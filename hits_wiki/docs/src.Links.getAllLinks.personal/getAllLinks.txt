@@ -1,0 +1,52 @@
+---
+//Links.getAllLinksFromNodes(session, map_title_article, base_nodes1);
+Links.getAllLinks(session, map_title_article);
+---
+Random:disable
+Страны|Века|Календарь|География_России|Люди
+
+Links.getAllLinks
+
+Россия 10 10 
+time sec:51.765 iter:4 vertices:518 edges:61589
+root_set_size:10 increment:10
+n_synonyms:100
+categories:854 total_steps_while_categories_removing:6606
+
+Россия 100 17
+time sec:29.005 iter:11 vertices:1972 edges:85132
+root_set_size:100 increment:17
+n_synonyms:100
+categories:2065 total_steps_while_categories_removing:22201
+
+Пыльник
+time sec:1.126 iter:13 vertices:69 edges:213
+root_set_size:100 increment:17
+n_synonyms:100
+categories:220 total_steps_while_categories_removing:1110
+
+Сленг
+time sec:3.741 iter:31 vertices:123 edges:280
+root_set_size:100 increment:17
+n_synonyms:100
+categories:447 total_steps_while_categories_removing:1951
+
+Робот
+time sec:6.622 iter:36 vertices:580 edges:3760
+root_set_size:100 increment:17
+n_synonyms:100
+categories:1041 total_steps_while_categories_removing:8264
+
+Интернационализация
+time sec:3.547 iter:20 vertices:201 edges:844
+root_set_size:100 increment:17
+n_synonyms:100
+categories:489 total_steps_while_categories_removing:5102
+
+Джемини 1 1
+time sec:0.496 iter:14 vertices:9 edges:10
+root_set_size:1 increment:1
+n_synonyms:100
+categories:65 total_steps_while_categories_removing:205
+
+

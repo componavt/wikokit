@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<article id="download_wp_dumps_four_tables" lang="en">
+
+<para>Download Wikipedia dumps from Wikimedia Foundation project: <ulink url="http://download.wikimedia.org/"/> (select "Database backup dumps"). See more about <ulink url="http://meta.wikimedia.org/wiki/Data_dumps">Data_dumps</ulink>. Synarcher works with four MySQL tables: page, pagelinks, categorylinks, and interwiki. In order to run Synarcher it is enough to download four files, e.g. <filename>ruwiki-20070304-pages-articles.xml.bz2</filename>, <filename>ruwiki-20070304-pagelinks.sql.gz</filename>, <filename>ruwiki-20070304-categorylinks.sql.gz</filename>, and <filename>ruwiki-20070304-interwiki.sql.gz</filename> (Russian Wikipedia).</para>
+
+</article>

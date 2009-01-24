@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<article id="add_javawiki_to_mysql" lang="en">
+
+        <para>Add the user (e.g. 'javawiki') to MySQL database. Grant 
+                    privileges at database levels (e.g. 'ruwiki' database). 
+                    Open MySQL command-line and run commands:
+                    <screen>        <prompt>mysql></prompt><command>CREATE USER javawiki;</command>
+        <prompt>mysql></prompt><command>GRANT SELECT ON ruwiki.* TO javawiki@'localhost';</command>
+        <prompt>(with password; from any computer></prompt><command>GRANT SELECT PRIVILEGES ON ruwiki.* TO javawiki identified by '12345'</command>)
+        <prompt>mysql></prompt><command>FLUSH PRIVILEGES;</command></screen></para>
+</article>
