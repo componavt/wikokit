@@ -1,0 +1,90 @@
+                         *****************************
+                         *                           *
+                         *   TouchGraph WikiBrowser  *	
+                         *          V 1.02           *
+                         *         (c) 2002          *
+                         *     Alexander Shapiro,    *
+                         *       TouchGraph LLC      *
+                         *                           *
+                         *****************************
+
+
+Release Notes:
+
+V 1.02 (06/11/02): 
+
+  Added features:
+  * Allowed LinkDatabase to be read from URL instead of a file, thanks to
+    Bill Seitz for the idea.
+
+  * BrowserLauncher now works for Windows NT/XP thank to a fix by 
+    Christoph Drieschner.
+
+V 1.01 (04/19/02):
+  
+  Added features:
+  * A new type of node representing pages external to the wiki has been added.
+    If an external URL has been mentioned repeatedly on several wiki pages,
+    one will see multiple incoming edges for the corresponding node.    
+  * Added a Show BackLinks checkbox which allows back links to be shown or
+    hidden.
+  * Added a Stop button which stops the graph motion and the animation.
+  * Added a Help button for getting quick directions.  
+  * Added tool tips to controls.
+  * Cursor icon changes when hoviring over a node and when dragging the
+    background.
+  * Fixed the HideNode function, so that the selected node can be hidden, and
+    added a CollapseNode option.
+  * Status bar in html pane is now a button which can be clicked to bring up
+    the page in an external browser.
+  * Status bar shows associated URL when the mouse is hovered oven a node.
+  * Nodes with high incident edge counts are not automatically expanded when    
+    selected from the browser pane, which allows for pages such as RecentChanges
+    to be viewed without problem.
+  * Setting the page in the browser pane is now done via a thread, which keeps
+    the tool from freezing while the requested page is being fetched.
+  
+  Potential improvements:
+  * Intra-wiki links should also have corresponding nodes shown in the graph.
+  * LinkDatabase is still stored locally instead of being dynamically aquired.
+  * Nodes hidden because they have too many incident edges should be shown in 
+    a separate pane.
+
+V 1.00 (03/12/02): 
+  
+  Current features:
+  * Searching for wiki pages
+  * Zooming
+  * A back button
+  * Controlling which nodes are displayed with the locality radius, and by 
+    setting a maximum edge degree at which nodes are not shown, and a maximum at 
+    which nodes are not expanded.
+  * Hilighting the associated node in the graph on hyperlink mouseover in the 
+    html browser pane.
+  * Status bar displaying hyperlink url / indicating if the link is local to the 
+    wiki.
+  * For local links, status bar shows associated node edge degree + sets text 
+    color to red for links with a high edge degree.
+
+  Potential improvements:
+  *  The current link database only provides information about node 
+     interconnections.  A richer database would produce a more interesting 
+     looking graph, for instance people nodes could be colored differendly then 
+     idea nodes.
+  *  The link data obtained in small amounts from the server, rather then 
+     stored as one large chunk.  This would maintain a real-time correspondance
+     between the graph and wiki-structure (the current database needs to be 
+     updated manually).
+ 
+================================================================================
+
+
+This software includes code from:
+
+  BrowserLauncher, a utility for launching external browsers, 
+  Copyright 1999-2001 Eric Albert
+  browserlauncher.sourceforge.net
+
+  Sun's graph layout applet:
+  java.sun.com/applets/jdk/1.2/demo/applets/GraphLayout/example1.html
+
