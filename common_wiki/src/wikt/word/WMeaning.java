@@ -1,0 +1,150 @@
+/* WMeaning.java - corresponds to a Meaning (definition + quotations)
+ * level of Wiktionary word.
+ * 
+ * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under GNU General Public License.
+ */
+
+package wikt.word;
+
+import wikt.util.WikiWord;
+import wikt.constant.ContextLabel;
+import wikipedia.language.LanguageType;
+import wikt.util.POSText;
+import wikt.multi.ru.WMeaningRu;
+
+/** Meaning consists of <PRE>
+ * # Definition (preceded by "#", which causes automatic numbering).
+ * and Quotations.      </PRE>
+ */
+public class WMeaning {
+
+    // StringBuffer definition;
+    // + wiki word, + number of wiki word or number of first char of wikiword in definition
+    
+    /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s" */
+    private ContextLabel[]  labels;
+
+    /** Word definition, e.g. "bullets" from text "# {{idiom}} [[bullet]]s" */
+    private StringBuffer    definition;
+
+    /** Wiki internal links, e.g. "bullet" from text "# {{idiom}} [[bullet]]s" */
+    private WikiWord[] wiki_words;
+    
+    /** Example sentences. */
+    private WQuote[] quote;
+    
+    private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];
+    private final static WMeaning   NULL_WMEANING       = new WMeaning();
+
+    public WMeaning() {
+        labels = null;
+        definition = null;
+        wiki_words = null;
+        quote = null;
+    }
+
+    public WMeaning(ContextLabel[] _labels, String _definition, WikiWord[] _wiki_words, WQuote[] _quote) {
+        labels = _labels;
+        definition = new StringBuffer(_definition);
+        wiki_words = _wiki_words;
+        quote = _quote;
+    }
+    
+    /** Gets array of context labels in the definition. */
+    public ContextLabel[] getLabels() {
+        return labels;
+    }
+
+    /** Gets definition line of text. */
+    public String getDefinition() {
+        return definition.toString();
+    }
+    
+    /** Gets array of internal links in the definition (wiki words, i.e. words with hyperlinks). */
+    public WikiWord[] getWikiWords() {
+        return wiki_words;
+    }
+    
+    /** Gets array of quotes (sentences) from the definition. */
+    public WQuote[] getQuotes() {
+        return quote;
+    }
+
+    /** Parses text (related to the POS), creates and fills array of meanings (WMeaning).
+     * @param wikt_lang     language of Wiktionary
+     * @param page_title    word which are described in this article 'text'
+     * @param lang_section  language of this section of an article
+     * @param pt            POSText defines POS stored in pt.text
+     * @return
+     */
+    public static WMeaning[] parse (
+                    LanguageType wikt_lang,
+                    String page_title,
+                    LanguageType lang_section,
+                    POSText pt)
+    {
+        // === Level III. Meaning ===
+        WMeaning[] wm = NULL_WMEANING_ARRAY;
+
+        LanguageType l = wikt_lang;
+
+        if(l  == LanguageType.ru) {
+
+            // get context labels, definitions, and quotations
+            /*   if(0==wm.length) {
+                    return NULL_WMEANING_ARRAY;
+            }*/
+          wm = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+
+        //} else if(l == LanguageType.en) {
+          //  return WordEn;
+        //} //else if(code.equalsIgnoreCase( "simple" )) {
+          //  return WordSimple;
+
+            // todo
+            // ...
+
+        } else {
+            throw new NullPointerException("Null LanguageType");
+        }
+        
+        return wm;
+    }
+
+    /** Parses one definition line, i.e. extracts {{label.}}, definition,
+     * {{example|Quotation sentence.}}, creates and fills a meaning (WMeaning).
+     * @param wikt_lang     language of Wiktionary
+     * @param page_title    word which are described in this article 'text'
+     * @param lang_section  language of this section of an article
+     * @param line          definition line
+     * @return WMeaning or null if the line is not started from "#"
+     */
+    public static WMeaning parseOneDefinition(LanguageType wikt_lang,
+                    String page_title,
+                    LanguageType lang_section,
+                    String line)
+    {
+        WMeaning wm = NULL_WMEANING;
+
+        LanguageType l = wikt_lang;
+
+        if(l  == LanguageType.ru) {
+            wm = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+
+        //} else if(l == LanguageType.en) {
+          //  return WordEn;
+        //} //else if(code.equalsIgnoreCase( "simple" )) {
+          //  return WordSimple;
+
+            // todo
+            // ...
+
+        } else {
+            throw new NullPointerException("Null LanguageType");
+        }
+
+        return wm;
+    }
+
+}
