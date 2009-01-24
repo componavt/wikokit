@@ -1,0 +1,30 @@
+List of keys for each table in WikIDF database.
+
+See fields of tables in the file: 
+synarcher/kleinberg/docs/idf_db/database_layout.txt
+
+1) table term - terms found in wiki-texts
+
+  PRIMARY KEY  (`term_id`),
+  UNIQUE KEY `lemma` (`lemma`)
+
+2) table page - title of wiki articles
+
+  PRIMARY KEY  (`page_id`),
+  KEY `page_title` (`page_title`)
+
+NEW!!!
+  UNIQUE KEY `page_title` (`page_title`)
+
+3) table term_page - pages which contain the term (It may be constrained, e.g.
+                        first 100 articles)
+
+  KEY `term_id` (`term_id`)
+  KEY `page_id` (`page_id`)
+
+4) table related_page - list of related pages found by the algorithm, cache for 
+                        Synarcher
+
+  PRIMARY KEY  (`rp_id`),
+  UNIQUE KEY `page_id` (`page_id`)
+
