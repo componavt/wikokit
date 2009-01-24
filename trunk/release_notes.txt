@@ -1,0 +1,114 @@
+wikokit 0.12.6 2008-0?-??
+  Project synarcher was renamed to wikokit.
+  New home: javaforge.com
+
+  Subproject kleinberg was renamed to hits_wiki.
+  The following subprojects were added: common_wiki and wikt_parser.
+
+
+Synarcher 0.12.5 2008-04-06
+  241 tests passed, 6 tests failed
+  This version is devoted to Index Wiki Database (WikIDF) creation.
+
+  WikIDF is a console application (part of Synarcher program), which 
+  depends on the RuPOSTagger program, see http://rupostagger.sourceforge.net
+
+  The Wiki Index Database is a list of lemmas and links to wiki pages, 
+  which contain these lemmas. The Wiki Index Database now could be 
+  created with the help of new upper (or sub) project WikIDF, 
+  see synarcher/wikidf/readme.txt
+
+  The created index DB for Russian and Simple English Wikipedia 
+  are available at: http://rupostagger.sourceforge.net, 
+  see packages idfruwiki and idfsimplewiki.
+
+  Added (from user's point of view)
+    Nothing
+
+  Added (from programmer's point of view)
+    WikiParsers.java converts wiki-texts to texts in natural language.
+    LanguageType.java with list of all Wikipedia languages.
+    WikimediaSisterProject.java with codes of Wikimedia sister projects.
+    Package wikipedia.sql_idf as API for Wikipedia index database (WikIDF),
+        see example in synarcher/wikidf/src/wikidf/ExampleAPI.java.
+
+  Bug fixed
+  
+  Todo
+    Publish a paper about WikIDF.
+
+Synarcher 0.12.4 2007-09-22
+  171 tests passed, 8 tests failed
+  Added
+    New Category tab was added to search panel. Category tab contains list of 
+        categories sorted by number of articles which belongs to it.
+    "The WordSimilarity-353 Test Collection" was taken (thanks to Evgeniy 
+        Gabrilovich) from http://www.cs.technion.ac.il/~gabr/resources/data/wordsim353/wordsim353.html
+        and converted to Java file, see wikipedia.experiment.WordSim353.java
+        It helps to evaluate results of search by an adapted HITS (AHITS) 
+        algorithm (Synarcher engine) in two tests.
+    Test 1. Comparison AHITS with human similarity estimation. See 
+        instructions in the file 
+        synarcher/kleinberg/src/wikipedia/experiment/Valuer.java
+    Test 2. Calculation of Resnik Information Content metric in WP.
+        See instructions in the file synarcher/sql_procedures/hyponyms/readme_ic.txt
+        See code and bibliography in the file 
+        synarcher/kleinberg/src/wikipedia/experiment/Hyponyms.java
+    During second test 526 cycles of categories was found in English Wikipedia,
+        see http://en.wikipedia.org/wiki/User:AKA_MBG/Cycles
+
+  Bug fixed
+    'Expand categories' works for the source article (with title entered by 
+        user).
+    Russian user interface instead of English: MessagesBundle.properties 
+        renamed to MessagesBundle_en.properties
+
+  Todo
+    Cache results of previous search by AHITS to the database idfenwiki.
+
+
+Synarcher 0.12.3 2007-06-26
+  156 tests passed, 5 tests failed
+  Added
+    Redirects are taken into account now. They are presented as green nodes. 
+        They are connected by green arcs to the redirect article.
+    Categories of redirect pages are taken into account, i.e. redirect pages 
+        are now filtered by black list of categories.
+    Preprocessing of search word: trim spaces, upper-case first letter.
+    Tab 'Result' is colored in case of 'No synonyms were found'
+    Added option: skip titles with columns, e.g. Portal:Literature
+
+  Bug fixed
+    Fix error with SQL connection: now connection is checked (isValid()) and 
+        reopened.
+
+  Improved
+    Speed-up search for synonyms: 
+        - skip search for categories in black list if it is empty.
+        - skip the article if it is in pl_from (Links.GetLToByLFrom).
+        - rewrite link.GetAllLinks, renamed it to getAllLinksFromNodes
+    Code clean-up: types of nodes are defined in NodeTypes.java: BASE, ROOT, etc.
+
+Synarcher 0.12.2 2007-01-05
+    Added categories counter (Database/"Get statistics")
+    Added checkbox 'Skip titles with spaces' in tab Synonyms/Parameters
+    Added checkbox 'Random pages (base set forming)' in tab Synonyms/Parameters
+    The interwiki links are skipped now (it is corrected 
+        the SQL Exception:"absent page "ja:...")
+    'Draw' (button) now skips articles which have categories in the black-list 
+        (defined by user)
+    Categories of category or article are visible now as nodes of blue color 
+        with prefix "C:". They are available through right click on the node 
+        and selection of the item "Expand Categories" in the context menu. 
+    Interwiki title can be added to the nodes. Select checkbox 
+        Synonyms->Parameters->Iwiki, assign to 'Iwiki' text field two letters 
+        language identifier. E.g. if the synonym search is applied in English 
+        Wikipedia, then Iwiki could be "Ru" for Russian iwiki, or "Eo" for Esperanto.
+
+
+Synarcher 0.12.1 2006-06-08
+    Coloring of nodes was added, meanings of colors were described in 
+    docs/quick_instructions.html 
+
+Synarcher 0.12.0 2006-05-23
+    First version.
