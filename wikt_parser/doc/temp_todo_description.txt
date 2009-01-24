@@ -1,0 +1,15 @@
+meaning table
+
+Meaning includes:
+1) a definition (preceded by "#"), or translation for foreign words;
+2) semantic relations
+3) translations
+---
+
+wikipedia table
+
+Titles of related Wikipedia articles, "Wikipedia has articles on: ".
+
+It contains only titles of English Wikipedia for English Wiktionary, Russian (and etc.) links are skipped.
+
+Wikipedia title can be different from Wiktionary, e.g. War_(card_game) for "war".

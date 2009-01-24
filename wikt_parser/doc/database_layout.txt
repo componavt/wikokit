@@ -1,0 +1,41 @@
+The layout of the index of Wikipedia database (WikIDF database).
+
+
+table term - terms found in wiki-texts
+term_id                 - uniquely identifying primary key;
+lemma                   - the word's lemma (term), unique;
+doc_freq                - document's frequency, number of documents where 
+                          the term appears.
+NEW!!!
+corpus_freq             - frequency of the term in the corpus
+
+
+table page - titles of wiki articles
+page_id                 - uniquely identifying primary key;
+page_title              - copy from MediaWiki page.page_title, 
+                          see http://www.mediawiki.org/wiki/Page_table
+NEW!!!
+word_count              - number of words in the article
+
+
+table term_page - pages which contain the term (It may be constrained, e.g. 
+                          first 100 articles)
+term_id
+page_id
+term_freq               - term frequency in the document
+
+table related_page - list of related pages found by the algorithm, cache for 
+                        Synarcher
+page_id
+related_titles          - comma separated list of related pages' titles
+
+
+== References == 
+
+* List of keys for each table in WikIDF database see in the file:
+synarcher/kleinberg/docs/idf_db/wikidf_keys.txt
+
+* See Java classes which provides interface to work with this db in
+synarcher/kleinberg/src/wikipedia/sql_idf/*.java
+
+* See also rupostagger/wikidf/readme.txt
