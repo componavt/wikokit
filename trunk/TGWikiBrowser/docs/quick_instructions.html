@@ -1,0 +1,110 @@
+<html>
+<head>
+  <title>Synarcher Instructions</title>
+</head>
+<body leftmargin="2">
+<p>
+<font font face="Arial">
+<center>
+      	<font size=5><b>Synarcher Instructions:</b></font> 
+</center>
+
+<h3>COLORS OF NODES</h3>
+        <li> <b>Source node</b> corresponds to the word entered by user. 
+        It is <b>black</b> or <font color="#FFE000"><b>yellow</b></font> (see below).
+
+        <li> <font color="#68C309"><b>Green nodes</b></font> corresponds to redirects. They are connected by <b><font color="#68C309">green</font></b> arcs to the redirect article.
+
+        <li> <font color="#617297"><b>Synonyms</b></font> found by the program have <font color="#617297"><b>blue grey</b></font> color. In fact, they are candidates to synonyms, they correspond to authorities in HITS algorithm.
+
+        <li> <font color="#FF8C00"><b>Synonyms</b></font> rated by user have <font color="#FF8C00"><b>orange</b></font> color.
+
+        <li> <b><font color="#FF4500">Hubs</font></b> refer to many synonyms. 
+        They have <font color="#FF4500"><b>red</b></font> color.
+
+
+        <li> <b><font color="#9B267D">Root</font></b> nodes are linked with <b>source</b> node. They have <b><font color="#9B267D">violet</font></b> color (if they are not <b><font color="#FF4500">hubs</font></b>).
+
+        <li> <b><font color="#A9A9A9">Dark grey</font></b> nodes are all others (in HITS they correspond to nodes in base set without root set nodes).
+
+        <li> <b><font color="#FFE000">Yellow</font></b> node is node which is currently selected by user. The associated wiki page is presented in the hypertext tab <b>Article</b>.
+
+        <li> <b><font color="#1D00E2">Blue</font></b> node is a category node (prefix "C:"). The category nodes are connected by arcs of <b><font color="#000000">black</font></b> color. All other nodes (articles) are connected by <b><font color="#D57413">light-brown</font></b> arcs.
+        </li>
+
+<h3>GRAPH NAVIGATION</h3>
+<li> <font color="#ff0000"><b>Change locale:</b></font> <b>Double Click</b> on a node to localize 
+view to the node and its neighbors <br>
+<li> <font color="#ff0000"><b>Show wiki page:</b></font> <b>Click</b> on a node to show the associated wiki page in the hypertext tab <b>Article</b><br>
+<li> <font color="#ff0000"><b>Show external page:</b></font> <b>Click</b> on a <b><font color="#802080">purple</font></b> node to 
+show the associated <b><font color="#802080">external page</font></b> in the hypertext tab <b>Article</b><br> 
+<li> <font color="#ff0000"><b>Show node info:</b></font> <b>Hover</b> over a node to show the corresponding URL in the status bar
+of the hypertext panel.<br>
+<li> <font color="#ff0000"><b>Expand Node:</b></font> <b>Right click</b> on a node and select Expand Node to show all of it's neighbors.<br> 
+<li> <font color="#1D00E2"><b>Expand Categories:</b></font> <b>Right click</b> on a node and select Expand Categories to show all categories of the article/category.<br> 
+<li> <font color="#ff0000"><b>Collapse node:</b></font> <b>Right click</b> on a 
+node and select Collapse Node to hide neighbors that can't be reached from any other node.<br>
+<li> <font color="#ff0000"><b>Hide node:</b></font> <b>Right click</b> on a node and 
+select Hide Node to hide the node and it's neighbors that can only be reached from that node.
+<font color="#ff0000"><b>Note</b></font> For graphs where the central node has a lot of neighbors, hide the central node to see
+the relationships between the neighbors independent of the central node.
+<li> <font color="#ff0000"><b>Hide all except node</b></font> <b>Right click</b> on a node and 
+select Hide All Except Node to hide all nodes. Only the selected node will remain visible.
+<li> <font color="#ff0000"><b>Rate synonym</b></font> <b>Right click</b> on a node and 
+select Rate Synonym to rate the node as a synonym for the requested word. The word will be added to the table Synonyms/Result, 
+and the word will be stored to the local file some_log_dir/word.params, if logging is checked in tab <b>Synonyms</b>.
+</li>
+
+<h3>HYPERTEXT PANEL:</h3>
+<li> <b>Hovering over a hyperlink:</b> Hovering over a hyperlink will highlight the corresponding node
+in <font color="#00FFFF"><b>light blue</b></font>, and show information about the node in the <b>status bar</b>.<br>
+<li> <b>Clicking a hyperlink:</b> Clicking a hyperlink will bring up the referenced page.  If the corresponding node is currently visible in the graph, 
+that node will be selected without rearranging the graph.  If the corresponding node is not visible, then the corresponding node
+will be selected and made visible, with the graph rearranged so that this node is in the center.<br>
+<li> <b>Status Bar:</b> By default, the status bar shows the URL of the current page.  <b>Click on the status bar</b> to
+bring up the current page in an external web browser.<br> 
+<li> <b>Status Bar on Hover:</b> When hovering over a hyperlink, the status bar will show the node name
+preceded by "In Graph:" if the associated node is present in the graph.  If the node has more then 50 
+incident arcs, the node name will be shown in red, to indicate that selecting that node will result in a very
+crowded graph.<br>       
+<li> <b>Hiding Hypertext Panel:</b> Click on the "&lt" arrow on the divider to hide the hypertext panel, making more
+room for the graph. 
+</li>
+
+<h3>TOOLBAR:</h3>
+<li> <b>Search:</b> Enter a search string in the search text field, and <b>press enter</b>.  An exact match will be 
+found if it exists, otherwise the first node whose label contains the substring will be set as the focus node. 
+Search is not case sensitive.<br>
+<li> <b>Back Button:</b> Click back button to go to a previously selected node, displaying the associated
+wiki page in the browser window.<br>
+<li> <b>Stop Button:</b> Clicking this button serves two purposes.  If the graph is moving erratically (which happens
+only if a node with too many outgoing arcs has been expanded) then clicking the stop button will stop this motion.  Click the button
+once to <b>bring the graph to a slow stop</b>, and twice to bring it to a complete halt.  Clicking the stop button will also quickly
+<b>wrap up the animation of new nodes</b>, which initially appear as pale shapes, being added. <br>
+<li> <b>Radius:</b> The locality radius.  When one chooses a focus node by double clicking on it, the size of the 
+displayed region will be determined by the Radius.  The resulting graph will consist of nodes that can be reached by following Radius arcs (edges) away from the focus node. <font color="#ff0000"><b>Note</b></font> <b>Radius, Show BackLinks, and the E# Combos will only work if some node is selected</b><br>
+<li> <b>Show BackLinks:</b> If Show BackLinks is not checked, then the corresponding graph will be generated by recursively following
+the just the outgoing hyperlinks from the focus node.  Selecting the Show BackLinks option will show the nodes which link To the focus node, not just the
+nodes From which the focus node can be reached. <font color="#ff0000"><b>Note</b></font> It is good to select the Show BackLinks option <b>if you are lost towards the
+end of a branch</b> (where few nodes are shown) and want to see more of the surrounding area.  Selecting the Show BackLinks option will cause a lot more nodes to be displayed so
+it will probably be necessary to <b>choose lower values for the Radius and E# combo boxes.</b> <br>
+<li> <b>E#:</b> E# refers to the edge degree of a node.  This is the sum on the incoming and outgoing arcs.
+<b>Do not confuse E# with the <font color="#ff0000">little red numbers</font></b> to the upper right of the node labels.  These numbers indicate
+the number of arcs (incoming and outgoing) not shown.<br>
+<li> <b>Show E#:</b> A node whose edge degree is greater then this number will not be shown.  This number should be greater then
+Expand E#, because it is more restrictive then the Expand E# constraint.<br>
+<li> <b>Expand E#:</b> A node whose edge degree is greater then this number will be shown but not expanded.  Thus
+if a node having an edge degree of greater then Expand E# is located at radius 1 from the focus node, and the
+radius is set to 2, then the nodes at radius 2 that can only be reached through the offending node will not be shown.<br>
+<li> <b>Zoom Scroll Bar:</b> Zooming in is very useful for cluttered graphs.<br>
+<li> <b>?:</b> Help (displays these instructions in tab <b>Article</b>).<br>
+</li>
+
+
+<h3>INTERWIKI (IWIKI): Wiki between wikipedias</h3>
+Interwiki title can be added to the nodes. Select checkbox <i>Synonyms->Parameters->Iwiki</i>, assign to 'Iwiki' text field two letters language identifier. E.g. if the synonym search is applied in English Wikipedia, then Iwiki could be "Ru" for Russian iwiki, or "Eo" for Esperanto.
+
+</font></font>	
+</body>
+</html>
+

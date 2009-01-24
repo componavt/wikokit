@@ -1,0 +1,180 @@
+<html>
+<head>
+  <title>TouchGraph WikiBrowser V1.01</title>
+</head>
+<body>
+<font size=3 face="arial">
+<font size=5><b>TouchGraph WikiBrowser V1.02</b></font><br>
+<font size=4><b>(c) 2002, Alexander Shapiro</b></font>
+<br><br><br>
+
+<h2>INSTRUCTIONS:</h2>
+<p>
+The TouchGraph WikiBrowser is a demonstration of how TouchGraph can be used to visualize 
+a Wiki.  The current demo renders the <a href=http://www.usemod.com/cgi-bin/mb.pl?>Meatball Wiki</a> 
+and <a href="http://www.emacswiki.org/cgi-bin/wiki.pl?">EmacsWiki</a> LinkDatabases (which can be obtained from <a href="http://www.usemod.com/cgi-bin/mb.pl?LinkDatabase">http://www.usemod.com/cgi-bin/mb.pl?LinkDatabase</a> 
+with <a href="http://www.usemod.com/cgi-bin/mb.pl?action=links&url=1">action=links&amp;url=1</a>, and <a href="http://www.emacswiki.org/cgi-bin/wiki.pl?action=links&url=1">
+http://www.emacswiki.org/cgi-bin/wiki.pl?action=links&amp;url=1</a>), 
+but any database encoded in a similar format could be displayed. 
+<p>
+For now, this is only a demo, due to the unfortunate drawback that the link database is not updated dynamically while browsing.
+It must either be downloaded ( The meatball.txt file available
+with this install was created on 4/19/02, and Emacs.txt on 4/21/02 ), or loaded from a URL before activating the visualization. 
+Later releases should fix this problem by dynamically acquiring the link structure through an XML based API.  Some
+of this progress can be seen at <a href="http://www.ecyrd.com/JSPWiki/Wiki.jsp?page=TouchGraphWikiBrowser">Ecyrd Wiki</a> 
+<p>
+
+<h2>Running the Demo</h2>
+<p>
+Running the TouchGraph WikiBrowser requires a Jave Runtime Environment (JRE) with version number of at least <b>1.3.0</b> 
+You can get the latest JRE from <a href="http://java.sun.com/j2se/1.4/download.html">http://java.sun.com/j2se/1.4/download.html</a> (The JRE links are in the left
+most column.)
+<p>
+To start the demo run Meatball.bat (windows) or Meatball.sh (unix).  On a unix machine 
+the permissions on Meatball.sh might need to be set to executable. (Likewise for Emacs.bat, Emacs.sh).
+<p>
+Meatball.bat contains a single line:<br>
+java -cp TGWikiBrowser.jar;BrowserLauncher.jar com.touchgraph.wikibrowser.TGWikiBrowser 
+<i>meatball.txt http://www.usemod.com/cgi-bin/mb.pl? hypermedium 2 false</i>
+<p>
+The last five parameters correspond to the data file, the wiki URL, the initial node, the initial locality radius, and a boolean corresponding to whether backlinks should initially be shown.  The first two parameters are mandatory, and last 3 are optional (though they must be specified in the order that they appear).  If the initial node is omitted, the first node in the data file will be set as the initial node.  The default for the locality radius is 2, and false for showing backlinks.
+<p>
+To display a different wiki, substitute the LinkDatabase in place of meatball.txt as the first parameter, the appropriate wiki URL as the second one, and fill in the other parameters as derired.
+You can also load the LinkDatabase from a URL, specifying that as the first parameter.  This way one can start with a fresh database
+every time one restarts the application.  The drawback of this approach is that it puts an increased load on the wiki server.  Also note
+that <i>the format of the remote LinkDatabase is not the same as that of files acquired from <a href="http://www.usemod.com/cgi-bin/mb.pl?LinkDatabase">http://www.usemod.com/cgi-bin/mb.pl?LinkDatabase</a></i>.  The database
+file accepted by the WikiBrowser should be plain text without html markup. 
+<p>
+<A name="utg">
+<h2>Understanding the Graph</h2></a>
+<p>
+The user is presented with a split view, with a conventional html browser on the left 
+side of the screen, and a graph of a local region of the wiki on the right.
+<p>
+The link graph consists on nodes whose labels correspond to hypertext pages, connected by 
+directed edges corresponding to hyperlinks between the pages.  Brown nodes correspond to internal
+wiki pages and purple ones to pages external to the wiki.
+<p>
+The graph is formed by selecting a central node, which appears in yellow, 
+and then displaying all nodes that are reachable from this node, or from which the node
+can be reached, by following a specified number of edges.  The maximum  number of edges 
+separating the central node from any peripheral nodes is called the locality radius.  
+The value of this radius can be adjusted by using the radius combo box, with a larger 
+value causing more nodes to be displayed.
+<p>
+The "Show E#" and "Expand E#" (with E# standing for edge number) combo boxes also 
+control which nodes are displayed.  
+<p>
+If a node has more incident edges that is indicated in the "Show E#" combo box, 
+then that node will not be shown.  This keeps the graph from getting cluttered by 
+hiding the nodes which connect to a large number of visible nodes.  The logic for hiding these
+nodes is that the value of their content is diluted by their large number of references.  One can
+almost veiw these nodes as the general context for the displayed graph, and eventually they
+could be shown in a separate pane.
+<p>
+If a node has more edges then indicated in the "Expand E#" combo box, then nodes 
+from which the central node can only be reached by passing through the offending 
+node will not be shown.  The "Expand E#" combo box will only have an effect if the 
+value displayed is less then that of the "Show E#" combo box.  
+<p>
+Adjusting the value of the radius combo box, or of either of the E# combo boxes will 
+redraw the graph to confirm to those settings.  Note that this will only work if some
+node is selected.
+<p>
+Some nodes show little red numbers in the upper right hand corner.  These numbers 
+indicate the number of adjacent nodes that are not displayed.  Right clicking on a node 
+and selecting expand will show all of it's adjacent nodes, and you can see that in the 
+process the hidden-edge tag will decrement to 1 and then disappear.  
+<p>
+<h2>Navigating the Graph.</h2>
+The graph can be navigated by Dragging, or Clicking, Double Clicking, or Right 
+clicking on nodes.  One can also hover over a node to display the corresponding URL 
+in the status bar of the Browser Pane.
+<p>
+Click + drag a node to rearrange the structure of the graph.  Doing so can result 
+in a more understandable layout.
+<p>
+Dragging the background is equivalent to scrolling, and will move the whole graph on 
+screen.
+<p>
+Clicking on a node will load the associated wiki page/external page in the browser pane on the 
+left, but it will not alter the graph's arrangement.
+<p>
+Double clicking on a node will also load the associated html page in the browser pane, 
+but now the graph will be rearranged about the selected node according to the values 
+of the radius and the E# combo boxes.
+<p>
+Right clicking on a node presents the options of Expanding, Collapsing, or Hiding the current node.
+<p>
+The expand option will show all the immediate neighbors of the current node.
+<p>
+The collapse option has the opposite effect of expanding a node.  All nodes in the graph
+that can only be reached through the collapsed node will be hidden. 
+<p>
+The hide option will hide the selected node, and all nodes detached in the process.  It is often
+useful to hide the central node if it has too many edges.  This will illuminate the relationships
+between that nodes neighbors independent of the central node.
+<p>
+<h2>The HTML Browser Pane</h2>
+The html browser can be used just like a regular browser.
+<p>
+Status messages can be seen in the status bar at the bottom of the browser.  Note that the 
+status bar is actually a button which when clicked will cause the current page to be displayed
+in an external browser.  
+<p>
+For external hyperlinks the status bar will show the associated URL.  
+<p>
+Internal links will show the link name preceded by the words "In Graph:" in the status bar.  
+To the right of the link name will appear a number indicating the number of edges 
+incident on that node.  This number will not be the same as the little red number attached 
+to the corresponding node, because the number in the status bar is the total number of edges, 
+while the little red number on the node shows the number of hidden edges.  Clicking on the 
+link has the same effect as double clicking on a node in the graph, i.e. 
+the associated node will be selected, and the graph will be rearranged about that node.
+<p>
+If the incident edge count for a node is greater than 50, then the status bar will display the
+name of that node in red.  This should serve as a reminder that clicking on that node is bound to produce a graph 
+that looks very cluttered, and should perhaps be avoided.
+<p>
+Another interesting feature of the browser pane is that when one moves the mouse over a hyperlink 
+for which the corresponding node is currently visible in the graph, that node will be 
+colored in light blue.
+<p>
+<h2>The Navigation Bar</h2>
+The navigation bar has some additional controls that help browse the Wiki.
+<p>
+Click the back button to go back to a previous page.  Doing so will also select the previously selected
+node in the graph.
+<p>
+A search string can be entered into the search text field.  Searching is activated by pressing the return key.  
+An exact match will be found if it exists, otherwise the first node whose label contains the 
+substring will be set as the focus node.  Search is not case sensitive. 
+<p>
+The radius and E# combo boxes have been covered in the <a href="#utg">Understanding the Graph</a> section.
+<p>
+The Show BackLinks button also controls the way the graph is expanded about the selected node.
+If Show BackLinks is not checked, then the corresponding graph will be generated by recursively following
+the just the outgoing hyperlinks from the focus node.  Selecting the Show BackLinks option will show the nodes which link 
+To the focus node, not just the nodes From which the focus node can be reached.  It is good to select the Show BackLinks option if you are lost towards the
+end of a branch (where few nodes are shown) and want to see more of the surrounding area.  Selecting the Show BackLinks option will 
+cause a lot more nodes to be displayed so it will probably be necessary to choose lower values for the Radius and E# combo boxes.<br>
+<p>
+The stop button serves two purposes.  If the graph is moving erratically (which happens
+only if a node with too many outgoing edges has been expanded) then clicking the stop button will stop this motion.  Click the button
+once to bring the graph to a slow stop, and twice to bring it to a complete halt.  Clicking the stop button will also quickly
+wrap up the animation of new nodes, which initially appear as pale shapes, being added. <br>
+<p>
+The Zoom scrollbar performs the obvious task of zooming into the graph.  This is especially useful if the E# combo boxes are set to high values, and the graph becomes cluttered.
+<p>
+The Help (?) button will bring up an abridge summary of these instructions in the Browser Pane.
+<p>
+<h2>Other Features</h2>
+<p>
+There are a couple of other minor features to be mentioned.
+<p>
+The divider between the browser and the graph can be adjusted left and right, or can be clicked closed to display just the graph area.
+<p>
+The display space can also be enlarged by right clicking on the graph background and selecting "Toggle Controls".  This will hide the scrollbars, and the navigation bar.  Repeating this action will bring the scrollbars and the navigation bar back.
+</body>
+</html>
+
