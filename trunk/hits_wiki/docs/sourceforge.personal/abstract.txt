@@ -1,0 +1,10 @@
+UNIX Name:synarcher
+Descriptive Name:Synarcher
+easyjapan@mail.ru
+GPL
+
+abstract:
+The system searches synonyms (and related words) in Wikipedia. Results of search are presented in the form of graph. Nodes are the names of articles, links show the relations between words (hyperlinks between articles).
+
+temp abstract:
+The system searches synonyms (and related words) in Wikipedia. (Current work plan: The format of Wikipedia database was changed. It is need to rewrite the low-level of Synarcher in order to access the new version of Wikipedia.)

@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Synarcher</title><meta name="generator" content="DocBook XSL Stylesheets V1.73.2" /></head><body><div class="article" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id2244483"></a>Synarcher</h2></div><div><div class="author"><h3 class="author"><span class="firstname">Andrew</span> <span class="surname">Krizhanovsky</span></h3><code class="email">&lt;<a class="email" href="mailto:/andrew |dot| krizhanovsky /at/ gmail |point| com /">/andrew |dot| krizhanovsky /at/ gmail |point| com /</a>&gt;</code></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="sect1"><a href="#Introduction">Introduction</a></span></dt><dt><span class="sect1"><a href="#Requirements">Requirements</a></span></dt><dt><span class="sect1"><a href="#Download">Download</a></span></dt><dt><span class="sect1"><a href="#Installation">Installation</a></span></dt><dd><dl><dt><span class="sect2"><a href="#install_win">Installation in Windows</a></span></dt><dt><span class="sect2"><a href="#install_linux">Installation in Linux</a></span></dt></dl></dd><dt><span class="sect1"><a href="#Example">Example of work with Synarcher</a></span></dt><dt><span class="sect1"><a href="#Troubleshooting">Troubleshooting</a></span></dt><dt><span class="sect1"><a href="#Screenshots">Screenshots</a></span></dt><dt><span class="appendix"><a href="#biblio">A. Bibliography</a></span></dt><dt><span class="appendix"><a href="#license">B. GPL Licence</a></span></dt><dt><span class="appendix"><a href="#third_party">C. Third party software</a></span></dt><dt><span class="appendix"><a href="#appx_server_props">D. ~/.wikibrowser.server.props</a></span></dt><dt><span class="appendix"><a href="#Developers">E. Notes for developers</a></span></dt></dl></div><p>Weekends were made for programming. /Karl Lehenbauer/</p><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Introduction"></a>Introduction</h2></div></div></div><p>The program searches synonyms (and related words) in a set of texts of special structure (like Wikipedia and other wiki-resources).</p></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Requirements"></a>Requirements</h2></div></div></div><p>Synarcher can work in Linux, Windows. It was tested in Mandriva, Debian, Windows XP.</p><p>Running the Synarcher requires:</p><div class="itemizedlist"><ul type="disc"><li><p>Local installation of Wikipedia. It requires <a class="ulink" href="http://dev.mysql.com/" target="_top">MySQL</a>, <a class="ulink" href="http://httpd.apache.org" target="_top">Apache</a>, <a class="ulink" href="http://www.mediawiki.org" target="_top">MediaWiki</a>, and files with <a class="ulink" href="http://download.wikimedia.org" target="_top">Wikipedia data</a>.</p></li></ul></div><div class="itemizedlist"><ul type="disc"><li><p>Java Runtime Environment (JRE) with version number of at least 1.3.0 You can get the latest JRE from <a class="ulink" href="http://java.sun.com/javase/downloads/index.jsp" target="_top">http://java.sun.com/javase/downloads/index.jsp</a></p></li></ul></div></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Download"></a>Download</h2></div></div></div><p>Download files from <a class="ulink" href="https://sourceforge.net/projects/synarcher" target="_top">https://sourceforge.net/projects/synarcher</a> <a class="ulink" href="http://sourceforge.net" target="_top"><div><table border="0" summary="manufactured viewport for HTML img" cellspacing="0" cellpadding="0" width="125"><tr><td><img src="http://sflogo.sourceforge.net/sflogo.php?group_id=159396&amp;type=2" width="125" /></td></tr></table></div></a></p></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Installation"></a>Installation</h2></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Install Apache, MySQL &amp; PHP. See <a class="ulink" href="http://www.linuxhelp.net/guides/lamp/" target="_top">Linux, Apache, MySQL &amp; PHP (LAMP) Setup Guide</a>, or <a class="ulink" href="http://www.aselabs.com/articles.php?id=38" target="_top">here</a>, or <a class="ulink" href="http://blazonry.com/scripting/install_apache.php" target="_top">here</a>. There are <a class="ulink" href="http://mpcon.org/apacheguide/index.php" target="_top">the guide for Windows users</a> and <a class="ulink" href="http://www.puremango.co.uk/cm_wamp_97.php" target="_top">one more guide</a>.
+                    See <a class="ulink" href="http://meta.wikimedia.org/wiki/Streamlined_Windows_Install_Guide" target="_top">Step by step setup of a MediaWiki on a Windows XP computer</a>.
+                  </p></li></ul></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="install_win"></a>Installation in Windows</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Download <code class="filename">php-5.2.0-Win32.zip</code> or later from <a class="ulink" href="http://www.php.net" target="_top">www.php.net</a></p><p>Install it, for example, to folder <code class="filename">c:\php</code></p><p>Rename the file <code class="filename">php-cgi.exe</code> to <code class="filename">php.exe</code></p><p>Rename the file <code class="filename">C:\php\php.ini-recommended</code> to <code class="filename">C:\php\php.ini</code></p><p>Edit the file <code class="filename">php.ini</code> (change the doc_root to match your httpd.conf DocumentRoot directory (Apache)):</p><div class="literallayout"><p>       doc_root = C:\inetpub<br />
+       memory_limit = 64M<br />
+       extension_dir = "C:\php\ext"<br />
+       extension = php_mysql.dll</p></div><p>Add <code class="filename">php.exe</code> to %PATH%, (see more about <a class="ulink" href="http://en.wikipedia.org/wiki/Environment_variable#.25PATH.25" target="_top">%PATH%</a> and <a class="ulink" href="http://support.microsoft.com/default.aspx?scid=kb;en-us;310519" target="_top">environment variables in Windows XP</a>). Check PHP installation (run the command):</p><pre class="screen"><strong class="userinput"><code>php -v</code></strong></pre><p> You should see something like: 
+                      <code class="computeroutput">PHP 5.2.0 (cli) (built: May  4 2006 10:35:22)</code></p></li><li><p>Install Apache HTTP Server (download <code class="filename">apache_2.2.4-win32-x86-no_ssl.msi</code> or later from <a class="ulink" href="http://httpd.apache.org/download.cgi" target="_top">apache.org</a>).</p><p>Edit Apache configuration file <code class="filename">C:\Program Files\Apache Group\Apache2\conf\httpd.conf</code>. Add the lines (let's MediaWiki will be installed to <code class="filename">C:/inetpub/mediawiki.ru/</code>):</p><div class="literallayout"><p>        Listen NNN.NNN.NN.NN:80 # your IP should be here<br />
+        Listen localhost:80<br />
+        ServerName YOUR_COMPUTER_NAME.YOUR_DOMAIN:80<br />
+        DocumentRoot "C:/Inetpub" # The place where will be located your data, e.g. mediawiki.ru<br />
+        &lt;Directory "C:/inetpub"&gt;<br />
+        ...<br />
+        LoadModule php5_module "c:/php/php5apache2_2.dll"<br />
+        AddType application/x-httpd-php .php<br />
+        PHPIniDir "C:/php"</p></div></li><li><p>Download <a class="ulink" href="http://mysql.org/downloads/mysql/5.0.html" target="_top">MySQL 5.0.27</a> (or later) and install it.</p><p>You can optimize MySQL to speed-up loading of Wikipedia data to MySQL.</p><div class="orderedlist"><ol type="i"><li><p>Run <span class="productname">MySQL Server Instance Config Wizard</span>™, select custom configuration, select option <span class="emphasis"><em>Dedicated MySQL Server Machine</em></span>, setup it.</p></li><li><p>Open in text editor MySQL configuration file <code class="filename">C:\Program Files\MySQL\MySQL Server 5.1\my.ini</code>. Replace some lines by list of setting presented below “<span class="quote"><a class="link" href="#mysql_optim">MySQL optimization</a></span>”</p></li><li><p>Restart MySQL service to apply changes</p><div class="literallayout"><p>        NET STOP MySQL # or: mysqld_safe --user=mysql --log &amp;<br />
+        NET START MySQL</p></div></li><li><p>After uploading Wikipedia database to MySQL (see steps below), you can return MySQL to normal mode: run <span class="productname">MySQL Server Instance Config Wizard</span>™, select custom configuration, select option <span class="emphasis"><em>Developer Machine</em></span>, setup it.</p></li></ol></div></li><li><p>Install MediaWiki (download from <a class="ulink" href="http://www.mediawiki.org" target="_top">www.mediawiki.org</a>).</p><p>See below “<span class="quote"><a class="link" href="#mediawiki_params">Example of MediaWiki parameters</a></span>” (in Linux section) to setup MediaWiki.</p><p>Then open in your browser: <a class="ulink" href="http://localhost/ruwikipedia/" target="_top">http://localhost/ruwikipedia/</a>. MediaWiki is installed, but MySQL database is empty at this moment.</p></li><li><div class="article" lang="en" xml:lang="en"><div class="titlepage"><hr /></div><p>Download Wikipedia dumps from Wikimedia Foundation project: <a class="ulink" href="http://download.wikimedia.org/" target="_top">http://download.wikimedia.org/</a> (select "Database backup dumps"). See more about <a class="ulink" href="http://meta.wikimedia.org/wiki/Data_dumps" target="_top">Data_dumps</a>. Synarcher works with four MySQL tables: page, pagelinks, categorylinks, and interwiki. In order to run Synarcher it is enough to download four files, e.g. <code class="filename">ruwiki-20070304-pages-articles.xml.bz2</code>, <code class="filename">ruwiki-20070304-pagelinks.sql.gz</code>, <code class="filename">ruwiki-20070304-categorylinks.sql.gz</code>, and <code class="filename">ruwiki-20070304-interwiki.sql.gz</code> (Russian Wikipedia).</p></div><p>Extract <code class="filename">ruwiki-20060718-pages-articles.xml.bz2</code> to <code class="filename">C:\all\inetpub\mediawiki.ru</code>, run two commands:</p><pre class="screen">        <strong class="userinput"><code>php maintenance/importDump.php &lt; ruwiki-20060718-pages-articles.xml</code></strong>
+        <strong class="userinput"><code>php maintenance/refreshLinks.php</code></strong></pre><p>Open in your browser: <a class="ulink" href="http://localhost/ruwikipedia/" target="_top">http://localhost/ruwikipedia/</a>. Wikipedia is installed.</p></li><li><p>Synarcher Installation.</p><div class="article" lang="en" xml:lang="en"><div class="titlepage"><hr /></div><p>Add the user (e.g. 'javawiki') to MySQL database. Grant 
+                    privileges at database levels (e.g. 'ruwiki' database). 
+                    Open MySQL command-line and run commands:
+                    </p><pre class="screen">        <code class="prompt">mysql&gt;</code><span class="command"><strong>CREATE USER javawiki;</strong></span>
+        <code class="prompt">mysql&gt;</code><span class="command"><strong>GRANT SELECT ON ruwiki.* TO javawiki@'localhost';</strong></span>
+        <code class="prompt">(with password; from any computer&gt;</code><span class="command"><strong>GRANT SELECT PRIVILEGES ON ruwiki.* TO javawiki identified by '12345'</strong></span>)
+        <code class="prompt">mysql&gt;</code><span class="command"><strong>FLUSH PRIVILEGES;</strong></span></pre></div><p>Download <code class="filename">synarcher-X.X.tar.gz</code> from <a class="ulink" href="https://sourceforge.net/projects/synarcher" target="_top">https://sourceforge.net/projects/synarcher</a></p><p>Unzip it to <code class="filename">c:\synarcher</code></p><p>Run <code class="filename">c:\synarcher\synarcher.bat</code>.</p><p>Define wikipedia parameters (for Synarcher) in file <code class="filename">%HOMEPATH%\.wikibrowser.server.props</code>. See appendix “<span class="quote"><a class="link" href="#appx_server_props" title="D. ~/.wikibrowser.server.props">~/.wikibrowser.server.props</a></span>”. Some parameters are available in tab 'Database' in Synarcher.</p><p>In the Synarcher program click button '?', help will be displayed in tab Article.</p></li></ul></div></div><div class="sect2" lang="en" xml:lang="en"><div class="titlepage"><div><div><h3 class="title"><a id="install_linux"></a>Installation in Linux</h3></div></div></div><div class="itemizedlist"><ul type="disc"><li><p>Linux tips:
+                    
+                    </p><div class="itemizedlist"><ul type="circle"><li style="list-style-type: circle"><p>
+                          <span class="command"><strong>cd /bin &amp;&amp; ln -s /usr/local/apache2/bin/apachectl</strong></span>
+                        </p></li><li style="list-style-type: circle"><p>
+                          Startup Apache
+                          </p><div class="itemizedlist"><ul type="square"><li><p>
+                                <span class="command"><strong>apachectl start</strong></span> # in Mandriva
+                              </p></li><li><p>
+                                <span class="command"><strong>/etc/init.d/apache2 start</strong></span> # in Debian
+                              </p></li></ul></div><p>
+                        </p></li><li style="list-style-type: circle"><p>
+                          <span class="command"><strong>/etc/init.d/mysql start</strong></span> # Startup MySQL</p></li><li style="list-style-type: circle"><p>
+                          or startup MySQL by these two commands:
+                          
+                          </p><div class="itemizedlist"><ul type="square"><li><p>
+                                <span class="command"><strong>su mysql</strong></span></p></li><li><p>
+                                <span class="command"><strong>mysqld</strong></span></p></li></ul></div><p>
+                        </p></li><li style="list-style-type: circle"><p>
+                          set root password in MySQL
+                          
+                          </p><div class="itemizedlist"><ul type="square"><li><p>
+                                <span class="command"><strong>mysql -u root</strong></span></p></li><li><p>
+                                <span class="command"><strong>SET PASSWORD FOR 'root'@'localhost' = PASSWORD('newpwd');</strong></span></p></li><li><p>
+                                <span class="command"><strong>SELECT Host, User FROM mysql.user;</strong></span></p></li></ul></div><p>
+                        </p></li></ul></div><p>
+                    
+                  </p></li><li><p>Let's we want install Russian Wikipedia. Let's the database name in MySQL will be <span class="emphasis"><em>ruwiki</em></span>. Then run MySQL and check that the database doesn't exist yet:</p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>mysql</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>show databases;</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>drop database ruwiki;</code></strong></pre><p>In order to optimize MySQL, change <code class="filename">/etc/mysql/my.cnf</code>, see e.g. <a class="ulink" href="http://forum.ev1servers.net/showthread.php?t=48880" target="_top">http://forum.ev1servers.net/showthread.php?t=48880</a>. The following parameters are recommended for <code class="filename">my.cnf</code>.</p><p><a id="mysql_optim"></a><em class="wordasword"><a id="mysql_optim.para"></a>MySQL optimization</em>:</p><div class="literallayout"><p>        # for computer with single CPU, 1GB of RAM <br />
+        [mysqld]<br />
+        connect_timeout=0<br />
+        interactive_timeout=100<br />
+        join_buffer_size=1M<br />
+        key_buffer=64M<br />
+        max_allowed_packet=16M<br />
+        max_connections=500<br />
+        max_connect_errors=10<br />
+        myisam_sort_buffer_size=32M<br />
+        read_buffer_size=2M<br />
+        read_rnd_buffer_size=2M<br />
+        sort_buffer_size=2M<br />
+        table_cache=1024<br />
+        thread_cache_size=100<br />
+        thread_concurrency=2<br />
+        wait_timeout=300<br />
+        query_cache_size=128M<br />
+        query_cache_limit=1M<br />
+        query_cache_type=1<br />
+        skip-innodb<br />
+        innodb_data_file_path = ibdata1:10M:autoextend:max:1900M</p></div><p>
+                    
+                    To speedup the server I usually make sure I disable other logging, by commenting out the following line:
+                    </p><div class="literallayout"><p>        #log        = /var/log/mysql.log</p></div><p>
+                    
+                    MySQL allows you to log slow queries. Uncomment the following line:
+                    </p><div class="literallayout"><p>        log-slow-queries        = /var/log/mysql/mysql-slow.log</p></div><p>
+                    
+                    </p><p>Restart MySQL to apply new settings:</p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>/etc/init.d/mysql restart</code></strong></pre></li><li><p>Install MediaWiki (download from <a class="ulink" href="http://www.mediawiki.org" target="_top">www.mediawiki.org</a>). It is used here to provide access to a local Wikipedia (to be uploaded to your MySQL database). Read <a class="ulink" href="http://www.mediawiki.org/wiki/How_to_become_a_MediaWiki_hacker" target="_top">Hacking MediaWiki</a>, <a class="ulink" href="http://www.mediawiki.org/wiki/Manual:Installation" target="_top">MediaWiki User's Guide: Installation</a> and <a class="ulink" href="http://www.mediawiki.org/wiki/Manual:Database_layout" target="_top">Database layout</a>.</p><div class="itemizedlist"><ul type="circle"><li><p>
+                        MediaWiki installation in Debian:
+                        
+                        </p><div class="orderedlist"><ol type="1"><li><p>Install PHP.</p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>apt-get install php5-mysql php5-cli</code></strong>
+  <code class="prompt">/etc/php5/apache2/php.ini&gt;</code> <strong class="userinput"><code>memory_limit = 64M</code></strong> <em class="lineannotation"><span class="lineannotation"> # some empirical value</span></em>
+  <code class="prompt">$</code> <strong class="userinput"><code>/etc/init.d/mysql restart</code></strong></pre></li><li><p>Install MediaWiki (stable version) by apt-get</p><pre class="screen"><code class="prompt">$</code> <strong class="userinput"><code>apt-get install mediawiki mediawiki-extensions</code></strong> <em class="lineannotation"><span class="lineannotation"># Folders <code class="filename">/etc/mediawiki1.9</code> and <code class="filename">/var/lib/mediawiki1.9</code> are created.</span></em></pre></li><li><p>Install latest MediaWiki version (download from <a class="ulink" href="http://www.mediawiki.org" target="_top">MediaWiki</a> site), e.g. file <code class="filename">mediawiki-1.10.0.tar.gz</code>.</p><pre class="screen"><code class="prompt">$</code> <strong class="userinput"><code>cp mediawiki-1.10.0.tar.gz /var/lib</code></strong>
+<code class="prompt">$</code> <strong class="userinput"><code>cd /var/lib</code></strong>
+<code class="prompt">$</code> <strong class="userinput"><code>tar -xzvf mediawiki-1.10.0.tar.gz</code></strong>
+<code class="prompt">$</code> <strong class="userinput"><code>mv mediawiki-1.10.0 mediawiki-1.10.0.ru</code></strong></pre></li><li><p>Add to <code class="filename">/etc/mediawiki1.9/apache.conf</code> the lines (this file will appear after execution of the command <span class="command"><strong>apt-get install mediawiki</strong></span>):
+</p><pre class="screen">  #############
+# RUWIKIPEDIA 
+#############
+Alias /ruwikipedia /var/lib/mediawiki-1.10.0.ru
+
+&lt;Directory /ruwikipedia/&gt;
+    Options +FollowSymLinks
+    AllowOverride All
+    order allow,deny
+    allow from all
+&lt;/Directory&gt;
+
+# some directories must be protected
+&lt;Directory /ruwikipedia/config&gt;
+    Options -FollowSymLinks
+    AllowOverride None
+&lt;/Directory&gt;
+&lt;Directory /ruwikipedia/upload&gt;
+    Options -FollowSymLinks
+    AllowOverride None
+&lt;/Directory&gt;
+
+
+#############
+# ENWIKIPEDIA 
+#############
+Alias /enwikipedia /var/lib/mediawiki-1.6.5.en
+&lt;Directory /enwikipedia/&gt;
+    Options +FollowSymLinks
+    AllowOverride All
+    order allow,deny
+    allow from all
+&lt;/Directory&gt;
+
+# some directories must be protected
+&lt;Directory /enwikipedia/config&gt;
+    Options -FollowSymLinks
+    AllowOverride None
+&lt;/Directory&gt;
+&lt;Directory /enwikipedia/upload&gt;
+    Options -FollowSymLinks
+    AllowOverride None
+&lt;/Directory&gt;</pre><p>
+                          </p></li><li><p> Restart apache, and open local wikipedia site in your browser
+</p><pre class="screen">  <code class="prompt">$</code> /etc/apache2/conf.d/mediawiki1.9.conf -&gt; /etc/mediawiki1.9/apache.conf   <em class="lineannotation"><span class="lineannotation"># check: this link should be created automatically after <strong class="userinput"><code>apt-get install mediawiki</code></strong></span></em>
+  
+  <code class="prompt">$</code> <strong class="userinput"><code>cd /var/lib/mediawiki-1.10.0.ru</code></strong>
+  
+  <code class="prompt">/var/lib/mediawiki-1.10.0.ru$</code> <strong class="userinput"><code>chmod a+wx -R /var/lib/mediawiki-1.10.0.ru/config</code></strong>
+  <code class="prompt">$</code> <strong class="userinput"><code>mozilla-firefox http://localhost/ruwikipedia/config</code></strong></pre><p>
+                          </p></li></ol></div><p>
+                      </p></li><li><p><a id="mediawiki_params"></a><a id="mediawiki_params.para"></a>Example of MediaWiki parameters</p><div class="itemizedlist"><ul type="square"><li><p>Site name <strong class="userinput"><code>ruwikipedia</code></strong>
+                          </p></li><li><p>Language <strong class="userinput"><code>ru - Русский</code></strong>
+                          </p></li><li><p>Memcached servers (optional) <strong class="userinput"><code>localhost:11211</code></strong> (first install: <span class="command"><strong>apt-get install memcached</strong></span>)
+                          </p></li><li><p>MySQL server <strong class="userinput"><code>localhost</code></strong>
+                          </p></li><li><p>Database name <strong class="userinput"><code>ruwiki</code></strong>
+                          </p></li><li><p>Database table prefix
+                          </p></li><li><p>Database charset <strong class="userinput"><code>Backwards-compatible UTF-8</code></strong> (not Experimental MySQL 4.1/5.0 UTF-8)
+                          </p></li><li><p>DB root password <strong class="userinput"><code>newpwd</code></strong>
+                          </p></li></ul></div></li><li><p>Move LocalSettings.php with your settings to parent folder.</p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>cd /var/lib/mediawiki-1.10.0.ru/config</code></strong>
+  <code class="prompt">/var/lib/mediawiki-1.10.0.ru/config$</code> <strong class="userinput"><code>mv LocalSettings.php ..</code></strong></pre></li></ul></div></li><li><div class="article" lang="en" xml:lang="en"><div class="titlepage"><hr /></div><p>Download Wikipedia dumps from Wikimedia Foundation project: <a class="ulink" href="http://download.wikimedia.org/" target="_top">http://download.wikimedia.org/</a> (select "Database backup dumps"). See more about <a class="ulink" href="http://meta.wikimedia.org/wiki/Data_dumps" target="_top">Data_dumps</a>. Synarcher works with four MySQL tables: page, pagelinks, categorylinks, and interwiki. In order to run Synarcher it is enough to download four files, e.g. <code class="filename">ruwiki-20070304-pages-articles.xml.bz2</code>, <code class="filename">ruwiki-20070304-pagelinks.sql.gz</code>, <code class="filename">ruwiki-20070304-categorylinks.sql.gz</code>, and <code class="filename">ruwiki-20070304-interwiki.sql.gz</code> (Russian Wikipedia).</p></div><p><em><span class="remark">Importing tool <a class="ulink" href="http://download.wikimedia.org/tools/" target="_top">mwdumper</a> (version 2006-Feb-01) failed to upload Russian Wikipedia, so I have used <code class="filename">maintenance/importDump.php</code> script (see example "Slow upload dump..." below). Failed command: <span class="command"><strong>java -server -jar mwdumper.jar --format=sql:1.5 ruwiki-20060204-pages-articles.xml.bz2 | mysql -u root -p ruwiki</strong></span></span></em>
+                  </p><p>Variant 1. Slow upload dump file to MySQL, e.g. commands for Russian Wikipedia:
+                    </p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>cd /var/lib/mediawiki-1.10.0.ru/</code></strong>
+  <code class="prompt">/var/lib/mediawiki-1.10.0.ru$</code> <strong class="userinput"><code>bzip2 -dc ruwiki-20060426-pages-articles.xml.bz2 | php maintenance/importDump.php</code></strong> <em class="lineannotation"><span class="lineannotation">
+      # The table <span class="emphasis"><em>page</em></span> will be created.</span></em>
+  
+  <code class="prompt">/var/lib/mediawiki-1.10.0.ru$</code> <strong class="userinput"><code>php maintenance/refreshLinks.php</code></strong> <em class="lineannotation"><span class="lineannotation">
+      # See <a class="ulink" href="http://meta.wikimedia.org/wiki/Rebuild_link_tables" target="_top">Meta's notes on rebuilding link tables</a></span></em>
+      <em class="lineannotation"><span class="lineannotation"># The tables <span class="emphasis"><em>pagelinks</em></span> and <span class="emphasis"><em>categorylinks</em></span> will be created.</span></em>
+      <em class="lineannotation"><span class="lineannotation"># If this command failes, chech that you have enough free disk space.</span></em></pre><p>
+                  </p><p>Variant 2. Fast upload dump file to MySQL (Russian Wikipedia). Download <a class="ulink" href="http://meta.wikimedia.org/wiki/Xml2sql" target="_top">Xml2sql</a>.
+                    </p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>cd /var/lib/mediawiki-1.10.0.ru/</code></strong>
+  <code class="prompt">/var/lib/mediawiki-1.10.0.ru$</code> <strong class="userinput"><code>bzip2 -d ruwiki-20070202-pages-articles.xml.bz2</code></strong>
+  <code class="prompt">/var/lib/mediawiki-1.10.0.ru$</code> <strong class="userinput"><code>xml2sql -m ruwiki-20070202-pages-articles.xml</code></strong> <em class="lineannotation"><span class="lineannotation">
+      # it generates three files: <code class="filename">page.sql</code>, <code class="filename">revision.sql</code> and <code class="filename">text.sql</code></span></em>
+  <code class="prompt">/var/lib/mediawiki-1.10.0.ru$</code> <strong class="userinput"><code>mysql -u root -p ruwiki</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>SOURCE /temp/page.sql;SOURCE /temp/text.sql;SOURCE /temp/revision.sql;</code></strong> <em class="lineannotation"><span class="lineannotation">
+      # I do not recommend here <strong class="userinput"><code>SOURCE pagelinks.sql;SOURCE categorylinks.sql;</code></strong> see description below</span></em></pre><p>
+
+If there is the error (due to <code class="filename">revision.sql</code>): "<code class="computeroutput">ERROR 1136 (21S01): Column count doesn't match value count at row 1</code>", then try the following commands (see <a class="ulink" href="http://www.mediawiki.org/wiki/Talk:Revision_table#Problem%20with%20import%20wiki%20to%20MySQL" target="_top">MediaWiki/Talk:Revision_table</a>):</p><pre class="screen">  <code class="prompt">mysql$</code> <strong class="userinput"><code>ALTER TABLE revision DROP COLUMN rev_len, DROP COLUMN rev_parent_id;</code></strong> <em class="lineannotation"><span class="lineannotation"># remove two fields</span></em>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>SOURCE /temp/revision.sql</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>ALTER TABLE revision ADD COLUMN rev_len INT(10) UNSIGNED DEFAULT NULL AFTER rev_deleted, ADD COLUMN rev_parent_id INT(10) UNSIGNED DEFAULT NULL AFTER rev_len;</code></strong> <em class="lineannotation"><span class="lineannotation">#add two fields back</span></em></pre><p>
+
+Tables <span class="emphasis"><em>pagelinks</em></span> and <span class="emphasis"><em>categorylinks</em></span> require special attention (when number of articles is more than 200'000), since after the command <span class="command"><strong>SOURCE pagelinks.sql</strong></span> MySQL loads the file (several hours), then starts building of keys (English WP requires more than a week, a SHOW PROCESSLIST shows "Repair with keycache"). The solution is to disable keys, load data, enable keys, then start <span class="command"><strong>isamchk</strong></span> in order to build index. Repeat it for <code class="filename">categorylinks</code>.
+
+</p><pre class="screen">  <code class="prompt">mysql$</code> <strong class="userinput"><code>ALTER TABLE pagelinks DISABLE KEYS;</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>SOURCE /temp/ruwiki-20070202-pagelinks.sql</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>ALTER TABLE pagelinks ENABLE KEYS;</code></strong>
+  <code class="prompt">$</code> <strong class="userinput"><code>myisamchk --key_buffer_size=256M --sort_buffer_size=256M \</code></strong> <em class="lineannotation"><span class="lineannotation"># if computer have 1 GB of RAM, else correct values</span></em>
+  <strong class="userinput"><code>--read_buffer_size=1M --write_buffer_size=1M \</code></strong>
+  <strong class="userinput"><code>--sort-recover -i /var/lib/mysql/ruwiki/pagelinks.MYI</code></strong>
+</pre><p>
+                  </p><p>You can check results of uploading files to MySQL, e.g. commands for Russian Wikipedia in MySQL shell are:
+                    </p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>mysql -u root -p</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>use ruwiki;</code></strong>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>SELECT count(*) FROM page;</code></strong> <em class="lineannotation"><span class="lineannotation"># check that you really uploaded pages, 
+        # it is about 150'000 pages for Russian Wikipedia, 2'940'000 for English Wikipedia</span></em>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>SELECT count(*) FROM pagelinks;</code></strong> <em class="lineannotation"><span class="lineannotation"># about 2'110'000 in Russian Wikipedia</span></em>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>SELECT count(*) FROM categorylinks;</code></strong> <em class="lineannotation"><span class="lineannotation"># about 285'000 in Russian Wikipedia</span></em></pre></li><li><p>Check that local Wikipedia works. Open in your browser: <a class="ulink" href="http://localhost/ruwikipedia" target="_top">http://localhost/ruwikipedia</a></p></li><li><p>Download <code class="filename">synarcher-X.X.tar.gz</code> from <a class="ulink" href="https://sourceforge.net/projects/synarcher" target="_top">https://sourceforge.net/projects/synarcher</a>
+</p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>gzip -zxvf synarcher-X.X.tar.gz</code></strong>
+  <code class="prompt">$</code> <strong class="userinput"><code>cd synarcher-X.X</code></strong>
+  
+  <code class="prompt">$</code> <strong class="userinput"><code>java -jar TGWikiBrowser/dist/TGWikiBrowser.jar</code></strong>
+  <em class="lineannotation"><span class="lineannotation"># The file <code class="filename">/home/user_name/.wikibrowser.server.props</code> will be created</span></em>
+  
+  <code class="prompt">$</code> <strong class="userinput"><code>java -Xms128m -Xmx128m -Xmn16m -XX:+DisableExplicitGC -verbose:gc -jar TGWikiBrowser/dist/TGWikiBrowser.jar</code></strong>
+  <em class="lineannotation"><span class="lineannotation"># You can experiment with Xms, Xmx and Xmn Java parameters, in order to speed up the program</span></em></pre><p>Define wikipedia parameters in file <code class="filename">/home/user_name/.wikibrowser.server.props</code>. See appendix “<span class="quote"><a class="link" href="#appx_server_props" title="D. ~/.wikibrowser.server.props">~/.wikibrowser.server.props</a></span>”.</p><p>In the Synarcher program click button '?', help will be displayed in tab Article.</p></li><li><div class="article" lang="en" xml:lang="en"><div class="titlepage"><hr /></div><p>Add the user (e.g. 'javawiki') to MySQL database. Grant 
+                    privileges at database levels (e.g. 'ruwiki' database). 
+                    Open MySQL command-line and run commands:
+                    </p><pre class="screen">        <code class="prompt">mysql&gt;</code><span class="command"><strong>CREATE USER javawiki;</strong></span>
+        <code class="prompt">mysql&gt;</code><span class="command"><strong>GRANT SELECT ON ruwiki.* TO javawiki@'localhost';</strong></span>
+        <code class="prompt">(with password; from any computer&gt;</code><span class="command"><strong>GRANT SELECT PRIVILEGES ON ruwiki.* TO javawiki identified by '12345'</strong></span>)
+        <code class="prompt">mysql&gt;</code><span class="command"><strong>FLUSH PRIVILEGES;</strong></span></pre></div></li></ul></div></div></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Example"></a>Example of work with Synarcher</h2></div></div></div><p>Todo</p></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Troubleshooting"></a>Troubleshooting</h2></div></div></div><p>Wikipedia installation</p><div class="itemizedlist"><ul type="disc"><li><div class="itemizedlist"><ul type="circle"><li><p>Question: error message printed while MediaWiki installation: <code class="computeroutput">Granting user permissions... A database error has occurred Query: SHOW STATUS Function: Error: 2006 MySQL server has gone away (localhost)</code></p><p>Answer: MySQL service wasn't run properly. Run MySQL using the commands 
+                        below.</p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>/etc/init.d/mysql start</code></strong> <em class="lineannotation"><span class="lineannotation"># as root</span></em>
+  <code class="prompt">$</code> <strong class="userinput"><code>su mysql</code></strong> <em class="lineannotation"><span class="lineannotation"># run as user, not root</span></em>
+  <code class="prompt">mysql$</code> <strong class="userinput"><code>mysqld</code></strong></pre><p>
+                      </p></li><li><p><code class="computeroutput">Exception: com.mysql.jdbc.Driver</code></p><p>Answer: add <code class="filename">mysql-connector-java-X.X.XX-bin.jar</code> to Java CLASSPATH. This jar file is presented in the Synarcher distributive, but you can download the latest version of <a class="ulink" href="http://www.mysql.com/products/connector/j" target="_top">MySQL Connector/J</a>.</p></li><li><p>Encoding problem: Wrong characters (e.g. hieroglyphs instead of Russian letters) are produced while typing in input fields (e.g, in "Word", or in "Category blacklist parameters" fields).</p><p>Answer: It should be set Unicode locale, e.g., en_US.UTF8. See <a class="ulink" href="http://lib.ru/CYRILLIC/Cyrillic-HOWTO/Cyrillic-HOWTO-russian.html" target="_top">Cyrillic-HOWTO-russian</a> or <a class="ulink" href="http://www.rus-linux.net/main.php?name=russ" target="_top">Linux in Russian</a>. Try the following 
+                        commands: </p><pre class="screen">  <code class="prompt">$</code> <strong class="userinput"><code>export LANG=en_US.UTF8</code></strong>
+  <code class="prompt">$</code> <strong class="userinput"><code>export LC_ALL=en_US.UTF8</code></strong>
+  <code class="prompt">$</code> <strong class="userinput"><code>echo $LC_ALL $LANG</code></strong> <em class="lineannotation"><span class="lineannotation"># check that it works</span></em></pre><p>
+                      </p></li><li><p>How to set up encodings for Russian Wikipedia?</p><p>1. Run program. Open tab Synonyms, write word (e.g., Орбита) to the field Word.</p><p>2. Open tab Database, set encodings UTF8 in the field "Default values". Press button Set. If you did not get valid Russian text (e.g., Страны|Века|Календарь|География_России) in the text field, then try enother encodings, e.g. Cp1251, or ISO8859_1, etc. It defines decoding of the default categories (and other text fields) from Java source code.</p><p>3. Open tab Database, set encodings UTF8 in the field "User interface". Press button Set. If you did not get valid Russian text (e.g., Орбита) in the text field, then try enother encodings, e.g. Cp1251, or ISO8859_1, etc. It defines decoding from text (e.g. in the field Word) entered by user to Java internal format (UTF8).</p><p>4. Restart the program. (Encoding values are stored in the file <code class="filename">~/.wikibrowser.server.props</code>.)</p><div><img src="figures/enc_tab.png" /></div></li></ul></div></li></ul></div><p>Wiktionary installation</p><div class="itemizedlist"><ul type="disc"><li>Add the line: <span class="command"><strong>$wgCapitalLinks=false;</strong></span> at the end of file <code class="filename">LocalSettings.php</code> before the line '<span class="command"><strong>?&gt;</strong></span>'
+                  </li></ul></div></div><div class="sect1" lang="en" xml:lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="Screenshots"></a>Screenshots</h2></div></div></div><div class="figure"><a id="fig_db"></a><p class="title"><b>Figure 1. Select Wikipedia database, assign parameters.</b></p><div class="figure-contents"><div><img src="figures/db_eo.png" alt="Select Wikipedia database, assign parameters." /></div></div></div><br class="figure-break" /><p>Selected Wikipedia (e.g. English, Russian or Esperanto) should be installed on your computer. In order to check connection with database press button "Get statistics" about the database.</p><div class="figure"><a id="fig_params"></a><p class="title"><b>Figure 2. Synonym search parameters</b></p><div class="figure-contents"><div><img src="figures/03a_crop_search_parameters_robot.png" alt="Synonym search parameters" /></div></div></div><br class="figure-break" /><div class="figure"><a id="fig_robot"></a><p class="title"><b>Figure 3. The found synonyms (for the word Robot) presented as the table and graph (English Wikipedia)</b></p><div class="figure-contents"><div><img src="figures/04_results_table_and_graph_robot.png" alt="The found synonyms (for the word Robot) presented as the table and graph (English Wikipedia)" /></div></div></div><br class="figure-break" /><div class="figure"><a id="fig_orbita"></a><p class="title"><b>Figure 4. The found synonyms in the Russian Wikipedia for the word Орбита (Orbita)</b></p><div class="figure-contents"><div><img src="figures/orbita.ru.rate_circle.png" alt="The found synonyms in the Russian Wikipedia for the word Орбита (Orbita)" /></div></div></div><br class="figure-break" /><div class="figure"><a id="fig_quaternion"></a><p class="title"><b>Figure 5. The found synonyms in the Russian Wikipedia for the word Quaternion. Categories are blue nodes with prefix "C:" in titles. The part of title ":En:..." shows the English interwiki found in Russian Wikipedia.</b></p><div class="figure-contents"><div><img src="figures/quantity_en_categories_region.png" alt="The found synonyms in the Russian Wikipedia for the word Quaternion. Categories are blue nodes with prefix &quot;C:&quot; in titles. The part of title &quot;:En:...&quot; shows the English interwiki found in Russian Wikipedia." /></div></div></div><br class="figure-break" /><div class="figure"><a id="fig_chechnya"></a><p class="title"><b>Figure 6. The found synonyms in the Russian Wikipedia for the word Chechnya with categories. The Esperanto interwiki ":Eo:..." are found in Russian Wikipedia.</b></p><div class="figure-contents"><div><img src="figures/chechnya_iwiki_eo.png" alt="The found synonyms in the Russian Wikipedia for the word Chechnya with categories. The Esperanto interwiki &quot;:Eo:...&quot; are found in Russian Wikipedia." /></div></div></div><br class="figure-break" /></div><div class="appendix" lang="en" xml:lang="en"><h2 class="title" style="clear: both"><a id="biblio"></a>A. Bibliography</h2><p>Krizhanovsky A. 2008. <span class="emphasis"><em>Index wiki database: design and experiments.</em></span> In: FLINS'08, Corpus Linguistics'08, AIS/CAD'08, <a class="ulink" href="http://arxiv.org/abs/0808.1753" target="_top">arXiv:0808.1753v1 [cs.IR]</a></p><p>Krizhanovsky A. 2006. <span class="emphasis"><em>Synonym search in Wikipedia: Synarcher.</em></span> In: 11-th International Conference "Speech and Computer" SPECOM'2006. Russia, St. Petersburg, June 25-29, 2006, pp. 474-477, <a class="ulink" href="http://arxiv.org/cs.IR/0606097" target="_top">arXiv:cs.IR/0606097</a></p><p>Крижановский А.А. 2006. Automatic forming lists of semantically related terms based on texts rating in the corpus with hyperlinks and categories (In Russian). Автоматизированное построение списков семантически близких слов на основе рейтинга текстов в корпусе с гиперссылками и категориями. Компьютерная лингвистика и интеллектуальные технологии. Труды международной конференции «Диалог 2006». Бекасово, 31 мая - 4 июня 2006 г. 297-302 (pdf на сайте <a class="ulink" href="http://arxiv.org/abs/cs.IR/0606128" target="_top">arXiv:cs.IR/0606128</a>, Word и html версия статьи на сайте <a class="ulink" href="http://whinger.narod.ru/paper/index.html" target="_top">whinger.narod.ru</a>)</p></div><div class="appendix" lang="en" xml:lang="en"><h2 class="title" style="clear: both"><a id="license"></a>B. GPL Licence</h2><p>Copyright (c) 2005, 2006 Andrew Krizhanovsky /aka / at / mail.iias.spb.su/</p><p>Distributed under GNU Public License. Version 2 of the GPL or any later version. See <a class="ulink" href="../gpl.txt" target="_top">gpl.txt</a></p></div><div class="appendix" lang="en" xml:lang="en"><h2 class="title" style="clear: both"><a id="third_party"></a>C. Third party software</h2><p>This product includes BrowserLauncher, a utility for launching external browsers, 
+              copyright 1999-2001, Eric Albert (browserlauncher.sourceforge.net).
+            </p><p>This product includes code from Sun's graph layout applet: <a class="ulink" href="java.sun.com/applets/jdk/1.2/demo/applets/GraphLayout/example1.html" target="_top">java.sun.com/applets/jdk/1.2/demo/applets/GraphLayout/example1.html</a></p><p>This product includes TouchGraph WikiBrowser V 1.02.
+              TouchGraph is copyright (c) 2002, Alexander Shapiro, TouchGraph LLC (<a class="ulink" href="http://www.touchgraph.com/" target="_top">http://www.touchgraph.com/</a>).</p><p>This product contains MySQL Connector/J. MySQL AB's JDBC Driver 
+              for MySQL. Copyright (c) 2003 MySQL AB. See <a class="ulink" href="http://www.mysql.com/products/connector/j" target="_top">http://www.mysql.com/products/connector/j</a></p></div><div class="appendix" lang="en" xml:lang="en"><h2 class="title" style="clear: both"><a id="appx_server_props"></a>D. ~/.wikibrowser.server.props</h2><p>Define wikipedia parameters (file <code class="filename">/home/user_name/.wikibrowser.server.props</code>) which are read by Synarcher. In Windows this is the file <code class="filename">C:\Documents and Settings\user_name\.wikibrowser.server.props</code>. If a database name and user name are differ from the default values, then update fields 'db_name_en' and 'user_en'. 
+                Set the language code: <span class="command"><strong>lang_code=en</strong></span> for English Wikipedia, or <span class="command"><strong>lang_code=ru</strong></span> for Russian.
+              </p><p>This is the example of the file <code class="filename">/home/user_name/.wikibrowser.server.props</code>:
+              </p><div class="literallayout"><p>                #WikiBrowser Server Properties<br />
+                #Thu May 18 16:02:53 MSD 2006<br />
+                db_host_ru=localhost<br />
+                enc_ui=UTF8<br />
+                db_name_en=ruwiki<br />
+                b_log_dump2dir=1<br />
+                wiki_url_ru=http\://localhost/ruwikipedia/index.php/<br />
+                radius=1<br />
+                pass_en=<br />
+                db_name_ru=ruwiki<br />
+                node_en=\u00D0\u00EE\u00E1\u00EE\u00F2<br />
+                log_dir=/home/andrew/wiki<br />
+                user_en=javawiki<br />
+                lang_code=ru<br />
+                pass_ru=<br />
+                enc_java=UTF8<br />
+                node_ru=\u041E\u0440\u0431\u0438\u0442\u0430<br />
+                show_backlinks=0<br />
+                db_host_en=localhost<br />
+                user_ru=javawiki<br />
+                wiki_url_en=http\://localhost/enwikipedia_linux/index.php/</p></div></div><div class="appendix" lang="en" xml:lang="en"><h2 class="title" style="clear: both"><a id="Developers"></a>E. Notes for developers</h2><p>Source code has UTF8 encoding. It is important for test packages. If you are using NetBeans IDE, set <span class="command"><strong>NetBeans/Tools/Options/Java Sources/Default Encoding=UTF8</strong></span></p><p>Set in NetBeans "Project Properties/Run/VM Options" to "-Xms128m -Xmx128m -Xmn16m -XX:+DisableExplicitGC -verbose:gc"</p><p>Add the following library files 
+              to CLASS_PATH, you can copy files to <code class="filename">./kleinberg/lib</code> directory: </p><pre class="screen">  <code class="filename">mysql-connector-java-3.1.12-bin.jar</code> <em class="lineannotation"><span class="lineannotation"># This file (or later version) is available at <a class="ulink" href="http://www.mysql.com/products/connector/j" target="_top">http://www.mysql.com/products/connector/j</a></span></em>
+  <code class="filename">commons-collections-3.1.jar</code> <em class="lineannotation"><span class="lineannotation"># This and below files are available at <a class="ulink" href="http://apache.org" target="_top">http://apache.org</a></span></em>
+  <code class="filename">commons-lang-2.1.jar</code>
+  <code class="filename">commons-logging-1.0.4</code>
+  <code class="filename">jakarta-oro-2.0.8</code>
+  <code class="filename">jcfd.jar</code></pre><p>
+              </p></div></div></body></html>

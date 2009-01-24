@@ -1,0 +1,22 @@
+
+Q: Error: java.lang.OutOfMemoryError: Java heap space
+A: Solution for Netbeans Java IDE. 
+
+Values are specified in the project.  If I right-click the project and
+then choose Properties the properties dialog appears.  On the left-hand side I
+choose Run and that causes the right-hand side to display runtime properties. 
+The values for Xmx, etc. are specified in the VM Options entry.
+
+XX:+AgressiveHeap
+default:
+-J-Xms32m -J-Xmx128m -J-XX:PermSize=32m -J-XX:MaxPermSize=96m -J-Xverify:none
+test:
+-Xms512m -Xmx512m -Xmn16m -XX:PermSize=4m -XX:MaxPermSize=4m -XX:+DisableExplicitGC -verbose:gc
+
+my:
+java.lang.OutOfMemoryError: PermGen space
+-Xms256m -Xmx256m -Xmn16m -XX:PermSize=4m -XX:MaxPermSize=4m -XX:+DisableExplicitGC -verbose:gc
+
+-Xms256m -Xmx256m -Xmn16m -XX:+DisableExplicitGC -verbose:gc
+-Xms320m -Xmx320m -Xmn16m -XX:+DisableExplicitGC -verbose:gc
+-Xms400m -Xmx400m -Xmn16m -XX:+DisableExplicitGC -verbose:gc

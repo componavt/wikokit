@@ -1,0 +1,7 @@
+
+Список категорий пустой, 
+if(Log)
+        total_steps_while_categories_removing:1093
+else
+        total_steps_while_categories_removing:0
+

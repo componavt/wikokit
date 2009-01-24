@@ -1,0 +1,88 @@
+---
+Links.getAllLinksFromNodes(session, map_title_article, base_nodes1);
+//Links.getAllLinks(session, map_title_article);
+---
+Алгоритм: Итеративный поиск подмножества авторитетных и хаб страниц.
+1. Найти с помощью AHITS 
+- na - авторитетных страниц, множество {na};
+- nh - хаб страниц, множество {nh};
+- n_del - страниц с малым весом authority+hub, множество {n_del}.
+2. root_base = {na} and {nh} and {synonyms rated by user},
+   Построить base_set, но не включать {n_del}
+3. Возвращение управления пользователю.
+4. goto 1
+
+
+Links.getAllLinksFromNodes
+
+Россия 10 10 
+time sec:47.369 iter:8 vertices:518 edges:2626
+root_set_size:10 increment:10
+n_synonyms:100
+categories:854 total_steps_while_categories_removing:6606
+
+Россия 100 17
+time sec:98.591 iter:158 vertices:1972 edges:14572
+root_set_size:100 increment:17
+n_synonyms:100
+categories:2065 total_steps_while_categories_removing:22201
+
+Пыльник
+time sec:1.861 iter:13 vertices:69 edges:193
+root_set_size:100 increment:17
+n_synonyms:100
+categories:220 total_steps_while_categories_removing:1110
+
+Сленг
+time sec:6.453 iter:39 vertices:123 edges:225
+root_set_size:100 increment:17
+n_synonyms:100
+categories:447 total_steps_while_categories_removing:1951
+
+Робот
+time sec:25.475 iter:30 vertices:580 edges:2008
+root_set_size:100 increment:17
+n_synonyms:100
+categories:1041 total_steps_while_categories_removing:8264
+
+Интернационализация
+time sec:9.967 iter:27 vertices:201 edges:522
+root_set_size:100 increment:17
+n_synonyms:100
+categories:489 total_steps_while_categories_removing:5102
+
+Луноход 1 1
+time sec:0.775 iter:2 vertices:21 edges:2
+root_set_size:1 increment:1
+n_synonyms:100
+categories:162 total_steps_while_categories_removing:633
+       
+Луноход 1 2
+time sec:1.423 iter:36 vertices:23 edges:6
+root_set_size:1 increment:2
+n_synonyms:100
+categories:173 total_steps_while_categories_removing:734
+
+Луноход 2 1
+time sec:0.997 iter:12 vertices:51 edges:10
+root_set_size:2 increment:1
+n_synonyms:100
+categories:253 total_steps_while_categories_removing:1163
+
+Луноход 2 2
+time sec:0.714 iter:30 vertices:54 edges:19
+root_set_size:2 increment:2
+n_synonyms:100
+categories:277 total_steps_while_categories_removing:1308
+
+Димексид 1 1
+time sec:1.793 iter:34 vertices:35 edges:5
+root_set_size:1 increment:1
+n_synonyms:100
+categories:110 total_steps_while_categories_removing:562
+
+Джемини 1 1
+time sec:0.777 iter:20 vertices:9 edges:3
+root_set_size:1 increment:1
+n_synonyms:100
+categories:65 total_steps_while_categories_removing:205

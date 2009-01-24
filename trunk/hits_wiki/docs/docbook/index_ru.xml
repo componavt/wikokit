@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"/usr/share/sgml/docbook/xml-dtd-4.3/docbookx.dtd" [
+<!--!ENTITY tested_on SYSTEM "tested_on.sgm">
+<!ENTITY requirements SYSTEM "requirements.sgm">
+<!ENTITY installation SYSTEM "installation.sgm">
+<!ENTITY used_libs SYSTEM "used_libs.sgm"-->
+]>
+
+<article lang="en">
+
+  <articleinfo>
+      <title>Synarcher (in Russian)</title>
+      <author>
+          <firstname>Andrew</firstname><surname>Krizhanovsky</surname>
+          <email>aka at iias.spb.ru</email>
+      </author>
+  </articleinfo>
+
+  
+  <sect1>
+    <title>Introduction</title>
+    
+    <para>The program searches synonyms (and related words) in a set of texts of special structure (like Wikipedia and other wiki-resources).</para>
+  </sect1>
+
+  <sect1>
+    <title>Requirements</title>
+    
+    <para>Running the Synarcher requires:</para>
+
+        <itemizedlist>
+        <listitem><para>Local installation of Wikipedia. It requires MySQL, Apache, MediaWiki, and files with Wikipedia data (see more at www !!!todo!!!).</para></listitem>
+        </itemizedlist>
+        
+        <itemizedlist>
+        <listitem>
+        <para>MySQL Connector/J</para>
+        </listitem>
+        </itemizedlist>
+        
+        <itemizedlist>
+        <listitem>
+          <para>Jave Runtime Environment (JRE) with version number of at least 1.3.0 You can get the latest JRE from <ulink url="http://java.sun.com/j2se/1.5.0/download.jsp">http://java.sun.com/j2se/1.5.0/download.jsp</ulink></para>
+        </listitem>
+        </itemizedlist>
+        </sect1>
+
+  <sect1>
+    <title>Installation</title>
+    
+    <para><emphasis>Удачливый установит систему с первой попытки, внимательный со второй... Настырный установит.</emphasis></para>
+    
+    <itemizedlist>
+        <listitem>
+          <para>Install Apache, MySQL &amp; PHP. See <ulink url="http://www.linuxhelp.net/guides/lamp/">Linux, Apache, MySQL &amp; PHP (LAMP) Setup Guide</ulink>, or <ulink url="http://www.aselabs.com/articles.php?id=38">here</ulink>, or <ulink url="http://blazonry.com/scripting/install_apache.php">here</ulink>. There are <ulink url="http://mpcon.org/apacheguide/index.php">the guide for Windows users</ulink> and <ulink url="http://www.puremango.co.uk/cm_wamp_97.php">one more guide</ulink>.</para>
+      </listitem>
+      
+      <listitem>
+        <para>Install <ulink url="http://www.mediawiki.org">MediaWiki</ulink>. Read <ulink url="http://meta.wikimedia.org/wiki/How_to_become_a_MediaWiki_hacker">Hacking MediaWiki</ulink> (getting started).</para>
+      </listitem>
+      
+      <listitem>
+        <para>Download Wikipedia dumps from Wikimedia Foundation project: <ulink url="http://download.wikimedia.org/"/></para>
+      </listitem>
+      
+    
+    </itemizedlist>
+  </sect1>    
+  
+  <sect1>
+    <title>Troubleshooting</title>
+
+      <para>The problems which I have encoutered during installation of Wikipedia and some hints to speed-up the program are listed here.</para>
+
+    <itemizedlist>
+      <listitem>
+	   <para>Russian Wikipedia datafiles don't treated properly by "MediaWiki 1.5 alpha 1". Successful versions are: MediaWiki 1.4.0 or 1.4.7.</para>
+      </listitem>
+      <listitem>
+	   <para>Russian table (20050309_cur_table.sql) presented in UTF-8. Set browser to UTF-8 (e.g. in Mozilla Firefox: View -> Character Encoding -> More Encodings -> Unicode -> Unicode (UTF-8))</para>
+      </listitem>
+      <listitem>
+        <para>Use settings from /usr/share/mysql/my-innodb-heavy-4G.cnf to speed-up MySQL</para>
+      </listitem>
+    </itemizedlist>
+  </sect1>
+  
+  <sect1>
+    <title>Screenshots</title>
+
+    <figure><title>Synonym search parameters</title>
+      <graphic fileref="figures/03a_crop_search_parameters_robot.png"/>
+    </figure>
+    
+    <figure><title>The found synonyms (for the word Robot) presented as the table and graph (English Wikipedia)</title>
+      <graphic fileref="figures/04_results_table_and_graph_robot.png"/>
+    </figure>
+    
+    <figure><title>The found synonyms in the Russian Wikipedia for the word Орбита (Orbita)</title>
+      <graphic fileref="figures/04_results_table_and_graph_orbita.png"/>
+    </figure>
+  </sect1>
+  
+  <appendix>
+    <title>GPL Licence</title>
+    <para>Version 2 of the GPL or any later version.</para>
+  </appendix>
+
+</article>

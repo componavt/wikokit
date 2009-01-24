@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="windows-1251"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN"
+"/usr/share/sgml/docbook/xml-dtd-4.3/docbookx.dtd" []>
+
+<article lang="en">
+
+  <articleinfo>
+      <title>Related Terms Search System Using Wiki Resources (<ulink url="./project_synarcher_ru.html">In Russian</ulink>)</title>
+      <author>
+          <firstname>Andrew</firstname><surname>Krizhanovsky</surname>
+          <email>aka at iias.spb.ru</email>
+      </author>
+      
+      <copyright>
+      <year>2005, 2006</year>
+      <holder>
+      St. Petersburg Institute for Informatics and Automation RAS, <ulink url="http://www.spiiras.nw.ru">www.spiiras.nw.ru</ulink>
+      </holder>
+      </copyright>
+      
+  </articleinfo>
+
+  
+  <sect1>
+    <title>Introduction</title>
+
+    <para>The system searches synonyms (and related words) in a set of texts of special structure (like Wikipedia and other wiki-resources). Results of search are presented in the form of graph. Nodes are the names of articles, links show the relations between words (they corresponds to hyperlinks between articles). The program searches synonyms automatically for the requested word, after that user rates/unrates synonyms (in the found synonym set) in interactive mode using graph or table.</para>
+    
+    <para>Synarcher can access to local or remote MySQL database with Wikipedia data. The synonym search parameters and list of rated synonyms (for every sought word) are stored on local user computer.</para>
+    
+  </sect1>
+  
+  <sect1>
+    <title>Algorithms</title>
+    
+      <para>The Kleinberg algorithm (based on concept of Authority and Hub pages) was adapted to search similar words in Wikipedia.</para>
+  </sect1>
+  
+  <sect1>
+    <title>Requirements. Client-server architecture.</title>
+
+    <para>Running the Synarcher on client side requires a Jave Runtime Environment (JRE) with version number of at least 1.3.0. The Synarcher was tested on Windows XP and Mandrake Linux.</para>
+    
+    <para>The server should provide the access to Wikipedia resources via MySQL, Apache, and MediaWiki software. The currently public available Wikipedia servers (e.g. http://en.wikipedia.org) could not be used directly because the current version of Synarcher requires an intensive computations. So we have used the locally installed version of Wikipedia.</para>
+    
+    <para>The Synarcher works with Wikipedia data in MySQL format (the format suitable for MediaWiki - the wiki engine running Wikipedia and other projects). Though we have tested Synarcher with English and Russian Wikipedia data only, we suppose that it is possible to run Synarcher (search of related terms) with other wiki resources used Mediawiki. See <ulink url="http://meta.wikimedia.org/wiki/Sites_using_MediaWiki">Sites using MediaWiki</ulink>.</para>
+    
+  </sect1>
+  
+  <sect1>
+    <title>Using Graph</title>
+
+    <para>The graph presentation of synonym search results based on TouchGraph WikiBrowser V1.02 (<ulink url="http://www.touchgraph.com/">www.touchgraph.com</ulink>). The user is presented with a split view, with a conventional html browser on the left side of the screen, and a graph of a local region of the wiki on the right.</para>
+
+    <para>The link graph consists on nodes whose labels correspond to hypertext pages, connected by directed edges corresponding to hyperlinks between the pages. User can expand node (draw node neighbours), hide node's neighbours, or rate node as synonym for the requested word.</para>
+  </sect1>
+  
+  <sect1>
+    <title>Todo</title>
+
+      <para><emphasis>Current work.</emphasis> The format of Wikipedia database was changed. It is need to rewrite the low-level of Synarcher in order to access the new version of Wikipedia.</para>
+    
+      <para>The work under development is to estimate the quality of synonym search. The developed model proposes to evaluate the found set of synonyms against the WordNet and Moby thesauri.</para>
+      
+      <para><emphasis>The future work</emphasis> is to use the classical hierarchical algorithm (i) to improve a search and (ii) to cluster the result set of words which relate to different problem areas. It is possible for wiki resources, since every article has one or more assigned category types (e.g. the article "QNX" has the following categories in Wikipedia: Unix, Computing platforms, Embedded operating systems).</para>
+      
+  </sect1>
+  
+  <sect1>
+    <title>Application</title>
+        <para>Automatic extension of user request (topic of text mining) by related terms (e.g. synonyms) is the possible application of the system. </para>
+  </sect1>
+
+</article>
