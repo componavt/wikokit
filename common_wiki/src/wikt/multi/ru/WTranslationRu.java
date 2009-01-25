@@ -102,8 +102,7 @@ public class WTranslationRu {
 
             // 4. extracts lang code "|en=", e.g. wikified translation [[angel]]
 
-            // return WTranslation 
-            // WTranslation or null if the translation text block was not found.
+            // return WTranslation or null if the translation text block was not found.
             WTranslation wt = WTranslation.parseOneTranslationBox(wikt_lang, page_title, trans_block);
             if(null != wt) {
                 wt_list.add(wt);

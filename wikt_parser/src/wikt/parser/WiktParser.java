@@ -106,7 +106,6 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
             
             //page_title = pt3[cur_doc]; // "Will_o'_the_wisp"; // "Momotarō";    // id=68417
             if(DEBUG) {
-                System.out.println("");
                 System.out.print(" "+cur_doc+": "+page_title + " ");
             }
             
