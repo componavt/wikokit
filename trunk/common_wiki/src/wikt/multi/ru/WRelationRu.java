@@ -35,7 +35,7 @@ public class WRelationRu {
 
     /** Gets position after ==== Синонимы ==== */
     private final static Pattern ptrn_synonymy = Pattern.compile(
-            "===?\\s*Синонимы\\s*===?\\s*\\n");
+            "===?=?\\s*Синонимы\\s*===?=?\\s*\\n");
             
     /** Parses text (related to the POS), creates and fill array of
      * semantic relations (WRelation).
@@ -61,10 +61,47 @@ public class WRelationRu {
         if(0 == text_source_sb.length()) {
             return NULL_MAP_RELATION_WRELATION_ARRAY;
         }
+        
+        Map<Relation, WRelation[]> m_rel = new HashMap<Relation, WRelation[]>();
+        String text = text_source_sb.toString();
 
-        // 1. gets position in text after ====Синонимы====
-        String text_source = text_source_sb.toString();
-        Matcher m = ptrn_synonymy.matcher(text_source_sb);
+        // synonymy
+        WRelation[] r_syn = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_synonymy, Relation.synonymy);
+        if(0 < r_syn.length) {
+            m_rel.put(Relation.synonymy, r_syn);
+        }
+        
+        // antonymy
+        // todo
+        // ...
+
+
+        return m_rel;
+    }
+
+    /** Parses text (related to the POS), creates and fill array of
+     * semantic relations only for one kind of semantic relations (e.g. synonyms)
+     * defined by the variable 'relation'.
+     * @param wikt_lang     language of Wiktionary
+     * @param page_title    word which are described in this article 'text'
+     * @param lang_section  language of this section of an article
+     * @param text          text of wiki article related to one POS
+     * @param relation_header_pattern regular expression to find the header of semantic relation
+     * @param relation type of parsing relation, e.g. synonymy
+     * @return
+     */
+    public static WRelation[] parseOneKindOfRelation (
+                    LanguageType wikt_lang,
+                    String page_title,
+                    String text,
+                    Pattern  relation_header_pattern,
+                    Relation relation)
+    {
+        // ===Семантические свойства===
+        // ====Синонимы====                         // ==== Level IV. Relation ====
+
+        // 1. gets position in text after e.g. ====Синонимы====
+        Matcher m = relation_header_pattern.matcher(text);
         boolean b_next = m.find();
 
         if(!b_next) {   // there is no section !
@@ -72,14 +109,21 @@ public class WRelationRu {
             //            page_title + "' has no section ====Синонимы====.");
         }
 
-        // todo parse one kind of relation
-        // Relation relation_type
+        // 1. get text till (1) next header or (2) empty line or (3) line which is not start from #
         // ...
-
-        // 2. antonymy
-
-
+        
+        // 2. split into lines: "\n#"
+        // ...
+        
+        // ====Гипонимы====
+        //# [[бубенчик]]
+        //# -
+        //# [[колокольчик средний]]
+        
+        // 3. split list of synonyms into wikiwords (or wiki phrases?)
+        // ...
+        
         return null;
     }
-
+    
 }
