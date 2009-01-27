@@ -30,7 +30,7 @@ public class WRelation {
     private WikiText[] phrases;
 
     // In some Wiktionaries (e.g. Russian): 
-    // near synonyms are split by comma, far synonyms are split by semicolon
+    // "near synonyms" are split by comma, far synonyms are split by semicolon
     // private int[] phrases_number_which_end_by_semicolon
     // todo
     
@@ -38,6 +38,10 @@ public class WRelation {
     //private final static WRelation[] NULL_WRELATION_ARRAY = new WRelation[0];
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
 
+    /** Gets array of relations (word or phrases). */
+    public WikiText[] get() {
+        return phrases;
+    }
 
     /** Parses text (related to the semantic relations, e.g. synonymy),
      * creates and fills array of related words (WRelation) for each meaning of a word.

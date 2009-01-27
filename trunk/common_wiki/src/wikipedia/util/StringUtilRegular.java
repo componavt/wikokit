@@ -207,6 +207,33 @@ public class StringUtilRegular {
         return -1;
     }
 
+    /** Gets position of 2nd, 3rd or 4th level header ===? Header ===? */
+    private final static Pattern ptrn_empty_line = Pattern.compile(
+            "^\\s*$", Pattern.MULTILINE);
+
+    /** Gets position of first header in text from start_pos,
+     * e.g. 2nd, 3rd or 4th level header ==?=? Header ==?=?,
+     * If header is absent then return -1.
+     */
+    public static int getFirstEmptyLinePosition(int start_pos, String text) {
+        Matcher m = null;
+
+        if(start_pos < 0 || start_pos > text.length()-1) {
+            return -1;
+        }
+
+        if(0 == start_pos) {
+            m = ptrn_empty_line.matcher(text);
+        } else {
+            m = ptrn_empty_line.matcher(text.substring(start_pos));
+        }
+
+        if (m.find()){
+            return start_pos + m.start();
+        }
+        return -1;
+    }
+
     /** Gets text from 'start_pos' position till position of first header
      * in text, or till the end of text (if header is absent).
      */
@@ -221,8 +248,55 @@ public class StringUtilRegular {
         if(-1 == header_pos) { // header is absent may be
             return text.substring(start_pos);
         }
-
+        
         return text.substring(start_pos, header_pos);
     }
+    
+    /** Gets text from 'start_pos' position till the nearest position:
+     * (1) of first header text, or (2) of first empty line,
+     * (3) or till the end of text (if header and empty lines are absent).
+     */
+    public static String getTextTillFirstHeaderOrEmptyLine(int start_pos, String text) {
 
+        if(start_pos < 0 || start_pos > text.length()-1) {
+            return NULL_STRING;
+        }
+
+        int header_pos     = getFirstHeaderPosition   (start_pos, text);
+        int empty_line_pos = getFirstEmptyLinePosition(start_pos, text);
+
+        if(-1 == header_pos && -1 == empty_line_pos) { // header is absent may be
+            return text.substring(start_pos);
+        }
+        
+        // select min(header_pos, empty_line_pos) but != -1
+
+        if(-1 == header_pos) { // header is absent may be
+            return substringAndchopLastNewline(text, start_pos, empty_line_pos);
+        }
+
+        if(-1 == empty_line_pos) { // empty lines are absent may be
+            return substringAndchopLastNewline(text, start_pos, header_pos);
+        }
+
+        if(empty_line_pos < header_pos) {
+            return substringAndchopLastNewline(text, start_pos, empty_line_pos);
+        }
+        return substringAndchopLastNewline(text, start_pos, header_pos);
+    }
+    
+    /** Gets text substring from 'start_pos' position till 'end_pos' position
+     * and chop last symbol if it is newline \n symbol.
+     */
+    public static String substringAndchopLastNewline(String text, int start_pos, int end_pos) {
+
+        if(start_pos < 0 || start_pos > end_pos || end_pos > text.length()-1) {
+            return NULL_STRING;
+        }
+        
+        if(end_pos > 0 && '\n' == text.charAt(end_pos-1)) {
+               end_pos --;
+        }
+        return text.substring(start_pos, end_pos);
+    }
 }

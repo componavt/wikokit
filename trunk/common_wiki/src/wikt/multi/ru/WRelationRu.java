@@ -13,6 +13,8 @@ import wikt.word.WRelation;
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;
 
+import wikipedia.util.StringUtilRegular;
+
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -22,13 +24,16 @@ import java.util.regex.Matcher;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.List;
+import java.util.ArrayList;
+
 /** Semantic relations  of Russian Wiktionary word.
  *
  * See http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей#Оформление семантических отношений
  */
 public class WRelationRu {
 
-    //private final static WRelation[] NULL_WRELATION_ARRAY = new WRelation[0];
+    private final static WRelation[] NULL_WRELATION_ARRAY = new WRelation[0];
     //Map<Relation, WRelation[]> m = new HashMap<Relation, WRelation[]>>();
 
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
@@ -36,6 +41,10 @@ public class WRelationRu {
     /** Gets position after ==== Синонимы ==== */
     private final static Pattern ptrn_synonymy = Pattern.compile(
             "===?=?\\s*Синонимы\\s*===?=?\\s*\\n");
+
+    /** Gets position after ==== Синонимы ==== */
+    private final static Pattern ptrn_line_start = Pattern.compile(
+            "^#\\s*");
             
     /** Parses text (related to the POS), creates and fill array of
      * semantic relations (WRelation).
@@ -88,7 +97,7 @@ public class WRelationRu {
      * @param text          text of wiki article related to one POS
      * @param relation_header_pattern regular expression to find the header of semantic relation
      * @param relation type of parsing relation, e.g. synonymy
-     * @return
+     * @return an empty array if relations are absent
      */
     public static WRelation[] parseOneKindOfRelation (
                     LanguageType wikt_lang,
@@ -104,26 +113,63 @@ public class WRelationRu {
         Matcher m = relation_header_pattern.matcher(text);
         boolean b_next = m.find();
 
-        if(!b_next) {   // there is no section !
+        if(!b_next) {   // the section is absent!
             //System.out.println("Warning in WRelationRu.parse(): The article '"+
             //            page_title + "' has no section ====Синонимы====.");
+            return NULL_WRELATION_ARRAY;
         }
 
-        // 1. get text till (1) next header or (2) empty line or (3) line which is not start from #
-        // ...
+        // 1. get text till (1) next header or (2) empty line
+        String relation_text = StringUtilRegular.getTextTillFirstHeaderOrEmptyLine(m.end(), text);
+        if(0 == relation_text.length()) {
+            return NULL_WRELATION_ARRAY;
+        }
+
+        List<WRelation> wr_list = new ArrayList<WRelation>();
         
-        // 2. split into lines: "\n#"
-        // ...
+        // 2. split into lines: "\n" (not "\n#")
+        // parse lines till the line which is not started from #
+        String[] lines = relation_text.split("\n");
+        for(String s : lines) {
+            Matcher m_start = ptrn_line_start.matcher(s);
+            if(m_start.find()) {
+                s = m_start.replaceFirst("");
+
+                // 3. split list of synonyms into wikiwords (or wiki phrases?)
+                WRelation wr = parseOneLine (page_title, s);
+
+                if(null != wr) {
+                    wr_list.add(wr);
+                }
+
+            } else break;   // this line starts not from "#". Stop.
+        }
         
         // ====Гипонимы====
         //# [[бубенчик]]
         //# -
         //# [[колокольчик средний]]
         
-        // 3. split list of synonyms into wikiwords (or wiki phrases?)
-        // ...
-        
-        return null;
+        return (WRelation[])wr_list.toArray(NULL_WRELATION_ARRAY);
     }
     
+    /** Parses one line of a semantic relations,
+     * extracts a list of words (wikified words), creates and fills WRelation.
+     *
+     * @param page_title    word which are described in this article 'text'
+     * @param text          semantic relation text line (e.g. list of synonyms)
+     * @return WRelation or null if the list of semantic relations is empty or equal "-".
+     */
+    public static WRelation parseOneLine(
+                    String page_title,
+                    String text)
+    {
+        // 1. check emptyness: regular expression "-"
+        // ..
+
+        // 2. split by semicolon and comma
+        // ..
+
+        return null;
+    }
 }

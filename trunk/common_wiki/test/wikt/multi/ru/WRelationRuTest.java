@@ -15,10 +15,11 @@ import wikt.util.POSText;
 import wikt.word.WRelation;
 
 import wikt.constant.POS;
+import wikt.util.WikiText;
 
 public class WRelationRuTest {
 
-    public static String samolyot_text;
+    public static String samolyot_text, kolokolchik_text;
 
     public WRelationRuTest() {
     }
@@ -58,55 +59,84 @@ public class WRelationRuTest {
                         "# [[авиапушка]], [[фюзеляж]], [[крыло]], [[двигатель]], [[винт]]\n" +
                         "\n" +
                         "=== Родственные слова ===\n";
-        /**
-         todo kolokolchik
-===Произношение===
-====Значение====
-====Синонимы====
-# [[кандия]] (церк.)
-# -
-# -
-
-====Антонимы====
-# -
-# -
-# -
-
-====Гиперонимы====
-# [[звонок]], [[колокол]]
-# [[инструмент]]
-# [[цветок]], [[растение]]
-
-====Гипонимы====
-# [[бубенчик]]
-# -
-# [[колокольчик средний]]
-
-==== Холонимы ====
-# [[самозвон]]
-# -
-# -
-
-==== Меронимы ====
-# [[язычок]]
-# [[пластинка]], [[ящик]]
-# -
-
-===Родственные слова===
-         */
         
+        
+        kolokolchik_text =   "===Произношение===\n" +
+                        "====Значение====\n" +
+                        "====Синонимы====\n" +
+                        "# [[кандия]] (церк.)\n" +
+                        "# -\n" +
+                        "# -\n" +
+                        "\n" +
+                        "====Антонимы====\n" +
+                        "# -\n" +
+                        "# -\n" +
+                        "# -\n" +
+                        "\n" +
+                        "====Гиперонимы====\n" +
+                        "# [[звонок]], [[колокол]]\n" +
+                        "# [[инструмент]]\n" +
+                        "# [[цветок]], [[растение]]\n" +
+                        "\n" +
+                        "====Гипонимы====\n" +
+                        "# [[бубенчик]]\n" +
+                        "# -\n" +
+                        "# [[колокольчик средний]]\n" +
+                        "\n" +
+                        "==== Холонимы ====\n" +
+                        "# [[самозвон]]\n" +
+                        "# -\n" +
+                        "# -\n" +
+                        "\n" +
+                        "==== Меронимы ====\n" +
+                        "# [[язычок]]\n" +
+                        "# [[пластинка]], [[ящик]]\n" +
+                        "# -\n" +
+                        "\n" +
+                        "===Родственные слова===\n";
     }
 
     @After
     public void tearDown() {
     }
 
-    /**
-     * Test of parse method, of class WRelationRu.
-     */
     @Test
-    public void testParse() {
-        System.out.println("parse_samolyot");
+    public void testParse_3_line_synonyms() {
+        System.out.println("parse_kolokolchik_3_line_synonyms");
+
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "колокольчик";
+        POSText pt = new POSText(POS.noun, kolokolchik_text);
+
+        Map<Relation, WRelation[]> result = WRelationRu.parse(wikt_lang, page_title, pt);
+
+        assertTrue(result.size() > 0);
+        assertTrue(result.containsKey(Relation.synonymy));
+
+        // ====Синонимы====
+        // # [[кандия]] (церк.)
+        // # -
+        // # -
+        WRelation[] r_syn = result.get(Relation.synonymy);
+        assertEquals(3, r_syn.length);
+        WikiText[] synonym_row_0 = r_syn[0].get();
+        assertEquals(1, synonym_row_0.length);
+        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("кандия (церк.)"));
+        assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("кандия"));
+
+        assertFalse(result.containsKey(Relation.antonymy));
+
+                    WRelation[] r_ant = result.get(Relation.antonymy);
+                    assertEquals(null, r_ant);
+
+        // hyperonymy ..
+        // todo
+        // ...
+    }
+
+    @Test
+    public void testParse_one_line_synonyms() {
+        System.out.println("parse_samolyot_one_line_synonyms");
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         String page_title = "самолёт";
