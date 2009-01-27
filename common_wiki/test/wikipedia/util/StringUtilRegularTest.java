@@ -119,4 +119,26 @@ public class StringUtilRegularTest extends TestCase {
         String s2 = StringUtilRegular.getTextTillFirstHeaderPosition(37 + 5, text);
         assertTrue(s2.equalsIgnoreCase("nks ==\n[[Category:Musical instruments]]\n"));
     }
+
+    public void testGetTextTillFirstHeaderOrEmptyLine() {
+        System.out.println("getTextTillFirstHeaderOrEmptyLine");
+
+        // test 1: the empty line before header
+        String kolokolchik_synonyms =   "# [[кандия]] (церк.)\n" +
+                                        "# -\n" +
+                                        "# -";
+        String addon  =                 "\n\n" +
+                                        "====Антонимы====\n";
+        String s = kolokolchik_synonyms.concat(addon);
+        String s1 = StringUtilRegular.getTextTillFirstHeaderOrEmptyLine(0, s);
+        assertTrue(s1.equalsIgnoreCase(kolokolchik_synonyms));
+        
+        
+        // test 2: the empty line is absent, there is only header
+        addon  =                        "\n" +
+                                        "====Антонимы====\n";
+        s = kolokolchik_synonyms.concat(addon);
+        String s2 = StringUtilRegular.getTextTillFirstHeaderOrEmptyLine(0, s);
+        assertTrue(s2.equalsIgnoreCase(kolokolchik_synonyms));
+    }
 }
