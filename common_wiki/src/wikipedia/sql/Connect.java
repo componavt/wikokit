@@ -39,7 +39,7 @@ public class Connect {
     
     // Simple English Wikipedia
     // use: connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS);
-    public final static String WP_SIMPLE_DB   = "simplewiki20080214?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String WP_SIMPLE_DB   = "simplewiki20090119?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String WP_SIMPLE_DB = "simplewiki20070909?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String WP_SIMPLE_DB = "simplewiki?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
     //public final static String WP_SIMPLE_DB = "simplewiki?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
