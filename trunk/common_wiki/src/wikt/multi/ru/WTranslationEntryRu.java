@@ -11,23 +11,11 @@ import wikt.word.WTranslationEntry;
 import wikipedia.language.LanguageType;
 import wikt.util.WikiText;
 
-import java.util.regex.Pattern;
-//import java.util.regex.Matcher;
-
-import java.util.List;
-import java.util.ArrayList;
-
 /** One line in the Translation section, i.e. a translation to one language,
  * e.g. "|en=[[airplane]], [[plane]], [[aircraft]]".
  */
 public class WTranslationEntryRu {
-
-    private final static WikiText[] NULL_WIKITEXT_ARRAY = new WikiText[0];
-
-    /** Splits by comma and semicolon */
-    private final static Pattern ptrn_comma_semicolon = Pattern.compile(
-            "[,;]+");
-            
+    
     /** Parses one entry (one line) of a translation box,
      * extracts a language and a list of translations (wikified words) for this language,
      * creates and fills WTranslationEntry.
@@ -61,21 +49,13 @@ public class WTranslationEntryRu {
         if(0 == trans_text.length()) {
             return null;
         }
-        
-        String[] ww = ptrn_comma_semicolon.split(trans_text);   // split by comma and semicolon
-        
-        List<WikiText> wt_list = new ArrayList<WikiText>();
-        for(String w : ww) {
-            WikiText wt = WikiText.create(page_title, w.trim());
-            if(null != wt) {
-                wt_list.add(wt);
-            }
-        }
 
-        if(0 == wt_list.size()) {
+        WikiText[] wt = WikiText.create(page_title, trans_text);
+        if(0 == wt.length) {
             return null;
         }
-        return new WTranslationEntry(lang, (WikiText[])wt_list.toArray(NULL_WIKITEXT_ARRAY));
+        
+        return new WTranslationEntry(lang, wt);
     }
 
 }

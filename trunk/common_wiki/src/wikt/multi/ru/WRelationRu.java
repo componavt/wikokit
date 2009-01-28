@@ -12,6 +12,7 @@ import wikt.word.WRelation;
 
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;
+import wikt.util.WikiText;
 
 import wikipedia.util.StringUtilRegular;
 
@@ -39,12 +40,17 @@ public class WRelationRu {
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
 
     /** Gets position after ==== Синонимы ==== */
-    private final static Pattern ptrn_synonymy = Pattern.compile(
-            "===?=?\\s*Синонимы\\s*===?=?\\s*\\n");
-
-    /** Gets position after ==== Синонимы ==== */
+    private final static Pattern ptrn_synonymy  = Pattern.compile("===?=?\\s*Синонимы\\s*===?=?\\s*\\n");
+    private final static Pattern ptrn_antonymy  = Pattern.compile("===?=?\\s*Антонимы\\s*===?=?\\s*\\n");
+    private final static Pattern ptrn_hypernymy = Pattern.compile("===?=?\\s*Гиперонимы\\s*===?=?\\s*\\n");
+    
+    /** The begin of any list of semantic relations: "# " */
     private final static Pattern ptrn_line_start = Pattern.compile(
             "^#\\s*");
+
+    /** The empty line can contain a dash and spaces. */
+    private final static Pattern ptrn_dashes = Pattern.compile(
+            "^[-‐‒–—―]?\\s*$");
             
     /** Parses text (related to the POS), creates and fill array of
      * semantic relations (WRelation).
@@ -74,16 +80,19 @@ public class WRelationRu {
         Map<Relation, WRelation[]> m_rel = new HashMap<Relation, WRelation[]>();
         String text = text_source_sb.toString();
 
+        WRelation[] r;
+
         // synonymy
-        WRelation[] r_syn = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_synonymy, Relation.synonymy);
-        if(0 < r_syn.length) {
-            m_rel.put(Relation.synonymy, r_syn);
-        }
+        r = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_synonymy, Relation.synonymy);
+        if(0 < r.length) m_rel.put(Relation.synonymy, r);
         
         // antonymy
-        // todo
-        // ...
+        r = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_antonymy, Relation.antonymy);
+        if(0 < r.length) m_rel.put(Relation.antonymy, r);
 
+        // hypernymy
+        r = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_hypernymy, Relation.hypernymy);
+        if(0 < r.length) m_rel.put(Relation.hypernymy, r);
 
         return m_rel;
     }
@@ -130,25 +139,26 @@ public class WRelationRu {
         // 2. split into lines: "\n" (not "\n#")
         // parse lines till the line which is not started from #
         String[] lines = relation_text.split("\n");
+        boolean b_relations = false;
         for(String s : lines) {
             Matcher m_start = ptrn_line_start.matcher(s);
             if(m_start.find()) {
-                s = m_start.replaceFirst("");
+                s = m_start.replaceFirst("");   // remove "# "
 
                 // 3. split list of synonyms into wikiwords (or wiki phrases?)
                 WRelation wr = parseOneLine (page_title, s);
 
-                if(null != wr) {
-                    wr_list.add(wr);
-                }
+                //if(null != wr)
+                wr_list.add(wr);    // null means that relation = "# -", i.e. absent for this meaning
+                
+                if(null != wr) b_relations = true;
 
             } else break;   // this line starts not from "#". Stop.
         }
         
-        // ====Гипонимы====
-        //# [[бубенчик]]
-        //# -
-        //# [[колокольчик средний]]
+        if(!b_relations) {  // only empty lists of relations
+            return NULL_WRELATION_ARRAY;
+        }
         
         return (WRelation[])wr_list.toArray(NULL_WRELATION_ARRAY);
     }
@@ -165,11 +175,16 @@ public class WRelationRu {
                     String text)
     {
         // 1. check emptyness: regular expression "-"
-        // ..
+        if(0 == text.length() && text.charAt(0) == '-') return null; // let's speed-up a little
+
+        Matcher m = ptrn_dashes.matcher(text);
+        if(m.find()) return null;
+
 
         // 2. split by semicolon and comma
-        // ..
-
-        return null;
+        WikiText[] wt = WikiText.create(page_title, text);
+        if(0 == wt.length) return null;
+        
+        return new WRelation(wt);
     }
 }

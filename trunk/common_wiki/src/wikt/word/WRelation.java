@@ -38,6 +38,10 @@ public class WRelation {
     //private final static WRelation[] NULL_WRELATION_ARRAY = new WRelation[0];
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
 
+    public WRelation(WikiText[] _phrases) {
+        phrases = _phrases;
+    }
+
     /** Gets array of relations (word or phrases). */
     public WikiText[] get() {
         return phrases;
