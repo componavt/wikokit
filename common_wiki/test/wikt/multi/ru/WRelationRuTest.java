@@ -103,6 +103,7 @@ public class WRelationRuTest {
     @Test
     public void testParse_3_line_synonyms() {
         System.out.println("parse_kolokolchik_3_line_synonyms");
+        WRelation[] r;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         String page_title = "колокольчик";
@@ -117,47 +118,73 @@ public class WRelationRuTest {
         // # [[кандия]] (церк.)
         // # -
         // # -
-        WRelation[] r_syn = result.get(Relation.synonymy);
-        assertEquals(3, r_syn.length);
-        WikiText[] synonym_row_0 = r_syn[0].get();
+        r = result.get(Relation.synonymy);
+        assertEquals(3, r.length);
+        WikiText[] synonym_row_0 = r[0].get();
         assertEquals(1, synonym_row_0.length);
         assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("кандия (церк.)"));
         assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("кандия"));
 
         assertFalse(result.containsKey(Relation.antonymy));
+        r = result.get(Relation.antonymy);
+        assertEquals(null, r);
 
-                    WRelation[] r_ant = result.get(Relation.antonymy);
-                    assertEquals(null, r_ant);
+        // ====Гиперонимы====   hypernymy
+        // # [[звонок]], [[колокол]]
+        // # [[инструмент]]
+        // # [[цветок]], [[растение]]
+        assertTrue(result.containsKey(Relation.hypernymy));
+        r = result.get(Relation.hypernymy);
+        assertEquals(3, r.length);
 
-        // hyperonymy ..
-        // todo
-        // ...
+        WikiText[] hypernymy_row_1 = r[1].get();
+        assertEquals(1, hypernymy_row_1.length);
+        assertTrue(hypernymy_row_1[0].getVisibleText().equalsIgnoreCase("инструмент"));
+
+        // ====Гипонимы====
+        //# [[бубенчик]]
+        //# -
+        //# [[колокольчик средний]]
     }
 
     @Test
     public void testParse_one_line_synonyms() {
         System.out.println("parse_samolyot_one_line_synonyms");
+        WRelation[] r;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         String page_title = "самолёт";
         POSText pt = new POSText(POS.noun, samolyot_text);
 
         Map<Relation, WRelation[]> result = WRelationRu.parse(wikt_lang, page_title, pt);
-
         assertTrue(result.size() > 0);
+
+        // ==== Синонимы ====
+        // # [[аэроплан]], [[воздушный лайнер]]
         assertTrue(result.containsKey(Relation.synonymy));
+        r = result.get(Relation.synonymy);
+        assertEquals(1, r.length);
 
-        WRelation[] r_syn = result.get(Relation.synonymy);
-        assertEquals(2, r_syn.length);
-
+        WikiText[] synonym_row_0 = r[0].get();
+        assertEquals(2, synonym_row_0.length);
+        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("аэроплан"));
+        assertTrue(synonym_row_0[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("воздушный лайнер"));
+        
+        // ==== Антонимы ====
+        // # -
         assertFalse(result.containsKey(Relation.antonymy));
 
-                    WRelation[] r_ant = result.get(Relation.antonymy);
-                    assertEquals(null, r_ant);
+        // ==== Гиперонимы ====
+        // # [[авиация]], [[транспорт]]
+        assertTrue(result.containsKey(Relation.hypernymy));
+        r = result.get(Relation.hypernymy);
+        assertEquals(1, r.length);
+
+        WikiText[] hypernymy_row_0 = r[0].get();
+        assertEquals(2, hypernymy_row_0.length);
+        assertTrue(hypernymy_row_0[0].getVisibleText().equalsIgnoreCase("авиация"));
+        assertTrue(hypernymy_row_0[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("транспорт"));
         
-        // hyperonymy ..
-        // todo
-        // ...
     }
 
     /**
