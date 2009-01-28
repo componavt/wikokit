@@ -125,6 +125,7 @@ public class WRelationRuTest {
         assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("кандия (церк.)"));
         assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("кандия"));
 
+        // antonymy
         assertFalse(result.containsKey(Relation.antonymy));
         r = result.get(Relation.antonymy);
         assertEquals(null, r);
@@ -141,10 +142,32 @@ public class WRelationRuTest {
         assertEquals(1, hypernymy_row_1.length);
         assertTrue(hypernymy_row_1[0].getVisibleText().equalsIgnoreCase("инструмент"));
 
-        // ====Гипонимы====
+        // ====Гипонимы==== hyponymy
         //# [[бубенчик]]
         //# -
         //# [[колокольчик средний]]
+        r = result.get(Relation.hyponymy);
+        assertEquals(3, r.length);
+        assertEquals(null, r[1]);
+        
+        // ==== Холонимы ==== holonymy
+        // # [[самозвон]]
+        // # -
+        // # -
+        r = result.get(Relation.holonymy);
+        assertEquals(3, r.length);
+        assertEquals(1, r[0].get().length);
+
+        // ==== Меронимы ==== meronymy
+        // # [[язычок]]
+        // # [[пластинка]], [[ящик]]
+        // # -
+        r = result.get(Relation.meronymy);
+        assertEquals(3, r.length);
+        WikiText[] meronymy_row_1 = r[1].get();
+        assertEquals(2, meronymy_row_1.length);
+        assertTrue(meronymy_row_1[0].getVisibleText().equalsIgnoreCase("пластинка"));
+        assertTrue(meronymy_row_1[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("ящик"));
     }
 
     @Test
@@ -184,7 +207,27 @@ public class WRelationRuTest {
         assertEquals(2, hypernymy_row_0.length);
         assertTrue(hypernymy_row_0[0].getVisibleText().equalsIgnoreCase("авиация"));
         assertTrue(hypernymy_row_0[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("транспорт"));
-        
+
+        // ==== Гипонимы ====
+        // # [[штурмовик]], [[истребитель]], [[экранолёт]], [[экраноплан]], [[моноплан]], [[биплан]], [[триплан]], [[многоплан]], [[аэробус]]
+        assertTrue(result.containsKey(Relation.hyponymy));
+        r = result.get(Relation.hyponymy);
+        assertEquals(1, r.length);
+
+        WikiText[] hyponymy_row_0 = r[0].get();
+        assertEquals(9, hyponymy_row_0.length);
+        assertTrue(hyponymy_row_0[0].getVisibleText().equalsIgnoreCase("штурмовик"));
+        assertTrue(hyponymy_row_0[8].getWikiWords()[0].getWordLink().equalsIgnoreCase("аэробус"));
+
+        // ==== Холонимы ====   holonymy
+        // # [[эскадрилья]]
+        r = result.get(Relation.holonymy);
+        assertEquals(1, r.length);
+        assertEquals(1, r[0].get().length);
+
+        WikiText[] holonymy_row_0 = r[0].get();
+        assertTrue(holonymy_row_0[0].getVisibleText().equalsIgnoreCase("эскадрилья"));
+        assertTrue(holonymy_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("эскадрилья"));
     }
 
     /**
