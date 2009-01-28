@@ -51,8 +51,8 @@ public class WikiTextTest {
     }
 
     @Test
-    public void testCreate_brackets() {
-        System.out.println("create_brackets");
+    public void testCreate_comma_in_brackets() {
+        System.out.println("create_comma_in_brackets");
 
         String page_title = "test";
         String text = "[[little]] [[bell]] (very little, little), [[handbell]], [[doorbell]]";
