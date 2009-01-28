@@ -1,5 +1,5 @@
 #labels Phase-Implementation,JUnit
-#Unit test requirements.
+Unit test requirements.
 
 = Introduction =
 
