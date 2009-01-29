@@ -5,7 +5,7 @@ There is a problem with import of categorylinks.sql
 
 There are differences between:
 
-||MediaWiki table || categorylinks table ||
+||MediaWiki table || categorylinks table (.sql file) ||
 ||cl_from int(10) unsigned || `cl_from` int(8) unsigned NOT NULL default '0' ||
 ||cl_sortkey varbinary(70) || `cl_sortkey` varchar(255) binary ||
 
