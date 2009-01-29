@@ -2,15 +2,15 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
-USE `mydb`;
+-- CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci ;
+-- USE `mydb`;
 
 -- -----------------------------------------------------
--- Table `mydb`.`page`
+-- Table `page`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`part_of_speech` ;
+DROP TABLE IF EXISTS `part_of_speech` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`part_of_speech` (
+CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `pos_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`pos_id`) ,
@@ -21,11 +21,11 @@ COMMENT = 'The language of the word in question. \n';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`part_of_speech`
+-- Table `part_of_speech`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`part_of_speech` ;
+DROP TABLE IF EXISTS `part_of_speech` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`part_of_speech` (
+CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `pos_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`pos_id`) ,
@@ -36,11 +36,11 @@ COMMENT = 'The language of the word in question. \n';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`lang_code`
+-- Table `lang_code`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`part_of_speech` ;
+DROP TABLE IF EXISTS `part_of_speech` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`part_of_speech` (
+CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `pos_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`pos_id`) ,
@@ -51,11 +51,11 @@ COMMENT = 'The language of the word in question. \n';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`lang_term`
+-- Table `lang_term`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`part_of_speech` ;
+DROP TABLE IF EXISTS `part_of_speech` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`part_of_speech` (
+CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `pos_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`pos_id`) ,
@@ -66,11 +66,11 @@ COMMENT = 'The language of the word in question. \n';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`pos_term`
+-- Table `pos_term`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`inflection` ;
+DROP TABLE IF EXISTS `inflection` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`inflection` (
+CREATE  TABLE IF NOT EXISTS `inflection` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The list of inflextions automatically gathered from wiki-texts.' ,
   `freq` INT(11) NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
   `inflected_form` VARCHAR(255) NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
@@ -81,11 +81,11 @@ COMMENT = 'terms found in wiki-texts';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`wikipedia`
+-- Table `wikipedia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`part_of_speech` ;
+DROP TABLE IF EXISTS `part_of_speech` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`part_of_speech` (
+CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `pos_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`pos_id`) ,
@@ -96,11 +96,11 @@ COMMENT = 'The language of the word in question. \n';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`page_wikipedia`
+-- Table `page_wikipedia`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`synonyms` ;
+DROP TABLE IF EXISTS `synonyms` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
+CREATE  TABLE IF NOT EXISTS `synonyms` (
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   PRIMARY KEY (`meaning_id`, `page_id`) ,
@@ -108,12 +108,12 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
   INDEX fk_synonyms_page (`page_id` ASC) ,
   CONSTRAINT `fk_synonyms_meaning`
     FOREIGN KEY (`meaning_id` )
-    REFERENCES `mydb`.`meaning` (`id` )
+    REFERENCES `meaning` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_synonyms_page`
     FOREIGN KEY (`page_id` )
-    REFERENCES `mydb`.`page` (`page_id` )
+    REFERENCES `page` (`page_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
@@ -122,11 +122,11 @@ COMMENT = 'pages which contain the term';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`inflection`
+-- Table `inflection`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`inflection` ;
+DROP TABLE IF EXISTS `inflection` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`inflection` (
+CREATE  TABLE IF NOT EXISTS `inflection` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The list of inflextions automatically gathered from wiki-texts.' ,
   `freq` INT(11) NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
   `inflected_form` VARCHAR(255) NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
@@ -137,11 +137,11 @@ COMMENT = 'terms found in wiki-texts';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`page_inflection`
+-- Table `page_inflection`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`synonyms` ;
+DROP TABLE IF EXISTS `synonyms` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
+CREATE  TABLE IF NOT EXISTS `synonyms` (
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   PRIMARY KEY (`meaning_id`, `page_id`) ,
@@ -149,12 +149,12 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
   INDEX fk_synonyms_page (`page_id` ASC) ,
   CONSTRAINT `fk_synonyms_meaning`
     FOREIGN KEY (`meaning_id` )
-    REFERENCES `mydb`.`meaning` (`id` )
+    REFERENCES `meaning` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_synonyms_page`
     FOREIGN KEY (`page_id` )
-    REFERENCES `mydb`.`page` (`page_id` )
+    REFERENCES `page` (`page_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
@@ -163,11 +163,11 @@ COMMENT = 'pages which contain the term';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`meaning`
+-- Table `meaning`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`synonyms` ;
+DROP TABLE IF EXISTS `synonyms` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
+CREATE  TABLE IF NOT EXISTS `synonyms` (
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   PRIMARY KEY (`meaning_id`, `page_id`) ,
@@ -175,12 +175,12 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
   INDEX fk_synonyms_page (`page_id` ASC) ,
   CONSTRAINT `fk_synonyms_meaning`
     FOREIGN KEY (`meaning_id` )
-    REFERENCES `mydb`.`meaning` (`id` )
+    REFERENCES `meaning` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_synonyms_page`
     FOREIGN KEY (`page_id` )
-    REFERENCES `mydb`.`page` (`page_id` )
+    REFERENCES `page` (`page_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
@@ -189,11 +189,11 @@ COMMENT = 'pages which contain the term';
 
 
 -- -----------------------------------------------------
--- Table `mydb`.`synonyms`
+-- Table `synonyms`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`synonyms` ;
+DROP TABLE IF EXISTS `synonyms` ;
 
-CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
+CREATE  TABLE IF NOT EXISTS `synonyms` (
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   PRIMARY KEY (`meaning_id`, `page_id`) ,
@@ -201,12 +201,12 @@ CREATE  TABLE IF NOT EXISTS `mydb`.`synonyms` (
   INDEX fk_synonyms_page (`page_id` ASC) ,
   CONSTRAINT `fk_synonyms_meaning`
     FOREIGN KEY (`meaning_id` )
-    REFERENCES `mydb`.`meaning` (`id` )
+    REFERENCES `meaning` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_synonyms_page`
     FOREIGN KEY (`page_id` )
-    REFERENCES `mydb`.`page` (`page_id` )
+    REFERENCES `page` (`page_id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
