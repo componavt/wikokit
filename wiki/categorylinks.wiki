@@ -18,3 +18,6 @@ mysql>
 = Epilog =
 
 This solution is interesting for you, only if the second step is failed.
+
+= See also ==
+* [http://synarcher.sourceforge.net/#Troubleshooting How to solve problems with import of pagelinks table].
