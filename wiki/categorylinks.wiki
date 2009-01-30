@@ -20,4 +20,4 @@ mysql>
 This solution is interesting for you, only if the second step is failed.
 
 = See also ==
-  * [http://synarcher.sourceforge.net How to solve problems with import of pagelinks table]. Search the line: ALTER TABLE pagelinks
+  * [http://synarcher.sourceforge.net How to solve problems with import of revision.sql]. Search the line: ALTER TABLE revision 
