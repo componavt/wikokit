@@ -1,3 +1,9 @@
+page table
+
++ boolean table.is_in_wiktionary;
+    /** true, if the page_title exists in Wiktionary
+     * false, if the page_title exists only as a [[|wikified word]] */
+
 meaning table
 
 Meaning includes:
