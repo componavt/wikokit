@@ -2,8 +2,6 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
-SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8;
 
 -- -----------------------------------------------------
 -- Table `page`
@@ -11,55 +9,13 @@ SET character_set_client = utf8;
 DROP TABLE IF EXISTS `page` ;
 
 CREATE  TABLE IF NOT EXISTS `page` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Number of wikified words (out-bound links).\n' ,
   `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   `word_count` INT(6) UNSIGNED NOT NULL COMMENT 'number of words in the article' ,
+  `wiki_link_count` INT(6) NOT NULL COMMENT 'number of wikified words (out-bound links) in the article' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX page_title (`page_title` ASC) )
-ENGINE = InnoDB
-COMMENT = 'titles of wiki articles, entry names';
-
-
--- -----------------------------------------------------
--- Table `lang_code`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `lang_code` ;
-
-CREATE  TABLE IF NOT EXISTS `lang_code` (
-  `lang_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
-  `code` VARCHAR(12) NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
-  PRIMARY KEY (`lang_id`) ,
-  UNIQUE INDEX name (`name` ASC) ,
-  UNIQUE INDEX code (`code` ASC) )
-ENGINE = InnoDB
-COMMENT = 'The language of the word in question. \n';
-
-
--- -----------------------------------------------------
--- Table `lang_term`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `lang_term` ;
-
-CREATE  TABLE IF NOT EXISTS `lang_term` (
-  `page_id` INT(10) UNSIGNED NOT NULL ,
-  `lang_id` SMALLINT UNSIGNED NOT NULL ,
-  `hyphenation` VARCHAR(255) NULL ,
-  `audio_files` VARCHAR(255) NULL ,
-  PRIMARY KEY (`page_id`, `lang_id`) ,
-  INDEX fk_lang_term_page (`page_id` ASC) ,
-  INDEX fk_lang_term_lang_code (`lang_id` ASC) ,
-  CONSTRAINT `fk_lang_term_page`
-    FOREIGN KEY (`page_id` )
-    REFERENCES `page` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_lang_term_lang_code`
-    FOREIGN KEY (`lang_id` )
-    REFERENCES `lang_code` (`lang_id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
+  UNIQUE INDEX `page_title` (`page_title` ASC) )
+ENGINE = MyISAM
 COMMENT = 'titles of wiki articles, entry names';
 
 
@@ -69,35 +25,60 @@ COMMENT = 'titles of wiki articles, entry names';
 DROP TABLE IF EXISTS `part_of_speech` ;
 
 CREATE  TABLE IF NOT EXISTS `part_of_speech` (
-  `pos_id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
-  PRIMARY KEY (`pos_id`) ,
-  UNIQUE INDEX name (`name` ASC) )
-ENGINE = InnoDB
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name` (`name` ASC) )
+ENGINE = MyISAM
 COMMENT = 'The language of the word in question. \n';
 
 
 -- -----------------------------------------------------
--- Table `pos_term`
+-- Table `lang`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `pos_term` ;
+DROP TABLE IF EXISTS `lang` ;
 
-CREATE  TABLE IF NOT EXISTS `pos_term` (
+CREATE  TABLE IF NOT EXISTS `lang` (
+  `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
+  `code` VARCHAR(12) NOT NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name` (`name` ASC) ,
+  UNIQUE INDEX `code` (`code` ASC) )
+ENGINE = MyISAM
+COMMENT = 'The language of the word in question. \n';
+
+
+-- -----------------------------------------------------
+-- Table `lang_pos`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `lang_pos` ;
+
+CREATE  TABLE IF NOT EXISTS `lang_pos` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `pos_id` TINYINT UNSIGNED NOT NULL ,
+  `etymology_n` TINYINT UNSIGNED NOT NULL ,
   `lemma` VARCHAR(255) NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
-  PRIMARY KEY (`page_id`, `lang_id`, `pos_id`) ,
-  INDEX fk_pos_term_lang_term (`page_id` ASC, `lang_id` ASC) ,
-  INDEX fk_pos_term_part_of_speech (`pos_id` ASC) ,
-  CONSTRAINT `fk_pos_term_lang_term`
-    FOREIGN KEY (`page_id` , `lang_id` )
-    REFERENCES `lang_term` (`page_id` , `lang_id` )
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_pos` (`pos_id` ASC) ,
+  INDEX `fk_lang` (`lang_id` ASC) ,
+  INDEX `fk_page` (`page_id` ASC) ,
+  UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) ,
+  CONSTRAINT `fk_pos`
+    FOREIGN KEY (`pos_id` )
+    REFERENCES `part_of_speech` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_pos_term_part_of_speech`
-    FOREIGN KEY (`pos_id` )
-    REFERENCES `part_of_speech` (`pos_id` )
+  CONSTRAINT `fk_lang`
+    FOREIGN KEY (`lang_id` )
+    REFERENCES `lang` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_page`
+    FOREIGN KEY (`page_id` )
+    REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -113,8 +94,8 @@ CREATE  TABLE IF NOT EXISTS `wikipedia` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX page_title (`page_title` ASC) )
-ENGINE = InnoDB
+  UNIQUE INDEX `page_title` (`page_title` ASC) )
+ENGINE = MyISAM
 COMMENT = 'Titles of related Wikipedia articles.';
 
 
@@ -126,9 +107,9 @@ DROP TABLE IF EXISTS `page_wikipedia` ;
 CREATE  TABLE IF NOT EXISTS `page_wikipedia` (
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `wikipedia_id` INT(10) UNSIGNED NOT NULL ,
-  PRIMARY KEY (`wikipedia_id`, `page_id`) ,
-  INDEX fk_page_wikipedia_wikipedia (`wikipedia_id` ASC) ,
-  INDEX fk_page_wikipedia_page (`page_id` ASC) ,
+  INDEX `fk_page_wikipedia_wikipedia` (`wikipedia_id` ASC) ,
+  INDEX `fk_page_wikipedia_page` (`page_id` ASC) ,
+  UNIQUE INDEX `page_wikipedia_unique` (`page_id` ASC, `wikipedia_id` ASC) ,
   CONSTRAINT `fk_page_wikipedia_wikipedia`
     FOREIGN KEY (`wikipedia_id` )
     REFERENCES `wikipedia` (`id` )
@@ -139,7 +120,7 @@ CREATE  TABLE IF NOT EXISTS `page_wikipedia` (
     REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = MyISAM
 COMMENT = 'pages which contain the term';
 
 
@@ -153,8 +134,8 @@ CREATE  TABLE IF NOT EXISTS `inflection` (
   `freq` INT(11) NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
   `inflected_form` VARCHAR(255) NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX inflected_form (`inflected_form` ASC) )
-ENGINE = InnoDB
+  UNIQUE INDEX `inflected_form` (`inflected_form` ASC) )
+ENGINE = MyISAM
 COMMENT = 'terms found in wiki-texts';
 
 
@@ -164,24 +145,53 @@ COMMENT = 'terms found in wiki-texts';
 DROP TABLE IF EXISTS `page_inflection` ;
 
 CREATE  TABLE IF NOT EXISTS `page_inflection` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `inflection_id` INT(10) UNSIGNED NOT NULL ,
   `term_freq` INT(6) UNSIGNED NOT NULL COMMENT 'term frequency in the document' ,
-  PRIMARY KEY (`inflection_id`, `page_id`) ,
-  INDEX fk_page_inflection_inflection (`inflection_id` ASC) ,
-  INDEX fk_page_inflection_page (`page_id` ASC) ,
-  CONSTRAINT `fk_page_inflection_inflection`
+  INDEX `fk_inflection` (`inflection_id` ASC) ,
+  INDEX `fk_page` (`page_id` ASC) ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `page_inflection_id_id` (`page_id` ASC, `inflection_id` ASC) ,
+  CONSTRAINT `fk_inflection`
     FOREIGN KEY (`inflection_id` )
     REFERENCES `inflection` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_page_inflection_page`
+  CONSTRAINT `fk_page`
     FOREIGN KEY (`page_id` )
     REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = MyISAM
 COMMENT = 'pages which contain the term';
+
+
+-- -----------------------------------------------------
+-- Table `lang_term_disabled`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `lang_term_disabled` ;
+
+CREATE  TABLE IF NOT EXISTS `lang_term_disabled` (
+  `page_id` INT(10) UNSIGNED NOT NULL ,
+  `lang_id` SMALLINT UNSIGNED NOT NULL ,
+  `hyphenation` VARCHAR(255) NULL ,
+  `audio_files` VARCHAR(255) NULL ,
+  PRIMARY KEY (`page_id`, `lang_id`) )
+ENGINE = MyISAM
+COMMENT = 'titles of wiki articles, entry names';
+
+
+-- -----------------------------------------------------
+-- Table `wiki_text`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `wiki_text` ;
+
+CREATE  TABLE IF NOT EXISTS `wiki_text` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT ,
+  `text` VARCHAR(1023) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
@@ -190,50 +200,81 @@ COMMENT = 'pages which contain the term';
 DROP TABLE IF EXISTS `meaning` ;
 
 CREATE  TABLE IF NOT EXISTS `meaning` (
-  `page_id` INT(10) UNSIGNED NOT NULL ,
-  `lang_id` SMALLINT UNSIGNED NOT NULL ,
-  `pos_id` TINYINT UNSIGNED NOT NULL ,
-  `meaning_number` TINYINT UNSIGNED NOT NULL ,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `lang_pos_id` INT(10) UNSIGNED NOT NULL ,
+  `meaning_n` TINYINT UNSIGNED NOT NULL ,
   `definition` VARCHAR(255) NULL ,
-  PRIMARY KEY (`meaning_number`, `page_id`, `lang_id`, `pos_id`) ,
-  INDEX fk_meaning_pos_term (`page_id` ASC, `lang_id` ASC, `pos_id` ASC) ,
-  CONSTRAINT `fk_meaning_pos_term`
-    FOREIGN KEY (`page_id` , `lang_id` , `pos_id` )
-    REFERENCES `pos_term` (`page_id` , `lang_id` , `pos_id` )
+  `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_lang_pos_id` (`lang_pos_id` ASC) ,
+  INDEX `fk_meaning_wiki_text` (`wiki_text_id` ASC) ,
+  CONSTRAINT `fk_lang_pos_id`
+    FOREIGN KEY (`lang_pos_id` )
+    REFERENCES `lang_pos` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_meaning_wiki_text`
+    FOREIGN KEY (`wiki_text_id` )
+    REFERENCES `wiki_text` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = MyISAM
 COMMENT = 'Meaning includes: definition; sem. rel., translations.';
 
 
 -- -----------------------------------------------------
--- Table `synonyms`
+-- Table `relation`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `synonyms` ;
+DROP TABLE IF EXISTS `relation` ;
 
-CREATE  TABLE IF NOT EXISTS `synonyms` (
-  `page_id` INT(10) UNSIGNED NOT NULL ,
-  `m_page_id` INT(10) UNSIGNED NOT NULL ,
-  `m_lang_id` SMALLINT UNSIGNED NOT NULL ,
-  `m_pos_id` TINYINT UNSIGNED NOT NULL ,
-  `m_number` TINYINT UNSIGNED NOT NULL ,
-  PRIMARY KEY (`page_id`, `m_number`, `m_page_id`, `m_lang_id`, `m_pos_id`) ,
-  INDEX fk_synonyms_page (`page_id` ASC) ,
-  INDEX fk_synonyms_meaning (`m_number` ASC, `m_page_id` ASC, `m_lang_id` ASC, `m_pos_id` ASC) ,
-  CONSTRAINT `fk_synonyms_page`
+CREATE  TABLE IF NOT EXISTS `relation` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `meaning_id` INT(10) UNSIGNED NOT NULL ,
+  `page_id` TINYINT UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_meaning` (`meaning_id` ASC) ,
+  INDEX `fk_page` (`page_id` ASC) ,
+  UNIQUE INDEX `page_relation_unique` (`page_id` ASC, `meaning_id` ASC) ,
+  CONSTRAINT `fk_meaning`
+    FOREIGN KEY (`meaning_id` )
+    REFERENCES `meaning` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_page`
     FOREIGN KEY (`page_id` )
     REFERENCES `page` (`id` )
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_synonyms_meaning`
-    FOREIGN KEY (`m_number` , `m_page_id` , `m_lang_id` , `m_pos_id` )
-    REFERENCES `meaning` (`meaning_number` , `page_id` , `lang_id` , `pos_id` )
-    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
+ENGINE = MyISAM
 COMMENT = 'pages which contain the term';
 
-SET character_set_client = @saved_cs_client;
+
+-- -----------------------------------------------------
+-- Table `wiki_text_words`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `wiki_text_words` ;
+
+CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT ,
+  `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
+  `page_inflection_id` INT(10) UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `fk_words_inflection` (`page_inflection_id` ASC) ,
+  INDEX `fk_words_text` (`wiki_text_id` ASC) ,
+  CONSTRAINT `fk_words_inflection`
+    FOREIGN KEY (`page_inflection_id` )
+    REFERENCES `page_inflection` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_words_text`
+    FOREIGN KEY (`wiki_text_id` )
+    REFERENCES `wiki_text` (`id` )
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = MyISAM
+COMMENT = 'Binds wiki_text with wiki words (inflection)';
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
