@@ -13,6 +13,7 @@ CREATE  TABLE IF NOT EXISTS `page` (
   `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   `word_count` INT(6) UNSIGNED NOT NULL COMMENT 'number of words in the article' ,
   `wiki_link_count` INT(6) NOT NULL COMMENT 'number of wikified words (out-bound links) in the article' ,
+  `is_in_wiktionary` BOOLEAN NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
 ENGINE = MyISAM
