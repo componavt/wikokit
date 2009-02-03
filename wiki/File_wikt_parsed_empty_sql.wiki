@@ -1,3 +1,4 @@
+#labels Phase-Deploy,MySQL
 How to create, edit and load empty Wiktionary parsed database into MySQL.
 
 = Details =
