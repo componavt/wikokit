@@ -31,13 +31,21 @@ public class TPage {
      * false, if the page_title exists only as a [[|wikified word]] */
     private boolean is_in_wiktionary;
     
-    public void TPage() {
+    public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {
+        id              = _id;
+        page_title      = _page_title;
+        word_count      = _word_count;
+        wiki_link_count = _wiki_link_count;
+        is_in_wiktionary = _is_in_wiktionary;
+    }
+
+    /*public void init() {
         id              = 0;
         page_title      = "";
         word_count      = 0;
         wiki_link_count = 0;
         is_in_wiktionary = false;
-    }
+    }*/
     
     /** Gets unique ID from database */
     public int getID() {
@@ -77,7 +85,7 @@ public class TPage {
         try
         {
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (");
+            str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
             
             String safe_title = StringUtil.spaceToUnderscore(
                                 StringUtil.escapeChars(page_title));
@@ -110,41 +118,39 @@ public class TPage {
 
         Statement   s = null;
         ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        TPage       tp = null;
 
         // page_title = _page_title
-        /*
+        
         try {
-            s = conn.createStatement ();
+            s = connect.conn.createStatement ();
 
-        Statement s = connect.conn.createStatement ();
-        page_title = PageTableBase.convertToSafeStringEncodeToDB (connect, page_title);
-
-        StringBuffer str_sql = new StringBuffer();
-
-
-            //str_sql.append("SELECT rp_id, related_titles FROM related_page WHERE page_id=");
-            str_sql.append("SELECT related_titles FROM related_page WHERE page_id=");
-            str_sql.append(page_id);
+            String safe_title = StringUtil.spaceToUnderscore(
+                                StringUtil.escapeChars(page_title));
+                                
+            str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title=\"");
+            str_sql.append(safe_title);
             s.executeQuery (str_sql.toString());
+            str_sql.append("\"");
 
             rs = s.getResultSet ();
             if (rs.next ())
             {
-                is_in_table_related_page = true;
-                //rp_id  = rs.getInt("rp_id");
-                related_titles = rs.getString("related_titles");
-                //result.page_id = page_id;
-            } else {
-                is_in_table_related_page = false;
+                int id              = rs.getInt("id");
+                int word_count      = rs.getInt("word_count");
+                int wiki_link_count = rs.getInt("wiki_link_count");
+                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+                
+                tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (sql_idf RelatedPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }*/
-
-        return null;
+        }
+        return tp;
     }
 
     /** Deletes row from the table 'page' by the page_title.
@@ -153,7 +159,7 @@ public class TPage {
      *
      * @param  page_title  title of Wiktionary article
      */
-    public static void delete (java.sql.Connection conn,String page_title) {
+    public static void delete (Connect connect,String page_title) {
 
         Statement   s = null;
         ResultSet   rs= null;
