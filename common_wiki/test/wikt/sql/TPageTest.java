@@ -33,6 +33,7 @@ public class TPageTest {
 
     @After
     public void tearDown() {
+        ruwikt_parsed_conn.Close();
     }
 
     /**
@@ -64,6 +65,12 @@ public class TPageTest {
         assertEquals(p.getWordCount(),      word_count);
         assertEquals(p.getWikiLinkCount(),  wiki_link_count);
         assertEquals(p.isInWiktionary(),    is_in_wiktionary);
+        
+        // delete temporary DB record
+        TPage.delete(conn, page_title);
+        
+        p = TPage.get(conn, page_title);
+        assertTrue(p == null);
     }
 
     

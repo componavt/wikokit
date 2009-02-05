@@ -6,9 +6,9 @@
 
 package wikt.word;
 
-import wikt.constant.POS;
+//import wikt.constant.POS;
 import wikt.util.LangText;
-import wikt.util.POSText;
+//import wikt.util.POSText;
 import wikipedia.language.LanguageType;
 import wikt.multi.ru.WLanguageRu;
 

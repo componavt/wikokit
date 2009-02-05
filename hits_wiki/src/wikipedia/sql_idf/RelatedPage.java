@@ -1,7 +1,7 @@
 /*
  * RelatedPage.java
  *
- * Copyright (c) 2005-2008 Andrew Krizhanovsky /aka at mail.iias.spb.su/
+ * Copyright (c) 2005-2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 

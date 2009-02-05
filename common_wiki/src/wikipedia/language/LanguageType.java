@@ -25,12 +25,22 @@ public class LanguageType {
     private static Map<String, LanguageType> code2lang = new HashMap<String, LanguageType>();
     
     private LanguageType(String code,String name) { 
-        this.code = code; 
-        this.name = name; 
+        this.code = code;
+        this.name = name;
         code2name.put(code, name);
         code2lang.put(code, this);
     }
-    
+
+    /** Gets language code. */
+    public String getCode() {
+        return code;
+    }
+
+    /** Gets language name. */
+    public String getName() {
+        return code;
+    }
+
     /** Checks weather exists the language code 'code'. */
     public static boolean has(String code) {
         return code2name.containsKey(code);
@@ -51,7 +61,12 @@ public class LanguageType {
          }    
         throw new NullPointerException("Null LanguageType");
     }
-    
+
+    /** Counts number of languages. */
+    public static int size() {
+
+        return code2name.size();
+    }
     
     // English Wiktionary specific codes
     public static final LanguageType translingual = new LanguageType("translingual", "Translingual");// translingual, INTernational
