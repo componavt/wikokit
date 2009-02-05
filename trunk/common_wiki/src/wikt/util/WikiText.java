@@ -1,6 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* WikiText.java - wiki text is a text, where some words are wikified.
+ *
+ * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under GNU Public License.
  */
 
 package wikt.util;

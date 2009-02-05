@@ -23,6 +23,9 @@ import java.util.ArrayList;
  * 
  * http://ru.wiktionary.org/wiki/Категория:Викисловарь:Шаблоны:Языки
  * http://en.wiktionary.org/wiki/Category:Language_templates
+ *
+ * todo: create LanguageTypeRu with list of all languages in Russian
+ * ...
  */
 public class WLanguageRu {
     

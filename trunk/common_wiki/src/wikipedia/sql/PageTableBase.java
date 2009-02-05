@@ -1,7 +1,7 @@
 /*
  * PageTableBase.java - SQL operations with the table page in wikipedia
  *
- * Copyright (c) 2005-2007 Andrew Krizhanovsky /aka at mail.iias.spb.su/
+ * Copyright (c) 2005-2007 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 

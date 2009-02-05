@@ -1,4 +1,4 @@
-/* TPage.java - SQL operations with the table 'page' in Wiktionary parsed database.
+/* TLang.java - SQL operations with the table 'page' in Wiktionary parsed database.
  *
  * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
@@ -6,101 +6,115 @@
 
 package wikt.sql;
 
+import wikipedia.language.LanguageType;
 import wikipedia.sql.Connect;
-import wikipedia.util.StringUtil;
+
+import java.util.Map;
+import java.util.HashMap;
 
 import java.sql.*;
 
-/** The operations with the table 'page' in MySQL wiktionary_parsed database. */
-public class TPage {
+
+/** Table lang contains list of languages: name and ID. */
+public class TLang {
 
     /** Unique page identifier. */
     private int id;
 
-    /** Title of the wiki page, word. */
-    private String page_title;
+    /** Languages of wiki: code and name, e.g. 'ru' and 'Russian'. */
+    private LanguageType lang;
 
-    /** Size of the page in words. */
-    private int word_count;
-    
-    /** Size of the page as a number of wikified words at the page
-     * (number of out-links). */
-    private int wiki_link_count;
+    private static Map<Integer, LanguageType> id2lang         = new HashMap<Integer, LanguageType>();
+    private static Map<String, Integer>          lang_code2id = new HashMap<String, Integer>();
 
-    /** true, if the page_title exists in Wiktionary
-     * false, if the page_title exists only as a [[|wikified word]] */
-    private boolean is_in_wiktionary;
-    
-    public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {
-        id              = _id;
-        page_title      = _page_title;
-        word_count      = _word_count;
-        wiki_link_count = _wiki_link_count;
-        is_in_wiktionary = _is_in_wiktionary;
-    }
+    /** Gets LanguageType by language code */
+    /*public static LanguageType get(String code) throws NullPointerException
+    {
 
-    /*public void init() {
-        id              = 0;
-        page_title      = "";
-        word_count      = 0;
-        wiki_link_count = 0;
-        is_in_wiktionary = false;
+        if(code2lang.containsKey(code)) {
+            return code2lang.get(code);
+         }
+        throw new NullPointerException("Null LanguageType");
     }*/
-    
-    /** Gets unique ID from database */
+
+    /** Gets unique ID of the language. */
     public int getID() {
         return id;
     }
-
-    /** Gets number of words, size of the page in words. */
-    public int getWordCount() {
-        return word_count;
-    }
-
-    /** Gets number of out-links, size of the page as a number of wikified words. */
-    public int getWikiLinkCount() {
-        return wiki_link_count;
-    }
-
-    /** Returns true, if the page_title exists in Wiktionary. */
-    public boolean isInWiktionary() {
-        return is_in_wiktionary;
+    
+    /** Gets language. */
+    public LanguageType getLanguage() {
+        return lang;
     }
     
+    /** Initialize */
+    public static void init() {
 
-    /** Inserts record into the table 'page'.
+        fillLocalMaps();
+        
+        //int db_current_size = count();
+        //if (db_current_size < LanguageType.size()) {
+        fillDB();
+        // }
+        {
+            int db_current_size = count();
+            assert(db_current_size == LanguageType.size());
+        }
+        
+    }
+
+    /** Load data from a LanguageType class, sorts,
+     * and fills local maps 'id2lang' and 'lang_code2id'. */
+    public static void fillLocalMaps() {
+        
+    }
+    
+    /** Fills database table 'lang' by data from LanguageType class. */
+    public static void fillDB() {
+        
+        // DELETE FROM lang;
+        // ALTER TABLE lang AUTO_INCREMENT = 0;
+
+    }
+
+    
+
+
+    /** Counts number of records (languages) in the table. */
+    public static int count() {
+        
+
+        return 0;
+    }
+    
+    /** Inserts record into the table 'lang'.
      *
-     * INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES ("apple",1,2,TRUE);
+     * INSERT INTO lang (code,name) VALUES ("ru","Russian");
      *
-     * @param page_title   title of wiki page
-     * @param word_count   size of the page in words
-     * @param wiki_link_count number of wikified words at the page
-     * @param is_in_wiktionary true, if the page_title exists in Wiktionary
+     * @param code  two (or more) letter language code, e.g. 'en', 'ru'
+     * @param name  language name, e.g. 'English', 'Russian'
      */
-    public static void insert (Connect connect,String page_title,int word_count,int wiki_link_count,
-            boolean is_in_wiktionary) {
+    public static void insert (Connect connect,String code,String name) {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         try
         {
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
-            
-            String safe_title = StringUtil.spaceToUnderscore(
-                                StringUtil.escapeChars(page_title));
-            str_sql.append(safe_title);
-            str_sql.append("\",");
-            str_sql.append(word_count);
-            str_sql.append(",");
-            str_sql.append(wiki_link_count);
-            str_sql.append(",");
-            str_sql.append(is_in_wiktionary);
-            str_sql.append(")");
+            str_sql.append("INSERT INTO lang (code,name) VALUES (\"");
+
+            //String safe_title = StringUtil.spaceToUnderscore(
+            //                    StringUtil.escapeChars(page_title));
+            //str_sql.append(safe_title);
+
+            str_sql.append(code);
+            str_sql.append("\",\"");
+            str_sql.append(name);
+            str_sql.append("\")");
 
             s.executeUpdate (str_sql.toString());
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TLang.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -114,19 +128,19 @@ public class TPage {
      * @param  page_title  title of Wiktionary article
      * @return null if page_title is absent
      */
-    public static TPage get (Connect connect,String page_title) {
+    public static TLang get (Connect connect,String lang_code) {
 
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        TPage       tp = null;
+        TLang       tp = null;
         
-        try {
+        /*try {
             s = connect.conn.createStatement ();
 
             String safe_title = StringUtil.spaceToUnderscore(
                                 StringUtil.escapeChars(page_title));
-                                
+
             str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
@@ -139,7 +153,7 @@ public class TPage {
                 int word_count      = rs.getInt("word_count");
                 int wiki_link_count = rs.getInt("wiki_link_count");
                 boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
-                
+
                 tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
             }
         } catch(SQLException ex) {
@@ -147,22 +161,22 @@ public class TPage {
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }
+        }*/
         return tp;
     }
 
-    /** Deletes row from the table 'page' by the page_title.
+    /** Deletes row from the table 'lang' by the language code.
      *
-     *  DELETE FROM page WHERE page_title="apple";
+     *  DELETE FROM lang WHERE code="ru";
      *
      * @param  page_title  title of Wiktionary article
      */
-    public static void delete (Connect connect,String page_title) {
+    public static void delete (Connect connect,String lang_code) {
 
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        try {
+        /*try {
             s = connect.conn.createStatement ();
 
             String safe_title = StringUtil.spaceToUnderscore(
@@ -171,7 +185,7 @@ public class TPage {
             str_sql.append("DELETE FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
-            
+
             s.execute (str_sql.toString());
 
         } catch(SQLException ex) {
@@ -179,7 +193,7 @@ public class TPage {
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }
+        }*/
     }
-    
+
 }
