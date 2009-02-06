@@ -36,9 +36,6 @@ public class TPageTest {
         ruwikt_parsed_conn.Close();
     }
 
-    /**
-     * Test of insert method, of class TPage.
-     */
     @Test
     public void testInsert() {
         System.out.println("insert_ru");
