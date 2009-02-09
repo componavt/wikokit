@@ -38,7 +38,7 @@ public class LanguageType {
 
     /** Gets language name. */
     public String getName() {
-        return code;
+        return name;
     }
 
     /** Checks weather exists the language code 'code'. */

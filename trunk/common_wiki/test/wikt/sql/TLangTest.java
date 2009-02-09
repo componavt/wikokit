@@ -46,11 +46,9 @@ public class TLangTest {
     }
 
     @Test
-    public void testFillDB() {
+    public void testRecreateTable() {
         System.out.println("fillDB");
-        TLang.fillDB();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        TLang.recreateTable(ruwikt_parsed_conn);
     }
 
     @Test
@@ -59,30 +57,37 @@ public class TLangTest {
 
         Connect conn = ruwikt_parsed_conn;
         String code = "ru";
+        String lang_name = ruwikt_parsed_conn.enc.EncodeFromJava("Русский");
         String name = ruwikt_parsed_conn.enc.EncodeFromJava("test_lang_Русский");
-        
+
         TLang p = null;
-        p = TLang.get(conn, code);
-        if(null == p) {
-            TLang.delete(conn, code);
+
+        // blockhead test
+        p = TLang.get(conn, null);
+        assertTrue(null == p);
+
+        LanguageType lt = LanguageType.ru;
+        p = TLang.get(conn, lt);
+        if(null != p) {
+            TLang.delete(conn, lt);
         }
 
         TLang.insert(conn, code, name);
-        p = TLang.get(conn, code);
+        p = TLang.get(conn, lt);
         
         assertTrue(p != null);
 
         int id = p.getID();
         assertTrue(id > 0);
 
-        LanguageType lt = p.getLanguage();
+        lt = p.getLanguage();
         assertTrue(lt.getCode().equalsIgnoreCase(code));
-        assertTrue(lt.getName().equalsIgnoreCase(name));
+        assertTrue(lt.getName().equalsIgnoreCase(lang_name));
         
         // delete temporary DB record
-        TLang.delete(conn, code);
+        TLang.delete(conn, lt);
 
-        p = TLang.get(conn, code);
+        p = TLang.get(conn, lt);
         assertTrue(p == null);
     }
 
