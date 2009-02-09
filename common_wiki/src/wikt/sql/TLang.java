@@ -27,6 +27,11 @@ public class TLang {
     private static Map<Integer, LanguageType> id2lang         = new HashMap<Integer, LanguageType>();
     private static Map<String, Integer>          lang_code2id = new HashMap<String, Integer>();
 
+    public TLang(int _id,LanguageType _lang) {
+        id      = _id;
+        lang    = _lang;
+    }
+
     /** Gets LanguageType by language code */
     /*public static LanguageType get(String code) throws NullPointerException
     {
@@ -76,6 +81,8 @@ public class TLang {
     
     /** Fills database table 'lang' by data from LanguageType class. */
     public static void fillDB(Connect connect) {
+
+        int z = 0;
         
     }
 
@@ -130,12 +137,15 @@ public class TLang {
      * @param  lang_code  title of Wiktionary article
      * @return null if a language code is absent in the table 'lang'
      */
-    public static TLang get (Connect connect,String lang_code) {
+    public static TLang get (Connect connect,LanguageType lt) {
 
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         TLang       tp = null;
+
+        if(null == lt) return null;
+        String lang_code = lt.getCode();
         
         try {
             s = connect.conn.createStatement ();
@@ -148,15 +158,18 @@ public class TLang {
             rs = s.getResultSet ();
             if (rs.next ())
             {
-                int id              = rs.getInt("id");
-                String name         = rs.getString("name");
-                int wiki_link_count = rs.getInt("wiki_link_count");
-                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+                int id      = rs.getInt("id");
+                String name = rs.getString("name");
+                tp = new TLang(id, lt);
 
-                tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
+                if(!lt.getName().equalsIgnoreCase(name)) {
+                    System.err.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name);
+                }
+            } else {
+                    System.err.println("Error: (wikt_parsed TLang.java get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TLang.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -170,44 +183,53 @@ public class TLang {
      *
      * @param  page_title  title of Wiktionary article
      */
-    public static void delete (Connect connect,String lang_code) {
+    public static void delete (Connect connect,LanguageType lt) {
 
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        /*try {
+
+        if(null == lt) return;
+        String lang_code = lt.getCode();
+
+        try {
             s = connect.conn.createStatement ();
 
-            String safe_title = StringUtil.spaceToUnderscore(
-                                StringUtil.escapeChars(page_title));
-
-            str_sql.append("DELETE FROM page WHERE page_title=\"");
-            str_sql.append(safe_title);
+            str_sql.append("DELETE FROM lang WHERE code=\"");
+            str_sql.append(lang_code);
             str_sql.append("\"");
-
+            
             s.execute (str_sql.toString());
 
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TLang.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }*/
+        }
     }
-
-    // DELETE FROM lang;
-        // ALTER TABLE lang AUTO_INCREMENT = 0;
-    /** Deletes row from the table 'lang' by the language code.
+    
+    /** Deletes all records from the table 'lang', resets auto increment.
      *
-     *  DELETE FROM lang WHERE code="ru";
-     *
-     * @param  page_title  title of Wiktionary article
+     * DELETE FROM lang;
+     * ALTER TABLE lang AUTO_INCREMENT = 0;
      */
     private static void deleteAllRecordsResetAutoIncrement (Connect connect) {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
-        
+
+        try {
+            s = connect.conn.createStatement ();
+            s.addBatch("DELETE FROM lang;");
+            s.addBatch("ALTER TABLE lang AUTO_INCREMENT = 0;");
+            s.executeBatch();
+
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TLang.java deleteAllRecordsResetAutoIncrement()):: sql='DELETE FROM lang; ALTER TABLE lang AUTO_INCREMENT = 0;' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
     }
 }
