@@ -64,8 +64,12 @@ public class LanguageType {
 
     /** Counts number of languages. */
     public static int size() {
-
         return code2name.size();
+    }
+    
+    /** Gets all languages. */
+    public static Map<String, LanguageType> getAllLanguages() {
+        return code2lang;
     }
     
     // English Wiktionary specific codes

@@ -8,9 +8,13 @@ package wikt.sql;
 
 import wikipedia.language.LanguageType;
 import wikipedia.sql.Connect;
+import wikipedia.util.StringUtil;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import java.sql.*;
 
@@ -24,8 +28,8 @@ public class TLang {
     /** Languages of wiki: code and name, e.g. 'ru' and 'Russian'. */
     private LanguageType lang;
 
-    private static Map<Integer, LanguageType> id2lang         = new HashMap<Integer, LanguageType>();
-    private static Map<String, Integer>          lang_code2id = new HashMap<String, Integer>();
+    private static Map<Integer, LanguageType> id2lang;         //= new HashMap<Integer, LanguageType>();
+    private static Map<String, Integer>          lang_code2id; //= new HashMap<String, Integer>();
 
     public TLang(int _id,LanguageType _lang) {
         id      = _id;
@@ -76,22 +80,44 @@ public class TLang {
     /** Load data from a LanguageType class, sorts,
      * and fills local maps 'id2lang' and 'lang_code2id'. */
     public static void fillLocalMaps() {
-        
+
+        int size = LanguageType.size();
+        Map<String, LanguageType> code2lang = LanguageType.getAllLanguages();
+
+        List<String>list_code = new ArrayList<String>(size);
+        for(String s : code2lang.keySet()) {
+            list_code.add(s);
+        }
+        Collections.sort(list_code);
+
+        // OK, we have list of language codes. Sorted list.
+        // list_code
+
+        id2lang      = new HashMap<Integer, LanguageType>(size);
+        lang_code2id = new HashMap<String, Integer>(size);
+        for(int id=0; id<size; id++) {
+
+            String code = list_code.get(id);
+            LanguageType lang = code2lang.get(code);
+            id2lang.put(id, lang);
+            lang_code2id.put(lang.getCode(), id);
+        }
     }
     
     /** Fills database table 'lang' by data from LanguageType class. */
     public static void fillDB(Connect connect) {
-
-        int z = 0;
         
+        for(int id : id2lang.keySet()) {
+            LanguageType lang = id2lang.get(id);
+            insert (connect, lang.getCode(), lang.getName());
+            //insert (connect, lang.getCode(), lang.getCode());
+        }
     }
-
     
-
-
     /** Counts number of records (languages) in the table. */
     public static int count() {
-        
+
+        // SELECT COUNT(*) FROM lang;
 
         return 0;
     }
@@ -111,14 +137,11 @@ public class TLang {
         {
             s = connect.conn.createStatement ();
             str_sql.append("INSERT INTO lang (code,name) VALUES (\"");
-
-            //String safe_title = StringUtil.spaceToUnderscore(
-            //                    StringUtil.escapeChars(page_title));
-            //str_sql.append(safe_title);
-
             str_sql.append(code);
             str_sql.append("\",\"");
-            str_sql.append(name);
+            String safe_title = StringUtil.spaceToUnderscore(
+                                StringUtil.escapeChars(name));
+            str_sql.append(safe_title);
             str_sql.append("\")");
 
             s.executeUpdate (str_sql.toString());
