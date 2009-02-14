@@ -54,17 +54,12 @@ public class TLang {
     public static void recreateTable(Connect connect) {
 
         fillLocalMaps();
-        
-        //int db_current_size = count();
-        //if (db_current_size < LanguageType.size()) {
         deleteAllRecordsResetAutoIncrement(connect);
         fillDB(connect);
-        // }
         {
             int db_current_size = wikipedia.sql.Statistics.Count(connect, "lang");
-            assert(db_current_size == LanguageType.size());
-        }
-        
+            assert(db_current_size == LanguageType.size()); // 356 languages
+        }   
     }
     
     /** Load data from a LanguageType class, sorts,
@@ -100,50 +95,14 @@ public class TLang {
         for(int id : id2lang.keySet()) {
             LanguageType lang = id2lang.get(id);
 
-            if(lang.equals(LanguageType.ru)) {
+            /*if(lang.equals(LanguageType.ru)) {
                 int z = 0;
-            }
+            }*/
 
-            //insert (connect, lang.getCode(), lang.getName());     //insert (connect, lang.getCode(), lang.getCode());
-            String s = connect.enc.EncodeFromJava(lang.getName());
-            insert (connect, lang.getCode(), s);
+            insert (connect, lang.getCode(), lang.getName());     //insert (connect, lang.getCode(), lang.getCode());
+            // insert (connect, lang.getCode(), connect.enc.EncodeFromJava(lang.getName()));
         }
     }
-    
-    /** Counts number of records (languages) in the table. */
-    /*public static int count() {
-
-        // SELECT COUNT(*) FROM lang;
-
-        Statement s = null;
-        ResultSet rs= null;
-        int size = 0;
-        String str_sql = null;
-        try {
-            s = connect.conn.createStatement ();
-            str_sql = "SELECT COUNT(*) AS size FROM " + table_name;
-            s.executeQuery (str_sql);
-            rs = s.getResultSet ();
-            if (rs.next ())
-            {
-                size = rs.getInt("size");
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (Statistics.java Count()): sql='" + str_sql + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {
-                try { rs.close();
-                } catch (SQLException sqlEx) { }
-                rs = null;
-                }
-                if (s != null) {
-                    try { s.close();
-                    } catch (SQLException sqlEx) { }
-                    s = null;
-                }
-        }
-        return size;
-    }*/
     
     /** Inserts record into the table 'lang'.
      *

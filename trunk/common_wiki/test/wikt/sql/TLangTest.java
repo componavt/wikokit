@@ -41,14 +41,6 @@ public class TLangTest {
     public void testFillLocalMaps() {
         System.out.println("fillLocalMaps");
         TLang.fillLocalMaps();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    @Test
-    public void testRecreateTable() {
-        System.out.println("fillDB");
-        TLang.recreateTable(ruwikt_parsed_conn);
     }
 
     @Test
@@ -57,8 +49,8 @@ public class TLangTest {
 
         Connect conn = ruwikt_parsed_conn;
         String code = "ru";
-        String lang_name = ruwikt_parsed_conn.enc.EncodeFromJava("Русский");
-        String name = ruwikt_parsed_conn.enc.EncodeFromJava("test_lang_Русский");
+        //String lang_name = ruwikt_parsed_conn.enc.EncodeFromJava("Русский");
+        String name = ruwikt_parsed_conn.enc.EncodeFromJava("Russian");
 
         TLang p = null;
 
@@ -72,6 +64,7 @@ public class TLangTest {
             TLang.delete(conn, lt);
         }
 
+        //System.err.println("Now one warning should be...");
         TLang.insert(conn, code, name);
         p = TLang.get(conn, lt);
         
@@ -82,7 +75,7 @@ public class TLangTest {
 
         lt = p.getLanguage();
         assertTrue(lt.getCode().equalsIgnoreCase(code));
-        assertTrue(lt.getName().equalsIgnoreCase(lang_name));
+        assertTrue(lt.getName().equalsIgnoreCase(name));    // todo lang_name also
         
         // delete temporary DB record
         TLang.delete(conn, lt);
@@ -91,4 +84,10 @@ public class TLangTest {
         assertTrue(p == null);
     }
 
+    /* This test should go after testInsert(), else you will got a mess in the table 'lang'. */
+    @Test
+    public void testRecreateTable() {
+        System.out.println("fillDB");
+        TLang.recreateTable(ruwikt_parsed_conn);
+    }
 }
