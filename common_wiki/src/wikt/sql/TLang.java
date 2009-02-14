@@ -35,17 +35,7 @@ public class TLang {
         id      = _id;
         lang    = _lang;
     }
-
-    /** Gets LanguageType by language code */
-    /*public static LanguageType get(String code) throws NullPointerException
-    {
-
-        if(code2lang.containsKey(code)) {
-            return code2lang.get(code);
-         }
-        throw new NullPointerException("Null LanguageType");
-    }*/
-
+    
     /** Gets unique ID of the language. */
     public int getID() {
         return id;
@@ -71,12 +61,12 @@ public class TLang {
         fillDB(connect);
         // }
         {
-            int db_current_size = count();
+            int db_current_size = wikipedia.sql.Statistics.Count(connect, "lang");
             assert(db_current_size == LanguageType.size());
         }
         
     }
-
+    
     /** Load data from a LanguageType class, sorts,
      * and fills local maps 'id2lang' and 'lang_code2id'. */
     public static void fillLocalMaps() {
@@ -109,18 +99,51 @@ public class TLang {
         
         for(int id : id2lang.keySet()) {
             LanguageType lang = id2lang.get(id);
-            insert (connect, lang.getCode(), lang.getName());
-            //insert (connect, lang.getCode(), lang.getCode());
+
+            if(lang.equals(LanguageType.ru)) {
+                int z = 0;
+            }
+
+            //insert (connect, lang.getCode(), lang.getName());     //insert (connect, lang.getCode(), lang.getCode());
+            String s = connect.enc.EncodeFromJava(lang.getName());
+            insert (connect, lang.getCode(), s);
         }
     }
     
     /** Counts number of records (languages) in the table. */
-    public static int count() {
+    /*public static int count() {
 
         // SELECT COUNT(*) FROM lang;
 
-        return 0;
-    }
+        Statement s = null;
+        ResultSet rs= null;
+        int size = 0;
+        String str_sql = null;
+        try {
+            s = connect.conn.createStatement ();
+            str_sql = "SELECT COUNT(*) AS size FROM " + table_name;
+            s.executeQuery (str_sql);
+            rs = s.getResultSet ();
+            if (rs.next ())
+            {
+                size = rs.getInt("size");
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (Statistics.java Count()): sql='" + str_sql + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {
+                try { rs.close();
+                } catch (SQLException sqlEx) { }
+                rs = null;
+                }
+                if (s != null) {
+                    try { s.close();
+                    } catch (SQLException sqlEx) { }
+                    s = null;
+                }
+        }
+        return size;
+    }*/
     
     /** Inserts record into the table 'lang'.
      *
