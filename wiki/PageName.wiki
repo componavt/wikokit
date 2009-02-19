@@ -6,9 +6,12 @@ monograph
 book
 
 
-= Details =
+= Comparison =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+English Wiktionary (-1)
+* booklet -> book (WN+)
+* publication -> publish-> ?? -> book (WN+)
+
+
+Hypernyms (WordNet +1)
+* booklet -> book -> publication 
