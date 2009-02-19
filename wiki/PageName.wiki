@@ -1,3 +1,4 @@
+#labels Phase-Design,Paper
 #test WordNet vs. Wiktionary
 
 = List of words =
@@ -30,5 +31,3 @@ En.Wiktionary:
 
 Wikt. vs. WordNet : 1:1
 -------------------
-
-
