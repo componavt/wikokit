@@ -31,3 +31,7 @@ En.Wiktionary:
 
 Wikt. vs. WordNet : 1:1
 -------------------
+
+== Complex and absent phrase ==
+
+LectureNotes -> absent in WordNet and Wiktionary
