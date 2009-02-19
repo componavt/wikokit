@@ -15,3 +15,20 @@ English Wiktionary (-1)
 
 Hypernyms (WordNet +1)
 * booklet -> book -> publication 
+
+------------
+
+Collection - Book
+
+WordNet + 1 : meronyms 
+
+collection <- (hypernym) publication -> (meronym) text -> (meronym) book
+
+En.Wiktionary:
+
+3 definitions of "book" contain the word "collection".
+
+Wikt. vs. WordNet : 1:1
+-------------------
+
+
