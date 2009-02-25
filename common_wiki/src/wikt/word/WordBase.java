@@ -36,6 +36,12 @@ public class WordBase {
     /*public WordBase(String _page_title) {
         page_title = _page_title;
     }*/
+
+    /** Gets an article title in Wiktionary. */
+    public String getPageTitle() {
+        return page_title;
+    }
+
     /** Creates word for the given Wiktionary (defined by language)
      * by parsing the Wiktionary article text.
      * Stores parsed data to the WordBase object.
@@ -68,10 +74,10 @@ public class WordBase {
     /** Word is empty if there are no recognized data in the parsed wiki text. */
     public boolean isEmpty() {
         
-        // if lang<>null return false;
-        // todo ...
+        if (null != lang && lang.length > 0)
+                return false;
         
-        return false;
+        return true;
     }
 
 }

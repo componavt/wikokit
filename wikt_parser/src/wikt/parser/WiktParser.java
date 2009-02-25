@@ -97,7 +97,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         List<String> pt = CategoryHyponyms.getArticlesOfSubCategories(wikt_conn, "Яблоки");
         System.out.println("Total documents: " + pt.size());
         for(String page_title:pt) {
-            page_title = "самолёт";         // ангел
+            //page_title = "самолёт";         // ангел
             //page_title = "Bolesław_Prus";
             //if(++ cur_doc > max_docs) {
             //if(++ cur_doc > 1) {

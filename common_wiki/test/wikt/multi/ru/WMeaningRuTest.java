@@ -88,6 +88,39 @@ public class WMeaningRuTest {
     }
 
     @Test
+    public void testParseOneDefinition_ru_meaning_emtpy() {
+        System.out.println("parse_OneDefinition_ru_meaning_emtpy");
+        System.out.println("parseOneDefinition_ru");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        String line;
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "самолёт";
+        lang_section    = LanguageType.ru; // Russian word
+
+        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        WikiWord[] ww = new WikiWord[4];
+
+        WQuote[] _quote = null;
+
+        // empty definition:
+        line =  "# ";
+
+        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        assertTrue(null == result);
+
+        
+        // test 2
+        // empty definition with empty example:
+        line =  "# {{пример|}}";
+
+        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        assertTrue(null == result);
+    }
+
+    @Test
     public void testParseOneDefinition_ru_labels() {
         System.out.println("parseOneDefinition_ru_labels");
         LanguageType wikt_lang;
@@ -214,7 +247,7 @@ public class WMeaningRuTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
+    
     @Test
     public void testParse_1_meaning() {
         System.out.println("parse_1_meaning");
