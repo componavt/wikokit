@@ -50,7 +50,7 @@ public class TPageTest {
         
         TPage p = null;
         p = TPage.get(conn, page_title);
-        if(null == p) {
+        if(null != p) {
             TPage.delete(conn, page_title);
         }
 
