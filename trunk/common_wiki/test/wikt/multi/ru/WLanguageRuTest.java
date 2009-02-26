@@ -136,12 +136,11 @@ public class WLanguageRuTest {
     // {{заголовок|ka|add=}}
     @Test
     public void testSplitToLanguageSections_with_special_header() {
-        System.out.println("splitToLanguageSections");
+        System.out.println("splitToLanguageSections_with_special_header");
         //StringBuffer[] expResult = null;
         //assertEquals(expResult, result);
         String source_text;
         LangText[] result;
-        StringBuffer s;
 
         // simple two-letter code: Georgia "|ka|"
         source_text = "Before {{заголовок|ka|add=}} Georgia";
@@ -156,5 +155,23 @@ public class WLanguageRuTest {
         assertEquals(1, result.length);
         //assertTrue(result[0].text.toString().equalsIgnoreCase("Before  Russian"));
         assertEquals("Before  Georgia", result[0].text.toString());
+    }
+
+    // {{-de-|schwalbe}}
+    @Test
+    public void testSplitToLanguageSections_header_with_parameter() {
+        System.out.println("splitToLanguageSections_header_with_parameter");
+        //StringBuffer[] expResult = null;
+        //assertEquals(expResult, result);
+        String source_text;
+        LangText[] result;
+        StringBuffer s;
+
+        // simple two-letter code: Georgia "|ka|"
+        source_text = "Before {{-de-|schwalbe}} Eine Rauchschwalbe";
+        result = WLanguageRu.splitToLanguageSections("test_word1", new StringBuffer(source_text));
+        assertEquals(1, result.length);
+        //assertTrue(result[0].text.toString().equalsIgnoreCase("Before  Russian"));
+        assertEquals("Before  Eine Rauchschwalbe", result[0].text.toString());
     }
 }

@@ -85,7 +85,7 @@ public class WMeaningRu {
 
             // 4. extracts {{label.}}, definition, {{example|Sentence.}}
             // return WMeaning
-            // return null if this line is not started from "#"
+            // return null if this line is not started from "#" or = "# "
             WMeaning wm = WMeaning.parseOneDefinition(wikt_lang, page_title, lang_section, line);
             if(null != wm) {
                 wm_list.add(wm);
@@ -103,7 +103,7 @@ public class WMeaningRu {
      * @param page_title    word which are described in this article 'text'
      * @param lang_section  language of this section of an article
      * @param line          definition line
-     * @return WMeaning or null if the line is not started from "#"
+     * @return WMeaning or null if the line is not started from "#" or = "# "
      */
     public static WMeaning parseOneDefinition(LanguageType wikt_lang,
                     String page_title,
@@ -111,7 +111,11 @@ public class WMeaningRu {
                     String line)
     {
         line = Definition.stripNumberSign(page_title, line);
-
+        if(  0 == line.length() ||
+           (11 == line.length() && line.equalsIgnoreCase("{{пример|}}"))
+          )
+            return null;
+            
         // 1. extract labels
         // todo
         // ...

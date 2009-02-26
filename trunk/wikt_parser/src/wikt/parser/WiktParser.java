@@ -94,7 +94,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
                                             // "Literature"     812 docs - OK
                                             // "Folklore"       29 docs
                                             // "American_poets" 9 docs  - OK
-        List<String> pt = CategoryHyponyms.getArticlesOfSubCategories(wikt_conn, "Яблоки");
+        List<String> pt = CategoryHyponyms.getArticlesOfSubCategories(wikt_conn, category_name); //"Яблоки"
         System.out.println("Total documents: " + pt.size());
         for(String page_title:pt) {
             //page_title = "самолёт";         // ангел

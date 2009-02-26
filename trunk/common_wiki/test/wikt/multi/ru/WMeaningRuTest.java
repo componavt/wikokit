@@ -104,7 +104,7 @@ public class WMeaningRuTest {
         WikiWord[] ww = new WikiWord[4];
 
         WQuote[] _quote = null;
-
+        
         // empty definition:
         line =  "# ";
 
@@ -247,7 +247,49 @@ public class WMeaningRuTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
+
+    // parse 1 meaning without Number sign #
+    // pomme
+    // ====Значение====
+    //[[яблоко]]
+    @Test
+    public void testParse_1_meaning_without_Number_sign() {
+        System.out.println("parse_1_meaning_without_Number_sign");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "pomme";
+        lang_section    = LanguageType.fr; // French word
+        
+        String _definition1 = "яблоко";
+
+        str =   "Before \n" +
+                "{{-ru-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "==== Значение ====\n" +
+                "[[яблоко]]\n" +
+                "\n" + 
+                "====Синонимы====";
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        assertTrue(null != result);
+        assertEquals(1, result.length);
+        assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
+
+        // labels == null
+        ContextLabel[] labels_result = result[0].getLabels();
+        assertEquals(0, labels_result.length);
+
+        // wikiword.size = 1;
+        WikiWord[] ww_result = result[0].getWikiWords();
+        assertEquals(1, ww_result.length);
+        ww_result[0].getWordLink().equalsIgnoreCase("яблоко");
+    }
+
     @Test
     public void testParse_1_meaning() {
         System.out.println("parse_1_meaning");
