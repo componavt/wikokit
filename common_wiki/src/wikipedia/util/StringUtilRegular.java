@@ -290,13 +290,14 @@ public class StringUtilRegular {
      */
     public static String substringAndchopLastNewline(String text, int start_pos, int end_pos) {
 
-        if(start_pos < 0 || start_pos > end_pos || end_pos > text.length()-1) {
+        if(start_pos < 0 || start_pos >= end_pos || end_pos > text.length()-1) {
             return NULL_STRING;
         }
         
         if(end_pos > 0 && '\n' == text.charAt(end_pos-1)) {
                end_pos --;
         }
+        
         return text.substring(start_pos, end_pos);
     }
 }

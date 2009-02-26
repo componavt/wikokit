@@ -159,10 +159,13 @@ public class WRelationRu {
         for(String s : lines) {
             Matcher m_start = ptrn_line_start.matcher(s);
             if(m_start.find()) {
+                WRelation wr = null;
                 s = m_start.replaceFirst("");   // remove "# "
 
-                // 3. split list of synonyms into wikiwords (or wiki phrases?)
-                WRelation wr = parseOneLine (page_title, s);
+                if(s.length() > 0) {
+                    // 3. split list of synonyms into wikiwords (or wiki phrases?)
+                    wr = parseOneLine (page_title, s);
+                }
 
                 //if(null != wr)
                 wr_list.add(wr);    // null means that relation = "# -", i.e. absent for this meaning
@@ -191,7 +194,7 @@ public class WRelationRu {
                     String text)
     {
         // 1. check emptyness: regular expression "-"
-        if(0 == text.length() && text.charAt(0) == '-') return null; // let's speed-up a little
+        if(0 == text.length()) return null;
 
         Matcher m = ptrn_dashes.matcher(text);
         if(m.find()) return null;

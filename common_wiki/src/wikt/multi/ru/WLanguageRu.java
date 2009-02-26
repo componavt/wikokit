@@ -67,6 +67,7 @@ public class WLanguageRu {
         
         int i = 0;
         boolean b_next = m.find();
+        boolean b_at_least_one_lang = b_next; // at least one language section was recognized
         boolean b_known_lang = true;
         if(b_next) {
             String lang_code = m.group(1);
@@ -107,7 +108,7 @@ public class WLanguageRu {
                 }
             }
         }
-        if(0==i && b_known_lang) {
+        if(0==i && b_known_lang && b_at_least_one_lang) {
             m.appendTail(lang_sections.get(i).text);
         }   
         return (LangText[])lang_sections.toArray(NULL_LANG_TEXT_ARRAY);
