@@ -17,7 +17,8 @@ import wikt.constant.POS;
 
 public class WTranslationRuTest {
 
-    public static String samolyot_text, samolyot_with_header, kolokolchik_text, kolokolchik_text_1_translation_box;
+    public static String samolyot_text, samolyot_with_header, kolokolchik_text, 
+            kolokolchik_text_1_translation_box, kosa_text_1_translation_box_without_header;
 
     public WTranslationRuTest() {
     }
@@ -89,6 +90,12 @@ public class WTranslationRuTest {
             "|en=[[bluebell]], [[bellflower]], [[campanula]]\n" +
             "|os=[[дзæнгæрæг]], [[къæрцгæнæг]]\n" +
             "|fr=[[campanule]], [[clochette]]\n" +
+            "}}\n";
+
+        kosa_text_1_translation_box_without_header = "{{перев-блок\n" +
+            "|en=[[braid]], [[plait]], [[pigtail]], [[queue]]\n" +
+            "|de=[[Zopf]] {{m}} -es, Zöpfe\n" +
+            "|fr=[[natte]] {{f}}; [[couette]] {{f}}, [[tresse]] <i>f</i>\n" +
             "}}\n";
     }
 
@@ -220,7 +227,7 @@ public class WTranslationRuTest {
      * also visible != word link, e.g.
      * "|ja=[[飛行機]] (ひこうき, хйко:ки)\n"
      */
-        @Test
+    @Test
     public void testParseOneTranslationBox_comma_in_comments() {
         System.out.println("parseOneTranslationBox_comma_in_comments");
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
@@ -246,5 +253,41 @@ public class WTranslationRuTest {
 
         // todo parse additional comments, e.g. {{f}}, {{n}},
         // ...
+    }
+    
+    // test one translation box without the header (article: "коса")
+    @Test
+    public void testParseOneTranslationBox_without_header() {
+        System.out.println("parseOneTranslationBox_comma_in_comments");
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "коса";
+
+        WTranslation result = WTranslationRu.parseOneTranslationBox(wikt_lang, page_title, kosa_text_1_translation_box_without_header);
+        assertTrue(null != result);
+        WTranslationEntry[] trans_all = result.getTranslations();
+        assertEquals(3, trans_all.length);
+        {
+            // {{перев-блок
+            // |en=[[braid]], [[plait]], [[pigtail]], [[queue]]
+            // |de=[[Zopf]] {{m}} -es, Zöpfe
+            // work link = Zopf
+            // word visible = Zopf m -es, Zöpfe
+            
+            // |fr=[[natte]] {{f}}; [[couette]] {{f}}, [[tresse]] <i>f</i>\n
+            
+            WTranslationEntry trans_de = trans_all[1];
+            assertEquals(LanguageType.de, trans_de.getLanguage());
+
+            WikiText[] wt_de = trans_de.getWikiPhrases();
+            assertEquals(2, wt_de.length);
+            
+            WikiWord[] ww_de = wt_de[0].getWikiWords();
+            assertTrue(null != ww_de);
+            assertEquals(1, ww_de.length);
+            assertTrue(ww_de[0].getWordLink().equalsIgnoreCase( "Zopf" ) );
+
+            assertTrue(wt_de[0].getVisibleText().equalsIgnoreCase( "Zopf {{m}} -es" ) );
+                                                                // "Zopf m. -es" will be better, but later
+        }
     }
 }

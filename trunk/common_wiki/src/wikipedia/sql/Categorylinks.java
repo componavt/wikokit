@@ -21,14 +21,21 @@ public class Categorylinks {
     //public String   cl_to;      // stores the name (excluding namespace prefix) of the desired category
     // public String   cl_sortkey; // stores the title by which the page should be sorted in a cateogy list (ORDER BY cl_sortkey)
     // public int   cl_timestamp;  // cl_timestamp marks when the link was last added
-    
-    /** Count the total number of categories in the database
+
+    private final static String[] NULL_STRING_ARRAY = new String[0];
+
+    /** Count the total number of categories in the database.
+     * @return -1 if database is not available
      */
     public static int countCategoryLinks(Connect connect) {
         Statement   s = null;
         ResultSet   rs= null;
         int         size = 0;
         String      str_sql = null;
+
+        if(null==connect || null==connect.conn)
+            return -1;
+
         try {
             s = connect.conn.createStatement ();
             str_sql = "SELECT COUNT(*) AS size FROM categorylinks";
@@ -55,6 +62,8 @@ public class Categorylinks {
     public static List<Integer> getArticlesIDSubcategoryIDByCategoryTitle(
                                     Connect connect,
                                     String category_title) {
+        if(null==connect || null==connect.conn)
+            return null;
         
         List<Integer> id = new ArrayList<Integer>();        
         Statement   s = null;
@@ -103,8 +112,10 @@ public class Categorylinks {
         Statement   s = null;
         ResultSet   rs= null;
         int         size, i;
-        //String      str_sql = null;
-        
+
+        if(null==connect || null==connect.conn)
+            return NULL_STRING_ARRAY;
+            
         sb.setLength(0);
         try {
             s = connect.conn.createStatement ();
