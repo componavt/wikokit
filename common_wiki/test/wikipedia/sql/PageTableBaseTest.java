@@ -113,6 +113,7 @@ public class PageTableBaseTest extends TestCase {
         String s;
         assertTrue(null != connect);
         s = PageTableBase.getArticleText(connect, "Gratitude");
+        assertTrue( "{{otheruses}}", s.length() > 0);
         assertEquals( "{{otheruses}}", s.substring(0, 13));
     }
     public void testSelectCurText_ru() {

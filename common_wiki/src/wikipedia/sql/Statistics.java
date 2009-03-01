@@ -16,13 +16,19 @@ public class Statistics {
     }
     
         
-    /** Gets number of elements in the table: SELECT COUNT(*) FROM table_name
+    /** Gets number of elements in the table: SELECT COUNT(*) FROM table_name.
+     *
+     * @return -1 if database is not available
      */
     public static int Count(Connect connect, String table_name) {
         Statement s = null;
         ResultSet rs= null;
         int size = 0;
         String str_sql = null;
+
+        if(null==connect || null==connect.conn)
+            return -1;
+        
         try {
             s = connect.conn.createStatement ();
             str_sql = "SELECT COUNT(*) AS size FROM " + table_name;
@@ -54,6 +60,8 @@ public class Statistics {
      * SELECT COUNT(*) AS size FROM page WHERE page_namespace=ns
      * 
      *  @param where    additional constraint, e.g. "page_is_redirect=0 AND"
+     *
+     * @return -1 if database is not available
      */
     private static int CountPageForNamespace(Connect connect, String where, 
                             PageNamespace ns) {
@@ -61,6 +69,10 @@ public class Statistics {
         ResultSet rs= null;
         int size = 0;
         String str_sql = null;
+
+        if(null==connect || null==connect.conn)
+            return -1;
+
         try {
             s = connect.conn.createStatement ();
             str_sql = "SELECT COUNT(*) AS size FROM page WHERE " + where + " page_namespace="+ns.toInt();

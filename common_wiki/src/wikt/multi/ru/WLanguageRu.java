@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 /** Language lets you know the language of the word in question. It is almost 
- * always in a level two heading. ==English== {{-ru-}}, or {{заголовок|ru|..}
+ * always in a level two heading. ==English==, {{-ru-}}, {{заголовок|ru|..},
+ * or {{-de-|schwalbe}}.
  * 
  * See http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
  * and http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей
@@ -39,14 +40,16 @@ public class WLanguageRu {
     
     /** start of the language block, e.g. {{-ru-}}, {{-en-}}, {{-de-}}, etc. */
     private final static Pattern ptrn_lang = Pattern.compile(
-            "\\{\\{-([-_a-zA-Z]{2,9})-\\}\\}|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=.*?\\}\\})");
+            //"\\{\\{-([-_a-zA-Z]{2,9})-\\}\\}|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=.*?\\}\\})");
+              "\\{\\{-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=.*?\\}\\})");
                 // {{-en-}}
                 // {{заголовок|ka|add=}}
                 // {{заголовок|ka}}
+                // {{-de-|schwalbe}}
                 //
-                // vim: {{-\([-_a-zA-Z]\{2,9\}\)\|{{заголовок|\([-_a-zA-Z]\{2,9\}\)[|}][^}]*}}\?
-                //part1:{{-\([-_a-zA-Z]\{2,9\}\)            part2: {{заголовок|\([-_a-zA-Z]\{2,9\}\)[|}][^}]*}}\?
-                //java: \\{\\{-([-_a-zA-Z]{2,9})-\\}\\}     java: \\Q{{заголовок|\\E([-_a-zA-Z]{2,9})[|}]
+                // vim: {{-\([-_a-zA-Z]\{2,9\}\)-[|}][^}]*}}\?\|{{заголовок|\([-_a-zA-Z]\{2,9\}\)[|}][^}]*}}\?
+                //part1:{{-\([-_a-zA-Z]\{2,9\}\)-[|}][^}]*}}\?              part2: {{заголовок|\([-_a-zA-Z]\{2,9\}\)[|}][^}]*}}\?
+                //java: \\{\\{-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})    java: \\Q{{заголовок|\\E([-_a-zA-Z]{2,9})[|}]
     
     //private final static StringBuffer   NULL_STRINGBUFFER = new StringBuffer("");    
     private final static LangText[] NULL_LANG_TEXT_ARRAY = new LangText[0];

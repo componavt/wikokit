@@ -40,9 +40,9 @@ public class WTranslationRu {
      *                                            "|en="
      */
     private final static Pattern ptrn_translation_box_header = Pattern.compile(
-            // "\\Q{{перев-блок|\\E(.*?)"); // +
-            "\\Q{{перев-блок|\\E(.*?)\\|?\\n\\|");
-            //"\\Q{{перев-блок|\\E(.*?)|?\\n");      // vim      {{перев-блок|\(.*\)|\?\n
+            // "\\Q{{перев-блок|\\E(.*?)\\|?\\n\\|");
+               "\\Q{{перев-блок\\E\\|?(.*?)\\|?\\n\\|");
+            // "\\Q{{перев-блок\\E\\|?(.*?)|?\\n");      // vim      {{перев-блок|\?\(.*\)|\?\n
             
     
     /** Parses text (related to the POS), creates and fill array of translations (WTranslation).
@@ -150,16 +150,19 @@ public class WTranslationRu {
                     String text)
     {
         String meaning_summary = "";
+        String text_wo_header;
 
         // 1. extract header (meaning summary, first line in translation box)
         Matcher m = ptrn_translation_box_header.matcher(text.toString());
         boolean b_found = m.find();
 
+        // System.out.println("WTranslationRu.parseOneTranslationBox(): The article '"+page_title + "'.");
+
         if(b_found) {   // there is a header
             meaning_summary = m.group(1);
-        }
-
-        String text_wo_header = text.substring(m.end());    // text without header
+            text_wo_header = text.substring(m.end());    // text without header
+        } else
+            text_wo_header = text;
 
         // chop close brackets "}}"
         Matcher m_bracket = ptrn_double_close_curly_brackets.matcher(text_wo_header);

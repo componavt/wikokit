@@ -64,7 +64,10 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
     {
         String old_text = "";
         String str_sql = null;
-        
+
+        if(null==connect || null==connect.conn)
+            return old_text;
+
           try {
             Statement s = connect.conn.createStatement ();
             page_title = convertToSafeStringEncodeToDB (connect, page_title);
@@ -114,12 +117,14 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
     /** Gets id of articles via Title:Namespace.
      *  Namespace could be MAIN (article), CATEGORY, ... .
      *  @return -id if article is the redirect page.
-     *  @return 0 if article id is absent in the table page.
+     *  @return 0 if article id is absent in the table page, or interwiki.
      */
     public static int getIDByTitleNamespace(Connect connect, String page_title, PageNamespace namespace)
     {
-        String  title = "", str_sql=null;
         int     page_id = 0;
+
+        if(null==connect || null==connect.conn)
+            return page_id;
 
         if(StringUtil.isInterWiki(page_title)) {
             //System.out.println("isInterWiki = "+page_title);
@@ -194,6 +199,9 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
         if(id < 0) {
             id = -id;
         }
+
+        if(null==connect || null==connect.conn)
+            return null;
         
         page_data.init();
         page_data.page_id = id;
@@ -235,6 +243,10 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
      */
     public static String getTitleByID(Connect connect, int id) {
         PageTableData d = getPageTableDataByID(connect, id);
+
+        if(null == d)
+            return "";
+
         String s = d.page_title;
         d.cleanup();
         return s;
@@ -246,7 +258,11 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
      */
     public static String getArticleTitleNotRedirectByID (Connect connect, int id) {
         PageTableData d = getPageTableDataByID(connect, id);
-        if(0 != d.page_id && !d.page_is_redirect && 
+
+        if(null == d)
+            return null;
+
+        if(0 != d.page_id && !d.page_is_redirect &&
            d.page_namespace == PageNamespace.MAIN) {
             String s = d.page_title;
             d.cleanup();
@@ -264,8 +280,11 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
      */
     public static String getCategoryTitleByID (Connect connect, int id) {
         PageTableData d = getPageTableDataByID(connect, id);
-        if(0 != d.page_id && 
-           d.page_namespace == PageNamespace.CATEGORY)
+        if(null == d)
+            return null;
+
+        if(0 != d.page_id &&
+                d.page_namespace == PageNamespace.CATEGORY)
         {   
             String s = d.page_title;
             d.cleanup();

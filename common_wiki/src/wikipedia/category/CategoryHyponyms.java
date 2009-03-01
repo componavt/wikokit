@@ -38,7 +38,7 @@ public class CategoryHyponyms {
     private static List<String> getArticlesOfCategory(Connect connect,
                                     List<Integer> articles_subcategory_id) {
         
-        if(0 == articles_subcategory_id.size()) {
+        if(null == articles_subcategory_id || 0 == articles_subcategory_id.size()) {
             return NULL_STRING_LIST;
         }
         
@@ -65,7 +65,7 @@ public class CategoryHyponyms {
     private static List<String> getSubcategoriesOfCategory(Connect connect,
                                     List<Integer> articles_subcategory_id) {
         
-        if(0 == articles_subcategory_id.size()) {
+        if(null == articles_subcategory_id || 0 == articles_subcategory_id.size()) {
             return NULL_STRING_LIST;
         }
         

@@ -31,6 +31,8 @@ public class WTranslationEntryRu {
     {
         // split "en=[[little]] [[bell]], [[handbell]], [[doorbell]]" into "en" and remain
         int pos_equal_sign = text.indexOf('=');
+        if(-1 == pos_equal_sign)
+            return null;
 
         // 1. language code
         String lang_code = text.substring(0, pos_equal_sign);
