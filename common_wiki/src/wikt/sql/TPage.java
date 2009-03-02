@@ -7,6 +7,7 @@
 package wikt.sql;
 
 import wikipedia.sql.Connect;
+import wikipedia.sql.PageTableBase;
 import wikipedia.util.StringUtil;
 
 import java.sql.*;
@@ -87,8 +88,7 @@ public class TPage {
             s = connect.conn.createStatement ();
             str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
             
-            String safe_title = StringUtil.spaceToUnderscore(
-                                StringUtil.escapeChars(page_title));
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
             str_sql.append(safe_title);
             str_sql.append("\",");
             str_sql.append(word_count);
@@ -124,8 +124,7 @@ public class TPage {
         try {
             s = connect.conn.createStatement ();
 
-            String safe_title = StringUtil.spaceToUnderscore(
-                                StringUtil.escapeChars(page_title));
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
                                 
             str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
@@ -165,8 +164,7 @@ public class TPage {
         try {
             s = connect.conn.createStatement ();
 
-            String safe_title = StringUtil.spaceToUnderscore(
-                                StringUtil.escapeChars(page_title));
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
 
             str_sql.append("DELETE FROM page WHERE page_title=\"");
             str_sql.append(safe_title);

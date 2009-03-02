@@ -15,6 +15,7 @@ import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 import wikipedia.category.CategoryHyponyms;
 import wikt.mrd.Keeper;
+import wikt.sql.TLang;
 
 /** Top level functions for Wiktionary parsing.
  *
@@ -76,7 +77,9 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         long    t_start, t_end;
         float   t_work;
         t_start = System.currentTimeMillis();
-        
+
+        TLang.recreateTable(wikt_parsed_conn);
+
         // 1. get wiki-text from MySQL database
         // variant A. Get all articles
         // todo
@@ -97,7 +100,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         List<String> pt = CategoryHyponyms.getArticlesOfSubCategories(wikt_conn, category_name); //"Яблоки"
         System.out.println("Total documents: " + pt.size());
         for(String page_title:pt) {
-            //page_title = "коса";         // ангел  самолёт
+            //page_title = "яблоко";         // ангел  самолёт коса
             //page_title = "Bolesław_Prus";
             //if(++ cur_doc > max_docs) {
             //if(++ cur_doc > 1) {
