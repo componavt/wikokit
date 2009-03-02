@@ -1,6 +1,8 @@
-wikokit 0.12.6 2008-0?-??
+wikokit 0.12.6 2009-0?-??
+  common_wiki 131 tests passed, 14 tests failed
+
   Project synarcher was renamed to wikokit.
-  New home: javaforge.com
+  New home: code.google.com
 
   Subproject kleinberg was renamed to hits_wiki.
   The following subprojects were added: common_wiki and wikt_parser.

@@ -64,7 +64,7 @@ public class TLangTest {
             TLang.delete(conn, lt);
         }
 
-        //System.err.println("Now one warning should be...");
+        //System.err.println("One warnings should be...");
         TLang.insert(conn, code, name);
         p = TLang.get(conn, lt);
         
@@ -78,10 +78,9 @@ public class TLangTest {
         assertTrue(lt.getName().equalsIgnoreCase(name));    // todo lang_name also
         
         // delete temporary DB record
-        TLang.delete(conn, lt);
-
-        p = TLang.get(conn, lt);
-        assertTrue(p == null);
+        //TLang.delete(conn, lt);
+        //p = TLang.get(conn, lt);
+        //assertTrue(p == null);
     }
 
     /* This test should go after testInsert(), else you will got a mess in the table 'lang'. */
