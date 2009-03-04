@@ -32,6 +32,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextOrigin;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import javafx.scene.control.TextBox;
 import javafx.scene.shape.Rectangle;
@@ -40,6 +41,19 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.image.ImageView;
 import javafx.ext.swing.SwingComboBox;
 import javafx.ext.swing.SwingComboBoxItem;
+import javafx.ext.swing.SwingList;
+import javafx.ext.swing.SwingListItem;
+
+import wikipedia.sql.Connect;
+import wikipedia.language.LanguageType;
+import wikt.sql.TPage;
+
+// ===========
+// Wiktionary parsed database
+// ===========
+
+def wikt_parsed_conn = new Connect();
+wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
 
 // Application Bounds
 var sceneWidth: Number = bind scene.width;
@@ -79,42 +93,82 @@ var OutputText: TextBox = TextBox {
     text: "Messages"
 }*/
 
+
+
 // ===========
 //
 // ===========
 
 var adjacent_words : String[] = ["Red", "Yellow", "Green"];
 
-SwingComboBox {
-    items: [
-        SwingComboBoxItem {
-            text: "File"
-            selected: true
-        }
-    ]
+var page_array = TPage.getByPrefix(wikt_parsed_conn, "", 10);
+
+class Model {
+    var action: String;
+    var selected_word_index: Integer on replace oldValue {
+        action = adjacent_words[selected_word_index];
+    }
 }
 
-var textDeltaBounds: Rectangle = Rectangle {
+/** todo: language selection
+var word_ComboBox = SwingComboBox {
+    //translateX: 113
+    width: 222
+
+    selectedIndex: 1
+    items: for (p in page_array)
+        SwingComboBoxItem {
+            text: p.getPageTitle()
+        }
+}*/
+
+var word_List = SwingList {
+    //translateX: 113
+    width: 222
+
+    // selectedIndex: 1
+    items: for (p in page_array)
+        SwingListItem {
+            text: p.getPageTitle()
+        }
+}
+
+
+/*var textDeltaBounds: Rectangle = Rectangle {
     x: 2
     y: 2
     width: 14
     height: 5
-};
-var wordText: TextBox = TextBox {
+};*/
+
+var word_Text: TextBox = TextBox {
     blocksMouse: true
     columns: 7
     selectOnFocus: false
-    text: "95054"
-    clip: Rectangle {
+    text: page_array[0].getPageTitle()
+    /*clip: Rectangle {
         x: bind textDeltaBounds.x
         y: bind textDeltaBounds.y
-        width: bind (wordText.width - textDeltaBounds.width)
-        height: bind (wordText.height - textDeltaBounds.height)
-    }
+        width: bind (word_Text.width - textDeltaBounds.width)
+        height: bind (word_Text.height - textDeltaBounds.height)
+    }*/
     action: function() {
-//        searchCoffeeShops(wordText.text.trim());
+//        searchCoffeeShops(word_Text.text.trim());
 
     }
+    
+    onKeyTyped: function(e:KeyEvent) {
+        page_array = TPage.getByPrefix(wikt_parsed_conn, "S", 10);
+
+        /*if(e.code == KeyCode.VK_UP) {
+            //bgImage.requestFocus();
+        } else if(e.code == KeyCode.VK_RIGHT) {
+            if("{__PROFILE__}" == "mobile") {
+                searchButton.requestFocus();
+            }
+        }*/
+    }
+
     /*onKeyPressed: function(e:KeyEvent) {
         if(e.code == KeyCode.VK_UP) {
             bgImage.requestFocus();
@@ -126,13 +180,19 @@ var wordText: TextBox = TextBox {
     }*/
 }
 
-
+var OutputPanel: VBox = VBox {
+    //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
+    //translateY: bind (sceneHeight - 52)
+    content: [word_Text, word_List ]    // word_ComboBox, 
+    spacing: 10
+};
 
 var scene: Scene = Scene {
     content: Group {
         content: bind [
-            OutputPanel,
-            wordText
+            OutputPanel // ,
+            //word_ComboBox //,
+            //word_Text
         // bgImage, titleBar, titleText, divider, shopDetailsGroup, backButton, nextButton, closeButton,
         // zipSearchPanel, serviceProviderText
         ]
