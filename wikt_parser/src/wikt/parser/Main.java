@@ -36,7 +36,7 @@ public class Main {
         Connect wikt_conn = new Connect();
         
         // Connect to wikt_parsed database
-        Connect wikt_parsed_conn = new Connect();        
+        Connect wikt_parsed_conn = new Connect();
         
         /*
         // simple

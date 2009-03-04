@@ -70,5 +70,53 @@ public class TPageTest {
         assertTrue(p == null);
     }
 
-    
+    // TPage getByPrefix (Connect connect,String prefix,int limit) {
+    @Test
+    public void test_getByPrefix() {
+        System.out.println("getByPrefix");
+        int limit;
+        String prefix;
+        Connect conn = ruwikt_parsed_conn;
+
+        String word1 = "zzz1";
+        String word2 = "zzz2";
+        String word3 = "zzz3";
+        
+        prefix = ruwikt_parsed_conn.enc.EncodeFromJava("zzz");
+        int word_count = 7;
+        int wiki_link_count = 13;
+        boolean is_in_wiktionary = true;
+        
+        TPage p[] = null;
+        //TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        TPage.insert(conn, word1, word_count, wiki_link_count, is_in_wiktionary);
+        TPage.insert(conn, word2, word_count, wiki_link_count, is_in_wiktionary);
+        TPage.insert(conn, word3, word_count, wiki_link_count, is_in_wiktionary);
+
+        // tests
+        limit = 0;
+        p = TPage.getByPrefix(conn, prefix, limit);
+        assertEquals(p.length, 0);
+
+        limit = 1;
+        p = TPage.getByPrefix(conn, prefix, limit);
+        assertEquals(p.length, 1);
+
+        limit = -1;
+        p = TPage.getByPrefix(conn, prefix, limit);
+        assertEquals(p.length, 3);
+
+        limit = 3;
+        p = TPage.getByPrefix(conn, prefix, limit);
+        assertEquals(p.length, 3);
+        
+        assertEquals(p[0].getWordCount(),      word_count);
+        assertEquals(p[0].getWikiLinkCount(),  wiki_link_count);
+        assertEquals(p[0].isInWiktionary(),    is_in_wiktionary);
+        
+        // delete temporary DB record
+        TPage.delete(conn, word1);
+        TPage.delete(conn, word2);
+        TPage.delete(conn, word3);
+    }
 }
