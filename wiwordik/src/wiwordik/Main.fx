@@ -82,12 +82,10 @@ var OutputLabel = Text {
     content: "Back door:"
     textOrigin: TextOrigin.TOP
 }
-
 var OutputGroup = Group {
     content: [ OutputText ] //, OutputTextBorder ]
 
 };
-
 var OutputText: TextBox = TextBox {
     blocksMouse: true
     columns: 20
@@ -102,9 +100,6 @@ var OutputText: TextBox = TextBox {
 // ===========
 
 //var adjacent_words : String[] = ["Red", "Yellow", "Green"];
-
-//                               any 10 words, since "" == prefix
-var page_array = TPage.getByPrefix(wikt_parsed_conn, "", 10);
 
 /*class Model {
     var action: String;
@@ -138,22 +133,15 @@ class WordListModel {
         //words = adjacent_words[selected_word_index];
     }
 }*/
+
+//                               any 10 words, since "" == prefix
+var page_array = TPage.getByPrefix(wikt_parsed_conn, "", 10);
+
 var word_List = SwingList {
     //translateX: 113
     width: 222
-
     // selectedIndex: 1
-
     items: bind for (p in page_array) SwingListItem{ text: p.getPageTitle() }
-
-    /*
-        items: for (p in page_array)
-            SwingListItem {
-                text: p.getPageTitle()
-            }*/
-    
-    //items: bind WordListModel.words
-    // SwingListItem[]
 }
 
 /*var textDeltaBounds: Rectangle = Rectangle {
@@ -176,34 +164,12 @@ var word_Text: TextBox = TextBox {
      }*/
     action: function() {
 //        searchCoffeeShops(word_Text.text.trim());
-
     }
     
     onKeyTyped: function(e:KeyEvent) {
-        //page_array = TPage.getByPrefix(wikt_parsed_conn, "S", 10);
-        //adjacent_words[0] = "111111";
-        System.out.println("e.code = {e.code}, word_Text.text = {word_Text.text}");
-
-        page_array = TPage.getByPrefix(wikt_parsed_conn, word_Text.text, 10);
-
-        /*if(e.code == KeyCode.VK_UP) {
-            //bgImage.requestFocus();
-        } else if(e.code == KeyCode.VK_RIGHT) {
-            if("{__PROFILE__}" == "mobile") {
-                searchButton.requestFocus();
-            }
-        }*/
+        // System.out.println("e.code = {e.code}, word_Text.text = {word_Text.text}");
+        page_array = TPage.getByPrefix(wikt_parsed_conn, word_Text.text.trim(), 10);
     }
-
-    /*onKeyPressed: function(e:KeyEvent) {
-        if(e.code == KeyCode.VK_UP) {
-            bgImage.requestFocus();
-        } else if(e.code == KeyCode.VK_RIGHT) {
-            if("{__PROFILE__}" == "mobile") {
-                searchButton.requestFocus();
-            }
-        }
-    }*/
 }
 
 var OutputPanel: VBox = VBox {
