@@ -216,6 +216,10 @@ public class TPage {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+
+        if(null == tp_list)
+            return NULL_TPAGE_ARRAY;
+
         return( (TPage[])tp_list.toArray(NULL_TPAGE_ARRAY) );
     }
 

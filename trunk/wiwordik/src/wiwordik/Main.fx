@@ -6,6 +6,8 @@
 
 package wiwordik;
 
+import java.lang.*;
+
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
@@ -56,8 +58,8 @@ def wikt_parsed_conn = new Connect();
 wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
 
 // Application Bounds
-var sceneWidth: Number = bind scene.width;
-var sceneHeight: Number = bind scene.height;
+//var sceneWidth: Number = bind scene.width;
+//var sceneHeight: Number = bind scene.height;
 
 // ===========
 // Statistics
@@ -99,16 +101,17 @@ var OutputText: TextBox = TextBox {
 //
 // ===========
 
-var adjacent_words : String[] = ["Red", "Yellow", "Green"];
+//var adjacent_words : String[] = ["Red", "Yellow", "Green"];
 
+//                               any 10 words, since "" == prefix
 var page_array = TPage.getByPrefix(wikt_parsed_conn, "", 10);
 
-class Model {
+/*class Model {
     var action: String;
     var selected_word_index: Integer on replace oldValue {
         action = adjacent_words[selected_word_index];
     }
-}
+}*/
 
 /** todo: language selection
 var word_ComboBox = SwingComboBox {
@@ -121,18 +124,37 @@ var word_ComboBox = SwingComboBox {
             text: p.getPageTitle()
         }
 }*/
-
+/*
+class WordListModel {
+    //var words: String[];
+    var words: SwingListItem[]
+    var selected_word_index: Integer on replace oldValue {
+        delete words;
+        //var i=0;
+        for (p in page_array) {
+            //words[i++] = p.getPageTitle()
+            insert p.getPageTitle() into words
+        }
+        //words = adjacent_words[selected_word_index];
+    }
+}*/
 var word_List = SwingList {
     //translateX: 113
     width: 222
 
     // selectedIndex: 1
-    items: for (p in page_array)
-        SwingListItem {
-            text: p.getPageTitle()
-        }
-}
 
+    items: bind for (p in page_array) SwingListItem{ text: p.getPageTitle() }
+
+    /*
+        items: for (p in page_array)
+            SwingListItem {
+                text: p.getPageTitle()
+            }*/
+    
+    //items: bind WordListModel.words
+    // SwingListItem[]
+}
 
 /*var textDeltaBounds: Rectangle = Rectangle {
     x: 2
@@ -147,18 +169,22 @@ var word_Text: TextBox = TextBox {
     selectOnFocus: false
     text: page_array[0].getPageTitle()
     /*clip: Rectangle {
-        x: bind textDeltaBounds.x
-        y: bind textDeltaBounds.y
-        width: bind (word_Text.width - textDeltaBounds.width)
-        height: bind (word_Text.height - textDeltaBounds.height)
-    }*/
+    x: bind textDeltaBounds.x
+     y: bind textDeltaBounds.y
+     width: bind (word_Text.width - textDeltaBounds.width)
+     height: bind (word_Text.height - textDeltaBounds.height)
+     }*/
     action: function() {
 //        searchCoffeeShops(word_Text.text.trim());
 
     }
     
     onKeyTyped: function(e:KeyEvent) {
-        page_array = TPage.getByPrefix(wikt_parsed_conn, "S", 10);
+        //page_array = TPage.getByPrefix(wikt_parsed_conn, "S", 10);
+        //adjacent_words[0] = "111111";
+        System.out.println("e.code = {e.code}, word_Text.text = {word_Text.text}");
+
+        page_array = TPage.getByPrefix(wikt_parsed_conn, word_Text.text, 10);
 
         /*if(e.code == KeyCode.VK_UP) {
             //bgImage.requestFocus();
