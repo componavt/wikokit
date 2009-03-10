@@ -1,5 +1,5 @@
 wikokit 0.12.6 2009-0?-??
-  common_wiki 131 tests passed, 14 tests failed
+  common_wiki 132 tests passed, 14 tests failed
 
   Project synarcher was renamed to wikokit.
   New home: code.google.com

@@ -86,7 +86,7 @@ public class TLangTest {
     /* This test should go after testInsert(), else you will got a mess in the table 'lang'. */
     @Test
     public void testRecreateTable() {
-        System.out.println("fillDB");
+        System.out.println("recreateTable, fill table `lang`");
         TLang.recreateTable(ruwikt_parsed_conn);
     }
 }
