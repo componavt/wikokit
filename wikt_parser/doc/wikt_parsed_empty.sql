@@ -15,7 +15,7 @@ CREATE  TABLE IF NOT EXISTS `page` (
   `wiki_link_count` INT(6) NOT NULL COMMENT 'number of wikified words (out-bound links) in the article' ,
   `is_in_wiktionary` BOOLEAN NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `page_title` (`page_title` ASC) )
+  UNIQUE INDEX page_title (`page_title` ASC) )
 ENGINE = MyISAM
 COMMENT = 'titles of wiki articles, entry names';
 
@@ -29,7 +29,7 @@ CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name` (`name` ASC) )
+  UNIQUE INDEX name (`name` ASC) )
 ENGINE = MyISAM
 COMMENT = 'The language of the word in question. \n';
 
@@ -44,8 +44,8 @@ CREATE  TABLE IF NOT EXISTS `lang` (
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   `code` VARCHAR(12) NOT NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name` (`name` ASC) ,
-  UNIQUE INDEX `code` (`code` ASC) )
+  UNIQUE INDEX name (`name` ASC) ,
+  UNIQUE INDEX code (`code` ASC) )
 ENGINE = MyISAM
 COMMENT = 'The language of the word in question. \n';
 
@@ -63,10 +63,10 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `etymology_n` TINYINT UNSIGNED NOT NULL ,
   `lemma` VARCHAR(255) NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_pos` (`pos_id` ASC) ,
-  INDEX `fk_lang` (`lang_id` ASC) ,
-  INDEX `fk_page` (`page_id` ASC) ,
-  UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) ,
+  INDEX fk_pos (`pos_id` ASC) ,
+  INDEX fk_lang (`lang_id` ASC) ,
+  INDEX fk_page (`page_id` ASC) ,
+  UNIQUE INDEX page_lang_pos_unique (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) ,
   CONSTRAINT `fk_pos`
     FOREIGN KEY (`pos_id` )
     REFERENCES `part_of_speech` (`id` )
@@ -95,7 +95,7 @@ CREATE  TABLE IF NOT EXISTS `wikipedia` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `page_title` (`page_title` ASC) )
+  UNIQUE INDEX page_title (`page_title` ASC) )
 ENGINE = MyISAM
 COMMENT = 'Titles of related Wikipedia articles.';
 
@@ -108,9 +108,9 @@ DROP TABLE IF EXISTS `page_wikipedia` ;
 CREATE  TABLE IF NOT EXISTS `page_wikipedia` (
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `wikipedia_id` INT(10) UNSIGNED NOT NULL ,
-  INDEX `fk_page_wikipedia_wikipedia` (`wikipedia_id` ASC) ,
-  INDEX `fk_page_wikipedia_page` (`page_id` ASC) ,
-  UNIQUE INDEX `page_wikipedia_unique` (`page_id` ASC, `wikipedia_id` ASC) ,
+  INDEX fk_page_wikipedia_wikipedia (`wikipedia_id` ASC) ,
+  INDEX fk_page_wikipedia_page (`page_id` ASC) ,
+  UNIQUE INDEX page_wikipedia_unique (`page_id` ASC, `wikipedia_id` ASC) ,
   CONSTRAINT `fk_page_wikipedia_wikipedia`
     FOREIGN KEY (`wikipedia_id` )
     REFERENCES `wikipedia` (`id` )
@@ -135,7 +135,7 @@ CREATE  TABLE IF NOT EXISTS `inflection` (
   `freq` INT(11) NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
   `inflected_form` VARCHAR(255) NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `inflected_form` (`inflected_form` ASC) )
+  UNIQUE INDEX inflected_form (`inflected_form` ASC) )
 ENGINE = MyISAM
 COMMENT = 'terms found in wiki-texts';
 
@@ -150,10 +150,10 @@ CREATE  TABLE IF NOT EXISTS `page_inflection` (
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `inflection_id` INT(10) UNSIGNED NOT NULL ,
   `term_freq` INT(6) UNSIGNED NOT NULL COMMENT 'term frequency in the document' ,
-  INDEX `fk_inflection` (`inflection_id` ASC) ,
-  INDEX `fk_page` (`page_id` ASC) ,
+  INDEX fk_inflection (`inflection_id` ASC) ,
+  INDEX fk_page (`page_id` ASC) ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `page_inflection_id_id` (`page_id` ASC, `inflection_id` ASC) ,
+  UNIQUE INDEX page_inflection_id_id (`page_id` ASC, `inflection_id` ASC) ,
   CONSTRAINT `fk_inflection`
     FOREIGN KEY (`inflection_id` )
     REFERENCES `inflection` (`id` )
@@ -207,8 +207,8 @@ CREATE  TABLE IF NOT EXISTS `meaning` (
   `definition` VARCHAR(255) NULL ,
   `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_lang_pos_id` (`lang_pos_id` ASC) ,
-  INDEX `fk_meaning_wiki_text` (`wiki_text_id` ASC) ,
+  INDEX fk_lang_pos_id (`lang_pos_id` ASC) ,
+  INDEX fk_meaning_wiki_text (`wiki_text_id` ASC) ,
   CONSTRAINT `fk_lang_pos_id`
     FOREIGN KEY (`lang_pos_id` )
     REFERENCES `lang_pos` (`id` )
@@ -231,11 +231,12 @@ DROP TABLE IF EXISTS `relation` ;
 CREATE  TABLE IF NOT EXISTS `relation` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
-  `page_id` TINYINT UNSIGNED NOT NULL ,
+  `page_id` INT(10) UNSIGNED NOT NULL ,
+  `relation_type` TINYINT NOT NULL COMMENT 'Synonym, antonym, etc.' ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_meaning` (`meaning_id` ASC) ,
-  INDEX `fk_page` (`page_id` ASC) ,
-  UNIQUE INDEX `page_relation_unique` (`page_id` ASC, `meaning_id` ASC) ,
+  INDEX fk_meaning (`meaning_id` ASC) ,
+  INDEX fk_page (`page_id` ASC) ,
+  UNIQUE INDEX page_relation_unique (`page_id` ASC, `meaning_id` ASC) ,
   CONSTRAINT `fk_meaning`
     FOREIGN KEY (`meaning_id` )
     REFERENCES `meaning` (`id` )
@@ -260,8 +261,8 @@ CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
   `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
   `page_inflection_id` INT(10) UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_words_inflection` (`page_inflection_id` ASC) ,
-  INDEX `fk_words_text` (`wiki_text_id` ASC) ,
+  INDEX fk_words_inflection (`page_inflection_id` ASC) ,
+  INDEX fk_words_text (`wiki_text_id` ASC) ,
   CONSTRAINT `fk_words_inflection`
     FOREIGN KEY (`page_inflection_id` )
     REFERENCES `page_inflection` (`id` )
