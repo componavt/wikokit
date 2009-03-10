@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import java.sql.*;
 
-/** The operations with the table 'page' in MySQL wiktionary_parsed database. */
+/** An operations with the table 'page' in MySQL wiktionary_parsed database. */
 public class TPage {
 
     /** Unique page identifier. */

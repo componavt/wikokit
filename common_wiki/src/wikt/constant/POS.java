@@ -8,6 +8,8 @@ package wikt.constant;
 
 import java.util.Set;
 import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 
 /** Strictly defined names of parts of speech
  * used in all wiktionaries.
@@ -22,14 +24,37 @@ public class POS {
     
     /* Set helps to check the presence of elements */
     private static Set<String>  name_set = new HashSet<String>();
+
+    private static Map<String, POS> name2type = new HashMap<String, POS>();
     
     private POS(String _name) {
         //super(name);  // old
         
         name = _name;   // new
-        name_set.add(_name); 
+        name_set.add(_name);
+        name2type.put(_name, this);
     }
     
+    /** Checks weather exists the part of speech by its name. */
+    public static boolean has(String _name) {
+        return name_set.contains(_name);
+    }
+    
+    /** Gets part of speech by its name */
+    public static POS get(String _name) {
+        return name_set.get(_name);
+    }
+
+    /** Counts number of POS. */
+    public static int size() {
+        return name_set.size();
+    }
+    
+    /** Gets all POS. */
+    public static Set<String> getAllPOS() {
+        return name_set;
+    }
+
     /*
     private final int number;
     private PageNamespace(int number) { this.number = number; }

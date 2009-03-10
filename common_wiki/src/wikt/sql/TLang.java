@@ -7,7 +7,6 @@
 package wikt.sql;
 
 import wikipedia.language.LanguageType;
-import wikipedia.sql.Connect;
 import wikipedia.util.StringUtil;
 
 import java.util.Map;
@@ -16,6 +15,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import wikipedia.sql.Connect;
+import wikipedia.sql.UtilSQL;
 import java.sql.*;
 
 
@@ -54,7 +55,7 @@ public class TLang {
     public static void recreateTable(Connect connect) {
 
         fillLocalMaps();
-        deleteAllRecordsResetAutoIncrement(connect);
+        UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "lang");
         fillDB(connect);
         {
             int db_current_size = wikipedia.sql.Statistics.Count(connect, "lang");
@@ -186,7 +187,7 @@ public class TLang {
      *
      *  DELETE FROM lang WHERE code="ru";
      *
-     * @param  page_title  title of Wiktionary article
+     * @param  lt  language to be deleted
      */
     public static void delete (Connect connect,LanguageType lt) {
 
@@ -212,29 +213,5 @@ public class TLang {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-    }
-    
-    /** Deletes all records from the table 'lang', resets auto increment.
-     *
-     * DELETE FROM lang;
-     * ALTER TABLE lang AUTO_INCREMENT = 0;
-     */
-    private static void deleteAllRecordsResetAutoIncrement (Connect connect) {
-
-        Statement   s = null;
-        ResultSet   rs= null;
-
-        try {
-            s = connect.conn.createStatement ();
-            s.addBatch("DELETE FROM lang;");
-            s.addBatch("ALTER TABLE lang AUTO_INCREMENT = 0;");
-            s.executeBatch();
-
-        } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLang.java deleteAllRecordsResetAutoIncrement()):: sql='DELETE FROM lang; ALTER TABLE lang AUTO_INCREMENT = 0;' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }
-    }
+    }    
 }
