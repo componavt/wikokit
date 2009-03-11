@@ -9,14 +9,14 @@ package wikt.sql;
 
 import wikt.constant.POS;
 
-import wikipedia.util.StringUtil;
+//import wikipedia.util.StringUtil;
 import wikipedia.sql.Connect;
 import wikipedia.sql.UtilSQL;
 import java.sql.*;
 
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.LinkedHashMap;
+//import java.util.Set;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,9 +31,11 @@ public class TPOS {
     
     /** Name of part of speech: code and name, e.g. 'ru' and 'Russian'. */
     private POS pos;
-    
-    private static Map<Integer, POS> id2pos;
 
+    /** Local map from id to POS. It is created from data in POS.java.
+     * It is used to fill the table 'part_of_speech' in right sequence.*/
+    private static Map<Integer, POS> id2pos;
+    
     public TPOS(int _id,POS _pos) {
         id  = _id;
         pos = _pos;
@@ -56,6 +58,7 @@ public class TPOS {
      */
     public static void recreateTable(Connect connect) {
 
+        System.out.println("Recreating the table `part_of_speech`");
         fillLocalMaps();
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "part_of_speech");
         fillDB(connect);
@@ -71,35 +74,25 @@ public class TPOS {
 
         int size = POS.size();
         List<String>list_pos = new ArrayList<String>(size);
-        list_pos.addAll(POS.getAllPOS());
-        Collections.sort(list_pos);
+        list_pos.addAll(POS.getAllPOSNames());
+        Collections.sort(list_pos);             // Collections.sort(list_pos, StringUtil.LEXICOGRAPHICAL_ORDER);
         
-        // OK, we have list of POS names. Sorted list.
-        // list_pos
-
-        id2pos      = new HashMap<Integer, POS>(size);
+        // OK, we have list of POS names. Sorted list 'list_pos'
+        
+        id2pos      = new LinkedHashMap<Integer, POS>(size);
         for(int id=0; id<size; id++) {
-            String pos_name = list_pos.get(id);
-            assert(POS.has(pos_name));
-            id2pos.put(id, POS.g);
-
-            id2pos.put(lang.getCode(), id);
+            String s = list_pos.get(id);    // s - POS name
+            assert(POS.has(s));                                                 //System.out.println("fillLocalMaps---id="+id+"; s="+s);
+            id2pos.put(id, POS.get(s));
         }
     }
-
+    
     /** Fills database table 'part_of_speech' by data from POS class. */
     public static void fillDB(Connect connect) {
 
-        /*for(int id : id2lang.keySet()) {
-            LanguageType lang = id2lang.get(id);
-
-            //if(lang.equals(LanguageType.ru)) {
-              //  int z = 0;
-            //}
-
-            insert (connect, lang.getCode(), lang.getName());     //insert (connect, lang.getCode(), lang.getCode());
-            // insert (connect, lang.getCode(), connect.enc.EncodeFromJava(lang.getName()));
-        }*/
+        for(int id : id2pos.keySet()) {
+            insert (connect, id2pos.get(id));
+        }
     }
 
     /** Inserts record into the table 'part_of_speech'.
@@ -161,7 +154,7 @@ public class TPOS {
                 int id      = rs.getInt("id");
                 tp = new TPOS(id, p);
             } else {
-                    System.err.println("Error: (wikt_parsed TPOS.java get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
+                    System.err.println("Warning: (wikt_parsed TPOS.java get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPOS.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
