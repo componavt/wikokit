@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+//import java.util.Comparator;
 //import java.io.UnsupportedEncodingException;
 
 public class StringUtil {
@@ -422,4 +423,15 @@ public class StringUtil {
             return s;
         return s.substring(0,1).toUpperCase() + s.substring(1);
     }
+
+    /*public static final Comparator<String> LEXICOGRAPHICAL_ORDER = new Comparator<String>() {
+        public int compare(String s1, String s2) {
+
+            int i = s1.compareToIgnoreCase(s2);
+            System.out.println("i="+i+"; s1="+s1+"; s2="+s2);
+            return i;
+
+            //return s1.compareToIgnoreCase(s2);
+        }
+    };*/
 }

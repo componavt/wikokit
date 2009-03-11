@@ -40,8 +40,12 @@ public class TPOSTest {
         System.out.println("insert_ru");
         Connect conn = ruwikt_parsed_conn;
 
-        TPOS.insert(conn, POS.noun);
         TPOS p = null;
+        System.err.println("One warnings may be...");
+        p = TPOS.get(conn, POS.noun);
+        if(null == p) {
+            TPOS.insert(conn, POS.noun);
+        }
         
         // blockhead test
         p = TPOS.get(conn, null);
@@ -51,13 +55,7 @@ public class TPOSTest {
         if(null != p) {
             TPOS.delete(conn, POS.noun);
         }
-
-        //System.err.println("One warnings should be...");
-        TPOS.insert(conn, POS.verb);
-        p = TPOS.get(conn, POS.verb);
-
-        assertTrue(p != null);
-
+        
         int id = p.getID();
         assertTrue(id > 0);
     }

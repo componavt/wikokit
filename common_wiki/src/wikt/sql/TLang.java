@@ -10,7 +10,7 @@ import wikipedia.language.LanguageType;
 import wikipedia.util.StringUtil;
 
 import java.util.Map;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,6 +54,7 @@ public class TLang {
      */
     public static void recreateTable(Connect connect) {
 
+        System.out.println("Recreating the table `lang`");
         fillLocalMaps();
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "lang");
         fillDB(connect);
@@ -79,8 +80,8 @@ public class TLang {
         // OK, we have list of language codes. Sorted list.
         // list_code
 
-        id2lang      = new HashMap<Integer, LanguageType>(size);
-        lang_code2id = new HashMap<String, Integer>(size);
+        id2lang      = new LinkedHashMap<Integer, LanguageType>(size);
+        lang_code2id = new LinkedHashMap<String, Integer>(size);
         for(int id=0; id<size; id++) {
 
             String code = list_code.get(id);
