@@ -10,12 +10,17 @@ import java.util.*;
 //import java.io.*;
 
 import wikt.word.*;
-import wikipedia.sql.PageTableBase;
-import wikipedia.sql.Connect;
+
 import wikipedia.language.LanguageType;
 import wikipedia.category.CategoryHyponyms;
 import wikt.mrd.Keeper;
+
+import wikipedia.sql.PageTableBase;
+import wikipedia.sql.Connect;
+import wikipedia.sql.UtilSQL;
+
 import wikt.sql.TLang;
+import wikt.sql.TPOS;
 
 /** Top level functions for Wiktionary parsing.
  *
@@ -79,6 +84,8 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         t_start = System.currentTimeMillis();
 
         TLang.recreateTable(wikt_parsed_conn);
+        TPOS.recreateTable(wikt_parsed_conn);
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page");
 
         // 1. get wiki-text from MySQL database
         // variant A. Get all articles

@@ -1,4 +1,5 @@
-/* TPage.java - SQL operations with the table 'page' in Wiktionary parsed database.
+/* TLangPOS.java - SQL operations with the table 'lang_pos' in Wiktionary
+ * parsed database.
  *
  * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
@@ -7,77 +8,43 @@
 package wikt.sql;
 
 import wikipedia.sql.Connect;
-import wikipedia.sql.PageTableBase;
-import wikipedia.language.Encodings;
-//import wikipedia.util.StringUtil;
-
-import java.util.List;
-import java.util.ArrayList;
 
 import java.sql.*;
 
-/** An operations with the table 'page' in MySQL wiktionary_parsed database. */
-public class TPage {
-    
-    /** Unique page identifier. */
+/** An operations with the table 'lang_pos' in MySQL wiktionary_parsed database.
+ *
+ * @see wikt.word.WPOS
+ */
+public class TLangPOS {
+
+    /** Unique identifier in the table lang_pos. */
     private int id;
 
     /** Title of the wiki page, word. */
-    private String page_title;
+    private TPage page;                 // int page_id;
 
-    /** Size of the page in words. */
-    private int word_count;
+    /** Language. */
+    private TLang lang;                 // int lang_id
+
+    /** Part of speech. */
+    private TPOS pos;                   // int pos_id
     
-    /** Size of the page as a number of wikified words at the page
-     * (number of out-links). */
-    private int wiki_link_count;
+    /** Etymology number. */
+    //private TEtymology etimology;     // int etymology_id
+    // see WPOSRu.splitToPOSSections in WPOSRuTest.java
 
-    /** true, if the page_title exists in Wiktionary
-     * false, if the page_title exists only as a [[|wikified word]] */
-    private boolean is_in_wiktionary;
-    
-    private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
+    /** A lemma of word described at the page 'Page'. */
+    private String lemma;
 
-    public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {
+    //private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
+
+    /*public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {
         id              = _id;
         page_title      = _page_title;
         word_count      = _word_count;
         wiki_link_count = _wiki_link_count;
         is_in_wiktionary = _is_in_wiktionary;
-    }
-
-    /*public void init() {
-        id              = 0;
-        page_title      = "";
-        word_count      = 0;
-        wiki_link_count = 0;
-        is_in_wiktionary = false;
     }*/
-    
-    /** Gets unique ID from database */
-    public int getID() {
-        return id;
-    }
-
-    /** Gets number of words, size of the page in words. */
-    public int getWordCount() {
-        return word_count;
-    }
-
-    /** Gets number of out-links, size of the page as a number of wikified words. */
-    public int getWikiLinkCount() {
-        return wiki_link_count;
-    }
-
-    /** Returns true, if the page_title exists in Wiktionary. */
-    public boolean isInWiktionary() {
-        return is_in_wiktionary;
-    }
-
-    /** Gets title of the wiki page, word. */
-    public String getPageTitle() {
-        return page_title;
-    }
 
     /** Inserts record into the table 'page'.
      *
@@ -88,16 +55,18 @@ public class TPage {
      * @param wiki_link_count number of wikified words at the page
      * @param is_in_wiktionary true, if the page_title exists in Wiktionary
      */
-    public static void insert (Connect connect,String page_title,int word_count,int wiki_link_count,
-            boolean is_in_wiktionary) {
+    public static void insert (Connect connect,TPage page,TLang lang,TPOS pos) {
+            // todo:
+            // int etymology_n,
+            // String lemma) {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        try
+        /*try
         {
             s = connect.conn.createStatement ();
             str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
-            
+
             String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
             str_sql.append(safe_title);
             str_sql.append("\",");
@@ -114,7 +83,7 @@ public class TPage {
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }
+        }*/
     }
 
     /** Selects row from the table 'page' by the page_title.
@@ -126,16 +95,16 @@ public class TPage {
      */
     public static TPage get (Connect connect,String page_title) {
 
-        Statement   s = null;
+        /*Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         TPage       tp = null;
-        
+
         try {
             s = connect.conn.createStatement ();
 
             String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
-                                
+
             str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
@@ -148,7 +117,7 @@ public class TPage {
                 int word_count      = rs.getInt("word_count");
                 int wiki_link_count = rs.getInt("wiki_link_count");
                 boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
-                
+
                 tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
             }
         } catch(SQLException ex) {
@@ -157,71 +126,11 @@ public class TPage {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-        return tp;
+        return tp;*/
+                return null;
     }
 
-    /** Selects row from the table 'page', WHERE page_title starts from 'prefix',
-     * result list is constrained by 'limit'.
-     *
-     * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE 'S%' LIMIT 1;
-     * 
-     * @param  limit    constraint of the number of rows returned, if it's negative then a constraint is omitted
-     * @param  prefix   the begining of the page_titles
-     * @return null if page_title is absent
-     */
-    public static TPage[] getByPrefix (Connect connect,String prefix,int limit) {
-        
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
-        List<TPage> tp_list = null;
-        
-        if(0==limit)
-            return NULL_TPAGE_ARRAY;
-            
-        try {
-            s = connect.conn.createStatement ();
-            String safe_prefix = PageTableBase.convertToSafeStringEncodeToDB(connect, prefix);
-            str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE \"");
-            str_sql.append(safe_prefix);
-            str_sql.append("%\"");
-            
-            if(limit > 0) {
-                str_sql.append(" LIMIT ");
-                str_sql.append(limit);
-            }
-            
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
-            boolean b_first = true;
-            while (rs.next ())
-            {
-                if(b_first) {
-                    tp_list = new ArrayList<TPage>();
-                    b_first = false;
-                }
 
-                int id              = rs.getInt("id");
-                int word_count      = rs.getInt("word_count");
-                int wiki_link_count = rs.getInt("wiki_link_count");
-                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
-                String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
-                
-                TPage tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
-                tp_list.add(tp);
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }
-
-        if(null == tp_list)
-            return NULL_TPAGE_ARRAY;
-
-        return( (TPage[])tp_list.toArray(NULL_TPAGE_ARRAY) );
-    }
 
     /** Deletes row from the table 'page' by the page_title.
      *
@@ -234,7 +143,7 @@ public class TPage {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        try {
+        /*try {
             s = connect.conn.createStatement ();
 
             String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
@@ -242,7 +151,7 @@ public class TPage {
             str_sql.append("DELETE FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
-            
+
             s.execute (str_sql.toString());
 
         } catch(SQLException ex) {
@@ -250,7 +159,9 @@ public class TPage {
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }
+        }*/
     }
-    
+
+
+
 }

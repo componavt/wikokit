@@ -54,7 +54,7 @@ public class TLang {
      */
     public static void recreateTable(Connect connect) {
 
-        System.out.println("Recreating the table `lang`");
+        System.out.println("Recreating the table `lang`...");
         fillLocalMaps();
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "lang");
         fillDB(connect);
