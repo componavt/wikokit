@@ -58,7 +58,7 @@ public class TPOS {
      */
     public static void recreateTable(Connect connect) {
 
-        System.out.println("Recreating the table `part_of_speech`");
+        System.out.println("Recreating the table `part_of_speech`...");
         fillLocalMaps();
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "part_of_speech");
         fillDB(connect);

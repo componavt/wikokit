@@ -33,6 +33,7 @@ import java.util.Map;
  * # Translation        </PRE>
  *
  * See http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
+ * @see wikt.sql.TLangPOS
  */
 public class WPOS {
     
