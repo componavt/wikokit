@@ -54,7 +54,7 @@ public class Main {
         wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
         
-        category_name = "Кандидаты в избранные статьи";
+        category_name = "Слово дня";
             // "Статья недели", "Слово дня"
             // "Кандидаты в избранные статьи", "Статьи со ссылками на Википедию"
             // "Статьи с звучащими примерами произношения", "Статьи с иллюстрациями", 
