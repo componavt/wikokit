@@ -1,4 +1,4 @@
-/* Main.fx - visualization data to MRD Wiktionary database (wikt_parsed).
+/* Main.fx - visualization of parsed Wiktionary database (wikt_parsed).
  *
  * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
