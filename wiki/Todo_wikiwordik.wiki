@@ -7,3 +7,9 @@ Todo:
   * Word history list (drop down menu with history);
   * Click on word fills the input text window;
   * If word is changed then the selected word is selected in the middle of SwingList;
+
+= DB layout changes =
+
+Todo:
+  # remove the field `meaning.definition`
+  # field `lang.name` is NOT unique, only `.code` is unique
