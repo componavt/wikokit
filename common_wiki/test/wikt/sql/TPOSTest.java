@@ -59,6 +59,23 @@ public class TPOSTest {
         int id = p.getID();
         assertTrue(id > 0);
     }
+
+    @Test
+    public void testGetID() {
+        System.out.println("getID");
+        
+        // once upon a time: create Wiktionary parsed db
+        TPOS.recreateTable(ruwikt_parsed_conn);
+
+        // once upon a time: use Wiktionary parsed db
+        TPOS.createFastMaps(ruwikt_parsed_conn);
+
+        // and every usual day
+        int noun_id = TPOS.getIDFast(ruwikt_parsed_conn, POS.noun);
+
+        TPOS tpos = TPOS.get(ruwikt_parsed_conn, POS.noun);
+        assertEquals(tpos.getID(), noun_id);
+    }
     
     @Test
     public void testRecreateTable() {

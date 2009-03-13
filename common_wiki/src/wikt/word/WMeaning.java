@@ -8,6 +8,7 @@
 package wikt.word;
 
 import wikt.util.WikiWord;
+import wikt.util.WikiText;
 import wikt.constant.ContextLabel;
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;
@@ -25,11 +26,13 @@ public class WMeaning {
     /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s" */
     private ContextLabel[]  labels;
 
+    private WikiText definition;
+
     /** Word definition, e.g. "bullets" from text "# {{idiom}} [[bullet]]s" */
-    private StringBuffer    definition;
+    //private StringBuffer    definition;
 
     /** Wiki internal links, e.g. "bullet" from text "# {{idiom}} [[bullet]]s" */
-    private WikiWord[] wiki_words;
+    //private WikiWord[] wiki_words;
     
     /** Example sentences. */
     private WQuote[] quote;
@@ -40,14 +43,19 @@ public class WMeaning {
     public WMeaning() {
         labels = null;
         definition = null;
-        wiki_words = null;
         quote = null;
     }
 
-    public WMeaning(ContextLabel[] _labels, String _definition, WikiWord[] _wiki_words, WQuote[] _quote) {
+    /** Constructor.
+     *
+     * @param page_title
+     * @param _labels
+     * @param _definition wikified text of the definition
+     * @param _quote
+     */
+    public WMeaning(String page_title,ContextLabel[] _labels, String _definition, WQuote[] _quote) {
         labels = _labels;
-        definition = new StringBuffer(_definition);
-        wiki_words = _wiki_words;
+        definition = WikiText.createOnePhrase(page_title, _definition);
         quote = _quote;
     }
     
@@ -58,12 +66,12 @@ public class WMeaning {
 
     /** Gets definition line of text. */
     public String getDefinition() {
-        return definition.toString();
+        return definition.getVisibleText();
     }
     
     /** Gets array of internal links in the definition (wiki words, i.e. words with hyperlinks). */
     public WikiWord[] getWikiWords() {
-        return wiki_words;
+        return definition.getWikiWords();
     }
     
     /** Gets array of quotes (sentences) from the definition. */

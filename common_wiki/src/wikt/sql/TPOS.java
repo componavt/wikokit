@@ -12,11 +12,13 @@ import wikt.constant.POS;
 //import wikipedia.util.StringUtil;
 import wikipedia.sql.Connect;
 import wikipedia.sql.UtilSQL;
+import wikipedia.sql.Statistics;
 import java.sql.*;
 
 import java.util.Map;
 import java.util.LinkedHashMap;
 //import java.util.Set;
+import java.util.Collection;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,9 +34,14 @@ public class TPOS {
     /** Name of part of speech: code and name, e.g. 'ru' and 'Russian'. */
     private POS pos;
 
-    /** Local map from id to POS. It is created from data in POS.java.
-     * It is used to fill the table 'part_of_speech' in right sequence.*/
-    private static Map<Integer, POS> id2pos;
+    /** Map from ID to part of speech. It is created from data
+     * in the table `part_of_speech`, which is created from data in POS.java.*/
+    private static Map<Integer, TPOS> id2pos;
+    
+    /** Map from part of speech to ID.*/
+    private static Map<POS, Integer> pos2id;
+
+    private final static TPOS[] NULL_TPOS_ARRAY = new TPOS[0];
     
     public TPOS(int _id,POS _pos) {
         id  = _id;
@@ -51,6 +58,77 @@ public class TPOS {
         return pos;
     }
     
+    /** Gets part of speech (POS with ID) from the table 'lang_pos'.<br><br>
+     *
+     * REM: createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static int getIDFast(Connect connect,POS p) {
+        return pos2id.get(p);
+    }
+
+    /** Gets language by ID from the table 'lang'.<br><br>
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static TPOS getTPOSFast(Connect connect,int id) {
+        return id2pos.get(id);
+    }
+    
+    /** Read all records from the table 'lang',
+     * fills the internal map from a table ID to a language.
+     * 
+     * REM: during a creation of Wikrtionary parsed database
+     * the functions recreateTable() should be called.
+     */
+    public static void createFastMaps(Connect connect) {
+
+        System.out.println("Loading table `part_of_speech`...");
+        
+        TPOS[] tpos = getAllTPOS(connect);
+        int size = tpos.length;
+        if(tpos.length != POS.size()) {
+            System.out.println("Warning (wikt_parsed TPOS.java createFastMaps()):: POS.size (" + POS.size()
+                    + ") is not equal to size of table 'lang_pos'("+ size +"). Is the database outdated?");
+        }
+
+        if(null != id2pos && id2pos.size() > 0)
+            id2pos.clear();
+        if(null != pos2id && pos2id.size() > 0)
+            pos2id.clear();
+        
+        id2pos  = new LinkedHashMap<Integer, TPOS>(size);
+        pos2id  = new LinkedHashMap<POS, Integer>(size);
+        
+        for(TPOS t : tpos) {
+            id2pos.put(t.getID(), t);
+            pos2id.put(t.getPOS(), t.getID());
+        }
+    }
+
+    /** Gets all records from the table 'part_of_speech'.
+     */
+    private static TPOS[] getAllTPOS(Connect connect) {
+
+        int size = Statistics.Count(connect, "part_of_speech");
+        if(0==size) {
+            System.err.println("Error (wikt_parsed TPOS.java getAllTPOS()):: The table `part_of_speech` is empty!");
+            return NULL_TPOS_ARRAY;
+        }
+        
+        List<TPOS>tpos_list = new ArrayList<TPOS>(size);
+
+        Collection<POS> pp = POS.getAllPOS();
+        for(POS p : pp) {
+            TPOS t = get(connect, p);
+            if(null != t)
+                tpos_list.add(t);
+        }
+        return( (TPOS[])tpos_list.toArray(NULL_TPOS_ARRAY) );
+    }
+
+
     /** Deletes all records from the table 'part_of_speech',
      * loads parts of speech names from POS.java,
      * sorts by name,
@@ -59,9 +137,9 @@ public class TPOS {
     public static void recreateTable(Connect connect) {
 
         System.out.println("Recreating the table `part_of_speech`...");
-        fillLocalMaps();
+        Map<Integer, POS> id2pos = fillLocalMaps();
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "part_of_speech");
-        fillDB(connect);
+        fillDB(connect, id2pos);
         {
             int db_current_size = wikipedia.sql.Statistics.Count(connect, "part_of_speech");
             assert(db_current_size == POS.size()); // ~ 12 POS
@@ -70,7 +148,7 @@ public class TPOS {
 
     /** Load data from a POS class, sorts,
      * and fills the local map 'id2pos'. */
-    public static void fillLocalMaps() {
+    public static Map<Integer, POS> fillLocalMaps() {
 
         int size = POS.size();
         List<String>list_pos = new ArrayList<String>(size);
@@ -78,17 +156,20 @@ public class TPOS {
         Collections.sort(list_pos);             // Collections.sort(list_pos, StringUtil.LEXICOGRAPHICAL_ORDER);
         
         // OK, we have list of POS names. Sorted list 'list_pos'
-        
-        id2pos      = new LinkedHashMap<Integer, POS>(size);
+
+        // Local map from id to POS. It is created from data in POS.java.
+        // It is used to fill the table 'part_of_speech' in right sequence.
+        Map<Integer, POS> id2pos = new LinkedHashMap<Integer, POS>(size);
         for(int id=0; id<size; id++) {
             String s = list_pos.get(id);    // s - POS name
             assert(POS.has(s));                                                 //System.out.println("fillLocalMaps---id="+id+"; s="+s);
             id2pos.put(id, POS.get(s));
         }
+        return id2pos;
     }
     
     /** Fills database table 'part_of_speech' by data from POS class. */
-    public static void fillDB(Connect connect) {
+    public static void fillDB(Connect connect,Map<Integer, POS> id2pos) {
 
         for(int id : id2pos.keySet()) {
             insert (connect, id2pos.get(id));
@@ -123,7 +204,7 @@ public class TPOS {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
-
+    
     /** Selects row from the table 'part_of_speech' by a POS name.
      *
      *  SELECT id FROM part_of_speech WHERE name="noun";

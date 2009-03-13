@@ -9,16 +9,16 @@ package wikt.sql;
 import wikipedia.language.LanguageType;
 import wikipedia.util.StringUtil;
 
+import wikipedia.sql.Connect;
+import wikipedia.sql.UtilSQL;
+import wikipedia.sql.Statistics;
+import java.sql.*;
+
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import wikipedia.sql.Connect;
-import wikipedia.sql.UtilSQL;
-import java.sql.*;
-
 
 /** Table lang contains list of languages: name and ID. */
 public class TLang {
@@ -29,9 +29,15 @@ public class TLang {
     /** Languages of wiki: code and name, e.g. 'ru' and 'Russian'. */
     private LanguageType lang;
 
-    private static Map<Integer, LanguageType> id2lang;         //= new HashMap<Integer, LanguageType>();
-    private static Map<String, Integer>          lang_code2id; //= new HashMap<String, Integer>();
+    /** Map from id to language. It is created from data in the table `lang`,
+     * which is created from data in LanguageType.java.*/
+    private static Map<Integer, TLang> id2lang;
 
+    /** Map from language to id.*/
+    private static Map<LanguageType, Integer> lang2id;
+
+    private final static TLang[] NULL_TLANG_ARRAY = new TLang[0];
+    
     public TLang(int _id,LanguageType _lang) {
         id      = _id;
         lang    = _lang;
@@ -46,7 +52,77 @@ public class TLang {
     public LanguageType getLanguage() {
         return lang;
     }
-    
+
+    /** Gets language ID from the table 'lang'.<br><br>
+     * 
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static int getIDFast(Connect connect,LanguageType lt) {
+        return lang2id.get(lt);
+    }
+
+    /** Gets language by ID from the table 'lang'.<br><br>
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */  
+    public static TLang getTLangFast(Connect connect,int id) {
+        return id2lang.get(id);
+    }
+
+    /** Read all records from the table 'lang',
+     * fills the internal map from a table ID to a language.
+     * 
+     * REM: during a creation of Wikrtionary parsed database
+     * the functions recreateTable() should be called.
+     */
+    public static void createFastMaps(Connect connect) {
+
+        System.out.println("Loading table `lang`...");
+        
+        TLang[] tlangs = getAllTLang(connect);
+        int size = tlangs.length;
+        if(tlangs.length != LanguageType.size()) {
+            System.out.println("Warning (wikt_parsed TLang.java createFastMaps()):: LanguageType.size (" + LanguageType.size()
+                    + ") is not equal to size of table 'lang'("+ size +"). Is the database outdated?");
+        }
+
+        if(null != id2lang && id2lang.size() > 0)
+            id2lang.clear();
+        if(null != lang2id && lang2id.size() > 0)
+            lang2id.clear();
+        
+        id2lang  = new LinkedHashMap<Integer, TLang>(size);
+        lang2id  = new LinkedHashMap<LanguageType, Integer>(size);
+        
+        for(TLang t : tlangs) {
+            id2lang.put(t.getID(), t);
+            lang2id.put(t.getLanguage(), t.getID());
+        }
+    }
+
+    /** Gets all records from the table 'lang'.
+     */
+    private static TLang[] getAllTLang(Connect connect) {
+
+        int size = Statistics.Count(connect, "lang");
+        if(0==size) {
+            System.err.println("Error (wikt_parsed TLang.java getAllTLang()):: The table `lang` is empty!");
+            return NULL_TLANG_ARRAY;
+        }
+        
+        List<TLang>tlang_list = new ArrayList<TLang>(size);
+
+        Map<String, LanguageType> ll = LanguageType.getAllLanguages();
+        for(LanguageType l : ll.values()) {
+            TLang t = get(connect, l);
+            if(null != t)
+                tlang_list.add(t);
+        }
+        return( (TLang[])tlang_list.toArray(NULL_TLANG_ARRAY) );
+    }
+
     /** Deletes all records from the table 'lang',
      * loads language code and name from LanguageType.java,
      * sorts by language code,
@@ -54,10 +130,13 @@ public class TLang {
      */
     public static void recreateTable(Connect connect) {
 
+        //Map<Integer, LanguageType> id2lang          = null; //= new HashMap<Integer, LanguageType>();
+        //Map<String, Integer>          lang_code2id  = null; //= new HashMap<String, Integer>();
+
         System.out.println("Recreating the table `lang`...");
-        fillLocalMaps();
+        Map<Integer, LanguageType> id2lang = fillLocalMaps();
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "lang");
-        fillDB(connect);
+        fillDB(connect, id2lang);
         {
             int db_current_size = wikipedia.sql.Statistics.Count(connect, "lang");
             assert(db_current_size == LanguageType.size()); // 356 languages
@@ -66,7 +145,7 @@ public class TLang {
     
     /** Load data from a LanguageType class, sorts,
      * and fills local maps 'id2lang' and 'lang_code2id'. */
-    public static void fillLocalMaps() {
+    private static Map<Integer, LanguageType> fillLocalMaps() {         //Map<String, Integer>          lang_code2id
 
         int size = LanguageType.size();
         Map<String, LanguageType> code2lang = LanguageType.getAllLanguages();
@@ -80,19 +159,18 @@ public class TLang {
         // OK, we have list of language codes. Sorted list.
         // list_code
 
-        id2lang      = new LinkedHashMap<Integer, LanguageType>(size);
-        lang_code2id = new LinkedHashMap<String, Integer>(size);
+        Map<Integer, LanguageType> id2lang = new LinkedHashMap<Integer, LanguageType>(size);    //lang_code2id = new LinkedHashMap<String, Integer>(size);
         for(int id=0; id<size; id++) {
 
             String code = list_code.get(id);
             LanguageType lang = code2lang.get(code);
-            id2lang.put(id, lang);
-            lang_code2id.put(lang.getCode(), id);
+            id2lang.put(id, lang);                      //lang_code2id.put(lang.getCode(), id);
         }
+        return id2lang;
     }
     
     /** Fills database table 'lang' by data from LanguageType class. */
-    public static void fillDB(Connect connect) {
+    private static void fillDB(Connect connect, Map<Integer, LanguageType> id2lang) {
         
         for(int id : id2lang.keySet()) {
             LanguageType lang = id2lang.get(id);
@@ -166,12 +244,13 @@ public class TLang {
             if (rs.next ())
             {
                 int id      = rs.getInt("id");
-                String name = rs.getString("name");
+                String name = StringUtil.underscoreToSpace(rs.getString("name"));
                 tp = new TLang(id, lt);
-
-                if(!lt.getName().equalsIgnoreCase(name)) {
-                    System.err.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name);
-                }
+                
+                /*if(!lt.getName().equalsIgnoreCase(name)) { // cause: field lang.name is NOT unique, only .code is unique
+                    System.err.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name +
+                            " (language code = " + lt.getCode() + ")");
+                }*/
             } else {
                     System.err.println("Error: (wikt_parsed TLang.java get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
             }
