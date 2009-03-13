@@ -134,7 +134,7 @@ public class LanguageType {
 
     public static final LanguageType zh_classical = new LanguageType("zh-classical", "ж–‡иЁЂ", "Classical Chinese/Literary Chinese");
     public static final LanguageType zh_min_nan = new LanguageType("zh-min-nan", "BГўn-lГўm-gГє", "Min-nan -- (see bug 8217)");
-    public static final LanguageType zh_yue = new LanguageType("zh-yue", "зІµиЄћ", "Cantonese -- (see bug 8217)");
+    public static final LanguageType zh_yue = new LanguageType("zh-yue", "зІµиЄћ", "Cantonese");
 
     public static final LanguageType zu = new LanguageType("zu", "isiZulu", "Cantonese");
     public static final LanguageType tlh = new LanguageType("tlh", "tlhIngan-Hol", "Klingon"); // - no interlanguage links allowed
@@ -181,6 +181,8 @@ public class LanguageType {
     public static final LanguageType tt_cyrl = new LanguageType("tt-cyrl", "РўР°С‚Р°СЂС‡Р°", "Tatar (Cyrillic script)");
     public static final LanguageType tt_latn = new LanguageType("tt-latn", "TatarГ§a", "Tatar (Latin script)");
 
+    public static final LanguageType yue = new LanguageType("yue", "зІµиЄћ", "Cantonese");
+    
     // automatically
     /** Vim commands to convert mediawiki/languages/Names.php to the following
      * lines:
@@ -381,8 +383,8 @@ public class LanguageType {
     public static final LanguageType myv = new LanguageType("myv", "Р­СЂР·СЏРЅСЊ", "Erzya");
     public static final LanguageType mzn = new LanguageType("mzn", "Щ…ЩЋШІЩђШ±Щ€Щ†ЩЉ", "Mazanderani");
     public static final LanguageType na = new LanguageType("na", "Dorerin Naoero", "Nauruan");
-    public static final LanguageType nah = new LanguageType("nah", "NДЃhuatl", "Nahuatl, en:Wikipedia writes Nahuatlahtolli, while another form is NГЎhuatl");
-    public static final LanguageType nan = new LanguageType("nan", "BГўn-lГўm-gГє", "Min-nan -- (bug 8217) nan instead of zh-min-nan, http://www.sil.org/iso639-3/codes.asp?order=639_3&letter=n");
+    public static final LanguageType nah = new LanguageType("nah", "NДЃhuatl", "Nahuatl");
+    public static final LanguageType nan = new LanguageType("nan", "BГўn-lГўm-gГє", "Min-nan");
     public static final LanguageType nap = new LanguageType("nap", "Nnapulitano", "Neapolitan");
     
     public static final LanguageType ne = new LanguageType("ne", "а¤ЁаҐ‡а¤Єа¤ѕа¤ІаҐЂ", "Nepali");
@@ -504,7 +506,7 @@ public class LanguageType {
     public static final LanguageType ydd = new LanguageType("ydd", "ЧћЧ™Ч–ЧЁЧ—ЦѕЧ™Ч™ЦґЧ“Ч™Ч©", "Eastern Yiddish");
     public static final LanguageType yi = new LanguageType("yi", "Ч™Ч™ЦґЧ“Ч™Ч©", "Yiddish");
     public static final LanguageType yo = new LanguageType("yo", "YorГ№bГЎ", "Yoruba");
-    public static final LanguageType yue = new LanguageType("yue", "зІµиЄћ", "Cantonese -- (bug 8217) yue instead of zh-yue, http://www.sil.org/iso639-3/codes.asp?order=639_3&letter=y");
+    
     public static final LanguageType za = new LanguageType("za", "(Cuengh)", "Zhuang");
     public static final LanguageType zea = new LanguageType("zea", "ZeГЄuws", "Zeeuws/Zeaws");
     public static final LanguageType zh = new LanguageType("zh", "дё­ж–‡", "(ZhЕЌng WГ©n) - Chinese");

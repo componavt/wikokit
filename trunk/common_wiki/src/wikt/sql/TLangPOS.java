@@ -30,12 +30,12 @@ public class TLangPOS {
     private TPOS pos;                   // int pos_id
     
     /** Etymology number. */
-    //private TEtymology etimology;     // int etymology_id
+    private int etymology_id;           //private TEtymology etimology;     // int etymology_id
     // see WPOSRu.splitToPOSSections in WPOSRuTest.java
 
     /** A lemma of word described at the page 'Page'. */
     private String lemma;
-
+    
     //private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
 
     /*public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {
@@ -86,14 +86,15 @@ public class TLangPOS {
         }*/
     }
 
-    /** Selects row from the table 'page' by the page_title.
+    /** Selects rows from the table 'lang_pos' by the page_id, lang_id, pos_id.
      *
-     *  SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title="apple";
+     *  SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM lang_pos WHERE page_title="apple";
      *
-     * @param  page_title  title of Wiktionary article
-     * @return null if page_title is absent
+     * @param  lang language of Wiktionary article, if lang==null then language are not used in order to filter data
+     * @param  pos part of speech of Wiktionary article, if pos==null then POS are not used in order to filter data
+     * @return null if data is absent
      */
-    public static TPage get (Connect connect,String page_title) {
+    public static TLangPOS[] get (Connect connect,TPage page,TLang lang,TPOS pos) {
 
         /*Statement   s = null;
         ResultSet   rs= null;
@@ -138,7 +139,7 @@ public class TLangPOS {
      *
      * @param  page_title  title of Wiktionary article
      */
-    public static void delete (Connect connect,String page_title) {
+    public static void delete (Connect connect,TPage page) {
 
         Statement   s = null;
         ResultSet   rs= null;

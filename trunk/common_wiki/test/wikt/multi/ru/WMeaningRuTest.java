@@ -57,7 +57,8 @@ public class WMeaningRuTest {
         lang_section    = LanguageType.ru; // Russian word
 
         ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
-        String _definition = "летательный аппарат тяжелее воздуха с жёстким крылом и собственным мотором";
+        String _definition_wiki = "летательный [[аппарат]] тяжелее [[воздух]]а с жёстким [[крыло]]м и собственным [[мотор]]ом";
+        String _definition      = "летательный аппарат тяжелее воздуха с жёстким крылом и собственным мотором";
         WikiWord[] ww = new WikiWord[4];
 
         //WikiWord(String _word_visible, String _word_link, ContextLabel[] _labels) {
@@ -69,7 +70,7 @@ public class WMeaningRuTest {
         
         WQuote[] _quote = null;
 
-        WMeaning expResult = new WMeaning(_labels, _definition, ww, _quote);      // expResult[0] = new WMeaning();
+        WMeaning expResult = new WMeaning(page_title, _labels, _definition_wiki, _quote);      // expResult[0] = new WMeaning();
 
         line =  "# летательный [[аппарат]] тяжелее [[воздух]]а с жёстким [[крыло]]м и собственным [[мотор]]ом {{пример|Самолёт-истребитель.}} {{пример|Военный cамолёт.}} {{пример|Эскадрилья самолётов.}}";
         

@@ -35,14 +35,7 @@ public class TLangTest {
     public void tearDown() {
         ruwikt_parsed_conn.Close();
     }
-
     
-    @Test
-    public void testFillLocalMaps() {
-        System.out.println("fillLocalMaps");
-        TLang.fillLocalMaps();
-    }
-
     @Test
     public void testInsert() {
         System.out.println("insert_ru");
@@ -82,7 +75,24 @@ public class TLangTest {
         //p = TLang.get(conn, lt);
         //assertTrue(p == null);
     }
+    
+    @Test
+    public void testGetID() {
+        System.out.println("getID");
+        
+        // once upon a time: create Wiktionary parsed db
+        TLang.recreateTable(ruwikt_parsed_conn);
 
+        // once upon a time: use Wiktionary parsed db
+        TLang.createFastMaps(ruwikt_parsed_conn);
+
+        // and every usual day
+        int os_id = TLang.getIDFast(ruwikt_parsed_conn, LanguageType.os);
+
+        TLang tlang = TLang.get(ruwikt_parsed_conn, LanguageType.os);
+        assertEquals(tlang.getID(), os_id);
+    }
+    
     /* This test should go after testInsert(), else you will got a mess in the table 'lang'. */
     @Test
     public void testRecreateTable() {

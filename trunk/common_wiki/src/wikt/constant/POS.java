@@ -10,7 +10,7 @@ import java.util.Set;
 //import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
-//import java.util.Collection;
+import java.util.Collection;
 
 /** Strictly defined names of parts of speech
  * used in all wiktionaries.
@@ -53,9 +53,9 @@ public class POS {
     }
     
     /** Gets all POS. */
-    /*public static Collection<POS> getAllPOS() {
+    public static Collection<POS> getAllPOS() {
         return name2type.values();
-    }*/
+    }
 
     /** Gets all POS. */
     public static Set<String> getAllPOSNames() {

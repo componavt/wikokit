@@ -120,23 +120,22 @@ public class WMeaningRu {
         // todo
         // ...
         ContextLabel[] labels = new ContextLabel[0];
-
+        
         // extract definition by parsing wiki-text
-
+        
         // 2. extract text till first {{пример|
         String wiki_definition = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, line);
 
         // 3. parsing wiki-text
-        StringBuffer definition = WikiWord.parseDoubleBrackets(page_title, new StringBuffer(wiki_definition));
-
+        //StringBuffer definition = WikiWord.parseDoubleBrackets(page_title, new StringBuffer(wiki_definition));
         // 4. extract wiki-links (internal links)
-        WikiWord[] ww = WikiWord.getWikiWords(page_title, new StringBuffer(wiki_definition));
+        //WikiWord[] ww = WikiWord.getWikiWords(page_title, new StringBuffer(wiki_definition));
 
         // 5. extract quotations
         // todo ...
         WQuote[] quote = null;
-
-        return new WMeaning(labels, definition.toString(), ww, quote);
+        
+        return new WMeaning(page_title, labels, wiki_definition, quote);
     }
 
 }

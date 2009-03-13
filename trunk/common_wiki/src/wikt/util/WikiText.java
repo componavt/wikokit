@@ -51,7 +51,7 @@ public class WikiText {
     /** Parses text, creates array of wiki words (words with hyperlinks),
      * e.g. text is "[[little]] [[bell]]", wiki_words[]="little", "bell"
      */
-    private static WikiText createOnePhrase(String page_title, String text)
+    public static WikiText createOnePhrase(String page_title, String text)
     {
         if(0 == text.trim().length()) {
             return null;
