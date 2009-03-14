@@ -10,6 +10,9 @@ Todo:
 
 = DB layout changes =
 
-Todo:
+Todo now:
   # remove the field `meaning.definition`
   # field `lang.name` is NOT unique, only `.code` is unique
+
+In future:
+  # rename `lang_pos.etymology_n` to `lang_pos.etymology_id`, create table `etymology`
