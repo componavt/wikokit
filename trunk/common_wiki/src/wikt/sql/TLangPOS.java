@@ -7,9 +7,14 @@
 
 package wikt.sql;
 
+import wikipedia.language.Encodings;
+import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
-
 import java.sql.*;
+
+import java.util.List;
+import java.util.ArrayList;
+
 
 /** An operations with the table 'lang_pos' in MySQL wiktionary_parsed database.
  *
@@ -36,131 +41,186 @@ public class TLangPOS {
     /** A lemma of word described at the page 'Page'. */
     private String lemma;
     
-    //private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
+    private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];
 
-    /*public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {
+    public TLangPOS(int _id,TPage _page,TLang _lang,TPOS _pos,int _etymology_id,String _lemma) {
         id              = _id;
-        page_title      = _page_title;
-        word_count      = _word_count;
-        wiki_link_count = _wiki_link_count;
-        is_in_wiktionary = _is_in_wiktionary;
-    }*/
+        page            = _page;
+        lang            = _lang;
+        pos             = _pos;
+        etymology_id    = _etymology_id;
+        lemma           = _lemma;
+    }
+
+    /** Gets unique ID from database */
+    public int getID() {
+        return id;
+    }
+
+    /** Gets page from database */
+    public TPage getPage() {
+        return page;
+    }
 
     /** Inserts record into the table 'page'.
      *
-     * INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES ("apple",1,2,TRUE);
+     * INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (1,2,3,4,"apple");
      *
-     * @param page_title   title of wiki page
-     * @param word_count   size of the page in words
-     * @param wiki_link_count number of wikified words at the page
-     * @param is_in_wiktionary true, if the page_title exists in Wiktionary
+     * @param TPage     ID of title of wiki page will be added
+     * @param lang      language of a word at a page
+     * @param pos       part of speech of a word
+     * @param etymology_n enumeration for homographs
+     * @param lemma     e.g. "run" for the page_title="running"
      */
-    public static void insert (Connect connect,TPage page,TLang lang,TPOS pos) {
-            // todo:
-            // int etymology_n,
-            // String lemma) {
+    public static void insert (Connect connect,TPage page,TLang lang,TPOS pos,
+            int etymology_n,String lemma) {
+            
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        /*try
+        try
         {
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
-
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
-            str_sql.append(safe_title);
-            str_sql.append("\",");
-            str_sql.append(word_count);
+            str_sql.append("INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (");
+            str_sql.append(page.getID());
             str_sql.append(",");
-            str_sql.append(wiki_link_count);
+            str_sql.append(lang.getID());
             str_sql.append(",");
-            str_sql.append(is_in_wiktionary);
-            str_sql.append(")");
+            str_sql.append(pos.getID());
+            str_sql.append(",");
+            str_sql.append(etymology_n);
 
+            if(null != lemma && lemma.length() > 0)
+            {
+                str_sql.append(",\"");
+                String safe_lemma = PageTableBase.convertToSafeStringEncodeToDB(connect, lemma);
+                str_sql.append(safe_lemma);
+                str_sql.append("\")");
+            } else
+                str_sql.append(",\"\")");
+            
             s.executeUpdate (str_sql.toString());
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }*/
-    }
-
-    /** Selects rows from the table 'lang_pos' by the page_id, lang_id, pos_id.
-     *
-     *  SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM lang_pos WHERE page_title="apple";
-     *
-     * @param  lang language of Wiktionary article, if lang==null then language are not used in order to filter data
-     * @param  pos part of speech of Wiktionary article, if pos==null then POS are not used in order to filter data
-     * @return null if data is absent
-     */
-    public static TLangPOS[] get (Connect connect,TPage page,TLang lang,TPOS pos) {
-
-        /*Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
-        TPage       tp = null;
-
-        try {
-            s = connect.conn.createStatement ();
-
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
-
-            str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
-            if (rs.next ())
-            {
-                int id              = rs.getInt("id");
-                int word_count      = rs.getInt("word_count");
-                int wiki_link_count = rs.getInt("wiki_link_count");
-                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
-
-                tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TLangPOS.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-        return tp;*/
-                return null;
     }
 
-
-
-    /** Deletes row from the table 'page' by the page_title.
+    /** Selects rows from the table 'lang_pos' by the page_id 
      *
-     *  DELETE FROM page WHERE page_title="apple";
+     * SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=562;
      *
-     * @param  page_title  title of Wiktionary article
+     * @return empty array if data is absent
+     */
+    public static TLangPOS[] get (Connect connect,TPage page) {
+        // Todo?
+        // 
+        // (lang_id?, pos_id?) : add selection by: language and POS? :
+        // * @param  lang language of Wiktionary article, if lang==null then language are not used in order to filter data
+        // * @param  pos part of speech of Wiktionary article, if pos==null then POS are not used in order to filter data
+        //public static TLangPOS[] get (Connect connect,TPage page,TLang lang,TPOS pos) {
+        //String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        List<TLangPOS> list_lp = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=");
+            str_sql.append(page.getID());
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            while (rs.next ())
+            {
+                int     id      =                             rs.getInt("id");
+                TLang   lang    = TLang.getTLangFast(connect, rs.getInt("lang_id"));
+                TPOS    pos     = TPOS. getTPOSFast (connect, rs.getInt("pos_id"));
+                int etymology_n =                             rs.getInt("etymology_n");
+                String lemma    = Encodings.bytesToUTF8(      rs.getBytes("lemma"));
+
+                if(null != lang && null != pos) {
+                    if(null == list_lp)
+                               list_lp = new ArrayList<TLangPOS>();
+                    list_lp.add(new TLangPOS(id, page, lang, pos, etymology_n, lemma));
+                }
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TLangPOS.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        
+        if(null == list_lp)
+            return NULL_TLANGPOS_ARRAY;
+        return ((TLangPOS[])list_lp.toArray(NULL_TLANGPOS_ARRAY));
+    }
+
+    /** Selects rows from the table 'lang_pos' by ID
+     *
+     * SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=8;
+     *
+     * @return empty array if data is absent
+     */
+    public static TLangPOS getByID (Connect connect,int id) {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        TLangPOS lang_pos = null;
+        
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=");
+            str_sql.append(id);
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            while (rs.next ())
+            {
+                TPage   page    = TPage.getByID     (connect, rs.getInt("page_id"));
+                TLang   lang    = TLang.getTLangFast(connect, rs.getInt("lang_id"));
+                TPOS    pos     = TPOS. getTPOSFast (connect, rs.getInt("pos_id"));
+                int etymology_n =                             rs.getInt("etymology_n");
+                String lemma    = Encodings.bytesToUTF8(      rs.getBytes("lemma"));
+                
+                if(null != lang && null != pos) {
+                    lang_pos = new TLangPOS(id, page, lang, pos, etymology_n, lemma);
+                }
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TLangPOS.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return lang_pos;
+    }
+    
+    /** Deletes all rows from the table 'lang_pos', by the page_id.
+     *
+     * DELETE FROM lang_pos WHERE page_id=1;
+     *
+     * @param  id  unique ID in the table `lang_pos`
      */
     public static void delete (Connect connect,TPage page) {
 
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        /*try {
+        try {
             s = connect.conn.createStatement ();
-
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
-
-            str_sql.append("DELETE FROM page WHERE page_title=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-
+            str_sql.append("DELETE FROM lang_pos WHERE page_id=");
+            str_sql.append(page.getID());
             s.execute (str_sql.toString());
-
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TLangPOS.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
-        }*/
+        }
     }
 
 

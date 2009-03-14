@@ -86,7 +86,8 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         TLang.recreateTable(wikt_parsed_conn);
         TPOS.recreateTable(wikt_parsed_conn);
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page");
-
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "lang_pos");
+        
         // 1. get wiki-text from MySQL database
         // variant A. Get all articles
         // todo
