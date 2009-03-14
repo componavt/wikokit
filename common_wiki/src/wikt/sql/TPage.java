@@ -159,6 +159,44 @@ public class TPage {
         }
         return tp;
     }
+    
+     /** Selects row from the table 'page' by the page ID.
+     *
+     *  SELECT page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE id=1;
+     *
+     * @param  id  ID of Wiktionary article's title in the table 'page'
+     * @return null if page_title is absent
+     */
+    public static TPage getByID (Connect connect,int id) {
+        
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        TPage       tp = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE id=");
+            str_sql.append(id);
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            if (rs.next ())
+            {
+                String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
+                int word_count      = rs.getInt("word_count");
+                int wiki_link_count = rs.getInt("wiki_link_count");
+                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+
+                tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TPage.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return tp;
+    }
 
     /** Selects row from the table 'page', WHERE page_title starts from 'prefix',
      * result list is constrained by 'limit'.
@@ -220,7 +258,7 @@ public class TPage {
         if(null == tp_list)
             return NULL_TPAGE_ARRAY;
 
-        return( (TPage[])tp_list.toArray(NULL_TPAGE_ARRAY) );
+        return ((TPage[])tp_list.toArray(NULL_TPAGE_ARRAY));
     }
 
     /** Deletes row from the table 'page' by the page_title.

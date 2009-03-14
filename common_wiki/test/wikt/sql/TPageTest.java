@@ -70,7 +70,41 @@ public class TPageTest {
         assertTrue(p == null);
     }
 
-    // TPage getByPrefix (Connect connect,String prefix,int limit) {
+    //TPage  (Connect connect,int id) {
+    @Test
+    public void testGetByID() {
+        System.out.println("getByID_ru");
+        String page_title;
+        Connect conn = ruwikt_parsed_conn;
+        
+        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_тыблоко");
+        int word_count = 7;
+        int wiki_link_count = 13;
+        boolean is_in_wiktionary = true;
+        
+        TPage p = null;
+        p = TPage.get(conn, page_title);
+        if(null != p) {
+            TPage.delete(conn, page_title);
+        }
+        
+        TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        p = TPage.get(conn, page_title);
+        
+        assertTrue(p != null);
+        assertTrue(p.getID() > 0);
+        
+        TPage p2 = TPage.getByID(conn, p.getID());
+        assertTrue(p2 != null);
+        assertEquals(p.getPageTitle(), p2.getPageTitle());
+        
+        // delete temporary DB record
+        TPage.delete(conn, page_title);
+        
+        p = TPage.get(conn, page_title);
+        assertTrue(p == null);
+    }
+    
     @Test
     public void test_getByPrefix() {
         System.out.println("getByPrefix");

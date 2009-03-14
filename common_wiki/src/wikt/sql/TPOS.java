@@ -59,23 +59,26 @@ public class TPOS {
     }
     
     /** Gets part of speech (POS with ID) from the table 'lang_pos'.<br><br>
-     *
-     * REM: createFastMaps() should be run at least once,
-     * before this function execution.
+     * REM: createFastMaps() should be run at least once, before this function execution.
      */
     public static int getIDFast(Connect connect,POS p) {
         return pos2id.get(p);
     }
 
+    /** Gets part of speech from the table 'lang_pos'.<br><br>
+     * REM: createFastMaps() should be run at least once, before this function execution.
+     */
+    public static TPOS getPOSFast(Connect connect,POS p) {
+        return id2pos.get(pos2id.get(p));
+    }
+
     /** Gets language by ID from the table 'lang'.<br><br>
-     *
-     * REM: the functions createFastMaps() should be run at least once,
-     * before this function execution.
+     * REM: createFastMaps() should be run at least once, before this function execution.
      */
     public static TPOS getTPOSFast(Connect connect,int id) {
         return id2pos.get(id);
     }
-    
+
     /** Read all records from the table 'lang',
      * fills the internal map from a table ID to a language.
      * 

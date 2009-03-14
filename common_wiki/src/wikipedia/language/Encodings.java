@@ -117,7 +117,7 @@ public class Encodings {
     //FromTo("text", "UTF8", "ISO8859_1");
     public static String FromTo(String text, String encode_from, String encode_to) {
         try {
-            if(null == text) { return EMPTY_STRING;
+            if(null == text || 0 == text.length()) { return EMPTY_STRING;
             }
             byte[] b = text.getBytes(encode_from);
             return new String(b, encode_to);
