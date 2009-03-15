@@ -59,6 +59,10 @@ public class TLang {
      * before this function execution.
      */
     public static int getIDFast(Connect connect,LanguageType lt) {
+        if(null == lang2id) {
+            System.err.println("Error (wikt_parsed TLang.getIDFast()):: What about calling 'createFastMaps()' before?");
+            return -1;
+        }
         return lang2id.get(lt);
     }
 
@@ -68,6 +72,10 @@ public class TLang {
      * before this function execution.
      */  
     public static TLang getTLangFast(Connect connect,int id) {
+        if(null == id2lang) {
+            System.err.println("Error (wikt_parsed TLang.getTLangFast()):: What about calling 'createFastMaps()' before?");
+            return null;
+        }
         return id2lang.get(id);
     }
 

@@ -62,6 +62,10 @@ public class TPOS {
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
     public static int getIDFast(Connect connect,POS p) {
+        if(null == pos2id) {
+            System.err.println("Error (wikt_parsed TPOS.getIDFast()):: What about calling 'createFastMaps()' before?");
+            return -1;
+        }
         return pos2id.get(p);
     }
 
@@ -69,6 +73,10 @@ public class TPOS {
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
     public static TPOS getPOSFast(Connect connect,POS p) {
+        if(null == id2pos) {
+            System.err.println("Error (wikt_parsed TPOS.getPOSFast()):: What about calling 'createFastMaps()' before?");
+            return null;
+        }
         return id2pos.get(pos2id.get(p));
     }
 
