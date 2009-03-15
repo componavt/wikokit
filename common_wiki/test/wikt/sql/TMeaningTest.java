@@ -1,7 +1,6 @@
 
 package wikt.sql;
 
-import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 import wikt.constant.POS;
 
@@ -13,11 +12,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import wikipedia.sql.Connect;
 
-public class TLangPOSTest {
+public class TMeaningTest {
 
     public Connect   ruwikt_parsed_conn;
     
-    public TLangPOSTest() {
+    public TMeaningTest() {
     }
 
     @BeforeClass
@@ -42,7 +41,6 @@ public class TLangPOSTest {
 
     @After
     public void tearDown() {
-        ruwikt_parsed_conn.Close();
     }
 
     @Test
@@ -50,48 +48,10 @@ public class TLangPOSTest {
         System.out.println("insert_ru");
         String page_title;
         Connect conn = ruwikt_parsed_conn;
-        
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_lang_pos");
-        int page_id = 562;
-        int word_count = 7;
-        int wiki_link_count = 13;
-        boolean is_in_wiktionary = true;
-        
-        TPage page = new TPage(page_id, page_title, word_count, wiki_link_count, is_in_wiktionary);
-        
-        int lang_id = TLang.getIDFast(conn, LanguageType.os); //227;
-        TLang lang = TLang.getTLangFast(conn, lang_id);
-        assertEquals(LanguageType.os, lang.getLanguage());
 
-        int etymology_n = 0;
-        String lemma = "";
+        page_title = conn.enc.EncodeFromJava("test_TMeaning_insert_ru");
 
-        TPOS pos = TPOS.getPOSFast(conn, POS.noun);
-        TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
-
-        TLangPOS[] array_lang_pos = TLangPOS.get(conn, page);
-        // TLangPOS[] array_lang_pos = TLangPOS.get(conn, page, lang, pos);   todo?
-
-        assertTrue(null != array_lang_pos);
-        assertEquals(1, array_lang_pos.length);
-
-        TLangPOS.delete(conn, page);
-        
-        array_lang_pos = TLangPOS.get(conn, page);  // , lang, pos);
-        assertEquals(0, array_lang_pos.length);
-    }
-
-    //TLangPOS getByID (Connect connect,int id)
-    @Test
-    public void testGetByID() {
-        System.out.println("getByID_ru");
-        String page_title;
-        Connect conn = ruwikt_parsed_conn;
-
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_lang_pos_getByID");
-
-
-        // insert page, get page_id
+        // insert page, get meaning_id
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
@@ -102,30 +62,50 @@ public class TLangPOSTest {
             TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
             page = TPage.get(conn, page_title);
         }
-        //TPage page = new TPage(page_id, page_title, word_count, wiki_link_count, is_in_wiktionary);
-
-
+        
         int lang_id = TLang.getIDFast(conn, LanguageType.os); //227;
         TLang lang = TLang.getTLangFast(conn, lang_id);
-
+        
         int etymology_n = 0;
         String lemma = "";
 
         TPOS pos = TPOS.getPOSFast(conn, POS.noun);
         TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
-
+        
         // let's found ID:
         TLangPOS[] array_lang_pos = TLangPOS.get(conn, page);
         assertTrue(null != array_lang_pos);
         assertEquals(1, array_lang_pos.length);
         int id = array_lang_pos[0].getID();
-
+        
         // test
         TLangPOS lang_pos = TLangPOS.getByID(conn, id);
         assertTrue(null != lang_pos);
         assertEquals(page.getID(), lang_pos.getPage().getID());
 
+        int meaning_n = 1;
+        TWikiText wiki_text = null;
+
+        TMeaning.insert(conn, lang_pos, meaning_n, wiki_text);
+        
+        // testGet
+        TMeaning[] mm = TMeaning.get(conn, lang_pos);
+        assertTrue(null != mm);
+        assertEquals(1, mm.length);
+        int meaning_id = mm[0].getID();
+
+        // testGetByID
+        TMeaning m = TMeaning.getByID(conn, meaning_id);
+        assertTrue(null != m);
+        TLangPOS tlp = m.getLangPOS(conn);
+        assertTrue(null != tlp);
+                                            TLangPOS mm_tlp = mm[0].getLangPOS(conn);
+                                            assertTrue(null != mm_tlp);
+                                            assertTrue(null != mm_tlp.getPage());
+        assertEquals(tlp.getPage().getID(), mm[0].getLangPOS(conn).getPage().getID());
+        
         TLangPOS.delete(conn, page);
         TPage.delete(conn, page_title);
+        TMeaning.delete(conn, m);
     }
 }

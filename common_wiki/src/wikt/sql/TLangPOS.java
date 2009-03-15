@@ -66,7 +66,7 @@ public class TLangPOS {
      *
      * INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (1,2,3,4,"apple");
      *
-     * @param TPage     ID of title of wiki page will be added
+     * @param TPage     ID of title of wiki page which will be added
      * @param lang      language of a word at a page
      * @param pos       part of speech of a word
      * @param etymology_n enumeration for homographs
@@ -74,7 +74,12 @@ public class TLangPOS {
      */
     public static void insert (Connect connect,TPage page,TLang lang,TPOS pos,
             int etymology_n,String lemma) {
-            
+
+        if(null == page || null == lang || null == pos) {
+            System.err.println("Error (wikt_parsed TLangPOS.insert()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
+            return;
+        }
+
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
@@ -123,6 +128,11 @@ public class TLangPOS {
         //public static TLangPOS[] get (Connect connect,TPage page,TLang lang,TPOS pos) {
         //String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
 
+        if(null == page) {
+            System.err.println("Error (wikt_parsed TLangPOS.get()):: null argument page.");
+            return null;
+        }
+
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
@@ -160,11 +170,9 @@ public class TLangPOS {
         return ((TLangPOS[])list_lp.toArray(NULL_TLANGPOS_ARRAY));
     }
 
-    /** Selects rows from the table 'lang_pos' by ID
-     *
-     * SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=8;
-     *
+    /** Selects row from the table 'lang_pos' by ID
      * @return empty array if data is absent
+     * SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=8;
      */
     public static TLangPOS getByID (Connect connect,int id) {
         Statement   s = null;
@@ -178,7 +186,7 @@ public class TLangPOS {
             str_sql.append(id);
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
-            while (rs.next ())
+            if (rs.next ())
             {
                 TPage   page    = TPage.getByID     (connect, rs.getInt("page_id"));
                 TLang   lang    = TLang.getTLangFast(connect, rs.getInt("lang_id"));
@@ -207,6 +215,11 @@ public class TLangPOS {
      */
     public static void delete (Connect connect,TPage page) {
 
+        if(null == page) {
+            System.err.println("Error (wikt_parsed TLangPOS.delete()):: null argument page.");
+            return;
+        }
+        
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
