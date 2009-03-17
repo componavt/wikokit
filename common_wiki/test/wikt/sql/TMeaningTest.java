@@ -41,6 +41,7 @@ public class TMeaningTest {
 
     @After
     public void tearDown() {
+        ruwikt_parsed_conn.Close();
     }
 
     @Test
