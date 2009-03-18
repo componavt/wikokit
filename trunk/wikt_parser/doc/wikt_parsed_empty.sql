@@ -8,6 +8,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `page` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `page` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Number of wikified words (out-bound links).\n' ,
   `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
@@ -16,44 +17,50 @@ CREATE  TABLE IF NOT EXISTS `page` (
   `is_in_wiktionary` BOOLEAN NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'titles of wiki articles, entry names';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `part_of_speech`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `part_of_speech` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name` (`name` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'The language of the word in question. \n';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `lang`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `lang` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `lang` (
   `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   `code` VARCHAR(12) NOT NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `code` (`code` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'The language of the word in question. \n';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `lang_pos`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `lang_pos` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
@@ -84,26 +91,30 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
 ENGINE = InnoDB
 COMMENT = 'terms found in wiki-texts';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `wikipedia`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `wikipedia` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `wikipedia` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'Titles of related Wikipedia articles.';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `page_wikipedia`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `page_wikipedia` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `page_wikipedia` (
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `wikipedia_id` INT(10) UNSIGNED NOT NULL ,
@@ -120,32 +131,36 @@ CREATE  TABLE IF NOT EXISTS `page_wikipedia` (
     REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'pages which contain the term';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `inflection`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `inflection` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `inflection` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The list of inflextions automatically gathered from wiki-texts.' ,
-  `freq` INT(11) NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
+  `freq` INT(11) UNSIGNED NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
   `inflected_form` VARCHAR(255) NOT NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `inflected_form` (`inflected_form` ASC) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'terms found in wiki-texts';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `page_inflection`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `page_inflection` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `page_inflection` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT ,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `inflection_id` INT(10) UNSIGNED NOT NULL ,
   `term_freq` INT(6) UNSIGNED NOT NULL COMMENT 'term frequency in the document' ,
@@ -163,44 +178,49 @@ CREATE  TABLE IF NOT EXISTS `page_inflection` (
     REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'pages which contain the term';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `lang_term_disabled`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `lang_term_disabled` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `lang_term_disabled` (
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `hyphenation` VARCHAR(255) NULL ,
   `audio_files` VARCHAR(255) NULL ,
   PRIMARY KEY (`page_id`, `lang_id`) )
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'titles of wiki articles, entry names';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `wiki_text`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `wiki_text` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `wiki_text` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT ,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `text` VARCHAR(1023) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  FULLTEXT INDEX `text` (`text` ASC) ,
   UNIQUE INDEX `text_unique` (`text`(128) ASC) )
-ENGINE = MyISAM;
+ENGINE = InnoDB;
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `meaning`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `meaning` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `meaning` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `lang_pos_id` INT(10) UNSIGNED NOT NULL ,
@@ -219,33 +239,37 @@ CREATE  TABLE IF NOT EXISTS `meaning` (
     REFERENCES `wiki_text` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'Meaning includes: definition; sem. rel., translations.';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `relation_type`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `relation_type` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `relation_type` (
-  `id` TINYINT NULL AUTO_INCREMENT ,
+  `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`id`) )
 ENGINE = InnoDB
 COMMENT = 'Types of semantic relations (synonym, antonym, etc.)';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `relation`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `relation` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `relation` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
-  `wiki_text_id` INT(10) NOT NULL ,
-  `relation_type_id` TINYINT NOT NULL COMMENT 'Synonym, antonym, etc.' ,
+  `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
+  `relation_type_id` TINYINT UNSIGNED NOT NULL COMMENT 'Synonym, antonym, etc.' ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_meaning` (`meaning_id` ASC) ,
   INDEX `fk_relation_relation_type` (`relation_type_id` ASC) ,
@@ -265,17 +289,19 @@ CREATE  TABLE IF NOT EXISTS `relation` (
     REFERENCES `wiki_text` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'pages which contain the term';
 
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `wiki_text_words`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `wiki_text_words` ;
 
+SHOW WARNINGS;
 CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
-  `id` INT(10) NOT NULL AUTO_INCREMENT ,
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
   `page_inflection_id` INT(10) UNSIGNED NOT NULL ,
   PRIMARY KEY (`id`) ,
@@ -291,9 +317,10 @@ CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
     REFERENCES `wiki_text` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = MyISAM
+ENGINE = InnoDB
 COMMENT = 'Binds wiki_text with wiki words (inflection)';
 
+SHOW WARNINGS;
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
