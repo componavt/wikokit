@@ -57,8 +57,13 @@ public class TLangPOSTest {
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
         
-        TPage page = new TPage(page_id, page_title, word_count, wiki_link_count, is_in_wiktionary);
-        
+        TPage page = null;
+        page = TPage.get(conn, page_title);
+        if(null == page) {
+            TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            page = TPage.get(conn, page_title);
+        }
+
         int lang_id = TLang.getIDFast(conn, LanguageType.os); //227;
         TLang lang = TLang.getTLangFast(conn, lang_id);
         assertEquals(LanguageType.os, lang.getLanguage());
