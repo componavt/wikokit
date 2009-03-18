@@ -68,17 +68,17 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) ,
   CONSTRAINT `fk_pos`
     FOREIGN KEY (`pos_id` )
-    REFERENCES `mydb`.`part_of_speech` (`id` )
+    REFERENCES `part_of_speech` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_lang`
     FOREIGN KEY (`lang_id` )
-    REFERENCES `mydb`.`lang` (`id` )
+    REFERENCES `lang` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_page`
     FOREIGN KEY (`page_id` )
-    REFERENCES `mydb`.`page` (`id` )
+    REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
@@ -112,12 +112,12 @@ CREATE  TABLE IF NOT EXISTS `page_wikipedia` (
   UNIQUE INDEX `page_wikipedia_unique` (`page_id` ASC, `wikipedia_id` ASC) ,
   CONSTRAINT `fk_page_wikipedia_wikipedia`
     FOREIGN KEY (`wikipedia_id` )
-    REFERENCES `mydb`.`wikipedia` (`id` )
+    REFERENCES `wikipedia` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_page_wikipedia_page`
     FOREIGN KEY (`page_id` )
-    REFERENCES `mydb`.`page` (`id` )
+    REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
@@ -132,7 +132,7 @@ DROP TABLE IF EXISTS `inflection` ;
 CREATE  TABLE IF NOT EXISTS `inflection` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The list of inflextions automatically gathered from wiki-texts.' ,
   `freq` INT(11) NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
-  `inflected_form` VARCHAR(255) NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
+  `inflected_form` VARCHAR(255) NOT NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `inflected_form` (`inflected_form` ASC) )
 ENGINE = MyISAM
@@ -155,12 +155,12 @@ CREATE  TABLE IF NOT EXISTS `page_inflection` (
   UNIQUE INDEX `page_inflection_id_id` (`page_id` ASC, `inflection_id` ASC) ,
   CONSTRAINT `fk_inflection`
     FOREIGN KEY (`inflection_id` )
-    REFERENCES `mydb`.`inflection` (`id` )
+    REFERENCES `inflection` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_page`
     FOREIGN KEY (`page_id` )
-    REFERENCES `mydb`.`page` (`id` )
+    REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
@@ -191,7 +191,8 @@ CREATE  TABLE IF NOT EXISTS `wiki_text` (
   `id` INT(10) NOT NULL AUTO_INCREMENT ,
   `text` VARCHAR(1023) NOT NULL ,
   PRIMARY KEY (`id`) ,
-  FULLTEXT INDEX `text` (`text` ASC) )
+  FULLTEXT INDEX `text` (`text` ASC) ,
+  UNIQUE INDEX `text_unique` (`text`(128) ASC) )
 ENGINE = MyISAM;
 
 
@@ -210,12 +211,12 @@ CREATE  TABLE IF NOT EXISTS `meaning` (
   INDEX `fk_meaning_wiki_text` (`wiki_text_id` ASC) ,
   CONSTRAINT `fk_lang_pos_id`
     FOREIGN KEY (`lang_pos_id` )
-    REFERENCES `mydb`.`lang_pos` (`id` )
+    REFERENCES `lang_pos` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_meaning_wiki_text`
     FOREIGN KEY (`wiki_text_id` )
-    REFERENCES `mydb`.`wiki_text` (`id` )
+    REFERENCES `wiki_text` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
@@ -251,17 +252,17 @@ CREATE  TABLE IF NOT EXISTS `relation` (
   INDEX `fk_relation_wiki_text` (`wiki_text_id` ASC) ,
   CONSTRAINT `fk_meaning`
     FOREIGN KEY (`meaning_id` )
-    REFERENCES `mydb`.`meaning` (`id` )
+    REFERENCES `meaning` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_relation_relation_type`
     FOREIGN KEY (`relation_type_id` )
-    REFERENCES `mydb`.`relation_type` (`id` )
+    REFERENCES `relation_type` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_relation_wiki_text`
     FOREIGN KEY (`wiki_text_id` )
-    REFERENCES `mydb`.`wiki_text` (`id` )
+    REFERENCES `wiki_text` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
@@ -282,12 +283,12 @@ CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
   INDEX `fk_words_text` (`wiki_text_id` ASC) ,
   CONSTRAINT `fk_words_inflection`
     FOREIGN KEY (`page_inflection_id` )
-    REFERENCES `mydb`.`page_inflection` (`id` )
+    REFERENCES `page_inflection` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_words_text`
     FOREIGN KEY (`wiki_text_id` )
-    REFERENCES `mydb`.`wiki_text` (`id` )
+    REFERENCES `wiki_text` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = MyISAM
