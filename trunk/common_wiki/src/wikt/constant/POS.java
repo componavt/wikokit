@@ -7,7 +7,6 @@
 package wikt.constant;
 
 import java.util.Set;
-//import java.util.HashSet;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
@@ -30,14 +29,12 @@ public class POS {
     private POS(String _name) {
         //super(name);  // old
         
-        name = _name;   // new
-        //name_set.add(_name);
+        name = _name;
         name2type.put(_name, this);
     }
     
     /** Checks weather exists the part of speech by its name. */
     public static boolean has(String _name) {
-        //return name_set.contains(_name);
         return name2type.containsKey(_name);
     }
     
@@ -57,7 +54,7 @@ public class POS {
         return name2type.values();
     }
 
-    /** Gets all POS. */
+    /** Gets all POS names. */
     public static Set<String> getAllPOSNames() {
         return name2type.keySet();
     }

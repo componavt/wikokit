@@ -8,13 +8,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import wikipedia.sql.Connect;
-import wikt.constant.POS;
+import wikt.constant.Relation;
 
-public class TPOSTest {
+public class TRelationTypeTest {
 
     public Connect   ruwikt_parsed_conn;
     
-    public TPOSTest() {
+    public TRelationTypeTest() {
     }
 
     @BeforeClass
@@ -40,24 +40,23 @@ public class TPOSTest {
     public void testInsert() {
         System.out.println("insert_ru");
         Connect conn = ruwikt_parsed_conn;
-
-        TPOS p = null;
+        
+        TRelationType r = null;
         System.err.println("One warnings may be...");
-        p = TPOS.get(conn, POS.noun);
-        if(null == p) {
-            TPOS.insert(conn, POS.noun);
+        r = TRelationType.get(conn, Relation.synonymy);
+        if(null == r) {
+            TRelationType.insert(conn, Relation.synonymy);
         }
-        
-        // blockhead test
-        p = TPOS.get(conn, null);
-        assertTrue(null == p);
 
-        p = TPOS.get(conn, POS.noun);
-        if(null != p) {
-            TPOS.delete(conn, POS.noun);
-        }
-        
-        int id = p.getID();
+        // blockhead test
+        r = TRelationType.get(conn, null);
+        assertTrue(null == r);
+
+        r = TRelationType.get(conn, Relation.synonymy);
+        if(null != r)
+            TRelationType.delete(conn, Relation.synonymy);
+
+        int id = r.getID();
         assertTrue(id > 0);
     }
 
@@ -66,22 +65,22 @@ public class TPOSTest {
         System.out.println("getID");
         
         // once upon a time: create Wiktionary parsed db
-        TPOS.recreateTable(ruwikt_parsed_conn);
+        TRelationType.recreateTable(ruwikt_parsed_conn);
 
         // once upon a time: use Wiktionary parsed db
-        TPOS.createFastMaps(ruwikt_parsed_conn);
+        TRelationType.createFastMaps(ruwikt_parsed_conn);
 
         // and every usual day
-        int noun_id = TPOS.getIDFast(ruwikt_parsed_conn, POS.noun);
+        int synonymy_id = TRelationType.getIDFast(ruwikt_parsed_conn, Relation.synonymy);
 
-        TPOS tpos = TPOS.get(ruwikt_parsed_conn, POS.noun);
-        assertEquals(tpos.getID(), noun_id);
+        TRelationType rel_type = TRelationType.get(ruwikt_parsed_conn, Relation.synonymy);
+        assertEquals(rel_type.getID(), synonymy_id);
     }
-    
+
     @Test
     public void testRecreateTable() {
-        System.out.println("recreateTable, fill table `part_of_speech`");
-        TPOS.recreateTable(ruwikt_parsed_conn);
+        System.out.println("recreateTable, fill table `relation_type`");
+        TRelationType.recreateTable(ruwikt_parsed_conn);
     }
 
 }

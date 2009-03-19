@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /** An operations with the table 'part_of_speech' in Wiktionary parsed database.
- * The table 'part_of_speech' contains list of POS: name and ID.
+ * The table 'part_of_speech' contains a list of POS: name and ID.
  */
 public class TPOS {
     
@@ -80,17 +80,17 @@ public class TPOS {
         return id2pos.get(pos2id.get(p));
     }
 
-    /** Gets language by ID from the table 'lang'.<br><br>
+    /** Gets part of speech by ID from the table 'lang_pos'.<br><br>
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
     public static TPOS getTPOSFast(Connect connect,int id) {
         return id2pos.get(id);
     }
 
-    /** Read all records from the table 'lang',
-     * fills the internal map from a table ID to a language.
+    /** Read all records from the table 'lang_pos',
+     * fills the internal map from a table ID to POS.<br><br>
      * 
-     * REM: during a creation of Wikrtionary parsed database
+     * REM: during a creation of Wiktionary parsed database
      * the functions recreateTable() should be called.
      */
     public static void createFastMaps(Connect connect) {
@@ -99,10 +99,9 @@ public class TPOS {
         
         TPOS[] tpos = getAllTPOS(connect);
         int size = tpos.length;
-        if(tpos.length != POS.size()) {
+        if(tpos.length != POS.size())
             System.out.println("Warning (wikt_parsed TPOS.java createFastMaps()):: POS.size (" + POS.size()
                     + ") is not equal to size of table 'lang_pos'("+ size +"). Is the database outdated?");
-        }
 
         if(null != id2pos && id2pos.size() > 0)
             id2pos.clear();
@@ -148,9 +147,9 @@ public class TPOS {
     public static void recreateTable(Connect connect) {
 
         System.out.println("Recreating the table `part_of_speech`...");
-        Map<Integer, POS> id2pos = fillLocalMaps();
+        Map<Integer, POS> _id2pos = fillLocalMaps();
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "part_of_speech");
-        fillDB(connect, id2pos);
+        fillDB(connect, _id2pos);
         {
             int db_current_size = wikipedia.sql.Statistics.Count(connect, "part_of_speech");
             assert(db_current_size == POS.size()); // ~ 12 POS
@@ -170,30 +169,30 @@ public class TPOS {
 
         // Local map from id to POS. It is created from data in POS.java.
         // It is used to fill the table 'part_of_speech' in right sequence.
-        Map<Integer, POS> id2pos = new LinkedHashMap<Integer, POS>(size);
+        Map<Integer, POS> _id2pos = new LinkedHashMap<Integer, POS>(size);
         for(int id=0; id<size; id++) {
             String s = list_pos.get(id);    // s - POS name
             assert(POS.has(s));                                                 //System.out.println("fillLocalMaps---id="+id+"; s="+s);
-            id2pos.put(id, POS.get(s));
+            _id2pos.put(id, POS.get(s));
         }
-        return id2pos;
+        return _id2pos;
     }
     
     /** Fills database table 'part_of_speech' by data from POS class. */
     public static void fillDB(Connect connect,Map<Integer, POS> id2pos) {
 
-        for(int id : id2pos.keySet()) {
+        for(int id : id2pos.keySet())
             insert (connect, id2pos.get(id));
-        }
     }
 
-    /** Inserts record into the table 'part_of_speech'.
-     *
+    /** Inserts record into the table 'part_of_speech'.<br><br>
      * INSERT INTO part_of_speech (name) VALUES ("noun");
-     *
      * @param name  part of speech name, e.g. 'unknown', 'noun'
      */
     public static void insert (Connect connect,POS p) {
+
+        if(null == p) return;
+
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
@@ -206,7 +205,7 @@ public class TPOS {
             //str_sql.append(safe_title);
             str_sql.append(p.toString());
             str_sql.append("\")");
-
+            
             s.executeUpdate (str_sql.toString());
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPOS.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
@@ -216,38 +215,30 @@ public class TPOS {
         }
     }
     
-    /** Selects row from the table 'part_of_speech' by a POS name.
-     *
+    /** Selects row from the table 'part_of_speech' by a POS name.<br><br>
      *  SELECT id FROM part_of_speech WHERE name="noun";
-     *
      * @param  POS  part of speech class
      * @return null if a part of speech name is absent in the table 'part_of_speech'
      */
     public static TPOS get (Connect connect,POS p) {
 
+        if(null == p) return null;
+        
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         TPOS        tp = null;
-
-        if(null == p) return null;
-        
         try {
             s = connect.conn.createStatement ();
-
             str_sql.append("SELECT id FROM part_of_speech WHERE name=\"");
             str_sql.append(p.toString());
             str_sql.append("\"");
-            
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
             if (rs.next ())
-            {
-                int id      = rs.getInt("id");
-                tp = new TPOS(id, p);
-            } else {
-                    System.err.println("Warning: (wikt_parsed TPOS.java get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
-            }
+                tp = new TPOS(rs.getInt("id"), p);
+            else
+                System.err.println("Warning: (wikt_parsed TPOS.java get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPOS.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
@@ -257,29 +248,23 @@ public class TPOS {
         return tp;
     }
 
-    /** Deletes row from the table 'part_of_speech' by the POS name.
-     *
+    /** Deletes row from the table 'part_of_speech' by the POS name.<br><br>
      *  DELETE FROM part_of_speech WHERE name="unknown";
-     *
      * @param  p  POS to be deleted
      */
     public static void delete (Connect connect,POS p) {
 
+        if(null == p) return;
+
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-
-        if(null == p) return;
-
         try {
             s = connect.conn.createStatement ();
-
             str_sql.append("DELETE FROM part_of_speech WHERE name=\"");
             str_sql.append(p.toString());
             str_sql.append("\"");
-
             s.execute (str_sql.toString());
-
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPOS.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
