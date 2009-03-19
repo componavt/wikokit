@@ -41,6 +41,11 @@ public class TWikiText {
     public int getID() {
         return id;
     }
+
+    /** Gets text (without wikification) from database */
+    public String getText() {
+        return text.toString();
+    }
     
     /** Inserts record into the table 'wiki_text'.<br><br>
      * INSERT INTO wiki_text (text) VALUES ("apple");
@@ -126,7 +131,7 @@ public class TWikiText {
 
         try {
             s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM wiki_text WHERE id=");
+            str_sql.append("SELECT text FROM wiki_text WHERE id=");
             str_sql.append(id);
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();

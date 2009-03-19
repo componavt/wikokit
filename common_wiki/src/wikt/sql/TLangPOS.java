@@ -71,18 +71,20 @@ public class TLangPOS {
      * @param pos       part of speech of a word
      * @param etymology_n enumeration for homographs
      * @param lemma     e.g. "run" for the page_title="running"
+     * @return null if data is absent
      */
-    public static void insert (Connect connect,TPage page,TLang lang,TPOS pos,
+    public static TLangPOS insert (Connect connect,TPage page,TLang lang,TPOS pos,
             int etymology_n,String lemma) {
 
         if(null == page || null == lang || null == pos) {
             System.err.println("Error (wikt_parsed TLangPOS.insert()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
-            return;
+            return null;
         }
 
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
+        TLangPOS lang_pos = null;
         try
         {
             s = connect.conn.createStatement ();
@@ -94,7 +96,6 @@ public class TLangPOS {
             str_sql.append(pos.getID());
             str_sql.append(",");
             str_sql.append(etymology_n);
-
             if(null != lemma && lemma.length() > 0)
             {
                 str_sql.append(",\"");
@@ -103,14 +104,21 @@ public class TLangPOS {
                 str_sql.append("\")");
             } else
                 str_sql.append(",\"\")");
-            
             s.executeUpdate (str_sql.toString());
+
+            s = connect.conn.createStatement ();
+            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+            rs = s.getResultSet ();
+            if (rs.next ())
+                lang_pos = new TLangPOS(rs.getInt("id"), page, lang, pos, etymology_n, lemma);
+            
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TLangPOS.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+        return lang_pos;
     }
 
     /** Selects rows from the table 'lang_pos' by the page_id 

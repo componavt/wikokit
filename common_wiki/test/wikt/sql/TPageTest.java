@@ -54,8 +54,10 @@ public class TPageTest {
             TPage.delete(conn, page_title);
         }
 
-        TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        TPage p0 = TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        assertTrue(null != p0);
         p = TPage.get(conn, page_title);
+        assertEquals(p0.getID(), p.getID());
 
         assertTrue(p != null);
         assertTrue(p.getID() > 0);

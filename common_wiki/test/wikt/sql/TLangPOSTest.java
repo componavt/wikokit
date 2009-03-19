@@ -60,8 +60,8 @@ public class TLangPOSTest {
         TPage page = null;
         page = TPage.get(conn, page_title);
         if(null == page) {
-            TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
-            page = TPage.get(conn, page_title);
+            page = TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            assertTrue(null != page);
         }
 
         int lang_id = TLang.getIDFast(conn, LanguageType.os); //227;
@@ -72,7 +72,8 @@ public class TLangPOSTest {
         String lemma = "";
 
         TPOS pos = TPOS.getPOSFast(conn, POS.noun);
-        TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+        TLangPOS lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+        assertTrue(null != lang_pos);
 
         TLangPOS[] array_lang_pos = TLangPOS.get(conn, page);
         // TLangPOS[] array_lang_pos = TLangPOS.get(conn, page, lang, pos);   todo?
