@@ -11,11 +11,14 @@ Todo:
 = DB layout changes =
 
 Todo now:
+  # field `relation_type.name` should be unique
+
+In future:
+  # rename `lang_pos.etymology_n` to `lang_pos.etymology_id`, create table `etymology`
+
+Done:
   # remove the field `meaning.definition`
   # field `lang.name` is NOT unique, only `.code` is unique
   # add default value (0) to the field `meaning.wiki_text_id`
   # replace `relation.page_id` by `relation.wiki_text_id` and change link from ->page to ->wiki_text
   # + table `relation_type` (id,name), + field `relation.relation_type_id`
-
-In future:
-  # rename `lang_pos.etymology_n` to `lang_pos.etymology_id`, create table `etymology`
