@@ -35,87 +35,77 @@ public class TWikiTextWordsTest {
         ruwikt_parsed_conn.Close();
     }
     
-    @Test
-    public void testGetID() {
-        System.out.println("getID");
-        TWikiTextWords instance = null;
-        int expResult = 0;
-        int result = instance.getID();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
     /**
      * Test of insert method, of class TWikiTextWords.
      */
     @Test
     public void testInsert() {
         System.out.println("insert_ru");
-        
-        TWikiText wiki_text = null;
-        TPageInflection page_inflection = null;
-
-        String text = "test_TWikiText_insert_ru";
         Connect conn = ruwikt_parsed_conn;
+        String page_title, inflected_form;
         
-        TWikiTextWords expResult = null;
-        TWikiTextWords result = TWikiTextWords.insert(conn, wiki_text, page_inflection);
-        assertEquals(expResult, result);
-
-        /*
-        // insert page, get wiki_text.id
-        TWikiText p = null, p2=null;
-        p = TWikiText.get(conn, text);
-        if(null != p) {
-            TWikiText.delete(conn, p);
+        page_title = conn.enc.EncodeFromJava("test_TWikiTextWords_insert_ru");
+        inflected_form = "test_TWikiTextWords_insert_ru";
+        
+        // insert page, get meaning_id
+        int word_count = 7;
+        int wiki_link_count = 13;
+        boolean is_in_wiktionary = true;
+        
+        TPage page = TPage.get(conn, page_title);
+        if(null == page) {
+            page = TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            assertTrue(null != page);
         }
-        // p == p2
-        p = TWikiText.insert(conn, text);
-        p2 = TWikiText.get(conn, text);
-
-        assertTrue(p != null);
-        assertTrue(p2 != null);
-        assertTrue(p.getID() > 0);
-        assertEquals(p.getID(), p2.getID());
-
-        TWikiText.delete(conn, p);              // delete temporary DB record
-
-        p = TWikiText.getByID(conn, p.getID()); // check deletion
-        assertTrue(p == null);
-        p2 = TWikiText.getByID(conn, p2.getID());
-        assertTrue(p2 == null);
-         */
-    }
-
-    /**
-     * Test of getByWikiText method, of class TWikiTextWords.
-     */
-    @Test
-    public void testGetByWikiText() {
-        System.out.println("getByWikiText");
-        Connect connect = null;
-        TWikiText wiki_text = null;
-        TWikiTextWords[] expResult = null;
-        TWikiTextWords[] result = TWikiTextWords.getByWikiText(connect, wiki_text);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getByID method, of class TWikiTextWords.
-     */
-    @Test
-    public void testGetByID() {
-        System.out.println("getByID");
-        Connect connect = null;
-        int id = 0;
-        TWikiTextWords expResult = null;
-        TWikiTextWords result = TWikiTextWords.getByID(connect, id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
+        // insert inflection
+        int freq = 1;
+        TInflection infl = TInflection.get(conn, inflected_form);
+        if(null == infl) {
+            infl = TInflection.insert(conn, inflected_form, freq);
+            assertTrue(null != infl);
+        }
+        
+        int term_freq = 1;
+        TPageInflection page_infl = TPageInflection.get(conn, page, infl);
+        if(null == page_infl) {
+            page_infl = TPageInflection.insert(conn, page, infl, term_freq);
+            assertTrue(null != page_infl);
+        }
+        
+        // insert wiki_text
+        String text = "test_TWikiTextWords_insert_ru";
+        TWikiText wiki_text = TWikiText.get(conn, text);
+        if(null == wiki_text) {
+            wiki_text = TWikiText.insert(conn, text);
+            assertTrue(null != wiki_text);
+        }
+        
+        // words
+        TWikiTextWords   word = null;
+        TWikiTextWords[] words = TWikiTextWords.getByWikiText(conn, wiki_text);
+        if(null == words || words.length == 0) {
+            // 1 word
+            word = TWikiTextWords.insert(conn, wiki_text, page_infl);
+            assertTrue(null != word);
+            // word, word, word ... s
+            words = TWikiTextWords.getByWikiText(conn, wiki_text);
+            assertTrue(null != words);
+            assertEquals(1,    words.length);
+        } else
+            word = words[0];
+        
+        // get by id
+        TWikiTextWords word2 = TWikiTextWords.getByID(conn, word.getID());
+        assertTrue(null != word2);
+        assertEquals(word. getWikiText().getText(),
+                     word2.getWikiText().getText());
+                     
+        TPage.delete(conn, page_title);
+        TInflection.delete(conn, infl);
+        TPageInflection.delete(conn, page_infl);
+        TWikiText.delete(conn, wiki_text);
+        TWikiTextWords.delete(conn, word);
     }
 
 }

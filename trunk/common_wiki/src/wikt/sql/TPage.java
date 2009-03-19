@@ -79,25 +79,23 @@ public class TPage {
         return page_title;
     }
 
-    /** Inserts record into the table 'page'.
-     *
+    /** Inserts record into the table 'page'.<br><br>
      * INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES ("apple",1,2,TRUE);
-     *
      * @param page_title   title of wiki page
      * @param word_count   size of the page in words
      * @param wiki_link_count number of wikified words at the page
      * @param is_in_wiktionary true, if the page_title exists in Wiktionary
      */
-    public static void insert (Connect connect,String page_title,int word_count,int wiki_link_count,
+    public static TPage insert (Connect connect,String page_title,int word_count,int wiki_link_count,
             boolean is_in_wiktionary) {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
+        TPage page = null;
         try
         {
             s = connect.conn.createStatement ();
             str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
-            
             String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
             str_sql.append(safe_title);
             str_sql.append("\",");
@@ -107,14 +105,21 @@ public class TPage {
             str_sql.append(",");
             str_sql.append(is_in_wiktionary);
             str_sql.append(")");
-
             s.executeUpdate (str_sql.toString());
+
+            s = connect.conn.createStatement ();
+            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+            rs = s.getResultSet ();
+            if (rs.next ())
+                page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count, is_in_wiktionary);
+                
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+        return page;
     }
 
     /** Selects row from the table 'page' by the page_title.

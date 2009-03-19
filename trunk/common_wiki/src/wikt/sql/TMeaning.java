@@ -7,7 +7,7 @@
 
 package wikt.sql;
 
-import wikipedia.language.Encodings;
+//import wikipedia.language.Encodings;
 //import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
 import java.sql.*;

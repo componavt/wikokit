@@ -43,7 +43,7 @@ public class TWikiTextTest {
         Connect conn = ruwikt_parsed_conn;
 
         // insert page, get wiki_text.id
-        TWikiText p = null, p2=null;
+        TWikiText p = null, p2=null, p3=null;
         p = TWikiText.get(conn, text);
         if(null != p) {
             TWikiText.delete(conn, p);
@@ -51,11 +51,14 @@ public class TWikiTextTest {
         // p == p2
         p = TWikiText.insert(conn, text);
         p2 = TWikiText.get(conn, text);
+        p3 = TWikiText.getByID(conn, p.getID());
 
         assertTrue(p != null);
         assertTrue(p2 != null);
+        assertTrue(p3 != null);
         assertTrue(p.getID() > 0);
         assertEquals(p.getID(), p2.getID());
+        assertEquals(p.getText(), p3.getText());
 
         TWikiText.delete(conn, p);              // delete temporary DB record
 
