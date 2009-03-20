@@ -1,9 +1,9 @@
 
 package wikt.sql;
 
-//import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 import wikt.constant.POS;
+import wikt.constant.Relation;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -13,16 +13,20 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import wikipedia.sql.Connect;
 
-public class TLangPOSTest {
+public class TRelationTest {
 
     public Connect   ruwikt_parsed_conn;
-
+    
     TPOS pos;
     TLang lang;
     TPage page;
-    String page_title;
+    String page_title, wiki_text_str;
+    TRelationType relation_type;
+    TWikiText wiki_text;
+    TLangPOS lang_pos;
+    TMeaning meaning;
     
-    public TLangPOSTest() {
+    public TRelationTest() {
     }
 
     @BeforeClass
@@ -44,10 +48,13 @@ public class TLangPOSTest {
         TPOS.recreateTable(ruwikt_parsed_conn);     // once upon a time: create Wiktionary parsed db
         TPOS.createFastMaps(ruwikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
 
+        TRelationType.recreateTable(ruwikt_parsed_conn);
+        TRelationType.createFastMaps(ruwikt_parsed_conn);
+
         
         Connect conn = ruwikt_parsed_conn;
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_lang_pos");
-        
+        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_TRelation");
+
         // insert page, get page_id
         int word_count = 7;
         int wiki_link_count = 13;
@@ -60,66 +67,76 @@ public class TLangPOSTest {
             assertTrue(null != page);
         }
 
-        // lang & pos
+        // get lang
         int lang_id = TLang.getIDFast(conn, LanguageType.os); //227;
         lang = TLang.getTLangFast(conn, lang_id);
         assertTrue(null != lang);
         assertEquals(LanguageType.os, lang.getLanguage());
 
+        // get POS
         pos = TPOS.getPOSFast(conn, POS.noun);
         assertTrue(null != pos);
+
+        // get relation_type
+        relation_type = TRelationType.get(conn, Relation.synonymy);
+        assertTrue(null != relation_type);
+        
+        // insert wiki_text
+        wiki_text_str = "test_TWikiText_TRelation";
+        wiki_text = TWikiText.insert(conn, wiki_text_str);
+        if(null == wiki_text)
+            wiki_text = TWikiText.get(conn, wiki_text_str);
+        assertTrue(null != wiki_text);
+
+        // insert lang_pos
+        int etymology_n = 0;
+        String lemma = "";
+        lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+        assertTrue(null != lang_pos);
+
+        // insert meaning
+        int meaning_n = 1;
+        meaning = TMeaning.insert(conn, lang_pos, meaning_n, wiki_text);
+        assertTrue(null != meaning);
     }
-    
+
     @After
     public void tearDown() {
-        TPage.delete(ruwikt_parsed_conn, page_title);
+        TPage.delete    (ruwikt_parsed_conn, page_title);
+        TLangPOS.delete (ruwikt_parsed_conn, page);
+        TMeaning.delete (ruwikt_parsed_conn, meaning);
+        
         ruwikt_parsed_conn.Close();
+    }
+
+    @Test
+    public void testInsert() {
+        System.out.println("insert_ang_get_and_delete_ru");
+        Connect conn = ruwikt_parsed_conn;
+
+        TRelation relation0 = TRelation.insert(conn, meaning, wiki_text, relation_type);
+        assertTrue(null != relation0);
+        
+        TRelation[] array_rel = TRelation.get(conn, meaning);
+        assertTrue(null != array_rel);
+        assertEquals(1, array_rel.length);
+
+        TRelation.delete(conn, relation0);
+
+        array_rel = TRelation.get(conn, meaning);
+        assertEquals(0, array_rel.length);
     }
     
     @Test
-    public void testInsert() {
-        System.out.println("insert_ru");
-        Connect conn = ruwikt_parsed_conn;
-
-        int etymology_n = 0;
-        String lemma = "";
-        
-        TLangPOS lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
-        assertTrue(null != lang_pos);
-
-        TLangPOS[] array_lang_pos = TLangPOS.get(conn, page);
-        // TLangPOS[] array_lang_pos = TLangPOS.get(conn, page, lang, pos);   todo?
-
-        assertTrue(null != array_lang_pos);
-        assertEquals(1, array_lang_pos.length);
-
-        TLangPOS.delete(conn, page);
-        
-        array_lang_pos = TLangPOS.get(conn, page);  // , lang, pos);
-        assertEquals(0, array_lang_pos.length);
-    }
-
-    @Test   //TLangPOS getByID (Connect connect,int id)
     public void testGetByID() {
         System.out.println("getByID_ru");
         Connect conn = ruwikt_parsed_conn;
 
-        int etymology_n = 0;
-        String lemma = "";
-        
-        TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+        TRelation r = TRelation.insert(conn, meaning, wiki_text, relation_type);
+        assertTrue(null != r);
 
-        // let's found ID:
-        TLangPOS[] array_lang_pos = TLangPOS.get(conn, page);
-        assertTrue(null != array_lang_pos);
-        assertEquals(1, array_lang_pos.length);
-        int id = array_lang_pos[0].getID();
-
-        // test
-        TLangPOS lang_pos = TLangPOS.getByID(conn, id);
-        assertTrue(null != lang_pos);
-        assertEquals(page.getID(), lang_pos.getPage().getID());
-
-        TLangPOS.delete(conn, page);
+        TRelation r2 = TRelation.getByID(conn, r.getID());
+        assertTrue(null != r2);
+        assertEquals(wiki_text_str, r2.getWikiText().getText());
     }
 }
