@@ -87,7 +87,7 @@ public class TLangTest {
         TLang.createFastMaps(ruwikt_parsed_conn);
 
         // and every usual day
-        int os_id = TLang.getIDFast(ruwikt_parsed_conn, LanguageType.os);
+        int os_id = TLang.getIDFast(LanguageType.os);
 
         TLang tlang = TLang.get(ruwikt_parsed_conn, LanguageType.os);
         assertEquals(tlang.getID(), os_id);

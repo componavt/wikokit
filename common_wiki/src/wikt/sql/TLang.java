@@ -58,9 +58,13 @@ public class TLang {
      * REM: the functions createFastMaps() should be run at least once,
      * before this function execution.
      */
-    public static int getIDFast(Connect connect,LanguageType lt) {
+    public static int getIDFast(LanguageType lt) {
         if(null == lang2id) {
             System.err.println("Error (wikt_parsed TLang.getIDFast()):: What about calling 'createFastMaps()' before?");
+            return -1;
+        }
+        if(null == lt) {
+            System.err.println("Error (wikt_parsed TLang.getIDFast()):: argument LanguageType is null");
             return -1;
         }
         return lang2id.get(lt);
@@ -71,12 +75,25 @@ public class TLang {
      * REM: the functions createFastMaps() should be run at least once,
      * before this function execution.
      */  
-    public static TLang getTLangFast(Connect connect,int id) {
+    public static TLang getTLangFast(int id) {
         if(null == id2lang) {
             System.err.println("Error (wikt_parsed TLang.getTLangFast()):: What about calling 'createFastMaps()' before?");
             return null;
         }
+        if(id <= 0) {
+            System.err.println("Error (wikt_parsed TLang.getTLangFast()):: argument id <=0, id = "+id);
+            return null;
+        }
         return id2lang.get(id);
+    }
+
+    /** Gets language TLang by LanguageType from the table 'lang'.<br><br>
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static TLang get(LanguageType lt) {
+        return getTLangFast(getIDFast(lt));
     }
 
     /** Read all records from the table 'lang',

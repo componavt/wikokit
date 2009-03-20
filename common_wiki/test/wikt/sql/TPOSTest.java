@@ -72,7 +72,7 @@ public class TPOSTest {
         TPOS.createFastMaps(ruwikt_parsed_conn);
 
         // and every usual day
-        int noun_id = TPOS.getIDFast(ruwikt_parsed_conn, POS.noun);
+        int noun_id = TPOS.getIDFast(POS.noun);
 
         TPOS tpos = TPOS.get(ruwikt_parsed_conn, POS.noun);
         assertEquals(tpos.getID(), noun_id);

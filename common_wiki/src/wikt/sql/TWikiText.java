@@ -8,6 +8,9 @@
 package wikt.sql;
 
 import wikipedia.language.Encodings;
+import wikt.util.WikiText;
+import wikt.util.WikiWord;
+
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
 import java.sql.*;
@@ -47,6 +50,38 @@ public class TWikiText {
         return text.toString();
     }
     
+    /** If table 'wiki_text' has this text, then return ID of this record;
+     * else inserts records into tables:
+     * 'wiki_text',
+     * 'wiki_text_words',
+     * 'page_inflecton',
+     * 'inflection',
+     * 'page'.<br><br>
+     *
+     * @param wiki_text      text with wiki words.
+     * @return inserted record, or null if insertion failed
+     */
+    public static TWikiText storeToDB (Connect connect,WikiText wiki_text) {
+
+        String visible_text = wiki_text.getVisibleText();
+
+        if(null == wiki_text || visible_text.length() == 0)
+            return null;
+
+        TWikiText  twiki_text = TWikiText.get(connect, visible_text);
+        if(null != twiki_text)
+            return twiki_text;
+
+        twiki_text = TWikiText.insert(connect, visible_text);
+        assert(null != twiki_text);
+
+        WikiWord[] wiki_words = wiki_text.getWikiWords();
+        for(WikiWord ww : wiki_words)
+            TWikiTextWords.storeToDB (connect, twiki_text, ww);
+            
+        return twiki_text;
+    }
+
     /** Inserts record into the table 'wiki_text'.<br><br>
      * INSERT INTO wiki_text (text) VALUES ("apple");
      * @param text      text (without wikification).

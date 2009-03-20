@@ -79,6 +79,23 @@ public class TPage {
         return page_title;
     }
 
+    /** Gets ID of a record or inserts record (if it is absent)
+     * into the table 'page'.<br><br>
+     * 
+     * @param page_title   title of wiki page
+     * @param word_count   size of the page in words
+     * @param wiki_link_count number of wikified words at the page
+     * @param is_in_wiktionary true, if the page_title exists in Wiktionary
+     */
+    public static TPage getOrInsert (Connect connect,String page_title,int word_count,int wiki_link_count,
+            boolean is_in_wiktionary) {
+        
+        TPage p = TPage.get(connect, page_title);
+        if(null == p)
+            p = TPage.insert(connect, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        return p;
+    }
+
     /** Inserts record into the table 'page'.<br><br>
      * INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES ("apple",1,2,TRUE);
      * @param page_title   title of wiki page

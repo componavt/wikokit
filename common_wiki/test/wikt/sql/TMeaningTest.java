@@ -64,13 +64,13 @@ public class TMeaningTest {
             page = TPage.get(conn, page_title);
         }
         
-        int lang_id = TLang.getIDFast(conn, LanguageType.os); //227;
-        TLang lang = TLang.getTLangFast(conn, lang_id);
+        int lang_id = TLang.getIDFast(LanguageType.os); //227;
+        TLang lang = TLang.getTLangFast(lang_id);
         
         int etymology_n = 0;
         String lemma = "";
 
-        TPOS pos = TPOS.getPOSFast(conn, POS.noun);
+        TPOS pos = TPOS.get(POS.noun);
         TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
         
         // let's found ID:

@@ -28,7 +28,17 @@ public class WLanguage {
     
     /** Part of speech. */
     private WPOS[] wpos;
-    
+
+    /** Gets language. */
+    public LanguageType getLanguage() {
+        return lang;
+    }
+
+    /** Gets all parts of speech for this word. */
+    public WPOS[] getAllPOS() {
+        return wpos;
+    }
+
     private final static WLanguage[] NULL_WLANGUAGE_ARRAY = new WLanguage[0];
     
     /** Parses text, creates and fill array of homonym (WLanguage) for each language

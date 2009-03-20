@@ -277,7 +277,8 @@ DROP TABLE IF EXISTS `wiki_text_words` ;
 CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
-  `page_inflection_id` INT(10) UNSIGNED NOT NULL ,
+  `page_id` INT(10) UNSIGNED NOT NULL ,
+  `page_inflection_id` INT(10) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `fk_words_inflection` (`page_inflection_id` ASC) ,
   INDEX `fk_words_text` (`wiki_text_id` ASC) ,
