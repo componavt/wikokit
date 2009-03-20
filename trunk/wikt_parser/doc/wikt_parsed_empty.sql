@@ -230,7 +230,8 @@ DROP TABLE IF EXISTS `relation_type` ;
 CREATE  TABLE IF NOT EXISTS `relation_type` (
   `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_unique` (`name` ASC) )
 ENGINE = InnoDB
 COMMENT = 'Types of semantic relations (synonym, antonym, etc.)';
 

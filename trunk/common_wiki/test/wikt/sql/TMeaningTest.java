@@ -87,8 +87,9 @@ public class TMeaningTest {
         int meaning_n = 1;
         TWikiText wiki_text = null;
 
-        TMeaning.insert(conn, lang_pos, meaning_n, wiki_text);
-        
+        TMeaning m0 = TMeaning.insert(conn, lang_pos, meaning_n, wiki_text);
+        assertTrue(null != m0);
+
         // testGet
         TMeaning[] mm = TMeaning.get(conn, lang_pos);
         assertTrue(null != mm);

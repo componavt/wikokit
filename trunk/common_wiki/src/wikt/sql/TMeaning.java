@@ -87,25 +87,26 @@ public class TMeaning {
         return lang_pos;
     }
     
-    /** Inserts record into the table 'meaning'.
-     *
+    /** Inserts record into the table 'meaning'.<br><br>
      * INSERT INTO meaning (lang_pos_id,meaning_n,wiki_text_id) VALUES (1,2,3);
-     *
      * @param lang_pos  ID of language and POS of wiki page which will be added
      * @param meaning_n meaning (sense) number
      * @param wiki_text wikified text (definitions), it could be null (since an article can contain synonyms without a definition of meaning)
+     * @return inserted record, or null if insertion failed
      */
-    public static void insert (Connect connect,TLangPOS lang_pos,
+    public static TMeaning insert (Connect connect,TLangPOS lang_pos,
             int meaning_n, TWikiText wiki_text) {
 
         if(null == lang_pos) {
             System.err.println("Error (wikt_parsed TMeaning.insert()):: null argument lang_pos");
-            return;
+            return null;
         }
 
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
+        TMeaning meaning = null;
+        int         wiki_text_id = 0;
         try
         {
             s = connect.conn.createStatement ();
@@ -116,20 +117,29 @@ public class TMeaning {
             str_sql.append(lang_pos.getID());
             str_sql.append(",");
             str_sql.append(meaning_n);
-
             if(null != wiki_text)
             {
                 str_sql.append(",");
                 str_sql.append(wiki_text.getID());
+                wiki_text_id = wiki_text.getID();
             }
             str_sql.append(")");
             s.executeUpdate (str_sql.toString());
+
+            s = connect.conn.createStatement ();
+            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+            rs = s.getResultSet ();
+            if (rs.next ())
+                meaning = new TMeaning(rs.getInt("id"), lang_pos, lang_pos.getID(),
+                                        meaning_n, wiki_text, wiki_text_id);
+
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TMeaning.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+        return meaning;
     }
 
     /** Selects rows from the table 'meaning' by the lang_pos_id

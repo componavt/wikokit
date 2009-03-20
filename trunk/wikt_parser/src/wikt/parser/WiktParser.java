@@ -21,6 +21,7 @@ import wikipedia.sql.UtilSQL;
 
 import wikt.sql.TLang;
 import wikt.sql.TPOS;
+import wikt.sql.TRelationType;
 
 /** Top level functions for Wiktionary parsing.
  *
@@ -84,9 +85,22 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         t_start = System.currentTimeMillis();
 
         TLang.recreateTable(wikt_parsed_conn);
+        TLang.createFastMaps(wikt_parsed_conn);
+
         TPOS.recreateTable(wikt_parsed_conn);
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page");
+        TPOS.createFastMaps(wikt_parsed_conn);
+
+        TRelationType.recreateTable(wikt_parsed_conn);
+        TRelationType.createFastMaps(wikt_parsed_conn);
+
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "inflection");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "lang_pos");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "meaning");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page_inflection");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "relation");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text_words");
         
         // 1. get wiki-text from MySQL database
         // variant A. Get all articles

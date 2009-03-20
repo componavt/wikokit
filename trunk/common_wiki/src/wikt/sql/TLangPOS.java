@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class TLangPOS {
 
-    /** Unique identifier in the table lang_pos. */
+    /** Unique identifier in the table 'lang_pos'. */
     private int id;
 
     /** Title of the wiki page, word. */
@@ -62,10 +62,8 @@ public class TLangPOS {
         return page;
     }
 
-    /** Inserts record into the table 'page'.
-     *
+    /** Inserts record into the table 'page'.<br><br>
      * INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (1,2,3,4,"apple");
-     *
      * @param TPage     ID of title of wiki page which will be added
      * @param lang      language of a word at a page
      * @param pos       part of speech of a word
@@ -137,7 +135,7 @@ public class TLangPOS {
         //String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
 
         if(null == page) {
-            System.err.println("Error (wikt_parsed TLangPOS.get()):: null argument page.");
+            System.err.println("Error (wikt_parsed TLangPOS.get()):: null argument: page.");
             return null;
         }
 
@@ -178,9 +176,9 @@ public class TLangPOS {
         return ((TLangPOS[])list_lp.toArray(NULL_TLANGPOS_ARRAY));
     }
 
-    /** Selects row from the table 'lang_pos' by ID
-     * @return empty array if data is absent
+    /** Selects row from the table 'lang_pos' by ID.<br><br>
      * SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=8;
+     * @return null if data is absent
      */
     public static TLangPOS getByID (Connect connect,int id) {
         Statement   s = null;
@@ -207,7 +205,7 @@ public class TLangPOS {
                 }
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLangPOS.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TLangPOS.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -215,10 +213,8 @@ public class TLangPOS {
         return lang_pos;
     }
     
-    /** Deletes all rows from the table 'lang_pos', by the page_id.
-     *
+    /** Deletes all rows from the table 'lang_pos' by page_id.<br><br>
      * DELETE FROM lang_pos WHERE page_id=1;
-     *
      * @param  id  unique ID in the table `lang_pos`
      */
     public static void delete (Connect connect,TPage page) {

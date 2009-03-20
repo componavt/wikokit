@@ -83,7 +83,7 @@ public class TLang {
      * fills the internal map from a table ID to a language.
      * 
      * REM: during a creation of Wikrtionary parsed database
-     * the functions recreateTable() should be called.
+     * the functions recreateTable() should be called (before this function).
      */
     public static void createFastMaps(Connect connect) {
 

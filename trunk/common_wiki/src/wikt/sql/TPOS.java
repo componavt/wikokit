@@ -91,7 +91,7 @@ public class TPOS {
      * fills the internal map from a table ID to POS.<br><br>
      * 
      * REM: during a creation of Wiktionary parsed database
-     * the functions recreateTable() should be called.
+     * the functions recreateTable() should be called (before this function).
      */
     public static void createFastMaps(Connect connect) {
 

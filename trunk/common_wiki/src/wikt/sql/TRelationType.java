@@ -90,7 +90,7 @@ public class TRelationType {
      * fills the internal map from a table ID to a semantic relation .<br><br>
      *
      * REM: during a creation of Wiktionary parsed database
-     * the functions recreateTable() should be called.
+     * the functions recreateTable() should be called (before this function).
      */
     public static void createFastMaps(Connect connect) {
 
