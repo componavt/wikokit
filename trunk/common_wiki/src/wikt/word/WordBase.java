@@ -42,6 +42,11 @@ public class WordBase {
         return page_title;
     }
 
+    /** Gets all languages. */
+    public WLanguage[] getAllLanguages() {
+        return lang;
+    }
+
     /** Creates word for the given Wiktionary (defined by language)
      * by parsing the Wiktionary article text.
      * Stores parsed data to the WordBase object.

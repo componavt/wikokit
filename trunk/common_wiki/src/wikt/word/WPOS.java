@@ -45,7 +45,7 @@ public class WPOS {
     
     /** (1) Meaning consists of Definitions + Quotations. */
     private WMeaning[] meaning;
-
+    
     /** (2) Semantic relations: synonymy, antonymy, etc.
      * The map from semantic relation (e.g. synonymy) to array of WRelation
      * (one WRelation contains a list of synonyms for one meaning).
@@ -60,6 +60,28 @@ public class WPOS {
 
     private final static WPOS[] NULL_WPOS_ARRAY = new WPOS[0];
 
+    /** Gets part of speech. */
+    public POS getPOS() {
+        return pos_type;
+    }
+
+    /** Gets all senses. */
+    public WMeaning[] getAllMeanings() {
+        return meaning;
+    }
+
+    /** Gets all relations. */
+    public Map<Relation, WRelation[]> getAllRelations() {
+        return relation;
+    }
+
+
+    /*Semantic relations: synonymy, antonymy, etc.
+     * The map from semantic relation (e.g. synonymy) to array of WRelation
+     * (one WRelation contains a list of synonyms for one meaning).
+
+    private Map<Relation, WRelation[]> relation*/
+    
     /** Parses text, creates and fill array of meanings (WLanguage), 
      * semantic relations, translations.
      * 

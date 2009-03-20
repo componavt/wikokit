@@ -128,7 +128,7 @@ public class WRelationRuTest {
         // antonymy
         assertFalse(result.containsKey(Relation.antonymy));
         r = result.get(Relation.antonymy);
-        assertEquals(null, r);
+        assertNull(r);
 
         // ====Гиперонимы====   hypernymy
         // # [[звонок]], [[колокол]]

@@ -61,32 +61,40 @@ public class TPOS {
     /** Gets part of speech (POS with ID) from the table 'lang_pos'.<br><br>
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
-    public static int getIDFast(Connect connect,POS p) {
+    public static int getIDFast(POS p) {
         if(null == pos2id) {
             System.err.println("Error (wikt_parsed TPOS.getIDFast()):: What about calling 'createFastMaps()' before?");
             return -1;
         }
+        if(null == p) {
+            System.err.println("Error (wikt_parsed TPOS.getIDFast()):: argument POS is null");
+            return -1;
+        }
         return pos2id.get(p);
+    }
+    
+    /** Gets part of speech by ID from the table 'lang_pos'.<br><br>
+     * REM: createFastMaps() should be run at least once, before this function execution.
+     */
+    public static TPOS getTPOSFast(int id) {
+        if(null == id2pos) {
+            System.err.println("Error (wikt_parsed TPOS.getTPOSFast()):: What about calling 'createFastMaps()' before?");
+            return null;
+        }
+        if(id <= 0) {
+            System.err.println("Error (wikt_parsed TPOS.getTPOSFast()):: argument id <=0, id = "+id);
+            return null;
+        }
+        return id2pos.get(id);
     }
 
     /** Gets part of speech from the table 'lang_pos'.<br><br>
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
-    public static TPOS getPOSFast(Connect connect,POS p) {
-        if(null == id2pos) {
-            System.err.println("Error (wikt_parsed TPOS.getPOSFast()):: What about calling 'createFastMaps()' before?");
-            return null;
-        }
-        return id2pos.get(pos2id.get(p));
+    public static TPOS get(POS p) {
+        return getTPOSFast(getIDFast(p));
     }
-
-    /** Gets part of speech by ID from the table 'lang_pos'.<br><br>
-     * REM: createFastMaps() should be run at least once, before this function execution.
-     */
-    public static TPOS getTPOSFast(Connect connect,int id) {
-        return id2pos.get(id);
-    }
-
+    
     /** Read all records from the table 'lang_pos',
      * fills the internal map from a table ID to POS.<br><br>
      * 

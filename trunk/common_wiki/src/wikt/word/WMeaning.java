@@ -73,6 +73,11 @@ public class WMeaning {
     public WikiWord[] getWikiWords() {
         return definition.getWikiWords();
     }
+
+    /** Gets wiki_text. */
+    public WikiText getWikiText() {
+        return definition;
+    }
     
     /** Gets array of quotes (sentences) from the definition. */
     public WQuote[] getQuotes() {

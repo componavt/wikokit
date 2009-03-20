@@ -68,15 +68,15 @@ public class TRelationTest {
         }
 
         // get lang
-        int lang_id = TLang.getIDFast(conn, LanguageType.os); //227;
-        lang = TLang.getTLangFast(conn, lang_id);
+        int lang_id = TLang.getIDFast(LanguageType.os); //227;
+        lang = TLang.getTLangFast(lang_id);
         assertTrue(null != lang);
         assertEquals(LanguageType.os, lang.getLanguage());
 
         // get POS
-        pos = TPOS.getPOSFast(conn, POS.noun);
+        pos = TPOS.get(POS.noun);
         assertTrue(null != pos);
-
+        
         // get relation_type
         relation_type = TRelationType.get(conn, Relation.synonymy);
         assertTrue(null != relation_type);

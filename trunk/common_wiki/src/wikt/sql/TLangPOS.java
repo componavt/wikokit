@@ -152,11 +152,11 @@ public class TLangPOS {
             rs = s.getResultSet ();
             while (rs.next ())
             {
-                int     id      =                             rs.getInt("id");
-                TLang   lang    = TLang.getTLangFast(connect, rs.getInt("lang_id"));
-                TPOS    pos     = TPOS. getTPOSFast (connect, rs.getInt("pos_id"));
-                int etymology_n =                             rs.getInt("etymology_n");
-                String lemma    = Encodings.bytesToUTF8(      rs.getBytes("lemma"));
+                int     id      =                       rs.getInt("id");
+                TLang   lang    = TLang.getTLangFast(   rs.getInt("lang_id"));
+                TPOS    pos     = TPOS. getTPOSFast (   rs.getInt("pos_id"));
+                int etymology_n =                       rs.getInt("etymology_n");
+                String lemma    = Encodings.bytesToUTF8(rs.getBytes("lemma"));
 
                 if(null != lang && null != pos) {
                     if(null == list_lp)
@@ -195,8 +195,8 @@ public class TLangPOS {
             if (rs.next ())
             {
                 TPage   page    = TPage.getByID     (connect, rs.getInt("page_id"));
-                TLang   lang    = TLang.getTLangFast(connect, rs.getInt("lang_id"));
-                TPOS    pos     = TPOS. getTPOSFast (connect, rs.getInt("pos_id"));
+                TLang   lang    = TLang.getTLangFast(         rs.getInt("lang_id"));
+                TPOS    pos     = TPOS. getTPOSFast (         rs.getInt("pos_id"));
                 int etymology_n =                             rs.getInt("etymology_n");
                 String lemma    = Encodings.bytesToUTF8(      rs.getBytes("lemma"));
                 
