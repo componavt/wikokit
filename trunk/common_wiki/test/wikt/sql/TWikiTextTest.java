@@ -9,6 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import wikipedia.sql.Connect;
 
+import wikipedia.sql.UtilSQL;
 import wikipedia.language.LanguageType;
 import wikt.constant.ContextLabel;
 import wikt.util.WikiWord;
@@ -39,51 +40,64 @@ public class TWikiTextTest {
 
     @After
     public void tearDown() {
+        Connect conn = ruwikt_parsed_conn;
+        
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "inflection");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page_inflection");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
+
         ruwikt_parsed_conn.Close();
     }
     
     @Test
     public void testStoreToDB() {
-        System.out.println("storeToDB_ru");
+        System.out.println("storeToDB_ru_en");
         
         String text = "test_TWikiText_storeToDB_ru";
         Connect conn = ruwikt_parsed_conn;
 
         // wiki_text
-        LanguageType wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
 
-        page_title      = "самолёт";
-        lang_section    = LanguageType.ru; // Russian word
-
-        //ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
-        /*WikiWord[] ww = new WikiWord[4];
-        ww[0] = new WikiWord("programmable","programmable", null);
-        ww[3] = new WikiWord("calculation", "calculations", null);
-        WQuote[] _quote = null;*/
-        //WMeaning expResult = new WMeaning(page_title, _labels, _definition_wiki, _quote);
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "airplane";
+        lang_section    = LanguageType.en; // English word
 
         String _definition = "A programmable calculations";
         String line =  "# A [[programmable]] [[calculation]]s";
         WMeaning wmeaning = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
-
         assertNotNull(wmeaning);
         assertTrue(wmeaning.getDefinition().equalsIgnoreCase(_definition));
-
-        // public static TWikiText storeToDB (Connect connect,WikiText wiki_text) {
+        
         TWikiText twiki_text = TWikiText.storeToDB (conn, wmeaning.getWikiText());
         assertNotNull(twiki_text);
 
-        // check that wiki text should appear: "programmable" and "calculation"
-        TPage page1 = TPage.get(conn, "programmable");
-        TPage page2 = TPage.get(conn, "calculation");
-        assertNotNull(page1);
-        assertNotNull(page2);
+        // check that two pages should appear in table 'page': "programmable" and "calculation"
+        TPage page_programmable = TPage.get(conn, "programmable");
+        TPage page_calculation = TPage.get(conn, "calculation");
+        assertNotNull(page_programmable);
+        assertNotNull(page_calculation);
 
-        // check that two pages should appear: "programmable" and "calculation"
+        // check that 1 record should appear in table 'wiki_text'
         TWikiText wiki_text = TWikiText.get(conn, _definition);
         assertNotNull(wiki_text);
+
+        // check that 1 record should appear in tables 'inflection', 'page_inflection'
+        TInflection infl_calculations = TInflection.get(conn, "calculations");
+        assertNotNull(infl_calculations);
+
+        TPageInflection pti_calc = TPageInflection.get(conn, page_calculation, infl_calculations);
+        assertNotNull(pti_calc);
+
+        // check that 2 record should appear in table 'wiki_text_words'
+        TWikiTextWords w_calc = TWikiTextWords.getByWikiTextAndPageAndInflection(conn, wiki_text, page_calculation, pti_calc);
+        TWikiTextWords w_prog = TWikiTextWords.getByWikiTextAndPageAndInflection(conn, wiki_text, page_programmable, null);
+        assertNotNull(w_calc);
+        assertNotNull(w_prog);
     }
 
     @Test

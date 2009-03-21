@@ -111,6 +111,13 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
                             StringUtil.escapeChars(s));
         return connect.enc.EncodeToDB(safe_title);
     }
+
+    /** Converts to safe DB string, but without replacement of a space by an underscore symbol. */
+    public static String convertToSafeStringEncodeToDBWunderscore(Connect connect, String s) {
+
+        String safe_title = StringUtil.escapeChars(s);
+        return connect.enc.EncodeToDB(safe_title);
+    }
     
     private static StringBuffer sb = new StringBuffer(255);
     

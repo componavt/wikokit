@@ -113,7 +113,7 @@ public class TPage {
         {
             s = connect.conn.createStatement ();
             str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
             str_sql.append(safe_title);
             str_sql.append("\",");
             str_sql.append(word_count);
@@ -156,7 +156,7 @@ public class TPage {
         try {
             s = connect.conn.createStatement ();
 
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
                                 
             str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
@@ -241,7 +241,7 @@ public class TPage {
             
         try {
             s = connect.conn.createStatement ();
-            String safe_prefix = PageTableBase.convertToSafeStringEncodeToDB(connect, prefix);
+            String safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
             str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE \"");
             str_sql.append(safe_prefix);
             str_sql.append("%\"");
@@ -297,7 +297,7 @@ public class TPage {
         try {
             s = connect.conn.createStatement ();
 
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
 
             str_sql.append("DELETE FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
