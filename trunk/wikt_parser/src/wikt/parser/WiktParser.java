@@ -24,7 +24,6 @@ import wikt.sql.TPOS;
 import wikt.sql.TRelationType;
 
 /** Top level functions for Wiktionary parsing.
- *
  */
 public class WiktParser {
     private static final boolean DEBUG = true;
@@ -50,7 +49,26 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
  * 
  * ruwikt20080620_parsed
  */
-    
+    public static void clearDatabase (Connect wikt_parsed_conn) {
+        TLang.recreateTable(wikt_parsed_conn);
+        TLang.createFastMaps(wikt_parsed_conn);
+
+        TPOS.recreateTable(wikt_parsed_conn);
+        TPOS.createFastMaps(wikt_parsed_conn);
+
+        TRelationType.recreateTable(wikt_parsed_conn);
+        TRelationType.createFastMaps(wikt_parsed_conn);
+
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "inflection");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "lang_pos");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "meaning");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page_inflection");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "relation");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text_words");
+    }
+
     /** Parses the set of Wiktionary pages, 
      * stores result to wikt_parsed database.
      * 
@@ -72,7 +90,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
      * FETCH cur1 INTO var1, var2, var3
      * CLOSE cur1;
      */
-    public void runSubCategories(
+    public static void runSubCategories(
                     LanguageType wiki_lang,
                     Connect wikt_conn,
                     Connect wikt_parsed_conn,
@@ -84,24 +102,8 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         float   t_work;
         t_start = System.currentTimeMillis();
 
-        TLang.recreateTable(wikt_parsed_conn);
-        TLang.createFastMaps(wikt_parsed_conn);
+        clearDatabase(wikt_parsed_conn);
 
-        TPOS.recreateTable(wikt_parsed_conn);
-        TPOS.createFastMaps(wikt_parsed_conn);
-
-        TRelationType.recreateTable(wikt_parsed_conn);
-        TRelationType.createFastMaps(wikt_parsed_conn);
-
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "inflection");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "lang_pos");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "meaning");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "page_inflection");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "relation");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text_words");
-        
         // 1. get wiki-text from MySQL database
         // variant A. Get all articles
         // todo
@@ -122,8 +124,9 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         List<String> pt = CategoryHyponyms.getArticlesOfSubCategories(wikt_conn, category_name); //"Яблоки"
         System.out.println("Total documents: " + pt.size());
         for(String page_title:pt) {
-            //page_title = "яблоко";         // ангел  самолёт коса
-            //page_title = "Bolesław_Prus";
+            cur_doc ++;
+            //page_title = "яблоко";         // ангел  самолёт коса яблоко
+            //page_title = "апподжиатура";        // Bolesław_Prus car
             //if(++ cur_doc > max_docs) {
             //if(++ cur_doc > 1) {
             //    break;
@@ -131,30 +134,10 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
             
             //page_title = pt3[cur_doc]; // "Will_o'_the_wisp"; // "Momotarō";    // id=68417
             if(DEBUG) {
-                System.out.print(" "+cur_doc+": "+page_title + " ");
+                System.out.println(" "+cur_doc+": "+page_title + " ");
             }
             
-            // gets Wiktionary article text
-            StringBuffer str = new StringBuffer( //StringUtil.escapeCharDollar(
-                    PageTableBase.getArticleText(wikt_conn, page_title));
-            
-            if(0 == str.length()) {
-                System.out.println("Error in WiktParser.runSubCategories(): The article with the title '"+
-                        page_title + "' has no text in Wiktionary.");
-                return;
-            }
-              
-            // parses wiki text 'str', stores to the object 'word'
-            WordBase word = new WordBase(page_title, wiki_lang, str);
-            
-            if(word.isEmpty()) {
-                System.out.println("Warning in WiktParser.runSubCategories(): The article with the title '"+
-                        page_title + "' after convert wiki to text: has no text.");
-                return;
-            }
-            
-            // store results to tables: pos_term, meaning, synonyms...
-            Keeper.storeToDB(wikt_parsed_conn, word);
+            parseWiktionaryEntry(wiki_lang, wikt_conn, wikt_parsed_conn, page_title);
         }
                 
         t_end  = System.currentTimeMillis();
@@ -162,5 +145,34 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         System.out.println("\n\nTime sec:" + t_work + 
                 "\ndocuments: " + pt.size());
     }
+    
+    public static void parseWiktionaryEntry(
+                    LanguageType wiki_lang,
+                    Connect wikt_conn,
+                    Connect wikt_parsed_conn,
+                    String page_title
+                    )
+    {
+        // gets Wiktionary article text
+        StringBuffer str = new StringBuffer( //StringUtil.escapeCharDollar(
+                PageTableBase.getArticleText(wikt_conn, page_title));
 
+        if(0 == str.length()) {
+            System.out.println("Error in WiktParser.runSubCategories(): The article with the title '"+
+                    page_title + "' has no text in Wiktionary.");
+            return;
+        }
+
+        // parses wiki text 'str', stores to the object 'word'
+        WordBase word = new WordBase(page_title, wiki_lang, str);
+
+        if(word.isEmpty()) {
+            System.out.println("Warning in WiktParser.runSubCategories(): The article with the title '"+
+                    page_title + "' after convert wiki to text: has no text.");
+            return;
+        }
+
+        // store results to tables: pos_term, meaning, synonyms...
+        Keeper.storeToDB(wikt_parsed_conn, word);
+    }
 }

@@ -1,9 +1,17 @@
 
 package wikt.sql;
 
+import wikt.util.POSText;
 import wikipedia.language.LanguageType;
 import wikt.constant.POS;
 import wikt.constant.Relation;
+import wikt.word.WRelation;
+import wikt.multi.ru.WRelationRu;
+import wikipedia.sql.Connect;
+import wikipedia.sql.UtilSQL;
+
+import java.util.Map;
+import java.util.Collection;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -11,7 +19,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import wikipedia.sql.Connect;
+
 
 public class TRelationTest {
 
@@ -25,6 +33,7 @@ public class TRelationTest {
     TWikiText wiki_text;
     TLangPOS lang_pos;
     TMeaning meaning;
+    String car_text;
     
     public TRelationTest() {
     }
@@ -98,15 +107,71 @@ public class TRelationTest {
         int meaning_n = 1;
         meaning = TMeaning.insert(conn, lang_pos, meaning_n, wiki_text);
         assertTrue(null != meaning);
+
+        car_text =  "=== Произношение ===\n" +
+                    "==== Значение ====\n" +
+                    "==== Синонимы ====\n" +
+                    "# [[carriage]]\n" +
+                    "# [[automobile]]\n" +
+                    "# -\n" +
+                    "# -\n" +
+                    "# -\n" +
+                    "\n" +
+                    "==== Антонимы ====\n" +
+                    "\n" +
+                    "==== Гиперонимы ====\n" +
+                    "# [[vehicle]]\n" +
+                    "# -\n" +
+                    "# -\n" +
+                    "# -\n" +
+                    "# -\n" +
+                    "\n" +
+                    "==== Гипонимы ====\n" +
+                    "# -\n" +
+                    "# [[truck]], [[van]], [[bus]]\n" +
+                    "# -\n" +
+                    "\n" +
+                    "===Родственные слова===\n";
     }
 
     @After
     public void tearDown() {
-        TPage.delete    (ruwikt_parsed_conn, page_title);
-        TLangPOS.delete (ruwikt_parsed_conn, page);
-        TMeaning.delete (ruwikt_parsed_conn, meaning);
+        Connect conn = ruwikt_parsed_conn;
+        TPage.delete    (conn, page_title);
+        TLangPOS.delete (conn, page);
+        TMeaning.delete (conn, meaning);
+
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
         
         ruwikt_parsed_conn.Close();
+    }
+
+    @Test
+    public void testStoreToDB() {
+        System.out.println("storeToDB_ru");
+        Connect conn = ruwikt_parsed_conn;
+
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "car";
+        POSText pt = new POSText(POS.noun, car_text);
+
+        Map<Relation, WRelation[]> m_relations = WRelationRu.parse(wikt_lang, page_title, pt);
+        assertNotNull(m_relations);
+        assertTrue(m_relations.size() > 0);
+        assertTrue(m_relations.containsKey(Relation.synonymy));
+        
+        // let's check second meaning (i.e. [1]): 
+        // synonyms: [[automobile]]
+        // hyponyms: [[truck]], [[van]], [[bus]]
+        TRelation.storeToDB(conn, meaning, 1, m_relations);
+
+        TRelation[] trelation = TRelation.get(conn, meaning); //TRelationType trelation_synonymy = TRelationType.getRelationFast(Relation.synonymy);
+        assertNotNull(trelation);
+        assertEquals(4, trelation.length);
     }
 
     @Test

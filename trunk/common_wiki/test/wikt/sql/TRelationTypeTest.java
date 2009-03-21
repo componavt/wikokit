@@ -71,7 +71,7 @@ public class TRelationTypeTest {
         TRelationType.createFastMaps(ruwikt_parsed_conn);
 
         // and every usual day
-        int synonymy_id = TRelationType.getIDFast(ruwikt_parsed_conn, Relation.synonymy);
+        int synonymy_id = TRelationType.getIDFast(Relation.synonymy);
 
         TRelationType rel_type = TRelationType.get(ruwikt_parsed_conn, Relation.synonymy);
         assertEquals(rel_type.getID(), synonymy_id);

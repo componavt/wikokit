@@ -77,6 +77,11 @@ public class WLanguageRuTest {
         source_text = "Before {{-unknown-}} Unknown lang";
         result = WLanguageRu.splitToLanguageSections("test_word1", new StringBuffer(source_text));
         assertEquals(0, result.length);
+
+        // without letter code: let's think that this is a Russian word
+        source_text = "Before without lang tag";
+        result = WLanguageRu.splitToLanguageSections("test_word1", new StringBuffer(source_text));
+        assertEquals(1, result.length);
         
         // unknown letter code (last): should be omitted (with text)
         source_text = "{{-ru-}} Russian {{-slovio-}} Slovio {{-unknown-}} Unknown lang";

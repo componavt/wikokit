@@ -60,30 +60,38 @@ public class TRelationType {
     /** Gets semantic relations' ID from the table 'relation_type'.<br><br>
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
-    public static int getIDFast(Connect connect,Relation r) {
+    public static int getIDFast(Relation r) {
         if(null == relation2id) {
             System.err.println("Error (wikt_parsed TRelationType.getIDFast()):: What about calling 'createFastMaps()' before?");
+            return -1;
+        }
+        if(null == r) {
+            System.err.println("Error (wikt_parsed TRelationType.getIDFast()):: argument POS is null");
             return -1;
         }
         return relation2id.get(r);
     }
 
-    /** Gets semantic relations (name with ID) from the table 'relation_type'.<br><br>
+    /** Gets semantic relations by ID from the table 'relation_type'.<br><br>
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
-    public static TRelationType getRelationFast(Connect connect,Relation r) {
+    public static TRelationType getRelationFast(int id) {
         if(null == id2relation) {
             System.err.println("Error (wikt_parsed TRelationType.getRelationFast()):: What about calling 'createFastMaps()' before?");
             return null;
         }
-        return id2relation.get(relation2id.get(r));
+        if(id <= 0) {
+            System.err.println("Error (wikt_parsed TRelationType.getRelationFast()):: argument id <=0, id = "+id);
+            return null;
+        }
+        return id2relation.get(id);
     }
-
-    /** Gets semantic relations by ID from the table 'relation_type'.<br><br>
+    
+    /** Gets semantic relations (name with ID) from the table 'relation_type'.<br><br>
      * REM: createFastMaps() should be run at least once, before this function execution.
      */
-    public static TRelationType getRelationFast(Connect connect,int id) {
-        return id2relation.get(id);
+    public static TRelationType getRelationFast(Relation r) {
+        return getRelationFast(getIDFast(r));
     }
 
     /** Read all records from the table 'relation_type',

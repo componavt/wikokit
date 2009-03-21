@@ -54,14 +54,16 @@ public class Main {
         wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
         
-        category_name = "Слово дня";
+        category_name = "Викисловарь:Избранные статьи";
+            // "Викисловарь:Избранные статьи";
+            // "Слово дня";
             // "Статья недели", "Слово дня"
             // "Кандидаты в избранные статьи", "Статьи со ссылками на Википедию"
             // "Статьи с звучащими примерами произношения", "Статьи с иллюстрациями", 
         
         WiktParser w = new WiktParser();
-        w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
-        //w.runAll(wiki_lang, wikt_conn, wikt_parsed_conn);
+        //w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
+        PageTableAll.parseAllPages(wiki_lang, wikt_conn, wikt_parsed_conn);
         
         wikt_conn.Close();
         wikt_parsed_conn.Close();
