@@ -11,9 +11,10 @@ Todo:
 = DB layout changes =
 
 Todo now:
-  # field `relation_type.name` should be unique
+
 
 In future:
+  # + field `relation.page_id`. It will replace (partly) `wiki_text_id` for one-word-relation, e.g. [[aircraft]], but not "[[aeroplane]] (брит.)" for "airplane" entry
   # rename `lang_pos.etymology_n` to `lang_pos.etymology_id`, create table `etymology`
 
 Done:
@@ -22,3 +23,4 @@ Done:
   # add default value (0) to the field `meaning.wiki_text_id`
   # replace `relation.page_id` by `relation.wiki_text_id` and change link from ->page to ->wiki_text
   # + table `relation_type` (id,name), + field `relation.relation_type_id`
+  # field `relation_type.name` should be unique
