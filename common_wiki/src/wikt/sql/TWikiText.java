@@ -63,10 +63,11 @@ public class TWikiText {
      */
     public static TWikiText storeToDB (Connect connect,WikiText wiki_text) {
 
+        if(null == wiki_text) return null;
+
         String visible_text = wiki_text.getVisibleText();
 
-        if(null == wiki_text || visible_text.length() == 0)
-            return null;
+        if(visible_text.length() == 0) return null;
 
         TWikiText  twiki_text = TWikiText.get(connect, visible_text);
         if(null != twiki_text)
@@ -100,7 +101,7 @@ public class TWikiText {
         {
             s = connect.conn.createStatement ();
             str_sql.append("INSERT INTO wiki_text (text) VALUES (\"");
-            String safe_text = PageTableBase.convertToSafeStringEncodeToDB(connect, text);
+            String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
             str_sql.append(safe_text);
             str_sql.append("\")");
             s.executeUpdate (str_sql.toString());
@@ -134,7 +135,7 @@ public class TWikiText {
         
         try {
             s = connect.conn.createStatement ();
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, text);
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
             str_sql.append("SELECT id FROM wiki_text WHERE text=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");

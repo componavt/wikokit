@@ -44,6 +44,20 @@ public class TPageInflection {
         return page;
     }
 
+    /** Gets ID of a record or inserts record (if it is absent)
+     * into the table 'page_inflection'.
+     *
+     * @param text      text (without wikification).
+     * @return inserted record, or null if insertion failed
+     */
+    public static TPageInflection getOrInsert (Connect connect,TPage page,TInflection inflection,int term_freq) {
+
+        TPageInflection pi = TPageInflection.get(connect, page, inflection);
+        if(null == pi)
+            pi = TPageInflection.insert(connect, page, inflection, term_freq);
+        return pi;
+    }
+
     /** Inserts record into the table 'page_inflection'.<br><br>
      * INSERT INTO page_inflection (page_id,inflection_id,term_freq) VALUES (1,2,3);
      * @param page_id       ID of wiki page

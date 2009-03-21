@@ -83,28 +83,38 @@ public class TWikiTextWords {
         TPage page = TPage.getOrInsert(connect, word_link, word_count, wiki_link_count, is_in_wiktionary);
         assert(page != null);
 
-        if(0 == word_link.compareTo(word_visible)) {
-            // skip tables 'page_inflecton' and 'inflection'
-            
-            // fill table 'wiki_text_words'
-            TWikiTextWords w = null; //  TWikiTextWords.getByWikiTextAndPage(connect, twiki_text, page);
-            if(null == w)
-                w = TWikiTextWords.insert(connect, twiki_text, page, null);
-            assert(w != null);
-
-        } else {
-            // fill also tables 'page_inflecton' and 'inflection'
-
-            int freq = 1;
-            TInflection infl = TInflection.insert(connect, word_visible, freq);
+        TPageInflection page_infl;
+        if(0 != word_link.compareTo(word_visible)) {
+            int freq = 1;       // fill also tables 'page_inflecton' and 'inflection'
+            TInflection infl = TInflection.getOrInsert(connect, word_visible, freq);
             assert(null != infl);
 
             int term_freq = 1;
-            TPageInflection page_infl = TPageInflection.insert(connect, page, infl, term_freq);
+            page_infl = TPageInflection.getOrInsert(connect, page, infl, term_freq);
             assert(null != page_infl);
-        }
+        } else
+            page_infl = null;   // skip tables 'page_inflecton' and 'inflection'
+
+        // fill table 'wiki_text_words'
+        TWikiTextWords w = TWikiTextWords.getOrInsert(connect, twiki_text, page, page_infl);
+        assert(w != null);
     }
     
+    /** Gets ID of a record or inserts record (if it is absent)
+     * into the table 'wiki_text_words'.
+     *
+     
+     * @return inserted record, or null if insertion failed
+     */
+    public static TWikiTextWords getOrInsert (Connect connect,TWikiText wiki_text,
+                                        TPage page,TPageInflection page_inflection) {
+
+        TWikiTextWords w = TWikiTextWords.getByWikiTextAndPageAndInflection(connect, wiki_text, page, page_inflection);
+        if(null == w)
+            w = TWikiTextWords.insert(connect, wiki_text, page, page_inflection);
+        return w;
+    }
+
     /** Inserts record into the table 'wiki_text_words'.<br><br>
      *
      * INSERT INTO wiki_text_words (wiki_text_id,page_id,page_inflection_id) VALUES (1,1,1);

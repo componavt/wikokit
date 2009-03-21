@@ -1,6 +1,9 @@
 
 package wikt.sql;
 
+import wikt.util.WikiWord;
+import wikipedia.sql.UtilSQL;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -84,9 +87,50 @@ public class TWikiTextWordsTest {
         TPageInflection.delete(conn, page_infl);
         TWikiText.delete(conn, wiki_text);
 
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "inflection");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page_inflection");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
+        
         ruwikt_parsed_conn.Close();
     }
-    
+
+    @Test
+    public void testStoreToDB() {
+        System.out.println("storeToDB_ru");
+        Connect conn = ruwikt_parsed_conn;
+        TWikiTextWords twtw;
+        StringBuffer s_wiki_text = new StringBuffer("Having a [[pleasant]] [[taste|tasting]], ... one [[sugar]]xyz.");
+        WikiWord[] wiki_words = WikiWord.getWikiWords(page_title, s_wiki_text);
+
+        //ww[0] = new WikiWord("pleasant","pleasant",  null);
+        //ww[1] = new WikiWord("taste",   "tasting",   null);
+        //ww[2] = new WikiWord("sugar",   "sugarxyz",  null);
+
+        for(WikiWord word : wiki_words) {
+            TWikiTextWords.storeToDB (conn, wiki_text, word);
+            
+            String s_page       = word.getWordLink();
+            String s_inflection = word.getWordVisible();
+
+            TPage p = TPage.get(conn, s_page);
+            assertNotNull(p);
+
+            TPageInflection p_infl;
+            if(0 != s_page.compareTo(s_inflection)) {
+                TInflection i = TInflection.get(conn, s_inflection);
+                assertNotNull(i);
+
+                p_infl = TPageInflection.get(conn, p, i);
+                assertNotNull(p_infl);
+            } else
+                p_infl = null;
+
+            twtw = TWikiTextWords.getByWikiTextAndPageAndInflection(conn, wiki_text, p, p_infl);
+            assertNotNull(twtw);
+        }
+    }
+
     @Test
     public void testInsert() {
         System.out.println("insert_ru");

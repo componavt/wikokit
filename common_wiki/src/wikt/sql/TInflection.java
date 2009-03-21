@@ -46,8 +46,24 @@ public class TInflection {
         return inflected_form.toString();
     }
 
+    /** Gets ID of a record or inserts record (if it is absent)
+     * into the table 'inflection'.
+     *
+     * @param text      text (without wikification).
+     * @return inserted record, or null if insertion failed
+     */
+    public static TInflection getOrInsert (Connect connect,String inflected_form,int freq) {
+
+        TInflection i = TInflection.get(connect, inflected_form);
+        if(null == i)
+            i = TInflection.insert(connect, inflected_form, freq);
+        return i;
+    }
+    
     /** Inserts record into the table 'inflection'.<br><br>
+     *
      * INSERT INTO inflection (freq,inflected_form) VALUES (1,"apple");
+     * 
      * @param text      text (without wikification).
      * @return inserted record, or null if insertion failed
      */
@@ -66,7 +82,7 @@ public class TInflection {
             str_sql.append("INSERT INTO inflection (freq,inflected_form) VALUES (");
             str_sql.append(freq);
             str_sql.append(",\"");
-            String safe_text = PageTableBase.convertToSafeStringEncodeToDB(connect, inflected_form);
+            String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, inflected_form);
             str_sql.append(safe_text);
             str_sql.append("\")");
             s.executeUpdate (str_sql.toString());
@@ -103,7 +119,7 @@ public class TInflection {
         
         try {
             s = connect.conn.createStatement ();
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, inflected_form);
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, inflected_form);
             str_sql.append("SELECT id,freq FROM inflection WHERE inflected_form=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
