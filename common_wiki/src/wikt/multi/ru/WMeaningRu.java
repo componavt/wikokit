@@ -90,7 +90,7 @@ public class WMeaningRu {
             if(null != wm) {
                 wm_list.add(wm);
             }
-            to_continue = next_eol < len && (text.charAt(next_eol+1) == '#');
+            to_continue = next_eol < len-1 && (text.charAt(next_eol+1) == '#');
             prev_eol = next_eol + 1;
         }
         

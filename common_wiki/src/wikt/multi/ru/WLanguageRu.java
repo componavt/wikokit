@@ -113,7 +113,15 @@ public class WLanguageRu {
         }
         if(0==i && b_known_lang && b_at_least_one_lang) {
             m.appendTail(lang_sections.get(i).text);
-        }   
+        }
+
+        if(b_known_lang && 0 == lang_sections.size()) {
+            System.out.println("Warning: Ok. I guess that this is an article about Russian word, without language code. Word = '" + page_title + "'; in WLanguageRu.splitToLanguageSections()");
+            LangText lt = new LangText(LanguageType.ru);
+            lt.text = text;
+            lang_sections.add(lt);
+        }
+
         return (LangText[])lang_sections.toArray(NULL_LANG_TEXT_ARRAY);
     }
 

@@ -8,8 +8,10 @@ package wikt.mrd;
 
 import wikipedia.sql.Connect;
 import wikt.util.WikiText;
+import wikt.constant.*;
 import wikt.word.*;
 import wikt.sql.*;
+import java.util.Map;
 
 /** Manager stores parsed data to MRD Wiktionary database (wikt_parsed).
  */
@@ -22,9 +24,9 @@ public class Keeper {
      * @param word data to be stored to a parsed wiktionary database
      */
     public static void storeToDB(Connect conn, WordBase word) {
-
+        
         String page_title = word.getPageTitle();
-
+        
         // table 'page', stores page title, gets id of new page
         int word_count = 0;
         // to calculate, todo ...
@@ -51,26 +53,21 @@ public class Keeper {
                 String lemma = "";  // todo ...
                 TLangPOS lang_pos = TLangPOS.insert(conn, tpage, tlang, tpos, etymology_n, lemma);
 
+                Map<Relation, WRelation[]> m_relations = w_pos.getAllRelations();
+
                 WMeaning[] w_meaning_all = w_pos.getAllMeanings();
                 for(int i=0; i<w_meaning_all.length; i++) {
                     WMeaning w_meaning = w_meaning_all[i];
-
-                    // twiki_text
                     WikiText definition = w_meaning.getWikiText();
                     TWikiText twiki_text= TWikiText.storeToDB(conn, definition);
+                    
+                    TMeaning tmeaning = TMeaning.insert(conn, lang_pos, i, twiki_text);
+                    
+                    TRelation.storeToDB(conn, tmeaning, i, m_relations);
                 }
-                
             }
         }
-
-
-    // if ! word.isEmpty()
-
-        // 2. table 'wiki_text', stores wiki_text
-
-        // 3. table 'meaning', stores meaning: page_id, lang_id, pos_id, meaning_number
-        // definition as wiki_text_id
-
+        
         // 4. table 'relation', stores relation_id, meaning_id, wiki_text_id,
         // may be: page_id (for simple one-word relation, for relations which are presented in the db)
         //       ? post-processing?
@@ -80,10 +77,5 @@ public class Keeper {
         // 6. table 'translation_entry', stores: translation_id, lang_id, wiki_text_id,
         // may be: page_id (for simple one-word translation, for translations which are presented in the db)
         //       ? post-processing?
-
-        int z = 0;
     }
-
-    
-    
 }

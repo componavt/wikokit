@@ -7,6 +7,10 @@
 
 package wikt.sql;
 
+import wikt.constant.Relation;
+import wikt.word.WRelation;
+import wikt.util.WikiText;
+
 import wikipedia.language.Encodings;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
@@ -14,6 +18,8 @@ import java.sql.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Collection;
 
 /** An operations with the table 'relation' in MySQL wiktionary_parsed database.
  *
@@ -55,6 +61,39 @@ public class TRelation {
     /** Gets text (wikified sometimes). */
     public TWikiText getWikiText() {
         return wiki_text;
+    }
+
+    /** Inserts records into tables: 'wiki_text' and 'relation'.
+     * The insertion into 'wiki_text' results in updating records in tables:
+     * 'wiki_text_words', 'page_inflecton', 'inflection', and 'page'.
+     *
+     * @param tmeaning      corresponding record in table 'meaning' to this relation
+     * @param meaning_n     number of this meaning
+     * (e.g. m_relations.get(Relation.hypernymy)[meaning_n] = WRelation for this meaning.)
+     * @param m_relations   map from semantic relation (e.g. synonymy) to array of WRelation (one WRelation contains a list of synonyms for one meaning).
+     */
+    public static void storeToDB (Connect connect,TMeaning tmeaning,int meaning_n,
+                                  Map<Relation, WRelation[]> m_relations) {
+
+        if(null == tmeaning || null == m_relations || m_relations.size() == 0) return;
+
+        Collection<Relation> rr = m_relations.keySet();
+        for(Relation r : rr) {
+
+            TRelationType trelation_type = TRelationType.getRelationFast(r);
+            WRelation[] wr = m_relations.get(r);
+            if(meaning_n < wr.length && null != wr[meaning_n]) {
+                WikiText[] phrases = wr[meaning_n].get();
+                for(WikiText p : phrases) {
+
+                    TWikiText twiki_text = TWikiText.storeToDB(connect, p);
+
+                    if(null != twiki_text) {
+                        TRelation.insert(connect, tmeaning, twiki_text, trelation_type);
+                    }
+                }
+            }
+        }
     }
 
     /** Inserts record into the table 'relation'.<br><br>
@@ -127,9 +166,9 @@ public class TRelation {
             rs = s.getResultSet ();
             while (rs.next ())
             {
-                int          id =                                       rs.getInt("id");
-                TWikiText    wt = TWikiText.getByID(            connect,rs.getInt("wiki_text_id"));
-                TRelationType r = TRelationType.getRelationFast(connect,rs.getInt("relation_type_id"));
+                int          id =                               rs.getInt("id");
+                TWikiText    wt = TWikiText.getByID(connect,    rs.getInt("wiki_text_id"));
+                TRelationType r = TRelationType.getRelationFast(rs.getInt("relation_type_id"));
                 
                 if(null != wt && null != r) {
                     if(null == list_rel)
@@ -167,9 +206,9 @@ public class TRelation {
             rs = s.getResultSet ();
             if (rs.next ())
             {
-                TMeaning      m = TMeaning. getByID(            connect,rs.getInt("meaning_id"));
-                TWikiText    wt = TWikiText.getByID(            connect,rs.getInt("wiki_text_id"));
-                TRelationType r = TRelationType.getRelationFast(connect,rs.getInt("relation_type_id"));
+                TMeaning      m = TMeaning. getByID( connect,   rs.getInt("meaning_id"));
+                TWikiText    wt = TWikiText.getByID( connect,   rs.getInt("wiki_text_id"));
+                TRelationType r = TRelationType.getRelationFast(rs.getInt("relation_type_id"));
                 if(null != m && null != wt && null != r)
                     relation = new TRelation(id, m, wt, r);
             }
