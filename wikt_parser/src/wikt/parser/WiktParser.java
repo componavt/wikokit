@@ -174,5 +174,8 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
 
         // store results to tables: pos_term, meaning, synonyms...
         Keeper.storeToDB(wikt_parsed_conn, word);
+        
+        str.setLength(0);
+        str = null;
     }
 }

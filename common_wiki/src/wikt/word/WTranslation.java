@@ -89,7 +89,7 @@ public class WTranslation {
             /*   if(0==wm.length) {
                     return NULL_WTRANSLATION_ARRAY;
             }*/
-          wt = WTranslationRu.parse(wikt_lang, page_title, pt);
+          wt = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
 
         //} else if(l == LanguageType.en) {
           //  return WordEn;

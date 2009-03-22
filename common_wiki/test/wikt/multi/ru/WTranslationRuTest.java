@@ -108,10 +108,11 @@ public class WTranslationRuTest {
         System.out.println("parse__3_meanings");
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         String page_title = "колокольчик";
+        LanguageType lang_section = LanguageType.ru; // Russian word
         
         POSText pt = new POSText(POS.noun, kolokolchik_text);
 
-        WTranslation[] result = WTranslationRu.parse(wikt_lang, page_title, pt);
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
         assertEquals(3, result.length );
         
         assertTrue(result[0].getHeader().equalsIgnoreCase( "звонок" ));
@@ -135,10 +136,11 @@ public class WTranslationRuTest {
         System.out.println("parse_1_meaning");
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         String page_title = "самолёт";
+        LanguageType lang_section = LanguageType.ru; // Russian word
 
         POSText pt = new POSText(POS.noun, samolyot_with_header);
 
-        WTranslation[] result = WTranslationRu.parse(wikt_lang, page_title, pt);
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
         assertEquals(1, result.length );
 
         assertEquals(0, result[0].getHeader().length()); // only one meaning, the translation box has no header

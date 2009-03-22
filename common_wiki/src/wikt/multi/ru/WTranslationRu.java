@@ -54,6 +54,7 @@ public class WTranslationRu {
      */
     public static WTranslation[] parse (
                     LanguageType wikt_lang,
+                    LanguageType lang_section,
                     String page_title,
                     POSText pt)
     {
@@ -72,7 +73,8 @@ public class WTranslationRu {
         boolean b_next = m.find();
 
         if(!b_next) {   // there is no translation section!
-            System.out.println("Warning in WTranslationRu.parse(): The article '"+
+            if(lang_section == LanguageType.ru)
+                System.out.println("Warning in WTranslationRu.parse(): The Russian word '"+
                         page_title + "' has no section === Перевод ===.");
             return NULL_WTRANSLATION_ARRAY;
         }

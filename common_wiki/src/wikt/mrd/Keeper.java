@@ -45,13 +45,15 @@ public class Keeper {
             TLang tlang = TLang.get(w_lang.getLanguage());
 
             WPOS[] w_pos_all = w_lang.getAllPOS();
+            int etymology_n = 0;
             for(WPOS w_pos : w_pos_all) {
                 TPOS tpos = TPOS.get(w_pos.getPOS());
 
                 // tpage, tlang, tpos: -> into table 'lang_pos', gets id
-                int etymology_n = 0; // todo ...
+                
                 String lemma = "";  // todo ...
                 TLangPOS lang_pos = TLangPOS.insert(conn, tpage, tlang, tpos, etymology_n, lemma);
+                etymology_n ++;
 
                 Map<Relation, WRelation[]> m_relations = w_pos.getAllRelations();
 
@@ -64,9 +66,19 @@ public class Keeper {
                     TMeaning tmeaning = TMeaning.insert(conn, lang_pos, i, twiki_text);
                     
                     TRelation.storeToDB(conn, tmeaning, i, m_relations);
+
+
+                    twiki_text = null;  // free memory
+                    tmeaning = null;
                 }
+                tpos = null;            // free memory
+                lang_pos = null;
             }
+            tlang = null;
+            w_lang = null;
         }
+        tpage = null;                   // free memory
+        w_languages = null;
         
         // 4. table 'relation', stores relation_id, meaning_id, wiki_text_id,
         // may be: page_id (for simple one-word relation, for relations which are presented in the db)
