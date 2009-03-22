@@ -19,12 +19,12 @@ public class PageTableAll {
     private static final boolean DEBUG = true;
     
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
-    //private static final String[] debug_pages = {"zwölf", "Википедия", "-iti-", "-лык", "-io-"};  // , "-лык", "-io-"
-    private static final String[] debug_pages = {"punainen", "alt", "unter", "that", "tester",
+    private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
+    /*private static final String[] debug_pages = {"punainen", "alt", "unter", "that", "tester",
         "unser", "um", "twin", "tuus", "tu", "top", "tomo", "toki", "title",
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
-        "-iti-", "-лык", "-io-", "zwölf", "Википедия"};
+        "-iti-", "-лык", "-io-", "zwölf", "Википедия"};*/
     
     /** Selects all pages (not categories, not redirects), 
      * stores to the Wiktionary parsed DB.<br><br>
@@ -65,10 +65,10 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                if (n_cur < debug_pages.length)
+                /*if (n_cur < debug_pages.length)
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
                 else 
-                    break;
+                    break;*/
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
                 
                 if(DEBUG && 0 == ++n_cur % 100) {   // % 100

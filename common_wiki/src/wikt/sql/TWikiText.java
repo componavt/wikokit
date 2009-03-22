@@ -74,7 +74,10 @@ public class TWikiText {
             return twiki_text;
 
         twiki_text = TWikiText.insert(connect, visible_text);
-        assert(null != twiki_text);
+        if(null == twiki_text) { // if two very long wiki_text has the same 100 first symbols
+            System.err.println("Error: (wikt_parsed TWikiText.java storeToDB()):: two very long wiki_text has the same 100 first symbols. Insertion failed. wiki_text='" + wiki_text.getVisibleText());
+            return null;
+        }
 
         WikiWord[] wiki_words = wiki_text.getWikiWords();
         for(WikiWord ww : wiki_words)
