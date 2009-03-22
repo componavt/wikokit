@@ -121,6 +121,32 @@ public class WMeaningRuTest {
         assertTrue(null == result);
     }
 
+     @Test
+    public void testParseOneDefinition_morpheme_template() {
+        System.out.println("parseOneDefinition_morpheme_template_ru");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        String line;
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "-ейш-";
+        lang_section    = LanguageType.ru; // Russian word
+
+        // test 1
+        line =  "# {{морфема|удар=|часть=основе прилагательного в [[положительная степень|положительной степени]]|образует=его [[превосходная степень|превосходную степень]]|знач=наивысшей степени качества}} {{пример|[[храбрый]] → [[храбрейший|храбр{{выдел|ейш}}ий]]}} {{пример|[[важный]] → [[важнейший|важн{{выдел|ейш}}ий]]}} ‖ иногда суффикс присоединяется вместе с приставкой [[наи-]] {{пример|[[красивый]] → [[наикрасивейший|{{выдел|наи}}красив{{выдел|ейш}}ий]]}}";
+        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+
+        // skip now, todo (parse) in future
+        assertTrue(null == result);
+
+        // test 2
+        lang_section    = LanguageType.tt; // Tatar word
+        line = "# {{морфема tt|часть=существительному, прилагательному, числительному|ряд=зад|образует=существительные|знач=«абстракции, множества, группы объектов»}}";
+        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        assertTrue(null == result);
+    }
+
     @Test
     public void testParseOneDefinition_ru_labels() {
         System.out.println("parseOneDefinition_ru_labels");

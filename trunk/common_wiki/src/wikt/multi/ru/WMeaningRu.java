@@ -115,7 +115,10 @@ public class WMeaningRu {
            (11 == line.length() && line.equalsIgnoreCase("{{пример|}}"))
           )
             return null;
-            
+
+        if(line.startsWith("{{морфема"))
+            return null;    // skip now, todo (parse) in future
+
         // 1. extract labels
         // todo
         // ...
