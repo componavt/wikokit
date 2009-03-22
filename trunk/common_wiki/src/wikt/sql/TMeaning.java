@@ -86,6 +86,12 @@ public class TMeaning {
         lang_pos = TLangPOS.getByID(connect, lang_pos_id);  // lazy DB access
         return lang_pos;
     }
+
+    /** Gets text (without wikification) */
+    /*public TWikiText getWikiText() {
+        return wiki_text;
+    }*/
+
     
     /** Inserts record into the table 'meaning'.<br><br>
      * INSERT INTO meaning (lang_pos_id,meaning_n,wiki_text_id) VALUES (1,2,3);

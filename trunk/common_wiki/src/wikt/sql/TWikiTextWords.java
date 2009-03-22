@@ -92,12 +92,17 @@ public class TWikiTextWords {
             int term_freq = 1;
             page_infl = TPageInflection.getOrInsert(connect, page, infl, term_freq);
             assert(null != page_infl);
+            infl = null;
         } else
             page_infl = null;   // skip tables 'page_inflecton' and 'inflection'
 
         // fill table 'wiki_text_words'
         TWikiTextWords w = TWikiTextWords.getOrInsert(connect, twiki_text, page, page_infl);
         assert(w != null);
+
+        w = null;
+        page = null;
+        page_infl = null;
     }
     
     /** Gets ID of a record or inserts record (if it is absent)
