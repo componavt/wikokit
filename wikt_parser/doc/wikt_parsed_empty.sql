@@ -21,35 +21,6 @@ COMMENT = 'titles of wiki articles, entry names';
 
 
 -- -----------------------------------------------------
--- Table `part_of_speech`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `part_of_speech` ;
-
-CREATE  TABLE IF NOT EXISTS `part_of_speech` (
-  `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name` (`name` ASC) )
-ENGINE = InnoDB
-COMMENT = 'The language of the word in question. \n';
-
-
--- -----------------------------------------------------
--- Table `lang`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `lang` ;
-
-CREATE  TABLE IF NOT EXISTS `lang` (
-  `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
-  `code` VARCHAR(12) NOT NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
-  PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `code` (`code` ASC) )
-ENGINE = InnoDB
-COMMENT = 'The language of the word in question. \n';
-
-
--- -----------------------------------------------------
 -- Table `lang_pos`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `lang_pos` ;
@@ -57,30 +28,12 @@ DROP TABLE IF EXISTS `lang_pos` ;
 CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
-  `lang_id` SMALLINT UNSIGNED NOT NULL ,
-  `pos_id` TINYINT UNSIGNED NOT NULL ,
+  `lang_id` SMALLINT NOT NULL ,
+  `pos_id` TINYINT NOT NULL ,
   `etymology_n` TINYINT UNSIGNED NOT NULL ,
   `lemma` VARCHAR(255) NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
   PRIMARY KEY (`id`) ,
-  INDEX `fk_pos` (`pos_id` ASC) ,
-  INDEX `fk_lang` (`lang_id` ASC) ,
-  INDEX `fk_page` (`page_id` ASC) ,
-  UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) ,
-  CONSTRAINT `fk_pos`
-    FOREIGN KEY (`pos_id` )
-    REFERENCES `part_of_speech` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_lang`
-    FOREIGN KEY (`lang_id` )
-    REFERENCES `lang` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_page`
-    FOREIGN KEY (`page_id` )
-    REFERENCES `page` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
 ENGINE = InnoDB
 COMMENT = 'terms found in wiki-texts';
 
@@ -125,6 +78,21 @@ COMMENT = 'pages which contain the term';
 
 
 -- -----------------------------------------------------
+-- Table `lang`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `lang` ;
+
+CREATE  TABLE IF NOT EXISTS `lang` (
+  `id` SMALLINT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
+  `code` VARCHAR(12) NOT NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `code` (`code` ASC) )
+ENGINE = MyISAM
+COMMENT = 'The language of the word in question. \n';
+
+
+-- -----------------------------------------------------
 -- Table `inflection`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `inflection` ;
@@ -149,20 +117,8 @@ CREATE  TABLE IF NOT EXISTS `page_inflection` (
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `inflection_id` INT(10) UNSIGNED NOT NULL ,
   `term_freq` INT(6) UNSIGNED NOT NULL COMMENT 'term frequency in the document' ,
-  INDEX `fk_inflection` (`inflection_id` ASC) ,
-  INDEX `fk_infl_page` (`page_id` ASC) ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `page_inflection_id_id` (`page_id` ASC, `inflection_id` ASC) ,
-  CONSTRAINT `fk_inflection`
-    FOREIGN KEY (`inflection_id` )
-    REFERENCES `inflection` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_infl_page`
-    FOREIGN KEY (`page_id` )
-    REFERENCES `page` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  UNIQUE INDEX `page_inflection_id_id` (`page_id` ASC, `inflection_id` ASC) )
 ENGINE = InnoDB
 COMMENT = 'pages which contain the term';
 
@@ -183,6 +139,50 @@ COMMENT = 'titles of wiki articles, entry names';
 
 
 -- -----------------------------------------------------
+-- Table `part_of_speech`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `part_of_speech` ;
+
+CREATE  TABLE IF NOT EXISTS `part_of_speech` (
+  `id` SMALLINT NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name` (`name` ASC) )
+ENGINE = MyISAM
+COMMENT = 'The language of the word in question. \n';
+
+
+-- -----------------------------------------------------
+-- Table `meaning`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `meaning` ;
+
+CREATE  TABLE IF NOT EXISTS `meaning` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `lang_pos_id` INT(10) UNSIGNED NOT NULL ,
+  `meaning_n` TINYINT UNSIGNED NOT NULL ,
+  `wiki_text_id` INT(10) UNSIGNED NULL COMMENT 'NULL if word without definition but with synonym' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+COMMENT = 'Meaning includes: definition; sem. rel., translations.';
+
+
+-- -----------------------------------------------------
+-- Table `relation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `relation` ;
+
+CREATE  TABLE IF NOT EXISTS `relation` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `meaning_id` INT(10) UNSIGNED NOT NULL ,
+  `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
+  `relation_type_id` TINYINT UNSIGNED NOT NULL COMMENT 'Synonym, antonym, etc.' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB
+COMMENT = 'pages which contain the term';
+
+
+-- -----------------------------------------------------
 -- Table `wiki_text`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `wiki_text` ;
@@ -196,30 +196,18 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `meaning`
+-- Table `wiki_text_words`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `meaning` ;
+DROP TABLE IF EXISTS `wiki_text_words` ;
 
-CREATE  TABLE IF NOT EXISTS `meaning` (
+CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `lang_pos_id` INT(10) UNSIGNED NOT NULL ,
-  `meaning_n` TINYINT UNSIGNED NOT NULL ,
-  `wiki_text_id` INT(10) UNSIGNED NULL COMMENT 'NULL if word without definition but with synonym' ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_lang_pos_id` (`lang_pos_id` ASC) ,
-  INDEX `fk_meaning_wiki_text` (`wiki_text_id` ASC) ,
-  CONSTRAINT `fk_lang_pos_id`
-    FOREIGN KEY (`lang_pos_id` )
-    REFERENCES `lang_pos` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_meaning_wiki_text`
-    FOREIGN KEY (`wiki_text_id` )
-    REFERENCES `wiki_text` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
+  `page_id` INT(10) UNSIGNED NOT NULL ,
+  `page_inflection_id` INT(10) UNSIGNED NULL ,
+  PRIMARY KEY (`id`) )
 ENGINE = InnoDB
-COMMENT = 'Meaning includes: definition; sem. rel., translations.';
+COMMENT = 'Binds wiki_text with wiki words (inflection)';
 
 
 -- -----------------------------------------------------
@@ -234,66 +222,6 @@ CREATE  TABLE IF NOT EXISTS `relation_type` (
   UNIQUE INDEX `name_unique` (`name` ASC) )
 ENGINE = InnoDB
 COMMENT = 'Types of semantic relations (synonym, antonym, etc.)';
-
-
--- -----------------------------------------------------
--- Table `relation`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `relation` ;
-
-CREATE  TABLE IF NOT EXISTS `relation` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `meaning_id` INT(10) UNSIGNED NOT NULL ,
-  `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
-  `relation_type_id` TINYINT UNSIGNED NOT NULL COMMENT 'Synonym, antonym, etc.' ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_meaning` (`meaning_id` ASC) ,
-  INDEX `fk_relation_relation_type` (`relation_type_id` ASC) ,
-  INDEX `fk_relation_wiki_text` (`wiki_text_id` ASC) ,
-  CONSTRAINT `fk_meaning`
-    FOREIGN KEY (`meaning_id` )
-    REFERENCES `meaning` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_relation_relation_type`
-    FOREIGN KEY (`relation_type_id` )
-    REFERENCES `relation_type` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_relation_wiki_text`
-    FOREIGN KEY (`wiki_text_id` )
-    REFERENCES `wiki_text` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'pages which contain the term';
-
-
--- -----------------------------------------------------
--- Table `wiki_text_words`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `wiki_text_words` ;
-
-CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
-  `page_id` INT(10) UNSIGNED NOT NULL ,
-  `page_inflection_id` INT(10) UNSIGNED NULL ,
-  PRIMARY KEY (`id`) ,
-  INDEX `fk_words_inflection` (`page_inflection_id` ASC) ,
-  INDEX `fk_words_text` (`wiki_text_id` ASC) ,
-  CONSTRAINT `fk_words_inflection`
-    FOREIGN KEY (`page_inflection_id` )
-    REFERENCES `page_inflection` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_words_text`
-    FOREIGN KEY (`wiki_text_id` )
-    REFERENCES `wiki_text` (`id` )
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'Binds wiki_text with wiki words (inflection)';
 
 
 

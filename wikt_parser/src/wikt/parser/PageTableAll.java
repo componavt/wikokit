@@ -19,12 +19,12 @@ public class PageTableAll {
     private static final boolean DEBUG = true;
     
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
-    private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
-    /*private static final String[] debug_pages = {"punainen", "alt", "unter", "that", "tester",
+    //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
+    private static final String[] debug_pages = {"punainen", "alt", "unter", "that", "tester",
         "unser", "um", "twin", "tuus", "tu", "top", "tomo", "toki", "title",
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
-        "-iti-", "-лык", "-io-", "zwölf", "Википедия"};*/
+        "-iti-", "-лык", "-io-", "zwölf", "Википедия"};
     
     /** Selects all pages (not categories, not redirects), 
      * stores to the Wiktionary parsed DB.<br><br>
