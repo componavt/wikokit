@@ -50,19 +50,21 @@ public class TRelationTest {
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
         ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
-
-        TLang.recreateTable(ruwikt_parsed_conn);    // once upon a time: create Wiktionary parsed db
-        TLang.createFastMaps(ruwikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
-
-        TPOS.recreateTable(ruwikt_parsed_conn);     // once upon a time: create Wiktionary parsed db
-        TPOS.createFastMaps(ruwikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
-
-        TRelationType.recreateTable(ruwikt_parsed_conn);
-        TRelationType.createFastMaps(ruwikt_parsed_conn);
-
         
         Connect conn = ruwikt_parsed_conn;
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_TRelation");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
+
+        TLang.recreateTable(conn);    // once upon a time: create Wiktionary parsed db
+        TLang.createFastMaps(conn);   // once upon a time: use Wiktionary parsed db
+
+        TPOS.recreateTable(conn);     // once upon a time: create Wiktionary parsed db
+        TPOS.createFastMaps(conn);    // once upon a time: use Wiktionary parsed db
+
+        TRelationType.recreateTable(conn);
+        TRelationType.createFastMaps(conn);
+
+        
+        page_title = conn.enc.EncodeFromJava("test_TRelation");
 
         // insert page, get page_id
         int word_count = 7;
