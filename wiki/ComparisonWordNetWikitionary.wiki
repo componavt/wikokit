@@ -55,15 +55,18 @@ WordNet: no relation at all
 ==Manual - Publication==
 
 WordNet:Hypernyms
+
 manual->handbook->reference book->book->publication
 
 --------------------
 
 ==Monograph - Book==
+WordNet: no relation at all
 
 ----------------------
 
 ==Deliverable - Publication==
+WordNet: no relation at all
 
 ------------------------
 
