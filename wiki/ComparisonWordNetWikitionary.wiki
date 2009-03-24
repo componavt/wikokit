@@ -8,7 +8,7 @@
 
 ---------------------------
 
-=Booklet - Publication= 
+==Booklet - Publication== 
 
 English Wiktionary (-1)
 * booklet -> book (WN+)
@@ -20,7 +20,7 @@ Hypernyms (WordNet +1)
 
 ------------
 
-=Collection - Book=
+==Collection - Book==
 
 WordNet + 1 : meronyms 
 
@@ -34,27 +34,27 @@ Wikt. vs. WordNet : 1:1
 
 -------------------
 
-=Academic - Publication=
+==Academic - Publication==
 
 -------------------
 
-=Informal - Publication=
+==Informal - Publication==
 
 -------------------
 
-=Report - Publication=
+==Report - Publication==
 
 --------------------
 
-=Manual - Publication=
+==Manual - Publication==
 
 --------------------
 
-=Monograp - Book=
+==Monograp - Book==
 
 ----------------------
 
-=Deliverable - Publication=
+==Deliverable - Publication==
 
 ------------------------
 
