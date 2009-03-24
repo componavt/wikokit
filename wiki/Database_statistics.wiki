@@ -1,0 +1,24 @@
+Statistics of parsing, source Wiktionary database, and created database.
+
+= Russian Wiktionary, dump 20090122 =
+
+Source database: ruwikt20090122
+
+Result database: ruwikt20090122_parsed
+
+== Parsing ==
+
+Time sec:5183.856 = 86 minutes
+Total pages: 319741
+
+Problems: memory leak, I guess, so it fails if you give 400 or less MByte:
+
+-Xms512m -Xmx512m -Xmn16m -XX:+DisableExplicitGC -verbose:gc
+
+== Parsed database ==
+
+See database layout: 
+
+Number of records (name of table, size of table, and my comment):
+  * page - 334306 (> 319741 pages in source database!?)
+  * relation - 
