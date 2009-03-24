@@ -3,11 +3,12 @@
 
 = List of words =
 
-monograph 
-book
-
 
 = Comparison =
+
+---------------------------
+
+Booklet - Publication 
 
 English Wiktionary (-1)
 * booklet -> book (WN+)
