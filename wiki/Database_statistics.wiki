@@ -10,6 +10,7 @@ Result database: [http://code.google.com/p/wikokit/downloads/detail?name=ruwikt2
 == Parsing ==
 
 Time sec:5183.856 = 86 minutes
+
 Total pages: 319741
 
 Problems: memory leak, I guess, so it fails if you give 400 or less MByte:
@@ -18,7 +19,7 @@ Problems: memory leak, I guess, so it fails if you give 400 or less MByte:
 
 == Parsed database ==
 
-See [http://code.google.com/p/wikokit/source/browse/trunk/wikt_parser/doc/screenshots/wikt_parsed_20090122_2.png database layout].
+See [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/wikt_parsed_20090122_2.png database layout].
 
 There are the following results (name of table, size of table, and my comment).
 
