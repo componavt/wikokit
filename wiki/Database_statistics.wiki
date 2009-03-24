@@ -17,8 +17,13 @@ Problems: memory leak, I guess, so it fails if you give 400 or less MByte:
 
 == Parsed database ==
 
-See database layout: 
+See database layout: todo
 
 Number of records (name of table, size of table, and my comment):
-  * page - 334306 (> 319741 pages in source database!?)
-  * relation - 
+  * page - 334'306 (> 319741 pages in source database!?)
+  * relation - 67'250 (number of semantic relations, e.g. synonyms, antonyms, etc.)
+  * lang_pos - 247'408 (number of pairs: language & part of speech, one Wiktionary page can contain several such pairs. Why it is less than number of pages?!)
+  * wiki_text
+  * wiki_text_words
+  * meaning
+  * inflection 
