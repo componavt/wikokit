@@ -23,7 +23,11 @@ Number of records (name of table, size of table, and my comment):
   * page - 334'306 (> 319741 pages in source database!?)
   * relation - 67'250 (number of semantic relations, e.g. synonyms, antonyms, etc.)
   * lang_pos - 247'408 (number of pairs: language & part of speech, one Wiktionary page can contain several such pairs. Why it is less than number of pages?!)
-  * wiki_text
-  * wiki_text_words
-  * meaning
-  * inflection 
+
+|| *Table* || *Size* || *Table description* || *Comment* ||
+|| wiki_text || 85'728 || number of meaning definitions + number of semantic relations phrases (divided by comma, semicolon) || ||
+|| wiki_text_words || 102'107 || number of wikifierd words (in meaning definitions + in semantic relations) || ||
+|| meaning || 177'158 || number of meanings, one word can have several meanings || ||
+|| inflection || 13110 || number of unique inflectional wordforms || it is extracted from wikified word definitions ||
+|| || || || ||
+    
