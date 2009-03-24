@@ -36,21 +36,30 @@ Wikt. vs. WordNet : 1:1
 
 ==Academic - Publication==
 
+WordNet: no relation at all
+
 -------------------
 
 ==Informal - Publication==
+
+WordNet: no relation at all
 
 -------------------
 
 ==Report - Publication==
 
+WordNet: no relation at all
+
 --------------------
 
 ==Manual - Publication==
 
+WordNet:Hypernyms
+manual->handbook->reference book->book->publication
+
 --------------------
 
-==Monograp - Book==
+==Monograph - Book==
 
 ----------------------
 
