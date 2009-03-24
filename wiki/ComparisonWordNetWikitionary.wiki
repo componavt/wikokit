@@ -30,7 +30,32 @@ En.Wiktionary:
 3 definitions of "book" contain the word "collection".
 
 Wikt. vs. WordNet : 1:1
+
 -------------------
+
+Academic - Publication
+
+-------------------
+
+Informal - Publication
+
+-------------------
+
+Report - Publication
+
+--------------------
+
+Manual - Publication
+
+--------------------
+
+Monograp - Book
+
+----------------------
+
+Deliverable - Publication
+
+------------------------
 
 == Complex and absent phrase ==
 
