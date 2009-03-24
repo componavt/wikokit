@@ -13,7 +13,9 @@ Time sec:5183.856 = 86 minutes
 
 Total pages: 319741
 
-Problems: memory leak, I guess, so it fails if you give 400 or less MByte:
+Problems: it works only with if you have enough RAM. It is memory leak, I guess, so it fails if you give less than 507 MByte:
+
+GC 507625K->494275K(522688K), 0.1761469 secs
 
 -Xms512m -Xmx512m -Xmn16m -XX:+DisableExplicitGC -verbose:gc
 
