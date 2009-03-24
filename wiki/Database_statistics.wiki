@@ -4,7 +4,7 @@ Statistics of parsing, source Wiktionary database, and created database.
 
 Source database: ruwikt20090122
 
-Result database: ruwikt20090122_parsed
+Result database: [http://code.google.com/p/wikokit/downloads/detail?name=ruwikt20090122_parsed.zip ruwikt20090122_parsed]
 
 == Parsing ==
 
