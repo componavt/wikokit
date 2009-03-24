@@ -1,3 +1,4 @@
+#labels parser
 Statistics of parsing, source Wiktionary database, and created database.
 
 = Russian Wiktionary, dump 20090122 =
@@ -17,7 +18,7 @@ Problems: memory leak, I guess, so it fails if you give 400 or less MByte:
 
 == Parsed database ==
 
-See database layout: todo
+See [http://code.google.com/p/wikokit/source/browse/trunk/wikt_parser/doc/screenshots/wikt_parsed_20090122_2.png database layout].
 
 There are the following results (name of table, size of table, and my comment).
 
