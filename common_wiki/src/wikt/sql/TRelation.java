@@ -248,4 +248,11 @@ public class TRelation {
         }
     }
 
+    /** Gets all semantic relation (pairs of word).
+     * @return empty map, if it is absent
+     */
+    public static Map<String,String> getAllWordPairs (Connect connect) {
+        
+        return null;
+    }
 }
