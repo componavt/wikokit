@@ -43,7 +43,6 @@ public class TLangPOSTest {
 
         TPOS.recreateTable(ruwikt_parsed_conn);     // once upon a time: create Wiktionary parsed db
         TPOS.createFastMaps(ruwikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
-
         
         Connect conn = ruwikt_parsed_conn;
         page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_lang_pos");
