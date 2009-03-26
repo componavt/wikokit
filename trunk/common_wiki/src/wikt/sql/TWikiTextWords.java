@@ -53,6 +53,20 @@ public class TWikiTextWords {
         return wiki_text;
     }
 
+    /** Gets page (article entry) from the table 'page'. */
+    public TPage getPage() {
+
+        // wiki_text_word.page_id -> page.id
+        if(null != page)
+            return page;
+
+        // wiki_text_word.page_inflection_id -> page_inflection.id -> page.id
+        if(null != page_inflection)
+            return page_inflection.getPage();
+
+        return null;
+    }
+
     
     /** If this word is absent in the table 'wiki_text_words' then
      * inserts records into tables:
@@ -282,8 +296,8 @@ public class TWikiTextWords {
             rs = s.getResultSet ();
             if(rs.next ())
             {
-                TWikiText       wiki_text = TWikiText.      getByID(connect, rs.getInt("wiki_text_id"));
-                TPage page = TPage.getByID(connect, rs.getInt("page_id"));
+                TWikiText wiki_text = TWikiText.getByID(connect, rs.getInt("wiki_text_id"));
+                TPage     page      = TPage.    getByID(connect, rs.getInt("page_id"));
 
                 int pi = rs.getInt("page_inflection_id");
                 TPageInflection page_infl = 0 == pi ? null : TPageInflection.getByID(connect, pi);
@@ -300,6 +314,51 @@ public class TWikiTextWords {
         return word;
     }
 
+    /** Selects only first row (LIMIT 1) from the table 'wiki_text' by wiki_text_id<br><br>
+     *
+     * SELECT id,page_id,page_inflection_id FROM wiki_text_words WHERE wiki_text_id=1 LIMIT 1;
+     *
+     * @return null if data is absent
+     */
+    public static TWikiTextWords getOneByWikiText (Connect connect,TWikiText wiki_text) {
+        
+        if(null == wiki_text) {
+            System.err.println("Error (wikt_parsed TWikiTextWords.getOneByWikiText()):: null argument wiki_text.");
+            return null;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        TWikiTextWords word = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id,page_id,page_inflection_id FROM wiki_text_words WHERE wiki_text_id=");
+            str_sql.append(wiki_text.getID());
+            str_sql.append(" LIMIT 1");
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            if(rs.next ())
+            {
+                int     id =                        rs.getInt("id");
+                TPage page = TPage.getByID(connect, rs.getInt("page_id"));
+
+                int pi = rs.getInt("page_inflection_id");
+                TPageInflection page_infl = 0 == pi ? null : TPageInflection.getByID(connect, pi);
+                
+                if(null != wiki_text && null != page)
+                    word = new TWikiTextWords(id, wiki_text, page, page_infl);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TWikiTextWords.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return word;
+    }
+    
     /** Deletes row from the table 'wiki_text_words' by a value of ID.
      * DELETE FROM wiki_text_words WHERE id=1;
      * @param  id  unique ID in the table `wiki_text_words`
