@@ -434,4 +434,11 @@ public class StringUtil {
             //return s1.compareToIgnoreCase(s2);
         }
     };*/
+
+    /** Trims each element of array. */
+    public static String[] trim(String[] s) {
+        for(int i=0; i<s.length; i++)
+            s[i] = s[i].trim();
+        return s;
+    }
 }
