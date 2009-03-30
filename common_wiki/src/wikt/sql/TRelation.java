@@ -65,6 +65,13 @@ public class TRelation {
     public TWikiText getWikiText() {
         return wiki_text;
     }
+    
+    /** Gets type of semantic relation. */
+    public Relation getRelationType() {
+        if(null == relation_type)
+            return null;
+        return relation_type.getRelation();
+    }
 
     /** Inserts records into tables: 'wiki_text' and 'relation'.
      * The insertion into 'wiki_text' results in updating records in tables:
@@ -276,8 +283,8 @@ public class TRelation {
 
         try {
             s = connect.conn.createStatement ();
-            //str_sql.append("SELECT id,meaning_id,wiki_text_id,relation_type_id FROM relation");
             str_sql.append("SELECT meaning_id,wiki_text_id FROM relation");
+//str_sql.append("SELECT meaning_id,wiki_text_id FROM relation LIMIT 1000");
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
             m_words = new HashMap<String,List<String>> ();
@@ -331,7 +338,7 @@ public class TRelation {
                     }
                 }
                 
-                if(DEBUG && 0 == ++n_cur % 100) {   // % 100
+                if(DEBUG && 0 == ++n_cur % 1000) {   // % 100
                     //if(n_cur<10900) continue;
                     long    t_cur, t_remain;
 
@@ -364,5 +371,65 @@ public class TRelation {
                 "\nTotal relations: " + n_total);
 
         return m_words;
+    }
+    
+    /** Gets a word defined by a semantic relation (e.g. the page "car" contains "[[automobile]]"
+     * in a section "Synonyms", then the "automobile" will be returned).
+     * @param trelation defines relation (e.g. synonymy) and source word (e.g. "car")
+     * @return word defined by a semantic relation (e.g. "automobile" for "car"), or null if search failed
+     */
+    public static TPage getWikifiedPage (Connect connect,TRelation trelation) {
+        
+        if(null == trelation)
+            return null;
+        
+        TWikiText twt = trelation.getWikiText();
+        if(null == twt)
+            return null;
+
+        TWikiTextWords t_word = TWikiTextWords.getOneByWikiText(connect, twt);
+        if(null != t_word)
+            return t_word.getPage();
+        return null;
+    }
+
+    /** Gets type of semantic relation between a pair of word: title of a page
+     * (page_title) and word on this page (word).
+     */
+    private static Relation getRelationBetweenPageTitleAndWord (Connect connect,String page_title,String word) {
+        
+        if(0 == word.length() || 0 == page_title.length() || word.equals(page_title))
+            return null;
+
+        TPage page = TPage.get(connect, page_title);    if(null == page)        return null;
+        TPage page_word = TPage.get(connect, word);     if(null == page_word)   return null;
+            
+        TLangPOS[] lp = TLangPOS.get(connect, page);
+        for(TLangPOS lang_pos : lp) {
+            TMeaning[] tm = TMeaning.get(connect, lang_pos);
+            for(TMeaning tmeaning : tm) {
+                TRelation[] tr = TRelation.get(connect, tmeaning);
+                for(TRelation trelation : tr) {
+                    TPage p = TRelation.getWikifiedPage(connect, trelation);
+                    if(null != p && word.equals(p.getPageTitle())) {
+                        return trelation.getRelationType();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+    
+    /** Gets type of semantic relation between a pair of word (word1 and word2).
+     */
+    public static Relation getRelationType (Connect connect,String word1,String word2) {
+        Relation r;
+
+        r = TRelation.getRelationBetweenPageTitleAndWord(connect, word1, word2);
+        if(null != r)
+            return r;
+            
+        r = TRelation.getRelationBetweenPageTitleAndWord(connect, word2, word1);
+        return r;
     }
 }

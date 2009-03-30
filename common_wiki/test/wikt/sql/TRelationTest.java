@@ -64,7 +64,7 @@ public class TRelationTest {
         TRelationType.createFastMaps(conn);
 
         
-        page_title = conn.enc.EncodeFromJava("test_TRelation");
+        page_title = conn.enc.EncodeFromJava("car");    // test_TRelation
 
         // insert page, get page_id
         int word_count = 7;
@@ -77,6 +77,9 @@ public class TRelationTest {
             page = TPage.get(conn, page_title);
             assertTrue(null != page);
         }
+
+        // add "automobile"
+        TPage.insert(conn, "automobile", word_count, wiki_link_count, is_in_wiktionary);
 
         // get lang
         int lang_id = TLang.getIDFast(LanguageType.os); //227;
@@ -206,4 +209,38 @@ public class TRelationTest {
         assertTrue(null != r2);
         assertEquals(wiki_text_str, r2.getWikiText().getText());
     }
+
+    
+    //public static Relation getRelationType (Connect connect,String word1,String word2) {
+
+    @Test
+    public void testGetRelationType () {
+        System.out.println("getRelationType _ru");
+        Connect conn = ruwikt_parsed_conn;
+
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "car";
+        POSText pt = new POSText(POS.noun, car_text);
+
+        Map<Relation, WRelation[]> m_relations = WRelationRu.parse(wikt_lang, page_title, pt);
+        
+        // let's check second meaning (i.e. [1]):
+        // synonyms: [[automobile]]
+        // hyponyms: [[truck]], [[van]], [[bus]]
+        TRelation.storeToDB(conn, meaning, 1, m_relations);
+
+        Relation r;
+        r = TRelation.getRelationType(conn, "car", "car");
+        assertNull(r);
+
+        r = TRelation.getRelationType(conn, "car", "absent word");
+        assertNull(r);
+
+        r = TRelation.getRelationType(conn, "automobile", "car");
+        assertEquals(Relation.synonymy, r);
+
+        r = TRelation.getRelationType(conn, "car", "van");
+        assertEquals(Relation.hyponymy, r);
+    }
+
 }
