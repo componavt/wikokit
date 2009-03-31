@@ -28,8 +28,8 @@ DROP TABLE IF EXISTS `lang_pos` ;
 CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
-  `lang_id` SMALLINT NOT NULL ,
-  `pos_id` TINYINT NOT NULL ,
+  `pos_id` TINYINT UNSIGNED NOT NULL ,
+  `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `etymology_n` TINYINT UNSIGNED NOT NULL ,
   `lemma` VARCHAR(255) NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
   PRIMARY KEY (`id`) ,
@@ -222,6 +222,34 @@ CREATE  TABLE IF NOT EXISTS `relation_type` (
   UNIQUE INDEX `name_unique` (`name` ASC) )
 ENGINE = InnoDB
 COMMENT = 'Types of semantic relations (synonym, antonym, etc.)';
+
+
+-- -----------------------------------------------------
+-- Table `translation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `translation` ;
+
+CREATE  TABLE IF NOT EXISTS `translation` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `lang_pos_id` INT(10) NOT NULL ,
+  `meaning_summary` VARCHAR(511) NULL ,
+  `meaning_id` INT(10) NULL COMMENT 'I am afraid it could be null sometimes.' ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `translation_entry`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `translation_entry` ;
+
+CREATE  TABLE IF NOT EXISTS `translation_entry` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `translation_id` INT(10) UNSIGNED NOT NULL ,
+  `lang_id` SMALLINT UNSIGNED NOT NULL ,
+  `wiki_text_id` INT(10) NOT NULL ,
+  PRIMARY KEY (`id`) )
+ENGINE = InnoDB;
 
 
 
