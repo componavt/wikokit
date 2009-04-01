@@ -34,7 +34,7 @@ public class WTranslationRuTest {
     @Before
     public void setUp() {
                 
-        // 21 translations
+        // 1 translation box with 21 translations
         samolyot_text = "{{перев-блок||\n" +
             "|en=[[airplane]], [[plane]], [[aircraft]]\n" +     // 0
             "|bg=[[самолет]], [[аероплан]]\n" +
