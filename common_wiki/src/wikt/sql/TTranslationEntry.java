@@ -27,7 +27,7 @@ public class TTranslationEntry {
     /** Translation into 'lang'.
      */
     private TLang lang;                 // int lang_id;
-
+    
     /** Text of translation (Wikified text). */
     private TWikiText wiki_text;
 
@@ -124,9 +124,9 @@ public class TTranslationEntry {
   return null;
     }
 
-    /** Deletes row from the table 'translation' by a value of ID.<br>
-     *  DELETE FROM translation WHERE id=1;
-     * @param  id  unique ID in the table `meaning`
+    /** Deletes row from the table 'translation_entry' by a value of ID.<br>
+     *  DELETE FROM translation_entry WHERE id=1;
+     * @param  id  unique ID in the table `translation_entry`
      */
     public static void delete (Connect connect,TTranslationEntry t_entry) {
 

@@ -67,6 +67,8 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "relation");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text_words");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation_entry");
     }
 
     /** Parses the set of Wiktionary pages, 
