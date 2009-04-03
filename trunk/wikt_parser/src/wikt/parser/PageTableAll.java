@@ -71,7 +71,7 @@ public class PageTableAll {
                     break;*/
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
                 
-                if(DEBUG && 0 == ++n_cur % 100) {   // % 100
+                if(DEBUG && 0 == ++n_cur % 1000) {   // % 100
                     //if(n_cur<10900)
                     //    continue;
                     long    t_cur, t_remain;

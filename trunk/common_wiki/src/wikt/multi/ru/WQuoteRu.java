@@ -10,6 +10,7 @@ package wikt.multi.ru;
 /** Phrase or sentence that illustrates a meaning of a word in Russian Wiktionary.
  */
 public class WQuoteRu {
+    private static final boolean DEBUG = false;
 
     /* Gets, extracts from 'text' a definition till first example sentence starting from {{пример|. */
     public static String getDefinitionBeforeFirstQuote (String page_title, String text) {
@@ -18,8 +19,9 @@ public class WQuoteRu {
         int pos_quote = text.indexOf("{{пример|");
 
         if(-1 == pos_quote) {   // there is no quote section!
-            System.out.println("Warning in WQuoteRu.getDefinitionBeforeFirstQuote(): The article '"+
-                        page_title + "' has no quote '{{пример|' in a definition.");
+            if(DEBUG)
+                System.out.println("Warning in WQuoteRu.getDefinitionBeforeFirstQuote(): The article '"+
+                                    page_title + "' has no quote '{{пример|' in a definition.");
             return text;
         }
 
