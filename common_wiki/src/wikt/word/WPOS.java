@@ -75,6 +75,11 @@ public class WPOS {
         return relation;
     }
 
+    /** Gets all translations. */
+    public WTranslation[] getAllTranslation() {
+        return translation;
+    }
+
 
     /*Semantic relations: synonymy, antonymy, etc.
      * The map from semantic relation (e.g. synonymy) to array of WRelation

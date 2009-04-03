@@ -34,6 +34,7 @@ public class TWikiTextWords {
      */
     private TPageInflection page_inflection;
 
+    private final static TWikiText[]      NULL_TWIKITEXT_ARRAY      = new TWikiText[0];
     private final static TWikiTextWords[] NULL_TWIKITEXTWORDS_ARRAY = new TWikiTextWords[0];
 
     public TWikiTextWords(int _id,TWikiText _wiki_text,TPage _page,TPageInflection _page_inflection) {
@@ -189,12 +190,12 @@ public class TWikiTextWords {
      * SELECT id,page_id,page_inflection_id FROM wiki_text_words WHERE wiki_text_id=1;
      * 
      * @param  text  text (without wikification).
-     * @return null if text is absent
+     * @return empty array if there are no wikified words
      */
     public static TWikiTextWords[] getByWikiText (Connect connect,TWikiText wiki_text) {
 
         if(null == wiki_text)
-            return null;
+            return NULL_TWIKITEXTWORDS_ARRAY;
             
         Statement   s = null;
         ResultSet   rs= null;
@@ -223,6 +224,52 @@ public class TWikiTextWords {
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TWikiTextWords.java getByWikiText()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        if(null == list_words)
+            return NULL_TWIKITEXTWORDS_ARRAY;
+        return ((TWikiTextWords[])list_words.toArray(NULL_TWIKITEXTWORDS_ARRAY));
+    }
+    
+    /** Selects records from 'wiki_text_words' table by an ID of page.<br><br>
+     * SELECT id,wiki_text_id,page_inflection_id FROM wiki_text_words WHERE page_id=1;
+     * @param  page  wikified word which belong to some wiki text
+     * @return empty array if there are no wiki texts with this word
+     */
+    public static TWikiTextWords[] getByPage (Connect connect,TPage page) {
+
+        if(null == page) {
+            System.err.println("Error (TWikiTextWords.getByPage()):: null argument page.");
+            return NULL_TWIKITEXTWORDS_ARRAY;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        List<TWikiTextWords> list_words = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id,wiki_text_id,page_inflection_id FROM wiki_text_words WHERE page_id=");
+            str_sql.append(page.getID());
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            while (rs.next ())
+            {
+                int pi = rs.getInt("page_inflection_id");
+                TWikiText wiki_text = TWikiText.getByID(connect, rs.getInt("wiki_text_id"));
+                TPageInflection page_infl = 0 == pi ? null : TPageInflection.getByID(connect, pi);
+
+                if(null != wiki_text) {
+                    if(null == list_words)
+                        list_words = new ArrayList<TWikiTextWords>();
+                    list_words.add(new TWikiTextWords(rs.getInt("id"), wiki_text, page, page_infl));
+                }
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TWikiTextWords.getByPage()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -323,7 +370,7 @@ public class TWikiTextWords {
     public static TWikiTextWords getOneByWikiText (Connect connect,TWikiText wiki_text) {
         
         if(null == wiki_text) {
-            System.err.println("Error (wikt_parsed TWikiTextWords.getOneByWikiText()):: null argument wiki_text.");
+            System.err.println("Error (TWikiTextWords.getOneByWikiText()):: null argument wiki_text.");
             return null;
         }
 
@@ -358,6 +405,75 @@ public class TWikiTextWords {
         }
         return word;
     }
+
+    
+    /** Selects records from 'page' table (via 'wiki_text_words' and
+     * 'page_inflection' tables) by wiki text with one condition:
+     * only one word should be wikified in this wiki text.<br><br>
+     *
+     * This could be used in order to find translations for this article.<br><br>
+     *
+     * E.g. to find articles which contain the translation [[little]].
+     * If there are three translations on this page:<br>
+     *      (1) == translation == [[little]] [[bell]]<br>
+     *      (2) == translation == [[little bell]]<br>
+     *      (3) == translation == [[little]]<br>
+     * then translation (1) is not suitable (two wiki words), but (2) and (3) are OK.
+     *
+     * @param  wikified text.
+     * @return null if text is absent
+     */
+    public static TPage getPageForOneWordWikiText (Connect connect,TWikiText wiki_text) {
+        
+        if(null == wiki_text) {
+            System.err.println("Error (TWikiTextWords.getPageForOneWordWikiText()):: null argument wiki_text.");
+            return null;
+        }
+        
+        TWikiTextWords[] words = TWikiTextWords.getByWikiText(connect, wiki_text);
+        if(1 == words.length)
+            return words[0].getPage();
+        
+        return null;
+    }
+
+    /** Gets wiki texts which have only one wikified word.
+     *
+     * @param page a wikified word in the sought wiki phrases
+     * @return empty array if such texts are absent
+     */
+    public static TWikiText[] getOneWordWikiTextByPage (Connect connect,TPage page) {
+
+        if(null == page) {
+            System.err.println("Error (TWikiTextWords.getOneWordWikiTextByPage()):: null argument page.");
+            return NULL_TWIKITEXT_ARRAY;
+        }
+
+        // 1. 'page_inflection'
+        // todo ...
+
+        // 2. 'wiki_text_words'
+        List<TWikiText> list_texts = null;
+        
+        TWikiTextWords[] words = TWikiTextWords.getByPage(connect, page);
+        for(TWikiTextWords w : words) {
+            
+            TWikiText wiki_text = w.getWikiText();
+            
+            if(null != wiki_text) {
+                TWikiTextWords[] ww = TWikiTextWords.getByWikiText(connect, wiki_text);
+                if(1 == ww.length) {
+                    if(null == list_texts)
+                               list_texts = new ArrayList<TWikiText>();
+                    list_texts.add(wiki_text);
+                }
+            }
+        }
+        if(null == list_texts)
+            return NULL_TWIKITEXT_ARRAY;
+        return ((TWikiText[])list_texts.toArray(NULL_TWIKITEXT_ARRAY));
+    }
+
     
     /** Deletes row from the table 'wiki_text_words' by a value of ID.
      * DELETE FROM wiki_text_words WHERE id=1;

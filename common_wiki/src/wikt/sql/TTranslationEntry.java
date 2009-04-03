@@ -10,6 +10,8 @@ package wikt.sql;
 import wikipedia.sql.Connect;
 import java.sql.*;
 
+import java.util.List;
+import java.util.ArrayList;
 
 /** SQL operations with the table 'translation_entry' in Wiktionary parsed database.
  *
@@ -31,8 +33,32 @@ public class TTranslationEntry {
     /** Text of translation (Wikified text). */
     private TWikiText wiki_text;
 
+    private final static TTranslationEntry[] NULL_TTRANSLATIONENTRY_ARRAY = new TTranslationEntry[0];
+
+    public TTranslationEntry(int _id,TTranslation _translation,TLang _lang,TWikiText _wiki_text) {
+        id          = _id;
+        translation = _translation;
+        lang        = _lang;
+        wiki_text  = _wiki_text;
+    }
+
+    /** Gets unique ID from database */
+    public int getID() {
+        return id;
+    }
+
+    /** Gets wikified text from the database' table 'wiki_text'. */
+    public TWikiText getWikiText() {
+        return wiki_text;
+    }
+
+    /** Gets translation from the database' table 'translation'. */
+    public TTranslation getTranslation() {
+        return translation;
+    }
+
     /** Inserts record into the table 'meaning'.<br><br>
-     * INSERT INTO translation (lang_pos_id,meaning_summary,meaning_id) VALUES (1,'hello',3);
+     * INSERT INTO translation_entry (translation_id,lang_id,wiki_text_id) VALUES (1,2,3);
      * @param lang_pos  ID of language and POS of wiki page which will be added
      * @param meaning_id defines meaning (sense) in table 'meaning', it could be null (todo check)
      * @param meaning_summary
@@ -40,34 +66,26 @@ public class TTranslationEntry {
      */
     public static TTranslationEntry insert (Connect connect,TTranslation trans,
             TLang lang,TWikiText wiki_text) {
-/*
-        if(null == lang_pos) {
-            System.err.println("Error (wikt_parsed TTranslationEntry.insert()):: null argument lang_pos");
+
+        if(null == trans || null == lang || null == wiki_text) {
+            System.err.println("Error (wikt_parsed TTranslationEntry.insert()):: null arguments: trans = "+trans+
+                    "; lang="+ lang +"; wiki_text=" + wiki_text);
             return null;
         }
-
+        
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        TTranslationEntry t_entry = null;
-        int         wiki_text_id = 0;
-        /*try
+        TTranslationEntry trans_entry = null;
+        try
         {
             s = connect.conn.createStatement ();
-            if(null != wiki_text)
-                str_sql.append("INSERT INTO meaning (lang_pos_id,meaning_n,wiki_text_id) VALUES (");
-            // INSERT INTO translation (lang_pos_id,meaning_summary,meaning_id) VALUES (1,'hello',3);
-            else
-                str_sql.append("INSERT INTO meaning (lang_pos_id,meaning_n) VALUES (");
-            str_sql.append(lang_pos.getID());
+            str_sql.append("INSERT INTO translation_entry (translation_id,lang_id,wiki_text_id) VALUES (");
+            str_sql.append(trans.getID());
             str_sql.append(",");
-            str_sql.append(meaning_n);
-            if(null != wiki_text)
-            {
-                str_sql.append(",");
-                str_sql.append(wiki_text.getID());
-                wiki_text_id = wiki_text.getID();
-            }
+            str_sql.append(lang.getID());
+            str_sql.append(",");
+            str_sql.append(wiki_text.getID());
             str_sql.append(")");
             s.executeUpdate (str_sql.toString());
 
@@ -75,43 +93,89 @@ public class TTranslationEntry {
             s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             rs = s.getResultSet ();
             if (rs.next ())
-                meaning = new TMeaning(rs.getInt("id"), lang_pos, lang_pos.getID(),
-                                        meaning_n, wiki_text, wiki_text_id);
+                trans_entry = new TTranslationEntry(rs.getInt("id"), trans, lang, wiki_text);
+            
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TTranslation.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-        return trans;*/
-        return null;
+        return trans_entry;
     }
 
-    /** Selects rows from the table 'translation' by ID<br><br>
-     * SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=1;
+    /** Selects rows from the table 'translation_entry' by ID.<br><br>
+     * SELECT translation_id,lang_id,wiki_text_id FROM translation_entry WHERE id=1;
      * @return empty array if data is absent
      */
     public static TTranslationEntry getByID (Connect connect,int id) {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        TTranslationEntry t_entry = null;
-/*
+        TTranslationEntry trans_entry = null;
+        
         try {
             s = connect.conn.createStatement ();
-            // SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=1;
-            str_sql.append("SELECT lang_pos_id,meaning_n,wiki_text_id FROM meaning WHERE id=");
+            str_sql.append("SELECT translation_id,lang_id,wiki_text_id FROM translation_entry WHERE id=");
             str_sql.append(id);
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
             if (rs.next ())
+            {   
+                TTranslation trans = TTranslation.getByID(connect,  rs.getInt("translation_id"));
+                TLang        lang  = TLang.getTLangFast(            rs.getInt("lang_id"));
+                TWikiText    wiki_text = TWikiText.getByID(connect, rs.getInt("wiki_text_id"));
+
+                if(null != trans && null != lang && null != wiki_text)
+                    trans_entry = new TTranslationEntry(id, trans, lang, wiki_text);
+                else
+                    System.err.println("Error (wikt_parsed TTranslationEntry.insert()):: null arguments: trans = "+trans+
+                    "; lang="+ lang +"; wiki_text=" + wiki_text);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return trans_entry;
+    }
+    
+    /** Selects rows from the table 'translation_entry' by translation ID and language ID.<br><br>
+     * SELECT id,wiki_text_id FROM translation_entry WHERE translation_id=1 AND lang_id=2;
+     * @return empty array if data is absent
+     */
+    public static TTranslationEntry[] getByLanguageAndTranslation (Connect connect,
+                                        TTranslation trans, TLang lang) {
+
+        if(null == trans || null == lang) {
+            System.err.println("Error (TTranslationEntry.getByLanguageAndTranslation()):: null arguments, trans="+trans+", lang="+lang);
+            return null;
+        }
+        
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        List<TTranslationEntry> list_trans = null;
+        
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id,wiki_text_id FROM translation_entry WHERE translation_id=");
+                         // SELECT id,wiki_text_id FROM translation_entry WHERE translation_id=1 AND lang_id=2;
+            str_sql.append(trans.getID());
+            str_sql.append(" AND lang_id=");
+            str_sql.append(lang.getID());
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            while(rs.next ())
             {
-                TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));
-                int meaning_n     =                             rs.getInt("meaning_n");
-                int wiki_text_id  =                             rs.getInt("wiki_text_id");
-                TWikiText wiki_text = wiki_text_id < 1 ? null : TWikiText.getByID(connect, wiki_text_id);
-                if(null != lang_pos) {
-                    meaning = new TMeaning(id, lang_pos, lang_pos.getID(), meaning_n, wiki_text, wiki_text_id);
+                int id  = rs.getInt("id");
+                TWikiText wiki_text = TWikiText.getByID(connect, rs.getInt("wiki_text_id"));
+
+                if(null != wiki_text) {
+                    if(null == list_trans)
+                               list_trans = new ArrayList<TTranslationEntry>();
+                    list_trans.add(new TTranslationEntry(id, trans, lang, wiki_text));
                 }
             }
         } catch(SQLException ex) {
@@ -120,35 +184,78 @@ public class TTranslationEntry {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-        return trans;*/
-  return null;
+        if(null == list_trans)
+            return NULL_TTRANSLATIONENTRY_ARRAY;
+        return ((TTranslationEntry[])list_trans.toArray(NULL_TTRANSLATIONENTRY_ARRAY));
+    }
+
+    /** Selects rows from the table 'translation_entry' by wiki text ID and language ID.<br><br>
+     * SELECT id,translation_id FROM translation_entry WHERE wiki_text_id=3 AND lang_id=2;
+     * @return null if data is absent
+     */
+    public static TTranslationEntry getByWikiTextAndLanguage (Connect connect,
+                                        TWikiText wiki_text, TLang lang) {
+                                        
+        if(null == wiki_text || null == lang) {
+            System.err.println("Error (TTranslationEntry.getByWikiTextAndLanguage()):: null arguments, wiki_text="+wiki_text+", lang="+lang);
+            return null;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        TTranslationEntry trans_entry = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id,translation_id FROM translation_entry WHERE wiki_text_id=");
+                         // SELECT id,translation_id FROM translation_entry WHERE wiki_text_id=3 AND lang_id=2;
+            str_sql.append(wiki_text.getID());
+            str_sql.append(" AND lang_id=");
+            str_sql.append(lang.getID());
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            if(rs.next ())
+            {
+                TTranslation trans = TTranslation.getByID(connect, rs.getInt("translation_id"));
+                if(null != trans)
+                    trans_entry = new TTranslationEntry(rs.getInt("id"), trans, lang, wiki_text);
+            }
+            if(rs.next ())
+                System.err.println("Error (TTranslationEntry.getByWikiTextAndLanguage()):: There are more records than one!");
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return trans_entry;
     }
 
     /** Deletes row from the table 'translation_entry' by a value of ID.<br>
      *  DELETE FROM translation_entry WHERE id=1;
      * @param  id  unique ID in the table `translation_entry`
      */
-    public static void delete (Connect connect,TTranslationEntry t_entry) {
+    public static void delete (Connect connect,TTranslationEntry trans_entry) {
 
-        if(null == t_entry) {
+        if(null == trans_entry) {
             System.err.println("Error (wikt_parsed TTranslationEntry.delete()):: null argument 'translation_entry'");
             return;
         }
-/*
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         try {
             s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM translation WHERE id=");
-            str_sql.append(trans.getID());
+            str_sql.append("DELETE FROM translation_entry WHERE id=");
+            str_sql.append(trans_entry.getID());
             s.execute (str_sql.toString());
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TMeaning.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TTranslationEntry.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-*/    }
+    }
 
 }
