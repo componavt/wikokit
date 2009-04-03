@@ -17,7 +17,8 @@ import java.util.regex.Matcher;
  * #*:'''Sithence''' it must continue so short a time, and begun so late [...], there was no time to be lost.
  */
 public class Definition {
-
+    private static final boolean DEBUG = false;
+    
     /** Gets position after /^\s+#\s+/ */
     private final static Pattern ptrn_definition_number_sign = Pattern.compile(
             "\\s*#\\s*");           // vim: ^\s*#\s*
@@ -30,8 +31,9 @@ public class Definition {
         boolean b_next = m.find();
 
         if(!b_next) {   // there is no definition section!
-            System.out.println("Warning in Definition.stripNumberSign(): The article '"+
-                        page_title + "' has no number sign '#' in a definition.");
+            if(DEBUG)
+                System.out.println("Warning in Definition.stripNumberSign(): The article '"+
+                                    page_title + "' has no number sign '#' in a definition.");
             return text;
         }
 
