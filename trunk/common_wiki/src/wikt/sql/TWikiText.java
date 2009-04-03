@@ -50,8 +50,10 @@ public class TWikiText {
         return text.toString();
     }
     
-    /** If table 'wiki_text' has this text, then return ID of this record;
-     * else inserts records into tables:
+    /** If table 'wiki_text' has this text, then return ID of this record,
+     * if it is absent then add it.
+     * 
+     * In any case, let's try to insert records into the tables:
      * 'wiki_text',
      * 'wiki_text_words',
      * 'page_inflecton',
@@ -70,10 +72,9 @@ public class TWikiText {
         if(visible_text.length() == 0) return null;
 
         TWikiText  twiki_text = TWikiText.get(connect, visible_text);
-        if(null != twiki_text)
-            return twiki_text;
-
-        twiki_text = TWikiText.insert(connect, visible_text);
+        if(null == twiki_text)
+            twiki_text = TWikiText.insert(connect, visible_text);
+        
         if(null == twiki_text) { // if two very long wiki_text has the same 100 first symbols
             System.err.println("Error: (wikt_parsed TWikiText.java storeToDB()):: two very long wiki_text has the same 100 first symbols. Insertion failed. wiki_text='" + wiki_text.getVisibleText());
             return null;
@@ -187,7 +188,7 @@ public class TWikiText {
         }
         return wiki_text;
     }
-
+    
     /** Deletes row from the table 'wiki_text' by a value of ID.<br><br>
      * DELETE FROM wiki_text WHERE id=1;
      * @param  id  unique ID in the table `wiki_text`

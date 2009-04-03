@@ -56,7 +56,7 @@ public class Keeper {
                 etymology_n ++;
 
                 Map<Relation, WRelation[]> m_relations = w_pos.getAllRelations();
-
+                WTranslation[] translations = w_pos.getAllTranslation();
                 WMeaning[] w_meaning_all = w_pos.getAllMeanings();
                 for(int i=0; i<w_meaning_all.length; i++) {
                     WMeaning w_meaning = w_meaning_all[i];
@@ -67,12 +67,15 @@ public class Keeper {
                     
                     TRelation.storeToDB(conn, tmeaning, i, m_relations);
 
-
+                    if(translations.length > i) // not every meaning is happy to have it's own translation
+                        TTranslation.storeToDB(conn, lang_pos, tmeaning, translations[i]);
+                        
                     twiki_text = null;  // free memory
                     tmeaning = null;
                 }
                 tpos = null;            // free memory
                 lang_pos = null;
+                translations = null;
             }
             tlang = null;
             w_lang = null;

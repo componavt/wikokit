@@ -61,6 +61,11 @@ public class TLangPOS {
     public TPage getPage() {
         return page;
     }
+    
+    /** Gets language from database */
+    public TLang getLang() {
+        return lang;
+    }
 
     /** Inserts record into the table 'page'.<br><br>
      * INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (1,2,3,4,"apple");

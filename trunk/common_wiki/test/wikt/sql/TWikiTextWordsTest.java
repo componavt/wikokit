@@ -16,7 +16,7 @@ public class TWikiTextWordsTest {
 
     public Connect   ruwikt_parsed_conn;
 
-    String page_title, inflected_form;
+    String page_title, inflected_form, str_wiki_text;
     TWikiText wiki_text;
     TInflection infl;
     TPage page;
@@ -39,8 +39,10 @@ public class TWikiTextWordsTest {
         ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
 
         Connect conn = ruwikt_parsed_conn;
-        page_title = conn.enc.EncodeFromJava("test_TWikiTextWords_insert_ru");
-        inflected_form = "test_TWikiTextWords_insert_ru";
+
+        // [[test_TWikiTextWords_insert_ru|test_TWikiTextWords_inflected_form]]
+        page_title = conn.enc.EncodeFromJava("test_TWikiTextWords");
+        inflected_form = "test_TWikiTextWords_inflected_form";
 
         // insert page, get meaning_id
         int word_count = 7;
@@ -70,10 +72,10 @@ public class TWikiTextWordsTest {
         }
 
         // insert wiki_text
-        String text = "test_TWikiTextWords_insert_ru";
-        wiki_text = TWikiText.get(conn, text);
+        str_wiki_text = "test_TWikiTextWords_insert_ru";
+        wiki_text = TWikiText.get(conn, str_wiki_text);
         if(null == wiki_text) {
-            wiki_text = TWikiText.insert(conn, text);
+            wiki_text = TWikiText.insert(conn, str_wiki_text);
             assertTrue(null != wiki_text);
         }
     }
@@ -129,6 +131,44 @@ public class TWikiTextWordsTest {
             twtw = TWikiTextWords.getByWikiTextAndPageAndInflection(conn, wiki_text, p, p_infl);
             assertNotNull(twtw);
         }
+    }
+    
+    @Test
+    public void testGetPageForOneWordWikiText() {
+        System.out.println("getPageForOneWordWikiText");
+        Connect conn = ruwikt_parsed_conn;
+        TWikiTextWords word;
+
+        word = TWikiTextWords.insert(conn, wiki_text, page, page_infl);
+        assertNotNull(word);
+        
+        //[[test_TWikiTextWords_insert_ru|test_TWikiTextWords_inflected_form]]
+
+        TPage one_wiki_word = TWikiTextWords.getPageForOneWordWikiText(conn, wiki_text);
+        assertNotNull(one_wiki_word);
+
+        assertEquals(page_title, one_wiki_word.getPageTitle());
+
+        TWikiTextWords.delete(conn, word);
+    }
+    
+    @Test
+    public void testGetOneWordWikiTextByPage () {
+        System.out.println("getOneWordWikiTextByPage");
+        Connect conn = ruwikt_parsed_conn;
+        TWikiTextWords word;
+
+        word = TWikiTextWords.insert(conn, wiki_text, page, page_infl);
+        assertNotNull(word);
+
+        //[[test_TWikiTextWords_insert_ru|test_TWikiTextWords_inflected_form]]
+
+        TWikiText[] wiki_texts = TWikiTextWords.getOneWordWikiTextByPage (conn,page);
+        assertNotNull(wiki_texts);
+        assertEquals(1, wiki_texts.length);
+        assertEquals(str_wiki_text, wiki_texts[0].getText());
+
+        TWikiTextWords.delete(conn, word);
     }
 
     @Test
@@ -188,10 +228,7 @@ public class TWikiTextWordsTest {
 
         TWikiTextWords.delete(conn, word);
     }
-
-    //TWikiTextWords getByWikiTextAndPageAndInflection (Connect connect,
-            //TWikiText wiki_text,TPage page,TPageInflection page_inflection)
-
+    
     @Test
     public void testInsert_getByWikiTextAndPageAndInflection() {
         System.out.println("getByWikiTextAndPageAndInflection_ru");
