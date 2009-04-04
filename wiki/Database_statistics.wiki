@@ -37,8 +37,8 @@ There are the following results (name of table, size of table, and my comment).
 || page || 334'306  || 396'460 || || > 319741 pages in source database!? Thanks to red links, i.e. wikification? ||
 || relation || 67'250 || 67'250 || number of semantic relations, e.g. synonyms, antonyms, etc. || ||
 || lang_pos || 247'408 || 247'408 || number of pairs: language & part of speech, one Wiktionary page can contain several such pairs. || Why it is less than number of pages?! ||
-|| wiki_text || 85'728 || 163'373 || number of meaning definitions + number of semantic relations phrases (divided by comma, semicolon) || ||
-|| wiki_text_words || 102'107 || 196'811 || number of wikifierd words (in meaning definitions + in semantic relations) || ||
+|| wiki_text || 85'728 || 163'373 || number of meaning definitions + number of semantic relations phrases (divided by comma, semicolon) + number of wikified translations || ||
+|| wiki_text_words || 102'107 || 196'811 || number of wikified words (in meaning definitions + in semantic relations + in translations) || ||
 || meaning || 177'158 || 177'158 || number of meanings, one word can have several meanings || ||
 || inflection || 13'110 || 14'859 || number of unique inflectional wordforms || It is extracted from wikified word definitions ||
 || translation || 0 || 35'009 || number of translation section boxes (in best case: one translation box corresponds to one meaning) || in practice: 35'009 < 177'158 ||
