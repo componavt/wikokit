@@ -3,15 +3,19 @@ Statistics of parsing, source Wiktionary database, and created database.
 
 = Russian Wiktionary, dump 20090122 =
 
-Source database: ruwikt20090122
+Source database: ruwikt20090122, see [http://download.wikimedia.org/backup-index.html Database dump progress]
 
-Result database: [http://code.google.com/p/wikokit/downloads/detail?name=ruwikt20090122_parsed.zip ruwikt20090122_parsed]
+Total pages in source database: 319741
+
+Result database:
+  # [http://code.google.com/p/wikokit/downloads/detail?name=ruwikt20090122_parsed.zip ruwikt20090122_parsed]
+  # [http://code.google.com/p/wikokit/downloads/detail?name=ruwikt20090122_parsed_with_translation.zip ruwikt20090122_parsed_with_translation]
 
 == Parsing ==
 
-Time sec:5183.856 = 86 minutes
+=== ruwikt20090122_parsed === 
 
-Total pages: 319741
+Time 5183.856 sec = 86 min
 
 Problems: it works only with if you have enough RAM. It is memory leak, I guess, so it fails if you give less than 507 MByte:
 
@@ -19,17 +23,41 @@ GC 507625K->494275K(522688K), 0.1761469 secs
 
 -Xms512m -Xmx512m -Xmn16m -XX:+DisableExplicitGC -verbose:gc
 
+=== ruwikt20090122_parsed_with_translation === 
+
+Time 18271.756 sec = 305 min
+
 == Parsed database ==
 
 See [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/wikt_parsed_20090122_2.png database layout].
 
 There are the following results (name of table, size of table, and my comment).
 
-|| *Table* || *Size* || *Table description* || *Comment* ||
-|| page || 334'306 || || > 319741 pages in source database!? Thanks to red links, i.e. wikification? ||
+|| *Table* || *Size1* || *Size2* || *Table description* || *Comment* ||
+|| page || 334'306  || 396'460 || || > 319741 pages in source database!? Thanks to red links, i.e. wikification? ||
 || relation || 67'250 || number of semantic relations, e.g. synonyms, antonyms, etc. || ||
 || lang_pos || 247'408 || number of pairs: language & part of speech, one Wiktionary page can contain several such pairs. || Why it is less than number of pages?! ||
 || wiki_text || 85'728 || number of meaning definitions + number of semantic relations phrases (divided by comma, semicolon) || ||
 || wiki_text_words || 102'107 || number of wikifierd words (in meaning definitions + in semantic relations) || ||
 || meaning || 177'158 || number of meanings, one word can have several meanings || ||
 || inflection || 13110 || number of unique inflectional wordforms || It is extracted from wikified word definitions ||
+
+*Size1* is a statistics of the database ruwikt20090122_parsed, and *Size2* - ruwikt20090122_parsed_with_translation.
+
+== Structure ==
+
+The structure of the article in Russian Wiktionary 
+is more or less strictly defined and formalized, see [http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D1%81%D1%82%D0%B0%D1%82%D0%B5%D0%B9 Викисловарь:Правила оформления статей].
+
+There are some difference with structure of the article
+in English Wiktionary, see [http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained Wiktionary:Entry layout explained].
+
+=== ruwikt20090122_parsed === 
+
+The following sections of Russian Wiktionary has been parsed:
+  * meaning (definition) (without quotations, labels)
+  * semantic relations
+
+=== ruwikt20090122_parsed_with_translation === 
+
+An additional section "translation" has been parsed.
