@@ -61,7 +61,7 @@ in English Wiktionary, see [http://en.wiktionary.org/wiki/Wiktionary:Entry_layou
 
 === ruwikt20090122_parsed === 
 
-The following sections of Russian Wiktionary has been parsed:
+The following sections of articles from Russian Wiktionary have been parsed:
   * meaning (definition) (without quotations, labels)
   * semantic relations
 
