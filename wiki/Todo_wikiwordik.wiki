@@ -24,3 +24,13 @@ Done:
   # replace `relation.page_id` by `relation.wiki_text_id` and change link from ->page to ->wiki_text
   # + table `relation_type` (id,name), + field `relation.relation_type_id`
   # field `relation_type.name` should be unique
+
+= wikt_parser =
+
+== Translation ==
+
+{{{
+девятиступенчатый | |fr=[[à]] [[neuf]] [[étage]]s  
+}}}
+
+The phrase should be parsed as one translation: _девятиступенчатый_ (fr) = _à neuf étages_
