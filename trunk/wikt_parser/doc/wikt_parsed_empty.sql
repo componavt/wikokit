@@ -10,7 +10,7 @@ DROP TABLE IF EXISTS `page` ;
 
 CREATE  TABLE IF NOT EXISTS `page` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Number of wikified words (out-bound links).\n' ,
-  `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
+  `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   `word_count` INT(6) UNSIGNED NOT NULL COMMENT 'number of words in the article' ,
   `wiki_link_count` INT(6) NOT NULL COMMENT 'number of wikified words (out-bound links) in the article' ,
   `is_in_wiktionary` BOOLEAN NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
@@ -31,7 +31,7 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `pos_id` TINYINT UNSIGNED NOT NULL ,
   `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `etymology_n` TINYINT UNSIGNED NOT NULL ,
-  `lemma` VARCHAR(255) NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
+  `lemma` VARCHAR(255) BINARY NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
 ENGINE = InnoDB
@@ -45,7 +45,7 @@ DROP TABLE IF EXISTS `wikipedia` ;
 
 CREATE  TABLE IF NOT EXISTS `wikipedia` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `page_title` VARCHAR(255) NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
+  `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
 ENGINE = InnoDB
@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `inflection` ;
 CREATE  TABLE IF NOT EXISTS `inflection` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'The list of inflextions automatically gathered from wiki-texts.' ,
   `freq` INT(11) UNSIGNED NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
-  `inflected_form` VARCHAR(255) NOT NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
+  `inflected_form` VARCHAR(255) BINARY NOT NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `inflected_form` (`inflected_form` ASC) )
 ENGINE = InnoDB
@@ -189,7 +189,7 @@ DROP TABLE IF EXISTS `wiki_text` ;
 
 CREATE  TABLE IF NOT EXISTS `wiki_text` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `text` VARCHAR(1023) NOT NULL ,
+  `text` VARCHAR(1023) BINARY NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `text_unique` (`text`(128) ASC) )
 ENGINE = InnoDB;

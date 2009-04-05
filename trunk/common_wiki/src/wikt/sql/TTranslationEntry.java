@@ -191,9 +191,9 @@ public class TTranslationEntry {
 
     /** Selects rows from the table 'translation_entry' by wiki text ID and language ID.<br><br>
      * SELECT id,translation_id FROM translation_entry WHERE wiki_text_id=3 AND lang_id=2;
-     * @return null if data is absent
+     * @return empty array, if data is absent
      */
-    public static TTranslationEntry getByWikiTextAndLanguage (Connect connect,
+    public static TTranslationEntry[] getByWikiTextAndLanguage (Connect connect,
                                         TWikiText wiki_text, TLang lang) {
                                         
         if(null == wiki_text || null == lang) {
@@ -204,7 +204,7 @@ public class TTranslationEntry {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
-        TTranslationEntry trans_entry = null;
+        List<TTranslationEntry> list_entry = null;
 
         try {
             s = connect.conn.createStatement ();
@@ -215,21 +215,26 @@ public class TTranslationEntry {
             str_sql.append(lang.getID());
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
-            if(rs.next ())
+            while (rs.next ())
             {
                 TTranslation trans = TTranslation.getByID(connect, rs.getInt("translation_id"));
-                if(null != trans)
-                    trans_entry = new TTranslationEntry(rs.getInt("id"), trans, lang, wiki_text);
+                if(null != trans) {
+                    if(null == list_entry)
+                        list_entry = new ArrayList<TTranslationEntry>();
+                    list_entry.add(new TTranslationEntry(rs.getInt("id"), trans, lang, wiki_text));
+                }
             }
-            if(rs.next ())
-                System.err.println("Error (TTranslationEntry.getByWikiTextAndLanguage()):: There are more records than one!");
+            
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-        return trans_entry;
+
+        if(null == list_entry)
+            return NULL_TTRANSLATIONENTRY_ARRAY;
+        return (TTranslationEntry [])list_entry.toArray(NULL_TTRANSLATIONENTRY_ARRAY);
     }
 
     /** Deletes row from the table 'translation_entry' by a value of ID.<br>

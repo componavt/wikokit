@@ -62,7 +62,7 @@ public class Main {
             // "Статьи с звучащими примерами произношения", "Статьи с иллюстрациями", 
         
         WiktParser w = new WiktParser();
-        //w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
+//        w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
         PageTableAll.parseAllPages(wiki_lang, wikt_conn, wikt_parsed_conn);
         
         wikt_conn.Close();
