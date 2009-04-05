@@ -42,7 +42,7 @@ There are the following results (name of table, size of table, and my comment).
 || meaning || 177'158 || 177'158 || number of meanings, one word can have several meanings || ||
 || inflection || 13'110 || 14'859 || number of unique inflectional wordforms || It is extracted from wikified word definitions ||
 || translation || 0 || 35'009 || number of translation section boxes (in best case: one translation box corresponds to one meaning) || in practice: 35'009 < 177'158 ||
-|| translation_entry || 0 || 453'387 || number of different translations || ||
+|| translation_entry || 0 || 453'387 || number of different translations (pairs of translations) || ||
 
 *Size1* is a statistics of the database ruwikt20090122_parsed, and *Size2* - ruwikt20090122_parsed_with_translation.
 
