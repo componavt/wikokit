@@ -41,6 +41,18 @@ public class PathSearcher {
     public static String[] getShortestPath(Graph<String, Integer> g, DijkstraShortestPath<String,Integer> alg, String word1, String word2) {
 
 //System.out.println("getShortestPath: word1=" + word1 + "; word2=" + word2);
+
+        if(!g.containsVertex(word1)) {
+            System.out.println("Warning: (PathSearcher.getShortestPath) graph has no word1=" + word1);
+            return NULL_STRING_ARRAY;
+        }
+        if(!g.containsVertex(word2)) {
+            System.out.println("Warning: (PathSearcher.getShortestPath) graph has no word2=" + word2);
+            return NULL_STRING_ARRAY;
+        }
+        //if(null == TPage.get(ruwikt_parsed_conn, word1)) { word2
+        //}
+
         List<Integer> l_edges = alg.getPath(word1, word2);
         if(l_edges.size() == 0)
             return NULL_STRING_ARRAY;

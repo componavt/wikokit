@@ -127,12 +127,11 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         System.out.println("Total documents: " + pt.size());
         for(String page_title:pt) {
             cur_doc ++;
-            //page_title = "яблоко";         // ангел  самолёт коса яблоко
-            //page_title = "апподжиатура";        // Bolesław_Prus car
+            //page_title = "ангел";                   // ангел  самолёт коса яблоко
+            //page_title = "апподжиатура";          // Bolesław_Prus car
             //if(++ cur_doc > max_docs) {
-            //if(++ cur_doc > 1) {
-            //    break;
-            //}
+            //if(++ cur_doc > 100)
+              //  break;
             
             //page_title = pt3[cur_doc]; // "Will_o'_the_wisp"; // "Momotarō";    // id=68417
             if(DEBUG) {

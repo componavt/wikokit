@@ -156,6 +156,7 @@ public class TTranslationEntryTest {
 
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
         //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "lang_pos");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
@@ -229,13 +230,34 @@ public class TTranslationEntryTest {
         TTranslationEntry trans_entry = TTranslationEntry.insert(conn, trans, lang, wiki_text);
         assertNotNull(trans_entry);
         
-        TTranslationEntry trans_entry2 = TTranslationEntry.getByWikiTextAndLanguage(conn, wiki_text, lang);
-        assertNotNull(trans_entry2);
+        TTranslationEntry[] list_entry = TTranslationEntry.getByWikiTextAndLanguage(conn, wiki_text, lang);
+        assertNotNull(list_entry);
+        assertEquals(1, list_entry.length);
         
-        TWikiText twt = trans_entry2.getWikiText();
+        TWikiText twt = list_entry[0].getWikiText();
         assertNotNull(twt);
         assertEquals(str_wiki_text, twt.getText());
-        
+
+        {   // + 1 to array
+            
+            TLangPOS lang_pos2 = TLangPOS.insert(conn, page, lang, TPOS.get(POS.verb), 0, "");
+
+            int meaning_n = 1;
+            meaning = TMeaning.insert(conn, lang_pos2, meaning_n, wiki_text);
+            assertNotNull(meaning);
+
+            trans = TTranslation.insert(conn, lang_pos2, meaning_summary, meaning);
+            assertNotNull(trans);
+
+            trans_entry = TTranslationEntry.insert(conn, trans, lang, wiki_text);
+            assertNotNull(trans_entry);
+
+            // result: 2 elements
+            list_entry = TTranslationEntry.getByWikiTextAndLanguage(conn, wiki_text, lang);
+            assertNotNull(list_entry);
+            assertEquals(2, list_entry.length);
+        }
+
         TTranslation.delete(conn, trans);
         TTranslationEntry.delete(conn, trans_entry);
     }

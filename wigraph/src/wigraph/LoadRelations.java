@@ -44,36 +44,49 @@ public class LoadRelations {
         return _list;
     }
 
+    /** Loads thesaurus of semantic relations, which was extracted from
+     * parsed Wiktionary database and stored (serialized) to files.
+     *
+     * @param connect Wiktionary parsed database interface
+     * @param filename_relation_pairs serialized (by SaveRelations) semantic relations (pairs of words)
+     * @param filename_unique_words serialized (by SaveRelations) list of unique words (from semantic relations)
+     * @return graph thesaurus of semantic relations
+     *
+     * It is supposed that Wiktionary parsed database has been created.
+     */
+    public static Graph loadGraph(Connect connect,
+                                String filename_relation_pairs,String filename_unique_words) {
+
+        // It is supposed that Wiktionary parsed database has been created
+        TLang.createFastMaps(connect);
+        TPOS.createFastMaps(connect);
+        TRelationType.createFastMaps(connect);
+
+        // edge creation 1
+        // for each TRelation: get page<->wiki_text + type of relation
+        
+        Map<String,List<String>> m_words = null;
+        List<String> unique_words = null;
+        try {
+            System.out.println("Loading relations from file " + filename_relation_pairs + " ...");
+            m_words      = LoadRelations.loadMapToLists(filename_relation_pairs);
+            unique_words = LoadRelations.loadListString(filename_unique_words);
+        } catch(IOException ex) {
+            System.err.println("IOException (LoadRelations.loadGraph()):: Serialization failed (" + filename_relation_pairs + ", " + filename_unique_words + "), msg: " + ex.getMessage());
+        } catch(ClassNotFoundException ex) {
+            System.err.println("IOException (LoadRelations.loadGraph()):: Serialization failed (" + filename_relation_pairs + ", " + filename_unique_words + "), msg: " + ex.getMessage());
+        }
+        
+        System.out.println("Creating graph...");
+        return GraphCreator.createGraph(m_words, unique_words);
+    }
+
     public static void main(String[] args) {
 
         Connect ruwikt_parsed_conn = new Connect();
         ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
-
-        // It is supposed that Wiktionary parsed database has been created
-        TLang.createFastMaps(ruwikt_parsed_conn);
-        TPOS.createFastMaps(ruwikt_parsed_conn);
-        TRelationType.createFastMaps(ruwikt_parsed_conn);
         
-        // edge creation 1
-        // for each TRelation: get page<->wiki_text + type of relation
-        
-        String filename1 = "relation_pairs.txt";
-        String filename2 = "unique_words.txt";
-        Map<String,List<String>> m_words = null;
-        List<String> unique_words = null;
-        try {
-            System.out.println("Loading relations from file " + filename1 + " ...");
-            m_words      = loadMapToLists(filename1);
-            unique_words = loadListString(filename2);
-            System.out.println("Unique words : " + unique_words.size());
-        } catch(IOException ex) {
-            System.err.println("IOException (wigraph SerializeRelationsToFile.java main()):: Serialization failed (" + filename1 + "), msg: " + ex.getMessage());
-        } catch(ClassNotFoundException ex) {
-            System.err.println("IOException (wigraph SerializeRelationsToFile.java main()):: Serialization failed (" + filename1 + "), msg: " + ex.getMessage());
-        }
-
-        System.out.println("Creating graph...");
-        Graph g = GraphCreator.createGraph(m_words, unique_words);
+        Graph g = LoadRelations.loadGraph(ruwikt_parsed_conn, "relation_pairs.txt", "unique_words.txt");
         assert(null != g);
         System.out.println("Calculation Dijkstra shortest path...");
         DijkstraShortestPath<String,Integer> alg = new DijkstraShortestPath(g);
@@ -94,11 +107,9 @@ public class LoadRelations {
 
                 String[] word_path = null;
 
-                if(g.containsVertex(word1) && g.containsVertex(word2)) {
-
-                    if(null != TPage.get(ruwikt_parsed_conn, word1) &&
-                       null != TPage.get(ruwikt_parsed_conn, word2))
-                    {
+                    //if(null != TPage.get(ruwikt_parsed_conn, word1) &&
+                    //   null != TPage.get(ruwikt_parsed_conn, word2))
+                    //{
                         System.out.println("Starting search path ['" + word1 + "', '" + word2 + "']");
                         word_path = PathSearcher.getShortestPath(g, alg, word1, word2);
                         if(word_path.length > 0) {
@@ -112,8 +123,7 @@ public class LoadRelations {
                                 System.out.println("" + i + ".: " + rel_name + "["+ word_path[i-1] + ", "+ word_path[i] + "]");
                             }
                         }
-                    }
-                }
+                    //}
 
                 if(null == word_path || 0 == word_path.length)
                     System.out.println("There is no path from '" + word1 + "' to '" + word2 + "'.");

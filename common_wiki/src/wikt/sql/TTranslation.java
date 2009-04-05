@@ -49,6 +49,7 @@ public class TTranslation {
 
     private final static TTranslation[] NULL_TTRANSLATION_ARRAY = new TTranslation[0];
     private final static TPage[]        NULL_TPAGE_ARRAY        = new TPage[0];
+    private final static String[]       NULL_STRING_ARRAY       = new String[0];
 
     public TTranslation(int _id,TLangPOS _lang_pos,String _meaning_summary,
                     TMeaning _meaning) {
@@ -124,6 +125,7 @@ public class TTranslation {
      *
      * @param source_lang source language
      * @param target_lang target language
+     * @return empty array if data is absent
      */
     public static TPage[] fromPageToTranslations (Connect connect,TLang source_tlang,
                                                   TPage source_page,TLang target_tlang) {
@@ -186,6 +188,7 @@ public class TTranslation {
      * @param source_tlang      language of sought pages (language of page)
      * @param translation_page  given translation (target language)
      * @param target_tlang      language of translations
+     * @return empty array if data is absent
      */
     public static TPage[] fromTranslationsToPage (Connect connect,
                                                 TLang source_tlang,     // language of sought pages (language of page)
@@ -207,8 +210,8 @@ public class TTranslation {
         TWikiText[] one_word_wiki_text = TWikiTextWords.getOneWordWikiTextByPage(connect, translation_page);
         
         for(TWikiText w : one_word_wiki_text) {
-            TTranslationEntry e = TTranslationEntry.getByWikiTextAndLanguage(connect, w, target_tlang);
-            if(null != e) {
+            TTranslationEntry[] trans_entries = TTranslationEntry.getByWikiTextAndLanguage(connect, w, target_tlang);
+            for(TTranslationEntry e : trans_entries) {
                 TTranslation trans = e.getTranslation();
 
                 if(null != trans && null != trans.getLangPOS()) {
@@ -228,6 +231,36 @@ public class TTranslation {
         if(null == list_page)
             return NULL_TPAGE_ARRAY;
         return ((TPage[])list_page.toArray(NULL_TPAGE_ARRAY));
+    }
+
+    /** Gets articles which contain the given translation.
+     *
+     * @param source_tlang      language of sought pages (language of page)
+     * @param translation_page  given translation (target language)
+     * @param target_tlang      language of translations
+     * @return empty array if data is absent
+     */
+    public static String[] fromTranslationsToPage (Connect connect,
+                                                LanguageType source_lang,   // language of sought pages (language of page)
+                                                String translation_page,    // on target language
+                                                LanguageType target_lang) { // language of translations
+
+        TPage page = TPage.get(connect, translation_page);
+        if(null == page) {
+            System.err.println("Error (wikt_parsed TTranslation.insert()):: null argument lang_pos");
+        }
+        
+        TLang source_tlang = TLang.get(source_lang);
+        TLang target_tlang = TLang.get(target_lang);
+        TPage[] source_pages = TTranslation.fromTranslationsToPage(connect, source_tlang, page, target_tlang);
+        if(0 == source_pages.length)
+            return NULL_STRING_ARRAY;
+
+        String[] s_pages = new String[source_pages.length];
+        for(int i=0; i < source_pages.length; i++)
+            s_pages [i] = source_pages [i].getPageTitle();
+
+        return s_pages;
     }
 
 

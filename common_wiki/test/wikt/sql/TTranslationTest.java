@@ -28,6 +28,7 @@ public class TTranslationTest {
 
     TPage page;
     String  page_title;
+    TPOS pos;
     TLangPOS lang_pos;
     TMeaning meaning;
     String meaning_summary;
@@ -119,7 +120,7 @@ public class TTranslationTest {
         int etymology_n = 0;
         String lemma = "";
 
-        TPOS pos = TPOS.get(POS.noun);
+        pos = TPOS.get(POS.noun);
         TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
 
         // let's found ID:
@@ -152,6 +153,7 @@ public class TTranslationTest {
 
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
         //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "lang_pos");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
@@ -212,7 +214,116 @@ public class TTranslationTest {
         assertEquals(page_title, ru_source[0].getPageTitle());
     }
 
-    
+    @Test
+    public void testFromTranslationsToPage_strings () {
+        System.out.println("fromTranslationsToPage_strings");
+        Connect conn = ruwikt_parsed_conn;
+
+        for(WTranslation wtrans : wtrans_all) {
+            TTranslation.storeToDB(conn, lang_pos, meaning, wtrans);
+        }
+        
+        //  "{{перев-блок|звонок|\n" +
+        //      "|en=[[little]] [[bell]], [[handbell]], [[doorbell]]\n" +
+        //  "{{перев-блок|оркестровый инструмент|\n" +
+        //      "|en=[[glockenspiel]]\n" +
+        //  "{{перев-блок|цветок\n" +
+        //      "|en=[[bluebell]], [[bellflower]], [[campanula]]\n" +
+        LanguageType source_lang = LanguageType.ru;
+        LanguageType target_lang = LanguageType.en;
+
+        // there is 1 translation Russian ("колокольчик") -> English ("doorbell")
+        String en_translation = "doorbell";
+        String[] ru_source = TTranslation.fromTranslationsToPage(conn, source_lang, en_translation, target_lang);
+        assertNotNull(ru_source);
+        assertEquals(1, ru_source.length);
+        assertEquals(page_title, ru_source[0]);
+    }
+
+    @Test
+    public void testFromTranslationsToPage_UpperCaseConflict () {
+        System.out.println("fromTranslationsToPage_strings");
+        Connect conn = ruwikt_parsed_conn;
+
+        // 1. let's check conflict: "plane" and "Plane"
+        String de_page_title = "Plane";
+
+        TPage de_page = TPage.get(conn, de_page_title);
+        assertNull(de_page);
+        de_page = TPage.insert(conn, de_page_title, 0, 0, false);
+        assertNotNull(de_page);
+
+
+        // 2. let's check more than one translations: "самолёт" -> "plane" and "план" -> "plane"
+        TLang lang = TLang.get(LanguageType.ru);
+        int etymology_n = 0;
+        String lemma = "";
+        WTranslation[] wtrans_all;
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        LanguageType lang_section = LanguageType.ru; // Russian word
+
+        {
+            page_title = "самолёт";
+            page = TPage.insert(conn, page_title, 0, 0, false);
+            assertNotNull(page);
+            lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+            assertNotNull(lang_pos);
+
+            String samolyot_text = "text before \n" +
+                "===Перевод===\n" +
+                "{{перев-блок||\n" +
+                "|en=[[airplane]], [[plane]], [[aircraft]]\n" +
+                "|bg=[[самолет]], [[аероплан]]\n" +
+                "}}\n";
+            POSText pt = new POSText(POS.noun, samolyot_text);
+            wtrans_all = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+
+            for(WTranslation wtrans : wtrans_all) {
+                TTranslation.storeToDB(conn, lang_pos, meaning, wtrans);
+            }
+        }
+
+        {
+            page_title = "план";
+            page = TPage.insert(conn, page_title, 0, 0, false);
+            assertNotNull(page);
+            lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+            assertNotNull(lang_pos);
+
+            String plan_text = "text before \n" +
+                "===Перевод===\n" +
+                "{{перев-блок|схема, чертёж|\n" +
+                "|en=[[map]], [[plane]], [[scheme]]\n" +
+                "}}\n" +
+                "\n" +
+                "{{перев-блок|программа|\n" +
+                "|en=[[plan]], [[draft]], [[scheme]], [[contrivance]], [[road map]]\n" +
+                "}}\n";
+
+            POSText pt = new POSText(POS.noun, plan_text);
+            wtrans_all = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+
+            for(WTranslation wtrans : wtrans_all) {
+                TTranslation.storeToDB(conn, lang_pos, meaning, wtrans);
+            }
+        }
+
+        //  "|en=[[airplane]], [[plane]], [[aircraft]]\n" +
+        //      самолёт
+        //  "|en=[[map]], [[plane]], [[scheme]]\n" +
+        //      план
+        LanguageType source_lang = LanguageType.ru;
+        LanguageType target_lang = LanguageType.en;
+
+        // there is 2 translation Russian ("самолёт", "план") -> English ("plane")
+        String en_translation = "plane";
+        String[] ru_source = TTranslation.fromTranslationsToPage(conn, source_lang, en_translation, target_lang);
+        assertNotNull(ru_source);
+        assertEquals(2, ru_source.length);
+        assertTrue( ru_source[0].equals("самолёт") ||
+                    ru_source[1].equals("самолёт")    );
+    }
+
     @Test
     public void testInsert() {
         System.out.println("insert");
