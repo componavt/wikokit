@@ -34,15 +34,15 @@ See [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/wikt_pa
 There are the following results (name of table, size of table, and my comment).
 
 || *Table* || *Size1* || *Size2* || *Table description* || *Comment* ||
-|| page || 334'306  || 396'460 || || > 319741 pages in source database!? Thanks to red links, i.e. wikification? ||
-|| relation || 67'250 || 67'250 || number of semantic relations, e.g. synonyms, antonyms, etc. || ||
-|| lang_pos || 247'408 || 247'408 || number of pairs: language & part of speech, one Wiktionary page can contain several such pairs. || Why it is less than number of pages?! ||
-|| wiki_text || 85'728 || 163'373 || number of meaning definitions + number of semantic relations phrases (divided by comma, semicolon) + number of wikified translations || ||
-|| wiki_text_words || 102'107 || 196'811 || number of wikified words (in meaning definitions + in semantic relations + in translations) || ||
-|| meaning || 177'158 || 177'158 || number of meanings, one word can have several meanings || ||
-|| inflection || 13'110 || 14'859 || number of unique inflectional wordforms || It is extracted from wikified word definitions ||
-|| translation || 0 || 35'009 || number of translation section boxes (in best case: one translation box corresponds to one meaning) || in practice: 35'009 < 177'158 ||
-|| translation_entry || 0 || 453'387 || number of different translations (pairs of translations) || ||
+|| page || 334'306  || 391'141 || || > 319741 pages in source database!? Thanks to red links, i.e. wikification? ||
+|| relation || 67'250 || 67'296 || number of semantic relations, e.g. synonyms, antonyms, etc. || ||
+|| lang_pos || 247'408 || 247'580 || number of pairs: language & part of speech, one Wiktionary page can contain several such pairs. || Why it is less than number of pages?! ||
+|| wiki_text || 85'728 || 163'570 || number of meaning definitions + number of semantic relations phrases (divided by comma, semicolon) + number of wikified translations || ||
+|| wiki_text_words || 102'107 || 186'556 || number of wikified words (in meaning definitions + in semantic relations + in translations) || ||
+|| meaning || 177'158 || 177'365 || number of meanings, one word can have several meanings || ||
+|| inflection || 13'110 || 14'906 || number of unique inflectional wordforms || It is extracted from wikified word definitions ||
+|| translation || 0 || 33'800 || number of translation section boxes (in best case: one translation box corresponds to one meaning) || in practice: 35'009 < 177'158 ||
+|| translation_entry || 0 || 504'919 || number of different translations (pairs of translations) || ||
 
 *Size1* is a statistics of the database ruwikt20090122_parsed, and *Size2* - ruwikt20090122_parsed_with_translation.
 
