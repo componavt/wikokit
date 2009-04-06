@@ -127,7 +127,22 @@ public class LanguageType {
     
     public static final LanguageType translingual_ru = new LanguageType("INT", "Translingual", "Translingual (INT)");// INTernational
 
-    // todo: check and merge with correspondend English language
+    public static final LanguageType yrk = new LanguageType("yrk", "Nenets", "Nenets");//Ненецкий
+    public static final LanguageType vot = new LanguageType("vot", "Votic", "Votic");//Водский
+
+    public static final LanguageType cel = new LanguageType("cel", "Tselinsky", "Tselinsky");//Целинский - in English?
+    public static final LanguageType kom = new LanguageType("kom", "Komi", "Komi");//Коми-зырянский
+    public static final LanguageType krc = new LanguageType("krc", "Karachay-Balkar", "Karachay-Balkar");//Карачаево-балкарский
+
+    public static final LanguageType arc_syr = new LanguageType("arc.syr", "Aramaic", "Aramaic");//Арамейский (сир.)
+    public static final LanguageType arc_jud = new LanguageType("arc.jud", "Aramaic", "Aramaic");//Арамейский (иуд.)
+    public static final LanguageType alt = new LanguageType("alt", "Altai", "Altai");//Алтайский
+
+    //public static final LanguageType  = new LanguageType("", "", "");//
+
+
+
+    // todo: check and merge Russian Wiktionary types with correspondend English language (Mediawiki)
     
     public static final LanguageType zh_nan = new LanguageType("zh-nan", "Min-nan", "Min-nan");//Китайский (южноминьский) Min Nan, Minnan, or Min-nan, Southern Min
 
@@ -135,7 +150,8 @@ public class LanguageType {
     public static final LanguageType kk_cyr = new LanguageType("kk.cyr", "Kazakh Cyrillic", "Kazakh Cyrillic");
     public static final LanguageType kk_lat = new LanguageType("kk.lat", "Kazakh Latin", "Kazakh Latin");
 
-    //public static final LanguageType     = new LanguageType("", "", "");//
+    public static final LanguageType oen    = new LanguageType("oen", "Old English", "Old English");//Староанглийский
+    
     
 
 

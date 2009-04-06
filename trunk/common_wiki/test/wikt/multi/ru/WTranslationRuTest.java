@@ -18,7 +18,8 @@ import wikt.constant.POS;
 public class WTranslationRuTest {
 
     public static String samolyot_text, samolyot_with_header, kolokolchik_text, 
-            kolokolchik_text_1_translation_box, kosa_text_1_translation_box_without_header;
+            kolokolchik_text_1_translation_box, kosa_text_1_translation_box_without_header,
+            unfinished_template;
 
     public WTranslationRuTest() {
     }
@@ -97,6 +98,15 @@ public class WTranslationRuTest {
             "|de=[[Zopf]] {{m}} -es, Zöpfe\n" +
             "|fr=[[natte]] {{f}}; [[couette]] {{f}}, [[tresse]] <i>f</i>\n" +
             "}}\n";
+
+        unfinished_template = "\n" +
+            "{{unfinished\n" +
+            "|m=\n" +
+            "|p=1\n" +
+            "|s=\n" +
+            "|e=\n" +
+            "}}";
+
     }
 
     @After
@@ -182,6 +192,29 @@ public class WTranslationRuTest {
             assertTrue(wt_os[0].getVisibleText().equalsIgnoreCase( "дзæнгæрæг" ) );
             assertTrue(wt_os[1].getVisibleText().equalsIgnoreCase( "къæрцгæнæг" ) );
         }
+    }
+
+    // tests skipping of unfinished_template
+    @Test
+    public void testParseTranslation_unfinished_template() {
+        System.out.println("parse_1_meaning");
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "самолёт";
+        LanguageType lang_section = LanguageType.ru; // Russian word
+
+        String s = samolyot_with_header + unfinished_template;
+        POSText pt = new POSText(POS.noun, s);
+
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+        assertEquals(1, result.length );
+
+        assertEquals(0, result[0].getHeader().length()); // only one meaning, the translation box has no header
+
+        //   "|tr=[[uçak]], [[tayyare]]\n"
+        WikiText[] wt_samolyot = result[0].getTranslationIntoLanguage(LanguageType.tr);
+        assertEquals(2, wt_samolyot.length );
+        assertTrue(wt_samolyot[0].getVisibleText().equalsIgnoreCase( "uçak" ) );
+        assertTrue(wt_samolyot[1].getVisibleText().equalsIgnoreCase( "tayyare" ) );
     }
     
     @Test
