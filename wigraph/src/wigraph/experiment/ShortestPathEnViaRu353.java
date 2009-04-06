@@ -66,6 +66,7 @@ public class ShortestPathEnViaRu353 {
             dump.Print("\n" +
                 "isct_wo - Number of intersection words, they are synonyms of word1 and word2" + "\n" +
                 "t sec   - time sec" + "\n" +
+                "rel.min - relatedness = 1 / distance {minimum, average, maximum} (synynyms word set 1, set 2)" + "\n" +
                 "syn1.len - number of synonyms in first list" + "\n" +
                 "syn2.len - number of synonyms in first list" + "\n" +
                 "human   - human_wordsim" + "\n");
@@ -73,14 +74,13 @@ public class ShortestPathEnViaRu353 {
             dump.Print("\n" +
                 "word1\t" + "word2\t" + "human\t" +
                // intersect.length + "\t" + dist_f + "\t" + dist_i + "\t" +
-                "dist.min\t" + "average\t" + "max\t" +
+                "rel.min\t" + "average\t" + "max\t" +
                 "syn1.list\t" +
                 "syn1.len\t" +
                 "syn2.list\t" +
                 "syn2.len\t" +
-                "t sec\t" +
-                "cat_max" + "\t" +
-                "iter\t"
+                "t sec" +
+                "\n"
                 //"vert-s\t" +
                 //"edges\t" +
                 );
@@ -95,12 +95,13 @@ public class ShortestPathEnViaRu353 {
         System.out.println ("\nThe words are processing:\n");
         WordSim353 wordsim353= new WordSim353();
         Valuer.absent_counter = 0;
-        for(WordSim w:wordsim353.data) {
-            i++;
+        //for(WordSim w:wordsim353.data) {
+        // i++;
+        for(i=320; i<wordsim353.data.size(); i ++) { WordSim w = wordsim353.data.get(i);
             String word1 = w.word1;
             String word2 = w.word2;
-            word1 = "plane";        // computer
-            word2 = "car";          // keyboard
+            //word1 = "noon";    // computer plane   smart   Jerusalem   alcohol     noon
+            //word2 = "string";  // keyboard car     student Israel      chemistry   string
 
             //System.out.println ("The word Latin1ToUTF8 '"+Encodings.Latin1ToUTF8(all_words[i])+"' is processing...");
             System.out.println (i + ": " + word1 + ", " + word2);
@@ -115,7 +116,7 @@ public class ShortestPathEnViaRu353 {
                                     source_lang, target_lang,
                                     dump);
 //            if( i > 9)
-              break;
+//              break;
         }
 
         t_end  = System.currentTimeMillis();
