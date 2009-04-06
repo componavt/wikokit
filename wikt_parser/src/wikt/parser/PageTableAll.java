@@ -20,7 +20,12 @@ public class PageTableAll {
     
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
-    private static final String[] debug_pages = {"punainen", "alt", "unter", "that", "tester",
+    private static final String[] debug_pages = {
+        "нелетный", // redirect
+        "негритянка",
+        "злато", "зограф", "камыш", "кан", "кар", "карта",
+        "журавль", "игнатовец", "мурашкинец", "кулёма",
+        "punainen", "alt", "unter", "that", "tester",
         "unser", "um", "twin", "tuus", "tu", "top", "tomo", "toki", "title",
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
@@ -65,10 +70,10 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                /*if (n_cur < debug_pages.length)
+                if (n_cur < debug_pages.length)
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
                 else 
-                    break;*/
+                    break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
                 
                 if(DEBUG && 0 == ++n_cur % 1000) {   // % 100

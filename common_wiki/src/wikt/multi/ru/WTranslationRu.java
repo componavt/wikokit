@@ -97,7 +97,12 @@ public class WTranslationRu {
             // 3. gets next substring "{{перев-блок|"
             int next_end = text.indexOf("{{перев-блок|", prev_end + 1);
             if(-1 == next_end) {
-                next_end = len;
+                to_continue = false;
+                int unfinished_template_pos = text.indexOf("{{unfinished", prev_end + 1);
+                if(-1 != unfinished_template_pos)
+                    next_end = unfinished_template_pos;
+                else
+                    next_end = len;
             }
             
             String trans_block = text.substring(prev_end, next_end);
@@ -109,7 +114,8 @@ public class WTranslationRu {
             if(null != wt) {
                 wt_list.add(wt);
             }
-            to_continue = -1 != next_end && next_end < len;
+            if(to_continue)
+                to_continue = -1 != next_end && next_end < len;
             prev_end = next_end;
         }
 
