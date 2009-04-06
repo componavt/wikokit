@@ -205,7 +205,8 @@ public class TTranslation {
         // page -> wiki_text_words -> wiki_text -> translation (filter by lang)-> lang_pos -> page
         //                                      -> ? meaning     -> lang_pos -> page
 
-        List<TPage> list_page = null;
+        List<String> slist_page = null; // just for unique TPage, local var
+        List<TPage>   list_page = null;
         LanguageType source_lang = source_tlang.getLanguage();
         TWikiText[] one_word_wiki_text = TWikiTextWords.getOneWordWikiTextByPage(connect, translation_page);
         
@@ -221,13 +222,24 @@ public class TTranslation {
                             System.err.println("Error (wikt_parsed TTranslation.fromTranslationsToPage()):: There is no page with translation (translation_page)="+translation_page.getPageTitle());
                             return NULL_TPAGE_ARRAY;
                         }
-                        if(null == list_page)
-                            list_page = new ArrayList<TPage>();
-                        list_page.add(p);
+                        if(null == list_page) {
+                             list_page = new ArrayList<TPage>();
+                            slist_page = new ArrayList<String>();
+                        }
+                        String s = p.getPageTitle();
+                        if(!slist_page.contains(s)) {
+                            slist_page.add(s);
+                            list_page.add(p);
+                        }
                     }
                 }
             }
         }
+        if(null != slist_page) {
+            slist_page.clear();
+            slist_page = null;
+        }
+        
         if(null == list_page)
             return NULL_TPAGE_ARRAY;
         return ((TPage[])list_page.toArray(NULL_TPAGE_ARRAY));
@@ -247,7 +259,8 @@ public class TTranslation {
 
         TPage page = TPage.get(connect, translation_page);
         if(null == page) {
-            System.err.println("Error (wikt_parsed TTranslation.insert()):: null argument lang_pos");
+            System.err.println("Error (TTranslation.fromTranslationsToPage()):: null argument page");
+            return NULL_STRING_ARRAY;
         }
         
         TLang source_tlang = TLang.get(source_lang);

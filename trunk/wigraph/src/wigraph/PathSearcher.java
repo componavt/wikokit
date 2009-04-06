@@ -71,7 +71,8 @@ public class PathSearcher {
         return l_words;
     }
 
-    /** Calculates an average shortest path from words set 1 to word set 2,
+    /** Calculates relatedness (1 / an average shortest path) of (from)
+     * words set 1 to word set 2,
      * i.e. average length of shortest paths from each word of a set 1 to each word of a set 2.
      *
      * @param g    source graph with defined words and relations between words
@@ -100,13 +101,17 @@ public class PathSearcher {
                         max = inverse;
                     if(inverse < min)
                         min = inverse;
-                } else
-                    max = 1f;
+                } //else
+                    //max = 1f;
             }
         }
-        average = 0f;
-        if(n_pairs > 0)
+        if(n_pairs > 0) {
             average = (float)n_pairs/path_len;
+        } else {
+            average = 0f;
+            max = 0f;
+            min = 0f;
+        }
 
         return new DistanceData(average, min, max);
     }    
