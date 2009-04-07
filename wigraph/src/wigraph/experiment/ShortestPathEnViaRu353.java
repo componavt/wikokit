@@ -100,8 +100,8 @@ public class ShortestPathEnViaRu353 {
         for(i=320; i<wordsim353.data.size(); i ++) { WordSim w = wordsim353.data.get(i);
             String word1 = w.word1;
             String word2 = w.word2;
-            //word1 = "noon";    // computer plane   smart   Jerusalem   alcohol     noon
-            //word2 = "string";  // keyboard car     student Israel      chemistry   string
+            word1 = "deliverable";    // computer plane   smart   Jerusalem   alcohol     noon
+            word2 = "publication";  // keyboard car     student Israel      chemistry   string
 
             //System.out.println ("The word Latin1ToUTF8 '"+Encodings.Latin1ToUTF8(all_words[i])+"' is processing...");
             System.out.println (i + ": " + word1 + ", " + word2);
@@ -116,7 +116,7 @@ public class ShortestPathEnViaRu353 {
                                     source_lang, target_lang,
                                     dump);
 //            if( i > 9)
-//              break;
+              break;
         }
 
         t_end  = System.currentTimeMillis();
