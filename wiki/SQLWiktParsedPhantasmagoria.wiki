@@ -14,7 +14,7 @@ The number of entries and selected types of lexical semantic information availab
 || nouns || ||  || || 935 || 336 || 58843 || 40607 ||
 || verb || Parser is unfinished :) ||  || Too little verbs!? || 342 || 49 || 356 || 24'096 ||
 || adjective || ||  || || 184 || 18 || 2'168 || 23'536 ||
-|| unknown || Part of speech don't recognized by the parser ||  || || 1'321 || 12'648 || 57'573 || 331 ||
+|| unknown || Part of speech which were not recognized by the parser ||  || || 1'321 || 12'648 || 57'573 || 331 ||
 
 ||  || SQL ||  || || en || de || ru || uk ||
 
