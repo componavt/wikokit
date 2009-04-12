@@ -5,16 +5,16 @@ How to extract some information from the database *wikt_parsed* of the parsed Wi
 
 The number of entries and selected types of lexical semantic information available from the Russian edition of Wiktionary as of January 2009 (see [http://code.google.com/p/wikokit/downloads/detail?name=ruwikt20090122_parsed_with_translation.zip ruwikt20090122_parsed_with_translation]).
 
-|| *Question* || *SQL* || *Result* || *Comment* || en || de || ru || uk ||
+|| *Question* || *SQL* || *Result* || *Comment* || en || de || ru || uk || all languages ||
 || English id by language code || SELECT `*` FROM lang WHERE code="en"; || id = 85 || || 85 || 74 || 276 || 352 ||
 || Entries || SELECT COUNT(`*`) FROM lang_pos WHERE lang_id=85; || 2'813 || || 2813 || 13'072 || 124'301 || 88'575 ||
 || noun POS id || SELECT `*` FROM part_of_speech WHERE name="noun"; || 11 || || || || || ||
 || || noun=11; verb=21; adjective=3; unknown=20 || || || || || || ||
 || English nouns || SELECT COUNT(`*`) FROM lang_pos WHERE lang_id=85 AND pos_id=11; || 935 || || || || || ||
-|| nouns || ||  || || 935 || 336 || 58843 || 40607 ||
-|| verb || Parser is unfinished :) ||  || Too little verbs!? || 342 || 49 || 356 || 24'096 ||
-|| adjective || ||  || || 184 || 18 || 2'168 || 23'536 ||
-|| unknown || Part of speech which were not recognized by the parser ||  || || 1'321 || 12'648 || 57'573 || 331 ||
+|| nouns || ||  || || 935 || 336 || 58'843 || 40'607 || 108'448 ||
+|| verb || Parser is unfinished :) ||  || Too little verbs!? || 342 || 49 || 356 || 24'096 || 26'290 ||
+|| adjective || ||  || || 184 || 18 || 2'168 || 23'536 || 26'864 ||
+|| unknown || Part of speech which were not recognized by the parser ||  || || 1'321 || 12'648 || 57'573 || 331 || 80'293 ||
 || synonymy relation id || SELECT `*` FROM relation_type WHERE name="synonymy" || 26 || || || || || ||
 || || synonymy=26; antonymy=19; hyponymy=23; hypernymy=22; holonymy=21; meronymy=24 || || || || || || ||
 || total synonyms || SELECT COUNT(`*`) FROM relation WHERE relation_type_id=26; || 28'718 || || || || || ||
