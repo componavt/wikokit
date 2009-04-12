@@ -10,7 +10,7 @@ The number of entries and selected types of lexical semantic information availab
 || Entries || SELECT COUNT(`*`) FROM lang_pos WHERE lang_id=85; || 2'813 || || 2813 || 13'072 || 124'301 || 88'575 ||
 || noun POS id || SELECT `*` FROM part_of_speech WHERE name="noun"; || 11 || || || || || ||
 || || noun=11; verb=21; adjective=3; unknown=20 || || || || || || ||
-|| English nouns || SELECT COUNT(`*`) FROM lang_pos WHERE lang_id=85 AND pos_id=11; || 935 || || || || || ||
+|| English nouns || SELECT COUNT(`*`) FROM lang_pos WHERE lang_id=85 AND pos_id=11; || 935 || || || || || || all POS = 247'580 ||
 || nouns || ||  || || 935 || 336 || 58'843 || 40'607 || 108'448 ||
 || verb || Parser is unfinished :) ||  || Too little verbs!? || 342 || 49 || 356 || 24'096 || 26'290 ||
 || adjective || ||  || || 184 || 18 || 2'168 || 23'536 || 26'864 ||
@@ -18,7 +18,12 @@ The number of entries and selected types of lexical semantic information availab
 || synonymy relation id || SELECT `*` FROM relation_type WHERE name="synonymy" || 26 || || || || || ||
 || || synonymy=26; antonymy=19; hyponymy=23; hypernymy=22; holonymy=21; meronymy=24 || || || || || || ||
 || total synonyms || SELECT COUNT(`*`) FROM relation WHERE relation_type_id=26; || 28'718 || || || || || ||
-
+|| total antonyms || || 10'480 || || || || || ||
+|| total hyponyms || || 8'585 || || || || || ||
+|| total hypernyms || || 18'975 || || || || || ||
+|| total holonyms || || 216 || || || || || ||
+|| total meronyms || || 322 || || || || || ||
+|| total relations || || 67'296 || || || || || ||
 
 ||  || SQL ||  || || en || de || ru || uk ||
 
