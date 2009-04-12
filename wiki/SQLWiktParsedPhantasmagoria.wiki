@@ -1,0 +1,20 @@
+#labels Phase-Implementation,SQL,wikt_parsed
+How to extract some information from the database *wikt_parsed* of the parsed Wiktionary.
+
+= wikt_parsed =
+
+|| *Question* || *SQL* || *Result* || *Comment* ||
+|| Enlglish language code || SELECT `*` FROM lang WHERE code="en"; || id = 85 || ||
+||  ||  ||  || ||
+
+||  ||  ||  || ||
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
+
+= References =
+  * Zesch, T.; Mueller, C. & Gurevych, I. [http://elara.tk.informatik.tu-darmstadt.de/publications/2008/lrec08_camera_ready.pdf Extracting Lexical Semantic Knowledge from Wikipedia and Wiktionary.]
