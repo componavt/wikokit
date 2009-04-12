@@ -13,8 +13,8 @@ The number of entries and selected types of lexical semantic information availab
 || English nouns || SELECT COUNT(`*`) FROM lang_pos WHERE lang_id=85 AND pos_id=11; || 935 || || || || || ||
 || nouns || ||  || || 935 || 336 || 58843 || 40607 ||
 || verb || Parser is unfinished :) ||  || Too little verbs!? || 342 || 49 || 356 || 24'096 ||
-|| adjective || ||  || || en || de || ru || uk ||
-|| unknown || ||  || || en || de || ru || uk ||
+|| adjective || ||  || || 184 || 18 || 2'168 || 23'536 ||
+|| unknown || ||  || || 1'321 || 12'648 || 57'573 || 331 ||
 
 ||  || SQL ||  || || en || de || ru || uk ||
 
@@ -26,4 +26,4 @@ Add your content here.  Format your content with:
   * Automatic links to other wiki pages
 
 = References =
-  * Zesch, T.; Mueller, C. & Gurevych, I. [http://elara.tk.informatik.tu-darmstadt.de/publications/2008/lrec08_camera_ready.pdf Extracting Lexical Semantic Knowledge from Wikipedia and Wiktionary.]
+  * Zesch, T.; Mueller, C. & Gurevych, I. [http://elara.tk.informatik.tu-darmstadt.de/publications/2008/lrec08_camera_ready.pdf Extracting Lexical Semantic Knowledge from Wikipedia and Wiktionary.] (see page 2, table 2)
