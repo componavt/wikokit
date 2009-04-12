@@ -3,7 +3,7 @@ How to extract some information from the database *wikt_parsed* of the parsed Wi
 
 = wikt_parsed =
 
-The number of entries and selected types of lexical semantic information available from the Russian edition of Wiktionary as of January 2009 (see ruwikt20090122_parsed_with_translation).
+The number of entries and selected types of lexical semantic information available from the Russian edition of Wiktionary as of January 2009 (see [http://code.google.com/p/wikokit/downloads/detail?name=ruwikt20090122_parsed_with_translation.zip ruwikt20090122_parsed_with_translation]).
 
 || *Question* || *SQL* || *Result* || *Comment* || en || de || ru || uk ||
 || Enlglish language code || SELECT `*` FROM lang WHERE code="en"; || id = 85 || || 85 || 74 || 276 || 352 ||
