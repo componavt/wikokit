@@ -67,6 +67,11 @@ public class TLangPOS {
         return lang;
     }
 
+    /** Gets part of speech from database. */
+    public TPOS getPOS() {
+        return pos;
+    }
+
     /** Inserts record into the table 'page'.<br><br>
      * INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (1,2,3,4,"apple");
      * @param TPage     ID of title of wiki page which will be added
