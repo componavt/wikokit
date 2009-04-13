@@ -1,5 +1,4 @@
-/*
- * PageTableAll.java - parse all pages in the Wiktionary table 'page'.
+/* PageTableAll.java - parses all pages in the Wiktionary table 'page' (source database).
  *
  * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.

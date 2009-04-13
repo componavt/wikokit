@@ -1,7 +1,6 @@
-/*
- * Statistics.java
+/* Statistics.java - Statistics of the source Wiki database.
  *
- * Copyright (c) 2005 Andrew Krizhanovsky /aka at mail.iias.spb.su/
+ * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
@@ -9,12 +8,11 @@ package wikipedia.sql;
 
 import java.sql.*;
 
-/** Presents various statistics related to wikipedia MySQL database */
+/** Presents various statistics related to Wikipedia MySQL database */
 public class Statistics {
     
     public Statistics() {
     }
-    
         
     /** Gets number of elements in the table: SELECT COUNT(*) FROM table_name.
      *
