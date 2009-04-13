@@ -147,6 +147,7 @@ public class RelationTableAll {
         Map<LanguageType, Map<Relation,Integer>> m = RelationTableAll.countRelationsPerLanguage(wikt_parsed_conn);        
         wikt_parsed_conn.Close();
 
+        System.out.println();
         WTStatistics.printRelationsPerLanguage(m);
     }
 
