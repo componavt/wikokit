@@ -159,7 +159,7 @@ public class TRelationType {
         fillDB(connect, _id2relation);
         {
             int db_current_size = wikipedia.sql.Statistics.Count(connect, "relation_type");
-            assert(db_current_size == Relation.size()); // ~ 9 POS
+            assert(db_current_size == Relation.size()); // ~ 9 types of relations
         }
     }
 
