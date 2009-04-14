@@ -88,8 +88,3 @@ WordNet: no relation at all
 == Complex and absent phrase ==
 
 LectureNotes -> absent in WordNet and Wiktionary
-
-= Abstract for joint paper =
-
-There are a lot of algorithms for semantic similarity which are used for ontology matching. Some methods are compared ontologies based on ontologies themselves, others are using additional information extracted from corpus (e.g., statistics), others are using information from dictionary and thesaurus (e.g., WordNet, Wiktionary).  The problem of WordNet is the small coverage (150,000 words), but in the  Russian
-Wiktionary there are about 200,000 words, at the same time, WordNet consists of 150,000 synsets while precise number of semantic relation in Wiktionary is unknown at this moment. So it is an  important question of using Wiktionary for improvement of semantic distance calculation instead of (or additional) data source with WordNet. 
