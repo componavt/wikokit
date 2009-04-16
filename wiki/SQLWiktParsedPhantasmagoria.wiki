@@ -111,7 +111,7 @@ The number of entries and selected types of lexical semantic information availab
 Languages with relations:76
 
 = See also =
-* [Database_statistics]
+  * [Database_statistics]
 
 = References =
   * Zesch, T.; Mueller, C. & Gurevych, I. [http://elara.tk.informatik.tu-darmstadt.de/publications/2008/lrec08_camera_ready.pdf Extracting Lexical Semantic Knowledge from Wikipedia and Wiktionary.] (see page 2, table 2)
