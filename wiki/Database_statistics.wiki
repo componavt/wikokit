@@ -70,4 +70,4 @@ The following sections of articles from Russian Wiktionary have been parsed:
 An additional section "translation" has been parsed.
 
 == See also ==
-* [ComparisonWordNetWikitionary]
+  * [SQLWiktParsedPhantasmagoria]
