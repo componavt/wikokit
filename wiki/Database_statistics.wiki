@@ -68,3 +68,6 @@ The following sections of articles from Russian Wiktionary have been parsed:
 === ruwikt20090122_parsed_with_translation === 
 
 An additional section "translation" has been parsed.
+
+== See also ==
+* [[ComparisonWordNetWikitionary]]
