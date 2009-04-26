@@ -11,9 +11,10 @@ Todo:
 = DB layout changes =
 
 Todo now:
-
+  # translate word from lang source to lang target
 
 In future:
+  # generate statistics about number of translations, like [[SQLWiktParsedPhantasmagoria]]
   # + field `relation.page_id`. It will replace (partly) `wiki_text_id` for one-word-relation, e.g. [[aircraft]], but not "[[aeroplane]] (брит.)" for "airplane" entry
   # rename `lang_pos.etymology_n` to `lang_pos.etymology_id`, create table `etymology`
 
