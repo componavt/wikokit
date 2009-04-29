@@ -18,6 +18,14 @@ public class WTTranslation {
 
     /** Translates the word from source to target language. */
     public static String [] translate (Connect connect,
+            String source_lang,String target_lang,String word) {
+
+
+        return null;
+    }
+
+    /** Translates the word from source to target language. */
+    public static String [] translate (Connect connect,
             LanguageType source_lang,LanguageType target_lang,String word) {
 
         
