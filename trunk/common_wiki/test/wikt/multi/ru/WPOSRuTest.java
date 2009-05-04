@@ -37,7 +37,7 @@ public class WPOSRuTest {
     @Before
     public void setUp() {
         connect_ruwikt = new Connect();
-        connect_ruwikt.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
+        connect_ruwikt.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
     }
 
     @After

@@ -7,6 +7,7 @@ package wikt.multi.ru;
 
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
+import wikipedia.language.LanguageType;
 import wikt.util.LangText;
 
 import org.junit.After;
@@ -35,7 +36,7 @@ public class WLanguageRuTest {
     @Before
     public void setUp() {
         connect_ruwikt = new Connect();
-        connect_ruwikt.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
+        connect_ruwikt.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
     }
 
     @After

@@ -2,6 +2,7 @@
 package wikipedia.sql;
 
 import wikipedia.language.Encodings;
+import wikipedia.language.LanguageType;
 
 import java.sql.Connection; 
 import java.sql.DriverManager; 
@@ -14,16 +15,17 @@ import java.sql.SQLException;
 public class Connect {
     
     /** stores encoding values for database and user interface */
-    public        Encodings  enc;
+    public      Encodings  enc;
     public static PageTableBase  page_table;
-    public        Connection conn;      // non static variable, because can be used two or more connections 
+    public      Connection conn;      // non static variable, because can be used two or more connections 
                                         // (to Russian, English and other wikipedias)
     
     private     String  db_host;
     private     String  db_name;
     private     String  user;
     private     String  pass;
-
+    private     LanguageType lang;  // language of Wiktionary/Wikipedia edition, e.g. Russian in Russian Wiktionary.
+    
     
     // debug constant parameters
     
@@ -89,16 +91,31 @@ public class Connect {
     //public final static String IDF_RU_DB    = "idfruwiki20080220?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
     public final static String IDF_RU_DB    = "idfruwiki20070920?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
 
-    
+    /** Gets language of Wiktionary/Wikipedia edition, main or native language,
+     * e.g. Russian in Russian Wiktionary.
+     */
+    public LanguageType getNativeLanguage() {
+        return lang;
+    }
+
     public Connect() {
         enc        = new Encodings();
         page_table = new PageTableBase();
     }
     
     
-    /** Opens MySQL connection. */
-    public void Open(String _db_host, String _db_name, String _user, String _pass) { 
-        
+    /** Opens MySQL connection. 
+     *
+     * @param _db_host
+     * @param _db_name
+     * @param _user
+     * @param _pass
+     * @param _lang language of Wiktionary/Wikipedia edition, main or native language, e.g. Russian in Russian Wiktionary.
+     */
+    public void Open(String _db_host, String _db_name, String _user, String _pass,
+                    LanguageType _lang) {
+
+        lang    = _lang;
         db_host = _db_host;
         db_name = _db_name;
         user    = _user;

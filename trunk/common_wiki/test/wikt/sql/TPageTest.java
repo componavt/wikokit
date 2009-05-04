@@ -9,6 +9,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import wikipedia.sql.Connect;
+import wikipedia.language.LanguageType;
 
 public class TPageTest {
 
@@ -28,7 +29,7 @@ public class TPageTest {
     @Before
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
-        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
+        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
     }
 
     @After
@@ -114,11 +115,11 @@ public class TPageTest {
         String prefix;
         Connect conn = ruwikt_parsed_conn;
 
-        String word1 = "zzz1";
-        String word2 = "zzz2";
-        String word3 = "zzz3";
+        String word1 = "zzzz1";
+        String word2 = "zzzz2";
+        String word3 = "zzzz3";
         
-        prefix = ruwikt_parsed_conn.enc.EncodeFromJava("zzz");
+        prefix = ruwikt_parsed_conn.enc.EncodeFromJava("zzzz");
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;

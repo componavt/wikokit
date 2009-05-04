@@ -9,6 +9,7 @@ import junit.framework.*;
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.PageNamespace;
+import wikipedia.language.LanguageType;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public class CategoryHyponymsTest extends TestCase {
 
     protected void setUp() throws Exception {
         connect_simple = new Connect();
-        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS);
+        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS, LanguageType.simple);
         
         cat1 = connect_simple.enc.EncodeFromJava("Folklore");
         art1 = connect_simple.enc.EncodeFromJava("Ghost_light");

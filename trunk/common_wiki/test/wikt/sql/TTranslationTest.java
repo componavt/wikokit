@@ -48,7 +48,8 @@ public class TTranslationTest {
     @Before
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
-        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
+        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,
+                                LanguageType.ru);
 
         TLang.recreateTable(ruwikt_parsed_conn);    // once upon a time: create Wiktionary parsed db
         TLang.createFastMaps(ruwikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
@@ -95,7 +96,7 @@ public class TTranslationTest {
         Connect conn = ruwikt_parsed_conn;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
-        page_title = "колокольчик"; // page_title = conn.enc.EncodeFromJava("test_TTranslation");
+        page_title = "колокольчик_test"; // page_title = conn.enc.EncodeFromJava("test_TTranslation");
         LanguageType lang_section = LanguageType.ru; // Russian word
 
         POSText pt = new POSText(POS.noun, kolokolchik_text);

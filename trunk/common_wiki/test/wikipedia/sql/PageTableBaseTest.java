@@ -1,6 +1,7 @@
 package wikipedia.sql;
 
 import wikipedia.language.Encodings;
+import wikipedia.language.LanguageType;
 import junit.framework.*;
 
 import wikipedia.util.*;
@@ -39,13 +40,13 @@ public class PageTableBaseTest extends TestCase {
 
     protected void setUp() throws Exception {
         connect = new Connect();
-        connect.Open(Connect.WP_HOST, Connect.WP_DB, Connect.WP_USER, Connect.WP_PASS);
+        connect.Open(Connect.WP_HOST, Connect.WP_DB, Connect.WP_USER, Connect.WP_PASS,LanguageType.en);
         
         connect_ru = new Connect();
-        connect_ru.Open(Connect.WP_RU_HOST,Connect.WP_RU_DB,Connect.WP_RU_USER,Connect.WP_RU_PASS); //Java:MySQL ISO8859_1:latin1
+        connect_ru.Open(Connect.WP_RU_HOST,Connect.WP_RU_DB,Connect.WP_RU_USER,Connect.WP_RU_PASS,LanguageType.ru); //Java:MySQL ISO8859_1:latin1
         
         connect_simple = new Connect();
-        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS);
+        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,Connect.WP_USER,Connect.WP_PASS,LanguageType.simple);
         
         // simple WP
         cat1 = connect_simple.enc.EncodeFromJava("Folklore");

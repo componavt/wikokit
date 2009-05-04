@@ -172,6 +172,7 @@ public class TTranslation {
     //          for(TMeaning meaning : meaning_all) {
     //              TTranslation.
     //          }
+    // See: WTMeaning.getDefinitionsByPage()
 
     
     /** Gets articles which contain the given translation.

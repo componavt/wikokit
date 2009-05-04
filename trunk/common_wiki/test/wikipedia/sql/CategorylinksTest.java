@@ -7,6 +7,7 @@ package wikipedia.sql;
 
 //import wikipedia.kleinberg.SessionHolder;
 import wikipedia.language.Encodings;
+import wikipedia.language.LanguageType;
 import wikipedia.util.*;
 
 import junit.framework.*;
@@ -27,13 +28,13 @@ public class CategorylinksTest extends TestCase {
 
     protected void setUp() throws Exception {
         connect_simple = new Connect();
-        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS);
+        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS, LanguageType.simple);
         
         connect = new Connect();
-        connect.Open(Connect.WP_HOST, Connect.WP_DB, Connect.WP_USER, Connect.WP_PASS);
+        connect.Open(Connect.WP_HOST, Connect.WP_DB, Connect.WP_USER, Connect.WP_PASS, LanguageType.en);
         
         connect_ru = new Connect();
-        connect_ru.Open(Connect.WP_RU_HOST,Connect.WP_RU_DB,Connect.WP_RU_USER,Connect.WP_RU_PASS);
+        connect_ru.Open(Connect.WP_RU_HOST,Connect.WP_RU_DB,Connect.WP_RU_USER,Connect.WP_RU_PASS, LanguageType.ru);
         
         // simple WP
         cat1 = connect_simple.enc.EncodeFromJava("Folklore");
