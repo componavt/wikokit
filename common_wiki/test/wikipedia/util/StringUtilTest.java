@@ -159,7 +159,29 @@ public class StringUtilTest extends TestCase {
         assertEquals(Arrays.asList(a), result);
         a[0] = "new value";
         assertFalse(result.get(0).equalsIgnoreCase(a[0]));
-        
+    }
+
+    //String[] addORCaseSensitive(String[] a,String[] b)
+     public void testAddORCaseSensitive(){
+        System.out.println("addORCaseSensitive");
+
+        String[] result = StringUtil.addORCaseSensitive(null, null);
+        assertEquals(0, result.length);
+
+        String[] a = {"dinnER", "dinner", "CUP", "halva"};
+        String[] b = {"DInner", "dinner", "CUP", "dressing"};
+        String[] exp_result =  {"dinnER", "dinner", "CUP", "halva", "DInner", "dressing"};
+
+        result = StringUtil.addORCaseSensitive(a, b);
+        assertEquals(exp_result.length, result.length);
+        for(String s : exp_result) {
+            assertTrue(StringUtil.containsIgnoreCase(result, s));
+        }
+
+        // b is null, and changes of source 'a' do not affect the 'result' array
+        result = StringUtil.addORCaseSensitive(a, null);
+        a[0] = "new value";
+        assertFalse(result[0].equalsIgnoreCase(a[0]));
     }
     
     public void testContainsIgnoreCase() {

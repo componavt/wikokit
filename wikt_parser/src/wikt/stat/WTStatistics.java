@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Collection;
 
 /** Statistics of the database of the parsed Wiktionary.
+ *
+ * Todo: the result could be inserted into the Wiktionary statistics page.
  */
 public class WTStatistics {
 
@@ -28,10 +30,9 @@ public class WTStatistics {
         // print header line
         System.out.print("|| Language code || Languge ");
         //Collection<Relation> all_rel = Relation.getAllRelations();
-        Relation[] all_rel = {Relation.synonymy,    Relation.antonymy,
-                            Relation.hypernymy,     Relation.hyponymy,
-                            Relation.holonymy,      Relation.meronymy};
-
+        Relation[] all_rel = {  Relation.synonymy,  Relation.antonymy,
+                                Relation.hypernymy, Relation.hyponymy,
+                                Relation.holonymy,  Relation.meronymy};
 
         for(Relation r : all_rel) {
             System.out.print(" || " + r.toString());
@@ -60,8 +61,36 @@ public class WTStatistics {
 
         System.out.println("\nLanguages with relations:" + m_lang_rel_n.size());
     }
-
     
-        
+    /** Prints statistics about translations in Wiktionary.
+     *
+     * @param m_lang_n map of maps with number of translations into
+     * English, Russian etc. (lang -> count)
+     */
+    public static void printTranslationPerLanguage (Map<LanguageType, Integer> m_lang_n) {
 
+        int total = 0; // total number of translations
+        
+        // print header line
+        System.out.print("|| Language code || Languge || n ||");
+
+        // print values
+        for(LanguageType lang : m_lang_n.keySet()) {
+            /*if(!m_lang_rel_n.containsKey(lang))
+                System.out.println(lang.toString() + " : 0");
+            else {*/
+
+                System.out.print("|| " + lang.getCode() + " || " + lang.getName());
+                
+                int n = m_lang_n.get(lang);
+                System.out.println(" || " + n + " ||");
+
+                total += n;
+            //}
+        }
+
+        System.out.println("\nThere are translations into " + m_lang_n.size() + " languages.");
+        System.out.println("\nTotal translations: " + total);
+    }
+    
 }

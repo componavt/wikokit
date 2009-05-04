@@ -5,6 +5,7 @@
 
 package wikipedia.sql;
 
+import wikipedia.language.LanguageType;
 import junit.framework.*;
 
 public class StatisticsTest extends TestCase {
@@ -19,10 +20,10 @@ public class StatisticsTest extends TestCase {
 
     protected void setUp() throws Exception {
         connect = new Connect();
-        connect.Open("localhost", "enwiki?useUnicode=true&characterEncoding=UTF-8", "javawiki", "");
+        connect.Open("localhost", "enwiki?useUnicode=true&characterEncoding=UTF-8", "javawiki", "",LanguageType.en);
         
         connect_simple = new Connect();
-        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS);
+        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS,LanguageType.simple);
         
         /*links   = new Links();
         

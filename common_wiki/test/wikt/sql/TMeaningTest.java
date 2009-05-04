@@ -30,7 +30,7 @@ public class TMeaningTest {
     @Before
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
-        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
+        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
 
         TLang.recreateTable(ruwikt_parsed_conn);    // once upon a time: create Wiktionary parsed db
         TLang.createFastMaps(ruwikt_parsed_conn);   // once upon a time: use Wiktionary parsed db

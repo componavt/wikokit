@@ -51,8 +51,8 @@ public class Main {
         
         // russian
         wiki_lang = LanguageType.ru;
-        wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
-        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
+        wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
+        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
         
         category_name = "Викисловарь:Избранные статьи";
             // "Викисловарь:Избранные статьи";

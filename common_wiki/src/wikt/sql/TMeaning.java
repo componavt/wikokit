@@ -88,9 +88,9 @@ public class TMeaning {
     }
 
     /** Gets text (without wikification) */
-    /*public TWikiText getWikiText() {
+    public TWikiText getWikiText() {
         return wiki_text;
-    }*/
+    }
 
     
     /** Inserts record into the table 'meaning'.<br><br>

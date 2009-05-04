@@ -8,6 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import wikipedia.sql.Connect;
+import wikipedia.language.LanguageType;
 
 public class TInflectionTest {
 
@@ -27,7 +28,7 @@ public class TInflectionTest {
     @Before
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
-        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
+        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
     }
 
     @After

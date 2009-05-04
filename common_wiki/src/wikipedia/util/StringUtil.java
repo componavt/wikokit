@@ -10,6 +10,7 @@ package wikipedia.util;
 import java.text.StringCharacterIterator;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.HashMap;
 //import java.util.Comparator;
@@ -256,6 +257,30 @@ public class StringUtil {
             }
         }
         return result;
+    }
+
+    /** Adds two arrays to one, i.e. creates the array of unique strings (case sensitive). */
+    public static String[] addORCaseSensitive(String[] a,String[] b) {
+
+        if(a==null && b==null) {
+            return NULL_STRING_ARRAY;
+        }
+
+        List<String> result = new ArrayList<String>();
+
+        if(a==null || 0==a.length) {
+            result.addAll(Arrays.asList(b));
+        } else if(b==null || 0==b.length) {
+            result.addAll(Arrays.asList(a));
+        } else {
+            result.addAll(getUnique(Arrays.asList(a)));
+            
+            for(int i=0; i<b.length; i++) {
+                if(!result.contains(b[i]))
+                    result.add(b[i]);
+            }
+        }
+        return ((String[])result.toArray(NULL_STRING_ARRAY));
     }
     
     /** Returns true if array 'ar' contains string 'wanted', ignore case. */

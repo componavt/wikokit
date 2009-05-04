@@ -42,7 +42,7 @@ public class TTranslationEntryTest {
     @Before
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
-        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS);
+        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
 
         TLang.recreateTable(ruwikt_parsed_conn);    // once upon a time: create Wiktionary parsed db
         TLang.createFastMaps(ruwikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
@@ -216,8 +216,29 @@ public class TTranslationEntryTest {
         TTranslationEntry.delete(conn, trans_entry);
     }
 
-    //TTranslationEntry getByWikiTextAndLanguage (Connect connect,
-      //                                  TWikiText wiki_text, TLang lang)
+    @Test
+    public void testGetByTranslation() {
+        System.out.println("getByTranslation");
+        Connect conn = ruwikt_parsed_conn;
+
+        TTranslation trans = TTranslation.insert(conn, lang_pos, meaning_summary, meaning);
+        assertNotNull(trans);
+
+        TTranslationEntry trans_entry  = TTranslationEntry.insert(conn, trans, lang, wiki_text);
+
+        TLang lang2 = TLang.getTLangFast(TLang.getIDFast(LanguageType.de));
+        assertTrue(null != lang2);
+        TTranslationEntry trans_entry2 = TTranslationEntry.insert(conn, trans, lang2, wiki_text);
+        assertNotNull(trans_entry2);
+
+        TTranslationEntry[] trans_entries = TTranslationEntry.getByTranslation(conn, trans);
+        assertNotNull(trans_entries);
+        assertEquals(2, trans_entries.length);
+
+        TTranslation.delete(conn, trans);
+        TTranslationEntry.delete(conn, trans_entry);
+        TTranslationEntry.delete(conn, trans_entry2);
+    }
 
     @Test
     public void testGetByWikiTextAndLanguage() {

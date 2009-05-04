@@ -1,4 +1,4 @@
-/* RelationTableAll.java - works with all relations in the database of the parsed Wiktionary.
+/* RelationTableAll.java - relations' statistics in the database of the parsed Wiktionary.
  *
  * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
@@ -9,8 +9,6 @@ package wikt.stat;
 import wikt.constant.Relation;
 import wikipedia.language.LanguageType;
 
-//import wikipedia.language.LanguageType;
-import wikipedia.language.Encodings;
 import wikipedia.sql.*;
 import wikt.sql.*;
 
@@ -20,7 +18,7 @@ import java.util.Map;
 import java.util.HashMap;
 
 
-/** Worker with all relations in the database of the parsed Wiktionary.
+/** Relations' statistics in the database of the parsed Wiktionary.
  */
 public class RelationTableAll {
     private static final boolean DEBUG = true;
@@ -138,7 +136,7 @@ public class RelationTableAll {
         Connect wikt_parsed_conn = new Connect();
 
         // russian
-        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
+        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
