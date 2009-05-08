@@ -106,8 +106,8 @@ public class TranslationTableAll {
                     }
 
                     if(DEBUG && 0 == n_cur % 1000) {   // % 100
-                        if(n_cur > 333)
-                            break;
+                        //if(n_cur > 333)
+                          //  break;
                         long    t_cur, t_remain;
 
                         t_cur  = System.currentTimeMillis() - t_start;
