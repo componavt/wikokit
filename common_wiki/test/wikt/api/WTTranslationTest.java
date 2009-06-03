@@ -123,9 +123,17 @@ public class WTTranslationTest {
         LanguageType source_lang, target_lang;
 
         String[] transl_words;
+
+        // Test translation for the word which is absent in Wiktionary
+        source_lang = LanguageType.en;
+        target_lang = LanguageType.ru;
+        transl_words = WTTranslation.translate(connect, source_lang, target_lang, "The word absent in Wiktionary");
+        assertEquals(0, transl_words.length);
+        
+
         source_lang = LanguageType.ru;
         String word = "самолёт";
-        
+
         // Russian to Deutch: [[Flugzeug]] {{n}}
         target_lang = LanguageType.de;
 
