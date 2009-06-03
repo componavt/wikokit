@@ -166,18 +166,18 @@ public class Connect {
             //System.out.println ("Database connection established");
         } 
         catch (ClassNotFoundException e) {
-            System.out.println("Couldn't find class " + classname + ". Message: " + e.getMessage()); 
+            System.err.println("Couldn't find class " + classname + ". Message: " + e.getMessage());
         }
         catch (InstantiationException ie) {  
-          System.out.println("Couldn't instantiate an object of type " + classname + ". Message: " + ie.getMessage()); 
+          System.err.println("Couldn't instantiate an object of type " + classname + ". Message: " + ie.getMessage());
         }  
         catch (IllegalAccessException ia) {  
-          System.out.println("Couldn't access class " + classname + ". Message: " + ia.getMessage()); 
+          System.err.println("Couldn't access class " + classname + ". Message: " + ia.getMessage());
         }
         catch (SQLException ex) {
             System.err.println("Exception: " + ex.getMessage());
-            System.out.println("SQL State: " + ex.getSQLState());
-            System.out.println("Vendor Error: " + ex.getErrorCode()); 
+            System.err.println("SQL State: " + ex.getSQLState());
+            System.err.println("Vendor Error: " + ex.getErrorCode());
             System.err.printf("Input parameters: db_host=%s, db_name=%s, user=%s\n", 
                     db_host, db_name, user);
             System.err.println(

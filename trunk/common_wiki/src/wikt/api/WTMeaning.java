@@ -28,6 +28,8 @@ public class WTMeaning {
                                                 String page_title) {
 
         TPage tpage = TPage.get(connect, page_title);
+        if(null == tpage)
+            return NULL_STRING_ARRAY;
         
         List<String> definitions = new ArrayList<String>();
         
