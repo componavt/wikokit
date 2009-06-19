@@ -35,8 +35,13 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.TextOrigin;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.layout.LayoutInfo;
+
+import javafx.scene.text.Text;
+import javafx.scene.text.TextOrigin;
 
 import javafx.scene.control.TextBox;
+import javafx.scene.control.ListView;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
@@ -55,7 +60,7 @@ import wikt.sql.TPage;
 // ===========
 
 def wikt_parsed_conn = new Connect();
-wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS);
+wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
 // Application Bounds
 //var sceneWidth: Number = bind scene.width;
@@ -134,15 +139,98 @@ class WordListModel {
     }
 }*/
 
-//                               any 10 words, since "" == prefix
-var page_array = TPage.getByPrefix(wikt_parsed_conn, "", 10);
+//                                any (first) 10 words, since "" == prefix
+var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, "", 10);
+
+var page_array_string: String[];
+copyWordsToStringArray();
+
+var page_listItems: SwingListItem[] = SwingListItem{};
+
+
+//page_listItems[0].text = "nelik"; // new SwingListItem{ text: "testishe" };
+//page_listItems[1].text = "razik"; // new SwingListItem{ text: "testishe" };
+
+//insert SwingListItem{ text: "testishe" } into page_listItems;
+//insert SwingListItem{ text: "secondere" } into page_listItems;
+
+
+/** Copies data from TPagе[].text page_array to SwingListItem[]  page_listItems
+*/
+function copyWordsToListItems() {
+    //var list: SwingListItem[] = SwingListItem{};
+
+    delete page_listItems;
+    for (i in [0.. sizeof page_array])
+        insert SwingListItem{ text: page_array[i].getPageTitle() } into page_listItems; // list;
+
+    //page_listItems = list;
+}
+copyWordsToListItems();
+
+/** Copies data from page_array to page_array_string
+*/
+function copyWordsToStringArray() {
+    //var list: SwingListItem[] = SwingListItem{};
+
+    var result : String[];
+    for (p in page_array) {
+        insert p.getPageTitle() into result;
+        //System.out.println("copyWordsToStringArray. p.title = {p.getPageTitle()}");
+    }
+    
+    return result;
+}
+
+
 
 var word_List = SwingList {
     //translateX: 113
     width: 222
+    height: 333
     // selectedIndex: 1
-    items: bind for (p in page_array) SwingListItem{ text: p.getPageTitle() }
+
+    items: bind page_listItems
+        /* for (p in page_array) SwingListItem {
+            text: bind p.getPageTitle();
+            }
+            */
+        /*for (p in page_listItems) {
+            SwingListItem{ text: p.text
+                }
+        }*/
+
+        //for (p in page_array) SwingListItem{ text: p.getPageTitle() }
+    //[ SwingListItem{ text: "слово1" },
+     //        SwingListItem{ text: "word2"  }
+     //        ]
 }
+
+
+
+var word_ListView: ListView = ListView {
+
+    // items: bind page_array_string
+    
+    items: bind for(tpage in page_array) { tpage.getPageTitle() }
+
+    layoutInfo: LayoutInfo { width: 150 }
+
+    /* todo
+            onMouseClicked: function (me: MouseEvent) {
+            if (me.clickCount >= 2 and chooseProject ) {
+                //showTaskDetails(dataHandler.getProjectTask(list.selectedItem.text));
+                task.category = (list.selectedItem).toString();
+                controller.showTaskDetails(task);
+            } else if (me.clickCount >= 2 and list.selectedItem != "" and list.selectedItem != null) {
+                var pc:ProjectModel =
+                    dataHandler.getProjectCategory((list.selectedItem).toString());
+                showProgress(pc.name);
+            }
+
+    */
+}
+
 
 /*var textDeltaBounds: Rectangle = Rectangle {
     x: 2
@@ -151,11 +239,14 @@ var word_List = SwingList {
     height: 5
 };*/
 
+var word_value: String = bind word_Text.rawText;
 var word_Text: TextBox = TextBox {
     blocksMouse: true
-    columns: 7
+    columns: 25
     selectOnFocus: false
-    text: page_array[0].getPageTitle()
+    text: ""
+    //text: bind input_word // page_array[0].getPageTitle()
+    //text: page_array[0].getPageTitle()
     /*clip: Rectangle {
     x: bind textDeltaBounds.x
      y: bind textDeltaBounds.y
@@ -167,15 +258,25 @@ var word_Text: TextBox = TextBox {
     }
     
     onKeyTyped: function(e:KeyEvent) {
-        // System.out.println("e.code = {e.code}, word_Text.text = {word_Text.text}");
-        page_array = TPage.getByPrefix(wikt_parsed_conn, word_Text.text.trim(), 10);
+        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), 20);
+        page_array_string = copyWordsToStringArray();
+
+        //System.out.println("e.code = {e.code}, e.char {e.char}, word_value = {word_value}");
+        //System.out.print("page_array_string: ");
+        //for (p in page_array_string) {
+        //    System.out.print("{p}, ");
+       // }
     }
 }
+//word_value = page_array[0].getPageTitle();
+//var input_word : String = page_array[0].getPageTitle();
+//var input_word bind word_Text.text;
+
 
 var OutputPanel: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
-    content: [word_Text, word_List ]    // word_ComboBox, 
+    content: [word_Text, word_List, word_ListView ]    // word_ComboBox,
     spacing: 10
 };
 
@@ -196,6 +297,7 @@ var scene: Scene = Scene {
         }*/
     }
     fill: Color.TRANSPARENT
+
 }
 
 // Application User Interface
@@ -208,7 +310,6 @@ var stage: Stage = Stage {
     width: 240
     height: 320
     // content: "Wiktionary browser"
-
 }
 
 
