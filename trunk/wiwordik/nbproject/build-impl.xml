@@ -117,13 +117,13 @@ is divided into following sections:
             </not>
         </condition>
         <property name="run.jvmargs" value=""/>
+        <available file="${platform.fxhome}/emulator/bin/emulator${binary.extension}" property="emulator.available"/>
     </target>
     <target name="-post-init">
         <!-- Empty placeholder for easier customization.-->
         <!-- You can override this target in the ../build.xml file.-->
     </target>
     <target depends="-pre-init,-init-private,-init-user,-init-project,-do-init" name="-init-check">
-        <fail unless="src.dir">Must set src.dir</fail>
         <fail unless="build.dir">Must set build.dir</fail>
         <fail unless="dist.dir">Must set dist.dir</fail>
         <fail unless="dist.javadoc.dir">Must set dist.javadoc.dir</fail>
@@ -195,11 +195,15 @@ is divided into following sections:
         </java>
     </target>
     <target depends="jar" description="Start MIDP execution" if="midp.execution.trigger" name="midp-run">
+        <fail message="Current platform does not include mobile device emulator necessary for the execution." unless="emulator.available"/>
         <property location="${dist.dir}/${application.title}.jad" name="jad.file"/>
         <property name="mobile.device" value="DefaultFxPhone1"/>
+        <condition else="-Xdescriptor:" property="emulator.exec.arg" value="-Xjam:install=">
+            <istrue value="${jad.install}"/>
+        </condition>
         <exec executable="${platform.fxhome}/emulator/bin/emulator${binary.extension}" failonerror="true">
             <arg value="${run.jvmargs}"/>
-            <arg value="-Xdescriptor:${jad.file}"/>
+            <arg value="${emulator.exec.arg}${jad.file}"/>
             <arg value="-Xdevice:${mobile.device}"/>
         </exec>
     </target>
@@ -258,10 +262,14 @@ is divided into following sections:
         </java>
     </target>
     <target if="midp.execution.trigger" name="-debug-midp-debuggee">
+        <fail message="Current platform does not include mobile device emulator necessary for the debugging." unless="emulator.available"/>
         <property location="${dist.dir}/${application.title}.jad" name="jad.file"/>
+        <condition else="-Xdescriptor:" property="emulator.exec.arg" value="-Xjam:install=">
+            <istrue value="${jad.install}"/>
+        </condition>
         <exec executable="${platform.fxhome}/emulator/bin/emulator${binary.extension}">
             <arg value="${run.jvmargs}"/>
-            <arg value="-Xdescriptor:${jad.file}"/>
+            <arg value="${emulator.exec.arg}${jad.file}"/>
             <arg value="-Xdebug"/>
             <arg value="-Xrunjdwp:transport=dt_socket,address=${javafx.address},server=n"/>
         </exec>
