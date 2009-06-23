@@ -102,7 +102,14 @@ public class Connect {
         enc        = new Encodings();
         page_table = new PageTableBase();
     }
-    
+
+    public String getDBName() {
+        int question_sign = db_name.indexOf('?');
+        if(-1 == question_sign)
+            return db_name;
+        return db_name.substring(0, question_sign);
+    }
+
     
     /** Opens MySQL connection. 
      *
