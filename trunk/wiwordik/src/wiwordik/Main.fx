@@ -7,6 +7,8 @@
 package wiwordik;
 
 import java.lang.*;
+import wikt.api.*;
+import wikt.constant.*;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -24,6 +26,7 @@ import javafx.animation.Interpolator;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TextBox;
+import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -53,14 +56,23 @@ import javafx.ext.swing.SwingListItem;
 
 import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
-import wikt.sql.TPage;
+import wikt.sql.*;
 
 // ===========
 // Wiktionary parsed database
 // ===========
 
 def wikt_parsed_conn = new Connect();
-wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+
+function init() {
+
+    wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+
+    TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
+    TPOS.createFastMaps(wikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
+}
+init();
+def native_lang : LanguageType = wikt_parsed_conn.getNativeLanguage();
 
 // Application Bounds
 //var sceneWidth: Number = bind scene.width;
@@ -158,13 +170,9 @@ var page_listItems: SwingListItem[] = SwingListItem{};
 /** Copies data from TPagе[].text page_array to SwingListItem[]  page_listItems
 */
 function copyWordsToListItems() {
-    //var list: SwingListItem[] = SwingListItem{};
-
     delete page_listItems;
-    for (i in [0.. sizeof page_array])
-        insert SwingListItem{ text: page_array[i].getPageTitle() } into page_listItems; // list;
-
-    //page_listItems = list;
+    for (i in [0.. sizeof page_array-1])
+        insert SwingListItem{ text: page_array[i].getPageTitle() } into page_listItems;
 }
 copyWordsToListItems();
 
@@ -181,7 +189,6 @@ function copyWordsToStringArray() {
     
     return result;
 }
-
 
 
 var word_List = SwingList {
@@ -206,6 +213,70 @@ var word_List = SwingList {
      //        ]
 }
 
+/** Prints meanings for each language.
+
+    Wiktionary language (e.g. Russian in Russian Wiktionary)
+    should be in first place in enumeration of definitions in different languages.
+*/
+function getDefinitionsForLanguage(
+                page_title : String,            // source word
+                lang_pos_array : TLangPOS[])
+                : String {
+
+    var lang_pos_def_collection : String[];     // collection of definitions for each Lang and POS
+
+    for (i in [0.. sizeof lang_pos_array-1]) {
+        def lang_pos : TLangPOS = lang_pos_array[i];
+        //TMeaning.get(arg0, arg1) //lang_pos.
+        //definition_Text.content = lang_pos_array.size().toString(); // number of lang-POS pairs
+
+        // simple
+        def lang : LanguageType = lang_pos.getLang().getLanguage();
+        def pos : POS = lang_pos.getPOS().getPOS();
+
+        var s : String = "{lang.getName()} ({lang.getCode()}):{pos.toString()}\n";
+
+        def definitions : String[] = WTMeaning.getDefinitionsByPage(wikt_parsed_conn, lang, page_title);
+        for (j in [0.. sizeof definitions-1]) {
+            s = s.concat("  {j+1}. {definitions[j]}\n");
+        }
+
+        if(lang == native_lang) {
+            insert s before lang_pos_def_collection[0];
+        } else {
+            insert s into lang_pos_def_collection;
+        }
+    }
+
+    var res : String;
+    for (i in [0.. sizeof lang_pos_def_collection-1]) {
+        def s : String = lang_pos_def_collection[i];
+        res = res.concat("{i+1}) {s}");
+    }
+    return res;
+}
+
+
+
+/** Word is a selected word in the list, an index is a number of the word.
+*/
+function getDataForSelectedWord(word : String, index:Integer) {
+
+    page_title_Label.text = word; // page_array[index].
+
+    var tpage : TPage = page_array[index];
+    //var page_id : Integer = tpage.getID();
+
+    
+    // complex
+    var lang_pos_array : TLangPOS[] =
+                         TLangPOS.get(wikt_parsed_conn, tpage);
+                         
+                         //TLangPOS.getByID(wikt_parsed_conn, page_id);
+                                        //word_value;
+    // Prints meanings for each language
+    definition_Text.content = getDefinitionsForLanguage(word, lang_pos_array);
+}
 
 
 var word_ListView: ListView = ListView {
@@ -216,19 +287,26 @@ var word_ListView: ListView = ListView {
 
     layoutInfo: LayoutInfo { width: 150 }
 
-    /* todo
-            onMouseClicked: function (me: MouseEvent) {
-            if (me.clickCount >= 2 and chooseProject ) {
-                //showTaskDetails(dataHandler.getProjectTask(list.selectedItem.text));
-                task.category = (list.selectedItem).toString();
-                controller.showTaskDetails(task);
-            } else if (me.clickCount >= 2 and list.selectedItem != "" and list.selectedItem != null) {
-                var pc:ProjectModel =
-                    dataHandler.getProjectCategory((list.selectedItem).toString());
-                showProgress(pc.name);
-            }
+    
+    onMouseClicked: function (me: MouseEvent) {
+        var l = word_ListView;
+        if (me.clickCount >= 2 and l.selectedItem != "" and l.selectedItem != null) {
 
-    */
+            // get data for "page_array[l.selectedIndex]"
+            var word_value = (l.selectedItem).toString();
+            getDataForSelectedWord(word_value, l.selectedIndex);
+        }
+    }
+
+    /*if (me.clickCount >= 2 and chooseProject ) {
+        //showTaskDetails(dataHandler.getProjectTask(list.selectedItem.text));
+        task.category = (list.selectedItem).toString();
+        controller.showTaskDetails(task);
+    } else if (me.clickCount >= 2 and list.selectedItem != "" and list.selectedItem != null) {
+        var pc:ProjectModel =
+            dataHandler.getProjectCategory((list.selectedItem).toString());
+        showProgress(pc.name);
+    }*/
 }
 
 
@@ -253,8 +331,14 @@ var word_Text: TextBox = TextBox {
      width: bind (word_Text.width - textDeltaBounds.width)
      height: bind (word_Text.height - textDeltaBounds.height)
      }*/
-    action: function() {
-//        searchCoffeeShops(word_Text.text.trim());
+
+    action: function() { // Enter
+
+System.out.print("Action in word_Text: TextBox");
+
+
+        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), 20);
+        page_array_string = copyWordsToStringArray();
     }
     
     onKeyTyped: function(e:KeyEvent) {
@@ -273,17 +357,46 @@ var word_Text: TextBox = TextBox {
 //var input_word bind word_Text.text;
 
 
-var OutputPanel: VBox = VBox {
+var page_title_Label: Label = Label {
+            //x: 10  y: 30
+            font: Font { size: 16 }
+            //content: "слово"
+            text: "page_title"
+        }
+
+var definition_Text: Text = Text {
+            //x: 10  y: 30
+            //font: Font { size: 24 }
+            //fill: Color.BLUE
+            content: "meaning"
+        }
+
+
+var outputPanel_VBox1: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
     content: [word_Text, word_List, word_ListView ]    // word_ComboBox,
     spacing: 10
 };
 
+var result_VBox2: VBox = VBox {
+    //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
+    //translateY: bind (sceneHeight - 52)
+    content: [page_title_Label, definition_Text]
+    spacing: 10
+};
+
+var horizontal_Panel: HBox = HBox {
+    //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
+    //translateY: bind (sceneHeight - 52)
+    content: [outputPanel_VBox1, result_VBox2]
+    spacing: 10
+};
+
 var scene: Scene = Scene {
     content: Group {
         content: bind [
-            OutputPanel // ,
+            horizontal_Panel // ,
             //word_ComboBox //,
             //word_Text
         // bgImage, titleBar, titleText, divider, shopDetailsGroup, backButton, nextButton, closeButton,
@@ -302,13 +415,13 @@ var scene: Scene = Scene {
 
 // Application User Interface
 var stage: Stage = Stage {
-    title: "Wiwordik 0.01"
+    title: "Wiwordik 0.01 ({wikt_parsed_conn.getDBName()})"
     //    resizable: false
     visible: true
     //    style: StageStyle.TRANSPARENT
     scene: bind scene
-    width: 240
-    height: 320
+    width: 640
+    height: 480
     // content: "Wiktionary browser"
 }
 
