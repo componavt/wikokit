@@ -159,13 +159,13 @@ copyWordsToStringArray();
 
 var page_listItems: SwingListItem[] = SwingListItem{};
 
+var lang_pos_array : TLangPOS[];
+
+/** Current TPage corresponds to selected word. */
+var tpage : TPage;
 
 //page_listItems[0].text = "nelik"; // new SwingListItem{ text: "testishe" };
-//page_listItems[1].text = "razik"; // new SwingListItem{ text: "testishe" };
-
 //insert SwingListItem{ text: "testishe" } into page_listItems;
-//insert SwingListItem{ text: "secondere" } into page_listItems;
-
 
 /** Copies data from TPagе[].text page_array to SwingListItem[]  page_listItems
 */
@@ -220,15 +220,15 @@ var word_List = SwingList {
 */
 function getDefinitionsForLanguage(
                 page_title : String,            // source word
-                lang_pos_array : TLangPOS[])
+                _lang_pos_array : TLangPOS[])
                 : String {
 
     var lang_pos_def_collection : String[];     // collection of definitions for each Lang and POS
 
-    for (i in [0.. sizeof lang_pos_array-1]) {
-        def lang_pos : TLangPOS = lang_pos_array[i];
+    for (i in [0.. sizeof _lang_pos_array-1]) {
+        def lang_pos : TLangPOS = _lang_pos_array[i];
         //TMeaning.get(arg0, arg1) //lang_pos.
-        //definition_Text.content = lang_pos_array.size().toString(); // number of lang-POS pairs
+        //definition_Text.content = _lang_pos_array.size().toString(); // number of lang-POS pairs
 
         // simple
         def lang : LanguageType = lang_pos.getLang().getLanguage();
@@ -260,17 +260,17 @@ function getDefinitionsForLanguage(
 
 /** Word is a selected word in the list, an index is a number of the word.
 */
-function getDataForSelectedWord(word : String, index:Integer) {
+function getDataForSelectedWordByTPage (_tpage : TPage) {
+    //word : String, index:Integer) {
 
-    page_title_Label.text = word; // page_array[index].
+    def word : String = _tpage.getPageTitle();
+    page_title_Label.text = word;
 
-    var tpage : TPage = page_array[index];
+    //var _tpage : TPage = page_array[index];
     //var page_id : Integer = tpage.getID();
-
     
     // complex
-    var lang_pos_array : TLangPOS[] =
-                         TLangPOS.get(wikt_parsed_conn, tpage);
+    lang_pos_array = TLangPOS.get(wikt_parsed_conn, _tpage);     // var lang_pos_array : TLangPOS[]
                          
                          //TLangPOS.getByID(wikt_parsed_conn, page_id);
                                         //word_value;
@@ -278,12 +278,25 @@ function getDataForSelectedWord(word : String, index:Integer) {
     definition_Text.content = getDefinitionsForLanguage(word, lang_pos_array);
 }
 
+/** Word is given by user, language is uknown, so prints all languages.
+*/
+function getDataByWord(word : String) {
+
+    page_title_Label.text = word; // page_array[index].
+
+    tpage = TPage.get(wikt_parsed_conn, word);      // def tpage : TPage
+
+    lang_pos_array = TLangPOS.get (wikt_parsed_conn, tpage);
+
+    // Prints meanings for each language
+    definition_Text.content = getDefinitionsForLanguage(word, lang_pos_array);
+}
 
 var word_ListView: ListView = ListView {
 
     // items: bind page_array_string
     
-    items: bind for(tpage in page_array) { tpage.getPageTitle() }
+    items: bind for(_tpage in page_array) { _tpage.getPageTitle() }
 
     layoutInfo: LayoutInfo { width: 150 }
 
@@ -291,10 +304,12 @@ var word_ListView: ListView = ListView {
     onMouseClicked: function (me: MouseEvent) {
         var l = word_ListView;
         if (me.clickCount >= 2 and l.selectedItem != "" and l.selectedItem != null) {
-
+            
             // get data for "page_array[l.selectedIndex]"
-            var word_value = (l.selectedItem).toString();
-            getDataForSelectedWord(word_value, l.selectedIndex);
+            getDataForSelectedWordByTPage( page_array[ l.selectedIndex ]);
+            
+            //var word_value = (l.selectedItem).toString();
+            //getDataForSelectedWord(word_value, l.selectedIndex);
         }
     }
 
@@ -334,11 +349,12 @@ var word_Text: TextBox = TextBox {
 
     action: function() { // Enter
 
-System.out.print("Action in word_Text: TextBox");
+System.out.print("Action in word_Text: TextBox, word_value.trim() = {word_value.trim()}");
 
+        getDataByWord(word_value.trim());
 
-        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), 20);
-        page_array_string = copyWordsToStringArray();
+        // get data for "page_array[l.selectedIndex]"
+        //getDataForSelectedWord(word_value.trim());
     }
     
     onKeyTyped: function(e:KeyEvent) {
