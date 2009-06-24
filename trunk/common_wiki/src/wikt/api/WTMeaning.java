@@ -53,6 +53,34 @@ public class WTMeaning {
         return NULL_STRING_ARRAY;
     }
 
+    /** Gets list of definitions by page_title (for all available languages). */
+    public static String[] getDefinitionsByPage(Connect connect,
+                                                String page_title) {
+
+        TPage tpage = TPage.get(connect, page_title);
+        if(null == tpage)
+            return NULL_STRING_ARRAY;
+
+        List<String> definitions = new ArrayList<String>();
+
+        TLangPOS[] lang_pos_all = TLangPOS.get(connect, tpage);
+        for(TLangPOS lang_pos : lang_pos_all) {
+            TMeaning[] mm = TMeaning.get(connect, lang_pos);
+            for(TMeaning m : mm) {
+                TWikiText twiki_text = m.getWikiText();
+                if(null != twiki_text) {
+                    definitions.add(twiki_text.getText());
+                }
+            }
+        }
+
+        if(definitions.size() > 0)
+            return (String[])definitions.toArray(NULL_STRING_ARRAY);
+
+        definitions = null;
+        return NULL_STRING_ARRAY;
+    }
+
 
 
 
