@@ -7,8 +7,13 @@
 package wiwordik;
 
 import java.lang.*;
+
 import wikt.api.*;
+import wikt.sql.*;
 import wikt.constant.*;
+
+import wikipedia.sql.Connect;
+import wikipedia.language.LanguageType;
 
 import javafx.stage.Stage;
 import javafx.scene.Scene;
@@ -54,9 +59,6 @@ import javafx.ext.swing.SwingComboBoxItem;
 import javafx.ext.swing.SwingList;
 import javafx.ext.swing.SwingListItem;
 
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
-import wikt.sql.*;
 
 // ===========
 // Wiktionary parsed database
@@ -164,6 +166,9 @@ var lang_pos_array : TLangPOS[];
 /** Current TPage corresponds to selected word. */
 var tpage : TPage;
 
+/** Word's definition, semantic relations, and quotations. */
+var definition_text_value : String = "word's definition, semantic relations, and quotations";
+
 //page_listItems[0].text = "nelik"; // new SwingListItem{ text: "testishe" };
 //insert SwingListItem{ text: "testishe" } into page_listItems;
 
@@ -191,27 +196,14 @@ function copyWordsToStringArray() {
 }
 
 
-var word_List = SwingList {
+/*var word_List = SwingList {
     //translateX: 113
     width: 222
     height: 333
     // selectedIndex: 1
 
     items: bind page_listItems
-        /* for (p in page_array) SwingListItem {
-            text: bind p.getPageTitle();
-            }
-            */
-        /*for (p in page_listItems) {
-            SwingListItem{ text: p.text
-                }
-        }*/
-
-        //for (p in page_array) SwingListItem{ text: p.getPageTitle() }
-    //[ SwingListItem{ text: "слово1" },
-     //        SwingListItem{ text: "word2"  }
-     //        ]
-}
+}*/
 
 /** Prints meanings for each language.
 
@@ -236,9 +228,17 @@ function getDefinitionsForLanguage(
 
         var s : String = "{lang.getName()} ({lang.getCode()}):{pos.toString()}\n";
 
-        def definitions : String[] = WTMeaning.getDefinitionsByPage(wikt_parsed_conn, lang, page_title);
+        def definitions : String[] = WTMeaning.getDefinitionsByPageLang(wikt_parsed_conn, lang, page_title);
+
+        def synonyms : String[] = WTRelation.getForEachMeaningByPageLang(wikt_parsed_conn, lang, page_title, Relation.synonymy);
+        // ["", "synonyms 2"];
+
         for (j in [0.. sizeof definitions-1]) {
             s = s.concat("  {j+1}. {definitions[j]}\n");
+
+            if(sizeof synonyms > j and synonyms[j].length() > 0)
+                s = s.concat("    Syn.: {synonyms[j]}\n");
+                // todo: Text {fill: Color.BLUE; content: synonyms[j]}
         }
 
         if(lang == native_lang) {
@@ -249,9 +249,13 @@ function getDefinitionsForLanguage(
     }
 
     var res : String;
-    for (i in [0.. sizeof lang_pos_def_collection-1]) {
-        def s : String = lang_pos_def_collection[i];
-        res = res.concat("{i+1}) {s}");
+    if (1 == sizeof lang_pos_def_collection) { // let's skip numbering "1)" if there is only one lang
+        res = lang_pos_def_collection[0];
+    } else {
+        for (i in [0.. sizeof lang_pos_def_collection-1]) {
+            def s : String = lang_pos_def_collection[i];
+            res = "{res}{i+1}) {s}\n \n"; // "\n \n" because the bug in JavaFX http://javafx-jira.kenai.com/browse/JFXC-3299
+        }
     }
     return res;
 }
@@ -275,21 +279,32 @@ function getDataForSelectedWordByTPage (_tpage : TPage) {
                          //TLangPOS.getByID(wikt_parsed_conn, page_id);
                                         //word_value;
     // Prints meanings for each language
-    definition_Text.content = getDefinitionsForLanguage(word, lang_pos_array);
+    definition_text_value = getDefinitionsForLanguage(word, lang_pos_array);
 }
 
 /** Word is given by user, language is uknown, so prints all languages.
-*/
+ *
+ * If a word (printed by user) is absent in dictionary, then print first
+ * word from the list of nearest words.
+**/
 function getDataByWord(word : String) {
 
-    page_title_Label.text = word; // page_array[index].
+    page_title_Label.text = word;
 
-    tpage = TPage.get(wikt_parsed_conn, word);      // def tpage : TPage
+    tpage = TPage.get(wikt_parsed_conn, word);
 
-    lang_pos_array = TLangPOS.get (wikt_parsed_conn, tpage);
+    if(null == tpage and sizeof page_array > 0) // If a word is absent in dictionary...
+        tpage = page_array[0];
 
     // Prints meanings for each language
-    definition_Text.content = getDefinitionsForLanguage(word, lang_pos_array);
+    if(null != tpage) {
+        lang_pos_array = TLangPOS.get (wikt_parsed_conn, tpage);
+        definition_text_value = getDefinitionsForLanguage(tpage.getPageTitle(), lang_pos_array);
+    } else {
+        definition_text_value = "";
+    }
+
+    // System.out.println("\n\n. getDataByWord(). definition_Text.content = {definition_text_value}.");
 }
 
 var word_ListView: ListView = ListView {
@@ -336,7 +351,8 @@ var word_value: String = bind word_Text.rawText;
 var word_Text: TextBox = TextBox {
     blocksMouse: true
     columns: 25
-    selectOnFocus: false
+    //wrappingWidth: 200
+    selectOnFocus: true
     text: ""
     //text: bind input_word // page_array[0].getPageTitle()
     //text: page_array[0].getPageTitle()
@@ -347,14 +363,8 @@ var word_Text: TextBox = TextBox {
      height: bind (word_Text.height - textDeltaBounds.height)
      }*/
 
-    action: function() { // Enter
-
-System.out.print("Action in word_Text: TextBox, word_value.trim() = {word_value.trim()}");
-
+    action: function() { // "Enter"
         getDataByWord(word_value.trim());
-
-        // get data for "page_array[l.selectedIndex]"
-        //getDataForSelectedWord(word_value.trim());
     }
     
     onKeyTyped: function(e:KeyEvent) {
@@ -380,18 +390,38 @@ var page_title_Label: Label = Label {
             text: "page_title"
         }
 
+//var definition_Text: TextBox = TextBox {
 var definition_Text: Text = Text {
             //x: 10  y: 30
             //font: Font { size: 24 }
             //fill: Color.BLUE
-            content: "meaning"
+
+            content: bind definition_text_value // "line 1\n\nline2\n \nline3"
+            wrappingWidth: 380
+            
+            //text: bind definition_text_value
+            //columns: 44
+            //height: 55
+            //style: "border-radius:20;"
+
+            font: Font {
+                name: "sansserif"
+                size: 12
+            }
+
+            /*clip: Rectangle {
+            //x: bind textDeltaBounds.x
+             //y: bind textDeltaBounds.y
+             width: 200 //width: bind (word_Text.width - textDeltaBounds.width)
+             height: 200 //height: bind (word_Text.height - textDeltaBounds.height)
+             }*/
         }
 
 
 var outputPanel_VBox1: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
-    content: [word_Text, word_List, word_ListView ]    // word_ComboBox,
+    content: [word_Text, word_ListView ]    // word_List, word_ComboBox,
     spacing: 10
 };
 
