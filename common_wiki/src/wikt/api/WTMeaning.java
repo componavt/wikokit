@@ -24,7 +24,7 @@ public class WTMeaning {
 
 
     /** Gets list of definitions by page_title and language. */
-    public static String[] getDefinitionsByPage(Connect connect,LanguageType lang,
+    public static String[] getDefinitionsByPageLang(Connect connect,LanguageType lang,
                                                 String page_title) {
 
         TPage tpage = TPage.get(connect, page_title);
@@ -54,7 +54,7 @@ public class WTMeaning {
     }
 
     /** Gets list of definitions by page_title (for all available languages). */
-    public static String[] getDefinitionsByPage(Connect connect,
+   /* public static String[] getDefinitionsByPage(Connect connect,
                                                 String page_title) {
 
         TPage tpage = TPage.get(connect, page_title);
@@ -79,7 +79,7 @@ public class WTMeaning {
 
         definitions = null;
         return NULL_STRING_ARRAY;
-    }
+    }*/
 
 
 
