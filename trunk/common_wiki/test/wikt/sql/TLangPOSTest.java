@@ -121,4 +121,29 @@ public class TLangPOSTest {
 
         TLangPOS.delete(conn, page);
     }
+
+    // SELECt lang_id FROM lang_pos WHERE page_id=674672 GROUP by lang_id;
+    //public static TLang[] getLanguages (Connect connect,TPage page) {
+
+    @Test   //TLang[] getLanguages (Connect connect,TPage page)
+    public void testGetLanguages() {
+        System.out.println("getLanguages_ru");
+        Connect conn = ruwikt_parsed_conn;
+
+        int etymology_n = 0;
+        String lemma = "";
+
+        TLangPOS lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+        assertTrue(null != lang_pos);
+
+        TPage tpage = lang_pos.getPage();
+        assertTrue(null != tpage);
+
+        // test
+        TLang[] languages = TLangPOS.getLanguages(conn, tpage);
+        assertTrue(null != languages);
+        assertEquals(1, languages.length);
+
+        TLangPOS.delete(conn, page);
+    }
 }

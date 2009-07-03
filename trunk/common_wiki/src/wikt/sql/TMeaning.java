@@ -77,6 +77,12 @@ public class TMeaning {
         return id;
     }
 
+    /** Gets meaning (sense) number from database */
+    public int getMeaningNumber() {
+        return meaning_n;
+    }
+
+
     /** Gets language and POS ID (for this meaning) from the database' table 'lang_pos'. */
     public TLangPOS getLangPOS(Connect connect) {
 
