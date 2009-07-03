@@ -6,9 +6,10 @@
 
 package wiwordik;
 
+import wiwordik.word_card.WC;
+
 import java.lang.*;
 
-import wikt.api.*;
 import wikt.sql.*;
 import wikt.constant.*;
 
@@ -59,12 +60,17 @@ import javafx.ext.swing.SwingComboBoxItem;
 import javafx.ext.swing.SwingList;
 import javafx.ext.swing.SwingListItem;
 
+def DEBUG : Boolean = false;
+
+// Todo. Errors in parser:
+// дуб (илл -> syn)
+// тупица, река, самолёт (-) i.e. page.is_in_wiktionary = false
 
 // ===========
 // Wiktionary parsed database
 // ===========
 
-def wikt_parsed_conn = new Connect();
+var wikt_parsed_conn : Connect = new Connect();
 
 function init() {
 
@@ -72,47 +78,13 @@ function init() {
 
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
     TPOS.createFastMaps(wikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
+    TRelationType.createFastMaps(wikt_parsed_conn);
 }
 init();
-def native_lang : LanguageType = wikt_parsed_conn.getNativeLanguage();
 
 // Application Bounds
 //var sceneWidth: Number = bind scene.width;
 //var sceneHeight: Number = bind scene.height;
-
-// ===========
-// Statistics
-// ===========
-/*
-var OutputPanel: HBox = HBox {
-    //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
-    //translateY: bind (sceneHeight - 52)
-    content: [OutputLabel, OutputGroup ] //, clearButton]
-    spacing: 10
-};
-
-var OutputLabel = Text {
-    y: 8
-    font: Font { 
-        name: "sansserif",
-        size: 12
-    }
-    fill: Color.BLACK
-    content: "Back door:"
-    textOrigin: TextOrigin.TOP
-}
-var OutputGroup = Group {
-    content: [ OutputText ] //, OutputTextBorder ]
-
-};
-var OutputText: TextBox = TextBox {
-    blocksMouse: true
-    columns: 20
-    selectOnFocus: false
-    text: "Messages"
-}*/
-
-
 
 // ===========
 //
@@ -161,13 +133,8 @@ copyWordsToStringArray();
 
 var page_listItems: SwingListItem[] = SwingListItem{};
 
-var lang_pos_array : TLangPOS[];
-
-/** Current TPage corresponds to selected word. */
-var tpage : TPage;
-
-/** Word's definition, semantic relations, and quotations. */
-var definition_text_value : String = "word's definition, semantic relations, and quotations";
+/** Current word card: contains TPage, corresponds to selected word. */
+var wc; // = WC {}
 
 //page_listItems[0].text = "nelik"; // new SwingListItem{ text: "testishe" };
 //insert SwingListItem{ text: "testishe" } into page_listItems;
@@ -205,108 +172,6 @@ function copyWordsToStringArray() {
     items: bind page_listItems
 }*/
 
-/** Prints meanings for each language.
-
-    Wiktionary language (e.g. Russian in Russian Wiktionary)
-    should be in first place in enumeration of definitions in different languages.
-*/
-function getDefinitionsForLanguage(
-                page_title : String,            // source word
-                _lang_pos_array : TLangPOS[])
-                : String {
-
-    var lang_pos_def_collection : String[];     // collection of definitions for each Lang and POS
-
-    for (i in [0.. sizeof _lang_pos_array-1]) {
-        def lang_pos : TLangPOS = _lang_pos_array[i];
-        //TMeaning.get(arg0, arg1) //lang_pos.
-        //definition_Text.content = _lang_pos_array.size().toString(); // number of lang-POS pairs
-
-        // simple
-        def lang : LanguageType = lang_pos.getLang().getLanguage();
-        def pos : POS = lang_pos.getPOS().getPOS();
-
-        var s : String = "{lang.getName()} ({lang.getCode()}):{pos.toString()}\n";
-
-        def definitions : String[] = WTMeaning.getDefinitionsByPageLang(wikt_parsed_conn, lang, page_title);
-
-        def synonyms : String[] = WTRelation.getForEachMeaningByPageLang(wikt_parsed_conn, lang, page_title, Relation.synonymy);
-        // ["", "synonyms 2"];
-
-        for (j in [0.. sizeof definitions-1]) {
-            s = s.concat("  {j+1}. {definitions[j]}\n");
-
-            if(sizeof synonyms > j and synonyms[j].length() > 0)
-                s = s.concat("    Syn.: {synonyms[j]}\n");
-                // todo: Text {fill: Color.BLUE; content: synonyms[j]}
-        }
-
-        if(lang == native_lang) {
-            insert s before lang_pos_def_collection[0];
-        } else {
-            insert s into lang_pos_def_collection;
-        }
-    }
-
-    var res : String;
-    if (1 == sizeof lang_pos_def_collection) { // let's skip numbering "1)" if there is only one lang
-        res = lang_pos_def_collection[0];
-    } else {
-        for (i in [0.. sizeof lang_pos_def_collection-1]) {
-            def s : String = lang_pos_def_collection[i];
-            res = "{res}{i+1}) {s}\n \n"; // "\n \n" because the bug in JavaFX http://javafx-jira.kenai.com/browse/JFXC-3299
-        }
-    }
-    return res;
-}
-
-
-
-/** Word is a selected word in the list, an index is a number of the word.
-*/
-function getDataForSelectedWordByTPage (_tpage : TPage) {
-    //word : String, index:Integer) {
-
-    def word : String = _tpage.getPageTitle();
-    page_title_Label.text = word;
-
-    //var _tpage : TPage = page_array[index];
-    //var page_id : Integer = tpage.getID();
-    
-    // complex
-    lang_pos_array = TLangPOS.get(wikt_parsed_conn, _tpage);     // var lang_pos_array : TLangPOS[]
-                         
-                         //TLangPOS.getByID(wikt_parsed_conn, page_id);
-                                        //word_value;
-    // Prints meanings for each language
-    definition_text_value = getDefinitionsForLanguage(word, lang_pos_array);
-}
-
-/** Word is given by user, language is uknown, so prints all languages.
- *
- * If a word (printed by user) is absent in dictionary, then print first
- * word from the list of nearest words.
-**/
-function getDataByWord(word : String) {
-
-    page_title_Label.text = word;
-
-    tpage = TPage.get(wikt_parsed_conn, word);
-
-    if(null == tpage and sizeof page_array > 0) // If a word is absent in dictionary...
-        tpage = page_array[0];
-
-    // Prints meanings for each language
-    if(null != tpage) {
-        lang_pos_array = TLangPOS.get (wikt_parsed_conn, tpage);
-        definition_text_value = getDefinitionsForLanguage(tpage.getPageTitle(), lang_pos_array);
-    } else {
-        definition_text_value = "";
-    }
-
-    // System.out.println("\n\n. getDataByWord(). definition_Text.content = {definition_text_value}.");
-}
-
 var word_ListView: ListView = ListView {
 
     // items: bind page_array_string
@@ -314,38 +179,23 @@ var word_ListView: ListView = ListView {
     items: bind for(_tpage in page_array) { _tpage.getPageTitle() }
 
     layoutInfo: LayoutInfo { width: 150 }
-
     
     onMouseClicked: function (me: MouseEvent) {
         var l = word_ListView;
         if (me.clickCount >= 2 and l.selectedItem != "" and l.selectedItem != null) {
             
+            var wc = WC {}
+
             // get data for "page_array[l.selectedIndex]"
-            getDataForSelectedWordByTPage( page_array[ l.selectedIndex ]);
+            wc.getDataForSelectedWordByTPage(wikt_parsed_conn, page_array[ l.selectedIndex ]);
+
+            wc.createCXLangList(wikt_parsed_conn, page_array[ l.selectedIndex ]);
             
             //var word_value = (l.selectedItem).toString();
             //getDataForSelectedWord(word_value, l.selectedIndex);
         }
     }
-
-    /*if (me.clickCount >= 2 and chooseProject ) {
-        //showTaskDetails(dataHandler.getProjectTask(list.selectedItem.text));
-        task.category = (list.selectedItem).toString();
-        controller.showTaskDetails(task);
-    } else if (me.clickCount >= 2 and list.selectedItem != "" and list.selectedItem != null) {
-        var pc:ProjectModel =
-            dataHandler.getProjectCategory((list.selectedItem).toString());
-        showProgress(pc.name);
-    }*/
 }
-
-
-/*var textDeltaBounds: Rectangle = Rectangle {
-    x: 2
-    y: 2
-    width: 14
-    height: 5
-};*/
 
 var word_value: String = bind word_Text.rawText;
 var word_Text: TextBox = TextBox {
@@ -364,7 +214,10 @@ var word_Text: TextBox = TextBox {
      }*/
 
     action: function() { // "Enter"
-        getDataByWord(word_value.trim());
+        var wc = WC {}
+        wc.getDataByWord(wikt_parsed_conn, word_value.trim(), page_array);
+
+        wc.createCXLangListByWord(wikt_parsed_conn, word_value.trim(), page_array);
     }
     
     onKeyTyped: function(e:KeyEvent) {
@@ -383,52 +236,23 @@ var word_Text: TextBox = TextBox {
 //var input_word bind word_Text.text;
 
 
-var page_title_Label: Label = Label {
+var wiki_page_Label: Label = Label {
             //x: 10  y: 30
             font: Font { size: 16 }
-            //content: "слово"
-            text: "page_title"
-        }
-
-//var definition_Text: TextBox = TextBox {
-var definition_Text: Text = Text {
-            //x: 10  y: 30
-            //font: Font { size: 24 }
-            //fill: Color.BLUE
-
-            content: bind definition_text_value // "line 1\n\nline2\n \nline3"
-            wrappingWidth: 380
-            
-            //text: bind definition_text_value
-            //columns: 44
-            //height: 55
-            //style: "border-radius:20;"
-
-            font: Font {
-                name: "sansserif"
-                size: 12
-            }
-
-            /*clip: Rectangle {
-            //x: bind textDeltaBounds.x
-             //y: bind textDeltaBounds.y
-             width: 200 //width: bind (word_Text.width - textDeltaBounds.width)
-             height: 200 //height: bind (word_Text.height - textDeltaBounds.height)
-             }*/
-        }
-
+            text: "Wiktionary page"
+}
 
 var outputPanel_VBox1: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
-    content: [word_Text, word_ListView ]    // word_List, word_ComboBox,
+    content: [word_Text, word_ListView]
     spacing: 10
 };
 
 var result_VBox2: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
-    content: [page_title_Label, definition_Text]
+    content: [wiki_page_Label] //, wc.card]
     spacing: 10
 };
 
@@ -456,7 +280,6 @@ var scene: Scene = Scene {
         }*/
     }
     fill: Color.TRANSPARENT
-
 }
 
 // Application User Interface

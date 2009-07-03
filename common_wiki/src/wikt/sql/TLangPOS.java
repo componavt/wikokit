@@ -42,6 +42,7 @@ public class TLangPOS {
     private String lemma;
     
     private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];
+    private final static TLang   [] NULL_TLANG_ARRAY    = new TLang[0];
 
     public TLangPOS(int _id,TPage _page,TLang _lang,TPOS _pos,int _etymology_id,String _lemma) {
         id              = _id;
@@ -185,6 +186,55 @@ public class TLangPOS {
             return NULL_TLANGPOS_ARRAY;
         return ((TLangPOS[])list_lp.toArray(NULL_TLANGPOS_ARRAY));
     }
+
+
+    /** Selects list of languages for the given page.
+     *
+     * SELECt lang_id FROM lang_pos WHERE page_id=674672 GROUP by lang_id;
+     *
+     * @return empty array if data is absent
+     */
+    public static TLang[] getLanguages (Connect connect,TPage page) {
+        
+        if(null == page) {
+            System.err.println("Error (wikt_parsed TLangPOS.get()):: null argument: page.");
+            return null;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        List<TLang> list_lang = null;
+
+        try {
+            s = connect.conn.createStatement ();
+                         // SELECt lang_id FROM lang_pos WHERE page_id=674672 GROUP by lang_id
+            str_sql.append("SELECt lang_id FROM lang_pos WHERE page_id=");
+            str_sql.append(page.getID());
+            str_sql.append(" GROUP by lang_id");
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            while (rs.next ())
+            {
+                TLang  l = TLang.getTLangFast(   rs.getInt("lang_id"));
+                if(null != l) {
+                    if(null == list_lang)
+                               list_lang = new ArrayList<TLang>();
+                    list_lang.add(l);
+                }
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TLangPOS.getLanguages()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+
+        if(null == list_lang)
+            return NULL_TLANG_ARRAY;
+        return ((TLang[])list_lang.toArray(NULL_TLANG_ARRAY));
+    }
+
 
     /** Selects row from the table 'lang_pos' by ID.<br><br>
      * SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=8;

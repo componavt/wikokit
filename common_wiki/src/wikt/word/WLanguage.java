@@ -18,7 +18,7 @@ import wikt.multi.ru.WLanguageRu;
  *
  * Exception: ==Translingual==
  * 
- * See http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
+ * @see http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
  * and http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей
  */
 public class WLanguage {

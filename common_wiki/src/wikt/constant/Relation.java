@@ -51,13 +51,23 @@ public class Relation {
         return name2relation.values();
     }
 
+    /** Gets all relations (as Array[]).
+     * Rem: We are waiting a marvellous day when JavaFX will support Collection<>.
+     *      Then this function will be deleted.
+     */
+    public static Relation[] getAllRelationsOrderedArray() {
+        
+        return RELATION_ORDERED_ARRAY;
+        //return (Relation[])name2relation.values().toArray(NULL_RELATION_ARRAY);
+    }
+
     /** Gets all names of semantic relations. */
     public static Set<String> getAllRelationNames() {
         return name2relation.keySet();
     }
-    
+
     //public static final Relation unknown          = new Relation("unknown");        /** The relation is unknown :( */
-    
+
     public static final Relation synonymy           = new Relation("synonymy");
     public static final Relation antonymy           = new Relation("antonymy");
     public static final Relation hypernymy          = new Relation("hypernymy");
@@ -67,4 +77,15 @@ public class Relation {
     public static final Relation troponymy          = new Relation("troponymy");
     public static final Relation coordinate_term    = new Relation("coordinate term");
     public static final Relation otherwise_related  = new Relation("otherwise related");   // See also
+
+    
+    //private final static Relation[] NULL_RELATION_ARRAY = new Relation[0];
+    private final static Relation[] RELATION_ORDERED_ARRAY = {
+        Relation.synonymy,  Relation.antonymy,
+        Relation.hypernymy, Relation.hyponymy,
+        Relation.holonymy, Relation.meronymy,
+        Relation.troponymy, Relation.coordinate_term,
+        Relation.otherwise_related
+    };
+
 }

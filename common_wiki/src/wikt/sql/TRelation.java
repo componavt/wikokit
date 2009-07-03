@@ -195,7 +195,7 @@ public class TRelation {
 
         if(null == list_rel)
             return NULL_TRELATION_ARRAY;
-        return ((TRelation[])list_rel.toArray(NULL_TRELATION_ARRAY));
+        return (TRelation[])list_rel.toArray(NULL_TRELATION_ARRAY);
     }
 
     /** Selects row from the table 'relation' by ID.<br><br>

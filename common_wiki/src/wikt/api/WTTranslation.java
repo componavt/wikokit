@@ -99,7 +99,7 @@ public class WTTranslation {
 
         String[] backward = getBackwardTranslation (connect, foreign_lang, word);
 
-        String[] meanings = WTMeaning.getDefinitionsByPageLang(connect, foreign_lang, word);
+        String[] meanings = WTMeaning.getDefinitionsByPageLang(connect, word, foreign_lang);
         return StringUtil.addORCaseSensitive(backward, meanings);
     }
 
