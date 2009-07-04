@@ -12,6 +12,8 @@ import wikt.constant.*;
 import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 
+import wiwordik.util.ScrollNode;
+
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.Group;
@@ -22,6 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Flow;
+import javafx.ext.swing.SwingScrollPane;
 //import javax.swing.JFrame;
 
 /** One word card describes one word (page, entry in Wiktionary).
@@ -91,20 +94,55 @@ public class WC{ // extends JFrame {
         };
     }*/
 
-    public var card : Stage = Stage {
+    /*public var card : Stage = Stage {
     title : bind header_page_title
     scene: Scene {
         width: 382
         height: 500
         //content: Flow{
-            content: VBox {
-                content: [headerText, lang_VBox]
-                //content: [headerText, lang_VBox, langPOSCards]
-                spacing: 10
-            };
+            content:
+
+            //SwingScrollPane{
+                //height: bind Math.min(150, (sizeof swing_list_group) * (font_size +5)) // 165
+            //    scrollable: true
+                //font: Font {  size: font_size }
+
+           //     view:
+                
+                    VBox {
+                        content: [headerText, lang_VBox]
+                        //content: [headerText, lang_VBox, langPOSCards]
+                        spacing: 10
+                    }
+            //}
         //}
+      }
+    }*/
+
+    var width : Integer = 382;
+    var height : Integer = 600;
+
+    public var card : Stage = Stage {
+    title : bind header_page_title
+    scene: Scene {
+        width: width
+        height: height
+        content:
+            ScrollNode {
+                Y_speed: 55;
+                width: width
+                height: height
+                nodeWidth: width + 20
+                nodeHeight: height + 20
+                node:
+                    VBox {
+                        content: [headerText, lang_VBox]
+                        //content: [headerText, lang_VBox, langPOSCards]
+                        spacing: 10
+                    }
+            }
+        }
     }
-}
 
 
     /** Prints meanings for each language.
@@ -275,6 +313,9 @@ public class WC{ // extends JFrame {
             _tpage = page_array[0];                  // then let's take first from the scroll list
 
         createCXLangList (conn, _tpage);
+
+        //group.parent.notifyAll();
+        //card.notifyAll();
     }
 
 

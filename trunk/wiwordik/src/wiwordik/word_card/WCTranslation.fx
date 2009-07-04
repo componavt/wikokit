@@ -33,7 +33,7 @@ import java.lang.*;
 
 public class WCTranslation {
 
-    def DEBUG : Boolean = false;
+    def DEBUG : Boolean = true;
 
     /** Translation section (box) title, i.e. additional comment,
      * e.g. "fruit" or "apple tree" for "apple".
@@ -42,20 +42,10 @@ public class WCTranslation {
     var meaning_summary : String;
 
     var swing_list_group : SwingListItem[];
+    var scroll_height : Integer;
+    var scroll_width : Integer;
 
-    //A list with three items
-    var translations_scrollpane = SwingScrollPane{ 
-        //height: 165
-        scrollable: true
-        view:
-            SwingList{items: bind swing_list_group
-            //[
-                //SwingListItem{text:"De: a;lksdjf"},
-                //SwingListItem{text:"It: ;alskdf"},
-                //SwingListItem{text:"Pl: kdsla;kj"},
-            //]
-            }
-    };
+    def font_size : Integer = 14;
 
     public var group: VBox = VBox {
         spacing: 2
@@ -66,7 +56,19 @@ public class WCTranslation {
                 //font: Font {  size: 14  }
                 //fill: Color.GRAY
             }
-            translations_scrollpane
+            
+            SwingScrollPane{
+                height: bind scroll_height  // 165
+                width: bind scroll_width  // 165
+                scrollable: true
+                font: Font {  size: font_size }
+                
+                view:
+                    SwingList{items: bind swing_list_group
+                    //SwingList{items: [
+                    //    SwingListItem{text:"De: a;lksdjf"}, ]
+                    }
+            }
         ]
     };
 
@@ -81,8 +83,9 @@ public class WCTranslation {
                            
         meaning_summary = _ttranslation.getMeaningSummary();
         
-        def trans_entries : TTranslationEntry[] = TTranslationEntry.getByLanguageAndTranslation (conn,
-                                        _ttranslation, _lang);
+        def trans_entries : TTranslationEntry[] = TTranslationEntry.getByTranslation (conn, _ttranslation, );
+
+        System.out.println("WCTranslation.create() _lang={_lang.getLanguage().toString()}; sizeof trans_entries={sizeof trans_entries}");
 
         for(e in trans_entries) {
             //if(r.getRelationType() == _relation_type)
@@ -90,18 +93,23 @@ public class WCTranslation {
             def l : LanguageType = e.getLang().getLanguage();
             def language_name_value = "{l.getName()} ({l.getCode()})";
 
-            def list : String = "{language_name_value}{e.getWikiText().getText()}";
-            insert SwingListItem{text: list } into swing_list_group;
+            def s : String = "{language_name_value}: {e.getWikiText().getText()}";
+            insert SwingListItem{text: s } into swing_list_group;
         }
 
-
-        /*def len : Integer = list.length();    // at least one relation exists.
-        if(len > 0) {
-            relation_type  = _relation_type.toString();
-            relation_words = list.substring(0, len - 2);
-            return true;
-        }*/
-
-        return true;
+        def len : Integer = sizeof trans_entries;
+        if(1 == len) {
+            scroll_height = (font_size +7);
+        } else if(len < 5) {
+            scroll_height = (font_size +6)*len;
+        } else if(len < 7) {
+            scroll_height = (font_size +5)*len;
+        } else {
+            //scroll_height = Math.min(150, Math.max(font_size, (sizeof swing_list_group) * (font_size +5)))
+            scroll_height = (font_size +5)*6;
+        }
+        scroll_width = 300;
+        
+        return len > 0;
     }
 }

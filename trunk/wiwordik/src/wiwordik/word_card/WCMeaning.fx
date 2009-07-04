@@ -44,7 +44,7 @@ public class WCMeaning {
 
     // (3) Translation
     var translation : WCTranslation[];  //private WTranslation[] translation;
-    var translation_group : VBox = VBox { spacing: 10 };
+    var translation_group : VBox = VBox { spacing: 1 };
     
     public var group: VBox = VBox {
         spacing: 4
@@ -68,21 +68,24 @@ public class WCMeaning {
     **/
     public function create(conn : Connect,
                             _tmeaning : TMeaning,
-                            _max_meaning_number : Integer
-                            //_tpage : TPage,
-                            //syn : String []
+                            _max_meaning_number : Integer,
+                            _lang : TLang,
+                            _ttranslations : TTranslation[]
                            ) {
+
+        /** Meaning (sense) number. */
+        def meaning_n : Integer = _tmeaning.getMeaningNumber();
 
         var s_debug : String;
         if(DEBUG)
-            s_debug = "; meaning.id={_tmeaning.getID()}; meaning _n/max={_tmeaning.getMeaningNumber()+1}/{_max_meaning_number}";
+            s_debug = "; meaning.id={_tmeaning.getID()}; meaning _n/max={meaning_n+1}/{_max_meaning_number}";
 
 
         // 1. Definition
         // numbering logic: if only one definition then without number 1.
         var s_number;
         if(_max_meaning_number > 1)
-            s_number = "{_tmeaning.getMeaningNumber() + 1}. ";
+            s_number = "{meaning_n + 1}. ";
 
         def twiki_text : TWikiText = _tmeaning.getWikiText();
         if(null != twiki_text)
@@ -103,22 +106,18 @@ public class WCMeaning {
 
 
         // 3. Translations.
-        //create (conn : Connect, _ttranslation : TTranslation);
-        
-        def _lang_pos : TLangPOS = _tmeaning.getLangPOS(conn);
-        def _lang : TLang = _lang_pos.getLang();
-        def translations : TTranslation[] = TTranslation.getByLangPOS(conn, _lang_pos);
-        for(t in translations) {
+        if(sizeof _ttranslations > meaning_n) {
+
+            // only one translation block, for the current meaning
+            def tt : TTranslation = _ttranslations[meaning_n];
 
             def _translation : WCTranslation = new WCTranslation();
-            if(_translation.create(conn, t, _lang)) {
-                // + line if there are any synonyms, antonyms, etc.
+            if(_translation.create(conn, tt, _lang)) {
+                // + if there are any translation entries in the block
                 insert _translation into translation;                       // logic
                 insert _translation.group into translation_group.content;   // visual
             }
         }
-
-
     }
     
 }
