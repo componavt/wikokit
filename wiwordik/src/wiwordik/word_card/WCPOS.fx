@@ -72,33 +72,22 @@ public class WCPOS {
             if (DEBUG)
                 POS_header_value = "{_pos.toString()}; lang_pos.id = {_lang_pos.getID()}";
             
+            // get all translation blocks (for every meaning)
+            //def _lang_pos : TLangPOS = _tmeaning.getLangPOS(conn);
+            def lang : TLang = _lang_pos.getLang();
+            def ttranslations : TTranslation[] = TTranslation.getByLangPOS(conn, _lang_pos);
+            //System.out.println("WCPOS.create() _lang={_lang.getLanguage().toString()}; pos={_lang_pos.getPOS().getPOS().toString()}; sizeof translations={sizeof ttranslations}");
+
             def mm : TMeaning[] = TMeaning.get(conn, _lang_pos);
             for(m in mm) {
 
                 def _meaning : WCMeaning = new WCMeaning();
-                _meaning.create(conn, m, sizeof mm);
+
+                _meaning.create(conn, m, sizeof mm, lang, ttranslations);
 
                 insert _meaning into meaning;                       // logic
                 insert _meaning.group into meaning_group.content;   // visual
             }
-
-
-            // System.out.println("WCLanguage.create(). language_name_value = {language_name_value}");
-
-            /*def definitions : String[] = WTMeaning.getDefinitionsByLangPOS(conn, lang_pos);
-
-            def synonyms : String[] = WTRelation.getForEachMeaningByPageLang(conn, lang_pos, Relation.synonymy);
-            //def synonyms : String[] = ["", "synonyms 2"];
-
-            for (j in [0.. sizeof definitions-1]) {
-                s = s.concat("  {j+1}. {definitions[j]}\n");
-
-                if(sizeof synonyms > j and synonyms[j].length() > 0)
-                    //s = s.concat("    Syn.: {synonyms[j]}\n");
-                    s = s.concat("    Syn.: {synonyms[j]}\n");
-                            //fill: Color.rgb (0xec, 0xed, 0xee)
-                    // todo: Text {fill: Color.BLUE; content: synonyms[j]}
-            }*/
         }
     }
 

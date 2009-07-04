@@ -194,7 +194,9 @@ public class TTranslationEntry {
         return ((TTranslationEntry[])list_trans.toArray(NULL_TTRANSLATIONENTRY_ARRAY));
     }
 
-    /** Selects rows from the table 'translation_entry' by wiki text ID and language ID.<br><br>
+    /** Selects rows from the table 'translation_entry' by wiki text ID and 
+     * language ID. Selects one language entry from one translation box.<br><br>
+     * 
      * SELECT id,translation_id FROM translation_entry WHERE wiki_text_id=3 AND lang_id=2;
      * @return empty array, if data is absent
      */
