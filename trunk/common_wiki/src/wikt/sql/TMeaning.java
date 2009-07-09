@@ -154,7 +154,7 @@ public class TMeaning {
         return meaning;
     }
 
-    /** Selects rows from the table 'meaning' by the lang_pos_id
+    /** Selects rows from the table 'meaning' by the lang_pos_id.
      * SELECT id,meaning_n,wiki_text_id FROM meaning WHERE lang_pos_id=1;
      * @return empty array if data is absent
      */
@@ -174,6 +174,7 @@ public class TMeaning {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,meaning_n,wiki_text_id FROM meaning WHERE lang_pos_id=");
             str_sql.append(lang_pos.getID());
+            //str_sql.append(" ORDER BY id");
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
             while (rs.next ())

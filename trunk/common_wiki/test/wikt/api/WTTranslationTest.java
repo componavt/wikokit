@@ -194,7 +194,7 @@ public class WTTranslationTest {
         transl_words = WTTranslation.translate(connect, "de", "ru", "Flugzeug"); // from Deutch to Russian
         assertTrue(transl_words.length >= 2);
         assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт"));
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "аэроплан"));
+        // assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт, аэроплан"));
 
         // Russian to English: "самолёт" -> [[airplane]], [[plane]], [[aircraft]]
         // English to Russian: airplane -> # {{амер.}} [[аэроплан]]
@@ -203,7 +203,7 @@ public class WTTranslationTest {
         transl_words = WTTranslation.translate(connect, "en", "ru", "airplane");
         assertTrue(transl_words.length >= 2);
         assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт"));
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "аэроплан"));
+        // assertTrue(StringUtil.containsIgnoreCase(transl_words, "{{амер.}} самолёт, аэроплан"));
 
         // English to Russian: car -> ...
 

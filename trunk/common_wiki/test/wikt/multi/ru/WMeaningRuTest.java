@@ -119,6 +119,13 @@ public class WMeaningRuTest {
 
         result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
         assertTrue(null == result);
+
+        // test 3
+        // empty definition with very empty example:
+        line =  "# {{пример}}";
+
+        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        assertTrue(null == result);
     }
 
      @Test
@@ -204,6 +211,33 @@ public class WMeaningRuTest {
     }
 
     @Test
+    public void testParseOneDefinition_ru_empty_quote() {
+        System.out.println("parseOneDefinition_ru_empty_quote");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        String line;
+
+        // 1. simple: 1 empty quote
+        line =  "# {{хим-элем|5|B}} {{пример}}";
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "бор";
+        lang_section    = LanguageType.ru; // Russian word
+
+        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+
+        assertTrue(null != result);
+        String def = result.getDefinition();
+
+        // temporary result: "{{хим-элем|5|B}}"
+            // todo future work: "" - definition is empty, because this is the label.
+            //assertEquals(0, def.length());
+        assertTrue(def.equalsIgnoreCase( "{{хим-элем|5|B}}" ));
+    }
+
+
+    @Test
     public void testParseOneDefinition_ru_quote() {
         System.out.println("parseOneDefinition_ru_quote");
         LanguageType wikt_lang;
@@ -227,8 +261,9 @@ public class WMeaningRuTest {
         assertEquals(1, quote_result.length);
         assertTrue(quote_result[0].getText().equalsIgnoreCase( "Увязочные ... лубяных волокон), ... ." ) );
 
+        // "# {{хим-элем|5|B}} {{пример}}"
 
-        // 2. complex: several quotes (sentences)
+        // 3. complex: several quotes (sentences)
         // todo
         // ...
     }
@@ -258,12 +293,14 @@ public class WMeaningRuTest {
                 "{{илл|CachacaDivininha.jpg|Алкоголь [1]}}\n" +
                 "==== Значение ====\n" +
                 "# {{разг.}} [[алкогольный|алкогольные]], [[спиртной|спиртные]] напитки, [[вино]]; [[винный]] [[спирт]] {{пример|Изгнать {{выдел|алкоголь}} из быта рабочих.}}\n" +
-                "# {{хим.}} {{=|спирт}}, бесцветная летучая жидкость, получаемая при ферментации сахара {{пример|}}";
+                "# {{хим.}} {{=|спирт}}, бесцветная летучая жидкость, получаемая при ферментации сахара {{пример|}}" +
+                "# {{хим-элем|5|B}} {{пример}}";
         pt = new POSText(POS.noun, str);
         WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
-        assertEquals(2, result.length);
+        assertEquals(3, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
         assertTrue(result[1].getDefinition().equalsIgnoreCase(_definition2));
+        assertEquals(0, result[2].getDefinition().length());
 
         // todo
         // test wikiwords

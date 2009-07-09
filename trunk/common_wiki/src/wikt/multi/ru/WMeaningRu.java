@@ -97,6 +97,7 @@ public class WMeaningRu {
         return( (WMeaning[])wm_list.toArray(NULL_WMEANING_ARRAY) );
     }
 
+    
     /** Parses one definition line, i.e. extracts {{label}}, definition,
      * {{example|Quotation sentence.}}, creates and fills a meaning (WMeaning).
      * @param wikt_lang     language of Wiktionary
@@ -110,10 +111,13 @@ public class WMeaningRu {
                     LanguageType lang_section,
                     String line)
     {
+        // remove empty quotations: {{пример|}} and {{пример}}
+        line = line.replace("{{пример|}}", "");
+        line = line.replace("{{пример}}", "");
+
         line = Definition.stripNumberSign(page_title, line);
-        if(  0 == line.length() ||
-           (11 == line.length() && line.equalsIgnoreCase("{{пример|}}"))
-          )
+
+        if(0 == line.length())
             return null;
 
         if(line.startsWith("{{морфема"))
@@ -135,8 +139,8 @@ public class WMeaningRu {
         //WikiWord[] ww = WikiWord.getWikiWords(page_title, new StringBuffer(wiki_definition));
 
         // 5. extract quotations
-        // todo ...
         WQuote[] quote = null;
+        // todo ...
         
         return new WMeaning(page_title, labels, wiki_definition, quote);
     }

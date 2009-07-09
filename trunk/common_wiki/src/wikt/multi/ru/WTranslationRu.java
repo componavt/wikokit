@@ -101,8 +101,14 @@ public class WTranslationRu {
                 int unfinished_template_pos = text.indexOf("{{unfinished", prev_end + 1);
                 if(-1 != unfinished_template_pos)
                     next_end = unfinished_template_pos;
-                else
-                    next_end = len;
+                else {
+                    // search first "\n}}", i.e. end of translation template
+                    int e = text.indexOf("\n}}", prev_end + 12);
+                    if(-1 != e)
+                        next_end = e;
+                    else
+                        next_end = len;
+                }
             }
             
             String trans_block = text.substring(prev_end, next_end);

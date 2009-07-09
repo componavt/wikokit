@@ -19,7 +19,7 @@ public class WTranslationRuTest {
 
     public static String samolyot_text, samolyot_with_header, kolokolchik_text, 
             kolokolchik_text_1_translation_box, kosa_text_1_translation_box_without_header,
-            unfinished_template;
+            unfinished_template, page_end;
 
     public WTranslationRuTest() {
     }
@@ -56,8 +56,7 @@ public class WTranslationRuTest {
             "|fr=[[avion]] {{m}}\n" +
             "|cs=[[letadlo]]\n" +
             "|eo=[[aeroplano]], [[avio]], [[aviadilo]]\n" +
-            "|et=[[lennuk]]\n" +
-            "|ja=[[飛行機]] (ひこうき, хйко:ки)\n" +               // 20
+            "|et=[[lennuk]]\n" + //"|ja=[[飛行機]] (ひこうき, хйко:ки)\n" +               // 20
             "}}";
 
         samolyot_with_header = "=== Перевод ===\n" +
@@ -107,6 +106,14 @@ public class WTranslationRuTest {
             "|e=\n" +
             "}}";
 
+        page_end = "\n" +
+            "*{{theza|самолёт}}\n" +
+            "\n" +
+            "{{длина слова|7}}\n" +
+            "\n" +
+            "[[Категория:Авиация]]\n" +
+            "\n" +
+            "[[ar:самолёт]]";
     }
 
     @After
@@ -216,6 +223,29 @@ public class WTranslationRuTest {
         assertTrue(wt_samolyot[0].getVisibleText().equalsIgnoreCase( "uçak" ) );
         assertTrue(wt_samolyot[1].getVisibleText().equalsIgnoreCase( "tayyare" ) );
     }
+
+    // tests skipping of unfinished_template
+    @Test
+    public void testParseTranslation_without_unfinished_template() {
+        System.out.println("parse_1_meaning");
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "самолёт";
+        LanguageType lang_section = LanguageType.ru; // Russian word
+
+        String s = samolyot_with_header + page_end;
+        POSText pt = new POSText(POS.noun, s);
+
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+        assertEquals(1, result.length );
+
+        assertEquals(0, result[0].getHeader().length()); // only one meaning, the translation box has no header
+        
+        // the last translation entry shoud be without "[[en:..]]", etc.
+        //   "|et=[[lennuk]]\n"
+        WikiText[] wt_samolyot_et = result[0].getTranslationIntoLanguage(LanguageType.et);
+        assertEquals(1, wt_samolyot_et.length);
+        assertTrue(wt_samolyot_et[0].getVisibleText().equalsIgnoreCase( "lennuk" ) );
+    }
     
     @Test
     public void testParseOneTranslationBox_utf8_korean() {
@@ -229,7 +259,7 @@ public class WTranslationRuTest {
         assertEquals(0, result.getHeader().length()); // 1 meaning, the translation has no header (summary meaning)
 
         WTranslationEntry[] trans_all = result.getTranslations();
-        assertEquals(21, trans_all.length);
+        assertEquals(20, trans_all.length);
 
         {
             // 1. English

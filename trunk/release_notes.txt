@@ -1,11 +1,13 @@
 wikokit 0.12.6 2009-0?-??
+  common_wiki 171 tests passed, 25 tests failed
+  common_wiki 164 tests passed, 32 tests failed
   common_wiki 134 tests passed, 14 tests failed
 
   Project synarcher was renamed to wikokit.
   New home: code.google.com
 
   Subproject kleinberg was renamed to hits_wiki.
-  The following subprojects were added: common_wiki and wikt_parser.
+  The following subprojects were added: common_wiki, wikt_parser, and wiwordik.
 
 
 Synarcher 0.12.5 2008-04-06
@@ -38,6 +40,7 @@ Synarcher 0.12.5 2008-04-06
   
   Todo
     Publish a paper about WikIDF.
+    Done: see arxiv.org.
 
 Synarcher 0.12.4 2007-09-22
   171 tests passed, 8 tests failed

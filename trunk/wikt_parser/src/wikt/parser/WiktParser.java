@@ -159,7 +159,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
                 PageTableBase.getArticleText(wikt_conn, page_title));
 
         if(0 == str.length()) {
-            System.out.println("Error in WiktParser.runSubCategories(): The article with the title '"+
+            System.out.println("Error in WiktParser.parseWiktionaryEntry(): The article with the title '"+
                     page_title + "' has no text in Wiktionary.");
             return;
         }
@@ -168,7 +168,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         WordBase word = new WordBase(page_title, wiki_lang, str);
 
         if(word.isEmpty()) {
-            System.out.println("Warning in WiktParser.runSubCategories(): The article with the title '"+
+            System.out.println("Warning in WiktParser.parseWiktionaryEntry(): The article with the title '"+
                     page_title + "' after convert wiki to text: has no text.");
             return;
         }

@@ -61,10 +61,12 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    public final static String RUWIKT_DB   = "ruwikt20090122?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    //public final static String RUWIKT_DB   = "ruwikt20090122?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_DB   = "ruwikt20090707?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     
     // Russian Wiktionary parsed database
-    public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20090707_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
     
     

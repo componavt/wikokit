@@ -8,6 +8,7 @@ package wikt.word;
 
 //import wikt.util.LangText;
 import wikipedia.language.LanguageType;
+import wikipedia.text.WikiParser;
 //import wikt.word.ru.WordRu;
 
 /** Article in Wiktionary.
@@ -28,9 +29,12 @@ public class WordBase {
             StringBuffer text) {
         
         page_title = _page_title;
+
+        // remove <!-- comments -->
+        StringBuffer s = WikiParser.removeHTMLComments(text);
         
-        //LangText[] lang_sections = WLanguage.splitToLanguageSections(wikt_lang, page_title, text);
-        lang = WLanguage.parse(wikt_lang, page_title, text);
+        //LangText[] lang_sections = WLanguage.splitToLanguageSections(wikt_lang, page_title, s);
+        lang = WLanguage.parse(wikt_lang, page_title, s);
     }
     
     /*public WordBase(String _page_title) {
