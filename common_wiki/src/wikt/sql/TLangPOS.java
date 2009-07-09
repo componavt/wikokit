@@ -132,7 +132,7 @@ public class TLangPOS {
 
     /** Selects rows from the table 'lang_pos' by the page_id 
      *
-     * SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=562;
+     * SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=562 ORDER BY id;
      *
      * @return empty array if data is absent
      */
@@ -159,6 +159,7 @@ public class TLangPOS {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=");
             str_sql.append(page.getID());
+            str_sql.append(" ORDER BY id");
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
             while (rs.next ())

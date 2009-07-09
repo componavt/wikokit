@@ -20,6 +20,9 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
+        "бор",
+        "барак",
+        "колокольчик", "car", "яблоко", "самолёт", "Flugzeug",  "airplane", // used in unit tests
         "нелетный", // redirect
         "негритянка",
         "злато", "зограф", "камыш", "кан", "кар", "карта",
@@ -75,7 +78,7 @@ public class PageTableAll {
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
                 
-                if(DEBUG && 0 == ++n_cur % 1000) {   // % 100
+                if(DEBUG && 0 == ++n_cur % 1) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
                     long    t_cur, t_remain;

@@ -50,8 +50,8 @@ public class WTMeaningTest {
      * Test of getDefinitionsByPage method, of class WTMeaning.
      */
     @Test
-    public void testGetDefinitionsByPage() {
-        System.out.println("getDefinitionsByPage");
+    public void testGetDefinitionsByPageLang() {
+        System.out.println("getDefinitionsByPageLang");
 
         Connect connect = ruwikt_parsed_conn;
         String word = "car";
@@ -63,7 +63,7 @@ public class WTMeaningTest {
         //# [[кабина]] [[лифт]]а
         //# [[вагон]]
 
-        String[] definitions = WTMeaning.getDefinitionsByPage(connect, LanguageType.en, word);
+        String[] definitions = WTMeaning.getDefinitionsByPageLang(connect, word, LanguageType.en);
         assertTrue(definitions.length >= 5);
         assertTrue(StringUtil.containsIgnoreCase(definitions, "автомобиль"));
     }

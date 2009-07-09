@@ -148,7 +148,7 @@ public class WPOSRuTest {
         lt.text = new StringBuffer(str);
         result = WPOSRu.guessPOSWith2ndLevelHeader(page_title, "Произношение", lt.text);
         // assertEquals(POS.adjective, result); too complex now
-        assertEquals(POS.unknown, result);  // too complex now
+        assertEquals(null, result);  // too complex now: POS.unknown
     }
 
     @Test
