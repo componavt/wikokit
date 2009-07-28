@@ -15,7 +15,7 @@ import java.sql.*;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
@@ -72,13 +72,13 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                if (n_cur < debug_pages.length)
+                /*if (n_cur < debug_pages.length)
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-                
-                if(DEBUG && 0 == ++n_cur % 1) {   // % 100 1000
+                */
+                if(DEBUG && 0 == ++n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
                     long    t_cur, t_remain;
