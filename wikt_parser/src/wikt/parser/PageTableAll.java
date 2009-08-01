@@ -20,6 +20,9 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
+        "Abessinia", "Arabian", "Asianus", "Avernus", "Guatemala", "baba", // unknown language code 'null'
+        "a", // -lang-
+        "FDR", // abbrev
         "бор",
         "барак",
         "колокольчик", "car", "яблоко", "самолёт", "Flugzeug",  "airplane", // used in unit tests

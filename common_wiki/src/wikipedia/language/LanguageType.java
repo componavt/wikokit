@@ -101,14 +101,19 @@ public class LanguageType {
     public static final LanguageType ajg    = new LanguageType("ajg", "Aja (Benin)", "Aja (Benin)");//аджа (Бенин)
     
     public static final LanguageType ale    = new LanguageType("ale", "Aleut", "Aleut");// Алеутский
+    public static final LanguageType alp    = new LanguageType("alp", "Alune", "Alune");// Алуне
+
+    public static final LanguageType alt    = new LanguageType("alt", "Altai", "Altai");//Алтайский
 
     public static final LanguageType akk    = new LanguageType("akk", "Akkadian", "Akkadian");// Аккадский
 
     public static final LanguageType arc_syr = new LanguageType("arc.syr", "Aramaic", "Aramaic");//Арамейский (сир.)
     public static final LanguageType arc_jud = new LanguageType("arc.jud", "Aramaic", "Aramaic");//Арамейский (иуд.)
-    public static final LanguageType alt = new LanguageType("alt", "Altai", "Altai");//Алтайский
-
+    
     public static final LanguageType art    = new LanguageType("art", "Toki pona", "Toki pona (art)");// Токипона
+    public static final LanguageType art_oou= new LanguageType("art-oou", "oou", "oou");// Ооу
+
+
     public static final LanguageType ave    = new LanguageType("ave", "Avestan", "Avestan");// Авестийский
 
     public static final LanguageType ban    = new LanguageType("ban", "Bali", "Bali");//Balinese or Bali language (Nigeria)?
@@ -126,9 +131,14 @@ public class LanguageType {
 
     public static final LanguageType cjs    = new LanguageType("cjs", "Shor", "Shor");// Шорский
 
+    public static final LanguageType de_a   = new LanguageType("de-a", "de-a", "de-a");// Немецкий (австрийский)
     public static final LanguageType dlg    = new LanguageType("dlg", "Dolgan", "Dolgan");// Долганский
-
     public static final LanguageType drw    = new LanguageType("drw", "Drow (Dungeons & Dragons)", "Drow (Dungeons & Dragons)");//Дроу
+
+    public static final LanguageType egy    = new LanguageType("egy", "Egyptian", "Egyptian");// Египетский
+    public static final LanguageType en_nz  = new LanguageType("en-nz", "New Zealand English", "New Zealand English");// Новозеландский вариант английского языка
+    public static final LanguageType en_us  = new LanguageType("en-us", "American English", "American English");// Английский (американский)
+
     public static final LanguageType fic_drw= new LanguageType("fic-drw", "Drow (Dungeons & Dragons)", "Drow (Dungeons & Dragons)");//Дроу
 
     public static final LanguageType ha_lat = new LanguageType("ha.lat", "", "Hausa"); // Хауса (лат.)
@@ -157,8 +167,11 @@ public class LanguageType {
 
     public static final LanguageType oj     = new LanguageType("oj", "Ojibwe", "Ojibwe");// # Оджибва
 
-    public static final LanguageType pau    = new LanguageType("pau", "Palau", "Palau");//Палау
-    public static final LanguageType ppol   = new LanguageType("ppol", "Proto-Polynesian", "Proto-Polynesian");//Протополинезийский
+    public static final LanguageType pau    = new LanguageType("pau", "Palau", "Palau");// Палау
+    public static final LanguageType PIE    = new LanguageType("PIE", "Proto-Indo-European", "Proto-Indo-European");// Праиндоевропейский
+    public static final LanguageType pinyin = new LanguageType("PIE", "Pinyin", "Pinyin");// Пиньинь
+    public static final LanguageType ppol   = new LanguageType("ppol", "Proto-Polynesian", "Proto-Polynesian");// Протополинезийский
+    public static final LanguageType prg    = new LanguageType("prg", "Old Prussian", "Old Prussian");// Древнепрусский
 
     public static final LanguageType qya    = new LanguageType("qya", "Quenya", "Quenya");// квэнья
 
