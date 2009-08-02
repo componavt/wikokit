@@ -21,7 +21,7 @@ public class UtilSQL {
         try {
             s = connect.conn.createStatement ();
             s.addBatch("DELETE FROM "+ table_name +";");
-            s.addBatch("ALTER TABLE "+ table_name +" AUTO_INCREMENT = 0;");
+            s.addBatch("ALTER TABLE "+ table_name +" AUTO_INCREMENT = 1;");
             s.executeBatch();
 
         } catch(SQLException ex) {

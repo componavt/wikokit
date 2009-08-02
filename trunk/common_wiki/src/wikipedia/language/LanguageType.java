@@ -175,9 +175,10 @@ public class LanguageType {
 
     public static final LanguageType qya    = new LanguageType("qya", "Quenya", "Quenya");// квэнья
 
-    public static final LanguageType rmr    = new LanguageType("rmr", "Calo", "Calo");//Кало - язык испанских цыган
+    public static final LanguageType rmr    = new LanguageType("rmr", "Calo", "Calo");// Кало - язык испанских цыган
+    public static final LanguageType romaji = new LanguageType("romaji", "Romaji", "Romaji");// Ромадзи
 
-    public static final LanguageType sjn    = new LanguageType("sjn", "Sindarin", "Sindarin");//Синдарин
+    public static final LanguageType sjn    = new LanguageType("sjn", "Sindarin", "Sindarin");// Синдарин
     
     public static final LanguageType slovio = new LanguageType("slovio", "Slovio", "Slovio");// Словио
     public static final LanguageType slovio_la = new LanguageType("slovio-la", "Slovio", "Slovio-la");// Словио
@@ -185,6 +186,7 @@ public class LanguageType {
     public static final LanguageType slovio_l = new LanguageType("slovio-l", "Slovio (Latin)", "Slovio (Latin)");//Словио (лат)
 
     public static final LanguageType sms    = new LanguageType("sms", "Skolt Sami", "Skolt Sami");// Колтта-саамский
+    public static final LanguageType sot    = new LanguageType("sot", "Sesotho", "Sesotho");// Сесото
     public static final LanguageType sux    = new LanguageType("sux", "Sumerian", "Sumerian");// Шумерский
 
     public static final LanguageType translingual_ru = new LanguageType("INT", "Translingual", "Translingual (INT)");// INTernational
@@ -290,6 +292,7 @@ public class LanguageType {
     
     public static final LanguageType roa_rup = new LanguageType("roa-rup", "ArmГЈneashce", "Aromanian");
     public static final LanguageType roa_tara = new LanguageType("roa-tara", "TarandГ­ne", "Tarantino");
+
 
     public static final LanguageType ruq_cyrl = new LanguageType("ruq-cyrl", "Р’Р»Р°С…РµСЃС‚Рµ", "Megleno-Romanian (Cyrillic script)");
     public static final LanguageType ruq_grek = new LanguageType("ruq-grek", "О’О»О±ОµПѓП„Оµ", "Megleno-Romanian (Greek script)");

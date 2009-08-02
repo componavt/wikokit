@@ -54,7 +54,31 @@ public class WLanguageRu {
     //private final static StringBuffer   NULL_STRINGBUFFER = new StringBuffer("");    
     private final static LangText[] NULL_LANG_TEXT_ARRAY = new LangText[0];
     //private final static List<LangText> NULL_LANG_TEXT_LIST = new ArrayList<LangText>(0);
-    
+
+
+    /** Gets language type (code) information from a Wiktionary article header 
+     * and from the result of search by regular expression stored in a matcher m.
+     */
+    public static LanguageType getLanguageType(Matcher m,String page_title) {
+
+        LanguageType lang_type = null;
+
+        String lang_code = m.group(1);
+        if((null == lang_code || lang_code.length() < 2) && 2 == m.groupCount()) {
+            lang_code = m.group(2);
+        }
+        if (null == lang_code || !LanguageType.has(lang_code)) {  // i.e. skip the whole article if the first lang code is unknown
+            if (null == lang_code)
+                System.out.println("Warning: null language code for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
+            else
+                System.out.println("Warning: unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
+        } else {
+            lang_type = LanguageType.get(lang_code);
+        }
+        
+        return lang_type;
+    }
+
     /** page_title - word which are described in this article 'text'*/
     public static LangText[] splitToLanguageSections (
             String page_title,
@@ -73,15 +97,12 @@ public class WLanguageRu {
         boolean b_at_least_one_lang = b_next; // at least one language section was recognized
         boolean b_known_lang = true;
         if(b_next) {
-            String lang_code = m.group(1);
-            if((null == lang_code || lang_code.length() < 2) && 2 == m.groupCount()) {
-                lang_code = m.group(2);
-            }
-            if (!LanguageType.has(lang_code)) {  // i.e. skip the whole article if the first lang code is unknown
-                System.out.println("Warning: unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.splitToLanguageSections()");
-                b_known_lang = false;
-            } else {
-                LangText lt = new LangText(LanguageType.get(lang_code));
+
+            LanguageType lang_type = getLanguageType(m, page_title);
+            b_known_lang = null != lang_type;
+
+            if(b_known_lang) {
+                LangText lt = new LangText(lang_type);
 
                 m.appendReplacement(lt.text, "");   // "First {{-ru-}}" (add the text before the first lang code)
                 lang_sections.add(lt);
@@ -95,13 +116,14 @@ public class WLanguageRu {
                     } else {                                                    
                         m.appendReplacement(new StringBuffer(), "");   // {{-unknown-}} just reset the text within the unknown lang {{-known-}}
                     }
-                    lang_code = m.group(1);
-                    b_known_lang = LanguageType.has(lang_code);
+
+                    lang_type = getLanguageType(m, page_title);
+                    b_known_lang = null != lang_type;
+
                     b_next = m.find();
-                    if (!b_known_lang) {
-                        System.out.println("Warning: unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.splitToLanguageSections()");
-                    } else {
-                        lt = new LangText(LanguageType.get(lang_code));
+
+                    if (b_known_lang) {
+                        lt = new LangText(lang_type);
                         //m.appendReplacement(lang_sections.get(i-1).text, "");   // text belongs to previous lang code:
                         lang_sections.add(lt);                                  // i.e. {{-prev lang code-}} current text {{-current lang code-}}
                         if(!b_next) {

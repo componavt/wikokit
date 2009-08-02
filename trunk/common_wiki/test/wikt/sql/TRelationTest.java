@@ -11,7 +11,7 @@ import wikipedia.sql.Connect;
 import wikipedia.sql.UtilSQL;
 
 import java.util.Map;
-import java.util.Collection;
+//import java.util.Collection;
 
 import org.junit.After;
 import org.junit.AfterClass;
