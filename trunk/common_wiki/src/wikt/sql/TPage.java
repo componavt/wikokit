@@ -35,7 +35,19 @@ public class TPage {
     /** true, if the page_title exists in Wiktionary
      * false, if the page_title exists only as a [[|wikified word]] */
     private boolean is_in_wiktionary;
-    
+
+    /** Hard redirect defined by #REDIRECT", 
+     * @see TLangPOS.redirect_type and .lemma - a soft redirect. */
+    private boolean is_redirect;
+
+    /** Redirected page, i.e. target or destination page.
+     * It is null for usual entries.
+     *
+     * Hard redirect defined by #REDIRECT",
+     * @see TLangPOS.redirect_type and .lemma - a soft redirect.
+     */
+    private String  redirect_target;
+
     private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
 
     public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {

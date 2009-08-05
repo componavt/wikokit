@@ -161,6 +161,7 @@ public class LanguageType {
 
     public static final LanguageType liv    = new LanguageType("liv", "Livonian ", "Livonian ");// Livonian - Ливский
 
+    public static final LanguageType mаs    = new LanguageType("mas", "Maasai", "Maasai");// Масайский
     public static final LanguageType mos    = new LanguageType("mos", "Mossi", "Mossi");// Море
 
     public static final LanguageType non    = new LanguageType("non", "Old Norse", "Old Norse");// Древнеисландский

@@ -21,9 +21,7 @@ public class ReferenceParserTest extends TestCase {
         super.tearDown();
     }
 
-    /**
-     * Test of expandMoveToEndOfText method, of class ReferenceParser.
-     */
+    /** Test of expandMoveToEndOfText method, of class ReferenceParser. */
     public void testExpandMoveToEndOfText() {
         System.out.println("expandMoveToEndOfText");
         StringBuffer wiki_text, expResult, result;
@@ -81,5 +79,60 @@ public class ReferenceParserTest extends TestCase {
         result = WikiParser.convertWikiToText(wiki_text, LanguageType.ru, true);
         assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
     }
-    
+
+    /** Test of removeReferences method, of class ReferenceParser. */
+    public void testRemoveReferencesOnly() {
+        System.out.println("removeReferencesOnly");
+        StringBuffer wiki_text, expResult, result;
+
+        // 1. expand and move ref text to the end of text
+        wiki_text = new StringBuffer(
+"Впечатление произвело не только, и даже не столько увиденное и услышанное, сколько личность самого " +
+"их будущего Гуруджи<ref>Джи – уважительная приставка, по типу «сан» у японцев.</ref> — Шри Рам Кумар Шармы.");
+
+        expResult = new StringBuffer(
+"Впечатление произвело не только, и даже не столько увиденное и услышанное, сколько личность самого " +
+"их будущего Гуруджи — Шри Рам Кумар Шармы.");
+        result = ReferenceParser.expandMoveToEndOfText(wiki_text);
+        assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
+
+
+        // 2. complex: remove ref with template inside: <ref>{{...}}</ref>
+        //      but do not expand [[Wiki text|wiki text]]
+        wiki_text = new StringBuffer(
+"''Bold [[wiktionary:pale|pale]] text. ''<ref>{{cite book |last= Axell |first= Albert |coauthors = " +
+    "Kase, Hideaki | year=2002 | title= Kamikaze: Japan’s suicide gods |publisher= New York: Longman. " +
+    "ISBN 0-582-77232-X | pages=p. 16 }}</ref>\n" +
+" A special ceremony before going to combat usually took place.");
+
+        //expResult = new StringBuffer(
+        //        "Bold pale text. \n A special ceremony before going to combat usually took place.");
+        expResult = new StringBuffer(
+"''Bold [[wiktionary:pale|pale]] text. ''" +
+" A special ceremony before going to combat usually took place.");
+
+        result = ReferenceParser.expandMoveToEndOfText(wiki_text);
+        assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
+
+
+        // 3. complex: remove several references
+        wiki_text = new StringBuffer(
+"{{помета|сиб.}} [[ловушка]]<ref>Брокгауз</ref><ref>Даль</ref><ref>[http://www]</ref>{{пример|кулёма на медведя…}}" +
+    "" +
+    "" +
+"");
+
+
+
+
+        //expResult = new StringBuffer(
+        //        "Bold pale text. \n A special ceremony before going to combat usually took place.");
+        expResult = new StringBuffer(
+"''Bold [[wiktionary:pale|pale]] text. ''" +
+" A special ceremony before going to combat usually took place.");
+
+        result = ReferenceParser.expandMoveToEndOfText(wiki_text);
+        assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
+    }
+
 }

@@ -15,7 +15,7 @@ import java.sql.*;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
@@ -27,9 +27,12 @@ public class PageTableAll {
         "барак",
         "колокольчик", "car", "яблоко", "самолёт", "Flugzeug",  "airplane", // used in unit tests
         "нелетный", // redirect
+        "всё-равно",// soft-error redirect, template "{{wrongname|}}"
+        "маня",     // soft redirect, prints the word normal form (lemma)
         "негритянка",
         "злато", "зограф", "камыш", "кан", "кар", "карта",
-        "журавль", "игнатовец", "мурашкинец", "кулёма",
+        "журавль", "игнатовец", "мурашкинец", 
+        "кулёма",   // skip <ref>
         "punainen", "alt", "unter", "that", "tester",
         "unser", "um", "twin", "tuus", "tu", "top", "tomo", "toki", "title",
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
@@ -76,6 +79,7 @@ public class PageTableAll {
                 
                 // test problem pages:
                 if (n_cur < debug_pages.length)
+                    //page_title = wikt_conn.enc.EncodeFromJava("нелетный"); //
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
                 else 
                     break;

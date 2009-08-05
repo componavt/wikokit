@@ -1,7 +1,6 @@
-/*
- * StringUtilRegular.java
+/* StringUtilRegular.java - realm of regular expressions.
  *
- * Copyright (c) 2005 Andrew Krizhanovsky /aka at mail.iias.spb.su/
+ * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
