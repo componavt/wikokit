@@ -11,7 +11,9 @@ Todo:
 = DB layout changes =
 
 Todo now:
-  # translate word from lang source to lang target
+  # + page.is_redirect
+  # + page.redirect_target
+  # + lang_pos.redirect_type (e.g. Wordform, Misspelling)
 
 In future:
   # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria]
@@ -25,6 +27,7 @@ Done:
   # replace `relation.page_id` by `relation.wiki_text_id` and change link from ->page to ->wiki_text
   # + table `relation_type` (id,name), + field `relation.relation_type_id`
   # field `relation_type.name` should be unique
+  # translate word from lang source to lang target
 
 = wikt_parser =
 
