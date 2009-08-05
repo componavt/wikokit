@@ -10,6 +10,7 @@ package wikt.word;
 import wikipedia.language.LanguageType;
 import wikipedia.text.WikiParser;
 //import wikt.word.ru.WordRu;
+import wikt.word.WRedirect;
 
 /** Article in Wiktionary.
  *
@@ -22,7 +23,20 @@ public class WordBase {
     
     /** Language level of the word (includes: POS, meaning, translation). */
     private WLanguage[] lang;
-    
+
+    /** Redirected page, i.e. target or destination page.
+     * It is null for usual entries.
+     * 
+     * Hard redirect defined by #REDIRECT",
+     * @see TLangPOS.redirect_type and .lemma - a soft redirect.
+     */
+    private String  redirect_target;
+
+
+    /** Parses the article text.
+     * Creates and stores parsed data to the word (WordBase)
+     * for the given Wiktionary (defined by wikt_lang language).
+     */
     public WordBase(
             String _page_title,
             LanguageType wikt_lang, // constant for the Wiktionary dump
@@ -32,15 +46,15 @@ public class WordBase {
 
         // remove <!-- comments -->
         StringBuffer s = WikiParser.removeHTMLComments(text);
-        
-        //LangText[] lang_sections = WLanguage.splitToLanguageSections(wikt_lang, page_title, s);
-        lang = WLanguage.parse(wikt_lang, page_title, s);
+
+        redirect_target = WRedirect.getRedirect(wikt_lang, page_title, s);
+
+        if (null == redirect_target) {    // it is not a redirect
+            //LangText[] lang_sections = WLanguage.splitToLanguageSections(wikt_lang, page_title, s);
+            lang = WLanguage.parse(wikt_lang, page_title, s);
+        }
     }
     
-    /*public WordBase(String _page_title) {
-        page_title = _page_title;
-    }*/
-
     /** Gets an article title in Wiktionary. */
     public String getPageTitle() {
         return page_title;
@@ -49,6 +63,11 @@ public class WordBase {
     /** Gets all languages. */
     public WLanguage[] getAllLanguages() {
         return lang;
+    }
+
+    /** Checks is the entry a REDIRECT. */
+    public boolean isRedirect() {
+        return null != redirect_target;
     }
 
     /** Creates word for the given Wiktionary (defined by language)
@@ -82,7 +101,10 @@ public class WordBase {
     
     /** Word is empty if there are no recognized data in the parsed wiki text. */
     public boolean isEmpty() {
-        
+
+        if(isRedirect())
+            return false;   // REDIRECT is not an empty article.
+
         if (null != lang && lang.length > 0)
                 return false;
         

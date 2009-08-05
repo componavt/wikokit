@@ -7,6 +7,8 @@
 
 package wikt.sql;
 
+import wikt.constant.SoftRedirectType;
+
 import wikipedia.language.Encodings;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
@@ -38,7 +40,17 @@ public class TLangPOS {
     private int etymology_id;           //private TEtymology etimology;     // int etymology_id
     // see WPOSRu.splitToPOSSections in WPOSRuTest.java
 
-    /** A lemma of word described at the page 'Page'. */
+    /** Type of soft redirect (to the page .lemma):
+     * 0 - None - it's not a redirect, it is the usual Wiktionary entry
+     * 1 - Wordform, soft redirect to lemma, e.g. worked -> work
+     *     e.g. worked: "Simple past tense and past participle of [[work]]."
+     * 2 - Misspelling, soft redirect to correct spelling
+     *
+     * @see TPage.is_redirect - a hard redirect.
+     */
+    private SoftRedirectType redirect_type;
+
+    /** A lemma of word. It's used when .redirect_type != None */
     private String lemma;
     
     private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];

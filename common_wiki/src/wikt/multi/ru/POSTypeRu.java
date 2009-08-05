@@ -19,7 +19,7 @@ import java.util.HashMap;
  */
 public class POSTypeRu extends POSType {
 
-    /** POS name encountered in the Wiktionary, e.g.: {{acronym}} or  Acronym, 
+    /** POS name encountered in the Wiktionary, e.g.: {{acronym}} or Acronym, 
      * since there are ==={{acronym}}=== and ===Acronym===
      */
     private final String name_in_text;
