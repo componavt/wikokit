@@ -2,6 +2,8 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+CREATE SCHEMA IF NOT EXISTS DEFAULT CHARACTER SET latin1 COLLATE latin1_bin ;
+USE 
 
 -- -----------------------------------------------------
 -- Table `page`
@@ -13,7 +15,9 @@ CREATE  TABLE IF NOT EXISTS `page` (
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   `word_count` INT(6) UNSIGNED NOT NULL COMMENT 'number of words in the article' ,
   `wiki_link_count` INT(6) NOT NULL COMMENT 'number of wikified words (out-bound links) in the article' ,
-  `is_in_wiktionary` BOOLEAN NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
+  `is_in_wiktionary` TINYINT(1) NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
+  `is_redirect` TINYINT(1) NULL COMMENT 'Hard redirect defined by #REDIRECT' ,
+  `redirect_target` VARCHAR(255) NULL COMMENT 'Redirected (target or destination) page' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
 ENGINE = InnoDB
@@ -32,6 +36,7 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `etymology_n` TINYINT UNSIGNED NOT NULL ,
   `lemma` VARCHAR(255) BINARY NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
+  `redirect_type` TINYINT NULL COMMENT 'Type of soft redirect (Wordform, Misspelling)' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
 ENGINE = InnoDB

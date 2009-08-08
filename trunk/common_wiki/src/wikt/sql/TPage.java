@@ -36,7 +36,7 @@ public class TPage {
      * false, if the page_title exists only as a [[|wikified word]] */
     private boolean is_in_wiktionary;
 
-    /** Hard redirect defined by #REDIRECT", 
+    /** Hard redirect defined by #REDIRECT
      * @see TLangPOS.redirect_type and .lemma - a soft redirect. */
     private boolean is_redirect;
 

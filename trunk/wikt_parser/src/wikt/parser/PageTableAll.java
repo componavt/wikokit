@@ -15,7 +15,7 @@ import java.sql.*;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
@@ -26,10 +26,11 @@ public class PageTableAll {
         "бор",
         "барак",
         "колокольчик", "car", "яблоко", "самолёт", "Flugzeug",  "airplane", // used in unit tests
-        "нелетный", // redirect
+        "нелетный", "улепетывание", // redirect
         "всё-равно",// soft-error redirect, template "{{wrongname|}}"
         "маня",     // soft redirect, prints the word normal form (lemma)
         "негритянка",
+        "borda",   // -lang-
         "злато", "зограф", "камыш", "кан", "кар", "карта",
         "журавль", "игнатовец", "мурашкинец", 
         "кулёма",   // skip <ref>
