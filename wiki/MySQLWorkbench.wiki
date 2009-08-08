@@ -1,0 +1,15 @@
+#labels Phase-Implementation,export,MySQL,SQL,wikt_parser
+How to create _wikt_parsed_empty.sql_ from _wikt_parsed_empty.mwb_ via MySQL Workbench
+
+See the folder wikokit/wikt_parser/doc/
+
+= Details =
+
+MySQL Workbench tips:
+  * Export forward engineer
+  * V Generate Drop Statements Before Each CREATE statement
+  * V Omit Scheme Qualifier
+  * V Generate INSERTS Statements for Tables
+
+Vim tips:
+  * %s/`mydb`.//g 
