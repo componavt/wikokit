@@ -1,7 +1,11 @@
-#summary How to create _wikt_parsed_empty.sql_ from _wikt_parsed_empty.mwb_ via MySQL Workbench
+#summary How to create empty SQL file for the Wiktionary parsed database.
 #labels Phase-Implementation,export,MySQL,SQL,wikt_parser
 
-See the folder wikokit/wikt_parser/doc/
+== Intro == 
+
+The goal is to create an empty SQL file for the Wiktionary parsed database, i.e. create _wikt_parsed_empty.sql_ from _wikt_parsed_empty.mwb_ via MySQL Workbench.
+
+See the files in the folder wikokit/wikt_parser/doc/
 
 = Details =
 
