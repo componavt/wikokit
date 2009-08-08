@@ -93,7 +93,7 @@ public class ReferenceParserTest extends TestCase {
         expResult = new StringBuffer(
 "Впечатление произвело не только, и даже не столько увиденное и услышанное, сколько личность самого " +
 "их будущего Гуруджи — Шри Рам Кумар Шармы.");
-        result = ReferenceParser.expandMoveToEndOfText(wiki_text);
+        result = ReferenceParser.remove(wiki_text);
         assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
 
 
@@ -111,25 +111,16 @@ public class ReferenceParserTest extends TestCase {
 "''Bold [[wiktionary:pale|pale]] text. ''" +
 " A special ceremony before going to combat usually took place.");
 
-        result = ReferenceParser.expandMoveToEndOfText(wiki_text);
+        result = ReferenceParser.remove(wiki_text);
         assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
 
 
         // 3. complex: remove several references
         wiki_text = new StringBuffer(
-"{{помета|сиб.}} [[ловушка]]<ref>Брокгауз</ref><ref>Даль</ref><ref>[http://www]</ref>{{пример|кулёма на медведя…}}" +
-    "" +
-    "" +
-"");
+"{{помета|сиб.}} [[ловушка]]<ref>Брокгауз</ref><ref>Даль</ref><ref>[http://www]</ref>{{пример|кулёма на медведя…}}");
 
-
-
-
-        //expResult = new StringBuffer(
-        //        "Bold pale text. \n A special ceremony before going to combat usually took place.");
         expResult = new StringBuffer(
-"''Bold [[wiktionary:pale|pale]] text. ''" +
-" A special ceremony before going to combat usually took place.");
+"{{помета|сиб.}} [[ловушка]]{{пример|кулёма на медведя…}}");
 
         result = ReferenceParser.expandMoveToEndOfText(wiki_text);
         assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
