@@ -3,7 +3,7 @@
 
 == Intro == 
 
-The goal is to create an empty SQL file for the Wiktionary parsed database, i.e. create _wikt_parsed_empty.sql_ from _wikt_parsed_empty.mwb_ via MySQL Workbench.
+The goal is to create an empty SQL file for the Wiktionary parsed database, i.e. create `wikt_parsed_empty.sql` from `wikt_parsed_empty.mwb` via MySQL Workbench.
 
 See the files in the folder wikokit/wikt_parser/doc/
 
