@@ -1,5 +1,5 @@
+#summary How to create _wikt_parsed_empty.sql_ from _wikt_parsed_empty.mwb_ via MySQL Workbench
 #labels Phase-Implementation,export,MySQL,SQL,wikt_parser
-How to create _wikt_parsed_empty.sql_ from _wikt_parsed_empty.mwb_ via MySQL Workbench
 
 See the folder wikokit/wikt_parser/doc/
 
