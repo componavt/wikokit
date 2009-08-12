@@ -27,7 +27,7 @@ public class PageTableAll {
         "барак",
         "колокольчик", "car", "яблоко", "самолёт", "Flugzeug",  "airplane", // used in unit tests
         "нелетный", "улепетывание", // redirect
-        "всё-равно",// soft-error redirect, template "{{wrongname|}}"
+        "всё-равно",// soft-error redirect, template "{{wrongname|}}" = "{{misspelling of|}}"
         "маня",     // soft redirect, prints the word normal form (lemma)
         "негритянка",
         "borda",   // -lang-
@@ -80,8 +80,8 @@ public class PageTableAll {
                 
                 // test problem pages:
                 if (n_cur < debug_pages.length)
-                    //page_title = wikt_conn.enc.EncodeFromJava("нелетный"); //
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
+                    //page_title = wikt_conn.enc.EncodeFromJava("нелетный"); // всё-равно
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit

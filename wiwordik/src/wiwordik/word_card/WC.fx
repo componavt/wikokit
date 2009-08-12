@@ -14,6 +14,8 @@ import wikipedia.language.LanguageType;
 
 import wiwordik.util.ScrollNode;
 
+import java.lang.*;
+
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.Group;
@@ -26,6 +28,7 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Flow;
 import javafx.ext.swing.SwingScrollPane;
 //import javax.swing.JFrame;
+
 
 /** One word card describes one word (page, entry in Wiktionary).
  *
@@ -214,16 +217,22 @@ public class WC{ // extends JFrame {
             def page_title : String = _tpage.getPageTitle();
             header_page_title = page_title;
 
+            var s : String = "";
             if(_tpage.isInWiktionary()) {
-                headerText.content = "{page_title} (+)"; }
+                s = "{page_title} (+)"; }
             else
-                headerText.content = "{page_title} (-)";
+                s = "{page_title} (-)";
+
+            if(_tpage.isRedirect())
+                s += "\n \nСм. {_tpage.getRedirect()} (Redirect)";
+
+            headerText.content = s;
         }
     }
     
     /** Word is a selected word in the list, an index is a number of the word.
      *  Prints meanings for each language.
-    */
+     */
     public function getDataForSelectedWordByTPage (
                                         conn : Connect,
                                         _tpage : TPage) {
@@ -232,11 +241,21 @@ public class WC{ // extends JFrame {
             
             printHeaderText (_tpage);
 
-            // Prints meanings for each language
-            var lang_pos_array : TLangPOS[] = TLangPOS.get(conn, _tpage);     // var lang_pos_array : TLangPOS[]
-            card_text_value = getDefinitionsForLangPOS(conn, _tpage.getPageTitle(), lang_pos_array);
+            if(_tpage.isRedirect()) {
+                if(_tpage.isRedirect())
+                headerText.content = "\n \nСм. {_tpage.getRedirect()} (Redirect)";
+            } else {
+                // Prints meanings for each language
+                var lang_pos_array : TLangPOS[] = TLangPOS.get(conn, _tpage);     // var lang_pos_array : TLangPOS[]
+                card_text_value = getDefinitionsForLangPOS(conn, _tpage.getPageTitle(), lang_pos_array);
+
+                System.out.println("\nNot a redirect.");
+            }
         } else
             card_text_value = "";
+
+        System.out.println(" title={_tpage.getPageTitle()}.");
+        System.out.println(" getRedirect={_tpage.getRedirect()}.");
     }
     
     
@@ -305,7 +324,7 @@ public class WC{ // extends JFrame {
     public function createCXLangListByWord( conn : Connect, word : String,
                                         page_array: TPage[]) {
 
-        headerText.content = word;
+        //headerText.content = word;
 
         var _tpage = TPage.get(conn, word);
 

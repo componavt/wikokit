@@ -50,12 +50,18 @@ public class TPage {
 
     private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
 
-    public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,boolean _is_in_wiktionary) {
+    public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,
+                 boolean _is_in_wiktionary,
+                 String _redirect_target)
+    {
         id              = _id;
         page_title      = _page_title;
         word_count      = _word_count;
         wiki_link_count = _wiki_link_count;
         is_in_wiktionary = _is_in_wiktionary;
+
+        is_redirect     = null != _redirect_target;
+        redirect_target = _redirect_target;
     }
 
     /*public void init() {
@@ -71,6 +77,11 @@ public class TPage {
         return id;
     }
 
+    /** Gets title of the wiki page, word. */
+    public String getPageTitle() {
+        return page_title;
+    }
+    
     /** Gets number of words, size of the page in words. */
     public int getWordCount() {
         return word_count;
@@ -86,9 +97,18 @@ public class TPage {
         return is_in_wiktionary;
     }
 
-    /** Gets title of the wiki page, word. */
-    public String getPageTitle() {
-        return page_title;
+    /** Returns true, if the page_title is a #REDIRECT in Wiktionary.
+     * @see TLangPOS.redirect_type and .lemma - a soft redirect.
+     */
+    public boolean isRedirect() {
+        return is_redirect;
+    }
+    
+    /** Gets a redirected page, i.e. target or destination page.
+     * It is null for usual entries.
+     */
+    public String getRedirect() {
+        return redirect_target;
     }
 
     /** Gets ID of a record or inserts record (if it is absent)
@@ -98,33 +118,47 @@ public class TPage {
      * @param word_count   size of the page in words
      * @param wiki_link_count number of wikified words at the page
      * @param is_in_wiktionary true, if the page_title exists in Wiktionary
+     * @param redirect_target redirected (target, destination) page,
+     *                         it is null for usual entries
      */
     public static TPage getOrInsert (Connect connect,String page_title,int word_count,int wiki_link_count,
-            boolean is_in_wiktionary) {
+            boolean is_in_wiktionary,String redirect_target) {
         
         TPage p = TPage.get(connect, page_title);
         if(null == p)
-            p = TPage.insert(connect, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            p = TPage.insert(connect, page_title, word_count, wiki_link_count, 
+                            is_in_wiktionary, redirect_target);
         return p;
     }
 
     /** Inserts record into the table 'page'.<br><br>
      * INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES ("apple",1,2,TRUE);
+     * 
+     * or with redirect:
+     * INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target) VALUES ("apple",1,2,TRUE,TRUE,"test_neletnwi");
      * @param page_title   title of wiki page
      * @param word_count   size of the page in words
      * @param wiki_link_count number of wikified words at the page
      * @param is_in_wiktionary true, if the page_title exists in Wiktionary
+     * @param redirect_target redirected (target, destination) page,
+     *                         it is null for usual entries
      */
     public static TPage insert (Connect connect,String page_title,int word_count,int wiki_link_count,
-            boolean is_in_wiktionary) {
+            boolean is_in_wiktionary,String redirect_target) {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         TPage page = null;
+        boolean is_redirect = null != redirect_target && redirect_target.length() > 0;
         try
         {
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary) VALUES (\"");
+            str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary");
+
+            if(is_redirect)
+                str_sql.append(",is_redirect,redirect_target");
+
+            str_sql.append(") VALUES (\"");
             String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
             str_sql.append(safe_title);
             str_sql.append("\",");
@@ -133,6 +167,14 @@ public class TPage {
             str_sql.append(wiki_link_count);
             str_sql.append(",");
             str_sql.append(is_in_wiktionary);
+
+            if(is_redirect) {// ,TRUE,"test_neletnwi"
+                str_sql.append(",TRUE,\"");
+                str_sql.append(PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect,
+                               redirect_target));
+                str_sql.append("\"");
+            }
+
             str_sql.append(")");
             s.executeUpdate (str_sql.toString());
 
@@ -140,7 +182,8 @@ public class TPage {
             s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             rs = s.getResultSet ();
             if (rs.next ())
-                page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count, is_in_wiktionary);
+                page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count, 
+                                 is_in_wiktionary, redirect_target);
                 
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
@@ -153,7 +196,7 @@ public class TPage {
 
     /** Selects row from the table 'page' by the page_title.
      *
-     *  SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title="apple";
+     *  SELECT id,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title="apple";
      *
      * @param  page_title  title of Wiktionary article
      * @return null if page_title is absent
@@ -170,7 +213,7 @@ public class TPage {
 
             String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
                                 
-            str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title=\"");
+            str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
 
@@ -181,9 +224,14 @@ public class TPage {
                 int id              = rs.getInt("id");
                 int word_count      = rs.getInt("word_count");
                 int wiki_link_count = rs.getInt("wiki_link_count");
-                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+                //boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+                boolean is_in_wiktionary = 0 != rs.getInt("is_in_wiktionary");
                 
-                tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
+                boolean is_redirect = 0 != rs.getInt("is_redirect");
+                String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
+
+                tp = new TPage(id, page_title, word_count, wiki_link_count,
+                               is_in_wiktionary, redirect_target);
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
@@ -195,22 +243,22 @@ public class TPage {
     }
     
      /** Selects row from the table 'page' by the page ID.
-     *
-     *  SELECT page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE id=1;
-     *
-     * @param  id  ID of Wiktionary article's title in the table 'page'
-     * @return null if page_title is absent
-     */
+      *
+      * SELECT page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE id=1;
+      *
+      * @param  id  ID of Wiktionary article's title in the table 'page'
+      * @return null if page_title is absent
+      */
     public static TPage getByID (Connect connect,int id) {
         
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         TPage       tp = null;
-
+        
         try {
             s = connect.conn.createStatement ();
-            str_sql.append("SELECT page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE id=");
+            str_sql.append("SELECT page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE id=");
             str_sql.append(id);
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
@@ -219,9 +267,12 @@ public class TPage {
                 String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
                 int word_count      = rs.getInt("word_count");
                 int wiki_link_count = rs.getInt("wiki_link_count");
-                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+                boolean is_in_wiktionary = 0 != rs.getInt("is_in_wiktionary");
+                boolean is_redirect = 0 != rs.getInt("is_redirect");
+                String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
 
-                tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
+                tp = new TPage(id, page_title, word_count, wiki_link_count,
+                               is_in_wiktionary, redirect_target);
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
@@ -235,14 +286,20 @@ public class TPage {
     /** Selects row from the table 'page', WHERE page_title starts from 'prefix',
      * result list is constrained by 'limit'.
      *
-     * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE 'S%' LIMIT 1;
-     * 
+     * skip #REDIRECT
+     * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE 'zzz%' AND is_redirect is NULL LIMIT 1;
+     *
+     * any entries, with #REDIRECT too
+     * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE 'S%' LIMIT 1;
+
      * @param  limit    constraint of the number of rows returned, if it's negative then a constraint is omitted
      * @param  prefix   the begining of the page_titles
+     * @param  b_skip_redirects return articles without redirects if true
      * @return null if page_title is absent
      */
-    public static TPage[] getByPrefix (Connect connect,String prefix,int limit) {
-        
+    public static TPage[] getByPrefix (Connect connect,String prefix,
+                                        int limit, boolean b_skip_redirects)
+    {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
@@ -254,10 +311,13 @@ public class TPage {
         try {
             s = connect.conn.createStatement ();
             String safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
-            str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE \"");
+            str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
             str_sql.append(safe_prefix);
             str_sql.append("%\"");
-            
+
+            if(b_skip_redirects)
+                str_sql.append(" AND is_redirect is NULL");
+
             if(limit > 0) {
                 str_sql.append(" LIMIT ");
                 str_sql.append(limit);
@@ -265,22 +325,32 @@ public class TPage {
             
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
-            boolean b_first = true;
             while (rs.next ())
             {
-                if(b_first) {
+                if(null == tp_list)
                     tp_list = new ArrayList<TPage>();
-                    b_first = false;
-                }
 
                 int id              = rs.getInt("id");
                 int word_count      = rs.getInt("word_count");
                 int wiki_link_count = rs.getInt("wiki_link_count");
                 boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
                 String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
+
+                boolean is_redirect = 0 != rs.getInt("is_redirect");
+                String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
+
+                if (b_skip_redirects)
+                    assert(null == redirect_target);
                 
-                TPage tp = new TPage(id, page_title, word_count, wiki_link_count, is_in_wiktionary);
+                TPage tp = new TPage(id, page_title, word_count, wiki_link_count,
+                               is_in_wiktionary, redirect_target);
                 tp_list.add(tp);
+
+                //System.out.println(" title=" + page_title +
+                //        "; redirect_target=" + redirect_target +
+                //        "; id=" + id +
+                //        "; is_redirect=" + is_redirect +
+                //        " (TPage.getByPrefix)");
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());

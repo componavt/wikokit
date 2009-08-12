@@ -35,7 +35,8 @@ public class Keeper {
         // to calculate, todo ...
 
         boolean is_in_wiktionary = true;
-        TPage tpage = TPage.getOrInsert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        TPage tpage = TPage.getOrInsert(conn, page_title, word_count, wiki_link_count, 
+                is_in_wiktionary, word.getRedirect());
 
         if(word.isRedirect())
             return;
