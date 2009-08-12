@@ -11,9 +11,10 @@ Todo:
 = DB layout changes =
 
 Todo now:
-  # + page.is_redirect
-  # + page.redirect_target
+  # page.is_redirect (done)
+  # page.redirect_target (done)
   # + lang_pos.redirect_type (e.g. Wordform, Misspelling)
+  # + i18n: "See нелётный (Redirect)" vs. "См. нелётный (Перенаправление)"
 
 In future:
   # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria]
