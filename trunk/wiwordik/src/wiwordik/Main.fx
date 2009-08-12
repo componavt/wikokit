@@ -125,8 +125,15 @@ class WordListModel {
     }
 }*/
 
-//                                any (first) 10 words, since "" == prefix
-var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, "", 10);
+/** Skips #REDIRECT words if true. */
+var b_skip_redirects : Boolean = false;
+
+/** Number of words in visible in the list */
+var n_words_list : Integer = 21;
+
+/** Words extracted by several letters (prefix). */
+var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, "", n_words_list, b_skip_redirects);
+                                // any (first) N words, since "" == prefix
 
 var page_array_string: String[];
 copyWordsToStringArray();
@@ -215,20 +222,20 @@ var word_Text: TextBox = TextBox {
 
     action: function() { // "Enter"
         var wc = WC {}
-        wc.getDataByWord(wikt_parsed_conn, word_value.trim(), page_array);
+        //wc.getDataByWord(wikt_parsed_conn, word_value.trim(), page_array);
 
         wc.createCXLangListByWord(wikt_parsed_conn, word_value.trim(), page_array);
     }
     
-    onKeyTyped: function(e:KeyEvent) {
-        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), 20);
+    onKeyTyped: function(e:KeyEvent){
+        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), n_words_list, b_skip_redirects);
         page_array_string = copyWordsToStringArray();
-
+        
         //System.out.println("e.code = {e.code}, e.char {e.char}, word_value = {word_value}");
         //System.out.print("page_array_string: ");
         //for (p in page_array_string) {
         //    System.out.print("{p}, ");
-       // }
+        // }
     }
 }
 //word_value = page_array[0].getPageTitle();

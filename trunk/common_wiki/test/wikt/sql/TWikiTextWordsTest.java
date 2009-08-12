@@ -49,10 +49,12 @@ public class TWikiTextWordsTest {
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
+        String redirect_target = null;
 
         page = TPage.get(conn, page_title);
         if(null == page) {
-            page = TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            page = TPage.insert(conn, page_title, word_count, wiki_link_count, 
+                                is_in_wiktionary, redirect_target);
             assertTrue(null != page);
         }
 

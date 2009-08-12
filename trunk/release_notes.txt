@@ -1,9 +1,6 @@
 wikokit 0.12.6 2009-0?-??
   common_wiki 167 tests passed, 33 tests failed (wo wikt_parsed)
-
-  common_wiki 173 tests passed, 25 tests failed
-  common_wiki 164 tests passed, 32 tests failed
-  common_wiki 134 tests passed, 14 tests failed
+  common_wiki 173 tests passed, 25 tests failed (with wikt_parsed)
 
   Project synarcher was renamed to wikokit.
   New home: code.google.com

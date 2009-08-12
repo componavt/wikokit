@@ -94,8 +94,10 @@ public class TWikiTextWords {
         // fill table 'page'
         int word_count = 0;
         int wiki_link_count = 0;
-        boolean is_in_wiktionary = false; // don't know, may be
-        TPage page = TPage.getOrInsert(connect, word_link, word_count, wiki_link_count, is_in_wiktionary);
+        boolean is_in_wiktionary = false; // don't know, may be (!todo the check)
+        String redirect_target = null;
+        TPage page = TPage.getOrInsert(connect, word_link, word_count, wiki_link_count, 
+                                       is_in_wiktionary, redirect_target);
         assert(page != null);
 
         TPageInflection page_infl;

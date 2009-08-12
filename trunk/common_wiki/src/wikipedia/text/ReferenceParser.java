@@ -79,37 +79,14 @@ public class ReferenceParser {
 
     /** Removes refences from the text.
      */
-    public static StringBuffer remove(StringBuffer text)
+    public static StringBuffer removeReferences(StringBuffer text)
     {
         if(null == text || 0 == text.length()) {
             return NULL_STRINGBUFFER;
         }
-
+        
         //Matcher m = ptrn_ref_boundaries.matcher(StringUtil.escapeCharDollarAndBackslash(text.toString()));
         Matcher m = ptrn_ref_boundaries.matcher(text.toString());
-
-        boolean bfound = m.find();
-        if(bfound) {
-            StringBuffer result = new StringBuffer();
-            StringBuffer eo_text = new StringBuffer();  // end of text
-            while(bfound) {
-                                                                   // group(1) := text within <ref>reference boundaries</ref>
-                StringBuffer sb = WikiParser.parseCurlyBrackets(
-                            StringUtil.escapeCharDollarAndBackslash(m.group(1) ));
-                sb = removeHTTPURL(sb);
-
-                eo_text.append( sb );
-                m.appendReplacement(result, "");
-                bfound = m.find();
-            }
-            m.appendTail(result);
-            if(eo_text.length() > 0) {
-                result.append("\n\n");
-                result.append(eo_text);
-            }
-            return result;
-        }
-
-        return text;
+        return new StringBuffer(m.replaceAll(""));
     }
 }

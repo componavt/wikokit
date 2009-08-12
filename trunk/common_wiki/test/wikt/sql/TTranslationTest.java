@@ -107,11 +107,13 @@ public class TTranslationTest {
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
+        String redirect_target = null;
 
         page = null;
         page = TPage.get(conn, page_title);
         if(null == page) {
-            TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            TPage.insert(conn, page_title, word_count, wiki_link_count, 
+                         is_in_wiktionary, redirect_target);
             page = TPage.get(conn, page_title);
         }
 
@@ -248,10 +250,11 @@ public class TTranslationTest {
 
         // 1. let's check conflict: "plane" and "Plane"
         String de_page_title = "Plane";
+        String redirect_target = null;
 
         TPage de_page = TPage.get(conn, de_page_title);
         assertNull(de_page);
-        de_page = TPage.insert(conn, de_page_title, 0, 0, false);
+        de_page = TPage.insert(conn, de_page_title, 0, 0, false, redirect_target);
         assertNotNull(de_page);
 
 
@@ -259,13 +262,13 @@ public class TTranslationTest {
         TLang lang = TLang.get(LanguageType.ru);
         int etymology_n = 0;
         String lemma = "";
-        WTranslation[] wtrans_all;
+//        WTranslation[] wtrans_all_;
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         LanguageType lang_section = LanguageType.ru; // Russian word
 
         {
             page_title = "самолёт";
-            page = TPage.insert(conn, page_title, 0, 0, false);
+            page = TPage.insert(conn, page_title, 0, 0, false, redirect_target);
             assertNotNull(page);
             lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
             assertNotNull(lang_pos);
@@ -286,7 +289,7 @@ public class TTranslationTest {
 
         {
             page_title = "план";
-            page = TPage.insert(conn, page_title, 0, 0, false);
+            page = TPage.insert(conn, page_title, 0, 0, false, redirect_target);
             assertNotNull(page);
             lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
             assertNotNull(lang_pos);

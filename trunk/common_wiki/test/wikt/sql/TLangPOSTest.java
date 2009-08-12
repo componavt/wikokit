@@ -51,10 +51,12 @@ public class TLangPOSTest {
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
+        String redirect_target = null;
 
         page = TPage.get(conn, page_title);
         if(null == page) {
-            TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+            TPage.insert(conn, page_title, word_count, wiki_link_count, 
+                         is_in_wiktionary, redirect_target);
             page = TPage.get(conn, page_title);
             assertTrue(null != page);
         }

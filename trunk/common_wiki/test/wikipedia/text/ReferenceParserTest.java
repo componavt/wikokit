@@ -87,13 +87,11 @@ public class ReferenceParserTest extends TestCase {
 
         // 1. expand and move ref text to the end of text
         wiki_text = new StringBuffer(
-"Впечатление произвело не только, и даже не столько увиденное и услышанное, сколько личность самого " +
-"их будущего Гуруджи<ref>Джи – уважительная приставка, по типу «сан» у японцев.</ref> — Шри Рам Кумар Шармы.");
+"Впечатление от Гуруджи<ref>Джи – уважительная приставка....</ref> — Шри Рам Кумар Шармы.");
 
         expResult = new StringBuffer(
-"Впечатление произвело не только, и даже не столько увиденное и услышанное, сколько личность самого " +
-"их будущего Гуруджи — Шри Рам Кумар Шармы.");
-        result = ReferenceParser.remove(wiki_text);
+"Впечатление от Гуруджи — Шри Рам Кумар Шармы.");
+        result = ReferenceParser.removeReferences(wiki_text);
         assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
 
 
@@ -109,9 +107,10 @@ public class ReferenceParserTest extends TestCase {
         //        "Bold pale text. \n A special ceremony before going to combat usually took place.");
         expResult = new StringBuffer(
 "''Bold [[wiktionary:pale|pale]] text. ''" +
+    "\n" +
 " A special ceremony before going to combat usually took place.");
 
-        result = ReferenceParser.remove(wiki_text);
+        result = ReferenceParser.removeReferences(wiki_text);
         assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
 
 
@@ -122,8 +121,7 @@ public class ReferenceParserTest extends TestCase {
         expResult = new StringBuffer(
 "{{помета|сиб.}} [[ловушка]]{{пример|кулёма на медведя…}}");
 
-        result = ReferenceParser.expandMoveToEndOfText(wiki_text);
+        result = ReferenceParser.removeReferences(wiki_text);
         assertTrue(expResult.toString().equalsIgnoreCase( result.toString() ) );
     }
-
 }

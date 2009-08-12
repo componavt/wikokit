@@ -10,7 +10,7 @@ package wikt.word;
 import wikipedia.language.LanguageType;
 import wikipedia.text.WikiParser;
 //import wikt.word.ru.WordRu;
-import wikt.word.WRedirect;
+
 
 /** Article in Wiktionary.
  *
@@ -68,6 +68,13 @@ public class WordBase {
     /** Checks is the entry a REDIRECT. */
     public boolean isRedirect() {
         return null != redirect_target;
+    }
+
+    /** Gets a redirected page, i.e. target or destination page.
+     * It is null for usual entries.
+     */
+    public String getRedirect() {
+        return redirect_target;
     }
 
     /** Creates word for the given Wiktionary (defined by language)

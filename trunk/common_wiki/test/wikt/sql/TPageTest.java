@@ -44,10 +44,11 @@ public class TPageTest {
         Connect conn = ruwikt_parsed_conn;
 
         //page_title = "test_тыблоко";
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_тыблоко");
+        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_tybloko");
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
+        String redirect_target = null;
         
         TPage p = null;
         p = TPage.get(conn, page_title);
@@ -55,9 +56,11 @@ public class TPageTest {
             TPage.delete(conn, page_title);
         }
 
-        TPage p0 = TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        TPage p0 = TPage.insert(conn, page_title, word_count, wiki_link_count, 
+                                is_in_wiktionary, redirect_target);
         assertTrue(null != p0);
         p = TPage.get(conn, page_title);
+        assertTrue(null != p);
         assertEquals(p0.getID(), p.getID());
 
         assertTrue(p != null);
@@ -80,10 +83,11 @@ public class TPageTest {
         String page_title;
         Connect conn = ruwikt_parsed_conn;
         
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_тыблоко");
+        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_tybloko");
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
+        String redirect_target = null;
         
         TPage p = null;
         p = TPage.get(conn, page_title);
@@ -91,7 +95,8 @@ public class TPageTest {
             TPage.delete(conn, page_title);
         }
         
-        TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
+        TPage.insert(conn, page_title, word_count, wiki_link_count, 
+                     is_in_wiktionary, redirect_target);
         p = TPage.get(conn, page_title);
         
         assertTrue(p != null);
@@ -107,6 +112,47 @@ public class TPageTest {
         p = TPage.get(conn, page_title);
         assertTrue(p == null);
     }
+
+    @Test // tests Insert() Get() and GetByID() with redirects
+    public void testRedirect() {
+        System.out.println("redirect_ru");
+        String page_title;
+        Connect conn = ruwikt_parsed_conn;
+
+        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_neletnwi");
+        int word_count = 7;
+        int wiki_link_count = 13;
+        boolean is_in_wiktionary = true;
+        String redirect_target = ruwikt_parsed_conn.enc.EncodeFromJava("test_нелётный");
+
+        TPage p = null;
+        p = TPage.get(conn, page_title);
+        if(null != p) {
+            TPage.delete(conn, page_title);
+        }
+        
+        TPage.insert(conn, page_title, word_count, wiki_link_count,
+                     is_in_wiktionary, redirect_target);
+        p = TPage.get(conn, page_title);
+
+        assertTrue(p != null);
+        assertTrue(p.getID() > 0);
+
+        TPage p2 = TPage.getByID(conn, p.getID());
+        assertTrue(p2 != null);
+        assertEquals(p.getPageTitle(), p2.getPageTitle());
+
+        // test the valid redirect
+        assertTrue(p2.isRedirect());
+        String result_redirect = p2.getRedirect();
+        assertTrue(result_redirect.equalsIgnoreCase(redirect_target));
+        
+        // delete temporary DB record
+        TPage.delete(conn, page_title);
+
+        p = TPage.get(conn, page_title);
+        assertTrue(p == null);
+    }
     
     @Test
     public void test_getByPrefix() {
@@ -117,35 +163,43 @@ public class TPageTest {
 
         String word1 = "zzzz1";
         String word2 = "zzzz2";
-        String word3 = "zzzz3";
+        String word3 = "zzzz3_with_redirect";
         
         prefix = ruwikt_parsed_conn.enc.EncodeFromJava("zzzz");
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
+        String redirect_target = null;
         
         TPage p[] = null;
         //TPage.insert(conn, page_title, word_count, wiki_link_count, is_in_wiktionary);
-        TPage.insert(conn, word1, word_count, wiki_link_count, is_in_wiktionary);
-        TPage.insert(conn, word2, word_count, wiki_link_count, is_in_wiktionary);
-        TPage.insert(conn, word3, word_count, wiki_link_count, is_in_wiktionary);
+        TPage.insert(conn, word1, word_count, wiki_link_count, is_in_wiktionary, redirect_target);
+        TPage.insert(conn, word2, word_count, wiki_link_count, is_in_wiktionary, redirect_target);
+        redirect_target = ruwikt_parsed_conn.enc.EncodeFromJava("test_redirect_target");
+        TPage.insert(conn, word3, word_count, wiki_link_count, is_in_wiktionary, redirect_target);
 
         // tests
         limit = 0;
-        p = TPage.getByPrefix(conn, prefix, limit);
+        boolean b_skip_redirects = true;
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
         assertEquals(p.length, 0);
 
         limit = 1;
-        p = TPage.getByPrefix(conn, prefix, limit);
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
         assertEquals(p.length, 1);
 
         limit = -1;
-        p = TPage.getByPrefix(conn, prefix, limit);
-        assertEquals(p.length, 3);
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
+        assertEquals(p.length, 2);
 
         limit = 3;
-        p = TPage.getByPrefix(conn, prefix, limit);
+        b_skip_redirects = false;
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
         assertEquals(p.length, 3);
+
+        assertTrue(!p[0].isRedirect());
+        assertTrue(!p[1].isRedirect());
+        assertTrue( p[2].isRedirect());
         
         assertEquals(p[0].getWordCount(),      word_count);
         assertEquals(p[0].getWikiLinkCount(),  wiki_link_count);
