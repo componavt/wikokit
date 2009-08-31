@@ -59,7 +59,7 @@ public class TLang {
      * before this function execution.
      */
     public static int getIDFast(LanguageType lt) {
-        if(null == lang2id) {
+        if(null == lang2id || 0 == lang2id.size()) {
             System.err.println("Error (wikt_parsed TLang.getIDFast()):: What about calling 'createFastMaps()' before?");
             return -1;
         }

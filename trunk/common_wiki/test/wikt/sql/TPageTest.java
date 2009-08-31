@@ -13,7 +13,7 @@ import wikipedia.language.LanguageType;
 
 public class TPageTest {
 
-    public Connect   ruwikt_parsed_conn;
+    public Connect   ruwikt_parsed_conn, ruwikt_sqlite;
 
     public TPageTest() {
     }
@@ -30,6 +30,10 @@ public class TPageTest {
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
         ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+
+        // ruwikt_parsed_conn_sqlite
+        ruwikt_sqlite = new Connect();
+        ruwikt_sqlite.OpenSQLite(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
     }
 
     @After

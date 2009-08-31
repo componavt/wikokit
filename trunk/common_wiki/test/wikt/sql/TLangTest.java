@@ -28,7 +28,11 @@ public class TLangTest {
     @Before
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
-        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+        //ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+
+        // SQLite
+        //Connect.testSQLite();
+        ruwikt_parsed_conn.OpenSQLite(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
     }
 
     @After
@@ -39,7 +43,7 @@ public class TLangTest {
     @Test
     public void testInsert() {
         System.out.println("insert_ru");
-
+/*
         Connect conn = ruwikt_parsed_conn;
         String code = "ru";
         //String lang_name = ruwikt_parsed_conn.enc.EncodeFromJava("Русский");
@@ -69,7 +73,7 @@ public class TLangTest {
         lt = p.getLanguage();
         assertTrue(lt.getCode().equalsIgnoreCase(code));
         assertTrue(lt.getName().equalsIgnoreCase(name));    // todo lang_name also
-        
+*/
         // delete temporary DB record
         //TLang.delete(conn, lt);
         //p = TLang.get(conn, lt);
@@ -81,7 +85,7 @@ public class TLangTest {
         System.out.println("getID");
         
         // once upon a time: create Wiktionary parsed db
-        TLang.recreateTable(ruwikt_parsed_conn);
+//        TLang.recreateTable(ruwikt_parsed_conn);
 
         // once upon a time: use Wiktionary parsed db
         TLang.createFastMaps(ruwikt_parsed_conn);
@@ -90,6 +94,7 @@ public class TLangTest {
         int os_id = TLang.getIDFast(LanguageType.os);
 
         TLang tlang = TLang.get(ruwikt_parsed_conn, LanguageType.os);
+        assertNotNull(tlang);
         assertEquals(tlang.getID(), os_id);
     }
     
@@ -97,6 +102,6 @@ public class TLangTest {
     @Test
     public void testRecreateTable() {
         System.out.println("recreateTable, fill table `lang`");
-        TLang.recreateTable(ruwikt_parsed_conn);
+//        TLang.recreateTable(ruwikt_parsed_conn);
     }
 }
