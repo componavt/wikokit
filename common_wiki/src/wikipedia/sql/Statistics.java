@@ -30,8 +30,9 @@ public class Statistics {
         try {
             s = connect.conn.createStatement ();
             str_sql = "SELECT COUNT(*) AS size FROM " + table_name;
-            s.executeQuery (str_sql);
-            rs = s.getResultSet ();
+            rs = s.executeQuery(str_sql);
+            //s.executeQuery (str_sql);
+            //rs = s.getResultSet ();
             if (rs.next ())
             {
                 size = rs.getInt("size");

@@ -1,3 +1,8 @@
+/* Connect.java - connection to a database functions, the list of databases.
+ *
+ * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under GNU General Public License.
+ */
 
 package wikipedia.sql;
 
@@ -8,7 +13,9 @@ import java.sql.Connection;
 import java.sql.DriverManager; 
 import java.sql.SQLException; 
 
-/**
+import java.sql.*;
+
+/** Connection to a database functions, the list of available databases.
  * 
  * @see com.touchgraph.wikibrowser.parameter.Constants in TGWikiBrowser subproject
  */
@@ -112,7 +119,26 @@ public class Connect {
         return db_name.substring(0, question_sign);
     }
 
-    
+    /** Opens SQLite connection.
+     *
+     * @param _db_host
+     * @param _db_name
+     * @param _user
+     * @param _pass
+     * @param _lang language of Wiktionary/Wikipedia edition, main or 
+     *               native language, e.g. Russian in Russian Wiktionary.
+     */
+    public void OpenSQLite(String _db_host, String _db_name, String _user, String _pass,
+                    LanguageType _lang) {
+
+        lang    = _lang;
+        db_host = _db_host;
+        db_name = _db_name;
+        user    = _user;
+        pass    = _pass;
+        OpenSQLite();
+    }
+
     /** Opens MySQL connection. 
      *
      * @param _db_host
@@ -165,7 +191,7 @@ public class Connect {
         String classname = "com.mysql.jdbc.Driver";
         try {
             Class.forName(classname).newInstance(); 
-            String s = "jdbc:mysql://"+db_host+"/"+db_name;
+                                  //String s = "jdbc:mysql://"+db_host+"/"+db_name;
             conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name, user, pass);
             
             // ?autoReconnect=true&useUnbufferedInput=false
@@ -204,7 +230,96 @@ public class Connect {
                     );
         }
     }
-    
+
+    public static void testSQLite() {
+
+        // register the driver
+        String sDriverName = "org.sqlite.JDBC";
+        try
+        {
+            Class.forName(sDriverName);
+        }
+        catch(Exception e)
+        {
+            System.err.println(e);
+        }
+
+        // now we set up a set of fairly basic string variables to use in the body of the code proper
+        String sTempDb = "hello.db";
+        String sJdbc = "jdbc:sqlite"; String sDbUrl = sJdbc + ":" + sTempDb;
+        // which will produce a legitimate Url for SqlLite JDBC :
+        // jdbc:sqlite:hello.db
+
+        int iTimeout = 30;
+        String sMakeTable = "CREATE TABLE dummy (id numeric, response text)";
+        String sMakeInsert = "INSERT INTO dummy VALUES(1,'Hello from the database')";
+        String sMakeSelect = "SELECT response from dummy";
+        try
+        { // create a database connection
+            Connection conn = DriverManager.getConnection(sDbUrl);
+            Statement stmt = conn.createStatement();
+            stmt.setQueryTimeout(iTimeout);
+            stmt.executeUpdate( sMakeTable );
+            stmt.executeUpdate( sMakeInsert ); ResultSet rs = stmt.executeQuery(sMakeSelect);
+            while(rs.next())
+            {
+                String sResult = rs.getString("response");
+                System.out.println(sResult);
+            }
+        }
+        catch(SQLException e)
+        {
+            // connection failed.
+            System.err.println(e);
+        }
+    }
+
+    private void OpenSQLite() {
+        conn = null;
+        String classname = "org.sqlite.JDBC";
+
+        try {
+            // Class.forName(classname).newInstance();
+            Class.forName(classname);
+            //String s = "jdbc:sqlite://"+db_host+"/"+db_name;
+            //String s = "jdbc:sqlite://c:/w/bin/sample_db.sql";
+            //String s = "jdbc:sqlite:/c:/w/bin/sample_db.sql";
+            //String s = "jdbc:sqlite:c:/w/bin/sample_db.sql";
+            String s = "jdbc:sqlite:C:/w/bin/sample.db";
+            //String s = "jdbc:sqlite:sample.db";
+
+                     // jdbc:sqlite:sample.db
+                     // C:\w\bin\sample_db.sql
+            conn = DriverManager.getConnection(s);
+            //conn = DriverManager.getConnection("jdbc:sqlite://"+db_host+"/"+db_name, user, pass);
+            
+            // ?autoReconnect=true&useUnbufferedInput=false
+            //conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name+"?useUnicode=true&characterEncoding=UTF-8", user, pass);
+            //conn = DriverManager.getConnection("jdbc:mysql://localhost/"+db_name, user, pass);
+            //conn = DriverManager.getConnection("jdbc:mysql://hdd80.net.com/"+db_name, user, pass);
+            //System.out.println ("Database connection established");
+        }
+        catch (ClassNotFoundException e) {
+            System.err.println("Couldn't find class " + classname + ". Message: " + e.getMessage());
+        }
+        /*catch (InstantiationException ie) {
+          System.err.println("Couldn't instantiate an object of type " + classname + ". Message: " + ie.getMessage());
+        }
+        catch (IllegalAccessException ia) {
+          System.err.println("Couldn't access class " + classname + ". Message: " + ia.getMessage());
+        }*/
+        catch (SQLException ex) {
+            System.err.println("Exception: " + ex.getMessage());
+            System.err.println("SQL State: " + ex.getSQLState());
+            System.err.println("Vendor Error: " + ex.getErrorCode());
+            System.err.printf("Input parameters: db_host=%s, db_name=%s, user=%s\n",
+                    db_host, db_name, user);
+            System.err.println(
+                "Recommendation: .. todo .."
+                    );
+        }
+    }
+
     public void Close()
     {
         if (conn != null) {

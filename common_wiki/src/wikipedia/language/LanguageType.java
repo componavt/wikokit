@@ -161,7 +161,9 @@ public class LanguageType {
 
     public static final LanguageType fon    = new LanguageType("fon", "Fon", "Fon");// Фон
 
-    public static final LanguageType kim    = new LanguageType("kim", "Tofa", "Tofa");//Тофаларский
+    public static final LanguageType kim    = new LanguageType("kim", "Tofa", "Tofa");// Тофаларский
+    public static final LanguageType kjh    = new LanguageType("kjh", "Khakas", "Khakas");// Хакасский
+
     public static final LanguageType kom    = new LanguageType("kom", "Komi", "Komi");//Коми-зырянский
     public static final LanguageType krc    = new LanguageType("krc", "Karachay-Balkar", "Karachay-Balkar");//Карачаево-балкарский
     public static final LanguageType krl    = new LanguageType("krl", "Karjalan kieli", "Karelian");//Карельский
@@ -290,7 +292,7 @@ public class LanguageType {
     public static final LanguageType cbk_zam = new LanguageType("cbk-zam", "Chavacano de Zamboanga", "Zamboanga Chavacano");
 
     public static final LanguageType de_formal = new LanguageType("de-formal", "Deutsch (Sie-Form)", "German - formal address (\"Sie\")");
-    public static final LanguageType dk = new LanguageType("dk", "Dansk (deprecated:da)", "Unused code currently falls back to Danish, 'da' is correct for the language");
+    public static final LanguageType dk = new LanguageType("dk", "Dansk (deprecated:da)", "Unused code currently falls back to Danish, da is correct for the language");
     public static final LanguageType en_gb = new LanguageType("en-gb", "British English", "British English");
     public static final LanguageType fiu_vro = new LanguageType("fiu-vro", "VГµro", "VГµro");
 
