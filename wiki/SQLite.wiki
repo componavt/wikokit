@@ -10,7 +10,8 @@ so we need to dump Wiktionary parsed database (MySQL) and to convert into SQLite
 
 The wiwordik application will be distributed with SQLite file.
 
-= Tables' structure preparations =
+= Conversion =
+== Tables' structure preparations ==
 
 Prepare only once the SQLite file with table structures of the the Wiktionary parsed database:
   * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > wikt_parsed_structure.sql`
@@ -26,9 +27,9 @@ Vim regular expressions:
 
 Update this file if the stucture of the Wiktionary parsed database is changed.
 
-= Data conversion ==
-
-`mysqldump -u root -p --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > ruwikt20090707_parsed_data.sql`
+== Data conversion ===
+Dump data of the the Wiktionary parsed database:
+  * `mysqldump -u root -p --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > ruwikt20090707_parsed_data.sql`
 
 Vim regular expressions in order to change data of INSERT commands into SQLite format:
 {{{
@@ -38,12 +39,12 @@ Vim regular expressions in order to change data of INSERT commands into SQLite f
 %s/\\'/''/g                 // replace \' by ''
 }}}
 
-= Data and tables merging =
+== Data and tables merging ==
 
 Merge two files (with tables structure and data) into one:
   * `ruwikt20090707_parsed_data.sql += wikt_parsed_structure.sql`
 
-= SQLite shell =
+== SQLite shell ==
 
 Run SQLite, load and backup the SQLite database:
 {{{
@@ -53,7 +54,7 @@ PRAGMA integrity_check;
 .backup "C:/w/bin/ruwikt20090707.sqlite"
 }}}
 
-= Java =
+== Java ==
 
 Check that the file `wiwordik\src\wiwordik\Main.fx` contains the line:
 {{{
@@ -67,5 +68,5 @@ private void OpenSQLite() {
 String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
 }}}
 
-== Links ==
+= Links =
   * [http://componavt.livejournal.com/630.html Java MySQL to SQLite migration]
