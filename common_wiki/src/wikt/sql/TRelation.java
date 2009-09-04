@@ -138,8 +138,7 @@ public class TRelation {
             s.executeUpdate (str_sql.toString());
             
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 relation = new TRelation(rs.getInt("id"), meaning, wiki_text, relation_type);
             
@@ -172,8 +171,7 @@ public class TRelation {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,wiki_text_id,relation_type_id FROM relation WHERE meaning_id=");
             str_sql.append(meaning.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 int          id =                               rs.getInt("id");
@@ -212,8 +210,7 @@ public class TRelation {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT meaning_id,wiki_text_id,relation_type_id FROM relation WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 TMeaning      m = TMeaning. getByID( connect,   rs.getInt("meaning_id"));
@@ -285,8 +282,7 @@ public class TRelation {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT meaning_id,wiki_text_id FROM relation");
 //str_sql.append("SELECT meaning_id,wiki_text_id FROM relation LIMIT 1000");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             m_words = new HashMap<String,List<String>> ();
             int n_cur = 0;
             while (rs.next ())

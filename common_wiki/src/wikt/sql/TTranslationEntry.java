@@ -95,8 +95,7 @@ public class TTranslationEntry {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 trans_entry = new TTranslationEntry(rs.getInt("id"), trans, lang, wiki_text);
             
@@ -123,8 +122,7 @@ public class TTranslationEntry {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT translation_id,lang_id,wiki_text_id FROM translation_entry WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {   
                 TTranslation trans = TTranslation.getByID(connect,  rs.getInt("translation_id"));
@@ -170,8 +168,7 @@ public class TTranslationEntry {
             str_sql.append(trans.getID());
             str_sql.append(" AND lang_id=");
             str_sql.append(lang.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while(rs.next ())
             {
                 int id  = rs.getInt("id");
@@ -220,8 +217,7 @@ public class TTranslationEntry {
             str_sql.append(wiki_text.getID());
             str_sql.append(" AND lang_id=");
             str_sql.append(lang.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 TTranslation trans = TTranslation.getByID(connect, rs.getInt("translation_id"));
@@ -265,8 +261,7 @@ public class TTranslationEntry {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,lang_id,wiki_text_id FROM translation_entry WHERE translation_id=");
             str_sql.append(trans.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while(rs.next ())
             {
                 int   id    = rs.getInt("id");

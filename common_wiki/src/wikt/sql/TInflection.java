@@ -88,8 +88,7 @@ public class TInflection {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 inflexio = new TInflection(rs.getInt("id"), inflected_form, freq);
                 
@@ -123,8 +122,7 @@ public class TInflection {
             str_sql.append("SELECT id,freq FROM inflection WHERE inflected_form=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
                 inflexio = new TInflection( rs.getInt("id"),
                                             inflected_form,
@@ -156,8 +154,7 @@ public class TInflection {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT freq,inflected_form FROM inflection WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 String inflected_form = Encodings.bytesToUTF8(rs.getBytes("inflected_form"));

@@ -77,9 +77,8 @@ function init() {
     // MySQL
     //wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
-    // SQLite
-    Connect.testSQLite();
-    wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+    // SQLite                                   //Connect.testSQLite();
+    wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
 
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
     TPOS.createFastMaps(wikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
@@ -236,11 +235,11 @@ var word_Text: TextBox = TextBox {
         page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), n_words_list, b_skip_redirects);
         page_array_string = copyWordsToStringArray();
         
-        //System.out.println("e.code = {e.code}, e.char {e.char}, word_value = {word_value}");
+        //System.out.println("e.code={e.code}, e.char={e.char}, word_value={word_value}, word_value.trim()={word_value.trim()}");
         //System.out.print("page_array_string: ");
         //for (p in page_array_string) {
         //    System.out.print("{p}, ");
-        // }
+        //}
     }
 }
 //word_value = page_array[0].getPageTitle();

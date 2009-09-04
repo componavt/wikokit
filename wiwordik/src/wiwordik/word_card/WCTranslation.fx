@@ -85,7 +85,7 @@ public class WCTranslation {
         
         def trans_entries : TTranslationEntry[] = TTranslationEntry.getByTranslation (conn, _ttranslation, );
 
-        System.out.println("WCTranslation.create() _lang={_lang.getLanguage().toString()}; sizeof trans_entries={sizeof trans_entries}");
+        // System.out.println("WCTranslation.create() _lang={_lang.getLanguage().toString()}; sizeof trans_entries={sizeof trans_entries}");
 
         for(e in trans_entries) {
             //if(r.getRelationType() == _relation_type)
