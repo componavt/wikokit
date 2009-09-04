@@ -28,6 +28,8 @@ Update this file if the stucture of the Wiktionary parsed database is changed.
 
 = Data conversion ==
 
+`mysqldump -u root -p --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > ruwikt20090707_parsed_data.sql`
+
 Vim regular expressions in order to change data of INSERT commands into SQLite format:
 {{{
 %s/\n\?.*\LOCK.*//g             // remove two type of lines 
