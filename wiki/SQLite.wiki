@@ -64,3 +64,6 @@ private void OpenSQLite() {
 ...
 String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
 }}}
+
+== Links ==
+  * [http://componavt.livejournal.com/630.html Java MySQL to SQLite migration]
