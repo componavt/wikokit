@@ -80,8 +80,8 @@ public class PageTableAll {
                 
                 // test problem pages:
                 if (n_cur < debug_pages.length)
-                    page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
-                    //page_title = wikt_conn.enc.EncodeFromJava("нелетный"); // всё-равно
+                    page_title = wikt_conn.enc.EncodeFromJava("бор"); // всё-равно
+                    //page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
@@ -105,7 +105,7 @@ public class PageTableAll {
                 }
 
                 WiktParser.parseWiktionaryEntry(wiki_lang, wikt_conn, wikt_parsed_conn, page_title);
-//break;
+break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());

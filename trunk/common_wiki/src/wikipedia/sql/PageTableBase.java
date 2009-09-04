@@ -77,13 +77,12 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
             //page_title = Encodings.FromTo(page_title, "UTF8", "ISO8859_1");
             //page_title = Encodings.FromTo(page_title, "Cp1251","ISO8859_1");
             str_sql = "SELECT old_text FROM page,text WHERE page.page_title='"+page_title+"' AND page_namespace=0 AND page.page_latest=text.old_id";
-            s.executeQuery (str_sql);
+            ResultSet rs = s.executeQuery (str_sql);
 
             // Get title
             //s.executeQuery ("SELECT page_title FROM page WHERE page_id = 10332");    // Out: Глаз
             //s.executeQuery ("SELECT page_title FROM page WHERE page_id = 1180710");  // Out: Gratitude
 
-            ResultSet rs = s.getResultSet ();
             if (rs.next ())
             {
                 // Get title
@@ -151,18 +150,14 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
             sb.append(" AND page_title='");
             sb.append(                  safe_title);
             sb.append(                              "'");
-            
-            s.executeQuery (sb.toString());
-            
-            ResultSet rs = s.getResultSet ();
+            ResultSet rs = s.executeQuery (sb.toString());
             if (rs.next ())
             {
                 // Get title and redirectness
                 page_id          = rs.getInt("page_id");
                 
-                if(1 == rs.getInt("page_is_redirect")) {
+                if(1 == rs.getInt("page_is_redirect"))
                     page_id = - page_id;
-                }
             }
             rs.close ();
             s.close ();
@@ -217,8 +212,7 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
             sb.setLength(0);
             sb.append("SELECT page_namespace, page_title, page_is_redirect FROM page WHERE page_id=");
             sb.append(id);
-            s.executeQuery(sb.toString());      //GetTitleByIDQuery(rs, s, sb);
-            rs = s.getResultSet ();
+            rs = s.executeQuery(sb.toString());      //GetTitleByIDQuery(rs, s, sb);
             if (rs.next ())
             {
                 Encodings e = connect.enc;
@@ -326,14 +320,12 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
         ResultSet   rs= null;
         try {
             s = c.conn.createStatement ();
-            s.executeQuery ("SELECT page_namespace FROM page WHERE page_id=" + id);
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT page_namespace FROM page WHERE page_id=" + id);
             if (rs.next ())
             {
                 int i_ns = rs.getInt("page_namespace");
-                if (PageNamespace.isValid(i_ns)) {
+                if (PageNamespace.isValid(i_ns))
                     ns = PageNamespace.get(i_ns);
-                }
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (PageTable.java GetNamespaceByID()): " + ex.getMessage());

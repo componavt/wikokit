@@ -39,8 +39,7 @@ public class Categorylinks {
         try {
             s = connect.conn.createStatement ();
             str_sql = "SELECT COUNT(*) AS size FROM categorylinks";
-            s.executeQuery (str_sql);
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql);
             if (rs.next ())
             {
                 size = rs.getInt("size");
@@ -78,9 +77,7 @@ public class Categorylinks {
             safe_title = connect.enc.EncodeToDB(safe_title);
             sb.append(safe_title);
             sb.append("\"");
-            s.executeQuery (sb.toString());
-            
-            rs = s.getResultSet ();
+            rs = s.executeQuery (sb.toString());
             while (rs.next ()) {
                 id.add( rs.getInt("cl_from") );
             }
@@ -128,8 +125,7 @@ public class Categorylinks {
                             System.out.println("GetCategory max_len_sql="+max_len_sql);
             }*/
             
-            s.executeQuery (sb.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (sb.toString());
             if (rs.next ())
             {
                 size = rs.getInt("size");
@@ -140,9 +136,7 @@ public class Categorylinks {
                     sb.setLength(0);
                     sb.append("SELECT cl_to FROM categorylinks WHERE cl_from=");
                     sb.append(cl_from);
-                    s.executeQuery ("SELECT cl_to FROM categorylinks WHERE cl_from=" + cl_from);
-                    
-                    rs = s.getResultSet ();
+                    rs = s.executeQuery ("SELECT cl_to FROM categorylinks WHERE cl_from=" + cl_from);
                     i=0;
                     while (rs.next ()) {
                         byte[] b = rs.getBytes("cl_to");

@@ -89,8 +89,7 @@ public class TPageInflection {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 page_infl = new TPageInflection(rs.getInt("id"), page, inflection, term_freq);
 
@@ -128,8 +127,7 @@ public class TPageInflection {
             str_sql.append(page.getID());
             str_sql.append(" AND inflection_id=");
             str_sql.append(infl.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 int id          = rs.getInt("id");
@@ -159,8 +157,7 @@ public class TPageInflection {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT page_id,inflection_id,term_freq FROM page_inflection WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 TPage       page = TPage.      getByID(connect, rs.getInt("page_id"));

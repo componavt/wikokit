@@ -320,8 +320,7 @@ public class TTranslation {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 trans = new TTranslation(rs.getInt("id"), lang_pos, meaning_summary, meaning);
         }catch(SQLException ex) {
@@ -347,8 +346,7 @@ public class TTranslation {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));
@@ -388,8 +386,7 @@ public class TTranslation {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,meaning_summary,meaning_id FROM translation WHERE lang_pos_id=");
             str_sql.append(lang_pos.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 int id = rs.getInt("id");

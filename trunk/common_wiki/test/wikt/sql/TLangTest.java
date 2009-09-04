@@ -28,11 +28,12 @@ public class TLangTest {
     @Before
     public void setUp() {
         ruwikt_parsed_conn = new Connect();
+
+        // MySQL
         //ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
 
-        // SQLite
-        //Connect.testSQLite();
-        ruwikt_parsed_conn.OpenSQLite(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+        // SQLite                   //Connect.testSQLite();
+        ruwikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
     }
 
     @After

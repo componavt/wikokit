@@ -264,8 +264,7 @@ public class TLang {
             str_sql.append(lang_code);
             str_sql.append("\"");
 
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 int id      = rs.getInt("id");

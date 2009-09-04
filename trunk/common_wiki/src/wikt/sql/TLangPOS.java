@@ -128,8 +128,7 @@ public class TLangPOS {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 lang_pos = new TLangPOS(rs.getInt("id"), page, lang, pos, etymology_n, lemma);
             
@@ -172,8 +171,7 @@ public class TLangPOS {
             str_sql.append("SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=");
             str_sql.append(page.getID());
             str_sql.append(" ORDER BY id");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 int     id      =                       rs.getInt("id");
@@ -225,8 +223,7 @@ public class TLangPOS {
             str_sql.append("SELECt lang_id FROM lang_pos WHERE page_id=");
             str_sql.append(page.getID());
             str_sql.append(" GROUP by lang_id");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 TLang  l = TLang.getTLangFast(   rs.getInt("lang_id"));
@@ -263,8 +260,7 @@ public class TLangPOS {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 TPage   page    = TPage.getByID     (connect, rs.getInt("page_id"));

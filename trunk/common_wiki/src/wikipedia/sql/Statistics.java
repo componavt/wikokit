@@ -31,8 +31,6 @@ public class Statistics {
             s = connect.conn.createStatement ();
             str_sql = "SELECT COUNT(*) AS size FROM " + table_name;
             rs = s.executeQuery(str_sql);
-            //s.executeQuery (str_sql);
-            //rs = s.getResultSet ();
             if (rs.next ())
             {
                 size = rs.getInt("size");
@@ -75,8 +73,7 @@ public class Statistics {
         try {
             s = connect.conn.createStatement ();
             str_sql = "SELECT COUNT(*) AS size FROM page WHERE " + where + " page_namespace="+ns.toInt();
-            s.executeQuery (str_sql);
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql);
             if (rs.next ())
             {
                 size = rs.getInt("size");

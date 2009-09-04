@@ -241,8 +241,7 @@ public class TPOS {
             str_sql.append("SELECT id FROM part_of_speech WHERE name=\"");
             str_sql.append(p.toString());
             str_sql.append("\"");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
                 tp = new TPOS(rs.getInt("id"), p);
             else

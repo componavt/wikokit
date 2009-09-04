@@ -139,8 +139,7 @@ public class TMeaning {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 meaning = new TMeaning(rs.getInt("id"), lang_pos, lang_pos.getID(),
                                         meaning_n, wiki_text, wiki_text_id);
@@ -175,8 +174,7 @@ public class TMeaning {
             str_sql.append("SELECT id,meaning_n,wiki_text_id FROM meaning WHERE lang_pos_id=");
             str_sql.append(lang_pos.getID());
             //str_sql.append(" ORDER BY id");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 int       id            = rs.getInt("id");
@@ -214,8 +212,7 @@ public class TMeaning {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT lang_pos_id,meaning_n,wiki_text_id FROM meaning WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));

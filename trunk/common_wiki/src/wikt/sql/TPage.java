@@ -179,8 +179,7 @@ public class TPage {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count, 
                                  is_in_wiktionary, redirect_target);
@@ -217,8 +216,7 @@ public class TPage {
             str_sql.append(safe_title);
             str_sql.append("\"");
 
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 int id              = rs.getInt("id");
@@ -260,8 +258,7 @@ public class TPage {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
@@ -310,7 +307,11 @@ public class TPage {
             
         try {
             s = connect.conn.createStatement ();
-            String safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
+
+            String safe_prefix = prefix;
+            if(connect.isMySQL())
+                safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
+            
             str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
             str_sql.append(safe_prefix);
             str_sql.append("%\"");
@@ -322,9 +323,9 @@ public class TPage {
                 str_sql.append(" LIMIT ");
                 str_sql.append(limit);
             }
+            //System.out.print("safe_prefix=" + safe_prefix);
             
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 if(null == tp_list)

@@ -240,8 +240,7 @@ public class TRelationType {
             str_sql.append("SELECT id FROM relation_type WHERE name=\"");
             str_sql.append(r.toString());
             str_sql.append("\"");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
                 rel_type = new TRelationType(rs.getInt("id"), r);
             else

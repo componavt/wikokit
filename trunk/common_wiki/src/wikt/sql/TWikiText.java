@@ -111,8 +111,7 @@ public class TWikiText {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 wiki_text = new TWikiText(rs.getInt("id"), text);
 
@@ -143,8 +142,7 @@ public class TWikiText {
             str_sql.append("SELECT id FROM wiki_text WHERE text=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 int id = rs.getInt("id");
@@ -173,8 +171,7 @@ public class TWikiText {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT text FROM wiki_text WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
                 String text = Encodings.bytesToUTF8(rs.getBytes("text"));

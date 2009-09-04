@@ -26,12 +26,22 @@ public class Connect {
     public static PageTableBase  page_table;
     public      Connection conn;      // non static variable, because can be used two or more connections 
                                         // (to Russian, English and other wikipedias)
-    
+
+    /** Database host (if !is_sqlite). */
     private     String  db_host;
     private     String  db_name;
     private     String  user;
     private     String  pass;
-    private     LanguageType lang;  // language of Wiktionary/Wikipedia edition, e.g. Russian in Russian Wiktionary.
+    
+    /** Language of Wiktionary/Wikipedia edition,
+     * e.g. Russian in Russian Wiktionary. */
+    private     LanguageType lang;
+
+    /** File path to the SQLite database file (if is_sqlite). */
+    private     String  sqlite_filepath;
+
+    /** It's true for SQLite and false for MySQL. */
+    private     boolean is_sqlite;
     
     
     // debug constant parameters
@@ -75,7 +85,9 @@ public class Connect {
     //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     public final static String RUWIKT_PARSED_DB = "ruwikt20090707_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
-    
+
+    // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
+    public final static String RUWIKT_SQLITE = "ruwikt20090707.sqlite";
     
     
     // IDF (inverse document frequency) database
@@ -113,29 +125,34 @@ public class Connect {
     }
 
     public String getDBName() {
+        if(is_sqlite)
+            return sqlite_filepath;
+
+        // if MySQL
         int question_sign = db_name.indexOf('?');
         if(-1 == question_sign)
             return db_name;
         return db_name.substring(0, question_sign);
     }
 
+    /** True for MySQL and false for SQLite databases. */
+    public boolean isMySQL() {
+        return !is_sqlite;
+    }
+
+
     /** Opens SQLite connection.
      *
-     * @param _db_host
-     * @param _db_name
-     * @param _user
-     * @param _pass
+     * @param _sqlite_filepath File path to the SQLite file,
+     *                      e.g. "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite"
      * @param _lang language of Wiktionary/Wikipedia edition, main or 
      *               native language, e.g. Russian in Russian Wiktionary.
      */
-    public void OpenSQLite(String _db_host, String _db_name, String _user, String _pass,
-                    LanguageType _lang) {
+    public void OpenSQLite(String _sqlite_filepath, LanguageType _lang) {
 
         lang    = _lang;
-        db_host = _db_host;
-        db_name = _db_name;
-        user    = _user;
-        pass    = _pass;
+        sqlite_filepath = _sqlite_filepath;
+        is_sqlite = true;
         OpenSQLite();
     }
 
@@ -155,6 +172,7 @@ public class Connect {
         db_name = _db_name;
         user    = _user;
         pass    = _pass;
+        is_sqlite = false;
         Open();
     }
     /** Reopens previous MySQL connection with previous parameters. */
@@ -285,7 +303,10 @@ public class Connect {
             //String s = "jdbc:sqlite://c:/w/bin/sample_db.sql";
             //String s = "jdbc:sqlite:/c:/w/bin/sample_db.sql";
             //String s = "jdbc:sqlite:c:/w/bin/sample_db.sql";
-            String s = "jdbc:sqlite:C:/w/bin/sample.db";
+            //String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
+
+            String s = "jdbc:sqlite:" + sqlite_filepath;
+
             //String s = "jdbc:sqlite:sample.db";
 
                      // jdbc:sqlite:sample.db

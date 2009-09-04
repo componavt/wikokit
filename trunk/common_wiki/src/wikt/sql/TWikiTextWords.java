@@ -173,8 +173,7 @@ public class TWikiTextWords {
             s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
-            s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            rs = s.getResultSet ();
+            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
                 words = new TWikiTextWords(rs.getInt("id"), wiki_text, page, page_inflection);
                 
@@ -208,8 +207,7 @@ public class TWikiTextWords {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,page_id,page_inflection_id FROM wiki_text_words WHERE wiki_text_id=");
             str_sql.append(wiki_text.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 int pi = rs.getInt("page_inflection_id");
@@ -256,8 +254,7 @@ public class TWikiTextWords {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,wiki_text_id,page_inflection_id FROM wiki_text_words WHERE page_id=");
             str_sql.append(page.getID());
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 int pi = rs.getInt("page_inflection_id");
@@ -311,8 +308,7 @@ public class TWikiTextWords {
                 str_sql.append(page_inflection.getID());
             } else
                 str_sql.append(" AND page_inflection_id IS NULL");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
                 word = new TWikiTextWords(rs.getInt("id"), wiki_text, page, page_inflection);
 
@@ -341,8 +337,7 @@ public class TWikiTextWords {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT wiki_text_id,page_id,page_inflection_id FROM wiki_text_words WHERE id=");
             str_sql.append(id);
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if(rs.next ())
             {
                 TWikiText wiki_text = TWikiText.getByID(connect, rs.getInt("wiki_text_id"));
@@ -386,8 +381,7 @@ public class TWikiTextWords {
             str_sql.append("SELECT id,page_id,page_inflection_id FROM wiki_text_words WHERE wiki_text_id=");
             str_sql.append(wiki_text.getID());
             str_sql.append(" LIMIT 1");
-            s.executeQuery (str_sql.toString());
-            rs = s.getResultSet ();
+            rs = s.executeQuery (str_sql.toString());
             if(rs.next ())
             {
                 int     id =                        rs.getInt("id");
