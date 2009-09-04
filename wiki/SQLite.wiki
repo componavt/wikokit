@@ -1,4 +1,5 @@
-# How to convert the Wiktionary parsed database (MySQL) into SQLite file. 
+#summary How to convert the Wiktionary parsed database (MySQL) into SQLite file.
+#labels Phase-Implementation,MySQL,SQL,SQLite,wikt_parser
 
 = Introduction =
 
@@ -9,9 +10,57 @@ so we need to dump Wiktionary parsed database (MySQL) and to convert into SQLite
 
 The wiwordik application will be distributed with SQLite file.
 
-= Details =
+= Tables' structure preparations =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Prepare only once the SQLite file with table structures of the the Wiktionary parsed database:
+  * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > wikt_parsed_structure.sql`
+
+Vim regular expressions:
+{{{
+%s/COMMENT.*/,/g    // remove COMMENT
+%s/unsigned\s*//g   // remove "unsigned"
+%s/\n\?.*\PRIMARY KEY.*//g      // remove lines with text "PRIMARY KEY"
+%s/AUTO_INCREMENT/PRIMARY KEY/g // replace AUTO_INCREMENT by PRIMARY KEY
+%s/CHARACTER SET latin1 COLLATE latin1_bin\s*//g    // remove "CHAR... "
+}}}
+
+Update this file if the stucture of the Wiktionary parsed database is changed.
+
+= Data conversion ==
+
+Vim regular expressions in order to change data of INSERT commands into SQLite format:
+{{{
+%s/\n\?.*\LOCK.*//g             // remove two type of lines 
+                                // UNLOCK TABLES;
+                                // LOCK TABLES "page" WRITE;
+%s/\\'/''/g                 // replace \' by ''
+}}}
+
+= Data and tables merging =
+
+Merge two files (with tables structure and data) into one:
+  * `ruwikt20090707_parsed_data.sql += wikt_parsed_structure.sql`
+
+= SQLite shell =
+
+Run SQLite, load and backup the SQLite database:
+{{{
+sqlite3
+.read "C:/w/bin/ruwikt20090707_parsed_data.sql"
+PRAGMA integrity_check;
+.backup "C:/w/bin/ruwikt20090707.sqlite"
+}}}
+
+= Java =
+
+Check that the file `wiwordik\src\wiwordik\Main.fx` contains the line:
+{{{
+wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+}}}
+
+Check that the file `common_wiki\src\wikipedia\sql\Connect.java` contains the line:
+{{{
+private void OpenSQLite() {
+...
+String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
+}}}
