@@ -1,0 +1,17 @@
+# How to convert the Wiktionary parsed database (MySQL) into SQLite file. 
+
+= Introduction =
+
+Dictionary with GUI, i.e. *wiwordik*, can work with MySQL and SQLite. 
+But... 
+The user will be happy do not install MySQL, 
+so we need to dump Wiktionary parsed database (MySQL) and to convert into SQLite format.
+
+The wiwordik application will be distributed with SQLite file.
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
