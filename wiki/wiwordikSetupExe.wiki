@@ -1,0 +1,18 @@
+#summary How to compile wiwordik-setup-X.XX.jar and .exe
+#labels Phase-Implementation,wiwordik,installation,IzPack
+
+= Introduction =
+
+[http://en.wikipedia.org/wiki/IzPack IzPack] is an open source software installer generator that targets the Java platform.
+
+= Details =
+
+Compile wiwordik files into one file (e.g. `wiwordik-setup-0.01.jar`):
+{{{
+cd wikokit/wiwordik/
+compile-wiwordik-izpack.bat
+cd ../releases/
+java -jar wiwordik-setup-0.01.jar
+}}}
+
+Convert into EXE file (e.g. `wiwordik-setup-0.01.exe`):
