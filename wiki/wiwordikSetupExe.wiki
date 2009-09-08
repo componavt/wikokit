@@ -16,3 +16,8 @@ java -jar wiwordik-setup-0.01.jar
 }}}
 
 Convert into EXE file (e.g. `wiwordik-setup-0.01.exe`):
+  * Add `izpack2exe.exe` into your %PATH%
+{{{
+cd wikokit/releases/
+izpack2exe --file=wiwordik-setup-0.01.jar --output=wiwordik-setup-0.01.exe
+}}}
