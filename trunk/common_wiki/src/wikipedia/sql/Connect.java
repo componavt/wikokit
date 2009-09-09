@@ -124,6 +124,7 @@ public class Connect {
         page_table = new PageTableBase();
     }
 
+    /** Gets database name (MySQL), or file name (SQLite). */
     public String getDBName() {
         if(is_sqlite)
             return sqlite_filepath;
@@ -333,8 +334,7 @@ public class Connect {
             System.err.println("Exception: " + ex.getMessage());
             System.err.println("SQL State: " + ex.getSQLState());
             System.err.println("Vendor Error: " + ex.getErrorCode());
-            System.err.printf("Input parameters: db_host=%s, db_name=%s, user=%s\n",
-                    db_host, db_name, user);
+            System.err.printf("Input parameters: sqlite_filepath=%s\n", sqlite_filepath);
             System.err.println(
                 "Recommendation: .. todo .."
                     );
