@@ -5,7 +5,7 @@
 
 [http://en.wikipedia.org/wiki/IzPack IzPack] is an open source software installer generator that targets the Java platform.
 
-= Details =
+= Compilation =
 
 Compile wiwordik files into one file (e.g. `wiwordik-setup-0.01.jar`):
 {{{
@@ -22,3 +22,6 @@ Convert into EXE file (e.g. `wiwordik-setup-0.01.exe`):
 cd wikokit/releases/
 izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.01.jar --output=wiwordik-setup-0.01.exe --launch-file=wiwordik.bat
 }}}
+
+= Software requirements =
+Install [http://javafx.com/downloads JavaFX SDK].
