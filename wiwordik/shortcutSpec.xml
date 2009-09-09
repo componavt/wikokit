@@ -1,0 +1,49 @@
+<shortcuts>
+    <skipIfNotSupported/>
+
+    <!--programGroup defaultName="wiwordik ${product.version}" location="applications"/-->
+    <!--programGroup defaultName="wiwordik@build.number@" location="applications"/-->
+    <programGroup defaultName="wiwordik 0.01" location="applications"/>
+      <shortcut
+         name="wiwordik"
+         programGroup="yes"
+         desktop="yes"
+         applications="no"
+         startMenu="no"
+         startup="no"
+         target="$INSTALL_PATH\wiwordik.bat"
+         workingDirectory="$INSTALL_PATH"
+         iconFile="$INSTALL_PATH\icons\koala.ico"
+         commandLine=""
+         description="Visualization and front-end for parsed Wiktionary database"
+         iconIndex="0"
+         initialState="noShow">
+
+         <createForPack name="Core"/>
+    </shortcut>
+    
+    <shortcut
+         name="Uninstaller"
+         programGroup="yes"
+         desktop="no"
+         applications="no"
+         startMenu="no"
+         startup="no"
+         target="java"
+         commandLine="-jar &quot;$INSTALL_PATH\Uninstaller\uninstaller.jar&quot;"
+         workingDirectory="$INSTALL_PATH"         
+         initialState="noShow"
+         type="Application"
+         encoding="UTF-8"
+         description="wiwordik uninstaller">
+
+         <createForPack name="Core" />
+</shortcut>    
+    
+    <!-- 
+         iconFile="trashcan_full"
+         iconIndex="0"
+         workingDirectory=""
+    -->    
+    <!-- iconFile="$INSTALL_PATH\icons\koala.ico" -->
+</shortcuts>
