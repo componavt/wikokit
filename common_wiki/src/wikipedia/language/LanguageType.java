@@ -94,8 +94,10 @@ public class LanguageType {
     // Russian Wiktionary specific codes
 
     public static final LanguageType abs    = new LanguageType("abs", "abs", "abs");// Амбонезский todo - find English name
+
+    public static final LanguageType agx    = new LanguageType("agx", "Agul", "Agul");// Агульский
+
     public static final LanguageType aie    = new LanguageType("aie", "Amara", "Amara");// Амара
-    public static final LanguageType am     = new LanguageType("am", "бЉ б€›б€­бЉ›", "Amharic");
 
     public static final LanguageType ain    = new LanguageType("ain", "Ainu", "Ainu");// Айнский
     public static final LanguageType ain_lat = new LanguageType("ain.lat", "Ainu (Latin)", "Ainu (Latin)");//айнский
@@ -107,9 +109,9 @@ public class LanguageType {
     public static final LanguageType ale    = new LanguageType("ale", "Aleut", "Aleut");// Алеутский
     public static final LanguageType alp    = new LanguageType("alp", "Alune", "Alune");// Алуне
 
-    public static final LanguageType alt    = new LanguageType("alt", "Altai", "Altai");//Алтайский
-
     public static final LanguageType akk    = new LanguageType("akk", "Akkadian", "Akkadian");// Аккадский
+    public static final LanguageType alt    = new LanguageType("alt", "Altai", "Altai");//Алтайский
+    public static final LanguageType am     = new LanguageType("am", "бЉ б€›б€­бЉ›", "Amharic");
 
     public static final LanguageType arc_syr = new LanguageType("arc.syr", "Aramaic", "Aramaic");//Арамейский (сир.)
     public static final LanguageType arc_jud = new LanguageType("arc.jud", "Aramaic", "Aramaic");//Арамейский (иуд.)
