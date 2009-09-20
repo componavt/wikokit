@@ -119,6 +119,7 @@ public class LanguageType {
     public static final LanguageType art    = new LanguageType("art", "Toki pona", "Toki pona (art)");// Токипона
     public static final LanguageType art_oou= new LanguageType("art-oou", "oou", "oou");// Ооу
 
+    public static final LanguageType asm    = new LanguageType("asm", "Assamese", "Assamese");// Ассамский
 
     public static final LanguageType ave    = new LanguageType("ave", "Avestan", "Avestan");// Авестийский
 
@@ -163,6 +164,8 @@ public class LanguageType {
 
     public static final LanguageType fon    = new LanguageType("fon", "Fon", "Fon");// Фон
 
+    public static final LanguageType kas    = new LanguageType("kas", "Kashmiri", "Kashmiri");// Кашмири
+    public static final LanguageType kbd    = new LanguageType("kbd", "Kabardian", "Kabardian");// Кабардино-черкесский
     public static final LanguageType kim    = new LanguageType("kim", "Tofa", "Tofa");// Тофаларский
     public static final LanguageType kjh    = new LanguageType("kjh", "Khakas", "Khakas");// Хакасский
 
@@ -188,6 +191,7 @@ public class LanguageType {
     public static final LanguageType pinyin = new LanguageType("pinyin", "Pinyin", "Pinyin");// Пиньинь
     public static final LanguageType ppol   = new LanguageType("ppol", "Proto-Polynesian", "Proto-Polynesian");// Протополинезийский
     public static final LanguageType prg    = new LanguageType("prg", "Old Prussian", "Old Prussian");// Древнепрусский
+    public static final LanguageType prs    = new LanguageType("prs", "Dari (Eastern Persian)", "Dari (Eastern Persian)");// Дари
 
     public static final LanguageType qya    = new LanguageType("qya", "Quenya", "Quenya");// квэнья
 
@@ -210,17 +214,22 @@ public class LanguageType {
 
     public static final LanguageType sux    = new LanguageType("sux", "Sumerian", "Sumerian");// Шумерский
 
+    public static final LanguageType tab = new LanguageType("tab", "Tabasaran", "Tabasaranagx");// Табасаранский
     public static final LanguageType translingual_ru = new LanguageType("INT", "Translingual", "Translingual (INT)");// INTernational
+    public static final LanguageType ttt    = new LanguageType("ttt", "Tat", "Tat");// Татский
     public static final LanguageType tup    = new LanguageType("tup", "Tupí-Guaraní", "Tupí-Guaraní");//гуарани
 
     public static final LanguageType udi    = new LanguageType("udi", "Udi", "Udi");// Удинский
     public static final LanguageType uga    = new LanguageType("uga", "Ugaritic", "Ugaritic");// Угаритский
 
-    public static final LanguageType vep    = new LanguageType("vep", "Veps", "Veps");//Вепсский
-    public static final LanguageType vot    = new LanguageType("vot", "Votic", "Votic");//Водский
-    public static final LanguageType vro    = new LanguageType("vro", "Võro", "Võro");//Выруский диалект
+    public static final LanguageType vep    = new LanguageType("vep", "Veps", "Veps");// Вепсский
+    public static final LanguageType vot    = new LanguageType("vot", "Votic", "Votic");// Водский
+    public static final LanguageType vro    = new LanguageType("vro", "Võro", "Võro");// Выруский диалект
 
-    public static final LanguageType yrk    = new LanguageType("yrk", "Nenets", "Nenets");//Ненецкий
+    public static final LanguageType yrk    = new LanguageType("yrk", "Nenets", "Nenets");// Ненецкий
+
+    public static final LanguageType zza    = new LanguageType("zza", "Zazaki", "Zazaki");// зазаки
+
     
     
 
