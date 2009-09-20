@@ -1,5 +1,5 @@
-#labels Phase-Deploy,MySQL
-How to create, edit and load empty Wiktionary parsed database into MySQL.
+#summary (./wikt_parser/doc) How to create, edit and load empty Wiktionary parsed database into MySQL.
+#labels Phase-Implementation,MySQL,MRD,parsing
 
 = Details =
 
