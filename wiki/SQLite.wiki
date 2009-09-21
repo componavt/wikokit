@@ -54,6 +54,10 @@ PRAGMA integrity_check;
 .backup "C:/w/bin/ruwikt20090707.sqlite"
 }}}
 
+== SQLite file location ==
+
+Copy SQLite file `ruwikt20090707.sqlite` to the folder `./wikokit/wiwordik/`.
+
 == Java ==
 
 Check that the file `wiwordik\src\wiwordik\Main.fx` contains the line:
@@ -67,6 +71,9 @@ private void OpenSQLite() {
 ...
 String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
 }}}
+
+== See also ==
+  * wiwordikSetupExe
 
 = Links =
   * [http://componavt.livejournal.com/630.html Java MySQL to SQLite migration]
