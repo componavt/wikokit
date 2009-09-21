@@ -25,3 +25,6 @@ izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.01.jar --output=wiwordik-
 
 = Software requirements =
 Install [http://javafx.com/downloads JavaFX SDK].
+
+= See also =
+  * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
