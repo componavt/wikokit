@@ -73,7 +73,7 @@ String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
 }}}
 
 = See also =
-  * [wiwordikSetupExe] - How to compile wiwordik-setup-X.XX.jar and .exe
+  * [wiwordikSetupExe] - How to compile wiwordik-setup-X.XX.jar and .exe with the created SQLite data file
 
 = Links =
   * [http://componavt.livejournal.com/630.html Java MySQL to SQLite migration]
