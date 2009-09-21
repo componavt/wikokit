@@ -72,7 +72,7 @@ private void OpenSQLite() {
 String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
 }}}
 
-== See also ==
+= See also =
   * [wiwordikSetupExe] - How to compile wiwordik-setup-X.XX.jar and .exe
 
 = Links =
