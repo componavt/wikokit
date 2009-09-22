@@ -14,8 +14,7 @@ Install [http://javafx.com/downloads JavaFX SDK].
 = Download =
 
 Windows executable file (tested with Windows XP and Vista):
-  # [http://wikokit.googlecode.com/files/wiwordik-setup-0.01.exe wiwordik-setup-0.01.exe]
-  # [http://code.google.com/p/wikokit/downloads/detail?name=wiwordik-setup-0.01.exe wiwordik-setup-0.01.exe]
+  * [http://wikokit.googlecode.com/files/wiwordik-setup-0.01.exe wiwordik-setup-0.01.exe]
 
 = Future =
 
