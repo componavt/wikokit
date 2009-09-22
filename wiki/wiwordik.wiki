@@ -5,7 +5,15 @@
 
 = Introduction =
 
-Congratulations to the readers of the Russian Wiktionary, since the graphical user interface (GUI) is ready to be tested. 
+wiwordik is a graphical user interface (GUI) to the Russian Wiktionary.
+
+At this moment the following data was extracted from the Wiktionary:
+  # word's language and part of speech
+  # meaning
+  # semantic relations
+  # translation
+
+Thus, the readers of the Russian Wiktionary could have access to the dictionary in offline.
 
 = Software requirements =
 
