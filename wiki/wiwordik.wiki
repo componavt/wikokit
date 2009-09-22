@@ -13,7 +13,7 @@ At this moment the following data were extracted from the Wiktionary:
   # semantic relations
   # translation
 
-Thus, the readers of the Russian Wiktionary could have access to the dictionary in offline.
+Thus, the readers of the Russian Wiktionary could have offline access to the dictionary.
 
 = Software requirements =
 
