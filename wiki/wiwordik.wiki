@@ -28,6 +28,13 @@ The software was tested on Microsoft Windows XP and Vista.
 
 = Future =
 
-The program is using database created by the Wiktionary parser (wikt_parser).
+The program is depend on Wiktionary parser (wikt_parser).
+
+In the future versions of the program we will teach the program to understand and extract the following data from the Wiktionary:
+  # usage labels
+  # citations
+  # morphological properties
+  # transcriptions and audio-files
+  # images
 
 The plans are to continue the development of Russian Wiktionary parser, create the parser of the English Wiktionary, and improve the GUI.
