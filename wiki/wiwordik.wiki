@@ -1,0 +1,22 @@
+#summary Download GUI with the parsed Wiktionary database.
+#labels Featured,Phase-Deploy,wiwordik
+
+Читайте эту страничку на русском здесь: [wiwordikRu] todo.
+
+= Introduction =
+
+Congratulations to the readers of the Russian Wiktionary, since the graphical user interface is ready to be tested. 
+
+= Software requirements =
+
+Install [http://javafx.com/downloads JavaFX SDK].
+
+= Download =
+
+Windows executable file (tested with Windows XP and Vista):
+  # [http://wikokit.googlecode.com/files/wiwordik-setup-0.01.exe wiwordik-setup-0.01.exe]
+  # [http://code.google.com/p/wikokit/downloads/detail?name=wiwordik-setup-0.01.exe wiwordik-setup-0.01.exe]
+
+= Future =
+
+The plans are to continue the development and add support for the English Wiktionary.
