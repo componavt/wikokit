@@ -1,5 +1,5 @@
+#summary Statistics of parsing, source Wiktionary database, and generated database.
 #labels parser,Featured
-Statistics of parsing, source Wiktionary database, and created database.
 
 = Russian Wiktionary, dump 20090122 =
 
