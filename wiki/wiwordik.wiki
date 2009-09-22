@@ -5,7 +5,7 @@
 
 = Introduction =
 
-Congratulations to the readers of the Russian Wiktionary, since the graphical user interface is ready to be tested. 
+Congratulations to the readers of the Russian Wiktionary, since the graphical user interface (GUI) is ready to be tested. 
 
 = Software requirements =
 
@@ -19,4 +19,6 @@ Windows executable file (tested with Windows XP and Vista):
 
 = Future =
 
-The plans are to continue the development and add support for the English Wiktionary.
+The program is based on the Wiktionary parser (wikt_parser).
+
+The plans are to continue the development of Russian Wiktionary parser, create the parser of the English Wiktionary, improve the GUI.
