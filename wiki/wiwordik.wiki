@@ -26,6 +26,6 @@ Windows executable file (tested with Windows XP and Vista):
 
 = Future =
 
-The program is based on the Wiktionary parser (wikt_parser).
+The program is using database created by the Wiktionary parser (wikt_parser).
 
-The plans are to continue the development of Russian Wiktionary parser, create the parser of the English Wiktionary, improve the GUI.
+The plans are to continue the development of Russian Wiktionary parser, create the parser of the English Wiktionary, and improve the GUI.
