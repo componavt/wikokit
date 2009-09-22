@@ -7,7 +7,7 @@
 
 wiwordik is a graphical user interface (GUI) to the Russian Wiktionary.
 
-At this moment the following data was extracted from the Wiktionary:
+At this moment the following data were extracted from the Wiktionary:
   # word's language and part of speech
   # meaning
   # semantic relations
