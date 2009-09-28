@@ -93,11 +93,19 @@ public class LanguageType {
     
     // Russian Wiktionary specific codes
 
+    // todo add
+    // word language_code
+    // Warning: unknown language code
+    // 'die' for the word 'Schleppe'
+
     public static final LanguageType abs    = new LanguageType("abs", "abs", "abs");// Амбонезский todo - find English name
 
     public static final LanguageType agx    = new LanguageType("agx", "Agul", "Agul");// Агульский
 
     public static final LanguageType aie    = new LanguageType("aie", "Amara", "Amara");// Амара
+
+    public static final LanguageType aii    = new LanguageType("aii", "Assyrian", "Assyrian");// Ассирийский
+    public static final LanguageType syc    = new LanguageType("syc", "Syriac", "Syriac");// Сирийский
 
     public static final LanguageType ain    = new LanguageType("ain", "Ainu", "Ainu");// Айнский
     public static final LanguageType ain_lat = new LanguageType("ain.lat", "Ainu (Latin)", "Ainu (Latin)");//айнский

@@ -38,7 +38,11 @@ public class WTranslationEntryRu {
         String lang_code = text.substring(0, pos_equal_sign);
         if(!LanguageType.has(lang_code)) {
             System.out.println("Warning in WTranslationEntryRu.parse(): The article '"+
-                        page_title + "' has translation into unknown language with code " + lang_code + ".");
+                        page_title + "' has translation into unknown language with code: " + lang_code + ".");
+
+            if(lang_code.length() > 7)
+                System.out.println("Error in WTranslationEntryRu.parse(): The article '"+
+                        page_title + "' has too long unknown language code: " + lang_code + ".");
             return null;
         }
         LanguageType lang = LanguageType.get(lang_code);

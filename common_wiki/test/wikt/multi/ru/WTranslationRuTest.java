@@ -19,7 +19,8 @@ public class WTranslationRuTest {
 
     public static String samolyot_text, samolyot_with_header, kolokolchik_text, 
             kolokolchik_text_1_translation_box, kosa_text_1_translation_box_without_header,
-            unfinished_template, page_end;
+            unfinished_template, 
+            page_end, empty_translation_with_category, absent_translation_block;
 
     public WTranslationRuTest() {
     }
@@ -114,6 +115,18 @@ public class WTranslationRuTest {
             "[[Категория:Авиация]]\n" +
             "\n" +
             "[[ar:самолёт]]";
+
+        empty_translation_with_category = "=== Перевод ===\n" +
+                "{{перев-блок||\n" +
+                "|en=\n" +
+                "}}\n" +
+                "\n" +
+                "[[Категория:Россиянки]]\n" + unfinished_template;
+
+        absent_translation_block = "=== Перевод ===\n" +
+                "*\n" +
+                "\n" +
+                "[[Категория:Россиянки]]\n" + unfinished_template;
     }
 
     @After
@@ -246,7 +259,52 @@ public class WTranslationRuTest {
         assertEquals(1, wt_samolyot_et.length);
         assertTrue(wt_samolyot_et[0].getVisibleText().equalsIgnoreCase( "lennuk" ) );
     }
-    
+
+    /* tests categories before unfinished_template, e.g.
+        {{перев-блок||
+        |en=
+        }}
+
+        [[Категория:Россиянки]]
+
+        {{unfinished|p=1}}{{длина слова|11}}*/
+    @Test
+    public void testParseTranslation_categories_before_unfinished_template() {
+        System.out.println("parse_categories_before_unfinished_template");
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "самолёт";
+        LanguageType lang_section = LanguageType.ru; // Russian word
+
+        String s = empty_translation_with_category;
+        POSText pt = new POSText(POS.noun, s);
+
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+        assertEquals(0, result.length );
+    }
+
+    /** At least one translation block should exists.
+     *
+        ===Перевод===
+        *
+
+        [[Категория:Травы]]
+        {{unfinished|p=1|s=1|e=1}}
+     */
+    @Test
+    public void testParseTranslation_absentTranslationBlock () {
+        System.out.println("parse_absentTranslationBlock");
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "самолёт";
+        LanguageType lang_section = LanguageType.ru; // Russian word
+
+        String s = absent_translation_block;
+        POSText pt = new POSText(POS.noun, s);
+
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+        assertEquals(0, result.length );
+    }
+
+
     @Test
     public void testParseOneTranslationBox_utf8_korean() {
         System.out.println("parseOneTranslationBox_utf8_korean");

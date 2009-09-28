@@ -79,6 +79,13 @@ public class WTranslationRu {
             return NULL_WTRANSLATION_ARRAY;
         }
 
+        // one more check that there is any translation
+        if(!text_source.contains("{{перев-блок|")) {
+            System.out.println("Warning in WTranslationRu.parse(): " + "The Russian word '" + page_title +
+                    "' has section === Перевод === but there is no any translation box \"{{перев-блок|\".");
+            return NULL_WTRANSLATION_ARRAY;
+        }
+
         // x = gets position of the next 2nd or 3rd level block == See also or Bibliography ==
         // gets text till x of the last brackets: "}}"
         String text = StringUtilRegular.getTextTillFirstHeaderPosition(m.end(), text_source);
@@ -98,19 +105,20 @@ public class WTranslationRu {
             int next_end = text.indexOf("{{перев-блок|", prev_end + 1);
             if(-1 == next_end) {
                 to_continue = false;
-                int unfinished_template_pos = text.indexOf("{{unfinished", prev_end + 1);
+
+                // gets text till first line "\n}}\n" or "{{unfinished"
+                /*int unfinished_template_pos = text.indexOf("{{unfinished", prev_end + 1);
                 if(-1 != unfinished_template_pos)
                     next_end = unfinished_template_pos;
-                else {
+                else {*/
                     // search first "\n}}", i.e. end of translation template
                     int e = text.indexOf("\n}}", prev_end + 12);
                     if(-1 != e)
-                        next_end = e;
+                        next_end = e + 3; // + len("\n}}")
                     else
                         next_end = len;
-                }
+                //}
             }
-            
             String trans_block = text.substring(prev_end, next_end);
 
             // 4. extracts lang code "|en=", e.g. wikified translation [[angel]]
@@ -125,7 +133,10 @@ public class WTranslationRu {
             prev_end = next_end;
         }
 
-        if(wt_list.size() > 1 && !AllTranslationsHaveHeader(wt_list)) {
+        if(!atLeastOneTranslationExists(wt_list))
+            return NULL_WTRANSLATION_ARRAY;
+
+        if(wt_list.size() > 1 && !allTranslationsHaveHeader(wt_list)) {
             System.out.println("Warning in WTranslationRu.parse(): The article '"+
                         page_title + "' has several translation boxes, but not all of them have headers.");
         }
@@ -134,7 +145,7 @@ public class WTranslationRu {
     }
 
     /** Checks, wheather all the translation boxes have headers. */
-    public static boolean AllTranslationsHaveHeader(List<WTranslation> wt_list)
+    public static boolean allTranslationsHaveHeader(List<WTranslation> wt_list)
     {
         for(WTranslation wt : wt_list) {
             if (0 == wt.getHeader().length()) {
@@ -143,7 +154,19 @@ public class WTranslationRu {
         }
         return true;
     }
-
+    
+    /** Returens true, if there is at least one translation entry
+     * in any of the translation boxes.
+     */
+    public static boolean atLeastOneTranslationExists(List<WTranslation> wt_list)
+    {
+        for(WTranslation wt : wt_list) {
+            if (wt.getTranslationsNumber() > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /** Chops close brackets "}}" */
     private final static Pattern ptrn_double_close_curly_brackets = Pattern.compile(

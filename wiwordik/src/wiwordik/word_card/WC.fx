@@ -242,20 +242,21 @@ public class WC{ // extends JFrame {
             printHeaderText (_tpage);
 
             if(_tpage.isRedirect()) {
-                if(_tpage.isRedirect())
                 headerText.content = "\n \nСм. {_tpage.getRedirect()} (Redirect)";
+
+                // System.out.println("\nRedirect.");
             } else {
                 // Prints meanings for each language
                 var lang_pos_array : TLangPOS[] = TLangPOS.get(conn, _tpage);     // var lang_pos_array : TLangPOS[]
                 card_text_value = getDefinitionsForLangPOS(conn, _tpage.getPageTitle(), lang_pos_array);
 
-                System.out.println("\nNot a redirect.");
+                // System.out.println("\nNot a redirect.");
             }
         } else
             card_text_value = "";
 
-        System.out.println(" title={_tpage.getPageTitle()}.");
-        System.out.println(" getRedirect={_tpage.getRedirect()}.");
+        // System.out.println(" title={_tpage.getPageTitle()}.");
+        // System.out.println(" getRedirect={_tpage.getRedirect()}.");
     }
     
     

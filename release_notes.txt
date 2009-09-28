@@ -1,4 +1,5 @@
 wikokit 0.12.6 2009-0?-??
+              170               33 
   common_wiki 170 tests passed, 31 tests failed
               169               32
 

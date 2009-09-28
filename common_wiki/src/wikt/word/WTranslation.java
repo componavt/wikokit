@@ -49,6 +49,11 @@ public class WTranslation {
     public WTranslationEntry[] getTranslations() {
         return entry;
     }
+
+    /** Gets number of translation entries. */
+    public int getTranslationsNumber() {
+        return entry.length;
+    }
     
     /** Gets translation entries into the languages 'lang'. */
     public WikiText[] getTranslationIntoLanguage(LanguageType lang) {

@@ -22,7 +22,7 @@
          <createForPack name="Core"/>
     </shortcut>
     
-    <shortcut
+    <!--shortcut
          name="Uninstaller"
          programGroup="yes"
          desktop="no"
@@ -38,7 +38,7 @@
          description="wiwordik uninstaller">
 
          <createForPack name="Core" />
-</shortcut>    
+    </shortcut-->    
     
     <!-- 
          iconFile="trashcan_full"

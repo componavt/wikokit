@@ -44,7 +44,8 @@ public class TLangPOS {
      * 0 - None - it's not a redirect, it is the usual Wiktionary entry
      * 1 - Wordform, soft redirect to lemma, e.g. worked -> work
      *     e.g. worked: "Simple past tense and past participle of [[work]]."
-     * 2 - Misspelling, soft redirect to correct spelling
+     * 2 - Misspelling, soft redirect to correct spelling,
+     *     see template {{misspelling of|}} in enwikt
      *
      * @see TPage.is_redirect - a hard redirect.
      */

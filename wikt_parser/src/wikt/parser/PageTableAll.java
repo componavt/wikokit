@@ -20,6 +20,21 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
+        "белореченка",
+        "бендерчанка",
+
+        /*wiki_text='}}
+
+Категория:Названия жителей населённых пунктов
+Категория:Названия жителей регионов
+Категория:Россиянки*/
+
+        "Aleksandrio", // todo - skipped (non explicit) section "Meaning"
+
+        "centi-", "redeo", "hic",   // todo - check or get before insertion --
+        "агиохронотопоним",         // TWikiText.java storeToDB())::
+                                    // two very long wiki_text has the same 100 first symbols. Insertion failed
+
         "Abessinia", "Arabian", "Asianus", "Avernus", "Guatemala", "baba", // unknown language code 'null'
         "a", // -lang-
         "FDR", // abbrev
@@ -33,12 +48,16 @@ public class PageTableAll {
         "borda",   // -lang-
         "злато", "зограф", "камыш", "кан", "кар", "карта",
         "журавль", "игнатовец", "мурашкинец", 
-        "кулёма",   // skip <ref>
         "punainen", "alt", "unter", "that", "tester",
         "unser", "um", "twin", "tuus", "tu", "top", "tomo", "toki", "title",
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
-        "-iti-", "-лык", "-io-", "zwölf", "Википедия"};
+        "-iti-", "-лык", "-io-", "zwölf", "Википедия",
+
+        // uncomment for next dump
+        // "кулёма",   // skip <ref>
+
+    };
     
     /** Selects all pages (not categories, not redirects), 
      * stores to the Wiktionary parsed DB.<br><br>
@@ -79,13 +98,13 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                /*if (n_cur < debug_pages.length)
-                    page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
-                    // page_title = wikt_conn.enc.EncodeFromJava("бор"); // всё-равно
+                if (n_cur < debug_pages.length)
+                    page_title = wikt_conn.enc.EncodeFromJava("камыш"); // всё-равно
+                    //page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-                */
+                
                 if(DEBUG && 0 == ++n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
@@ -105,7 +124,7 @@ public class PageTableAll {
                 }
 
                 WiktParser.parseWiktionaryEntry(wiki_lang, wikt_conn, wikt_parsed_conn, page_title);
-//break;
+break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());
