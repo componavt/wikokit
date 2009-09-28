@@ -26,7 +26,17 @@ Windows executable file (include GUI and the parsed Wiktionary database):
 
 The software was tested on Microsoft Windows XP and Vista.
 
+1
 http://wikokit.googlecode.com/svn/wiki/wiwordik.attach/friendly_dollar_0.01.jpg
+
+2
+http://wikokit.googlecode.com/svn/wiki/wiwordik.attach/friendly_dollar_0.01.png
+
+friendly_dollar_0.01.jpg
+http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/friendly_dollar_0.01.jpg
+
+friendly_dollar_0.01.png
+http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/friendly_dollar_0.01.png
 
 = Future =
 
