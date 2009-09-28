@@ -6,10 +6,8 @@
 
 package wikt.constant;
 
-import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.Collection;
 
 /** Names of types of soft redirects used in all wiktionaries.
  *

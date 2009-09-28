@@ -288,7 +288,10 @@ public class TPage {
      *
      * any entries, with #REDIRECT too
      * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE 'S%' LIMIT 1;
-
+     *
+     * skip empty articles, i.e. is_in_wiktionary==FALSE
+     * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE 'zzz%' AND is_in_wiktionary=1 LIMIT 1;
+     *
      * @param  limit    constraint of the number of rows returned, if it's negative then a constraint is omitted
      * @param  prefix   the begining of the page_titles
      * @param  b_skip_redirects return articles without redirects if true
@@ -318,6 +321,9 @@ public class TPage {
 
             if(b_skip_redirects)
                 str_sql.append(" AND is_redirect is NULL");
+
+            // temp: skip empty articles
+            //str_sql.append(" AND is_in_wiktionary=1");
 
             if(limit > 0) {
                 str_sql.append(" LIMIT ");

@@ -32,8 +32,8 @@ public class TPageTest {
         ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
 
         // ruwikt_parsed_conn_sqlite
-        ruwikt_sqlite = new Connect();
-        ruwikt_sqlite.OpenSQLite(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+        //ruwikt_sqlite = new Connect();
+        //ruwikt_sqlite.OpenSQLite(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
     }
 
     @After
