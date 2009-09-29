@@ -354,6 +354,37 @@ public class WMeaningRuTest {
         ww_result[0].getWordLink().equalsIgnoreCase("яблоко");
     }
 
+    // parse text without meaning
+    // ====Значение====
+    //
+    // ====Синонимы====
+    // ====Антонимы====
+    @Test
+    public void testParse_text_without_meaning() {
+        System.out.println("parse_text_without_meaning");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "mzda";
+        lang_section    = LanguageType.ru; // Russian word
+
+        str =   "{{-ru-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "==== Значение ====\n" +
+                "\n" +
+                "====Синонимы====\n" +
+                "\n" +
+                "====Антонимы====";
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        assertTrue(null != result);
+        assertEquals(0, result.length);
+    }
+
     @Test
     public void testParse_1_meaning() {
         System.out.println("parse_1_meaning");

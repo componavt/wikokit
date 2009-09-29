@@ -40,6 +40,7 @@ public class PageTableAll {
         "FDR", // abbrev
         "бор",
         "барак",
+        "мзда",
         "колокольчик", "car", "яблоко", "самолёт", "Flugzeug",  "airplane", // used in unit tests
         "нелетный", "улепетывание", // redirect
         "всё-равно",// soft-error redirect, template "{{wrongname|}}" = "{{misspelling of|}}"
@@ -99,7 +100,7 @@ public class PageTableAll {
                 
                 // test problem pages:
                 if (n_cur < debug_pages.length)
-                    page_title = wikt_conn.enc.EncodeFromJava("камыш"); // всё-равно
+                    page_title = wikt_conn.enc.EncodeFromJava("мзда"); // всё-равно
                     //page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
                 else 
                     break;

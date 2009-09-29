@@ -71,10 +71,15 @@ public class WMeaningRu {
         // todo
         // ....
 
-        List<WMeaning> wm_list = new ArrayList<WMeaning>();
+
 
         int len = text.length();
         int prev_eol = m.end();  // previous end of line
+
+        if(text.substring(prev_eol,prev_eol+3).equalsIgnoreCase("===")) 
+            return NULL_WMEANING_ARRAY;     // the definition section is empty!
+
+        List<WMeaning> wm_list = null;
         boolean to_continue = true;
         while(to_continue) {
             // 3. gets next # line
@@ -89,12 +94,17 @@ public class WMeaningRu {
             // return null if this line is not started from "#" or = "# "
             WMeaning wm = WMeaning.parseOneDefinition(wikt_lang, page_title, lang_section, line);
             if(null != wm) {
+                if(null == wm_list)
+                    wm_list = new ArrayList<WMeaning>();
                 wm_list.add(wm);
             }
             to_continue = next_eol < len-1 && (text.charAt(next_eol+1) == '#');
             prev_eol = next_eol + 1;
         }
-        
+
+        if(null == wm_list)
+            return NULL_WMEANING_ARRAY;
+
         return( (WMeaning[])wm_list.toArray(NULL_WMEANING_ARRAY) );
     }
 
