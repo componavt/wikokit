@@ -37,13 +37,10 @@ public class Keeper {
         boolean is_in_wiktionary = true;
         TPage tpage = TPage.getOrInsert(conn, page_title, word_count, wiki_link_count, 
                 is_in_wiktionary, word.getRedirect());
-
+        
         if(word.isRedirect())
             return;
-
-        //if(!tpage.is_in_wiktionary) { // yes, now the page is in Wiktionary
-        // TPage.update(is_in_wiktionary = true) } todo ...
-
+        
         WLanguage[] w_languages = word.getAllLanguages();
         for(WLanguage w_lang : w_languages) {
             TLang tlang = TLang.get(w_lang.getLanguage());
@@ -77,6 +74,15 @@ public class Keeper {
                     twiki_text = null;  // free memory
                     tmeaning = null;
                 }
+
+                // some stubs don't have definition, but they have translations
+                if(w_meaning_all.length == 0 && translations.length > 0) {
+                    for(int i=0; i<translations.length; i++) {
+                        TMeaning tmeaning = TMeaning.insert(conn, lang_pos, i, null);
+                        TTranslation.storeToDB(conn, lang_pos, tmeaning, translations[i]);
+                    }
+                }
+
                 tpos = null;            // free memory
                 lang_pos = null;
                 translations = null;

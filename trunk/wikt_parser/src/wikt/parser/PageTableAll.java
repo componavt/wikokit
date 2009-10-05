@@ -20,14 +20,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "белореченка",
-        "бендерчанка",
-
-        /*wiki_text='}}
-
-Категория:Названия жителей населённых пунктов
-Категория:Названия жителей регионов
-Категория:Россиянки*/
+        "молдаванка", "бендерчанка", "будуаръ",
 
         "Aleksandrio", // todo - skipped (non explicit) section "Meaning"
 
@@ -35,6 +28,7 @@ public class PageTableAll {
         "агиохронотопоним",         // TWikiText.java storeToDB())::
                                     // two very long wiki_text has the same 100 first symbols. Insertion failed
 
+        "ы", // Russian letter
         "Abessinia", "Arabian", "Asianus", "Avernus", "Guatemala", "baba", // unknown language code 'null'
         "a", // -lang-
         "FDR", // abbrev
@@ -46,7 +40,7 @@ public class PageTableAll {
         "всё-равно",// soft-error redirect, template "{{wrongname|}}" = "{{misspelling of|}}"
         "маня",     // soft redirect, prints the word normal form (lemma)
         "негритянка",
-        "borda",   // -lang-
+        "borda", "one", "vai", // -lang-
         "злато", "зограф", "камыш", "кан", "кар", "карта",
         "журавль", "игнатовец", "мурашкинец", 
         "punainen", "alt", "unter", "that", "tester",
@@ -100,8 +94,8 @@ public class PageTableAll {
                 
                 // test problem pages:
                 if (n_cur < debug_pages.length)
-                    page_title = wikt_conn.enc.EncodeFromJava("мзда"); // всё-равно
-                    //page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]); //"Борланд,_Вес"
+                    page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]);
+                    //page_title = wikt_conn.enc.EncodeFromJava("one"); // будуаръ centi- всё-равно
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
@@ -125,7 +119,7 @@ public class PageTableAll {
                 }
 
                 WiktParser.parseWiktionaryEntry(wiki_lang, wikt_conn, wikt_parsed_conn, page_title);
-break;
+//break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());

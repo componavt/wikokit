@@ -19,10 +19,16 @@ public class WQuoteRu {
         int pos_quote = text.indexOf("{{пример|");
 
         if(-1 == pos_quote) {   // there is no quote section!
-            if(DEBUG)
-                System.out.println("Warning in WQuoteRu.getDefinitionBeforeFirstQuote(): The article '"+
-                                    page_title + "' has no quote '{{пример|' in a definition.");
-            return text;
+            
+            // out of date quote template
+            pos_quote = text.indexOf("{{пример перевод|");
+
+            if(-1 == pos_quote) {   // there is no quote with translation section!
+                if(DEBUG)
+                    System.out.println("Warning in WQuoteRu.getDefinitionBeforeFirstQuote(): The article '"+
+                                        page_title + "' has no quote '{{пример|' in a definition.");
+                return text;
+            }
         }
 
         return text.substring(0, pos_quote).trim();

@@ -121,13 +121,20 @@ public class TPage {
      * @param redirect_target redirected (target, destination) page,
      *                         it is null for usual entries
      */
-    public static TPage getOrInsert (Connect connect,String page_title,int word_count,int wiki_link_count,
-            boolean is_in_wiktionary,String redirect_target) {
+    public static TPage getOrInsert (Connect connect,String _page_title,
+                            int _word_count,int _wiki_link_count,
+                            boolean _is_in_wiktionary,String _redirect_target) {
         
-        TPage p = TPage.get(connect, page_title);
+        TPage p = TPage.get(connect, _page_title);
         if(null == p)
-            p = TPage.insert(connect, page_title, word_count, wiki_link_count, 
-                            is_in_wiktionary, redirect_target);
+            p = TPage.insert(connect, _page_title, _word_count, _wiki_link_count,
+                            _is_in_wiktionary, _redirect_target);
+        else {
+            if( p.is_in_wiktionary != _is_in_wiktionary) {
+                TPage.setIsInWiktionary(connect, _page_title, _is_in_wiktionary);
+                p.is_in_wiktionary = _is_in_wiktionary;
+            }
+        }
         return p;
     }
 
@@ -191,6 +198,40 @@ public class TPage {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return page;
+    }
+
+    /** Update the field 'is_in_wiktionary' in the table 'page',
+     * record is identiied by 'page_title'.<br><br>
+     * UPDATE page SET is_in_wiktionary=1 WHERE page_title="centi-";
+     *
+     * @param page_title   unique title of an wiki page
+     * @param is_in_wiktionary true, if the page_title exists in Wiktionary
+     */
+    public static void setIsInWiktionary (Connect connect,String page_title,
+                                            boolean is_in_wiktionary)
+    {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        try
+        {
+            s = connect.conn.createStatement ();
+            if(is_in_wiktionary)
+                str_sql.append("UPDATE page SET is_in_wiktionary=1");
+            else
+                str_sql.append("UPDATE page SET is_in_wiktionary=0");
+
+            str_sql.append(" WHERE page_title=\"");
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
+            str_sql.append(safe_title);
+            str_sql.append("\"");
+            s.executeUpdate (str_sql.toString());
+        }catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TPage.setIsInWiktionary()):: page_title='"+page_title+"'; sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
     }
 
     /** Selects row from the table 'page' by the page_title.

@@ -76,7 +76,7 @@ public class TWikiText {
             twiki_text = TWikiText.insert(connect, visible_text);
         
         if(null == twiki_text) { // if two very long wiki_text has the same 100 first symbols
-            System.err.println("Error: (wikt_parsed TWikiText.java storeToDB()):: two very long wiki_text has the same 100 first symbols. Insertion failed. wiki_text='" + wiki_text.getVisibleText());
+            System.err.println("Error: (wikt_parsed TWikiText.storeToDB()):: two very long wiki_text has the same 100 first symbols. Insertion failed. wiki_text='" + wiki_text.getVisibleText());
             return null;
         }
 
@@ -116,7 +116,7 @@ public class TWikiText {
                 wiki_text = new TWikiText(rs.getInt("id"), text);
 
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TWikiText.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }

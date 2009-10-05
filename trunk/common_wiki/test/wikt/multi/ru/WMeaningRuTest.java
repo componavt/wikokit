@@ -268,6 +268,29 @@ public class WMeaningRuTest {
         // ...
     }
 
+    // out of date quote template: {{пример перевод|
+    @Test
+    public void testParseOneDefinition_quote_translation_out_of_date() {
+        System.out.println("parseOneDefinition_quote_translation_out_of_date");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        String line, definition;
+        
+        // 1. simple: 1 quote with translation
+        line =  "# (''замечание'') [[это]] {{пример перевод|cum {{выдел|his}} legatus|с {{выдел|этими}} легионами.}}";
+        definition = "(''замечание'') это";
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "hic";
+        lang_section    = LanguageType.la; // Russian word
+
+        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+
+        assertTrue(null != result);
+
+        assertTrue(result.getDefinition().equalsIgnoreCase(definition));
+    }
 
     @Test
     public void testParse_2_meaning_parse_labels() {
