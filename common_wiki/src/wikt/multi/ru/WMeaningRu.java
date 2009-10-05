@@ -125,6 +125,7 @@ public class WMeaningRu {
         // remove empty quotations: {{пример|}} and {{пример}}
         line = line.replace("{{пример|}}", "");
         line = line.replace("{{пример}}", "");
+        line = line.replace("{{пример перевод|}}", ""); // todo check - does exist this example
 
         line = Definition.stripNumberSign(page_title, line);
 
