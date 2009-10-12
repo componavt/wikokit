@@ -22,10 +22,12 @@ public class PageTableAll {
     private static final String[] debug_pages = {
         "молдаванка", "бендерчанка", "будуаръ",
 
+        "навлечь", // Warning in WTranslationRu.parse(): The Russian word 'навлечь' has section === Перевод === but there is no any translation box "{{перев-блок|".
+
         "Aleksandrio", // todo - skipped (non explicit) section "Meaning"
 
         "centi-", "redeo", "hic",   // todo - check or get before insertion --
-        "агиохронотопоним",         // TWikiText.java storeToDB())::
+        "агиохронотопоним", "при-", // TWikiText.java storeToDB())::
                                     // two very long wiki_text has the same 100 first symbols. Insertion failed
 
         "ы", // Russian letter
@@ -41,6 +43,7 @@ public class PageTableAll {
         "маня",     // soft redirect, prints the word normal form (lemma)
         "негритянка",
         "borda", "one", "vai", // -lang-
+        "шах",  // TMeaning.insert()):: null argument lang_pos
         "злато", "зограф", "камыш", "кан", "кар", "карта",
         "журавль", "игнатовец", "мурашкинец", 
         "punainen", "alt", "unter", "that", "tester",
@@ -93,13 +96,13 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                if (n_cur < debug_pages.length)
+                /*if (n_cur < debug_pages.length)
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]);
                     //page_title = wikt_conn.enc.EncodeFromJava("one"); // будуаръ centi- всё-равно
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-                
+                */
                 if(DEBUG && 0 == ++n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
