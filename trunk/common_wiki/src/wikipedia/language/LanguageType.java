@@ -309,6 +309,8 @@ public class LanguageType {
     public static final LanguageType vot    = new LanguageType("vot", "Votic", "Votic");// Водский
     public static final LanguageType vro    = new LanguageType("vro", "Võro", "Võro");// Выруский диалект
 
+    public static final LanguageType ykg    = new LanguageType("ykg", "Northern Yukaghir", "Northern Yukaghir");// Северноюкагирский
+    public static final LanguageType yux    = new LanguageType("yux", "Southern Yukaghir", "Southern dYukaghir");// Южноюкагирский
     public static final LanguageType yrk    = new LanguageType("yrk", "Nenets", "Nenets");// Ненецкий
 
     public static final LanguageType zza    = new LanguageType("zza", "Zazaki", "Zazaki");// зазаки
