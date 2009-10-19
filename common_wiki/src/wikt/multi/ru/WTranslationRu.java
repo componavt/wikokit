@@ -80,9 +80,9 @@ public class WTranslationRu {
         }
 
         // one more check that there is any translation
-        if(!text_source.contains("{{перев-блок|")) {
+        if(!text_source.contains("{{перев-блок")) {
             System.out.println("Warning in WTranslationRu.parse(): " + "The Russian word '" + page_title +
-                    "' has section === Перевод === but there is no any translation box \"{{перев-блок|\".");
+                    "' has section === Перевод === but there is no any translation box \"{{перев-блок\".");
             return NULL_WTRANSLATION_ARRAY;
         }
 
@@ -101,8 +101,8 @@ public class WTranslationRu {
         boolean to_continue = true;
         while(to_continue) {
             
-            // 3. gets next substring "{{перев-блок|"
-            int next_end = text.indexOf("{{перев-блок|", prev_end + 1);
+            // 3. gets next substring "{{перев-блок"
+            int next_end = text.indexOf("{{перев-блок", prev_end + 1);
             if(-1 == next_end) {
                 to_continue = false;
 

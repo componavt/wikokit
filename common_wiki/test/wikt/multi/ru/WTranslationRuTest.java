@@ -19,7 +19,7 @@ public class WTranslationRuTest {
 
     public static String samolyot_text, samolyot_with_header, kolokolchik_text, 
             kolokolchik_text_1_translation_box, kosa_text_1_translation_box_without_header,
-            unfinished_template, 
+            unfinished_template, translation_without_pipe,
             page_end, empty_translation_with_category, absent_translation_block;
 
     public WTranslationRuTest() {
@@ -123,6 +123,11 @@ public class WTranslationRuTest {
                 "\n" +
                 "[[Категория:Россиянки]]\n" + unfinished_template;
 
+        translation_without_pipe = "=== Перевод ===\n" +
+                "{{перев-блок\n" +
+                "|en=[[test_translation]]\n" +
+                "}}\n";
+
         absent_translation_block = "=== Перевод ===\n" +
                 "*\n" +
                 "\n" +
@@ -212,6 +217,29 @@ public class WTranslationRuTest {
             assertTrue(wt_os[0].getVisibleText().equalsIgnoreCase( "дзæнгæрæг" ) );
             assertTrue(wt_os[1].getVisibleText().equalsIgnoreCase( "къæрцгæнæг" ) );
         }
+    }
+
+    /* translation_without_pipe
+     * "{{перев-блок" instead of "{{перев-блок||"
+     */
+    @Test
+    public void testParse_without_pipe() {
+        System.out.println("without_pipe");
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "test_translation";
+        LanguageType lang_section = LanguageType.ru; // Russian word
+
+        POSText pt = new POSText(POS.noun, translation_without_pipe);
+
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+        assertEquals(1, result.length );
+
+        assertEquals(0, result[0].getHeader().length()); // only one meaning, the translation box has no header
+
+        //   "|en=[[test_translation]]\n"
+        WikiText[] wt_samolyot = result[0].getTranslationIntoLanguage(LanguageType.en);
+        assertEquals(1, wt_samolyot.length );
+        assertTrue(wt_samolyot[0].getVisibleText().equalsIgnoreCase( "test_translation" ) );
     }
 
     // tests skipping of unfinished_template

@@ -277,6 +277,8 @@ public class LanguageType {
     public static final LanguageType rom    = new LanguageType("rom", "Romani", "Romani");// Цыганский
     public static final LanguageType romaji = new LanguageType("romaji", "Romaji", "Romaji");// Ромадзи
     public static final LanguageType ru_old = new LanguageType("ru-old", "Russian (before 1917)", "Russian (before 1917)");// Русский (дореформенная орфография)
+    
+    public static final LanguageType sel    = new LanguageType("sel", "Selkup", "Selkup");// Селькупский
     public static final LanguageType sjd    = new LanguageType("sjd", "Kildin Sami", "Kildin Sami");// Саамский (кильдинский)
     public static final LanguageType sjn    = new LanguageType("sjn", "Sindarin", "Sindarin");// Синдарин
     
