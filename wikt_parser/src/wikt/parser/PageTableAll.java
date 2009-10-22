@@ -20,6 +20,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
+        "",
         "молдаванка", "бендерчанка", "будуаръ",
 
         "навлечь", // Warning in WTranslationRu.parse(): The Russian word 'навлечь' has section === Перевод === but there is no any translation box "{{перев-блок|".
@@ -58,14 +59,17 @@ public class PageTableAll {
     };
     
     /** Selects all pages (not categories, not redirects), 
-     * stores to the Wiktionary parsed DB.<br><br>
+     * stores to the Wiktionary parsed DB.
+     *
+     * @param n_start_from number of first Wiktionary entry to be parsed <br><br>
      * 
      * SELECT page_title FROM page WHERE page_namespace=0 AND page_is_redirect=0;
      */
     public static void parseAllPages(
             LanguageType wiki_lang,
             Connect wikt_conn,
-            Connect wikt_parsed_conn)
+            Connect wikt_parsed_conn,
+            int n_start_from)
     {
         Statement   s = null;
         ResultSet   rs= null;
@@ -88,6 +92,10 @@ public class PageTableAll {
             int n_cur = 0;
             while (rs.next ())
             {
+                n_cur ++;
+                if(n_start_from >= 0 && n_start_from > n_cur)
+                    continue;
+
                 Encodings e = wikt_conn.enc;
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), e.GetDBEnc());
                 String db_str = Encodings.bytesTo(rs.getBytes("page_title"), e.GetDBEnc());
@@ -96,14 +104,14 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                if (n_cur < debug_pages.length)
+                /*if (n_cur < debug_pages.length)
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur]);
                     //page_title = wikt_conn.enc.EncodeFromJava("one"); // будуаръ centi- всё-равно
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-                
-                if(DEBUG && 0 == ++n_cur % 1000) {   // % 100 1000
+                */
+                if(DEBUG && 0 == n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
                     long    t_cur, t_remain;

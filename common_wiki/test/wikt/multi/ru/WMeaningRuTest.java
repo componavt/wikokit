@@ -300,7 +300,7 @@ public class WMeaningRuTest {
         String page_title;
         POSText pt;
         String str;
-        
+
         wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "алкоголь";
         lang_section    = LanguageType.ru; // Russian word
@@ -333,6 +333,33 @@ public class WMeaningRuTest {
 
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
+    }
+
+    // tests that old-wrong-format do not crush the parser
+    @Test
+    public void testParse_AlmostEmptyDefinition_complex() {
+        System.out.println("parse_AlmostEmptyDefinition_complex");
+
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+        
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "some hieroglyph";
+        lang_section    = LanguageType.ja; // Russian word
+
+        str =   "Before \n" +
+                "{{-ja-}}\n" +
+                "==Глагол==\n" +
+                "\n" +
+                "===Значение===\n" +
+                "\n";
+
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        assertEquals(0, result.length);
     }
 
     // parse 1 meaning without Number sign #

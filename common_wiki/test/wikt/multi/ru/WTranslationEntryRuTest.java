@@ -33,6 +33,35 @@ public class WTranslationEntryRuTest {
     public void tearDown() {
     }
 
+    // // translation box with empty spaces
+/*        samolyot_with_spaces = "=== Перевод ===\n" +
+            "{{перев-блок||\n" +
+            "| en = [[airplane]]\n" +     // 0
+            "}}";
+*/
+    /* samolyot_with_spaces
+     * "| en = [[airplane]]" instead of
+       "|en=[[airplane]]""
+     */
+    @Test
+    public void testParse_parameters_with_spaces() {
+        System.out.println("parameters_with_spaces");
+
+        String page_title = "самолёт";
+        String text = " en = [[airplane]]";
+        WTranslationEntry result = WTranslationEntryRu.parse(page_title, text);
+
+        assertEquals(1, result.getWikiPhrases().length);
+
+        WikiText[] phrases = result.getWikiPhrases();
+
+        assertTrue(phrases[0].getVisibleText().equalsIgnoreCase( "airplane" ) );
+        WikiWord[] ww0 = phrases[0].getWikiWords();
+        assertEquals(1, ww0.length);
+        assertTrue(ww0[0].getWordVisible().equalsIgnoreCase( "airplane" ) );
+        assertTrue(ww0[0].getWordLink().   equalsIgnoreCase( "airplane" ) );
+    }
+
     @Test
     public void testParse_comma() {
         System.out.println("parse_comma");

@@ -63,7 +63,9 @@ public class Main {
         
         WiktParser w = new WiktParser();
 //        w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
-        PageTableAll.parseAllPages(wiki_lang, wikt_conn, wikt_parsed_conn);
+        
+        int n_start_from = 0;
+        PageTableAll.parseAllPages(wiki_lang, wikt_conn, wikt_parsed_conn, n_start_from);
         
         wikt_conn.Close();
         wikt_parsed_conn.Close();

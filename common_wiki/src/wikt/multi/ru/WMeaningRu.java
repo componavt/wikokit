@@ -74,10 +74,10 @@ public class WMeaningRu {
 
 
         int len = text.length();
-        int prev_eol = m.end();  // previous end of line
-
-        if(text.substring(prev_eol,prev_eol+3).equalsIgnoreCase("===")) 
-            return NULL_WMEANING_ARRAY;     // the definition section is empty!
+        int prev_eol = m.end();         // previous end of line
+        
+        if(len < prev_eol+3 || text.substring(prev_eol,prev_eol+3).equalsIgnoreCase("==="))
+            return NULL_WMEANING_ARRAY; // the definition section is empty!
 
         List<WMeaning> wm_list = null;
         boolean to_continue = true;

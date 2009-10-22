@@ -35,7 +35,7 @@ public class WTranslationEntryRu {
             return null;
 
         // 1. language code
-        String lang_code = text.substring(0, pos_equal_sign);
+        String lang_code = text.substring(0, pos_equal_sign).trim();
         if(!LanguageType.has(lang_code)) {
             System.out.println("Warning in WTranslationEntryRu.parse(): The article '"+
                         page_title + "' has translation into unknown language with code: " + lang_code + ".");

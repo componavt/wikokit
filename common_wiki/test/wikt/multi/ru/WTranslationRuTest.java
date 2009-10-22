@@ -17,8 +17,9 @@ import wikt.constant.POS;
 
 public class WTranslationRuTest {
 
-    public static String samolyot_text, samolyot_with_header, kolokolchik_text, 
-            kolokolchik_text_1_translation_box, kosa_text_1_translation_box_without_header,
+    public static String samolyot_text, samolyot_with_header,
+            kolokolchik_text, kolokolchik_text_1_translation_box,
+            kosa_text_1_translation_box_without_header,
             unfinished_template, translation_without_pipe,
             page_end, empty_translation_with_category, absent_translation_block;
 
