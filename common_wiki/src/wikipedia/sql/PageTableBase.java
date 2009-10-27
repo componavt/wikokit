@@ -1,7 +1,7 @@
 /*
  * PageTableBase.java - SQL operations with the table page in wikipedia
  *
- * Copyright (c) 2005-2007 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
@@ -39,6 +39,9 @@ public class PageTableBase {
             page_title = null;
         }
     }
+
+    private final static String         NULL_STRING       = new String("");
+
 
     /** Gets the article text by article title.
      * SQL:
@@ -117,7 +120,110 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
         String safe_title = StringUtil.escapeChars(s);
         return connect.enc.EncodeToDB(safe_title);
     }
-    
+
+    /** Finds the first position of wildcard characters in the string starting
+     * from the "from_index" character.
+     * Wildcards are the asterisk character ("*") and the question mark (?).
+     *
+     * If no such value exists, then -1 is returned.
+     */
+    private static int getFirstPositionOfWildcardCharacter(String s, int from_index) {
+
+        int n_question = s.indexOf("?", from_index);
+        int n_asterisk = s.indexOf("*", from_index);
+
+        boolean b_question = -1 != n_question;
+        boolean b_asterisk = -1 != n_asterisk;
+        
+        if(!b_question && !b_asterisk) {
+            return -1;
+        }
+
+        if(b_question && b_asterisk) {
+            return Math.min(n_question, n_asterisk);
+        }
+
+        if(b_question)
+            return n_question;
+
+        return n_asterisk;
+    }
+
+    /** Substitutes the asterisk character ('*') and the question mark ('?')
+     * by database wildcard characters (% and _).
+     *
+     * @param ch wildcard character '*' or '?'
+     * @param b_double_question    if true then double "??" for 'LIKE'
+     *                              of non ASCII characters (e.g. cyrillics)
+     */
+    private static String convertWildCharacter(char ch,boolean b_double_question) {
+
+        if('*' == ch) {
+            return "%";
+        } else {
+            if('?' == ch) {
+                if(b_double_question) {
+                    return "__";
+                } else
+                    return "_";
+            } else {
+                //System.out.println("Error in PageTableBase.convertWildCharacter(), character '"+ch+"' is not wildcard.");
+                return new StringBuffer(ch).toString();
+            }
+        }
+    }
+
+    /** Substitutes the asterisk character ("*") and the question mark (?)
+     * by database wildcard characters (% and _).
+     *
+     * Converts to safe database string (except "*" and "?"),
+     * but without replacement of a space by an underscore symbol.
+     *
+     * If the text does not contain wildcard characters then text .= '%'.
+     */
+    public static String convertWildcardToDatabaseChars (Connect connect, String s){
+        if (null == s || 0 == s.length()) {
+            System.out.println("Error in PageTableBase.convertWildcardToDatabaseChars(), argument is null.");
+            return NULL_STRING;
+        }
+
+        String safe_title = StringUtil.escapeChars(s);
+        String encoded_title = connect.enc.EncodeToDB(safe_title);
+        
+        int from_index = 0;
+        int n_question_or_asterisk = getFirstPositionOfWildcardCharacter(s, from_index);
+
+        if(-1 == n_question_or_asterisk)
+            return encoded_title.concat("%");
+
+        // ASCII texts are happy with '?', but cyrillics require '??'
+        boolean b_double_question = encoded_title.length() > s.length();
+        StringBuffer sb = new StringBuffer();
+
+        while(-1 != n_question_or_asterisk) {
+            String s_to_convert = s.substring(from_index, n_question_or_asterisk);
+            safe_title = StringUtil.escapeChars(s_to_convert);
+            sb.append( connect.enc.EncodeToDB(safe_title) );
+            
+            sb.append( convertWildCharacter(s.charAt(n_question_or_asterisk), b_double_question) );
+
+            from_index = n_question_or_asterisk + 1;
+            n_question_or_asterisk = getFirstPositionOfWildcardCharacter(s, from_index);
+        }
+
+        int len = s.length();
+        if(from_index != len) {
+            String s_to_convert = s.substring(from_index, len);
+            safe_title = StringUtil.escapeChars(s_to_convert);
+            sb.append( connect.enc.EncodeToDB(safe_title) );
+        } //else {
+            // last symbol is wildcard ('*' or '?')
+            //sb.append( convertWildCharacter(s.charAt(len - 1)) );
+        //}
+        
+        return sb.toString();
+    }
+
     private static StringBuffer sb = new StringBuffer(255);
     
     /** Gets id of articles via Title:Namespace.
@@ -198,9 +304,8 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
         ResultSet   rs= null;
         
         // special treatment of id of redirect page
-        if(id < 0) {
+        if(id < 0)
             id = -id;
-        }
 
         if(null==connect || null==connect.conn)
             return null;
