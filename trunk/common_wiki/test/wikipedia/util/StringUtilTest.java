@@ -55,7 +55,7 @@ public class StringUtilTest extends TestCase {
         String[] word0 = StringUtil.split(delimiter, "");
         assertEquals(0, word0.length);
     }
-    
+
     public void testEscapeChars(){
         System.out.println("EscapeChars");
         String escaped, unescaped, empty;
@@ -69,8 +69,7 @@ public class StringUtilTest extends TestCase {
         unescaped = "New's coming!";
         escaped   = StringUtil.escapeChars(unescaped);
         assertEquals(escaped, "New\\'s coming!");
-    }
-    
+    }    
     
     public void testEscapeCharDollarAndBackslash(){
         System.out.println("escapeCharDollarAndBackslash");

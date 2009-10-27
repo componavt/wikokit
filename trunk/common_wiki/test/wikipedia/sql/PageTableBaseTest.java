@@ -72,7 +72,44 @@ public class PageTableBaseTest extends TestCase {
         
         return suite;
     }
-    
+
+
+    public void testWildcardToDatabaseChars(){
+        System.out.println("test_wildcardToDatabaseChars");
+        String source, result, empty;
+
+        StringUtil.escapeChars(null);
+
+        empty   = "";
+        result  = PageTableBase.convertWildcardToDatabaseChars(connect, empty);
+        assertEquals(0, result.length());
+
+        // If the text does not contain wildcard characters then text .= '%'.
+        source  =               "word";
+        result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
+        assertEquals(result,    "word%");
+
+        // only one char is wildcard
+        source  =               "first*second";
+        result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
+        assertEquals(result,    "first%second");
+
+        // last char is wildcard (two wildchars)
+        source  =               "first*second?";
+        result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
+        assertEquals(result,    "first%second_");
+
+        // the char before last is wildcard
+        source  =               "*first_secon?d";
+        result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
+        assertEquals(result,    "%first_secon_d");
+
+        // non ASCII (e.g. Cyrillic) then '?' should be doubled
+        source  =               "я?";
+        result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
+        assertEquals(result,    "Ñ__");
+    }
+
     //
     public void testGetArticleText_simple() {
         System.out.println("getArticleText_simple");
@@ -297,7 +334,7 @@ public class PageTableBaseTest extends TestCase {
             assertEquals(t, title_result);
         }
     }
-    
+
     public void testGetArticleTitleNotRedirectByID_simple() {
         System.out.println("GetArticleTitleNotRedirectByID_simple");
         String result;

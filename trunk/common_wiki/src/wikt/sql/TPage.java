@@ -354,11 +354,13 @@ public class TPage {
 
             String safe_prefix = prefix;
             if(connect.isMySQL())
-                safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
+                safe_prefix = PageTableBase.convertWildcardToDatabaseChars(connect, prefix);
+                //safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
             
             str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
             str_sql.append(safe_prefix);
-            str_sql.append("%\"");
+                //str_sql.append("%\"");
+            str_sql.append("\"");
 
             if(b_skip_redirects)
                 str_sql.append(" AND is_redirect is NULL");
