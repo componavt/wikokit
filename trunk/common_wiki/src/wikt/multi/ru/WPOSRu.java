@@ -49,6 +49,25 @@ public class WPOSRu {
             //"(?m)^\\s*==");
             "(?m)^==\\s*([^=]+?)\\s*==\\s*");
             // "\\A==\\s*([^=]+)\\s*==\\s*\\Z");
+
+    /** start of the POS block,
+     * {{заголовок|be|add=I}}
+     * it can absent...
+     */
+    private final static Pattern ptrn_title_add_template = Pattern.compile(
+       // Vim: ^{{заголовок|\([^|]\+\)|add=[^}]\+}}\Z
+            // ^{{заголовок|\([^|]\+\)|add=[^}]\+}}\Z
+
+            //"(?m)^\\s*==");
+            //"(?m)^==\\s*([^=]+?)\\s*==\\s*");
+            
+            //"(?m)^\\Q{{заголовок|\\E([^|]+?)\\Q|add=\\E([^}]+?)\\}\\}\\s*\\Z"); // -
+            //"(?m)^\\Q{{заголовок|\\E([^|]+?)\\Q|add=\\E([^}]{2,9})\\s*\\Z"); // -
+              "(?m)^\\Q{{заголовок|\\E([^|]+?)\\Q|add=\\E([^}]{1,4})\\s*"); // ?  1-4 = len(I,..,VIII,..)
+            //"(?m)^\\Q{{заголовок|\\E([^|]+?)\\Q|add=\\E([^}]{2,9})"); // +
+            // "\\A==\\s*([^=]+)\\s*==\\s*\\Z");
+
+// "\\{\\{-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=\\}\\})"
     
     /** Gets first two letter after ==Морфологические и синтаксические свойства==
      * e.g. "{{" or "Су"ществительное, or "Гл"агол...
@@ -85,7 +104,12 @@ public class WPOSRu {
         Matcher m = ptrn_2nd_level.matcher(lt.text.toString());
         boolean b_next = m.find();
         
-        if(!b_next) {   // there is only one ==Second level header== in this language in this word (e.g. "== lead I ==" only)
+        if(!b_next) {   // check: "{{заголовок|sq|add=I}}")
+            POSText[] pp = splitToPOSWithTitleAddParameter(page_title, lt);
+            if(pp.length > 0)
+                return pp;
+
+                        // there is only one ==Second level header== in this language in this word
             POSText[] pos_section_alone = new POSText[1];
             pos_section_alone[0] = guessPOS(lt.text);
             return pos_section_alone;
@@ -99,10 +123,11 @@ public class WPOSRu {
         start = 0;
         pos_title = WikiParser.removeAcuteAccent(new StringBuffer(m.group(1)), LanguageType.ru).toString();
         b_next = m.find();
-        if(b_next) { 
+        if(b_next)
             end = m.start();
-        } else {
+        else {
             end = 0;    // there is only one POS block, e.g. ==Verb I==, it is a little strange ...
+            System.out.println("Warning: there is only one POS block, e.g. ==Verb I== for the word '" + page_title + "' with language code  '" + lt.getLanguage().toString() + "' in WPOSRu.splitToPOSSections()");
         }
         
         while(b_next) {
@@ -142,7 +167,123 @@ public class WPOSRu {
         
         return (POSText[])pos_sections.toArray(NULL_POS_TEXT_ARRAY);
     }
-    
+
+
+    /** Checks whether the language code XX is equals to lt.lang.
+     *
+     * @param page_title word which are described in this article 'text'
+     * @param lt .text will be parsed and splitted,
+     *           .lang is not using now, may be in future...
+     * @param add_lang_code language code XX in {{заголовок|XX|add=..}}
+     */
+    private static boolean isValidLanguageCode (
+            String      page_title,
+            LangText    lt,
+            String      add_lang_code)
+    {
+        if(null == add_lang_code
+                || add_lang_code.length() < 2
+                || !LanguageType.has(add_lang_code)) {
+                // i.e. skip the whole block POS if the first lang code is unknown
+            
+            if (null == add_lang_code)
+                System.out.println("Error: null language code in {{заголовок|lang_code|add=..}} for the word '" + page_title + "' in WPOSRu.splitToPOSWithTitleAddParameter()");
+            else
+                System.out.println("Error: unknown language code '" + add_lang_code + "' in {{заголовок|lang_code|add=..}} for the word '" + page_title + "' in WPOSRu.splitToPOSWithTitleAddParameter()");
+            return false;
+        }
+
+        LanguageType add_lang_type = LanguageType.get(add_lang_code);
+
+        if(add_lang_type != lt.getLanguage()) {
+            System.out.println("Error: language code '" + add_lang_code + "' != '"+ lt.getLanguage().toString() +"' (in {{заголовок|YY|add=..}} and {{-XX-}}) for the word '" + page_title + "' in WPOSRu.splitToPOSWithTitleAddParameter()");
+            return false;
+        }
+
+        return true;
+    }
+
+    /** Splits to blocks of text which describe different part of speech.
+     *
+     * page_title - word which are described in this article 'text'
+     * @param lt .text will be parsed and splitted,
+     *           .lang is not using now, may be in future...
+     *
+     * 1) Splits the following text to "заголовок|...|add=I" and "заголовок|...|add=II"
+     * 2) Extracts part of speech (e.g. "сущ" i.e. "noun")
+     * <PRE>
+     * {{заголовок|be|add=I}}
+     * === Морфологические и синтаксические свойства ===
+     * {{сущ be m|слоги={{по-слогам|шах}}|}}
+     *
+     * {{заголовок|be|add=II}}
+     * === Морфологические и синтаксические свойства ===
+     * {{сущ be m|слоги={{по-слогам|}}|}}</PRE>
+     */
+    private static POSText[] splitToPOSWithTitleAddParameter (
+            String      page_title,
+            LangText    lt)
+    {
+        Matcher m = ptrn_title_add_template.matcher(lt.text.toString());
+        boolean b_next = m.find();
+
+        if(!b_next) // there is no POS delimiter "{{заголовок|...|add=I}}"
+            return NULL_POS_TEXT_ARRAY;
+
+        List<POSText> pos_sections = new ArrayList<POSText>();  // result will be stored to
+        StringBuffer current_pos_section = new StringBuffer();
+
+        int start, end; // "<start> {{заголовок|...|add=I}} ...
+                        //    <end> {{заголовок|...|add=II}}" position of POS block in the lt.text
+
+        if(!isValidLanguageCode(page_title, lt, m.group(1)))
+            return NULL_POS_TEXT_ARRAY;
+
+        start = 0;
+        b_next = m.find();
+        if(b_next)
+            end = m.start();
+        else {
+            end = 0;    // there is only one POS block, it is a little strange ...
+            System.out.println("Warning: there is only one POS block, e.g. {{заголовок|...|add=I}} for the word '" + page_title + "' with language code  '" + lt.getLanguage().toString() + "' in WPOSRu.splitToPOSSections()");
+        }
+
+        while(b_next) {
+            current_pos_section.append(lt.text.substring(start, end));
+
+            POSText pt = guessPOS (current_pos_section);
+
+            if(null != pt.getPOSType()) { // OK. It's POS header, though it's possible that p=unknown :(
+                current_pos_section.setLength(0);
+                pos_sections.add(pt);
+                
+            } else {
+                // null, if this is another 2nd level header, e.g. Bibliography or References
+                current_pos_section.append(""); // +??? this Bibliography text
+                // todo ...
+            }
+
+            // variant I:  \1==page_title+"I", "II", ... "VIII"
+            // variant II: \1==Verb|Noun|... (In Russian)
+            //pos_title = WikiParser.removeAcuteAccent(new StringBuffer(m.group(1)), LanguageType.ru).toString();
+
+            b_next = m.find();
+            if(b_next) {
+                start = end;
+                end = m.start();
+            }
+        }
+
+        current_pos_section.append(lt.text.substring(end)); // last POS section
+
+        POSText pt = guessPOS (current_pos_section);
+        if(null != pt.getPOSType()) { // OK. It's last POS header, though it's possible that p=unknown :(
+            current_pos_section.setLength(0);
+            pos_sections.add(pt);
+        }
+
+        return (POSText[])pos_sections.toArray(NULL_POS_TEXT_ARRAY);
+    }
 
     /** The POS should be extracted from the texts, e.g.<PRE>
      * noun:
