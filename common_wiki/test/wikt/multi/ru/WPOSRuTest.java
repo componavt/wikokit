@@ -45,6 +45,60 @@ public class WPOSRuTest {
         connect_ruwikt.Close();
     }
 
+    /*  POS defined by the template {{заголовок|be|add=I}},
+     * where "add" is not empty.
+     *
+     * {{-be-}}
+     * {{заголовок|be|add=I}}
+     * {{заголовок|be|add=II}}
+     */
+    @Test
+    public void testSplitToPOSSections_add_parameter() {
+        System.out.println("splitToPOSSections_second_level_title_with_internal_brackets");
+
+        String str, s1, s2;
+        POSText[] result;
+        StringBuffer s;
+        LangText lt;
+        lt = new LangText(LanguageType.be);
+
+        // two POS in {{-en-}} in Russian Wiktionary
+        s1 =    "Before \n" +
+                "{{заголовок|be|add=I}}\n" +
+                "=== Морфологические и синтаксические свойства ===\n" +
+                "{{сущ be m|слоги={{по-слогам|шах}}|}}\n" +
+                "\n";
+        s2 =    "{{заголовок|be|add=II}}\n" +
+                "===Морфологические и синтаксические свойства===\n" +
+                "{{сущ be m|слоги={{по-слогам|}}|}}\n" +
+                "\n";
+        str = s1 + s2;
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("шах", lt);
+        assertEquals(2, result.length);
+        assertEquals(POS.noun, result[0].getPOSType());
+        assertEquals(POS.noun, result[1].getPOSType());
+
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(s1));
+        assertTrue(result[1].getText().toString().equalsIgnoreCase(s2));
+
+        // check of error: language code "en" != "be"
+        lt = new LangText(LanguageType.en);
+        s1 =    "Before \n" +
+                "{{заголовок|be|add=I}}\n" +
+                "=== Морфологические и синтаксические свойства ===\n" +
+                "{{сущ be m|слоги={{по-слогам|шах}}|}}\n" +
+                "\n";
+        s2 =    "{{заголовок|be|add=II}}\n" +
+                "===Морфологические и синтаксические свойства===\n" +
+                "{{сущ be m|слоги={{по-слогам|}}|}}\n" +
+                "\n";
+        str = s1 + s2;
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("шах", lt);
+        assertEquals(1, result.length);
+    }
+
     @Test
     public void guessPOS_till_hyphen_not_space() {
         System.out.println("testGuessPOS_till_hyphen_not_space");
@@ -155,9 +209,8 @@ public class WPOSRuTest {
     public void guessPOSWith2ndLevelHeader_POS_header_unknown_but_not_null() {
         System.out.println("splitToPOSSections_POS_header_unknown_but_not_null");
         
-        String str, s1, s2, page_title;
+        String str, page_title;
         POS result;
-        StringBuffer s;
         LangText lt;
         
         page_title = "round";
@@ -250,8 +303,8 @@ public class WPOSRuTest {
         // + real words from database
     }
     
-    /**
-     * Test of splitToPOSSections method, of class WPOSRu.
+    /** additional_second_level_blocks
+     * <references />
      */
     @Test
     public void testSplitToPOSSections_additional_second_level_blocks() {
@@ -337,7 +390,9 @@ public class WPOSRuTest {
         assertTrue(result[1].getText().toString().equalsIgnoreCase(s2));
         assertTrue(result[2].getText().toString().equalsIgnoreCase(s3));
     }
+
     
+
     @Test
     public void testSplitToPOSSections_second_level_title_with_internal_brackets() {
         System.out.println("splitToPOSSections_second_level_title_with_internal_brackets");

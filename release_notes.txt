@@ -2,8 +2,11 @@ wiwordik 0.02 2009-0?-??
   Added (from user's point of view):
     Wildcard characters: the asterisk character ("*") and the question mark (?).
 
+  Added (from programmer's point of view)
+    Correct parsing of POS blocks {{заголовок|XX|add=..}}.
+
 wikokit 0.12.6 2009-0?-??
-  common_wiki 184 tests passed, 25 tests failed
+  common_wiki 185 tests passed, 25 tests failed
 
   common_wiki 167 tests passed, 33 tests failed (wo wikt_parsed)
   common_wiki 173 tests passed, 25 tests failed (with wikt_parsed)

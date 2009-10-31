@@ -378,37 +378,16 @@ public class LanguageType {
     public static final LanguageType ku_latn = new LanguageType("ku-latn", "Northern Kurdish Latin script", "Northern Kurdish Latin script");
     public static final LanguageType ku_arab = new LanguageType("ku-arab", "Northern Kurdish Arabic script", "Northern Kurdish Arabic script");
     
-    public static final LanguageType ksh_c_a = new LanguageType("ksh-c-a", "Ripoarisch c a", "Ripuarian c a");
-    public static final LanguageType ksh_p_b = new LanguageType("ksh-p-b", "Ripoarisch p b", "Ripuarian p b");
-    
-    public static final LanguageType new_ = new LanguageType("new", "а¤ЁаҐ‡а¤Єа¤ѕа¤І а¤­а¤ѕа¤·а¤ѕ", "Newar / Nepal Bhasa");
-    
-    public static final LanguageType nn = new LanguageType("nn", "Norwegian (Nynorsk)", "Norwegian (Nynorsk)");
-    public static final LanguageType no = new LanguageType("no", "Norwegian", "Norwegian");
 
-    public static final LanguageType uz = new LanguageType("uz", "Uzbek", "Uzbek");
-    
-    public static final LanguageType zh_cn = new LanguageType("zh-cn", "Chinese (PRC)", "Chinese (PRC)");
-    public static final LanguageType zh_hans = new LanguageType("zh-hans", "Chinese written using the Simplified Chinese script", "Chinese written using the Simplified Chinese script");
-    public static final LanguageType zh_hant = new LanguageType("zh-hant", "Chinese written using the Traditional Chinese script", "Chinese written using the Traditional Chinese script");
-    public static final LanguageType zh_sg = new LanguageType("zh-sg", "Chinese (Singapore)", "Chinese (Singapore)");
-    public static final LanguageType zh_tw = new LanguageType("zh-tw", "Chinese (Taiwan)", "Chinese (Taiwan)");
-    public static final LanguageType zh_hk = new LanguageType("zh-hk", "Chinese (Hong Kong)", "Chinese (Hong Kong)");
-    public static final LanguageType zh_mo = new LanguageType("zh-mo", "Chinese (Macau)", "Chinese (Macau)");
-    public static final LanguageType zh_my = new LanguageType("zh-my", "Chinese (Malaysia)", "Chinese (Malaysia)");
-
-    public static final LanguageType zh_classical = new LanguageType("zh-classical", "ж–‡иЁЂ", "Classical Chinese/Literary Chinese");
-    public static final LanguageType zh_min_nan = new LanguageType("zh-min-nan", "BГўn-lГўm-gГє", "Min-nan -- (see bug 8217)");
-    public static final LanguageType zh_yue = new LanguageType("zh-yue", "зІµиЄћ", "Cantonese");
-
-    public static final LanguageType zu     = new LanguageType("zu", "isiZulu", "Cantonese");
-    public static final LanguageType tlh    = new LanguageType("tlh", "tlhIngan-Hol", "Klingon"); // - no interlanguage links allowed
 
     public static final LanguageType ab     = new LanguageType("ab", "РђТ§СЃСѓР°", "Abkhaz");
     public static final LanguageType bat_smg = new LanguageType("bat-smg", "ЕЅemaitД—ЕЎka", "Samogitian");
 
     public static final LanguageType be_tarask = new LanguageType("be-tarask", "Р‘РµР»Р°СЂСѓСЃРєР°СЏ (С‚Р°СЂР°С€РєРµРІС–С†Р°)", "Belarusian in Taraskievica orthography");
     public static final LanguageType be_x_old = new LanguageType("be-x-old", "Р‘РµР»Р°СЂСѓСЃРєР°СЏ (С‚Р°СЂР°С€РєРµРІС–С†Р°)", "Belarusian in Taraskievica orthography; compat link");
+    
+    public static final LanguageType brh    = new LanguageType("brh", "Brahui", "Brahui");// Брауи
+
     public static final LanguageType btk    = new LanguageType("btk", "Batak", "Batak");// Батакский
     public static final LanguageType bya    = new LanguageType("bya", "Batak", "Batak");// Батакский
 
@@ -434,8 +413,16 @@ public class LanguageType {
 
     public static final LanguageType krh    = new LanguageType("krh", "Kurama", "Kurama");
 
+    public static final LanguageType ksh_c_a = new LanguageType("ksh-c-a", "Ripoarisch c a", "Ripuarian c a");
+    public static final LanguageType ksh_p_b = new LanguageType("ksh-p-b", "Ripoarisch p b", "Ripuarian p b");
+
     public static final LanguageType mnc    = new LanguageType("mnc", "Manchu", "Manchu");
 
+    public static final LanguageType new_ = new LanguageType("new", "а¤ЁаҐ‡а¤Єа¤ѕа¤І а¤­а¤ѕа¤·а¤ѕ", "Newar / Nepal Bhasa");
+
+    public static final LanguageType nn = new LanguageType("nn", "Norwegian (Nynorsk)", "Norwegian (Nynorsk)");
+    public static final LanguageType no = new LanguageType("no", "Norwegian", "Norwegian");
+    
     public static final LanguageType nv     = new LanguageType("nv", "DinГ© bizaad", "Navajo");
     public static final LanguageType nav    = new LanguageType("nv", "DinГ© bizaad", "Navajo");
     
@@ -473,12 +460,31 @@ public class LanguageType {
     public static final LanguageType twf    = new LanguageType("twf", "Tiwa", "Tiwa");// ?
 
     public static final LanguageType uga    = new LanguageType("uga", "Ugaritic", "Ugaritic");// Угаритский
+    public static final LanguageType uz = new LanguageType("uz", "Uzbek", "Uzbek");
+
+    public static final LanguageType tlh    = new LanguageType("tlh", "tlhIngan-Hol", "Klingon"); // - no interlanguage links allowed
 
     public static final LanguageType val    = new LanguageType("val", "Vehes", "Vehes");// ?
 
     public static final LanguageType yua    = new LanguageType("yua", "Yucatec Maya", "Yucatec Maya");// Юкатекский
     public static final LanguageType yue    = new LanguageType("yue", "зІµиЄћ", "Cantonese");
-    
+
+    public static final LanguageType zh_cn = new LanguageType("zh-cn", "Chinese (PRC)", "Chinese (PRC)");
+    public static final LanguageType zh_hans = new LanguageType("zh-hans", "Chinese written using the Simplified Chinese script", "Chinese written using the Simplified Chinese script");
+    public static final LanguageType zh_hant = new LanguageType("zh-hant", "Chinese written using the Traditional Chinese script", "Chinese written using the Traditional Chinese script");
+    public static final LanguageType zh_sg = new LanguageType("zh-sg", "Chinese (Singapore)", "Chinese (Singapore)");
+    public static final LanguageType zh_tw = new LanguageType("zh-tw", "Chinese (Taiwan)", "Chinese (Taiwan)");
+    public static final LanguageType zh_hk = new LanguageType("zh-hk", "Chinese (Hong Kong)", "Chinese (Hong Kong)");
+    public static final LanguageType zh_mo = new LanguageType("zh-mo", "Chinese (Macau)", "Chinese (Macau)");
+    public static final LanguageType zh_my = new LanguageType("zh-my", "Chinese (Malaysia)", "Chinese (Malaysia)");
+
+    public static final LanguageType zh_classical = new LanguageType("zh-classical", "ж–‡иЁЂ", "Classical Chinese/Literary Chinese");
+    public static final LanguageType zh_min_nan = new LanguageType("zh-min-nan", "BГўn-lГўm-gГє", "Min-nan -- (see bug 8217)");
+    public static final LanguageType zh_yue = new LanguageType("zh-yue", "зІµиЄћ", "Cantonese");
+
+    public static final LanguageType zu     = new LanguageType("zu", "isiZulu", "Cantonese");
+
+
     // automatically
     /** Vim commands to convert mediawiki/languages/Names.php to the following
      * lines:

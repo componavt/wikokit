@@ -135,7 +135,8 @@ public class WLanguageRuTest {
     }
 
     
-    // {{заголовок|ka|add=}}
+    // {{заголовок|ka|add=}} - yes, this is language delimiter
+    // {{заголовок|be|add=I}}- no, this is not a laguage, but a POS delimiter
     @Test
     public void testSplitToLanguageSections_with_special_header() {
         System.out.println("splitToLanguageSections_with_special_header");
@@ -157,6 +158,29 @@ public class WLanguageRuTest {
         assertEquals(1, result.length);
         //assertTrue(result[0].text.toString().equalsIgnoreCase("Before  Russian"));
         assertEquals("Before  Georgia", result[0].text.toString());
+
+        // {{заголовок|be|add=I}}
+        // no, this is not a laguage, but a POS delimiter (next level)
+        source_text = "Before {{заголовок|be|add=I}} shah";
+        result = WLanguageRu.splitToLanguageSections("shah", new StringBuffer(source_text));
+        assertEquals(1, result.length); // 1, since it's one unknown language
+
+        // only one Belarusian language with two POS
+        // {{-be-}}
+        // {{заголовок|be|add=I}}
+        // {{заголовок|be|add=II}}
+        source_text = "{{-be-}} skip me {{заголовок|be|add=I}} Belarusian 1 {{заголовок|be|add=II}} second";
+        result = WLanguageRu.splitToLanguageSections("shah", new StringBuffer(source_text));
+        assertEquals(1, result.length);
+
+        // two = Russian and Belarusian (with two POS)
+        // {{-ru-}}
+        // {{-be-}}
+        // {{заголовок|be|add=I}}
+        // {{заголовок|be|add=II}}
+        source_text = "{{-ru-}} Ru {{-be-}} skip me {{заголовок|be|add=I}} Belarusian 1 {{заголовок|be|add=II}} second";
+        result = WLanguageRu.splitToLanguageSections("shah", new StringBuffer(source_text));
+        assertEquals(2, result.length);
     }
 
     // {{-de-|schwalbe}}
