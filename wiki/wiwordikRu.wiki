@@ -34,6 +34,10 @@ Windows исполняемый файл (включает графическую
 
 http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/friendly_dollar_0.01.jpg
 
+= Release Notes =
+
+См. список изменений, улучшений, исправлений в файле [http://wikokit.googlecode.com/svn/trunk/wiwordik/release_notes.txt release_notes.txt].
+
 = Планов громадьё =
 
 Впереди, в следующих версиях программы, планируется научить программу узнавать, т.е. извлекать и сохранять в базе данных:
