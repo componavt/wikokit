@@ -353,9 +353,16 @@ public class TPage {
             s = connect.conn.createStatement ();
 
             String safe_prefix = prefix;
-            if(connect.isMySQL())
+            if(connect.isMySQL()) {
                 safe_prefix = PageTableBase.convertWildcardToDatabaseChars(connect, prefix);
                 //safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
+            } else {
+                // SQLite
+                if(-1 == PageTableBase.getFirstPositionOfWildcardCharacter(safe_prefix, 0))
+                    safe_prefix = safe_prefix.concat("%");
+                else
+                    safe_prefix = safe_prefix.replace('*', '%').replace('?', '_');
+            }
             
             str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
             str_sql.append(safe_prefix);

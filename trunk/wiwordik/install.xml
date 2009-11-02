@@ -2,7 +2,7 @@
 
 <info>
     <appname>wiwordik</appname>
-    <appversion>0.01</appversion>
+    <appversion>0.02</appversion>
     <authors>
         <author name="Andrew Krizhanovsky" email="andrew.krizhanovsky@gmail.com" />
     </authors>
@@ -51,7 +51,7 @@
 
 <packs>
     <pack name="Core" required="yes">
-        <description>wiwordic core files.</description>
+        <description>wiwordik core files.</description>
         <fileset dir="" targetdir="$INSTALL_PATH">
         <include name="*.sqlite" />
         <include name="wiwordik.bat" />
