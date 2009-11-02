@@ -22,9 +22,11 @@ Read this page in English here: [wiwordik].
 = Скачать =
 
 Windows исполняемый файл (включает графическую оболочку и базу данных словаря):
-  * [http://wikokit.googlecode.com/files/wiwordik-setup-0.01.exe wiwordik-setup-0.01.exe]
+  * [http://wikokit.googlecode.com/files/wiwordik-setup-0.02.exe wiwordik-setup-0.02.exe]
 
-Программа тестировалась в среде Windows XP и Vista.
+Программа тестировалась в среде Windows XP - работает.
+
+В среде Vista - не работает, ждём следующей версии JavaFX...
 
 = Скриншот =
 
