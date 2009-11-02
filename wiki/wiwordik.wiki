@@ -34,6 +34,10 @@ wiwordik version 0.01 is based on the Russian Wiktionary dump as of July 07 2009
 
 http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/friendly_dollar_0.01.jpg
 
+= Release Notes =
+
+See [http://wikokit.googlecode.com/svn/trunk/wiwordik/release_notes.txt release_notes.txt].
+
 = Future =
 
 The program depends on the Wiktionary parser (wikt_parser).
