@@ -1,0 +1,10 @@
+wiwordik 0.02 2009-11-02
+  Added (from user's point of view):
+    Wildcard characters: the asterisk character ("*") and the question mark (?).
+
+  Added (from programmer's point of view)
+    Correct parsing of POS blocks {{заголовок|XX|add=..}}.
+
+wiwordik 0.01 2009-09-22
+  First release.
+
