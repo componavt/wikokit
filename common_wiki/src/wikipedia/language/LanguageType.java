@@ -145,9 +145,8 @@ public class LanguageType {
 
 
     // Russian Wiktionary specific codes
-// todo check errors:  has too long unknown language code
-
-    // todo error:  unknown language code
+    // 1. todo check errors:  has too long unknown language code
+    // 2. todo error:  unknown language code
     
     public static final LanguageType letter_ru = new LanguageType("Буква", "Letter", "Letter");// Буква
     public static final LanguageType bagua  = new LanguageType("bagua", "Ba gua", "Ba gua");// Багуа

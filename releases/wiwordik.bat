@@ -1,1 +1,1 @@
-java -jar wiwordik-setup-0.01.jar
+java -jar wiwordik-setup-0.02.jar

@@ -127,7 +127,7 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
      *
      * If no such value exists, then -1 is returned.
      */
-    private static int getFirstPositionOfWildcardCharacter(String s, int from_index) {
+    public static int getFirstPositionOfWildcardCharacter(String s, int from_index) {
 
         int n_question = s.indexOf("?", from_index);
         int n_asterisk = s.indexOf("*", from_index);
