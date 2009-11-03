@@ -14,9 +14,6 @@ It should be done before the parsing of the Wiktionary database.
   * `USE ruwikt20090122_parsed`
   * `SOURCE wikt_parsed_empty.sql`
 
-= See also =
-  * [File_wikt_parsed_empty_sql]
-
 = Misc =
 
 == Index ==
