@@ -13,3 +13,12 @@ It should be done before the parsing of the Wiktionary database.
   * Create DB in MySQL, e.g. `ruwikt20090122_parsed`
   * `USE ruwikt20090122_parsed`
   * `SOURCE wikt_parsed_empty.sql`
+
+= Misc =
+
+== Index ==
+
+CREATE TABLE test (id INT, INDEX(id));
+
+ALTER TABLE `relation` DROP INDEX `idx_software_key` ,
+ADD INDEX `idx_software_key` ( `software_key` ( 3 ) );
