@@ -82,7 +82,7 @@ public class PageTableBaseTest extends TestCase {
 
         empty   = "";
         result  = PageTableBase.convertWildcardToDatabaseChars(connect, empty);
-        assertEquals(0, result.length());
+        assertEquals(1, result.length()); // "%"
 
         // If the text does not contain wildcard characters then text .= '%'.
         source  =               "word";
@@ -103,6 +103,11 @@ public class PageTableBaseTest extends TestCase {
         source  =               "*first_secon?d";
         result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
         assertEquals(result,    "%first_secon_d");
+
+        // empty request = %, i.e. any record
+        source  =               "";
+        result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
+        assertEquals(result,    "%");
 
         // non ASCII (e.g. Cyrillic) then '?' should be doubled
         source  =               "я?";

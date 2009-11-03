@@ -2,6 +2,7 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL';
 
+
 -- -----------------------------------------------------
 -- Table `page`
 -- -----------------------------------------------------
@@ -33,7 +34,7 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `etymology_n` TINYINT UNSIGNED NOT NULL ,
   `lemma` VARCHAR(255) BINARY NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
-  `redirect_type` TINYINT NULL COMMENT 'Type of soft redirect (Wordform, Misspelling)' ,
+  `redirect_type` TINYINT UNSIGNED NULL COMMENT 'Type of soft redirect (Wordform, Misspelling)' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
 ENGINE = InnoDB
@@ -164,7 +165,8 @@ CREATE  TABLE IF NOT EXISTS `meaning` (
   `lang_pos_id` INT(10) UNSIGNED NOT NULL ,
   `meaning_n` TINYINT UNSIGNED NOT NULL ,
   `wiki_text_id` INT(10) UNSIGNED NULL COMMENT 'NULL if word without definition but with synonym' ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  INDEX `lang_pos_id` (`lang_pos_id` ASC) )
 ENGINE = InnoDB
 COMMENT = 'Meaning includes: definition; sem. rel., translations.';
 
@@ -179,9 +181,10 @@ CREATE  TABLE IF NOT EXISTS `relation` (
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
   `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
   `relation_type_id` TINYINT UNSIGNED NOT NULL COMMENT 'Synonym, antonym, etc.' ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  INDEX `meaning_id` (`meaning_id` ASC) )
 ENGINE = InnoDB
-COMMENT = 'pages which contain the term';
+COMMENT = 'Semantic relations (synonymy, antonymy, etc.)';
 
 
 -- -----------------------------------------------------
@@ -250,7 +253,8 @@ CREATE  TABLE IF NOT EXISTS `translation_entry` (
   `translation_id` INT(10) UNSIGNED NOT NULL ,
   `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `wiki_text_id` INT(10) NOT NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  INDEX `translation_id` (`translation_id` ASC) )
 ENGINE = InnoDB;
 
 

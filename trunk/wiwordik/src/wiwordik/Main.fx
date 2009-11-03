@@ -75,10 +75,10 @@ var wikt_parsed_conn : Connect = new Connect();
 function init() {
 
     // MySQL
-    //wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+    wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
     // SQLite                                   //Connect.testSQLite();
-    wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
+    //wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
 
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
     TPOS.createFastMaps(wikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
