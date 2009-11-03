@@ -183,8 +183,9 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
      */
     public static String convertWildcardToDatabaseChars (Connect connect, String s){
         if (null == s || 0 == s.length()) {
-            System.out.println("Error in PageTableBase.convertWildcardToDatabaseChars(), argument is null.");
-            return NULL_STRING;
+            //System.out.println("Error in PageTableBase.convertWildcardToDatabaseChars(), argument is null.");
+            //return NULL_STRING;
+            return "%";
         }
 
         String safe_title = StringUtil.escapeChars(s);
