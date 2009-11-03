@@ -5,7 +5,7 @@ It should be done before the parsing of the Wiktionary database.
 
 = Details =
 
-  * Edit `wikt_parsed_empty.mwb` file in MySQL Workbench (see [MySQLWorkbench]), export it to `wikt_parsed_empty.sql`
+  * Edit `wikt_parsed_empty.mwb` file in [MySQLWorkbench MySQL Workbench], export it to `wikt_parsed_empty.sql`
   * Make substitution in `wikt_parsed_empty.sql` in VIM by RE: 
 {{{
 %s/`mydb`\.//g
