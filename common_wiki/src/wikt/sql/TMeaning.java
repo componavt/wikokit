@@ -11,9 +11,12 @@ package wikt.sql;
 //import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
 import java.sql.*;
+import wikt.constant.Relation;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 /** An operations with the table 'meaning' in MySQL wiktionary_parsed database.
  *
@@ -50,7 +53,16 @@ public class TMeaning {
      */
     private int wiki_text_id;
 
+    /** Semantic relations: synonymy, antonymy, etc.
+     * The map from semantic relation (e.g. synonymy) to array of WRelation
+     * (one WRelation contains a list of synonyms for one meaning).
+     */
+    private Map<Relation, TRelation[]> relation;
+
+
+    private final static Map<Relation, TRelation[]> NULL_MAP_RELATION_TRELATION_ARRAY = new HashMap<Relation, TRelation[]>();
     private final static TMeaning[] NULL_TMEANING_ARRAY = new TMeaning[0];
+    private final static TRelation[] NULL_TRELATION_ARRAY = new TRelation[0];
 
     /** Constructor.
      * @param _id
@@ -70,6 +82,8 @@ public class TMeaning {
         meaning_n   = _meaning_n;
         wiki_text   = _wiki_text;
         wiki_text_id= _wiki_text_id;
+
+        relation    = NULL_MAP_RELATION_TRELATION_ARRAY;
     }
 
     /** Gets unique ID from database */
@@ -81,7 +95,6 @@ public class TMeaning {
     public int getMeaningNumber() {
         return meaning_n;
     }
-
 
     /** Gets language and POS ID (for this meaning) from the database' table 'lang_pos'. */
     public TLangPOS getLangPOS(Connect connect) {
@@ -97,6 +110,12 @@ public class TMeaning {
     public TWikiText getWikiText() {
         return wiki_text;
     }
+
+    /** Gets relation map */
+    public Map<Relation, TRelation[]> getRelation() {
+        return relation;
+    }
+
 
     
     /** Inserts record into the table 'meaning'.<br><br>
@@ -196,6 +215,68 @@ public class TMeaning {
         if(null == list_meaning)
             return NULL_TMEANING_ARRAY;
         return ((TMeaning[])list_meaning.toArray(NULL_TMEANING_ARRAY));
+    }
+
+    /** Filters the array 'rels' of semantic relations only for one kind of
+     * semantic relations (e.g. synonyms) defined by the variable 'r_type'.
+     * @param rels      array of relations
+     * @param r_type    the relation type we are interested in, e.g. synonymy
+     * @return an empty array if relations are absent
+     */
+    private void addOneKindOfRelation (Relation r_type, TRelation[] rels) {
+
+        // 1. counts number of relations of this type
+        int c = 0;
+        for(TRelation r : rels) {
+            if(r.getRelationType() == r_type)
+                c ++;
+        }
+        if(0 == c)
+            return;
+
+        // 2. gets these relations
+        TRelation[] result = new TRelation[c];
+        
+        c = 0;
+        for(TRelation r : rels) {
+            if(r.getRelationType() == r_type)
+                result [c ++] = r;
+        }
+
+        if(0 == relation.size())
+            relation = new HashMap<Relation, TRelation[]>();
+        relation.put(r_type, result);
+        //System.out.println("r_type="+r_type.toString()+"; +1 where TRelation[] result.size="+result.length);
+    }
+
+    /** Fills the relations field. */
+    public void fillRelation (Connect connect) {
+
+        TRelation[] rels = TRelation.get(connect, this);
+
+        // let's convert the flat array: TRelation[] rels
+        // into the map: Map<Relation, TRelation[]> relation;
+        
+        addOneKindOfRelation (Relation.synonymy, rels);
+        addOneKindOfRelation (Relation.antonymy, rels);
+        addOneKindOfRelation (Relation.hypernymy, rels);
+        addOneKindOfRelation (Relation.hyponymy, rels);
+        addOneKindOfRelation (Relation.holonymy, rels);
+        addOneKindOfRelation (Relation.meronymy, rels);
+    }
+
+    /** Selects rows from the table 'meaning' by the lang_pos_id.
+     * fills (recursively) relations.
+     *
+     * @return empty array if data is absent
+     */
+    public static TMeaning[] getRecursive (Connect connect,TLangPOS lang_pos) {
+        
+        TMeaning[] mm = TMeaning.get(connect, lang_pos);
+        for(TMeaning m : mm)
+            m.fillRelation(connect);
+
+        return mm;
     }
 
     /** Selects rows from the table 'meaning' by ID<br><br>

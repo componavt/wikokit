@@ -73,8 +73,10 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
 
           try {
             Statement s = connect.conn.createStatement ();
-            page_title = convertToSafeStringEncodeToDB (connect, page_title);
             
+            //page_title = convertToSafeStringEncodeToDB (connect, page_title);
+            page_title = convertToSafeStringEncodeToDBWunderscore (connect, page_title);
+
             // Get text
             //page_title = Encodings.FromTo(page_title, "UTF8", "ISO8859_1");
             //page_title = Encodings.FromTo(page_title, "UTF8", "ISO8859_1");

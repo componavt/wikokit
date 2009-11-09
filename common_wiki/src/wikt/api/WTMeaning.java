@@ -84,6 +84,23 @@ public class WTMeaning {
     }
 
 
+    /** Checks whether the article 'page_title' has any definitions. */
+    /*public static boolean hasDefinition(Connect connect,
+                                          String page_title) {
+
+        TPage tpage = TPage.get(connect, page_title);
+        if(null == tpage)
+            return false;
+
+        TLangPOS[] lang_pos_all = TLangPOS.get(connect, tpage);
+        for(TLangPOS lang_pos : lang_pos_all) {
+            if(TMeaning.get(connect, lang_pos).length > 0)
+                return true;
+        }
+
+        return false;
+    }*/
+
     /** Gets list of definitions by page_title (for all available languages). */
    /* public static String[] getDefinitionsByPage(Connect connect,
                                                 String page_title) {

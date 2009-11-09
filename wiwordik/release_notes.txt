@@ -1,3 +1,11 @@
+wiwordik 0.03 2009-11-??
+  Added (from user's point of view):
+    Filter by the preseance of (1) meanings, (2) semantic relations
+    Correct parsing of phrases (e.g. there is now only one phrase "good morning" instead of two: "good morning" and "good_morning" 
+    
+  Added (from programmer's point of view)
+    .
+
 wiwordik 0.02 2009-11-02
   Added (from user's point of view):
     Wildcard characters: the asterisk character ("*") and the question mark (?).

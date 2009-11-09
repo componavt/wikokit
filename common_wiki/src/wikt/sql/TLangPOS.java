@@ -53,10 +53,14 @@ public class TLangPOS {
 
     /** A lemma of word. It's used when .redirect_type != None */
     private String lemma;
+
+    /** (1) Meaning consists of Definitions + Quotations. */
+    private TMeaning[] meaning;
     
     private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];
     private final static TLang   [] NULL_TLANG_ARRAY    = new TLang[0];
-
+    private final static TMeaning[] NULL_TMEANING_ARRAY = new TMeaning[0];
+    
     public TLangPOS(int _id,TPage _page,TLang _lang,TPOS _pos,int _etymology_id,String _lemma) {
         id              = _id;
         page            = _page;
@@ -64,6 +68,8 @@ public class TLangPOS {
         pos             = _pos;
         etymology_id    = _etymology_id;
         lemma           = _lemma;
+
+        meaning         = NULL_TMEANING_ARRAY;
     }
 
     /** Gets unique ID from database */
@@ -86,6 +92,11 @@ public class TLangPOS {
         return pos;
     }
 
+    /** Gets meaning (already loaded from database). */
+    public TMeaning[] getMeaning() {
+        return meaning;
+    }
+    
     /** Inserts record into the table 'page'.<br><br>
      * INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (1,2,3,4,"apple");
      * @param TPage     ID of title of wiki page which will be added
@@ -197,6 +208,21 @@ public class TLangPOS {
         if(null == list_lp)
             return NULL_TLANGPOS_ARRAY;
         return ((TLangPOS[])list_lp.toArray(NULL_TLANGPOS_ARRAY));
+    }
+
+    /** Selects rows from the table 'lang_pos' by the page_id,
+     * fills (recursively) meanings, relations, translations.
+     *
+     * @return empty array if data is absent
+     */
+    public static TLangPOS[] getRecursive (Connect connect,TPage page) {
+
+        TLangPOS[] lang_pos_all = TLangPOS.get(connect, page);
+        for(TLangPOS lang_pos : lang_pos_all) {
+            lang_pos.meaning = TMeaning.getRecursive(connect, lang_pos);
+        }
+        
+        return lang_pos_all;
     }
 
 

@@ -185,20 +185,21 @@ public class TPageTest {
         // tests
         limit = 0;
         boolean b_skip_redirects = true;
-        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
+        boolean b_meaning = false;
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects, b_meaning);
         assertEquals(p.length, 0);
 
         limit = 1;
-        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects, b_meaning);
         assertEquals(p.length, 1);
 
         limit = -1;
-        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects, b_meaning);
         assertEquals(p.length, 2);
 
         limit = 3;
         b_skip_redirects = false;
-        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects);
+        p = TPage.getByPrefix(conn, prefix, limit, b_skip_redirects, b_meaning);
         assertEquals(p.length, 3);
 
         assertTrue(!p[0].isRedirect());
