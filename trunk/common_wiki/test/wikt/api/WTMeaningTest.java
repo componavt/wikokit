@@ -68,4 +68,22 @@ public class WTMeaningTest {
         assertTrue(StringUtil.containsIgnoreCase(definitions, "автомобиль"));
     }
 
+    /*@Test
+    public void testHasDefinition() {
+        System.out.println("hasDefinition");
+
+        Connect connect = ruwikt_parsed_conn;
+        String word = "car";
+
+        // English: car
+        //# колесное транспортное средство
+        //# [[автомобиль]]
+        //# ''амер.'' легковой [[автомобиль]]
+        //# [[кабина]] [[лифт]]а
+        //# [[вагон]]
+
+        boolean b = WTMeaning.hasDefinition(connect, word);
+        assertTrue(b);
+    }*/
+
 }

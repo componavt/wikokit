@@ -9,6 +9,8 @@ package wikt.sql;
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
 import wikipedia.language.Encodings;
+import wikt.api.WTMeaning;
+//import wikt.word.*;
 //import wikipedia.util.StringUtil;
 
 import java.util.List;
@@ -48,7 +50,11 @@ public class TPage {
      */
     private String  redirect_target;
 
-    private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
+    /** Array of language-POS with this page_title */
+    private TLangPOS[] lang_pos;
+
+    private final static TPage[]    NULL_TPAGE_ARRAY    = new TPage[0];
+    private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];
 
     public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,
                  boolean _is_in_wiktionary,
@@ -62,6 +68,8 @@ public class TPage {
 
         is_redirect     = null != _redirect_target;
         redirect_target = _redirect_target;
+
+        lang_pos        = NULL_TLANGPOS_ARRAY;
     }
 
     /*public void init() {
@@ -336,11 +344,25 @@ public class TPage {
      * @param  limit    constraint of the number of rows returned, if it's negative then a constraint is omitted
      * @param  prefix   the begining of the page_titles
      * @param  b_skip_redirects return articles without redirects if true
+     * @param  b_meaning return articles with definitions
      * @return null if page_title is absent
      */
-    public static TPage[] getByPrefix (Connect connect,String prefix,
-                                        int limit, boolean b_skip_redirects)
+    public static TPage[] getByPrefix (
+                                        Connect connect,String prefix,
+                                        int limit, boolean b_skip_redirects,
+                                        boolean b_meaning,
+                                        boolean b_sem_rel)
     {
+        boolean b_trans = true;
+
+        /** target (translation) language which filters the words */
+        TLang trans_lang;
+
+        // todo: as func parameter ...
+
+//        howto: language, e.g. os translate into TLang???
+
+
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
@@ -348,7 +370,14 @@ public class TPage {
         
         if(0==limit)
             return NULL_TPAGE_ARRAY;
-            
+
+        int limit_with_reserve = limit;
+        if(b_meaning)
+            limit_with_reserve += 42; // since some words without meaning will be skipped
+
+        if(b_sem_rel)
+            limit_with_reserve += 512; // since some words without relations will be skipped
+
         try {
             s = connect.conn.createStatement ();
 
@@ -377,33 +406,47 @@ public class TPage {
 
             if(limit > 0) {
                 str_sql.append(" LIMIT ");
-                str_sql.append(limit);
+                str_sql.append(limit_with_reserve);
             }
             //System.out.print("safe_prefix=" + safe_prefix);
             
             rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
+            while (rs.next () && 
+                    (limit < 0 || null == tp_list || tp_list.size() < limit))
             {
-                if(null == tp_list)
-                    tp_list = new ArrayList<TPage>();
-
                 int id              = rs.getInt("id");
                 int word_count      = rs.getInt("word_count");
                 int wiki_link_count = rs.getInt("wiki_link_count");
                 boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
                 String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
-
+                
                 boolean is_redirect = 0 != rs.getInt("is_redirect");
                 String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
 
                 if (b_skip_redirects)
                     assert(null == redirect_target);
+
                 
                 TPage tp = new TPage(id, page_title, word_count, wiki_link_count,
-                               is_in_wiktionary, redirect_target);
-                tp_list.add(tp);
+                           is_in_wiktionary, redirect_target);
 
-                //System.out.println(" title=" + page_title +
+                tp.lang_pos = TLangPOS.getRecursive(connect, tp);
+
+                boolean b_add = true;
+                if(b_meaning)
+                    b_add = b_add && tp.hasDefinition();
+
+                if(b_sem_rel)
+                    b_add = b_add && tp.hasSemanticRelation();
+
+                if(b_add) {
+                    if(null == tp_list)
+                        tp_list = new ArrayList<TPage>();
+
+                    tp_list.add(tp);
+                }
+
+                // System.out.println(" title=" + page_title);
                 //        "; redirect_target=" + redirect_target +
                 //        "; id=" + id +
                 //        "; is_redirect=" + is_redirect +
@@ -451,5 +494,42 @@ public class TPage {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
+
+
+    /** Checks whether the article 'page_title' has any definitions. 
+     * The field 'lang_pos' is scanned here.
+     */
+    public boolean hasDefinition() {
+
+        if(null == lang_pos)
+            return false;
+
+        for(TLangPOS lp : lang_pos) {
+            if(lp.getMeaning().length > 0)
+                return true;
+        }
+        
+        return false;
+    }
     
+    /** Checks whether the article 'page_title' has at least one synonym, 
+     * antonym, etc. The fields 'lang_pos', 'lang_pos.meaning' and
+     * 'lang_pos.meaning.relation' are scanned here.
+     */
+    public boolean hasSemanticRelation() {
+
+        if(null == lang_pos)
+            return false;
+
+        for(TLangPOS lp : lang_pos) {
+            TMeaning[] mm = lp.getMeaning();
+            for(TMeaning m : mm) {
+                if(m.getRelation().size() > 0)
+                    return true;
+            }
+        }
+        
+        return false;
+    }
+
 }

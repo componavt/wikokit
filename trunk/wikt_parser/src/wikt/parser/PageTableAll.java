@@ -20,6 +20,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
+        "good morning", "good_morning",
         "шах",
         "молдаванка", "бендерчанка", "будуаръ",
 
@@ -130,7 +131,9 @@ public class PageTableAll {
                 }
 
                 WiktParser.parseWiktionaryEntry(wiki_lang, wikt_conn, wikt_parsed_conn, page_title);
-break;
+
+if (n_cur >= 2)
+  break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());

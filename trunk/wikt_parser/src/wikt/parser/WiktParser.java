@@ -164,6 +164,9 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
             return;
         }
 
+        // converts "text_with_underscore" into the "text without underscore"
+        page_title = page_title.replace("_", " ");
+
         // parses wiki text 'str', stores to the object 'word'
         WordBase word = new WordBase(page_title, wiki_lang, str);
 

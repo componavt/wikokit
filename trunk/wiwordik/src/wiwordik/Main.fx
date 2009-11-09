@@ -51,6 +51,7 @@ import javafx.scene.text.TextOrigin;
 
 import javafx.scene.control.TextBox;
 import javafx.scene.control.ListView;
+import javafx.scene.control.CheckBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
@@ -135,9 +136,17 @@ var b_skip_redirects : Boolean = false;
 /** Number of words in visible in the list */
 var n_words_list : Integer = 21;
 
-/** Words extracted by several letters (prefix). */
-var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, "", n_words_list, b_skip_redirects);
+/** Whether list only articles with definitions */
+var meaning_CheckBox_value: Boolean = false;
+
+/** Whether list only articles with semantic relations */
+var sem_rel_CheckBox_value: Boolean = false;
+
+/** Words extracted by several letters (prefix). */ 
+var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, "", n_words_list,
                                 // any (first) N words, since "" == prefix
+                            b_skip_redirects,   meaning_CheckBox_value,
+                                                sem_rel_CheckBox_value);
 
 var page_array_string: String[];
 copyWordsToStringArray();
@@ -173,6 +182,16 @@ function copyWordsToStringArray() {
     return result;
 }
 
+
+/** Copies data from TPagе[].text page_array to SwingListItem[]  page_listItems
+*/
+function updateWordList() {
+
+    page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), 
+                        n_words_list, b_skip_redirects, meaning_CheckBox_value,
+                                                        sem_rel_CheckBox_value);
+    page_array_string = copyWordsToStringArray();
+}
 
 /*var word_List = SwingList {
     //translateX: 113
@@ -232,9 +251,9 @@ var word_Text: TextBox = TextBox {
     }
     
     onKeyTyped: function(e:KeyEvent){
-        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), n_words_list, b_skip_redirects);
-        page_array_string = copyWordsToStringArray();
         
+        updateWordList()
+
         //System.out.println("e.code={e.code}, e.char={e.char}, word_value={word_value}, word_value.trim()={word_value.trim()}");
         //System.out.print("page_array_string: ");
         //for (p in page_array_string) {
@@ -245,6 +264,116 @@ var word_Text: TextBox = TextBox {
 //word_value = page_array[0].getPageTitle();
 //var input_word : String = page_array[0].getPageTitle();
 //var input_word bind word_Text.text;
+
+
+// todo to separate file 'lang_source.fx'
+
+/** Whether list only articles wich have these language codes */
+var lang_source_CheckBox_value: Boolean = false;
+
+var lang_source_CheckBox: CheckBox = CheckBox {
+        text: "Source language"
+
+        onMouseReleased: function(e:MouseEvent) {
+
+                if (lang_source_CheckBox_value != lang_source_CheckBox.selected) {
+                    lang_source_CheckBox_value  = lang_source_CheckBox.selected;
+
+                    updateWordList();
+                }
+            }
+      }
+
+var lang_source_value: String = bind lang_source_Text.rawText;
+var lang_source_Text: TextBox = TextBox {
+    disable: bind not lang_source_CheckBox_value
+    blocksMouse: true
+    columns: 12
+    selectOnFocus: true
+    text: "ru en de fr os uk"
+   
+    onKeyTyped: function(e:KeyEvent){
+
+        // splitToLangCodes()
+        // updateWordList()
+
+        System.out.println("e.code={e.code}, e.char={e.char}, word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}");
+        //System.out.print("page_array_string: ");
+        //for (p in page_array_string) {
+        //    System.out.print("{p}, ");
+        //}
+    }
+}
+
+var lang_source_HBox: HBox = HBox {
+    content: [
+            lang_source_CheckBox, lang_source_Text
+    ]
+    spacing: 10
+};
+// --------- eo separate file
+
+
+
+
+
+var meaning_CheckBox: CheckBox = CheckBox {
+                text: "Meaning"
+
+                onMouseReleased: function(e:MouseEvent) { 
+
+                    if (meaning_CheckBox_value != meaning_CheckBox.selected) {
+                        meaning_CheckBox_value  = meaning_CheckBox.selected;
+                        
+                        updateWordList();
+                    }
+                }
+          }
+
+var sem_rel_CheckBox: CheckBox = CheckBox {
+                text: "Semantic Relation"
+
+                onMouseReleased: function(e:MouseEvent) {
+
+                    if (sem_rel_CheckBox_value != sem_rel_CheckBox.selected) {
+                        sem_rel_CheckBox_value  = sem_rel_CheckBox.selected;
+
+                        updateWordList();
+                    }
+                }
+          }
+
+var h_filter_MRT: HBox = HBox {
+    //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
+    //translateY: bind (sceneHeight - 52)
+    // text: "CheckBox:"
+    content: [
+            meaning_CheckBox, sem_rel_CheckBox,
+
+        //var wc = WC {}
+        //wc.getDataByWord(wikt_parsed_conn, word_value.trim(), page_array);
+
+        //wc.createCXLangListByWord(wikt_parsed_conn, word_value.trim(), page_array);
+
+
+              //  onKeyTyped: function(e:KeyEvent){
+
+                            //System.out.println("e.code={e.code}, e.char={e.char}, word_value={word_value}, word_value.trim()={word_value.trim()}");
+
+        //page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), n_words_list, b_skip_redirects);
+        //page_array_string = copyWordsToStringArray();
+
+        //System.out.println("e.code={e.code}, e.char={e.char}, word_value={word_value}, word_value.trim()={word_value.trim()}");
+        //System.out.print("page_array_string: ");
+        //for (p in page_array_string) {
+        //    System.out.print("{p}, ");
+        //}
+
+            CheckBox { text: "Translation" selected: false }
+          ]
+
+    spacing: 10
+};
 
 
 var wiki_page_Label: Label = Label {
@@ -263,7 +392,10 @@ var outputPanel_VBox1: VBox = VBox {
 var result_VBox2: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
-    content: [wiki_page_Label] //, wc.card]
+    content: [  // wiki_page_Label,
+                lang_source_HBox,
+                h_filter_MRT
+             ] //, wc.card]
     spacing: 10
 };
 
