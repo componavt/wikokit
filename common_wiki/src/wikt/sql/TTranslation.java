@@ -47,6 +47,9 @@ public class TTranslation {
      */
     private TMeaning meaning;           // int meaning_n;
 
+    /** Translations */
+    private TTranslationEntry[] entry;
+
     private final static TTranslation[] NULL_TTRANSLATION_ARRAY = new TTranslation[0];
     private final static TPage[]        NULL_TPAGE_ARRAY        = new TPage[0];
     private final static String[]       NULL_STRING_ARRAY       = new String[0];
@@ -83,6 +86,11 @@ public class TTranslation {
     /** Gets a meaning from the database' table 'meaning'. */
     public TMeaning getMeaning() {
         return meaning;
+    }
+    
+    /** Gets translations. */
+    public TTranslationEntry[] getTranslationEntry() {
+        return entry;
     }
 
     /** Inserts records into tables: 'translation' and 'translation_entry'.
@@ -410,7 +418,49 @@ public class TTranslation {
             return NULL_TTRANSLATION_ARRAY;
         return (TTranslation [])list_trans.toArray(NULL_TTRANSLATION_ARRAY);
     }
-    
+
+    /** Selects rows from the table 'translation' by meaning ID.<br><br>
+     *
+     * SELECT id,meaning_summary FROM translation WHERE meaning_id=1;
+     *
+     * @return null if data is absent
+     */
+    public static TTranslation getByMeaning(Connect connect,TMeaning meaning) {
+
+        if(null == meaning) {
+            System.err.println("Error (wikt_parsed TTranslation.getByMeaning()):: null argument meaning");
+            return null;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        TTranslation ttrans = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id,meaning_summary FROM translation WHERE meaning_id=");
+            str_sql.append(meaning.getID());
+            rs = s.executeQuery (str_sql.toString());
+            while (rs.next ())
+            {
+                int id = rs.getInt("id");
+                String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
+
+                //int meaning_id = rs.getInt("meaning_id");
+                //TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
+
+                ttrans = new TTranslation(id, meaning.getLangPOS(connect), meaning_summary, meaning);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TTranslation.getByMeaning()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return ttrans;
+    }
+
     /** Deletes row from the table 'translation' by a value of ID.<br>
      *  DELETE FROM translation WHERE id=1;
      * @param  id  unique ID in the table `translation`
@@ -437,4 +487,11 @@ public class TTranslation {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
+
+    /** Fills (recursively) all fields translation_entry. */
+    public void getRecursive (Connect connect) {
+        
+        entry = TTranslationEntry.getByTranslation(connect, this);
+    }
+
 }

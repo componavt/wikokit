@@ -335,6 +335,16 @@ public class TLangPOS {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
+    
+
+    /** Deletes all rows from the table 'lang_pos' by page_id.<br><br>
+     * DELETE FROM lang_pos WHERE page_id=1;
+     * @param  id  unique ID in the table `lang_pos`
+     */
+    public static boolean intersectionIsNotEmpty (TPage page) {
+
+        return false;
+    }
 
 
 

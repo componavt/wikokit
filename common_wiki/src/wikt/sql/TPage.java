@@ -9,7 +9,9 @@ package wikt.sql;
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
 import wikipedia.language.Encodings;
-import wikt.api.WTMeaning;
+import wikipedia.language.LanguageType;
+
+//import wikt.api.WTMeaning;
 //import wikt.word.*;
 //import wikipedia.util.StringUtil;
 
@@ -356,11 +358,15 @@ public class TPage {
         boolean b_trans = true;
 
         /** target (translation) language which filters the words */
-        TLang trans_lang;
+        // todo: TLang[] trans_lang;
 
-        // todo: as func parameter ...
+        TLang source_lang[] = new TLang[1];
+        source_lang[0] = TLang.get(LanguageType.en);
 
-//        howto: language, e.g. os translate into TLang???
+        TLang trans_lang[] = new TLang[0];
+        //trans_lang[0] = TLang.get(LanguageType.os);
+
+        // todo: as func parameters ...
 
 
         Statement   s = null;
@@ -377,6 +383,12 @@ public class TPage {
 
         if(b_sem_rel)
             limit_with_reserve += 512; // since some words without relations will be skipped
+
+        if(source_lang.length > 0)
+            limit_with_reserve += 555;
+
+        if(trans_lang.length > 0)
+            limit_with_reserve += 55;
 
         try {
             s = connect.conn.createStatement ();
@@ -438,6 +450,12 @@ public class TPage {
 
                 if(b_sem_rel)
                     b_add = b_add && tp.hasSemanticRelation();
+
+                if(source_lang.length > 0)
+                    b_add = b_add && tp.hasLanguage(source_lang);
+
+                if(trans_lang.length > 0)
+                    b_add = b_add && tp.hasTranslation(trans_lang);
 
                 if(b_add) {
                     if(null == tp_list)
@@ -529,6 +547,47 @@ public class TPage {
             }
         }
         
+        return false;
+    }
+
+    /** Checks whether the article 'page_title' has at least one translatio
+     * into the destination languages from the array 'trans_lang'.
+     * The fields 'lang_pos', 'lang_pos.translation' are scanned here.
+     */
+    public boolean hasTranslation(TLang trans_lang[]) {
+
+        if(null == lang_pos)
+            return false;
+
+        for(TLangPOS lp : lang_pos) {
+            TMeaning[] mm = lp.getMeaning();
+            for(TMeaning m : mm) {
+                if(m.hasTranslation(trans_lang))
+                    return true;
+            }
+        }
+
+        return false;
+    }
+
+    /** Checks whether the article 'page_title' has at least one wordform
+     * in the language from the array 'source_lang'.
+     * The language-POS of this page_title is scanned here.
+     */
+    public boolean hasLanguage(TLang source_lang[]) {
+
+        if(null == lang_pos)
+            return false;
+
+        for(TLangPOS lp : lang_pos) {
+
+            TLang lang = lp.getLang();
+
+            for(TLang source : source_lang)
+                if(lang == source)
+                    return true;
+        }
+
         return false;
     }
 
