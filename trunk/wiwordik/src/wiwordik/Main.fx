@@ -142,8 +142,10 @@ var meaning_CheckBox_value: Boolean = false;
 /** Whether list only articles with semantic relations */
 var sem_rel_CheckBox_value: Boolean = false;
 
+var word0: String = "*с?рё*";
+
 /** Words extracted by several letters (prefix). */ 
-var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, "", n_words_list,
+var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, word0, n_words_list,
                                 // any (first) N words, since "" == prefix
                             b_skip_redirects,   meaning_CheckBox_value,
                                                 sem_rel_CheckBox_value);
@@ -191,6 +193,7 @@ function updateWordList() {
                         n_words_list, b_skip_redirects, meaning_CheckBox_value,
                                                         sem_rel_CheckBox_value);
     page_array_string = copyWordsToStringArray();
+    word_value_old = word_value.trim();
 }
 
 /*var word_List = SwingList {
@@ -209,31 +212,43 @@ var word_ListView: ListView = ListView {
     items: bind for(_tpage in page_array) { _tpage.getPageTitle() }
 
     layoutInfo: LayoutInfo { width: 150 }
-    
+
+    onKeyPressed: function (e: KeyEvent) {
+
+        var l = word_ListView;
+        if (l.selectedItem != "" and l.selectedItem != null)
+            word_Text.text = (word_ListView.selectedItem).toString();
+    }
+
     onMouseClicked: function (me: MouseEvent) {
         var l = word_ListView;
-        if (me.clickCount >= 2 and l.selectedItem != "" and l.selectedItem != null) {
-            
-            var wc = WC {}
+        if (l.selectedItem != "" and l.selectedItem != null) {
+            word_Text.text = (l.selectedItem).toString();
+            word_value_old = (l.selectedItem).toString();
 
-            // get data for "page_array[l.selectedIndex]"
-            wc.getDataForSelectedWordByTPage(wikt_parsed_conn, page_array[ l.selectedIndex ]);
+            if (me.clickCount >= 2) {
 
-            wc.createCXLangList(wikt_parsed_conn, page_array[ l.selectedIndex ]);
-            
-            //var word_value = (l.selectedItem).toString();
-            //getDataForSelectedWord(word_value, l.selectedIndex);
+                var wc = WC {}
+
+                // get data for "page_array[l.selectedIndex]"
+                wc.getDataForSelectedWordByTPage(wikt_parsed_conn, page_array[ l.selectedIndex ]);
+
+                wc.createCXLangList(wikt_parsed_conn, page_array[ l.selectedIndex ]);
+
+                //getDataForSelectedWord(word_value, l.selectedIndex);
+            }
         }
     }
 }
 
+var word_value_old = word0;
 var word_value: String = bind word_Text.rawText;
 var word_Text: TextBox = TextBox {
     blocksMouse: true
     columns: 25
     //wrappingWidth: 200
     selectOnFocus: true
-    text: ""
+    text: word0
     //text: bind input_word // page_array[0].getPageTitle()
     //text: page_array[0].getPageTitle()
     /*clip: Rectangle {
@@ -251,7 +266,14 @@ var word_Text: TextBox = TextBox {
     }
     
     onKeyTyped: function(e:KeyEvent){
+
+        if(0 == word_value.trim().compareToIgnoreCase(word_value_old))
+            return;
         
+        var l = word_ListView;
+        if (l.selectedItem != "" and l.selectedItem != null)
+            word_Text.text = (l.selectedItem).toString();
+
         updateWordList()
 
         //System.out.println("e.code={e.code}, e.char={e.char}, word_value={word_value}, word_value.trim()={word_value.trim()}");

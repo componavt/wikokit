@@ -210,6 +210,7 @@ public class LanguageType {
     public static final LanguageType ckt    = new LanguageType("ckt", "Chukchi", "Chukchi");// Чукотский
     public static final LanguageType cop    = new LanguageType("cop", "Coptic", "Coptic");// Коптский
 
+    public static final LanguageType dar    = new LanguageType("dar", "Dargin", "Dargin");// Даргинский
     public static final LanguageType de_a   = new LanguageType("de-a", "de-a", "de-a");// Немецкий (австрийский)
     public static final LanguageType dlg    = new LanguageType("dlg", "Dolgan", "Dolgan");// Долганский
     public static final LanguageType drw    = new LanguageType("drw", "Drow (Dungeons & Dragons)", "Drow (Dungeons & Dragons)");// Дроу

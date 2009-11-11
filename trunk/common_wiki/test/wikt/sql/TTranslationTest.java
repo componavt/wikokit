@@ -8,7 +8,7 @@ import wikt.util.POSText;
 import wikt.multi.ru.WTranslationRu;
 
 import wikt.word.WTranslation;
-import wikt.word.WTranslationEntry;
+//import wikt.word.WTranslationEntry;
 
 import wikipedia.sql.UtilSQL;
 
@@ -411,6 +411,21 @@ public class TTranslationTest {
         TTranslation[] trans_all = TTranslation.getByLangPOS (conn, lang_pos);
         assertNotNull(trans_all);
         assertEquals(1, trans_all.length);
+
+        TTranslation.delete(conn, trans);
+    }
+
+    @Test
+    public void testGetByMeaning () {
+        System.out.println("getByMeaning");
+        Connect conn = ruwikt_parsed_conn;
+
+        TTranslation trans = TTranslation.insert(conn, lang_pos, meaning_summary, meaning);
+        assertNotNull(trans);
+
+        TTranslation ttrans = TTranslation.getByMeaning(conn, meaning);
+        assertNotNull(ttrans);
+        assertTrue(ttrans.getID() > 0);
 
         TTranslation.delete(conn, trans);
     }

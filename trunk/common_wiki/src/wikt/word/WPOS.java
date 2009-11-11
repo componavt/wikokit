@@ -52,7 +52,7 @@ public class WPOS {
      */
     private Map<Relation, WRelation[]> relation;
     
-    // (3) Translation
+    /** (3) Translation */
     private WTranslation[] translation;
 
     /** Text which is not belong to any POS texts, e.g. Bibliography, Links...*/

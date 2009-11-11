@@ -59,6 +59,9 @@ public class TMeaning {
      */
     private Map<Relation, TRelation[]> relation;
 
+    /** Translation */
+    private TTranslation translation;
+
 
     private final static Map<Relation, TRelation[]> NULL_MAP_RELATION_TRELATION_ARRAY = new HashMap<Relation, TRelation[]>();
     private final static TMeaning[] NULL_TMEANING_ARRAY = new TMeaning[0];
@@ -264,6 +267,21 @@ public class TMeaning {
         addOneKindOfRelation (Relation.holonymy, rels);
         addOneKindOfRelation (Relation.meronymy, rels);
     }
+    
+    /** Fills the translation field.
+     *
+     * Selects rows from the table 'translation' by the meaning_id,
+     * fills (recursively) all fields translation_entry.
+     */
+    public void fillTranslation (Connect connect) {
+
+        translation = TTranslation.getByMeaning(connect, this);
+
+        if(null == translation)
+            return;
+
+        translation.getRecursive(connect);
+    }
 
     /** Selects rows from the table 'meaning' by the lang_pos_id.
      * fills (recursively) relations.
@@ -273,8 +291,10 @@ public class TMeaning {
     public static TMeaning[] getRecursive (Connect connect,TLangPOS lang_pos) {
         
         TMeaning[] mm = TMeaning.get(connect, lang_pos);
-        for(TMeaning m : mm)
+        for(TMeaning m : mm) {
             m.fillRelation(connect);
+            m.fillTranslation(connect);
+        }
 
         return mm;
     }
@@ -338,5 +358,27 @@ public class TMeaning {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+    }
+
+
+    /** Checks whether the article 'page_title' has at least one translatio
+     * into the destination (target) language from the array 'trans_lang'.
+     * The fields 'lang_pos', 'lang_pos.translation' are scanned here.
+     */
+    public boolean hasTranslation(TLang trans_lang[]) {
+
+        if(null == translation)
+            return false;
+        
+        TTranslationEntry[] trans_entries = translation.getTranslationEntry();
+
+        for(TTranslationEntry entry: trans_entries) {
+            for(TLang lang : trans_lang) {
+                if(lang == entry.getLang())
+                    return true;
+            }
+        }
+        
+        return false;
     }
 }

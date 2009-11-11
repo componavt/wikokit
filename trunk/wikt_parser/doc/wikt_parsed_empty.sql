@@ -240,7 +240,8 @@ CREATE  TABLE IF NOT EXISTS `translation` (
   `meaning_summary` VARCHAR(511) NULL ,
   `meaning_id` INT(10) NULL COMMENT 'I am afraid it could be null sometimes.' ,
   PRIMARY KEY (`id`) ,
-  INDEX `lang_pos_id` (`lang_pos_id` ASC) )
+  INDEX `lang_pos_id` (`lang_pos_id` ASC) ,
+  INDEX `meaning_id` (`meaning_id` ASC) )
 ENGINE = InnoDB;
 
 
