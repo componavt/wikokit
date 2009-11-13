@@ -74,10 +74,16 @@ public class LanguageType {
     /** Gets LanguageType by language code */
     public static LanguageType get(String code) throws NullPointerException
     {
-        if(code2lang.containsKey(code)) {
-            return code2lang.get(code);
-         }    
-        throw new NullPointerException("Null LanguageType");
+        LanguageType lt = code2lang.get(code);
+
+        // speedup ?:
+        //if(code2lang.containsKey(code)) {
+        //    return code2lang.get(code);
+        // }
+        
+        if(null == lt)
+            throw new NullPointerException("Null LanguageType");
+        return lt;
     }
 
     /** Counts number of languages. */
