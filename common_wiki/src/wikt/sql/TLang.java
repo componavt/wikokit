@@ -95,7 +95,58 @@ public class TLang {
     public static TLang get(LanguageType lt) {
         return getTLangFast(getIDFast(lt));
     }
+    
+    /** Parses and extracts language codes from the string 'lang_codes'. 
+     * 
+     * @return empty array if language codes were not extracted
+     */
+    public static TLang[] parseLangCode(String lang_codes) {
 
+        String s = lang_codes.trim();
+        if(0 == s.length())
+            return NULL_TLANG_ARRAY;
+
+        List<TLang>tlang_list = new ArrayList<TLang>();
+        
+        String[] words = s.split("\\s");
+        for(String w : words) {
+            if(LanguageType.has(w))
+                tlang_list.add( TLang.get( LanguageType.get(w) ));
+        }
+        if(tlang_list.size() == 0)
+            return NULL_TLANG_ARRAY;
+            
+        return( (TLang[])tlang_list.toArray(NULL_TLANG_ARRAY) );
+    }
+
+    /** Compares language codes extracted from the string 'str_lang2' and
+     * array of language codes 'tlang1'. */
+    public static boolean isEquals(TLang[] tlang1, String str_lang2) {
+
+        TLang tlang2[] = parseLangCode(str_lang2);
+
+        if(tlang1.length != tlang2.length)
+            return false;
+
+        if(tlang1.length == 0)
+            return true;
+
+        for(TLang l1 : tlang1) {
+            boolean bfound = false;
+            for(TLang l2 : tlang2) {
+                if(l1 == l2) {
+                    bfound = true;
+                    break;
+                }
+            }
+
+            if(!bfound)
+                return false;
+        }
+        
+        return true;
+    }
+    
     /** Read all records from the table 'lang',
      * fills the internal map from a table ID to a language.
      * 

@@ -144,10 +144,16 @@ var sem_rel_CheckBox_value: Boolean = false;
 
 var word0: String = "*с?рё*";
 
+/** Language codes for words filtering, e.g. "ru en fr" */
+//var lang_source_value: String = bind lang_source_Text.rawText;
+var source_lang : TLang[];
+
 /** Words extracted by several letters (prefix). */ 
-var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, word0, n_words_list,
-                                // any (first) N words, since "" == prefix
-                            b_skip_redirects,   meaning_CheckBox_value,
+var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, word0, 
+                            n_words_list, // any (first) N words, since "" == prefix
+                            b_skip_redirects,
+                            source_lang, // lang_source_value,
+                                                meaning_CheckBox_value,
                                                 sem_rel_CheckBox_value);
 
 var page_array_string: String[];
@@ -189,9 +195,13 @@ function copyWordsToStringArray() {
 */
 function updateWordList() {
 
+//    System.out.println("updateWordList(), word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}, lang_source_value={lang_source_value}");
+
+
     page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), 
-                        n_words_list, b_skip_redirects, meaning_CheckBox_value,
-                                                        sem_rel_CheckBox_value);
+                        n_words_list, b_skip_redirects,
+                        source_lang,meaning_CheckBox_value,
+                                    sem_rel_CheckBox_value);
     page_array_string = copyWordsToStringArray();
     word_value_old = word_value.trim();
 }
@@ -306,7 +316,6 @@ var lang_source_CheckBox: CheckBox = CheckBox {
             }
       }
 
-var lang_source_value: String = bind lang_source_Text.rawText;
 var lang_source_Text: TextBox = TextBox {
     disable: bind not lang_source_CheckBox_value
     blocksMouse: true
@@ -316,10 +325,30 @@ var lang_source_Text: TextBox = TextBox {
    
     onKeyTyped: function(e:KeyEvent){
 
-        // splitToLangCodes()
-        // updateWordList()
+        //System.out.println("1. lang_source_Text={lang_source_Text.rawText}, source_lang.size={source_lang.size()}");
 
-        System.out.println("e.code={e.code}, e.char={e.char}, word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}");
+//        checkSourceLangListIsChanged();
+
+        // if list of source languages is the same then skip any changes
+        if(TLang.isEquals(source_lang, lang_source_Text.rawText))
+            return;
+
+        source_lang = TLang.parseLangCode(lang_source_Text.rawText);
+        //System.out.println("2. OK. It's changed. source_lang.size={source_lang.size()}");
+
+        updateWordList();
+       /* {
+//        System.out.println("updateWordList(), word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}, lang_source_value={lang_source_value}");
+
+        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(),
+                            n_words_list, b_skip_redirects,
+                            source_lang,  meaning_CheckBox_value,
+                                                sem_rel_CheckBox_value);
+        page_array_string = copyWordsToStringArray();
+        word_value_old = word_value.trim();
+        }
+*/
+        //System.out.println("e.code={e.code}, e.char={e.char}, word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}");
         //System.out.print("page_array_string: ");
         //for (p in page_array_string) {
         //    System.out.print("{p}, ");

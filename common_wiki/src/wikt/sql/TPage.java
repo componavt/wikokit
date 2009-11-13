@@ -347,21 +347,30 @@ public class TPage {
      * @param  prefix   the begining of the page_titles
      * @param  b_skip_redirects return articles without redirects if true
      * @param  b_meaning return articles with definitions
+     * @param  str_source_lang pages filtering for words with these language
+     *                          codes, e.g. "ru en fr"
      * @return null if page_title is absent
      */
     public static TPage[] getByPrefix (
                                         Connect connect,String prefix,
                                         int limit, boolean b_skip_redirects,
-                                        boolean b_meaning,
-                                        boolean b_sem_rel)
+                                        TLang source_lang[], // String str_source_lang,
+                                                                boolean b_meaning,
+                                                                boolean b_sem_rel
+                                       )
     {
         boolean b_trans = true;
 
         /** target (translation) language which filters the words */
         // todo: TLang[] trans_lang;
 
-        TLang source_lang[] = new TLang[1];
-        source_lang[0] = TLang.get(LanguageType.en);
+        // TLang source_lang[] = new TLang[1];
+        // source_lang[0] = TLang.get(LanguageType.en);
+
+/** Language codes for words filtering, e.g. "ru en fr" */
+//var lang_source_value: String = bind lang_source_Text.rawText;
+// var source_lang : TLang[];
+//TLang source_lang[] = TLang.parseLangCode(str_source_lang);
 
         TLang trans_lang[] = new TLang[0];
         //trans_lang[0] = TLang.get(LanguageType.os);
