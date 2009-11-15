@@ -206,6 +206,22 @@ function updateWordList() {
     word_value_old = word_value.trim();
 }
 
+/** Checks the list of source languages. If it has been changed, then
+ *  then the word list is changes.
+ */
+/*function checkSourceLangListIsChanged() {
+   // System.out.println("1. lang_source_Text={lang_source_Text.rawText}, source_lang.size={source_lang.size()}");
+
+    // if list of source languages is the same then skip any changes
+    if(TLang.isEquals(source_lang, lang_source_Text.rawText))
+        return;
+
+    source_lang = TLang.parseLangCode(lang_source_Text.rawText);
+    //System.out.println("2. OK. It's changed. source_lang.size={source_lang.size()}");
+
+    updateWordList();
+}*/
+
 /*var word_List = SwingList {
     //translateX: 113
     width: 222
@@ -311,7 +327,21 @@ var lang_source_CheckBox: CheckBox = CheckBox {
                 if (lang_source_CheckBox_value != lang_source_CheckBox.selected) {
                     lang_source_CheckBox_value  = lang_source_CheckBox.selected;
 
-                    updateWordList();
+                    if(not lang_source_CheckBox.selected) {
+                        source_lang = null; // without filer, all languages
+                        updateWordList();
+                    } else {
+                        //System.out.println("CheckBox 1. lang_source_Text={lang_source_Text.rawText}, source_lang.size={source_lang.size()}");
+
+                        // if list of source languages is the same then skip any changes
+                        if(TLang.isEquals(source_lang, lang_source_Text.rawText))
+                            return;
+
+                        source_lang = TLang.parseLangCode(lang_source_Text.rawText);
+                        //System.out.println("CheckBox 2. OK. It's changed. source_lang.size={source_lang.size()}");
+
+                        updateWordList();
+                    }
                 }
             }
       }
@@ -325,18 +355,17 @@ var lang_source_Text: TextBox = TextBox {
    
     onKeyTyped: function(e:KeyEvent){
 
-        //System.out.println("1. lang_source_Text={lang_source_Text.rawText}, source_lang.size={source_lang.size()}");
-
-//        checkSourceLangListIsChanged();
+        //System.out.println("TextBox 1. lang_source_Text={lang_source_Text.rawText}, source_lang.size={source_lang.size()}");
 
         // if list of source languages is the same then skip any changes
         if(TLang.isEquals(source_lang, lang_source_Text.rawText))
             return;
 
         source_lang = TLang.parseLangCode(lang_source_Text.rawText);
-        //System.out.println("2. OK. It's changed. source_lang.size={source_lang.size()}");
+        //System.out.println("TextBox 2. OK. It's changed. source_lang.size={source_lang.size()}");
 
         updateWordList();
+
        /* {
 //        System.out.println("updateWordList(), word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}, lang_source_value={lang_source_value}");
 
