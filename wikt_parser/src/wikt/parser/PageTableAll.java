@@ -20,6 +20,9 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
+        "герб",     // &#160; in definition
+        "губить",   // &#160; in semantic relations (synonym)
+
         "good morning", "good_morning",
         "шах",
         "молдаванка", "бендерчанка", "будуаръ",

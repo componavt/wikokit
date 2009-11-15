@@ -19,7 +19,7 @@ import wikt.util.WikiText;
 
 public class WRelationRuTest {
 
-    public static String samolyot_text, kolokolchik_text;
+    public static String samolyot_text, kolokolchik_text, empty_relation;
 
     public WRelationRuTest() {
     }
@@ -57,6 +57,14 @@ public class WRelationRuTest {
                         "\n" +
                         "==== Меронимы ====\n" +
                         "# [[авиапушка]], [[фюзеляж]], [[крыло]], [[двигатель]], [[винт]]\n" +
+                        "\n" +
+                        "=== Родственные слова ===\n";
+
+        empty_relation = "==== Значение ====\n" +
+                        "# some definition {{пример|some example.}}\n" +
+                        "\n" +
+                        "==== Синонимы ====\n" +
+                        "# &#160;\n" +
                         "\n" +
                         "=== Родственные слова ===\n";
         
@@ -229,6 +237,24 @@ public class WRelationRuTest {
         assertTrue(holonymy_row_0[0].getVisibleText().equalsIgnoreCase("эскадрилья"));
         assertTrue(holonymy_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("эскадрилья"));
     }
+
+    // test that "# &#160;" is an empty_relation
+    @Test
+    public void testParse_empty_synonyms() {
+        System.out.println("parse_empty_synonyms");
+        WRelation[] r;
+
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "empty_relation";
+        POSText pt = new POSText(POS.noun, empty_relation);
+
+        Map<Relation, WRelation[]> result = WRelationRu.parse(wikt_lang, page_title, pt);
+
+        // ====Синонимы====
+        // # &#160;
+        assertEquals(0, result.size());
+    }
+
 
     /**
      * Test of parseOneKindOfRelation method, of class WRelationRu.

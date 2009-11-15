@@ -199,6 +199,8 @@ public class WRelationRu {
         Matcher m = ptrn_dashes.matcher(text);
         if(m.find()) return null;
 
+        if(text.equals("&#160;"))
+            return null;
 
         // 2. split by semicolon and comma
         WikiText[] wt = WikiText.create(page_title, text);
