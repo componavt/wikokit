@@ -17,11 +17,11 @@ _Main language_ - native language in the Wiktionary, e.g. Russian language in Ru
 -- Example of auto generated tables for each language code.
 
 -- -----------------------------------------------------
--- Table `index.uk` - for direct search of Ukranian words
+-- Table `index_uk` - for direct search of Ukranian words
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `index.uk` ;
+DROP TABLE IF EXISTS `index_uk` ;
 
-CREATE  TABLE IF NOT EXISTS `index.uk` (
+CREATE  TABLE IF NOT EXISTS `index_uk` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `word_foreign` VARCHAR(255) BINARY NOT NULL COMMENT 'word (in Language \'uk\') found somewhere in the Wiktionary article' ,
   `page_title_native` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article in native language' ,
@@ -33,6 +33,12 @@ COMMENT = 'words with this language code (see table postfix)';
 }}}
 
 = Cases ==
+
+There are three cases of parsing Wiktionary article. The following INSERT statements should be executed.
+
+1) Word in main (native) language, e.g. russian word "вода" in Russian Wiktionary.
+  * index_ru.word_foreign = "вода"
+  * index_ru.page_title_native = NULL
 
 
 Add your content here.  Format your content with:
