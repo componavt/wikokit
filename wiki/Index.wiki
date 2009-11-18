@@ -1,5 +1,5 @@
 #summary How to speed up search of words in the database.
-#labels Databaseschema,index,Phase-Implementation
+#labels database,schema,index,Phase-Implementation
 
 = Introduction =
 
@@ -11,7 +11,12 @@ Wiktionary is a multilingual dictionary. But user usually is interested in words
 
 _Main language_ - e.g. Russian in Russian Wiktionary, or English in English Wiktionary.
 
-= Details =
+= MySQL index tables =
+
+todo
+
+= Cases ==
+
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
