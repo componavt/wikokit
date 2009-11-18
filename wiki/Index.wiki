@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS `index.uk` ;
 CREATE  TABLE IF NOT EXISTS `index.uk` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `word_foreign` VARCHAR(255) BINARY NOT NULL COMMENT 'word (in Language \'uk\') found somewhere in the Wiktionary article' ,
-  `page_title_native` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article' ,
+  `page_title_native` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article in native language' ,
   PRIMARY KEY (`id`) ,
   INDEX `word_foreign` (`word_foreign` ASC) ,
   INDEX `page_title_native` (`page_title_native` ASC) )
