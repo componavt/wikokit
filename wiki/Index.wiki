@@ -13,7 +13,24 @@ _Main language_ - native language in the Wiktionary, e.g. Russian language in Ru
 
 = MySQL index tables =
 
-todo
+{{{
+-- Example of auto generated tables for each language code.
+
+-- -----------------------------------------------------
+-- Table `index.uk` - for direct search of Ukranian words
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `index.uk` ;
+
+CREATE  TABLE IF NOT EXISTS `index.uk` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `word_foreign` VARCHAR(255) BINARY NOT NULL COMMENT 'word (in Language \'uk\') found somewhere in the Wiktionary article' ,
+  `page_title_native` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article' ,
+  PRIMARY KEY (`id`) ,
+  INDEX `word_foreign` (`word_foreign` ASC) ,
+  INDEX `page_title_native` (`page_title_native` ASC) )
+ENGINE = InnoDB
+COMMENT = 'words with this language code (see table postfix)';
+}}}
 
 = Cases ==
 
