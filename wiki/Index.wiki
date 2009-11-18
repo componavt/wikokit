@@ -1,0 +1,19 @@
+#summary How to speed up search of words in the database.
+#labels Databaseschema,index,Phase-Implementation
+
+= Introduction =
+
+Wiktionary is a multilingual dictionary. But user usually is interested in words in one language. 
+
+*Goal*: fast search of words in one of Wiktionary languages. E.g. search of English words in Russian Wiktionary.
+
+= Definitions =
+
+_Main language_ - e.g. Russian in Russian Wiktionary, or English in English Wiktionary.
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
