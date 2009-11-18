@@ -9,7 +9,7 @@ Wiktionary is a multilingual dictionary. But user usually is interested in words
 
 = Definitions =
 
-_Main language_ - e.g. Russian in Russian Wiktionary, or English in English Wiktionary.
+_Main language_ - native language in the Wiktionary, e.g. Russian language in Russian Wiktionary, or English in English Wiktionary.
 
 = MySQL index tables =
 
