@@ -1,4 +1,5 @@
 #summary Index table for each language code (search for words speed up in the database).
+#labels database,schema,index,Phase-Implementation
 
 = Introduction =
 
