@@ -46,7 +46,7 @@ There are four cases of parsing Wiktionary article. The following INSERT stateme
 
 Word in main (native) language (page_title), e.g. Russian word "вода" in Russian Wiktionary. This Wiktionary article has a red-link word, i.e. absent, e.g. "ходить по воде".
   * index_ru.native_page_title = "вода"
-  * index_ru.foreign_word = "ходить по воде" // Exception for table of main language, 'foreign_word' is a red-link (i.e. absent) word in main language  
+  * index_ru.foreign_word = "ходить по воде" // Exception for table of main language, 'foreign_word' is a red-link (i.e. absent) word in *main* language  
 
 3) Word in foreign language (in the ===Translation=== section), e.g. English word "water" is the translation of Russian "вода" in Russian Wiktionary.
   * index_en.native_page_title = "вода"
