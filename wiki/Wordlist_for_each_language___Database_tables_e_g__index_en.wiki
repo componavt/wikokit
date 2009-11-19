@@ -1,0 +1,52 @@
+#summary Index table for each language code (search for words speed up in the database).
+
+= Introduction =
+
+Wiktionary is a multilingual dictionary. But user usually is interested in words in one language. 
+
+*Goal*: fast search of words in one of Wiktionary languages. E.g. search of English words in Russian Wiktionary.
+
+= Definitions =
+
+_Main language_ - native language in the Wiktionary, e.g. Russian language in Russian Wiktionary, or English in English Wiktionary.
+
+= MySQL index tables =
+
+{{{
+-- Example of auto generated tables for each language code.
+
+-- -----------------------------------------------------
+-- Table `index_uk` - for direct search of Ukranian words
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `index_uk` ;
+
+CREATE  TABLE IF NOT EXISTS `index_uk` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `word` VARCHAR(255) BINARY NOT NULL COMMENT 'word (in Language \'uk\') found somewhere in the Wiktionary article' ,
+  `page_title` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article in native language' ,
+  PRIMARY KEY (`id`) ,
+  INDEX `word` (`word` ASC) ,
+  INDEX `page_title` (`page_title` ASC) )
+ENGINE = InnoDB
+COMMENT = 'words with this language code (see table postfix)';
+}}}
+
+= Cases ==
+
+There are three cases of parsing Wiktionary article. The following INSERT statements should be executed.
+
+1) Word in main (native) language (page_title), e.g. russian word "вода" in Russian Wiktionary.
+  * index_ru.page_title = "вода" // UNIQUE KEY in the index table of main language
+  * index_ru.word = NULL
+
+!Attention. The word will be stored to the table only if the ===Meaning=== section is not empty.
+
+2) Word in foreign language (in the ===Translation=== section), e.g. English word "water" is the translation of Russian "вода" in Russian Wiktionary.
+  * index_en.page_title = "вода"
+  * index_en.word = "water"
+
+3) Word in foreign language (page_title), e.g. English word "water" in Russian Wiktionary.
+  * index_en.page_title = "water"
+  * index_en.word = NULL
+  
+!Attention. The word will be stored to the table only if ===Meaning=== section is not empty.
