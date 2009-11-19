@@ -37,17 +37,19 @@ COMMENT = 'words with this language code (see table postfix)';
 There are three cases of parsing Wiktionary article. The following INSERT statements should be executed.
 
 1) Word in main (native) language (page_title), e.g. russian word "вода" in Russian Wiktionary.
-  * index_ru.page_title = "вода" // UNIQUE KEY in the index table of main language
+  * index_ru.native_page_title = "вода" // UNIQUE KEY in the index table of main language
   * index_ru.word = NULL
 
 !Attention. The word will be stored to the table only if the ===Meaning=== section is not empty.
 
+todo) case with red-link for words in native language...
+
 2) Word in foreign language (in the ===Translation=== section), e.g. English word "water" is the translation of Russian "вода" in Russian Wiktionary.
-  * index_en.page_title = "вода"
-  * index_en.word = "water"
+  * index_en.native_page_title = "вода"
+  * index_en.foreign_word = "water"
 
 3) Word in foreign language (page_title), e.g. English word "water" in Russian Wiktionary.
-  * index_en.page_title = "water"
-  * index_en.word = NULL
+  * index_en.native_page_title = NULL
+  * index_en.foreign_word = "water"
   
 !Attention. The word will be stored to the table only if ===Meaning=== section is not empty.
