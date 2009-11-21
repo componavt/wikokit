@@ -14,6 +14,21 @@ _Main language_ - native language in the Wiktionary, e.g. Russian language in Ru
 = MySQL index tables =
 
 {{{
+-- -----------------------------------------------------
+-- Table `index_native`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `index_native` ;
+
+CREATE  TABLE IF NOT EXISTS `index_native` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'Number of wikified words (out-bound links).\n' ,
+  `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'page.page_title of this Wiktionary article in native language' ,
+  `has_relation` TINYINT(1) NULL COMMENT 'true, if there is any semantic relation in this Wiktionary article' ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `page_title` (`page_title` ASC) )
+ENGINE = InnoDB
+COMMENT = 'titles of wiki articles, entry names';
+
+
 -- Example of auto generated tables for each language code.
 
 -- -----------------------------------------------------
