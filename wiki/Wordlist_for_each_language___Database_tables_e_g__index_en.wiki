@@ -13,10 +13,8 @@ _Main language_ - native language in the Wiktionary, e.g. Russian language in Ru
 
 = MySQL index tables =
 
+Table *index_native* - wordlist of words in main (native) language with non empty definitions.
 {{{
--- -----------------------------------------------------
--- Table `index_native`
--- -----------------------------------------------------
 DROP TABLE IF EXISTS `index_native` ;
 
 CREATE  TABLE IF NOT EXISTS `index_native` (
@@ -26,22 +24,23 @@ CREATE  TABLE IF NOT EXISTS `index_native` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
 ENGINE = InnoDB
-COMMENT = 'words in native language, which have meaning (non empty definition)';
+COMMENT = 'words (with definitions) in native language';
+}}}
 
--- Example of auto generated tables for each language code.
+Table *index_XX* - example of auto generated tables for each language code. The table contains two wordlists:
+  # _foreign_word_ - words in foreign language
+  # _native_page_title_ - words in native language 
 
--- -----------------------------------------------------
--- Table `index_uk` - for direct search of Ukranian words
--- -----------------------------------------------------
+{{
 DROP TABLE IF EXISTS `index_uk` ;
 
 CREATE  TABLE IF NOT EXISTS `index_uk` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
-  `word` VARCHAR(255) BINARY NOT NULL COMMENT 'word (in Language \'uk\') found somewhere in the Wiktionary article' ,
-  `page_title` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article in native language' ,
+  `foreign_word` VARCHAR(255) BINARY NOT NULL COMMENT 'word (in Language \'uk\') found somewhere in the Wiktionary article' ,
+  `native_page_title` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article in native language' ,
   PRIMARY KEY (`id`) ,
-  INDEX `word` (`word` ASC) ,
-  INDEX `page_title` (`page_title` ASC) )
+  INDEX `foreign_word` (`foreign_word` ASC) ,
+  INDEX `native_page_title` (`native_page_title` ASC) )
 ENGINE = InnoDB
 COMMENT = 'words with this language code (see table postfix)';
 }}}
