@@ -51,8 +51,8 @@ COMMENT = 'words with this language code (see table postfix)';
 There are four cases of parsing Wiktionary article. The following INSERT statements should be executed.
 
 1) Word in main (native) language (page_title), e.g. Russian word "вода" in Russian Wiktionary.
-  * index_ru.native_page_title = "вода" // Only with a definition
-  * index_ru.foreign_word = NULL
+  * index_native.page_title = "вода" // Only with a definition
+  * index_native.has_relation = true
 
 !Attention. The word will be stored to the table only if the definition section is not empty.
 
