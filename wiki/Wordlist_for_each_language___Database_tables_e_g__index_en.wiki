@@ -26,8 +26,7 @@ CREATE  TABLE IF NOT EXISTS `index_native` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
 ENGINE = InnoDB
-COMMENT = 'titles of wiki articles, entry names';
-
+COMMENT = 'words in native language, which have meaning (non empty definition)';
 
 -- Example of auto generated tables for each language code.
 
