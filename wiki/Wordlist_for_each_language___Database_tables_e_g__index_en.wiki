@@ -31,7 +31,7 @@ Table *index_XX* - example of auto generated tables for each language code. The 
   # _foreign_word_ - words in foreign language
   # _native_page_title_ - words in native language 
 
-{{
+{{{
 DROP TABLE IF EXISTS `index_uk` ;
 
 CREATE  TABLE IF NOT EXISTS `index_uk` (
