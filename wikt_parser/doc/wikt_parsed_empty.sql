@@ -260,6 +260,37 @@ CREATE  TABLE IF NOT EXISTS `translation_entry` (
 ENGINE = InnoDB;
 
 
+-- -----------------------------------------------------
+-- Table `index_native`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `index_native` ;
+
+CREATE  TABLE IF NOT EXISTS `index_native` (
+  `page_id` INT(10) UNSIGNED NOT NULL COMMENT 'Copy of page.id' ,
+  `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'page.page_title of this Wiktionary article in native language' ,
+  `has_relation` TINYINT(1) NULL COMMENT 'true, if there is any semantic relation in this Wiktionary article' ,
+  UNIQUE INDEX `page_id` (`page_id` ASC) ,
+  UNIQUE INDEX `page_title` (`page_title` ASC) )
+ENGINE = InnoDB
+COMMENT = 'words (with definitions) in native language';
+
+
+-- -----------------------------------------------------
+-- Table `native_red_link`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `native_red_link` ;
+
+CREATE  TABLE IF NOT EXISTS `native_red_link` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'page.page_title of the Wiktionary article in native language which contain this red link word.' ,
+  `red_link` VARCHAR(255) BINARY NOT NULL COMMENT 'Popular red link words can be found at several WT pages.' ,
+  `section_type` TINYINT UNSIGNED NULL COMMENT 'The section which contain red link word, e.g. Definition, or Synonyms, etc.' ,
+  PRIMARY KEY (`id`) ,
+  INDEX `red_link` (`red_link` ASC) )
+ENGINE = InnoDB
+COMMENT = 'words (without articles) in native language';
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
