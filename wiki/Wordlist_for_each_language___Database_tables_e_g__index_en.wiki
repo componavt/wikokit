@@ -18,10 +18,10 @@ Table *index_native* - wordlist of words in main (native) language with non empt
 DROP TABLE IF EXISTS `index_native` ;
 
 CREATE  TABLE IF NOT EXISTS `index_native` (
-  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `page_id` INT(10) UNSIGNED NOT NULL COMMENT 'Copy of page.id' ,
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'page.page_title of this Wiktionary article in native language' ,
   `has_relation` TINYINT(1) NULL COMMENT 'true, if there is any semantic relation in this Wiktionary article' ,
-  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `page_id` (`page_id` ASC) ,
   UNIQUE INDEX `page_title` (`page_title` ASC) )
 ENGINE = InnoDB
 COMMENT = 'words (with definitions) in native language';
