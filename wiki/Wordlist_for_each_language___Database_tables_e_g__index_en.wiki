@@ -37,7 +37,7 @@ DROP TABLE IF EXISTS `index_uk` ;
 CREATE  TABLE IF NOT EXISTS `index_uk` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `foreign_word` VARCHAR(255) BINARY NOT NULL COMMENT 'word (in Language \'uk\') found somewhere in the Wiktionary article' ,
-  `foreign_has_definition` TINYINT(1) NULL COMMENT 'true, if there any definition in the Wiktionary article with title foreign_word' ,
+  `foreign_has_definition` TINYINT(1) NULL COMMENT 'true, if there any definition in the Wiktionary article with the title foreign_word' ,
   `native_page_title` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article in native language' ,
   PRIMARY KEY (`id`) ,
   INDEX `foreign_word` (`foreign_word` ASC) ,
@@ -81,10 +81,11 @@ Word in main (native) language (page_title), e.g. Russian word "вода" in Rus
 3) Word in foreign language (in the ===Translation=== section), e.g. English word "water" is the translation of Russian "вода" in Russian Wiktionary.
   * index_en.native_page_title = "вода"
   * index_en.foreign_word = "water"
-  * foreign_has_definition
+  * index_en.foreign_has_definition = 1 // if "water" has article with definition
 
 4) Word in foreign language (page_title), e.g. English word "water" in Russian Wiktionary.
   * index_en.native_page_title = NULL
   * index_en.foreign_word = "water" // Only with a definition
-  
+  * index_en.foreign_has_definition = 1 // always in this case
+
 !Attention. The word will be stored to the table only if the definition section is not empty.
