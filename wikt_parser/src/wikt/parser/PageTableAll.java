@@ -65,12 +65,14 @@ public class PageTableAll {
     /** Selects all pages (not categories, not redirects), 
      * stores to the Wiktionary parsed DB.
      *
+     * @param native_lang   native language in the Wiktionary,
+     *                       e.g. Russian language in Russian Wiktionary,
      * @param n_start_from number of first Wiktionary entry to be parsed <br><br>
      * 
      * SELECT page_title FROM page WHERE page_namespace=0 AND page_is_redirect=0;
      */
     public static void parseAllPages(
-            LanguageType wiki_lang,
+            LanguageType native_lang,
             Connect wikt_conn,
             Connect wikt_parsed_conn,
             int n_start_from)
@@ -84,7 +86,7 @@ public class PageTableAll {
         System.out.println("Total pages: " + n_total);
         t_start = System.currentTimeMillis();
 
-        WiktParser.clearDatabase(wikt_parsed_conn);
+        WiktParser.clearDatabase(wikt_parsed_conn, native_lang);
         
         try {
             s = wikt_conn.conn.createStatement ();
@@ -133,7 +135,7 @@ public class PageTableAll {
                             " min");
                 }
 
-                WiktParser.parseWiktionaryEntry(wiki_lang, wikt_conn, wikt_parsed_conn, page_title);
+                WiktParser.parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
 
 if (n_cur >= 2)
   break;
