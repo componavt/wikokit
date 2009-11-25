@@ -14,6 +14,7 @@ import wikt.word.*;
 import wikipedia.language.LanguageType;
 import wikipedia.category.CategoryHyponyms;
 import wikt.mrd.Keeper;
+import wikt.sql.index.IndexForeign;
 
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
@@ -49,7 +50,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
  * 
  * ruwikt20080620_parsed
  */
-    public static void clearDatabase (Connect wikt_parsed_conn) {
+    public static void clearDatabase (Connect wikt_parsed_conn, LanguageType native_lang) {
         TLang.recreateTable(wikt_parsed_conn);
         TLang.createFastMaps(wikt_parsed_conn);
 
@@ -69,12 +70,17 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "wiki_text_words");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation_entry");
+
+        IndexForeign.generateTables(wikt_parsed_conn, native_lang);
     }
 
     /** Parses the set of Wiktionary pages, 
      * stores result to wikt_parsed database.
      * 
-     * @param   wiki_lang defines parsed wiki language, it is needed, e.g.,
+     * @param   native_lang native language in the Wiktionary, 
+     * e.g. Russian language in Russian Wiktionary,
+     * it defines parsed wiki language,
+     * it is needed, e.g.,
      * in order to recognize categories for the selected language, 
      * e.g. English (Category) or Esperanto (Kategorio).<br>
      * 
@@ -93,18 +99,18 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
      * CLOSE cur1;
      */
     public static void runSubCategories(
-                    LanguageType wiki_lang,
+                    LanguageType native_lang,
                     Connect wikt_conn,
                     Connect wikt_parsed_conn,
                     String category_name
                     )
-// w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn);
+// w.runSubCategories(native_lang, wikt_conn, wikt_parsed_conn);
     { 
         long    t_start, t_end;
         float   t_work;
         t_start = System.currentTimeMillis();
 
-        clearDatabase(wikt_parsed_conn);
+        clearDatabase(wikt_parsed_conn, native_lang);
 
         // 1. get wiki-text from MySQL database
         // variant A. Get all articles
@@ -138,7 +144,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
                 System.out.println(" "+cur_doc+": "+page_title + " ");
             }
             
-            parseWiktionaryEntry(wiki_lang, wikt_conn, wikt_parsed_conn, page_title);
+            parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
         }
                 
         t_end  = System.currentTimeMillis();
@@ -146,9 +152,17 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         System.out.println("\n\nTime sec:" + t_work + 
                 "\ndocuments: " + pt.size());
     }
-    
+
+    /** Parses one article.
+     *
+     * @param native_lang   native language in the Wiktionary,
+     *                       e.g. Russian language in Russian Wiktionary,
+     * @param wikt_conn
+     * @param wikt_parsed_conn
+     * @param page_title
+     */
     public static void parseWiktionaryEntry(
-                    LanguageType wiki_lang,
+                    LanguageType native_lang,
                     Connect wikt_conn,
                     Connect wikt_parsed_conn,
                     String page_title
@@ -168,7 +182,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         page_title = page_title.replace("_", " ");
 
         // parses wiki text 'str', stores to the object 'word'
-        WordBase word = new WordBase(page_title, wiki_lang, str);
+        WordBase word = new WordBase(page_title, native_lang, str);
 
         if(word.isEmpty()) {
             System.out.println("Warning in WiktParser.parseWiktionaryEntry(): The article with the title '"+

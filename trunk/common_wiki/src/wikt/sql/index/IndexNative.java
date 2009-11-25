@@ -58,7 +58,7 @@ public class IndexNative {
     }
 
 
-    /** Inserts record into the table 'page'.<br><br>
+    /** Inserts record into the table 'index_native'.<br><br>
      * INSERT INTO index_native (page_id,page_title,has_relation) VALUES (12,"water12",TRUE);
      *
      * @param page          Wiktionary page with title in native language

@@ -29,7 +29,7 @@ public class LanguageType {
     /** Language name, e.g. 'English', 'Русский'. */
     private final String name;
 
-    /** Language name in English, e.g. 'English', 'Russian'. */
+    /** Language name in English (ASCII), e.g. 'English', 'Russian'. */
     private final String english_name;
     
     private static Map<String, String>       code2name = new HashMap<String, String>();
@@ -58,13 +58,23 @@ public class LanguageType {
     public String getName() {
         return name;
     }
-
+    
     /** Checks weather exists the language code 'code'. */
     public static boolean has(String code) {
         return code2name.containsKey(code);
     }
     
     public String toString() { return code; }
+
+    /** Gets language code in English (ASCII). */
+    public String toStringASCII() {
+        
+        if(code.equalsIgnoreCase("Буква"))
+            return "letter_ru";
+            
+        return code;
+    }
+
     
     /** Returns true if the language has this 'code'. */
     public boolean equals(String code) {
@@ -388,6 +398,8 @@ public class LanguageType {
 
     public static final LanguageType ab     = new LanguageType("ab", "РђТ§СЃСѓР°", "Abkhaz");
     public static final LanguageType bat_smg = new LanguageType("bat-smg", "ЕЅemaitД—ЕЎka", "Samogitian");
+
+    public static final LanguageType bal    = new LanguageType("bal", "Balochi", "Balochi"); // Белуджский
 
     public static final LanguageType be_tarask = new LanguageType("be-tarask", "Р‘РµР»Р°СЂСѓСЃРєР°СЏ (С‚Р°СЂР°С€РєРµРІС–С†Р°)", "Belarusian in Taraskievica orthography");
     public static final LanguageType be_x_old = new LanguageType("be-x-old", "Р‘РµР»Р°СЂСѓСЃРєР°СЏ (С‚Р°СЂР°С€РєРµРІС–С†Р°)", "Belarusian in Taraskievica orthography; compat link");

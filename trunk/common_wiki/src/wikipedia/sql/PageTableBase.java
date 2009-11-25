@@ -227,6 +227,28 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
         return sb.toString();
     }
 
+
+    /** Converts 'source' string into safe (for storing in a database) string,
+     * substitutes the asterisk character ('*') and the question mark ('?')
+     * by database wildcard characters (% and _).
+     */
+    public static String convertToSafeWithWildCard(Connect connect, String source)
+    {
+        String s = source;
+
+        if(connect.isMySQL()) {
+            s = PageTableBase.convertWildcardToDatabaseChars(connect, source);
+            //s = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
+        } else {
+            // SQLite
+            if(-1 == PageTableBase.getFirstPositionOfWildcardCharacter(source, 0))
+                s = s.concat("%");
+            else
+                s = s.replace('*', '%').replace('?', '_');
+        }
+        return s;
+    }
+
     private static StringBuffer sb = new StringBuffer(255);
     
     /** Gets id of articles via Title:Namespace.

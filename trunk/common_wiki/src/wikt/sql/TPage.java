@@ -343,7 +343,8 @@ public class TPage {
      * skip empty articles, i.e. is_in_wiktionary==FALSE
      * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE 'zzz%' AND is_in_wiktionary=1 LIMIT 1;
      *
-     * @param  limit    constraint of the number of rows returned, if it's negative then a constraint is omitted
+     * @param  limit    constraint of the number of rows returned,
+     *                  if it's negative then a constraint is omitted
      * @param  prefix   the begining of the page_titles
      * @param  b_skip_redirects return articles without redirects if true
      * @param  b_meaning return articles with definitions
@@ -373,7 +374,7 @@ public class TPage {
 //TLang source_lang[] = TLang.parseLangCode(str_source_lang);
 
         TLang trans_lang[] = new TLang[0];
-        //trans_lang[0] = TLang.get(LanguageType.os);
+        //trans_lang[0] = TLang.get(LanguageType.fi);
 
         // todo: as func parameters ...
 
@@ -397,23 +398,12 @@ public class TPage {
             limit_with_reserve += 555;
 
         if(trans_lang.length > 0)
-            limit_with_reserve += 55;
+            limit_with_reserve += 55555;
 
         try {
             s = connect.conn.createStatement ();
 
-            String safe_prefix = prefix;
-            if(connect.isMySQL()) {
-                safe_prefix = PageTableBase.convertWildcardToDatabaseChars(connect, prefix);
-                //safe_prefix = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, prefix);
-            } else {
-                // SQLite
-                if(-1 == PageTableBase.getFirstPositionOfWildcardCharacter(safe_prefix, 0))
-                    safe_prefix = safe_prefix.concat("%");
-                else
-                    safe_prefix = safe_prefix.replace('*', '%').replace('?', '_');
-            }
-            
+            String safe_prefix = PageTableBase.convertToSafeWithWildCard(connect, prefix);
             str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
             str_sql.append(safe_prefix);
                 //str_sql.append("%\"");
