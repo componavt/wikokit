@@ -15,8 +15,9 @@ import wikipedia.language.LanguageType;
 import wikipedia.language.Encodings;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
-import java.sql.*;
+import wikt.sql.index.IndexForeign;
 
+import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -95,11 +96,16 @@ public class TTranslation {
 
     /** Inserts records into tables: 'translation' and 'translation_entry'.
      * The insertion into 'translation_entry' results in updating records in tables:
-     * 'wiki_text_words', 'page_inflecton', 'inflection', and 'page'.
+     * 'wiki_text_words', 'page_inflecton', 'inflection', 'page' and 'index_XX'.
      *
+     * @param native_lang   native language in the Wiktionary,
+     *                       e.g. Russian language in Russian Wiktionary
+     * @param page_title    title (in native language) of the article
      * @param tmeaning      corresponding record in table 'meaning' to this translation
      */
-    public static void storeToDB (Connect connect, TLangPOS lang_pos,
+    public static void storeToDB (Connect conn,
+                                LanguageType native_lang, String page_title,
+                                TLangPOS lang_pos,
                                 TMeaning tmeaning, WTranslation wtrans) {
 
         if(null == lang_pos || null == tmeaning || null == wtrans) return;
@@ -107,26 +113,31 @@ public class TTranslation {
         WTranslationEntry[] trans_entries = wtrans.getTranslations();
         if(0 == trans_entries.length) return;
 
-        TTranslation trans = TTranslation.insert(connect, lang_pos, wtrans.getHeader(), tmeaning);
+        TTranslation trans = TTranslation.insert(conn, lang_pos, wtrans.getHeader(), tmeaning);
         assert(null != trans);
 
         for(WTranslationEntry wtrans_entry : trans_entries) {
 
-            TLang tlang = TLang.get(wtrans_entry.getLanguage());
+            LanguageType foreign_lang = wtrans_entry.getLanguage();
+            TLang tlang = TLang.get(foreign_lang);
             
             WikiText[] phrases = wtrans_entry.getWikiPhrases();
             for(WikiText p : phrases) {
                 
-                TWikiText twiki_text = TWikiText.storeToDB(connect, p);
-
+                TWikiText twiki_text = TWikiText.storeToDB(conn, p);
+                
                 if(null != twiki_text) {
-                    TTranslationEntry trans_entry = TTranslationEntry.insert(connect, trans, tlang, twiki_text);
+                    TTranslationEntry trans_entry = TTranslationEntry.insert(conn, trans, tlang, twiki_text);
                     assert(null != trans_entry);
+                    
+                    IndexForeign.insert(conn, page_title, 
+                            false, // todo post-processing to set boolean 'foreign_has_definition'
+                            page_title, native_lang, foreign_lang);
                 }
             }
         }
     }
-
+    
     /** Gets translations (on the page defined by entry article 'source_page')
      * into given language target_lang,
      * i.e. gets wikified words from a text in the section == Translation ==
