@@ -74,6 +74,8 @@ There are four cases of parsing Wiktionary article. The following INSERT stateme
 
 2) Case with red-links for words in native language. Both red link and title of page with red link word are in native language.
 
+*TODO IN FUTURE*
+
 Word in main (native) language (page_title), e.g. Russian word "вода" in Russian Wiktionary. This Wiktionary article has a red-link word, i.e. absent, e.g. "ходить по воде".
   * native_red_link.page_title = "вода"
   * native_red_link.red_link = "ходить по воде"  
