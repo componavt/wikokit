@@ -137,8 +137,8 @@ public class PageTableAll {
 
                 WiktParser.parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
 
-if (n_cur >= 2)
-  break;
+//if (n_cur >= 2)
+  //break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());

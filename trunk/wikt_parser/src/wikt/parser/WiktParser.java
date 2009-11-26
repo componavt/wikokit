@@ -156,7 +156,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
     /** Parses one article.
      *
      * @param native_lang   native language in the Wiktionary,
-     *                       e.g. Russian language in Russian Wiktionary,
+     *                       e.g. Russian language in Russian Wiktionary
      * @param wikt_conn
      * @param wikt_parsed_conn
      * @param page_title
@@ -191,7 +191,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         }
 
         // store results to tables: pos_term, meaning, synonyms...
-        Keeper.storeToDB(wikt_parsed_conn, word);
+        Keeper.storeToDB(wikt_parsed_conn, word, native_lang);
         
         str.setLength(0);
         str = null;

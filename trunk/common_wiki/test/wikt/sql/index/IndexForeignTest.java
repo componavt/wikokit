@@ -76,6 +76,8 @@ public class IndexForeignTest {
     public void testInsert() {
         System.out.println("insert_ru");
         Connect conn = ruwikt_parsed_conn;
+        TPage native_page;
+        String s;
 
         // 0. test that foreign!=native => insert 0 records
 
@@ -104,9 +106,9 @@ public class IndexForeignTest {
                                         prefix_foreign_word, n_limit,
                                         native_lang, foreign_lang);
         assertEquals(1, index_foreign.length);
-        TPage native_page = index_foreign[0].getNativePage();
+        native_page = index_foreign[0].getNativePage();
         assertNotNull(native_page_title);
-        String s = native_page.getPageTitle();
+        s = native_page.getPageTitle();
         assertEquals(s, native_page_title);
 
         // delete temporary DB record
@@ -125,6 +127,26 @@ public class IndexForeignTest {
 
 //        index_foreign = IndexForeign.getByNative(conn, native_page_title, foreign_lang);
 //        assertEquals(0, index_foreign.length);
+
+        // 3. test insert into table with complex code, e.g. index_slovio-la
+        native_lang = LanguageType.ru;
+        foreign_lang = LanguageType.slovio_la;
+        IndexForeign.insert(conn, foreign_word, foreign_has_definition,
+                            native_page_title, native_lang, foreign_lang);
+                            
+        index_foreign = IndexForeign.getByPrefixForeign(conn,
+                                        prefix_foreign_word, n_limit,
+                                        native_lang, foreign_lang);
+        assertEquals(1, index_foreign.length);
+        native_page = index_foreign[0].getNativePage();
+        assertNotNull(native_page_title);
+        s = native_page.getPageTitle();
+        assertEquals(s, native_page_title);
+
+        // delete temporary DB record
+        IndexForeign.delete(conn, foreign_word, native_page_title,
+                             native_lang, foreign_lang);
+
     }
 
 

@@ -71,11 +71,11 @@ public class IndexNative {
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         IndexNative index_native = null;
-
+        
         try
         {
             String page_title = page.getPageTitle();
-
+            
             s = connect.conn.createStatement ();
             str_sql.append("INSERT INTO index_native (page_id,page_title,has_relation) VALUES (");
             

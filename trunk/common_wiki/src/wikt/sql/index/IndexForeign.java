@@ -88,7 +88,7 @@ public class IndexForeign {
 
         try
         {
-            String table_name = "index_" + foreign_lang.toStringASCII();
+            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
             String safe_title;
             
             s = connect.conn.createStatement ();
@@ -130,7 +130,9 @@ public class IndexForeign {
      * @param  foreign_word title of Wiktionary article
      * @param  limit    constraint of the number of rows returned,
      *                  if it's negative then a constraint is omitted
-     *
+     * @param native_lang       native language in the Wiktionary,
+     *                          e.g. Russian language in Russian Wiktionary
+     * 
      * @return array of words started from the prefix (empty array if they are absent)
      */
     public static IndexForeign[] getByPrefixForeign (
@@ -157,7 +159,7 @@ public class IndexForeign {
 
             String safe_prefix = PageTableBase.convertToSafeWithWildCard(connect,
                                                             prefix_foreign_word);
-            String table_name = "index_" + foreign_lang.toStringASCII();
+            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
 
             str_sql.append("SELECT foreign_word,foreign_has_definition,native_page_title FROM "+
                     table_name + " WHERE foreign_word LIKE \"");
@@ -241,7 +243,7 @@ public class IndexForeign {
 
         try
         {
-            String table_name = "index_" + foreign_lang.toStringASCII();
+            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
             String safe_title;
 
             s = connect.conn.createStatement ();

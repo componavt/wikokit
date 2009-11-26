@@ -26,6 +26,7 @@ public class TTranslationTest {
     String  samolyot_text, kolokolchik_text, kolokolchik_text_1_translation_box,
             kosa_text_1_translation_box_without_header;
 
+    LanguageType native_lang;
     TPage page;
     String  page_title;
     TPOS pos;
@@ -51,6 +52,7 @@ public class TTranslationTest {
         ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,
                                 LanguageType.ru);
 
+        native_lang = LanguageType.ru;
         TLang.recreateTable(ruwikt_parsed_conn);    // once upon a time: create Wiktionary parsed db
         TLang.createFastMaps(ruwikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
 
@@ -172,7 +174,8 @@ public class TTranslationTest {
         Connect conn = ruwikt_parsed_conn;
 
         for(WTranslation wtrans : wtrans_all) {
-            TTranslation.storeToDB(conn, lang_pos, meaning, wtrans);
+            TTranslation.storeToDB( conn, native_lang, page_title,
+                                    lang_pos, meaning, wtrans);
         }
         
         // gets translation from Russian into English (in Russian Wiktionary): 
@@ -223,7 +226,8 @@ public class TTranslationTest {
         Connect conn = ruwikt_parsed_conn;
 
         for(WTranslation wtrans : wtrans_all) {
-            TTranslation.storeToDB(conn, lang_pos, meaning, wtrans);
+            TTranslation.storeToDB( conn, native_lang, page_title,
+                                    lang_pos, meaning, wtrans);
         }
         
         //  "{{перев-блок|звонок|\n" +
@@ -283,7 +287,8 @@ public class TTranslationTest {
             wtrans_all = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
 
             for(WTranslation wtrans : wtrans_all) {
-                TTranslation.storeToDB(conn, lang_pos, meaning, wtrans);
+                TTranslation.storeToDB( conn, native_lang, page_title,
+                                        lang_pos, meaning, wtrans);
             }
         }
 
@@ -308,7 +313,8 @@ public class TTranslationTest {
             wtrans_all = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
 
             for(WTranslation wtrans : wtrans_all) {
-                TTranslation.storeToDB(conn, lang_pos, meaning, wtrans);
+                TTranslation.storeToDB( conn, native_lang, page_title,
+                                        lang_pos, meaning, wtrans);
             }
         }
 

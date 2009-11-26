@@ -11,6 +11,9 @@ import wikt.util.WikiText;
 import wikt.constant.*;
 import wikt.word.*;
 import wikt.sql.*;
+import wikt.sql.index.*;
+import wikipedia.language.LanguageType;
+
 import java.util.Map;
 
 /** Manager stores parsed data to MRD Wiktionary database (wikt_parsed).
@@ -22,8 +25,11 @@ public class Keeper {
      *
      * @param conn connection interface to a parsed wiktionary database
      * @param word data to be stored to a parsed wiktionary database
+     * @param native_lang       native language in the Wiktionary,
+     *                          e.g. Russian language in Russian Wiktionary
      */
-    public static void storeToDB(Connect conn, WordBase word) {
+    public static void storeToDB(Connect conn, WordBase word,
+                                  LanguageType native_lang) {
         
         String page_title = word.getPageTitle();
         
@@ -43,7 +49,11 @@ public class Keeper {
         
         WLanguage[] w_languages = word.getAllLanguages();
         for(WLanguage w_lang : w_languages) {
-            TLang tlang = TLang.get(w_lang.getLanguage());
+
+            LanguageType lang_type = w_lang.getLanguage();
+            TLang tlang = TLang.get(lang_type);
+
+            boolean b_native_lang = lang_type == native_lang; // word in native language
 
             WPOS[] w_pos_all = w_lang.getAllPOS();
             int etymology_n = 0;
@@ -69,7 +79,8 @@ public class Keeper {
                     TRelation.storeToDB(conn, tmeaning, i, m_relations);
 
                     if(translations.length > i) // not every meaning is happy to have it's own translation
-                        TTranslation.storeToDB(conn, lang_pos, tmeaning, translations[i]);
+                        TTranslation.storeToDB(conn, native_lang, page_title,
+                                            lang_pos, tmeaning, translations[i]);
                         
                     twiki_text = null;  // free memory
                     tmeaning = null;
@@ -79,10 +90,21 @@ public class Keeper {
                 if(w_meaning_all.length == 0 && translations.length > 0) {
                     for(int i=0; i<translations.length; i++) {
                         TMeaning tmeaning = TMeaning.insert(conn, lang_pos, i, null);
-                        TTranslation.storeToDB(conn, lang_pos, tmeaning, translations[i]);
+                        TTranslation.storeToDB(conn, native_lang, page_title,
+                                            lang_pos, tmeaning, translations[i]);
                     }
                 }
 
+                // index of words
+                if(w_meaning_all.length > 0) {
+                    if(b_native_lang) // index of words in native language
+                        IndexNative.insert(conn, tpage, !m_relations.isEmpty());
+                    else
+                        IndexForeign.insert(conn, page_title, true, 
+                                            null, native_lang,
+                                            lang_type);
+                }
+                
                 tpos = null;            // free memory
                 lang_pos = null;
                 translations = null;
