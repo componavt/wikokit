@@ -40,8 +40,9 @@ CREATE  TABLE IF NOT EXISTS `index_uk` (
   `foreign_has_definition` TINYINT(1) NOT NULL COMMENT 'true, if there is any definition in the Wiktionary article with the title foreign_word' ,
   `native_page_title` VARCHAR(255) BINARY COMMENT 'page.page_title of this Wiktionary article in native language' ,
   PRIMARY KEY (`id`) ,
-  INDEX `foreign_word` (`foreign_word` ASC) ,
-  INDEX `native_page_title` (`native_page_title` ASC) )
+  INDEX `foreign_word` (`foreign_word` (7) ASC) ,
+  INDEX `native_page_title` (`native_page_title` (7) ASC) ,
+  UNIQUE `foreign_native` (`foreign_word` ASC, `native_page_title` ASC) )
 ENGINE = InnoDB
 COMMENT = 'words with this language code (see table postfix)';
 }}}
