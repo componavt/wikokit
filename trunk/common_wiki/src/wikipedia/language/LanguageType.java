@@ -419,7 +419,10 @@ public class LanguageType {
     public static final LanguageType en_gb = new LanguageType("en-gb", "British English", "British English");
     public static final LanguageType fiu_vro = new LanguageType("fiu-vro", "VГµro", "VГµro");
     
-    public static final LanguageType gmh = new LanguageType("gmh", "Middle High German", "Middle High German");// Средневерхненемецкий
+    public static final LanguageType fro    = new LanguageType("fro", "Old French", "Old French"); // Старофранцузский
+
+    
+    public static final LanguageType gmh    = new LanguageType("gmh", "Middle High German", "Middle High German");// Средневерхненемецкий
 
     public static final LanguageType hif_deva = new LanguageType("hif-deva", "а¤«а¤јаҐЂа¤њаҐЂ а¤№а¤їа¤ЁаҐЌа¤¦аҐЂ", "Fiji Hindi (devangari)");
     public static final LanguageType hif_latn = new LanguageType("hif-latn", "Fiji Hindi", "Fiji Hindi (latin)");

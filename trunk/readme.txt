@@ -1,8 +1,7 @@
 wikokit 0.12.6 (c) 2005-2008, Andrew.Krizhanovsky at gmail.com
+http://code.google.com/p/wikokit/
                                                   
 Previous project name Synarcher.
-
-todo: new link
 Previous site: https://sourceforge.net/projects/synarcher
 
 Wiki tool kit (wikokit) contains several projects related to wiki

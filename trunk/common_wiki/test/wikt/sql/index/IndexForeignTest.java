@@ -77,20 +77,23 @@ public class IndexForeignTest {
         System.out.println("insert_ru");
         Connect conn = ruwikt_parsed_conn;
         TPage native_page;
-        String s;
+        String s, foreign_word, prefix_foreign_word;
+        LanguageType native_lang, foreign_lang;
+        IndexForeign[] index_foreign;
+        boolean foreign_has_definition;
 
         // 0. test that foreign!=native => insert 0 records
 
         int n_limit =-1;
-        boolean foreign_has_definition = true;
-        String foreign_word = "water12";
-        LanguageType native_lang = LanguageType.en;
-        LanguageType foreign_lang = LanguageType.en;
+        foreign_has_definition = true;
+        foreign_word = "water12";
+        native_lang = LanguageType.en;
+        foreign_lang = LanguageType.en;
         IndexForeign.insert(conn, foreign_word, foreign_has_definition,
                             native_page_title, native_lang, foreign_lang);
         
-        String prefix_foreign_word = "water1";
-        IndexForeign[] index_foreign = IndexForeign.getByPrefixForeign(conn, 
+        prefix_foreign_word = "water1";
+        index_foreign = IndexForeign.getByPrefixForeign(conn, 
                                     prefix_foreign_word, n_limit,
                                     native_lang, foreign_lang);
         
@@ -149,5 +152,59 @@ public class IndexForeignTest {
 
     }
 
+    @Test
+    public void testHasAndInsertIfAbsent() {
+        System.out.println("has and insertIfAbsent");
+        Connect conn = ruwikt_parsed_conn;
+        TPage native_page;
+        String s, foreign_word, prefix_foreign_word;
+        LanguageType native_lang, foreign_lang;
+        IndexForeign[] index_foreign;
+        boolean foreign_has_definition, b_has;
+
+        int count;
+        foreign_has_definition = true;
+        foreign_word = "water12";
+        native_lang = LanguageType.en;
+        foreign_lang = LanguageType.en;
+        IndexForeign.insert(conn, foreign_word, foreign_has_definition,
+                            native_page_title, native_lang, foreign_lang);
+        
+        // 1. successfull insertion of 1 record (foreign_word, native_page_title)
+        native_lang = LanguageType.ru;
+        foreign_lang = LanguageType.en;
+        IndexForeign.insertIfAbsent(conn, foreign_word, foreign_has_definition,
+                                native_page_title, native_lang, foreign_lang);
+                            
+        b_has = IndexForeign.has( conn, foreign_word, native_page_title,
+                                          foreign_lang);
+        assertTrue(b_has);
+
+        b_has = IndexForeign.has( conn, foreign_word, null,
+                                          foreign_lang);
+        assertFalse(b_has);
+
+        count = IndexForeign.count(conn, foreign_word, native_page_title, foreign_lang);
+        assertEquals(1, count);
+
+        // 2. failed insertion of the same record (foreign_word, native_page_title)
+        IndexForeign.insertIfAbsent(conn, foreign_word, foreign_has_definition,
+                                native_page_title, native_lang, foreign_lang);
+
+        b_has = IndexForeign.has( conn, foreign_word, native_page_title,
+                                          foreign_lang);
+        assertTrue(b_has);
+
+        b_has = IndexForeign.has( conn, foreign_word, null,
+                                          foreign_lang);
+        assertFalse(b_has);
+
+        count = IndexForeign.count(conn, foreign_word, native_page_title, foreign_lang);
+        assertEquals(1, count);
+
+        // delete temporary DB record
+        IndexForeign.delete(conn, foreign_word, native_page_title,
+                             native_lang, foreign_lang);
+    }
 
 }

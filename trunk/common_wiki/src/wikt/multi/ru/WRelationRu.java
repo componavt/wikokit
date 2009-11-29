@@ -202,6 +202,9 @@ public class WRelationRu {
         if(text.equals("&#160;"))
             return null;
 
+        if(text.equals("{{-}}"))
+            return null;
+
         // 2. split by semicolon and comma
         WikiText[] wt = WikiText.create(page_title, text);
         if(0 == wt.length) return null;

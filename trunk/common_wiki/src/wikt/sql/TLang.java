@@ -29,6 +29,14 @@ public class TLang {
     /** Languages of wiki: code and name, e.g. 'ru' and 'Russian'. */
     private LanguageType lang;
 
+    /** Number of foreign parts of speech (POS) in the table index_XX,
+     * where XX is a language code. */
+    private int n_foreign_POS;
+
+    /** Number of translation pairs in the table index_XX,
+     * where XX is a language code. */
+    private int n_translations;
+    
     /** Map from id to language. It is created from data in the table `lang`,
      * which is created from data in LanguageType.java.*/
     private static Map<Integer, TLang> id2lang;
@@ -38,9 +46,11 @@ public class TLang {
 
     private final static TLang[] NULL_TLANG_ARRAY = new TLang[0];
     
-    public TLang(int _id,LanguageType _lang) {
+    public TLang(int _id,LanguageType _lang,int _n_foreign_POS,int _n_translations) {
         id      = _id;
         lang    = _lang;
+        n_foreign_POS = _n_foreign_POS;
+        n_translations= _n_translations;
     }
     
     /** Gets unique ID of the language. */
@@ -51,6 +61,20 @@ public class TLang {
     /** Gets language. */
     public LanguageType getLanguage() {
         return lang;
+    }
+
+    /** Gets number of parts of speech (POS) in this language. <br><br>
+     * SELECT COUNT(*) FROM index_en WHERE native_page_title is NULL;
+     */
+    public int countPOS() {
+        return n_foreign_POS;
+    }
+
+    /** Gets number of translation into this language. <br><br>
+     * SELECT COUNT(*) FROM index_en WHERE native_page_title is not NULL;
+     */
+    public int countTranslations() {
+        return n_translations;
     }
 
     /** Gets language ID from the table 'lang'.<br><br>
@@ -255,33 +279,39 @@ public class TLang {
                 int z = 0;
             }*/
 
-            insert (connect, lang.getCode(), lang.getName());     //insert (connect, lang.getCode(), lang.getCode());
+            insert (connect, lang.getCode(), lang.getName(), 0, 0);     //insert (connect, lang.getCode(), lang.getCode());
             // insert (connect, lang.getCode(), connect.enc.EncodeFromJava(lang.getName()));
         }
     }
     
     /** Inserts record into the table 'lang'.
      *
-     * INSERT INTO lang (code,name) VALUES ("ru","Russian");
+     * INSERT INTO lang (code,name,n_foreign_POS,n_translations) VALUES ("ru","Russian", 12, 13);
      *
      * @param code  two (or more) letter language code, e.g. 'en', 'ru'
      * @param name  language name, e.g. 'English', 'Russian'
      */
-    public static void insert (Connect connect,String code,String name) {
+    public static void insert (Connect connect,String code,String name,
+                                int n_foreign_POS,int n_translations) {
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         try
         {
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO lang (code,name) VALUES (\"");
+            str_sql.append("INSERT INTO lang (code,name,n_foreign_POS,n_translations) VALUES (\"");
             str_sql.append(code);
             str_sql.append("\",\"");
             String safe_title = StringUtil.spaceToUnderscore(
                                 StringUtil.escapeChars(name));
             str_sql.append(safe_title);
-            str_sql.append("\")");
+            str_sql.append("\",");
 
+            str_sql.append(n_foreign_POS);
+            str_sql.append(",");
+            str_sql.append(n_translations);
+            str_sql.append(")");
+            
             s.executeUpdate (str_sql.toString());
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TLang.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
@@ -293,7 +323,7 @@ public class TLang {
 
     /** Selects row from the table 'lang' by a language code.
      *
-     *  SELECT id,name FROM lang WHERE code="ru";
+     *  SELECT id,name,n_foreign_POS,n_translations FROM lang WHERE code="ru";
      *
      * @param  lang_code  title of Wiktionary article
      * @return null if a language code is absent in the table 'lang'
@@ -311,16 +341,18 @@ public class TLang {
         try {
             s = connect.conn.createStatement ();
 
-            str_sql.append("SELECT id,name FROM lang WHERE code=\"");
+            str_sql.append("SELECT id,name,n_foreign_POS,n_translations FROM lang WHERE code=\"");
             str_sql.append(lang_code);
             str_sql.append("\"");
-
+            
             rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
             {
-                int id      = rs.getInt("id");
-                String name = StringUtil.underscoreToSpace(rs.getString("name"));
-                tp = new TLang(id, lt);
+                //String name = StringUtil.underscoreToSpace(rs.getString("name"));
+                
+                tp = new TLang( rs.getInt("id"), lt,
+                                rs.getInt("n_foreign_POS"),
+                                rs.getInt("n_translations"));
                 
                 /*if(!lt.getName().equalsIgnoreCase(name)) { // cause: field lang.name is NOT unique, only .code is unique
                     System.err.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name +

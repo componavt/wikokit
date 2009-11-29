@@ -4,6 +4,7 @@ wiwordik 0.03 2009-11-??
     Correct parsing of phrases (e.g. there is now only one phrase "good morning" instead of two: "good morning" and "good_morning" 
     
   Added (from programmer's point of view)
+    Indexing of fields in tables: page.page_title (7), wikipedia.page_title (7), inflection.inflected_form (7), wiki_text.text (12), index_native.page_title (7), native_red_link.red_link (7)
     .
 
 wiwordik 0.02 2009-11-02
