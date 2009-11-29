@@ -43,10 +43,15 @@ public class Keeper {
         boolean is_in_wiktionary = true;
         TPage tpage = TPage.getOrInsert(conn, page_title, word_count, wiki_link_count, 
                 is_in_wiktionary, word.getRedirect());
-        
+
+        if(null == tpage) {
+            System.err.println("(Keeper.storeToDB()):: TPage.getOrInsert returned null. page_title='" + page_title + "'");
+        }
+
         if(word.isRedirect())
             return;
-        
+
+        boolean b_page_added_to_index_native = false;
         WLanguage[] w_languages = word.getAllLanguages();
         for(WLanguage w_lang : w_languages) {
 
@@ -60,7 +65,7 @@ public class Keeper {
             for(WPOS w_pos : w_pos_all) {
                 TPOS tpos = TPOS.get(w_pos.getPOS());
 
-                // tpage, tlang, tpos: -> into table 'lang_pos', gets id
+                // tpage, tlang, tpos, etymology_n: -> into table 'lang_pos', gets id
                 
                 String lemma = "";  // todo ...
                 TLangPOS lang_pos = TLangPOS.insert(conn, tpage, tlang, tpos, etymology_n, lemma);
@@ -97,12 +102,14 @@ public class Keeper {
 
                 // index of words
                 if(w_meaning_all.length > 0) {
-                    if(b_native_lang) // index of words in native language
-                        IndexNative.insert(conn, tpage, !m_relations.isEmpty());
-                    else
-                        IndexForeign.insert(conn, page_title, true, 
-                                            null, native_lang,
-                                            lang_type);
+                    if(b_native_lang) { // index of words in native language
+                        if(!b_page_added_to_index_native) {
+                            b_page_added_to_index_native = true;
+                            IndexNative.insert(conn, tpage, !m_relations.isEmpty());
+                        }
+                    } else
+                        IndexForeign.insertIfAbsent(conn, page_title, true,
+                                                null, native_lang, lang_type);
                 }
                 
                 tpos = null;            // free memory

@@ -145,8 +145,11 @@ var sem_rel_CheckBox_value: Boolean = false;
 var word0: String = "*с?рё*";
 
 /** Language codes for words filtering, e.g. "ru en fr" */
-//var lang_source_value: String = bind lang_source_Text.rawText;
 var source_lang : TLang[];
+//var lang_source_value: String = bind lang_source_Text.rawText;
+
+/** Language codes for words filtering by translation, e.g. "ru en fr" */
+var dest_lang : TLang[];
 
 /** Words extracted by several letters (prefix). */ 
 var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, word0, 
@@ -316,8 +319,12 @@ var word_Text: TextBox = TextBox {
 
 // todo to separate file 'lang_source.fx'
 
-/** Whether list only articles wich have these language codes */
+/** Whether list only articles which have these language codes */
 var lang_source_CheckBox_value: Boolean = false;
+
+/** Whether list only articles (in native language) wich have translations
+ * into these language codes */
+var lang_dest_CheckBox_value: Boolean = false;
 
 var lang_source_CheckBox: CheckBox = CheckBox {
         text: "Source language"
@@ -339,6 +346,35 @@ var lang_source_CheckBox: CheckBox = CheckBox {
 
                         source_lang = TLang.parseLangCode(lang_source_Text.rawText);
                         //System.out.println("CheckBox 2. OK. It's changed. source_lang.size={source_lang.size()}");
+
+                        updateWordList();
+                    }
+                }
+            }
+      }
+      
+var lang_dest_CheckBox: CheckBox = CheckBox {
+        text: "Translation language"
+
+        onMouseReleased: function(e:MouseEvent) {
+
+                if (lang_dest_CheckBox_value != lang_dest_CheckBox.selected) {
+                    lang_dest_CheckBox_value  = lang_dest_CheckBox.selected;
+
+                    if(not lang_dest_CheckBox.selected) {
+                        dest_lang = null; // without filer, all languages
+                        updateWordList();
+                        lang_source_CheckBox.disable = false;
+                    } else {
+                        lang_source_CheckBox.disable = true;
+                        //System.out.println("CheckBox 1. lang_dest_Text={lang_dest_Text.rawText}, source_lang.size={source_lang.size()}");
+
+                        // if list of dest languages is the same then skip any changes
+                        if(TLang.isEquals(dest_lang, lang_dest_Text.rawText))
+                            return;
+
+                        dest_lang = TLang.parseLangCode(lang_dest_Text.rawText);
+                        //System.out.println("CheckBox 2. OK. It's changed. dest_lang.size={source_lang.size()}");
 
                         updateWordList();
                     }
@@ -385,9 +421,38 @@ var lang_source_Text: TextBox = TextBox {
     }
 }
 
+var lang_dest_Text: TextBox = TextBox {
+    disable: bind not lang_dest_CheckBox_value
+    blocksMouse: true
+    columns: 12
+    selectOnFocus: true
+    text: "en de fr os uk"
+
+    onKeyTyped: function(e:KeyEvent){
+
+        //System.out.println("TextBox 1. lang_dest_Text={lang_dest_Text.rawText}, dest_lang.size={dest_lang.size()}");
+
+        // if list of dest languages is the same then skip any changes
+        if(TLang.isEquals(dest_lang, lang_dest_Text.rawText))
+            return;
+
+        dest_lang = TLang.parseLangCode(lang_dest_Text.rawText);
+        //System.out.println("TextBox 2. OK. It's changed. dest_lang.size={dest_lang.size()}");
+
+        updateWordList();
+    }
+}
+
 var lang_source_HBox: HBox = HBox {
     content: [
             lang_source_CheckBox, lang_source_Text
+    ]
+    spacing: 10
+};
+
+var lang_dest_HBox: HBox = HBox {
+    content: [
+            lang_dest_CheckBox, lang_dest_Text
     ]
     spacing: 10
 };
@@ -474,7 +539,8 @@ var result_VBox2: VBox = VBox {
     //translateY: bind (sceneHeight - 52)
     content: [  // wiki_page_Label,
                 lang_source_HBox,
-                h_filter_MRT
+                h_filter_MRT,
+                lang_dest_HBox
              ] //, wc.card]
     spacing: 10
 };
@@ -507,7 +573,7 @@ var scene: Scene = Scene {
 
 // Application User Interface
 var stage: Stage = Stage {
-    title: "Wiwordik 0.02 ({wikt_parsed_conn.getDBName()})"
+    title: "Wiwordik 0.03 ({wikt_parsed_conn.getDBName()})"
     //    resizable: false
     visible: true
     //    style: StageStyle.TRANSPARENT

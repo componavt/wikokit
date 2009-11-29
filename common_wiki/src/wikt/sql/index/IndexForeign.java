@@ -60,7 +60,7 @@ public class IndexForeign {
     }
 
     /** Inserts record into the table 'index_XX'.<br><br>
-     * INSERT INTO index_en (foreign_word,native_page_title) VALUES ("water13","вода13");
+     * INSERT INTO index_en (foreign_word,foreign_has_definition,native_page_title) VALUES ("water13",0,"вода13");
      *
      * @param foreign_word      word in foreign language XX
      * @param foreign_has_definition true, if there is any definition in the Wiktionary article with the title foreign_word
@@ -121,6 +121,99 @@ public class IndexForeign {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+    }
+
+    /** Inserts a record into the table 'index_XX' only if a pair
+     * (foreign_word,native_page_title) is absent.
+     * 
+     * @param foreign_word      word in foreign language XX
+     * @param foreign_has_definition true, if there is any definition in the Wiktionary article with the title foreign_word
+     * @param native_page_title the corresponded page.page_title of the
+     *              Wiktionary article in native language (it could be null)
+     * @param native_lang       native language in the Wiktionary,
+     *                          e.g. Russian language in Russian Wiktionary,
+     * @param foreign_lang      foreign language XX
+     *
+     */
+    public static void insertIfAbsent (Connect conn,
+                                String foreign_word, boolean foreign_has_definition,
+                                String native_page_title,
+                                LanguageType native_lang, LanguageType foreign_lang)
+    {
+        if(!IndexForeign.has( conn, foreign_word,
+                              native_page_title, foreign_lang))
+        {
+            insert (conn,foreign_word, foreign_has_definition,
+                native_page_title,
+                native_lang, foreign_lang);
+        }
+    }
+
+    /** Checks whether exists any row in the table 'index_foreign' (index_XX)
+     * with a pair (foreign_word, native_page_title).<br><br>
+     *
+     * @param  native_page_title    title in native language of Wiktionary
+     *                               article, it could be NULL
+     */
+    public static boolean has (Connect conn, String foreign_word,
+                     String native_page_title, LanguageType foreign_lang)
+    {
+        return 0 != count (conn, foreign_word, native_page_title, foreign_lang);
+    }
+
+    /** Counts number of rows from the table 'index_foreign' (index_XX) 
+     * with a pair (foreign_word, native_page_title).<br><br>
+     *
+     * select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title is NULL;
+     * or
+     * select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title="вода13";
+     *
+     * @param  native_page_title    title in native language of Wiktionary
+     *                               article, it could be NULL
+     */
+    public static int count (Connect conn, String foreign_word,
+                     String native_page_title, LanguageType foreign_lang)
+    {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+
+        int size = 0;
+        try {
+            s = conn.conn.createStatement ();
+
+            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+
+            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(conn, foreign_word);
+
+            str_sql.append("select COUNT(*) AS size from "+table_name+" WHERE foreign_word=\"");
+            str_sql.append(safe_title);
+            str_sql.append("\"");
+
+            if(null == native_page_title) {
+                // select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title is NULL;
+                str_sql.append(" AND native_page_title is NULL");
+            } else {
+                // select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title="вода13";
+                safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(conn, native_page_title);
+
+                str_sql.append(" AND native_page_title=\"");
+                str_sql.append(safe_title);
+                str_sql.append("\"");
+            }
+
+            rs = s.executeQuery (str_sql.toString());
+            if (rs.next ())
+            {
+                size = rs.getInt("size");
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (IndexForeign.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return size;
     }
 
     /** Selects rows from the table 'index_foreign' by the prefix of foreign word.<br><br>
@@ -317,8 +410,9 @@ public class IndexForeign {
                     "`foreign_has_definition` TINYINT(1) NOT NULL," +
                     "`native_page_title` VARCHAR(255) BINARY," +
                     "PRIMARY KEY (`id`)," +
-                    "INDEX `foreign_word` (`foreign_word` ASC)," +
-                    "INDEX `native_page_title` (`native_page_title` ASC) ) " +
+                    "INDEX `foreign_word` (`foreign_word` (7) ASC)," +
+                    "INDEX `native_page_title` (`native_page_title` (7) ASC)," +
+                    "UNIQUE `foreign_native` (`foreign_word` ASC, `native_page_title` ASC) )" +
                     "ENGINE = InnoDB"
                 );
                 

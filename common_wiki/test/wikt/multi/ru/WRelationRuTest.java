@@ -19,7 +19,9 @@ import wikt.util.WikiText;
 
 public class WRelationRuTest {
 
-    public static String samolyot_text, kolokolchik_text, empty_relation;
+    public static String samolyot_text, kolokolchik_text, 
+            empty_relation, empty_hyphen_relation,
+                            empty_hyphen2_relation;
 
     public WRelationRuTest() {
     }
@@ -67,7 +69,30 @@ public class WRelationRuTest {
                         "# &#160;\n" +
                         "\n" +
                         "=== Родственные слова ===\n";
-        
+
+        empty_hyphen_relation = "==== Значение ====\n" +
+                        "# some definition {{пример|some example.}}\n" +
+                        "# definition 2 {{пример|}}\n" +
+                        "# def 3 {{пример|}}\n" +
+                        "\n" +
+                        "==== Синонимы ====\n" +
+                        "#{{-}}\n" +
+                        "#{{-}}\n" +
+                        "# [[synonym 2]]\n" +
+                        "\n" +
+                        "=== Родственные слова ===\n";
+
+        empty_hyphen2_relation = "==== Значение ====\n" +
+                        "# some definition {{пример|some example.}}\n" +
+                        "# definition 2 {{пример|}}\n" +
+                        "# def 3 {{пример|}}\n" +
+                        "\n" +
+                        "==== Синонимы ====\n" +
+                        "# [[synonym 2]]\n" +
+                        "#{{-}}\n" +
+                        "#{{-}}\n" +
+                        "\n" +
+                        "=== Родственные слова ===\n";
         
         kolokolchik_text =   "===Произношение===\n" +
                         "====Значение====\n" +
@@ -253,6 +278,50 @@ public class WRelationRuTest {
         // ====Синонимы====
         // # &#160;
         assertEquals(0, result.size());
+    }
+
+    // test that "#{{-}}" is an empty_relation
+    @Test
+    public void testParse_empty_hyphen() {
+        System.out.println("parse_empty_hyphen_in_synonyms");
+        WRelation[] r;
+        POSText pt;
+        Map<Relation, WRelation[]> result;
+
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "empty_relation";
+        
+        // test 1.
+        pt = new POSText(POS.noun, empty_hyphen_relation);
+        
+        result = WRelationRu.parse(wikt_lang, page_title, pt);
+
+        // ====Синонимы====
+        // #{{-}}
+        // #{{-}}
+        // # [[some synonyms]]
+        assertEquals(1, result.size());
+        r = result.get(Relation.synonymy);
+        assertEquals(3, r.length);
+        assertNull(r[0]);
+        assertNull(r[1]);
+        assertNotNull(r[2]);
+
+        // test 2.
+        pt = new POSText(POS.noun, empty_hyphen2_relation);
+
+        result = WRelationRu.parse(wikt_lang, page_title, pt);
+
+        // ====Синонимы====
+        // # [[some synonyms]]
+        // #{{-}}
+        // #{{-}}
+        assertEquals(1, result.size());
+        r = result.get(Relation.synonymy);
+        assertEquals(3, r.length);
+        assertNotNull(r[0]);
+        assertNull(r[1]);
+        assertNull(r[2]);
     }
 
 

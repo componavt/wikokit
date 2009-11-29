@@ -24,7 +24,6 @@ public class PageTableAll {
         "губить",   // &#160; in semantic relations (synonym)
 
         "good morning", "good_morning",
-        "шах",
         "молдаванка", "бендерчанка", "будуаръ",
 
         "навлечь", // Warning in WTranslationRu.parse(): The Russian word 'навлечь' has section === Перевод === but there is no any translation box "{{перев-блок|".

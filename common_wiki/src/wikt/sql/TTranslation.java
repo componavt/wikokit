@@ -130,7 +130,7 @@ public class TTranslation {
                     TTranslationEntry trans_entry = TTranslationEntry.insert(conn, trans, tlang, twiki_text);
                     assert(null != trans_entry);
                     
-                    IndexForeign.insert(conn, page_title, 
+                    IndexForeign.insertIfAbsent(conn, page_title, 
                             false, // todo post-processing to set boolean 'foreign_has_definition'
                             page_title, native_lang, foreign_lang);
                 }

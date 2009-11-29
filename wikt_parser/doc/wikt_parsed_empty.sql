@@ -17,7 +17,7 @@ CREATE  TABLE IF NOT EXISTS `page` (
   `is_redirect` TINYINT(1) NULL COMMENT 'Hard redirect defined by #REDIRECT' ,
   `redirect_target` VARCHAR(255) NULL COMMENT 'Redirected (target or destination) page' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `page_title` (`page_title` ASC) )
+  INDEX `idx_page_title` (`page_title`(7) ASC) )
 ENGINE = InnoDB
 COMMENT = 'titles of wiki articles, entry names';
 
@@ -36,7 +36,7 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `lemma` VARCHAR(255) BINARY NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
   `redirect_type` TINYINT UNSIGNED NULL COMMENT 'Type of soft redirect (Wordform, Misspelling)' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `page_lang_pos_unique` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
+  UNIQUE INDEX `unique_page_lang_pos` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
 ENGINE = InnoDB
 COMMENT = 'terms found in wiki-texts';
 
@@ -50,7 +50,7 @@ CREATE  TABLE IF NOT EXISTS `wikipedia` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `page_title` (`page_title` ASC) )
+  INDEX `idx_page_title` (`page_title`(7) ASC) )
 ENGINE = InnoDB
 COMMENT = 'Titles of related Wikipedia articles.';
 
@@ -89,6 +89,8 @@ CREATE  TABLE IF NOT EXISTS `lang` (
   `id` SMALLINT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   `code` VARCHAR(12) NOT NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
+  `n_foreign_POS` INT(10) UNSIGNED NOT NULL COMMENT 'Number of foreign POS' ,
+  `n_translations` INT(10) UNSIGNED NOT NULL COMMENT 'Number of translation pairs in this lang' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `code` (`code` ASC) )
 ENGINE = MyISAM
@@ -105,7 +107,7 @@ CREATE  TABLE IF NOT EXISTS `inflection` (
   `freq` INT(11) UNSIGNED NOT NULL COMMENT 'document\'s frequency, number of documents where the term appears' ,
   `inflected_form` VARCHAR(255) BINARY NOT NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `inflected_form` (`inflected_form` ASC) )
+  INDEX `idx_inflected_form` (`inflected_form`(7) ASC) )
 ENGINE = InnoDB
 COMMENT = 'terms found in wiki-texts';
 
@@ -196,7 +198,7 @@ CREATE  TABLE IF NOT EXISTS `wiki_text` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `text` VARCHAR(1023) BINARY NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `text_unique` (`text`(128) ASC) )
+  INDEX `idx_text` (`text`(12) ASC) )
 ENGINE = InnoDB;
 
 
@@ -270,7 +272,7 @@ CREATE  TABLE IF NOT EXISTS `index_native` (
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'page.page_title of this Wiktionary article in native language' ,
   `has_relation` TINYINT(1) NULL COMMENT 'true, if there is any semantic relation in this Wiktionary article' ,
   UNIQUE INDEX `page_id` (`page_id` ASC) ,
-  UNIQUE INDEX `page_title` (`page_title` ASC) )
+  INDEX `idx_page_title` (`page_title`(7) ASC) )
 ENGINE = InnoDB
 COMMENT = 'words (with definitions) in native language';
 
@@ -286,7 +288,7 @@ CREATE  TABLE IF NOT EXISTS `native_red_link` (
   `red_link` VARCHAR(255) BINARY NOT NULL COMMENT 'Popular red link words can be found at several WT pages.' ,
   `section_type` TINYINT UNSIGNED NULL COMMENT 'The section which contain red link word, e.g. Definition, or Synonyms, etc.' ,
   PRIMARY KEY (`id`) ,
-  INDEX `red_link` (`red_link` ASC) )
+  INDEX `idx_red_link` (`red_link`(7) ASC) )
 ENGINE = InnoDB
 COMMENT = 'words (without articles) in native language';
 
