@@ -59,6 +59,24 @@ public class IndexForeign {
         return native_page;
     }
 
+    /** Gets page in foreign language. */
+    public TPage getForeignPage() {
+        return foreign_page;
+    }
+
+    /** Gets the title of page in foreign language. */
+    public String getForeignWord() {
+        return foreign_word;
+    }
+
+    /** Gets concatenation of foreign word, delimiter, and a word in native language. */
+    public String getConcatForeignAndNativeWords(String delimiter) {
+        if(null == native_page)
+            return foreign_word;
+        else
+            return foreign_word + delimiter + native_page.getPageTitle();
+    }
+
     /** Inserts record into the table 'index_XX'.<br><br>
      * INSERT INTO index_en (foreign_word,foreign_has_definition,native_page_title) VALUES ("water13",0,"вода13");
      *
@@ -111,6 +129,12 @@ public class IndexForeign {
                 str_sql.append(safe_title);
                 str_sql.append("\"");
             }
+
+            //System.out.println(" foreign_word=" + foreign_word +
+            //            "; foreign_has_definition=" + foreign_has_definition +
+            //            "; native_page_title=" + native_page_title +
+            //            "\n where SQL=" + str_sql +
+            //            " (IndexForeign.insert)");
             
             str_sql.append(")");
             s.executeUpdate (str_sql.toString());
@@ -125,6 +149,8 @@ public class IndexForeign {
 
     /** Inserts a record into the table 'index_XX' only if a pair
      * (foreign_word,native_page_title) is absent.
+     *
+     * // If foreign_word == native_page_title then insert only (foreign_word,NULL).
      * 
      * @param foreign_word      word in foreign language XX
      * @param foreign_has_definition true, if there is any definition in the Wiktionary article with the title foreign_word
@@ -140,6 +166,11 @@ public class IndexForeign {
                                 String native_page_title,
                                 LanguageType native_lang, LanguageType foreign_lang)
     {
+        // if(null != native_page_title && 0 == foreign_word.compareTo(native_page_title))
+            // native_page_title = null;       // then insert only (foreign_word,NULL)
+                                            // since we want skip cases, e.g. :
+                                            // word (de) -> word (en)
+
         if(!IndexForeign.has( conn, foreign_word,
                               native_page_title, foreign_lang))
         {
@@ -272,15 +303,19 @@ public class IndexForeign {
             {
                 String foreign_word = Encodings.bytesToUTF8(rs.getBytes("foreign_word"));
                 boolean foreign_has_definition = rs.getBoolean("foreign_has_definition");
-                String native_page_title = Encodings.bytesToUTF8(rs.getBytes("native_page_title"));
+                byte[] bt_native_page_title = rs.getBytes("native_page_title");
                 
                 TPage foreign_page = null;
                 if(foreign_has_definition)
                     foreign_page = TPage.get(connect, foreign_word);
 
                 TPage native_page = null;
-                if(native_page_title.length() > 0)
-                    native_page = TPage.get(connect, native_page_title);
+                if(null != bt_native_page_title) {
+                    String native_page_title = Encodings.bytesToUTF8(bt_native_page_title);
+
+                    if(native_page_title.length() > 0)
+                        native_page = TPage.get(connect, native_page_title);
+                }
 
                 IndexForeign _if = new IndexForeign(
                         foreign_page, foreign_word, native_page);
