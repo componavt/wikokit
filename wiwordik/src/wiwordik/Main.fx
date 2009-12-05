@@ -6,60 +6,25 @@
 
 package wiwordik;
 
-import wiwordik.word_card.WC;
+import wiwordik.search_window.*;
 
 import java.lang.*;
 
 import wikt.sql.*;
-import wikt.constant.*;
 
 import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 
 import javafx.stage.Stage;
-import javafx.scene.Scene;
-import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.stage.StageStyle;
-//import javafx.ext.swing.SwingTextField;
 
-import java.io.InputStream;
-import java.lang.Exception;
-import javafx.io.http.HttpRequest;
-import javafx.animation.Timeline;
-import javafx.animation.KeyFrame;
-import javafx.animation.Interpolator;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.TextBox;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.TextOrigin;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.layout.LayoutInfo;
-
-import javafx.scene.text.Text;
-import javafx.scene.text.TextOrigin;
-
-import javafx.scene.control.TextBox;
-import javafx.scene.control.ListView;
 import javafx.scene.control.CheckBox;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.image.ImageView;
-import javafx.ext.swing.SwingComboBox;
-import javafx.ext.swing.SwingComboBoxItem;
-import javafx.ext.swing.SwingList;
-import javafx.ext.swing.SwingListItem;
 
 def DEBUG : Boolean = false;
 
@@ -72,6 +37,7 @@ def DEBUG : Boolean = false;
 // ===========
 
 var wikt_parsed_conn : Connect = new Connect();
+var native_lang : LanguageType;
 
 function init() {
 
@@ -81,6 +47,7 @@ function init() {
     // SQLite                                   //Connect.testSQLite();
     //wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
 
+    native_lang = LanguageType.ru;
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
     TPOS.createFastMaps(wikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
     TRelationType.createFastMaps(wikt_parsed_conn);
@@ -91,18 +58,7 @@ init();
 //var sceneWidth: Number = bind scene.width;
 //var sceneHeight: Number = bind scene.height;
 
-// ===========
-//
-// ===========
-
 //var adjacent_words : String[] = ["Red", "Yellow", "Green"];
-
-/*class Model {
-    var action: String;
-    var selected_word_index: Integer on replace oldValue {
-        action = adjacent_words[selected_word_index];
-    }
-}*/
 
 /** todo: language selection
 var word_ComboBox = SwingComboBox {
@@ -115,98 +71,59 @@ var word_ComboBox = SwingComboBox {
             text: p.getPageTitle()
         }
 }*/
-/*
-class WordListModel {
-    //var words: String[];
-    var words: SwingListItem[]
-    var selected_word_index: Integer on replace oldValue {
-        delete words;
-        //var i=0;
-        for (p in page_array) {
-            //words[i++] = p.getPageTitle()
-            insert p.getPageTitle() into words
-        }
-        //words = adjacent_words[selected_word_index];
-    }
-}*/
+
 
 /** Skips #REDIRECT words if true. */
 var b_skip_redirects : Boolean = false;
 
-/** Number of words in visible in the list */
-var n_words_list : Integer = 21;
+/** Number of words visible in the list */
+def n_words_list : Integer = 21;
 
-/** Whether list only articles with definitions */
-var meaning_CheckBox_value: Boolean = false;
+def word0: String = ""; //"*с?рё*";
 
-/** Whether list only articles with semantic relations */
-var sem_rel_CheckBox_value: Boolean = false;
+var lang_choice = LangChoice{};
 
-var word0: String = "*с?рё*";
+var word_list = WordList{};
 
-/** Language codes for words filtering, e.g. "ru en fr" */
-var source_lang : TLang[];
-//var lang_source_value: String = bind lang_source_Text.rawText;
+var filter_mean_sem_transl = FilterMeanSemRelTrans{};
 
-/** Language codes for words filtering by translation, e.g. "ru en fr" */
-var dest_lang : TLang[];
+def query_text_string = QueryTextString {
+     word0: word0;
+     wikt_parsed_conn: wikt_parsed_conn
+}
 
-/** Words extracted by several letters (prefix). */ 
-var page_array: TPage[] = TPage.getByPrefix(wikt_parsed_conn, word0, 
-                            n_words_list, // any (first) N words, since "" == prefix
+
+
+query_text_string.initialize(word_list, lang_choice);
+
+lang_choice.initialize(word_list, query_text_string);
+
+word_list.initialize(   wikt_parsed_conn,
+                        query_text_string, lang_choice, filter_mean_sem_transl,
+                        native_lang,
+                        //word0,
+                        n_words_list);
+
+word_list.setSkipRedirects(b_skip_redirects);
+
+filter_mean_sem_transl.initialize(word_list, lang_choice, query_text_string);
+
+word_list.updateWordList(   lang_choice.getLangDestSelected(),
                             b_skip_redirects,
-                            source_lang, // lang_source_value,
-                                                meaning_CheckBox_value,
-                                                sem_rel_CheckBox_value);
+                            word0
+                        );
+query_text_string.saveWordValue();
 
-var page_array_string: String[];
-copyWordsToStringArray();
+//word_list.copyWordsToStringArray( word_list.getPageArray() );
+//word_list.copyWordsToListItems();
 
-var page_listItems: SwingListItem[] = SwingListItem{};
-
-/** Current word card: contains TPage, corresponds to selected word. */
-var wc; // = WC {}
-
-//page_listItems[0].text = "nelik"; // new SwingListItem{ text: "testishe" };
-//insert SwingListItem{ text: "testishe" } into page_listItems;
-
-/** Copies data from TPagе[].text page_array to SwingListItem[]  page_listItems
-*/
-function copyWordsToListItems() {
-    delete page_listItems;
-    for (i in [0.. sizeof page_array-1])
-        insert SwingListItem{ text: page_array[i].getPageTitle() } into page_listItems;
-}
-copyWordsToListItems();
-
-/** Copies data from page_array to page_array_string
-*/
-function copyWordsToStringArray() {
-    //var list: SwingListItem[] = SwingListItem{};
-
-    var result : String[];
-    for (p in page_array) {
-        insert p.getPageTitle() into result;
-        //System.out.println("copyWordsToStringArray. p.title = {p.getPageTitle()}");
-    }
-    
-    return result;
-}
-
-
-/** Copies data from TPagе[].text page_array to SwingListItem[]  page_listItems
-*/
 function updateWordList() {
 
-//    System.out.println("updateWordList(), word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}, lang_source_value={lang_source_value}");
-
-
-    page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(), 
-                        n_words_list, b_skip_redirects,
-                        source_lang,meaning_CheckBox_value,
-                                    sem_rel_CheckBox_value);
-    page_array_string = copyWordsToStringArray();
-    word_value_old = word_value.trim();
+    word_list.updateWordList( lang_choice.getLangDestSelected(),
+                               b_skip_redirects,
+                               query_text_string.getWordValue()
+                            );
+    query_text_string.saveWordValue();
 }
 
 /** Checks the list of source languages. If it has been changed, then
@@ -225,275 +142,18 @@ function updateWordList() {
     updateWordList();
 }*/
 
-/*var word_List = SwingList {
-    //translateX: 113
-    width: 222
-    height: 333
-    // selectedIndex: 1
 
-    items: bind page_listItems
-}*/
-
-var word_ListView: ListView = ListView {
-
-    // items: bind page_array_string
-    
-    items: bind for(_tpage in page_array) { _tpage.getPageTitle() }
-
-    layoutInfo: LayoutInfo { width: 150 }
-
-    onKeyPressed: function (e: KeyEvent) {
-
-        var l = word_ListView;
-        if (l.selectedItem != "" and l.selectedItem != null)
-            word_Text.text = (word_ListView.selectedItem).toString();
-    }
-
-    onMouseClicked: function (me: MouseEvent) {
-        var l = word_ListView;
-        if (l.selectedItem != "" and l.selectedItem != null) {
-            word_Text.text = (l.selectedItem).toString();
-            word_value_old = (l.selectedItem).toString();
-
-            if (me.clickCount >= 2) {
-
-                var wc = WC {}
-
-                // get data for "page_array[l.selectedIndex]"
-                wc.getDataForSelectedWordByTPage(wikt_parsed_conn, page_array[ l.selectedIndex ]);
-
-                wc.createCXLangList(wikt_parsed_conn, page_array[ l.selectedIndex ]);
-
-                //getDataForSelectedWord(word_value, l.selectedIndex);
-            }
-        }
-    }
-}
-
-var word_value_old = word0;
-var word_value: String = bind word_Text.rawText;
-var word_Text: TextBox = TextBox {
-    blocksMouse: true
-    columns: 25
-    //wrappingWidth: 200
-    selectOnFocus: true
-    text: word0
-    //text: bind input_word // page_array[0].getPageTitle()
-    //text: page_array[0].getPageTitle()
-    /*clip: Rectangle {
-    x: bind textDeltaBounds.x
-     y: bind textDeltaBounds.y
-     width: bind (word_Text.width - textDeltaBounds.width)
-     height: bind (word_Text.height - textDeltaBounds.height)
-     }*/
-
-    action: function() { // "Enter"
-        var wc = WC {}
-        //wc.getDataByWord(wikt_parsed_conn, word_value.trim(), page_array);
-
-        wc.createCXLangListByWord(wikt_parsed_conn, word_value.trim(), page_array);
-    }
-    
-    onKeyTyped: function(e:KeyEvent){
-
-        if(0 == word_value.trim().compareToIgnoreCase(word_value_old))
-            return;
-        
-        var l = word_ListView;
-        if (l.selectedItem != "" and l.selectedItem != null)
-            word_Text.text = (l.selectedItem).toString();
-
-        updateWordList()
-
-        //System.out.println("e.code={e.code}, e.char={e.char}, word_value={word_value}, word_value.trim()={word_value.trim()}");
-        //System.out.print("page_array_string: ");
-        //for (p in page_array_string) {
-        //    System.out.print("{p}, ");
-        //}
-    }
-}
 //word_value = page_array[0].getPageTitle();
 //var input_word : String = page_array[0].getPageTitle();
 //var input_word bind word_Text.text;
-
-
-// todo to separate file 'lang_source.fx'
-
-/** Whether list only articles which have these language codes */
-var lang_source_CheckBox_value: Boolean = false;
-
-/** Whether list only articles (in native language) wich have translations
- * into these language codes */
-var lang_dest_CheckBox_value: Boolean = false;
-
-var lang_source_CheckBox: CheckBox = CheckBox {
-        text: "Source language"
-
-        onMouseReleased: function(e:MouseEvent) {
-
-                if (lang_source_CheckBox_value != lang_source_CheckBox.selected) {
-                    lang_source_CheckBox_value  = lang_source_CheckBox.selected;
-
-                    if(not lang_source_CheckBox.selected) {
-                        source_lang = null; // without filer, all languages
-                        updateWordList();
-                    } else {
-                        //System.out.println("CheckBox 1. lang_source_Text={lang_source_Text.rawText}, source_lang.size={source_lang.size()}");
-
-                        // if list of source languages is the same then skip any changes
-                        if(TLang.isEquals(source_lang, lang_source_Text.rawText))
-                            return;
-
-                        source_lang = TLang.parseLangCode(lang_source_Text.rawText);
-                        //System.out.println("CheckBox 2. OK. It's changed. source_lang.size={source_lang.size()}");
-
-                        updateWordList();
-                    }
-                }
-            }
-      }
-      
-var lang_dest_CheckBox: CheckBox = CheckBox {
-        text: "Translation language"
-
-        onMouseReleased: function(e:MouseEvent) {
-
-                if (lang_dest_CheckBox_value != lang_dest_CheckBox.selected) {
-                    lang_dest_CheckBox_value  = lang_dest_CheckBox.selected;
-
-                    if(not lang_dest_CheckBox.selected) {
-                        dest_lang = null; // without filer, all languages
-                        updateWordList();
-                        lang_source_CheckBox.disable = false;
-                    } else {
-                        lang_source_CheckBox.disable = true;
-                        //System.out.println("CheckBox 1. lang_dest_Text={lang_dest_Text.rawText}, source_lang.size={source_lang.size()}");
-
-                        // if list of dest languages is the same then skip any changes
-                        if(TLang.isEquals(dest_lang, lang_dest_Text.rawText))
-                            return;
-
-                        dest_lang = TLang.parseLangCode(lang_dest_Text.rawText);
-                        //System.out.println("CheckBox 2. OK. It's changed. dest_lang.size={source_lang.size()}");
-
-                        updateWordList();
-                    }
-                }
-            }
-      }
-
-var lang_source_Text: TextBox = TextBox {
-    disable: bind not lang_source_CheckBox_value
-    blocksMouse: true
-    columns: 12
-    selectOnFocus: true
-    text: "ru en de fr os uk"
-   
-    onKeyTyped: function(e:KeyEvent){
-
-        //System.out.println("TextBox 1. lang_source_Text={lang_source_Text.rawText}, source_lang.size={source_lang.size()}");
-
-        // if list of source languages is the same then skip any changes
-        if(TLang.isEquals(source_lang, lang_source_Text.rawText))
-            return;
-
-        source_lang = TLang.parseLangCode(lang_source_Text.rawText);
-        //System.out.println("TextBox 2. OK. It's changed. source_lang.size={source_lang.size()}");
-
-        updateWordList();
-
-       /* {
-//        System.out.println("updateWordList(), word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}, lang_source_value={lang_source_value}");
-
-        page_array = TPage.getByPrefix(wikt_parsed_conn, word_value.trim(),
-                            n_words_list, b_skip_redirects,
-                            source_lang,  meaning_CheckBox_value,
-                                                sem_rel_CheckBox_value);
-        page_array_string = copyWordsToStringArray();
-        word_value_old = word_value.trim();
-        }
-*/
-        //System.out.println("e.code={e.code}, e.char={e.char}, word_value={lang_source_value}, word_value.trim()={lang_source_value.trim()}");
-        //System.out.print("page_array_string: ");
-        //for (p in page_array_string) {
-        //    System.out.print("{p}, ");
-        //}
-    }
-}
-
-var lang_dest_Text: TextBox = TextBox {
-    disable: bind not lang_dest_CheckBox_value
-    blocksMouse: true
-    columns: 12
-    selectOnFocus: true
-    text: "en de fr os uk"
-
-    onKeyTyped: function(e:KeyEvent){
-
-        //System.out.println("TextBox 1. lang_dest_Text={lang_dest_Text.rawText}, dest_lang.size={dest_lang.size()}");
-
-        // if list of dest languages is the same then skip any changes
-        if(TLang.isEquals(dest_lang, lang_dest_Text.rawText))
-            return;
-
-        dest_lang = TLang.parseLangCode(lang_dest_Text.rawText);
-        //System.out.println("TextBox 2. OK. It's changed. dest_lang.size={dest_lang.size()}");
-
-        updateWordList();
-    }
-}
-
-var lang_source_HBox: HBox = HBox {
-    content: [
-            lang_source_CheckBox, lang_source_Text
-    ]
-    spacing: 10
-};
-
-var lang_dest_HBox: HBox = HBox {
-    content: [
-            lang_dest_CheckBox, lang_dest_Text
-    ]
-    spacing: 10
-};
-// --------- eo separate file
-
-
-
-
-
-var meaning_CheckBox: CheckBox = CheckBox {
-                text: "Meaning"
-
-                onMouseReleased: function(e:MouseEvent) { 
-
-                    if (meaning_CheckBox_value != meaning_CheckBox.selected) {
-                        meaning_CheckBox_value  = meaning_CheckBox.selected;
-                        
-                        updateWordList();
-                    }
-                }
-          }
-
-var sem_rel_CheckBox: CheckBox = CheckBox {
-                text: "Semantic Relation"
-
-                onMouseReleased: function(e:MouseEvent) {
-
-                    if (sem_rel_CheckBox_value != sem_rel_CheckBox.selected) {
-                        sem_rel_CheckBox_value  = sem_rel_CheckBox.selected;
-
-                        updateWordList();
-                    }
-                }
-          }
 
 var h_filter_MRT: HBox = HBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
     // text: "CheckBox:"
     content: [
-            meaning_CheckBox, sem_rel_CheckBox,
+            filter_mean_sem_transl.meaning_CheckBox,
+            filter_mean_sem_transl.sem_rel_CheckBox,
 
         //var wc = WC {}
         //wc.getDataByWord(wikt_parsed_conn, word_value.trim(), page_array);
@@ -530,7 +190,7 @@ var wiki_page_Label: Label = Label {
 var outputPanel_VBox1: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
-    content: [word_Text, word_ListView]
+    content: [query_text_string.word_Text, word_list.word_ListView]
     spacing: 10
 };
 
@@ -538,9 +198,9 @@ var result_VBox2: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
     content: [  // wiki_page_Label,
-                lang_source_HBox,
+                lang_choice.lang_source_HBox,
                 h_filter_MRT,
-                lang_dest_HBox
+                lang_choice.lang_dest_HBox
              ] //, wc.card]
     spacing: 10
 };
