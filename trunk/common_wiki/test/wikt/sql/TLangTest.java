@@ -98,6 +98,34 @@ public class TLangTest {
         assertNotNull(tlang);
         assertEquals(tlang.getID(), os_id);
     }
+
+    @Test
+    public void testUpdate() {
+        System.out.println("update");
+
+        int n_foreign_POS_old,  n_translations_old;
+        int n_foreign_POS,      n_translations;
+        
+        TLang tlang = TLang.get(ruwikt_parsed_conn, LanguageType.os);
+        assertNotNull(tlang);
+
+        // save old values
+        n_foreign_POS_old = tlang.getNumberPOS();
+        n_translations_old= tlang.getNumberTranslations();
+
+        TLang.update(ruwikt_parsed_conn, LanguageType.os, 111, 333);
+        
+        tlang = TLang.get(ruwikt_parsed_conn, LanguageType.os);
+        assertNotNull(tlang);
+
+        n_foreign_POS = tlang.getNumberPOS();
+        n_translations= tlang.getNumberTranslations();
+        assertEquals(111, n_foreign_POS);
+        assertEquals(333, n_translations);
+
+        // restore old values
+        TLang.update(ruwikt_parsed_conn, LanguageType.os, n_foreign_POS, n_translations);
+    }
     
     /* This test should go after testInsert(), else you will got a mess in the table 'lang'. */
     @Test

@@ -9,7 +9,6 @@ package wikt.sql;
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
 import wikipedia.language.Encodings;
-import wikipedia.language.LanguageType;
 
 //import wikt.api.WTMeaning;
 //import wikt.word.*;

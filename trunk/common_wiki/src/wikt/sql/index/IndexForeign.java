@@ -157,7 +157,7 @@ public class IndexForeign {
      * @param native_page_title the corresponded page.page_title of the
      *              Wiktionary article in native language (it could be null)
      * @param native_lang       native language in the Wiktionary,
-     *                          e.g. Russian language in Russian Wiktionary,
+     *                          e.g. Russian language in Russian Wiktionary
      * @param foreign_lang      foreign language XX
      *
      */
@@ -240,6 +240,75 @@ public class IndexForeign {
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexForeign.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return size;
+    }
+
+    /** Counts number of foreign parts of speech (POS) in the table
+     * 'index_foreign' (index_XX).
+     * 
+     * @param  foreign_lang language code (XX)
+     */
+    public static int countNumberOfForeignPOS (Connect conn, 
+                                    LanguageType foreign_lang)
+    {
+        return countNativePageTitleIsNull(conn, foreign_lang, true);
+    }
+
+    /** Counts number of translations in the table 'index_foreign' (index_XX).
+     *
+     * @param  foreign_lang language code (XX)
+     */
+    public static int countTranslations (Connect conn,
+                                    LanguageType foreign_lang)
+    {
+        return countNativePageTitleIsNull(conn, foreign_lang, false);
+    }
+
+    /** Counts number of rows from the table 'index_foreign' (index_XX)
+     * with a pair (foreign_word, native_page_title).<br><br>
+     *
+     * SELECT COUNT(*) FROM index_en WHERE native_page_title is NULL;
+     * or
+     * SELECT COUNT(*) FROM index_en WHERE native_page_title is not NULL;
+     *
+     * @param  native_page_title    title in native language of Wiktionary
+     *                               article, it could be NULL
+     * @param is_null defines "is NULL" or "is not NULL" SQL parameter 'native_page_title'
+     */
+    private static int countNativePageTitleIsNull (Connect conn, LanguageType foreign_lang,
+                                        boolean is_null)
+    {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+
+        int size = 0;
+        try {
+            s = conn.conn.createStatement ();
+
+            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+
+            str_sql.append("SELECT COUNT(*) AS size from "+table_name+" WHERE native_page_title is ");
+
+            if(is_null) {
+                // SELECT COUNT(*) FROM index_en WHERE native_page_title is NULL;
+                str_sql.append("NULL");
+            } else {
+                // SELECT COUNT(*) FROM index_en WHERE native_page_title is not NULL;
+                str_sql.append("not NULL");
+            }
+
+            rs = s.executeQuery (str_sql.toString());
+            if (rs.next ())
+            {
+                size = rs.getInt("size");
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (IndexForeign.countNativePageTitleIsNull()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -432,14 +501,15 @@ public class IndexForeign {
                 if(lang_code.toStringASCII().equalsIgnoreCase(s_native_lang))
                     continue;
 
-                String table_name = "index_" + lang_code.toStringASCII();
+                //String table_name = "index_" + lang_code.toStringASCII();
+                String table_name = "`index_" + lang_code.toStringASCII() + "`";
                 
                 str_sql.setLength(0);
-                str_sql.append("DROP TABLE IF EXISTS `"+ table_name +"`");
+                str_sql.append("DROP TABLE IF EXISTS "+ table_name);
                 s.execute(str_sql.toString());
                 
                 str_sql.setLength(0);
-                str_sql.append("CREATE TABLE IF NOT EXISTS `"+ table_name +"` (" +
+                str_sql.append("CREATE TABLE IF NOT EXISTS "+ table_name +" (" +
                     "`id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT," +
                     "`foreign_word` VARCHAR(255) BINARY NOT NULL," +
                     "`foreign_has_definition` TINYINT(1) NOT NULL," +

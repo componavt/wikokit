@@ -9,6 +9,7 @@ package wikt.parser;
 import wikipedia.language.LanguageType;
 import wikipedia.language.Encodings;
 import wikipedia.sql.*;
+import wikt.sql.TLang;
 
 import java.sql.*;
 
@@ -137,7 +138,7 @@ public class PageTableAll {
                 WiktParser.parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
 
 //if (n_cur >= 2)
-  //break;
+//  break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());
@@ -145,6 +146,9 @@ public class PageTableAll {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+
+        // post-processing
+        TLang.calcIndexStatistics(wikt_parsed_conn, native_lang);
         
         long  t_end;
         t_end  = System.currentTimeMillis();
