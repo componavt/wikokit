@@ -10,6 +10,7 @@ package wikt.sql.index;
 import wikt.sql.*;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
+import wikipedia.language.LanguageType;
 
 import java.sql.*;
 
@@ -55,6 +56,36 @@ public class IndexNative {
     /** Returns true, if this Wiktionary page describes any semantic relation. */
     public boolean hasRelation() {
         return has_relation;
+    }
+
+    /** Counts number of parts of speech in the table 'index_native'
+     * (words in native language) with non-empty definitions. <br><br>
+     *
+     * SELECT COUNT(*) AS size from index_native;
+     */
+    public static int countNumberPOSWithDefinition (Connect conn)
+    {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+
+        int size = 0;
+        try {
+            s = conn.conn.createStatement ();
+            str_sql.append("SELECT COUNT(*) AS size from index_native");
+            
+            rs = s.executeQuery (str_sql.toString());
+            if (rs.next ())
+            {
+                size = rs.getInt("size");
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (IndexNative.countNumberPOSWithDefinition()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return size;
     }
 
 

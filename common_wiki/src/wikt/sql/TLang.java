@@ -12,6 +12,9 @@ import wikipedia.util.StringUtil;
 import wikipedia.sql.Connect;
 import wikipedia.sql.UtilSQL;
 import wikipedia.sql.Statistics;
+import wikt.sql.index.IndexForeign;
+import wikt.sql.index.IndexNative;
+
 import java.sql.*;
 
 import java.util.Map;
@@ -30,12 +33,15 @@ public class TLang {
     private LanguageType lang;
 
     /** Number of foreign parts of speech (POS) in the table index_XX,
+     * which have its own articles in Wiktionary,
      * where XX is a language code. */
     private int n_foreign_POS;
+    // SELECT COUNT(*) FROM index_en WHERE native_page_title is NULL;
 
     /** Number of translation pairs in the table index_XX,
      * where XX is a language code. */
     private int n_translations;
+    // SELECT COUNT(*) FROM index_en WHERE native_page_title is not NULL;
     
     /** Map from id to language. It is created from data in the table `lang`,
      * which is created from data in LanguageType.java.*/
@@ -66,14 +72,14 @@ public class TLang {
     /** Gets number of parts of speech (POS) in this language. <br><br>
      * SELECT COUNT(*) FROM index_en WHERE native_page_title is NULL;
      */
-    public int countPOS() {
+    public int getNumberPOS() {
         return n_foreign_POS;
     }
 
     /** Gets number of translation into this language. <br><br>
      * SELECT COUNT(*) FROM index_en WHERE native_page_title is not NULL;
      */
-    public int countTranslations() {
+    public int getNumberTranslations() {
         return n_translations;
     }
 
@@ -174,7 +180,7 @@ public class TLang {
     /** Read all records from the table 'lang',
      * fills the internal map from a table ID to a language.
      * 
-     * REM: during a creation of Wikrtionary parsed database
+     * REM: during a creation of Wiktionary parsed database
      * the functions recreateTable() should be called (before this function).
      */
     public static void createFastMaps(Connect connect) {
@@ -283,6 +289,43 @@ public class TLang {
             // insert (connect, lang.getCode(), connect.enc.EncodeFromJava(lang.getName()));
         }
     }
+
+    /** Calculates (1) number of foreign parts of speech (POS) and translation pairs
+     * in the table index_XX, stores statistics into fields:
+     * (1) n_foreign_POS, (2) n_translations for each language (except native). <br><br>
+     *
+     * For native language calculates only  (1) n_foreign_POS by data from
+     * the table 'index_native'. (In really it's a number of native POS.)
+     *
+     * REM: this func should be called after the a creation of Wiktionary
+     * parsed database, and the tables should be filled with data.
+     *
+     * @param native_lang       native language in the Wiktionary,
+     *                          e.g. Russian language in Russian Wiktionary
+     */
+    public static void calcIndexStatistics(Connect connect,
+                            LanguageType native_lang) {
+
+        System.out.println("Fill table `lang` by statistics from index_XX tables...");
+
+        // foreign languages statistics
+        for(LanguageType lt : lang2id.keySet()) {
+            if(native_lang != lt) {
+
+                int n_foreign_POS = IndexForeign.countNumberOfForeignPOS(connect, lt);
+                int n_translations = IndexForeign.countTranslations(connect, lt);
+
+                update(connect, lt, n_foreign_POS, n_translations);
+            }
+        }
+
+        // For native language calculates only  (1) n_foreign_POS by data from
+        // the table 'index_native'. (In really it's a number of native POS.)
+
+        int n_native_POS = IndexNative.countNumberPOSWithDefinition(connect);
+        update(connect, native_lang, n_native_POS, 0);
+    }
+
     
     /** Inserts record into the table 'lang'.
      *
@@ -317,6 +360,36 @@ public class TLang {
             System.err.println("SQLException (wikt_parsed TLang.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+    }
+
+    /** Updates values (n_foreign_POS, n_translations) in the table 'lang'. <br><br>
+     *
+     * UPDATE lang SET n_foreign_POS=11, n_translations=13 WHERE code="en";
+     *
+     * @param lang  language, the corresponded record in the table to be updated
+     */
+    public static void update (Connect connect,LanguageType lang,
+                                int n_foreign_POS,int n_translations) {
+        Statement   s = null;
+        StringBuffer str_sql = new StringBuffer();
+        
+        try
+        {
+            s = connect.conn.createStatement ();
+            // UPDATE lang SET n_foreign_POS=11, n_translations=13 WHERE code="en"
+            str_sql.append("UPDATE lang SET n_foreign_POS=");
+            str_sql.append(n_foreign_POS);
+            str_sql.append(", n_translations=");
+            str_sql.append(n_translations);
+            str_sql.append(" WHERE code=\"");
+            str_sql.append(lang.getCode());
+            str_sql.append("\"");
+            s.executeUpdate (str_sql.toString());
+        }catch(SQLException ex) {
+            System.err.println("SQLException (TLang.update()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
