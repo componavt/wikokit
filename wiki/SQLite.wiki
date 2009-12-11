@@ -32,11 +32,10 @@ Dump data of the the Wiktionary parsed database:
   * `mysqldump -u root -p --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > ruwikt20090707_parsed_data.sql`
 
 Vim regular expressions in order to change data of INSERT commands into SQLite format:
-{{{
-%s/\n\?.*\LOCK.*//g             // remove two type of lines 
-                                // UNLOCK TABLES;
-                                // LOCK TABLES "page" WRITE;
-%s/\\'/''/g                 // replace \' by ''
+{{{                             // remove two types of lines:
+%s/UNLOCK TABLES;\n//g          // UNLOCK TABLES;
+%s/LOCK TABLES \".\+\n//g       // LOCK TABLES "page" WRITE;
+%s/\\'/''/g                     // replace \' by ''
 }}}
 
 == Data and tables merging ==
