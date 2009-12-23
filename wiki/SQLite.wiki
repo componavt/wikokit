@@ -13,10 +13,14 @@ The wiwordik application will be distributed with SQLite file.
 = Conversion =
 == Tables' structure preparations ==
 
-Prepare only once the SQLite file with table structures of the the Wiktionary parsed database:
-  * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > wikt_parsed_structure.sql`
+Prepare only once the SQLite file with table structures of the the Wiktionary parsed database (automatic mode):
+  * `cd ./wiwordik/mysql2sqlite`
+  * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > wikt_parsed_structure_source.sql`
+  * `mysql2sqlite.bat`
 
-Vim regular expressions:
+The result file with SQLite tables' structure is `wikt_parsed_structure.sql`.
+
+Vim regular expressions (manual mode):
 {{{
 %s/COMMENT.*/,/g    // remove COMMENT
 %s/unsigned\s*//g   // remove "unsigned"
