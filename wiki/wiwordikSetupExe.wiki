@@ -1,7 +1,7 @@
 #summary How to compile wiwordik-setup-X.XX.jar and .exe
 #labels Phase-Implementation,wiwordik,installation,IzPack
 
-= Compilation by IzPack =
+=Compilation by IzPack=
 == Introduction ==
 
 [http://en.wikipedia.org/wiki/IzPack IzPack] is an open source software installer generator that targets the Java platform.
