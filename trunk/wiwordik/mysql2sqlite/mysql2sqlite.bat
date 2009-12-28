@@ -1,0 +1,1 @@
+perl mysql2sqlite.pl wikt_parsed_structure_source.sql wikt_parsed_structure.sql

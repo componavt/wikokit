@@ -41,17 +41,6 @@ public class LangChoice {
     var word_list : WordList;
     var query_text_string : QueryTextString;
 
-    /** Set parameters of the class.
-     * @param _word_list    list of words in the dictionary (ListView)
-     * @param _query_text_string field with a user search text query
-     */
-    public function initialize(_word_list          : WordList,
-                                _query_text_string  : QueryTextString,
-                                ) {
-        word_list       = _word_list;
-        query_text_string = _query_text_string;
-    }
-
     /** Gets language codes for words filtering, e.g. "ru en fr". */
     public function getSourceLang() : TLang[] {
         return source_lang;
@@ -109,7 +98,7 @@ public class LangChoice {
             }
       }
 
-var lang_dest_CheckBox: CheckBox = CheckBox {
+    var lang_dest_CheckBox: CheckBox = CheckBox {
         text: "Translation language"
 
         onMouseReleased: function(e:MouseEvent) {
@@ -212,5 +201,18 @@ var lang_dest_CheckBox: CheckBox = CheckBox {
         ]
         spacing: 10
     };
+
+    /** Set parameters of the class.
+     * @param _word_list    list of words in the dictionary (ListView)
+     * @param _query_text_string field with a user search text query
+     */
+    public function initialize(_word_list          : WordList,
+                                _query_text_string  : QueryTextString,
+                                source_lang_codes   : String
+                                ) {
+        word_list       = _word_list;
+        query_text_string = _query_text_string;
+        lang_source_Text.text = source_lang_codes;
+    }
 
 }
