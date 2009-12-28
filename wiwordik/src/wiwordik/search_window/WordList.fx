@@ -46,7 +46,7 @@ public class WordList {
     /** Page titles from 'index_foreign' */
     var foreign_array_string: String[];
 
-    /** Foreign ords extracted by several letters (prefix). */
+    /** Foreign words extracted by several letters (prefix). */
     var index_foreign : IndexForeign[]; // //var foreign_word_to_index : Map<String, IndexForeign>;
 
     var page_listItems: SwingListItem[] = SwingListItem{};
@@ -102,7 +102,7 @@ public class WordList {
         //items: bind for(_tpage in page_array) { _tpage.getPageTitle() }
         items: bind for(_w in word_list_lines) { _w }
 
-        layoutInfo: LayoutInfo { width: 150 }
+        layoutInfo: LayoutInfo { width: 222 }
 
         onKeyPressed: function (e: KeyEvent) {
 
@@ -192,6 +192,7 @@ public class WordList {
     public function openWordCard() {
         var wc = WC {}
         var l = word_ListView;
+        //println("(WordList.openWordCard()): index_foreign.length={index_foreign.size()}, l.selectedIndex={l.selectedIndex} ");
 
         if(not isActiveIndexForeign()){
             // get data for "page_array[l.selectedIndex]"
@@ -205,7 +206,9 @@ public class WordList {
             // if index_foreign has .native_page_title != null
             // then take it
             // else open .foreign_word
-                
+
+            //println(" index_foreign[0].native_page={index_foreign[0].getPageArray()}");
+
             def i : IndexForeign = index_foreign [ l.selectedIndex ];
             def native_page : TPage = i.getNativePage();
             if(null != native_page) {
@@ -246,6 +249,7 @@ public class WordList {
     {
         var result : String[];
         for (i in index) {
+            //println(" ->: {i.getConcatForeignAndNativeWords(" -> ")}");
             insert i.getConcatForeignAndNativeWords(" -> ") into result;
         }
 

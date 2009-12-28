@@ -7,6 +7,7 @@
 package wiwordik;
 
 import wiwordik.search_window.*;
+import wiwordik.util.TipsTeapot;
 
 import java.lang.*;
 
@@ -42,10 +43,10 @@ var native_lang : LanguageType;
 function init() {
 
     // MySQL
-    wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+    //wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
     // SQLite                                   //Connect.testSQLite();
-    //wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
+    wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
 
     native_lang = LanguageType.ru;
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
@@ -79,7 +80,11 @@ var b_skip_redirects : Boolean = false;
 /** Number of words visible in the list */
 def n_words_list : Integer = 21;
 
-def word0: String = ""; //"*с?рё*";
+//def tips = new TipsTeapot();
+//tips.generateRandomTip();
+def tip : TipsTeapot = TipsTeapot.generateRandomTip();
+
+def word0: String = tip.getQuery(); //"*с?рё*";
 
 var lang_choice = LangChoice{};
 
@@ -96,7 +101,7 @@ def query_text_string = QueryTextString {
 
 query_text_string.initialize(word_list, lang_choice);
 
-lang_choice.initialize(word_list, query_text_string);
+lang_choice.initialize(word_list, query_text_string, tip.getSourceLangCodes());
 
 word_list.initialize(   wikt_parsed_conn,
                         query_text_string, lang_choice, filter_mean_sem_transl,

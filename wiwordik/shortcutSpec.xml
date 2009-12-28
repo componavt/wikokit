@@ -3,7 +3,7 @@
 
     <!--programGroup defaultName="wiwordik ${product.version}" location="applications"/-->
     <!--programGroup defaultName="wiwordik@build.number@" location="applications"/-->
-    <programGroup defaultName="wiwordik 0.01" location="applications"/>
+    <programGroup defaultName="wiwordik 0.03" location="applications"/>
       <shortcut
          name="wiwordik"
          programGroup="yes"
