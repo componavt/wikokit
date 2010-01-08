@@ -244,6 +244,8 @@ public class TPage {
     }
 
     /** Selects row from the table 'page' by the page_title.
+     * (1) Without conversion into the database encoding for SQLite.
+     * (2) With conversion for MySQL.
      *
      *  SELECT id,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title="apple";
      *
@@ -252,18 +254,35 @@ public class TPage {
      */
     public static TPage get (Connect connect,String page_title) {
 
+        boolean b_page_title_safe_convertion = connect.isMySQL();
+        return get(connect, page_title, b_page_title_safe_convertion);
+    }
+
+    /** Selects row from the table 'page' by the page_title.
+     *
+     *  SELECT id,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title="apple";
+     *
+     * @param  page_title  title of Wiktionary article
+     * @return null if page_title is absent
+     */
+    private static TPage get (Connect connect,String page_title,
+                              boolean b_page_title_safe_convertion) {
+                              
         Statement   s = null;
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         TPage       tp = null;
-        
+
         try {
             s = connect.conn.createStatement ();
-
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
-                                
             str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title=\"");
-            str_sql.append(safe_title);
+
+            if( b_page_title_safe_convertion ) {
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
+                str_sql.append(safe_title);
+            } else {
+                str_sql.append(page_title);
+            }
             str_sql.append("\"");
 
             rs = s.executeQuery (str_sql.toString());
@@ -274,7 +293,7 @@ public class TPage {
                 int wiki_link_count = rs.getInt("wiki_link_count");
                 //boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
                 boolean is_in_wiktionary = 0 != rs.getInt("is_in_wiktionary");
-                
+
                 boolean is_redirect = 0 != rs.getInt("is_redirect");
                 String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
 

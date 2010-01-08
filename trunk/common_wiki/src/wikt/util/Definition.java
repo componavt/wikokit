@@ -21,7 +21,7 @@ public class Definition {
     
     /** Gets position after /^\s+#\s+/ */
     private final static Pattern ptrn_definition_number_sign = Pattern.compile(
-            "\\s*#\\s*");           // vim: ^\s*#\s*
+            "\\A\\s*#\\s*");           // vim: ^\s*#\s*
 
     /* Strip number sign '#' and spaces (trim). */
     public static String stripNumberSign (String page_title, String text) {

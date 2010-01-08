@@ -21,12 +21,16 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
+        "адджындзинад",
+        "Свирь",
+        "Aare",
+        "ridiculous",
+        "picogray",
+        "бор",
         "герб",     // &#160; in definition
         "губить",   // &#160; in semantic relations (synonym)
 
         "good morning", "good_morning",
-        "молдаванка", "бендерчанка", "будуаръ",
-
         "навлечь", // Warning in WTranslationRu.parse(): The Russian word 'навлечь' has section === Перевод === but there is no any translation box "{{перев-блок|".
 
         "Aleksandrio", // todo - skipped (non explicit) section "Meaning"
@@ -39,7 +43,6 @@ public class PageTableAll {
         "Abessinia", "Arabian", "Asianus", "Avernus", "Guatemala", "baba", // unknown language code 'null'
         "a", // -lang-
         "FDR", // abbrev
-        "бор",
         "барак",
         "мзда",
         "колокольчик", "car", "яблоко", "самолёт", "Flugzeug",  "airplane", // used in unit tests
@@ -137,8 +140,8 @@ public class PageTableAll {
 
                 WiktParser.parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
 
-//if (n_cur >= 2)
-//  break;
+if (n_cur >= 2)
+  break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());

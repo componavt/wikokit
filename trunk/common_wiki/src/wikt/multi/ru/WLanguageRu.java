@@ -37,16 +37,29 @@ public class WLanguageRu {
     // zh-tw        5
     // ain          3
     // en           2
-    
+
+    private final static Pattern ptrn_add = Pattern.compile(
+            "\\|add=(.*?)(?:\\Z|\\|)");
+          //"\\|add=(.*?)");
+              
+
     /** start of the language block, e.g. {{-ru-}}, {{-en-}}, {{-de-}}, etc. */
     private final static Pattern ptrn_lang = Pattern.compile(
             //"\\{\\{-([-_a-zA-Z]{2,9})-\\}\\}|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=\\}\\})");
             //"\\{\\{-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=\\}\\})");
-              "\\{\\{-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=\\}\\})");
-                // {{-en-}}
-                // {{заголовок|ka|add=}}
-                // {{заголовок|ka}}
-                // {{-de-|schwalbe}}
+            //"\\{\\{-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=\\}\\})");
+              "(\\{\\{)-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})|(\\Q{{заголовок|\\E)(.*?)\\}\\}");
+           //  (\{\{)-([-_a-zA-Z]{2,9})-(?:\}\}|\|.*?\}\})|(\Q{{заголовок|\E)(.*?)\}\}
+                // Yes, this is language delimiter:
+                // {{-en-}}                 // group1={{            group2=en
+                // {{-de-|schwalbe}}        // group1={{            group2=de
+                // {{заголовок|ka|add=}}    // group1={{заголовок|  group2=ka|add=
+                // {{заголовок|ka}}         // group1={{заголовок|  group2=ka
+                //
+                // {{заголовок|de|add=|aare}} // group1={{заголовок|  group2=de|add=|aare
+                //
+                // No, this is not a laguage, but a POS delimiter:
+                // {{заголовок|sq|add=I}}   // group1={{заголовок|  group2=sq|add=I
                 //
                 // old:
                 // vim: {{-\([-_a-zA-Z]\{2,9\}\)-[|}][^}]*}}\?\|{{заголовок|\([-_a-zA-Z]\{2,9\}\)[|}][^}]*}}\?
@@ -64,19 +77,53 @@ public class WLanguageRu {
     public static LanguageType getLanguageType(Matcher m,String page_title) {
 
         LanguageType lang_type = null;
+        String lang_code = "";
 
-        String lang_code = m.group(1);
-        if((null == lang_code || lang_code.length() < 2) && 2 == m.groupCount()) {
-            lang_code = m.group(2);
+        String group1 = m.group(1);
+        String group2 = m.group(2);
+        String group3 = m.group(3);
+        String group4 = m.group(4);
+
+        if(null == group1 && null == group3)
+            return null;
+
+        if(null != group1 && group1.equalsIgnoreCase("{{"))
+            lang_code = group2;
+        else {
+            if(null != group3 && group3.equalsIgnoreCase("{{заголовок|")) {
+
+                int pipe_index = group4.indexOf('|');
+                if(-1 == pipe_index) {
+                    lang_code = group4;                 // {{заголовок|ka}}
+                } else {
+
+                    String text_till_first_pipe = group4.substring(0, pipe_index);
+
+                    if(-1 == group4.indexOf("add="))    // {{заголовок|de|aare}} exists?
+                        lang_code = text_till_first_pipe;
+                    else {
+                        Matcher m_add = ptrn_add.matcher(group4.toString());
+                        if(m_add.find() && m_add.group(1).length() == 0)
+                            lang_code = text_till_first_pipe;   // {{заголовок|de|add=|aare}}
+                    }                                           // {{заголовок|ka|add=}}
+                }
+            }
         }
-        if (null == lang_code || !LanguageType.has(lang_code)) {  // i.e. skip the whole article if the first lang code is unknown
+
+        if(lang_code.length() == 0)
+            return null;
+
+        //String lang_code = m.group(1);
+        /*if((lang_code.length() < 2) && 2 == m.groupCount()) {
+            lang_code = m.group(2);
+        }*/
+        if (!LanguageType.has(lang_code)) {  // i.e. skip the whole article if the first lang code is unknown
             if (null == lang_code)
                 System.out.println("Warning: null language code for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
             else
                 System.out.println("Warning: unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
-        } else {
+        } else
             lang_type = LanguageType.get(lang_code);
-        }
         
         return lang_type;
     }

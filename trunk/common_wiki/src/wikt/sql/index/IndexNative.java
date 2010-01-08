@@ -122,7 +122,9 @@ public class IndexNative {
             
             index_native = new IndexNative(page, has_relation);
         }catch(SQLException ex) {
-            System.err.println("SQLException (IndexNative.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            String page_title = page.getPageTitle();
+            System.err.println("SQLException (IndexNative.insert()):: page_title="+page_title+
+                    "; sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }

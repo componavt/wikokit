@@ -48,7 +48,7 @@ public class TPageTest {
         Connect conn = ruwikt_parsed_conn;
 
         //page_title = "test_тыблоко";
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_tybloko");
+        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_tybloko_3");
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;
@@ -87,7 +87,7 @@ public class TPageTest {
         String page_title;
         Connect conn = ruwikt_parsed_conn;
         
-        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_tybloko");
+        page_title = ruwikt_parsed_conn.enc.EncodeFromJava("test_tybloko_2");
         int word_count = 7;
         int wiki_link_count = 13;
         boolean is_in_wiktionary = true;

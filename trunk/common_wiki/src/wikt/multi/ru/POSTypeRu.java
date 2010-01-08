@@ -62,6 +62,7 @@ public class POSTypeRu extends POSType {
     // {{СущЖенНеодуш8a
     // Существительное, ...
     public static final POSType noun    = new POSTypeRu("сущ",      POS.noun);  // "существительное",
+    public static final POSType noun_old= new POSTypeRu("падежи",   POS.noun);  // "существительное",
     
     // ===Морфологические и синтаксические свойства===
     // {{парадигма-рус

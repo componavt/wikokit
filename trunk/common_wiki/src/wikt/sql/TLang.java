@@ -85,7 +85,7 @@ public class TLang {
 
     /** Gets language ID from the table 'lang'.<br><br>
      * 
-     * REM: the functions createFastMaps() should be run at least once,
+     * REM: the function 'createFastMaps()' should be run at least once,
      * before this function execution.
      */
     public static int getIDFast(LanguageType lt) {

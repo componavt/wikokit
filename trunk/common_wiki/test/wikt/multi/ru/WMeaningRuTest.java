@@ -404,6 +404,48 @@ public class WMeaningRuTest {
         ww_result[0].getWordLink().equalsIgnoreCase("яблоко");
     }
 
+    // parse 1 meaning without Number sign # and with redirect to another meaning
+    // сервер
+    // ====Значение====
+    // {{техн.|os}} [[#Русский|сервер]]
+    @Test
+    public void testParse_1_meaning_without_Number_sign_with_Redirect() {
+        System.out.println("parse_1_meaning_without_Number_sign_with_Redirect");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "сервер";
+        lang_section    = LanguageType.os; // Ossetic word
+        
+        String _definition1 = "сервер";
+
+        str =   "Before \n" +
+                "{{-os-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "==== Значение ====\n" +
+                "[[#Русский|сервер]]\n" +
+                "\n" + 
+                "====Синонимы====";
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        assertTrue(null != result);
+        assertEquals(1, result.length);
+        assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
+
+        // labels == null
+        ContextLabel[] labels_result = result[0].getLabels();
+        assertEquals(0, labels_result.length);
+
+        // wikiword.size = 1;
+        WikiWord[] ww_result = result[0].getWikiWords();
+        assertEquals(1, ww_result.length);
+        ww_result[0].getWordLink().equalsIgnoreCase("сервер");
+    }
+
     // parse text without meaning
     // ====Значение====
     //

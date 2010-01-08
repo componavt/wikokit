@@ -16,6 +16,7 @@ import java.sql.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import wikipedia.language.LanguageType;
 
 
 /** An operations with the table 'lang_pos' in MySQL wiktionary_parsed database.
@@ -118,6 +119,14 @@ public class TLangPOS {
         ResultSet   rs= null;
         StringBuffer str_sql = new StringBuffer();
         TLangPOS lang_pos = null;
+
+        lang_pos = getUniqueByPagePOSLangEtymology (connect, page, lang, pos, etymology_n);
+        if(null != lang_pos) {
+            System.out.println("Error (TLangPOS.java insert()):: page_title="+page.getPageTitle()+
+                    "; the language header is repeated twice or more!'");
+            return lang_pos;
+        }
+
         try
         {
             s = connect.conn.createStatement ();
@@ -145,7 +154,9 @@ public class TLangPOS {
                 lang_pos = new TLangPOS(rs.getInt("id"), page, lang, pos, etymology_n, lemma);
             
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLangPOS.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            String page_title = page.getPageTitle();
+            System.err.println("SQLException (wikt_parsed TLangPOS.java insert()):: page_title="+page_title+
+                    "; sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -210,6 +221,60 @@ public class TLangPOS {
         return ((TLangPOS[])list_lp.toArray(NULL_TLANGPOS_ARRAY));
     }
 
+    /** Selects one (unique) rows from the table 'lang_pos' by the page ID,
+     * POS ID, language ID, and etymology number.
+     *
+     * SELECT id,lemma FROM lang_pos WHERE page_id=1 AND pos_id=20 AND lang_id=390 AND etymology_n=2;
+     *
+     * @return null if data is absent
+     */
+    public static TLangPOS getUniqueByPagePOSLangEtymology (Connect connect,
+                                TPage page,TLang lang,TPOS pos,int etymology_n)
+    {
+        if(null == page || null == lang || null == pos) {
+            System.err.println("Error (TLangPOS.getUniqueByPagePOSLangEtymology()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
+            return null;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        TLangPOS lang_pos = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            
+            str_sql.append("SELECT id,lemma FROM lang_pos WHERE page_id=");
+            str_sql.append(page.getID());
+            // 3902
+            str_sql.append(" AND pos_id=");
+            str_sql.append(pos.getID());
+
+            str_sql.append(" AND lang_id=");
+            str_sql.append(lang.getID());
+
+            str_sql.append(" AND etymology_n=");
+            str_sql.append(etymology_n);
+
+            rs = s.executeQuery (str_sql.toString());
+            if (rs.next ())
+            {
+                int     id      =                       rs.getInt("id");
+                String lemma    = Encodings.bytesToUTF8(rs.getBytes("lemma"));
+
+                lang_pos = new TLangPOS(id, page, lang, pos, etymology_n, lemma);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TLangPOS.getUniqueByPagePOSLangEtymology()):: page_title="+page.getPageTitle()+
+                    "; sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+
+        return lang_pos;
+    }
+    
     /** Selects rows from the table 'lang_pos' by the page_id,
      * fills (recursively) meanings, relations, translations.
      *
@@ -341,10 +406,10 @@ public class TLangPOS {
      * DELETE FROM lang_pos WHERE page_id=1;
      * @param  id  unique ID in the table `lang_pos`
      */
-    public static boolean intersectionIsNotEmpty (TPage page) {
+    /*public static boolean intersectionIsNotEmpty (TPage page) {
 
         return false;
-    }
+    }*/
 
 
 

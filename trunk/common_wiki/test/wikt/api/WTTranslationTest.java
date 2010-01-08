@@ -103,7 +103,7 @@ public class WTTranslationTest {
         assertTrue(transl_words.length > 0);
         assertTrue(StringUtil.containsIgnoreCase(transl_words, "яблоко"));
 
-        // Russian to Deutch:
+        // Russian to German:
         // "яблоко" -> [[Apfel]] <i>m</i> -s, Äpfel
         word = "Apfel";
         foreign_lang = LanguageType.de;
@@ -134,7 +134,7 @@ public class WTTranslationTest {
         source_lang = LanguageType.ru;
         String word = "самолёт";
 
-        // Russian to Deutch: [[Flugzeug]] {{n}}
+        // Russian to German: [[Flugzeug]] {{n}}
         target_lang = LanguageType.de;
 
         transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
@@ -164,7 +164,7 @@ public class WTTranslationTest {
         source_lang = "ru";
         word = "самолёт";
 
-        // Russian to Deutch: [[Flugzeug]] {{n}}
+        // Russian to German: [[Flugzeug]] {{n}}
         target_lang = "de";
         
         transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
@@ -180,7 +180,7 @@ public class WTTranslationTest {
         assertEquals(3, transl_words.length);
     }
 
-    /** Translates from Foreign (Deutch, English) into Native (Russian) language. */
+    /** Translates from Foreign (German, English) into Native (Russian) language. */
     @Test
     public void testTranslate_fromForeignToNative_getMeaningOfForeignWord_ru() {
         System.out.println("translate_fromForeignToNative_getMeaningOfForeignWord_ru");
@@ -188,10 +188,10 @@ public class WTTranslationTest {
         //String source_lang, target_lang, word;
         String[] transl_words;
         
-        // Russian to Deutch: "самолёт" -> [[Flugzeug]] {{n}}
-        // Deutch to Russian: Flugzeug -> [[самолёт]], [[аэроплан]]
+        // Russian to German: "самолёт" -> [[Flugzeug]] {{n}}
+        // German to Russian: Flugzeug -> [[самолёт]], [[аэроплан]]
         
-        transl_words = WTTranslation.translate(connect, "de", "ru", "Flugzeug"); // from Deutch to Russian
+        transl_words = WTTranslation.translate(connect, "de", "ru", "Flugzeug"); // from German to Russian
         assertTrue(transl_words.length >= 2);
         assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт"));
         // assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт, аэроплан"));
@@ -225,7 +225,7 @@ public class WTTranslationTest {
         source_lang = LanguageType.en;
         String word = "airplane";
 
-        // English to Deutch: 
+        // English to German:
         // airplane -> самолёт -> [[Flugzeug]] {{n}}
         // plane    -> ?? ->
         // aircraft -> ?? ->

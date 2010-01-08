@@ -100,6 +100,23 @@ public class TLangPOSTest {
         assertEquals(0, array_lang_pos.length);
     }
 
+    @Test
+    public void testInsertTwiceLangHeader_and_getUniqueByPagePOSLangEtymology() {
+        System.out.println("insertTwiceLangHeader_and_getUniqueByPagePOSLangEtymology");
+        Connect conn = ruwikt_parsed_conn;
+
+        int etymology_n = 0;
+        String lemma = "";
+
+        TLangPOS lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+        assertTrue(null != lang_pos);
+
+        TLangPOS lang_pos_twice = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
+        assertTrue(null != lang_pos_twice);
+
+        TLangPOS.delete(conn, page);
+    }
+
     @Test   //TLangPOS getByID (Connect connect,int id)
     public void testGetByID() {
         System.out.println("getByID_ru");

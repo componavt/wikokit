@@ -171,6 +171,12 @@ public class IndexForeign {
                                             // since we want skip cases, e.g. :
                                             // word (de) -> word (en)
 
+        if(native_lang == foreign_lang) {
+            System.out.println("Error (IndexForeign.insertIfAbsent()):: native_lang == foreign_lang, It's possible that Wiktionary article about foreign word contains translation section! foreign_word='" +
+                    foreign_word + "'; native_page_title = '" + native_page_title + "'");
+            return;
+        }
+
         if(!IndexForeign.has( conn, foreign_word,
                               native_page_title, foreign_lang))
         {
@@ -396,7 +402,7 @@ public class IndexForeign {
 
                 //System.out.println(" foreign_word=" + foreign_word +
                 //        "; foreign_has_definition=" + foreign_has_definition +
-                //        "; native_page_title=" + native_page_title +
+                        // "; native_page_title=" + native_page_title +
                 //        " (IndexForeign.getByPrefixForeign)");
             }
         } catch(SQLException ex) {

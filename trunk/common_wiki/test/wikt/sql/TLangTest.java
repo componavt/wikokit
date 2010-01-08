@@ -87,13 +87,13 @@ public class TLangTest {
         
         // once upon a time: create Wiktionary parsed db
 //        TLang.recreateTable(ruwikt_parsed_conn);
-
+        
         // once upon a time: use Wiktionary parsed db
         TLang.createFastMaps(ruwikt_parsed_conn);
-
+        
         // and every usual day
         int os_id = TLang.getIDFast(LanguageType.os);
-
+        
         TLang tlang = TLang.get(ruwikt_parsed_conn, LanguageType.os);
         assertNotNull(tlang);
         assertEquals(tlang.getID(), os_id);

@@ -76,7 +76,21 @@ public class WPOSRu {
             "===\\s*Морфологические и синтаксические свойства\\s*===\\s*\\n\\s*(..)");
             //"===\\s*Морфологические и синтаксические свойства\\s*==="); +
             //"\\A===\\s*Морфологические и синтаксические свойства\\s*===\\s*\\n\\s*(..)");
-    
+
+
+    /** Gets true, if str is known header, e.g. "References".
+     */
+    public static boolean isSecondLevelHeaderWord (String str)
+    {
+        if(str.equalsIgnoreCase("Ссылки"))
+            return true;
+            
+        return false;
+    }
+
+
+
+
     /** page_title - word which are described in this article 'text'
      * @param lt .text will be parsed and splitted, 
      *           .lang is not using now, may be in future...
@@ -103,6 +117,9 @@ public class WPOSRu {
         
         Matcher m = ptrn_2nd_level.matcher(lt.text.toString());
         boolean b_next = m.find();
+
+        if(b_next && m.groupCount() > 0 && isSecondLevelHeaderWord(m.group(1)))
+            b_next = false; // it's usual header, e.g. "Links", not a == Verb I ==
         
         if(!b_next) {   // check: "{{заголовок|sq|add=I}}")
             POSText[] pp = splitToPOSWithTitleAddParameter(page_title, lt);

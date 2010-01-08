@@ -70,4 +70,20 @@ public class DefinitionTest {
         assertTrue(expResult.equalsIgnoreCase(result));
     }
 
+    // do not strip number sign in the redirect internal link, e.g.:
+    // [[#Русский|сервер]]
+    @Test
+    public void testDontStripRedirect_ru() {
+        System.out.println("stripNumberSign_ru");
+        String text, expResult, result, page_title;
+
+        page_title = "test_word";
+
+        text      = "[[#Русский|сервер]]";
+        expResult = "[[#Русский|сервер]]";
+
+        result = Definition.stripNumberSign(page_title, text);
+        assertTrue(expResult.equalsIgnoreCase(result));
+    }
+
 }

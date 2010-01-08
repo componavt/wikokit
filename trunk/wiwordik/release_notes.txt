@@ -1,6 +1,18 @@
-wiwordik 0.03 2009-11-??
+wiwordik 0.04 2010-01-??
   Added (from user's point of view):
-    Filter by the preseance of (1) meanings, (2) semantic relations
+    A
+    B
+    
+  Added (from programmer's point of view)
+    Fixed bug: SQL exception is treated carefully now, when the Wiktionary page has the error: two language headers, e.g. == English == and == English == again.
+    Added error message for the case the Wiktionary article about foreign word contains translation section.
+    Fixed bug: now the parsing of "{{заголовок|de|add=|aare}}" is correct when the parameter "add=" is empty. Now Aare is not Russian, but German word :)
+    Modified "Warning message" (The article XXX has translation into unknown language with code: YY.). The warning will appear only if there is any non-empty translation.
+
+
+wiwordik 0.03 2009-12-28
+  Added (from user's point of view):
+    Filter by the presence of (1) meanings, (2) semantic relations
     Correct parsing of phrases (e.g. there is now only one phrase "good morning" instead of two: "good morning" and "good_morning" 
     
   Added (from programmer's point of view)
