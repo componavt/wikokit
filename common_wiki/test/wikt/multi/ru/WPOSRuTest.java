@@ -54,11 +54,10 @@ public class WPOSRuTest {
      */
     @Test
     public void testSplitToPOSSections_add_parameter() {
-        System.out.println("splitToPOSSections_second_level_title_with_internal_brackets");
+        System.out.println("splitToPOSSections_add_parameter");
 
         String str, s1, s2;
         POSText[] result;
-        StringBuffer s;
         LangText lt;
         lt = new LangText(LanguageType.be);
 
@@ -161,6 +160,15 @@ public class WPOSRuTest {
         lt.text = new StringBuffer(str);
         result = WPOSRu.guessPOSWith2ndLevelHeader(page_title, "bar II", lt.text);
         assertEquals(POS.noun, result);
+
+        // one more noun (old version?)
+        page_title = "адджындзинад";
+        lt = new LangText(LanguageType.en);
+        str =   "===Морфологические и синтаксические свойства===\n" +
+                "{{падежи os|nom-sg={{PAGENAME}}}}";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.guessPOSWith2ndLevelHeader(page_title, "", lt.text);
+        assertEquals(POS.noun, result);
      
         // adjective
         page_title = "round";
@@ -238,6 +246,36 @@ public class WPOSRuTest {
         lt.text = new StringBuffer(str);
         result = WPOSRu.guessPOSWith2ndLevelHeader(page_title, "bar", lt.text);
         assertEquals(null, result);
+    }
+
+    // == Ссылки ==
+    @Test
+    public void testSplitToPOSSections_not_a_POS_header() {
+        System.out.println("splitToPOSSections_not_a_POS_header");
+
+        String str, s1, s2;
+        POSText[] result;
+        StringBuffer s;
+        LangText lt;
+        lt = new LangText(LanguageType.en);
+
+        // one POS in {{-os-}} in Russian Wiktionary
+        s1 =    "{{-os-}}\n" +
+                "===Морфологические и синтаксические свойства===\n" +
+                "{{падежи os\n" +
+                "|nom-sg={{PAGENAME}}\n" +
+                "|слоги={{по-слогам|а|.|га́}}\n" +
+                "}}\n";
+        s2 =    "== Ссылки ==\n" +
+                "* Осетинско-русский словарь, 3-е дополненное издание, 1970 год\n" +
+                "\n";
+        str = s1 + s2;
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("ага", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.noun, result[0].getPOSType());
+
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
     }
 
     /**

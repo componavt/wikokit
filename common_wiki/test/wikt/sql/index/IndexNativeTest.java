@@ -61,7 +61,8 @@ public class IndexNativeTest {
         TPage p0 = TPage.insert(conn, page_title, word_count, wiki_link_count,
                                 is_in_wiktionary, redirect_target);
         assertTrue(null != p0);
-  
+
+        // IndexNative i_old = IndexNative.get(conn, page_title);
         IndexNative i = IndexNative.insert(conn, p0, has_relation);
 
         assertTrue(i != null);

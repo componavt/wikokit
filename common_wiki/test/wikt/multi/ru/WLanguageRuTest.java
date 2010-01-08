@@ -42,7 +42,7 @@ public class WLanguageRuTest {
 
     /**
      * Test of splitToLanguageSections method, of class WLanguageRu.
-     * test words: самолёт, stitch, султан бор тафта кит акушер
+     * test words: самолёт, stitch, султан, бор, тафта, кит, акушер
      */
     @Test
     public void testSplitToLanguageSections() {
@@ -117,7 +117,7 @@ public class WLanguageRuTest {
         
         s = new StringBuffer(PageTableBase.getArticleText(connect_ruwikt, "кит"));
         result = WLanguageRu.splitToLanguageSections("кит", s);
-        assertEquals(3, result.length);
+        assertEquals(4, result.length);
         
         // three
         s = new StringBuffer(PageTableBase.getArticleText(connect_ruwikt, "акушер"));
@@ -163,7 +163,7 @@ public class WLanguageRuTest {
         // no, this is not a laguage, but a POS delimiter (next level)
         source_text = "Before {{заголовок|be|add=I}} shah";
         result = WLanguageRu.splitToLanguageSections("shah", new StringBuffer(source_text));
-        assertEquals(1, result.length); // 1, since it's one unknown language
+        assertEquals(0, result.length);
 
         // only one Belarusian language with two POS
         // {{-be-}}
@@ -181,6 +181,25 @@ public class WLanguageRuTest {
         source_text = "{{-ru-}} Ru {{-be-}} skip me {{заголовок|be|add=I}} Belarusian 1 {{заголовок|be|add=II}} second";
         result = WLanguageRu.splitToLanguageSections("shah", new StringBuffer(source_text));
         assertEquals(2, result.length);
+    }
+
+    // {{заголовок|ka|add=}} - yes, this is language delimiter
+    // {{заголовок|be|add=I}}- no, this is not a laguage, but a POS delimiter
+    // {{заголовок|de|add=|aare}} - also language delimiter
+    @Test
+    public void testSplitToLanguageSections_with_special_header_also() {
+        System.out.println("splitToLanguageSections_with_special_header_also");
+        
+        String source_text;
+        LangText[] result;
+
+        // {{заголовок|de|add=|aare}} - also language delimiter
+        // simple two-letter code: German "|de|"
+        source_text = "Before {{заголовок|de|add=|aare}} German";
+        result = WLanguageRu.splitToLanguageSections("test_word_Aare", new StringBuffer(source_text));
+        assertEquals(1, result.length);
+
+        assertEquals(LanguageType.de, result[0].getLanguage());
     }
 
     // {{-de-|schwalbe}}
