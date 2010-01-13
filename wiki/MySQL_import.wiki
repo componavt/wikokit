@@ -9,18 +9,18 @@ At this moment, there is more information about import here: [http://synarcher.s
 
 == Intro ==
 
-The problem: 
+The problem is the {{{"<redirect />"}}} element in the XML file.
+
+The error message is: 
 {{{
 ./xml2sql unexpected element <redirect> ./xml2sql: parsing aborted at line 33 pos 16.
 }}}
-
-The problem is the "<redirect />" element in the XML file.
 
 == Solution ==
 
 Strip of the redirect-tags by using a perl script [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/redirect_in_pages-articles.xml2sql/del_redirect_in_pages-articles_xml.pl `del_redirect_in_pages-articles_xml.pl`] with the following format:
 {{{
-<code>perl del_redirect_in_pages-articles_xml.pl in_file out_file</code>
+perl del_redirect_in_pages-articles_xml.pl in_file out_file
 }}}
 
 = See also ==
