@@ -29,6 +29,13 @@ public class WikiText {
     private final static Pattern ptrn_comma_semicolon = Pattern.compile(
             "[,;]+");
 
+    /** Context label (reserved for future use).
+     *
+     * Comment: is used in Russian Wiktionary.
+     * It is not used in English Wiktionary.
+     */
+    //private int label_id;
+
     public WikiText(String _text, WikiWord[] _wiki_words) {
         text        = _text;
         wiki_words  = _wiki_words;

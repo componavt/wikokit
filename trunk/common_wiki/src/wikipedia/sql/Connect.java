@@ -90,7 +90,21 @@ public class Connect {
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     public final static String RUWIKT_SQLITE = "ruwikt20090707.sqlite";
-    
+
+
+    // English Wiktionary
+    // use: connect_ruwikt.Open(Connect.WP_EN_HOST,Connect.WP_EN_DB,Connect.WP_EN_USER,Connect.WP_EN_PASS);
+    public final static String ENWIKT_HOST   = "localhost";
+    public final static String ENWIKT_USER   = "javawiki";
+    public final static String ENWIKT_PASS   = "";
+    public final static String ENWIKT_DB   = "enwikt20100106?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+
+    // Russian Wiktionary parsed database
+    public final static String ENWIKT_PARSED_DB = "enwikt20100106_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+
+    // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
+    public final static String ENWIKT_SQLITE = "enwikt20100106.sqlite";
+
     
     // IDF (inverse document frequency) database
     public final static String IDF_EN_HOST  = "localhost";

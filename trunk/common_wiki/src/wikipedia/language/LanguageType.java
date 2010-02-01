@@ -30,12 +30,17 @@ public class LanguageType {
     /** Language name, e.g. 'English', 'Русский'. */
     private final String name;
 
-    /** Language name in English (ASCII), e.g. 'English', 'Russian'. */
+    /** Language name in English (ASCII), e.g. 'English', 'Russian'. 
+     * See http://en.wiktionary.org/wiki/Wiktionary:Language_names
+     */
     private final String english_name;
     
     private static Map<String, String>       code2name = new HashMap<String, String>();
     private static Map<String, LanguageType> code2lang = new HashMap<String, LanguageType>();
     
+    /** It is need for English Wiktionary */
+    private static Map<String, LanguageType> english2lang = new HashMap<String, LanguageType>();
+
     private LanguageType(String code,String name,String english_name) {
         this.code = code;
 
@@ -48,6 +53,7 @@ public class LanguageType {
 
         code2name.put(code, name);
         code2lang.put(code, this);
+        english2lang.put(english_name, this);
     }
 
     /** Gets language code. */
@@ -95,6 +101,12 @@ public class LanguageType {
         if(null == lt)
             throw new NullPointerException("Null LanguageType");
         return lt;
+    }
+    
+    /** Gets LanguageType by language name in English */
+    public static LanguageType getByEnglishName (String english)
+    {
+        return english2lang.get(english);
     }
 
     /** Counts number of languages. */
@@ -551,7 +563,7 @@ public class LanguageType {
     public static final LanguageType ang = new LanguageType("ang", "Anglo-Saxon", "Old English");
     public static final LanguageType ar = new LanguageType("ar", "Ш§Щ„Ш№Ш±ШЁЩЉШ©", "Arabic");
     public static final LanguageType arc = new LanguageType("arc", "ЬђЬЄЬЎЬќЬђ", "Aramaic");
-    public static final LanguageType arn = new LanguageType("arn", "Mapudungun", "Mapuche, Mapudungu, Araucanian (Araucano)");
+    public static final LanguageType arn = new LanguageType("arn", "Mapudungun", "Mapuche, Mapudungu, Araucanian (Araucano)");// Арауканский
     public static final LanguageType arz = new LanguageType("arz", "Щ…ШµШ±Щ‰", "Egyptian Spoken Arabic");
     public static final LanguageType as = new LanguageType("as", "а¦…а¦ёа¦®а§Ђа§џа¦ѕ", "Assamese");
     public static final LanguageType ast = new LanguageType("ast", "Asturianu", "Asturian");

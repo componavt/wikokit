@@ -12,7 +12,10 @@ import wikt.util.LangText;
 
 import wikt.constant.POS;
 import wikt.constant.Relation;
+
 import wikt.multi.ru.WPOSRu;
+import wikt.multi.en.WEtymologyEn;
+import wikt.multi.en.WPOSEn;
 
 import java.util.Map;
 
@@ -125,20 +128,24 @@ public class WPOS {
 
 
 
-    /**Splits text to fragments related to different parts of speech (POS). 
+    /** Splits text to fragments related to different parts of speech (POS).
      * @param page_title   word which are described in this article text */
     public static POSText[] splitToPOSSections (
                     LanguageType wikt_lang,
                     String      page_title,
                     LangText    source_langtext)
     {
-        POSText[] lang_sections; // result will be stored to
+        POSText[] pos_sections; // result will be stored to
         
         LanguageType l = wikt_lang;
         
         if(l  == LanguageType.ru) {
-            lang_sections = WPOSRu.splitToPOSSections(page_title, source_langtext);
-        //} else if(l == LanguageType.en) {
+            pos_sections = WPOSRu.splitToPOSSections(page_title, source_langtext);
+        } else if(l == LanguageType.en) {
+
+            LangText[] etymology_sections = WEtymologyEn.splitToEtymologySections(page_title, source_langtext);
+            pos_sections = WPOSEn.splitToPOSSections(page_title, etymology_sections);
+
           //  return WordEn;
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
@@ -151,6 +158,6 @@ public class WPOS {
         }
         
         
-        return lang_sections;
+        return pos_sections;
     }
 }

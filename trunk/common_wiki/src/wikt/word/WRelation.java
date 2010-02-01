@@ -9,6 +9,7 @@ package wikt.word;
 import wikt.util.WikiText;
 import wikt.constant.Relation;
 import wikt.multi.ru.WRelationRu;
+import wikt.multi.en.WRelationEn;
 
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;
@@ -34,17 +35,38 @@ public class WRelation {
     // private int[] phrases_number_which_end_by_semicolon
     // todo
     
-    
+    /** Summary of the definition for which synonyms are being given,
+     * e.g. "flrink with cumplus" or "furp" in text
+     * <PRE>
+     * * (''flrink with cumplus''): [[flrink]], [[pigglehick]]
+     * * (''furp''): [[furp]], [[whoodleplunk]]
+     * </PRE>
+     *
+     * Disadvantage: the summary "flrink with cumplus" is repeated twice
+     *              in table for "flrink" and "pigglehick".
+     *
+     * Comment: is used in English Wiktionary, see http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained#Synonyms
+     * It is not used in Russian Wiktionary (NULL in database).
+     */
+    private String meaning_summary;
+
+
     //private final static WRelation[] NULL_WRELATION_ARRAY = new WRelation[0];
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
 
-    public WRelation(WikiText[] _phrases) {
+    public WRelation(String _meaning_summary, WikiText[] _phrases) {
         phrases = _phrases;
+        meaning_summary = _meaning_summary;
     }
 
     /** Gets array of relations (word or phrases). */
     public WikiText[] get() {
         return phrases;
+    }
+
+    /** Gets a summary of the semantic relation meaning (e.g. title of list of synonyms). */
+    public String getMeaningSummary() {
+        return meaning_summary;
     }
 
     /** Parses text (related to the semantic relations, e.g. synonymy),
@@ -67,13 +89,13 @@ public class WRelation {
 
         LanguageType l = wikt_lang;
 
-        if(l  == LanguageType.ru) {
-
-            // get synonym context labels, get synonyms, etc.
+        // get synonym context labels, get synonyms, etc.
+        if(l == LanguageType.ru) {
             wr = WRelationRu.parse(wikt_lang, page_title, pt);
 
-        //} else if(l == LanguageType.en) {
-          //  return WordEn;
+        } else if(l == LanguageType.en) {
+            wr = WRelationEn.parse(wikt_lang, page_title, pt);
+            
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
 

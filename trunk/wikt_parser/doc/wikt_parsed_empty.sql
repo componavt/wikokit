@@ -183,6 +183,7 @@ CREATE  TABLE IF NOT EXISTS `relation` (
   `meaning_id` INT(10) UNSIGNED NOT NULL ,
   `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
   `relation_type_id` TINYINT UNSIGNED NOT NULL COMMENT 'Synonym, antonym, etc.' ,
+  `meaning_summary` VARCHAR(511) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `meaning_id` (`meaning_id` ASC) )
 ENGINE = InnoDB

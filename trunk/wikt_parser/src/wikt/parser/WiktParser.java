@@ -42,8 +42,6 @@ add last line:
 SET character_set_client = @saved_cs_client;
  
 mysql>
-  
-
     use ruwikt20080620_parsed
 or  use enwikt20080525_parsed
 source ./wikt_parser/doc/wikt_parsed_empty.sql

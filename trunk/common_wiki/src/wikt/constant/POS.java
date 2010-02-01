@@ -101,5 +101,6 @@ public class POS {
     
     // other headers in use
     public static final POS particle        = new POS("particle");
+    public static final POS participle      = new POS("participle");
     
 }

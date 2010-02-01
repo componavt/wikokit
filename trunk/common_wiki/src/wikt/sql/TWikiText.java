@@ -23,7 +23,7 @@ import java.sql.*;
  * text2 = ум, [[интеллект]]
  * text3 = [[ум]], [[интеллект]]
  * Decision: add only text3 to the table, becaus it has max wiki_words=2.
- * ?Automatic recommenations to wikify text1 & text2 in Wiktionary?
+ * ?Automatic recommendations to wikify text1 & text2 in Wiktionary?
  */
 public class TWikiText {
 

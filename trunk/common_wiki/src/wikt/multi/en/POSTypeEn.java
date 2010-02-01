@@ -14,7 +14,7 @@ import java.util.HashMap;
 
 /** English names of parts of speech.
  * 
- * See http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained/POS_headers
+ * @see http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained/POS_headers
  */
 public class POSTypeEn extends POSType {
     
@@ -47,7 +47,11 @@ public class POSTypeEn extends POSType {
     public static boolean has(String code) {
         return name2type.containsKey(code);
     }
-    
+
+    /** Gets part of speech by its abbreviation */
+    public static POS get(String code) {
+        return name2type.get(code);
+    }
     
     // The classical parts of speech are:
     public static final POSType noun            = new POSTypeEn("Noun",         POS.noun);
@@ -87,4 +91,10 @@ public class POSTypeEn extends POSType {
     
     // other headers in use
     public static final POSType particle        = new POSTypeEn("Particle",     POS.particle);  // 	(language) particles, CJKV languages, and some others; see tok, ne.
+    public static final POSType participle      = new POSTypeEn("Participle",   POS.participle);
+
+    // Non-standard, deprecated headers
+    public static final POSType verb_form       = new POSTypeEn("Verb form",    POS.verb);
+    //
+
 }

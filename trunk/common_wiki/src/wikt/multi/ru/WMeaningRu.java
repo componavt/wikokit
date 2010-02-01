@@ -9,7 +9,6 @@ package wikt.multi.ru;
 
 import wikt.constant.ContextLabel;
 import wikt.word.WMeaning;
-import wikt.util.WikiWord;
 import wikt.word.WQuote;
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;

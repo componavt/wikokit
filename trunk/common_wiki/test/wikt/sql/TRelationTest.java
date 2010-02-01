@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 
 public class TRelationTest {
 
-    public Connect   ruwikt_parsed_conn;
+    Connect   conn; // ruwikt_parsed_conn
     
     TPOS pos;
     TLang lang;
@@ -33,7 +33,11 @@ public class TRelationTest {
     TWikiText wiki_text;
     TLangPOS lang_pos;
     TMeaning meaning;
-    String car_text;
+    String car_text, car_meaning_summary;
+
+    Connect   connect_enwikt;
+    
+    String hrunk_text, hrunk_meaning_summary1, hrunk_meaning_summary2;
     
     public TRelationTest() {
     }
@@ -48,10 +52,14 @@ public class TRelationTest {
 
     @Before
     public void setUp() {
-        ruwikt_parsed_conn = new Connect();
-        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
-        
-        Connect conn = ruwikt_parsed_conn;
+        //ruwikt_parsed_conn = new Connect();
+        //ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+
+        connect_enwikt = new Connect();
+        connect_enwikt.Open(Connect.ENWIKT_HOST,Connect.ENWIKT_PARSED_DB,Connect.ENWIKT_USER,Connect.ENWIKT_PASS,LanguageType.ru);
+
+        // conn = ruwikt_parsed_conn;
+        conn = connect_enwikt;
         //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
 
         TLang.recreateTable(conn);    // once upon a time: create Wiktionary parsed db
@@ -140,11 +148,25 @@ public class TRelationTest {
                     "# -\n" +
                     "\n" +
                     "===Родственные слова===\n";
+        car_meaning_summary = null;
+
+        hrunk_text = 
+                "# Definition hrunk 1.\n" +
+                "# Definition hrunk 2.\n" +
+                "\n" +
+                "====Synonyms====\n" +
+                "* (''flrink with cumplus''): [[flrink]], [[pigglehick]]\n" +
+                "* (''furp''): [[furp]], [[whoodleplunk]]";
+
+        hrunk_meaning_summary1 = "flrink with cumplus";
+        hrunk_meaning_summary2 = "furp";
     }
 
     @After
     public void tearDown() {
-        Connect conn = ruwikt_parsed_conn;
+        // Connect conn = ruwikt_parsed_conn;
+        //Connect conn = connect_enwikt;
+        
         TPage.delete    (conn, page_title);
         TLangPOS.delete (conn, page);
         TMeaning.delete (conn, meaning);
@@ -155,13 +177,13 @@ public class TRelationTest {
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
         
-        ruwikt_parsed_conn.Close();
+        conn.Close();
     }
 
     @Test
     public void testStoreToDB() {
         System.out.println("storeToDB_ru");
-        Connect conn = ruwikt_parsed_conn;
+        //Connect conn = ruwikt_parsed_conn;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         String page_title = "car";
@@ -183,17 +205,44 @@ public class TRelationTest {
     }
 
     @Test
-    public void testInsert() {
+    public void testInsert_ru() {
         System.out.println("insert_ang_get_and_delete_ru");
-        Connect conn = ruwikt_parsed_conn;
+        //Connect conn = ruwikt_parsed_conn;
 
-        TRelation relation0 = TRelation.insert(conn, meaning, wiki_text, relation_type);
+        TRelation relation0 = TRelation.insert(conn, meaning, wiki_text, 
+                                            relation_type, car_meaning_summary);
         assertTrue(null != relation0);
         
         TRelation[] array_rel = TRelation.get(conn, meaning);
         assertTrue(null != array_rel);
         assertEquals(1, array_rel.length);
 
+        assertNull(array_rel[0].getMeaningSummary()); // == car_meaning_summary
+
+        TRelation.delete(conn, relation0);
+
+        array_rel = TRelation.get(conn, meaning);
+        assertEquals(0, array_rel.length);
+    }
+
+    // test an insertion of not null value of meaning_summary
+    // hrunk_text, hrunk_meaning_summary1, hrunk_meaning_summary2
+    @Test
+    public void testInsert_not_null_meaning_summary_en() {
+        System.out.println("insert_not_null_meaning_summary_en");
+        //Connect conn = ruwikt_parsed_conn;
+
+        TRelation relation0 = TRelation.insert(conn, meaning, wiki_text,
+                                            relation_type, hrunk_meaning_summary1);
+        assertTrue(null != relation0);
+
+        TRelation[] array_rel = TRelation.get(conn, meaning);
+        assertTrue(null != array_rel);
+        assertEquals(1, array_rel.length);
+        
+        String sum0 = array_rel[0].getMeaningSummary();
+        assertTrue(sum0.equalsIgnoreCase(hrunk_meaning_summary1));
+        
         TRelation.delete(conn, relation0);
 
         array_rel = TRelation.get(conn, meaning);
@@ -201,11 +250,12 @@ public class TRelationTest {
     }
     
     @Test
-    public void testGetByID() {
+    public void testGetByID_ru() {
         System.out.println("getByID_ru");
-        Connect conn = ruwikt_parsed_conn;
+        //Connect conn = ruwikt_parsed_conn;
 
-        TRelation r = TRelation.insert(conn, meaning, wiki_text, relation_type);
+        TRelation r = TRelation.insert( conn, meaning, wiki_text, relation_type,
+                                        car_meaning_summary);
         assertTrue(null != r);
 
         TRelation r2 = TRelation.getByID(conn, r.getID());
@@ -219,7 +269,7 @@ public class TRelationTest {
     @Test
     public void testGetRelationType () {
         System.out.println("getRelationType _ru");
-        Connect conn = ruwikt_parsed_conn;
+        //Connect conn = ruwikt_parsed_conn;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         String page_title = "car";
