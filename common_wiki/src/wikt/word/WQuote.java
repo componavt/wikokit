@@ -14,6 +14,9 @@ public class WQuote {
     /** Text of an example sentence. */
     private StringBuffer    text;
 
+    /** Translation of the example sentence in foreign. */
+    private StringBuffer    translation;
+
     /** Start and end positions of the highlighted word(s) in the quote, by the template {{выдел|}} */
     //private int[][2] start_end_pos;
 

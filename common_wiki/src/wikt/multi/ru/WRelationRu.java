@@ -19,18 +19,15 @@ import wikipedia.util.StringUtilRegular;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-//import java.util.List;
-//import java.util.ArrayList;
-
 import java.util.Map;
 import java.util.HashMap;
 
 import java.util.List;
 import java.util.ArrayList;
 
-/** Semantic relations  of Russian Wiktionary word.
+/** Semantic relations of Russian Wiktionary word.
  *
- * See http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей#Оформление семантических отношений
+ * @see http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей#Оформление семантических отношений
  */
 public class WRelationRu {
 
@@ -209,6 +206,6 @@ public class WRelationRu {
         WikiText[] wt = WikiText.create(page_title, text);
         if(0 == wt.length) return null;
         
-        return new WRelation(wt);
+        return new WRelation(null, wt);
     }
 }

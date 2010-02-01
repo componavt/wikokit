@@ -37,7 +37,7 @@ public class TLangPOS {
     /** Part of speech. */
     private TPOS pos;                   // int pos_id
     
-    /** Etymology number. */
+    /** Etymology number (from 0 till max(ruwikt,now)=7). */
     private int etymology_id;           //private TEtymology etimology;     // int etymology_id
     // see WPOSRu.splitToPOSSections in WPOSRuTest.java
 

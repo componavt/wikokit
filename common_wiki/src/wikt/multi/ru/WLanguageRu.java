@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * always in a level two heading. ==English==, {{-ru-}}, {{заголовок|ru|..},
  * or {{-de-|schwalbe}}.
  * 
- * See http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
+ * @see http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
  * and http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей
  * 
  * http://ru.wiktionary.org/wiki/Категория:Викисловарь:Шаблоны:Языки
@@ -128,7 +128,9 @@ public class WLanguageRu {
         return lang_type;
     }
 
-    /** page_title - word which are described in this article 'text'*/
+    /** Splits an article text into language sections.
+     *
+     * @param  page_title word which are described in this article 'text'*/
     public static LangText[] splitToLanguageSections (
             String page_title,
             StringBuffer text)
@@ -137,7 +139,7 @@ public class WLanguageRu {
             return NULL_LANG_TEXT_ARRAY;
         }
         
-        List<LangText> lang_sections = new ArrayList<LangText>();     // result will be stored to
+        List<LangText> lang_sections = new ArrayList<LangText>(); // result will be stored to
         
         Matcher m = ptrn_lang.matcher(text.toString());
         

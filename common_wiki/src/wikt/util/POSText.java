@@ -34,6 +34,11 @@ public class POSText {
         pos = _pos;
         text = new StringBuffer(_text);
     }
+
+    public POSText(POS _pos, StringBuffer _text) {
+        pos = _pos;
+        text = _text;
+    }
     
     public POS getPOSType() {
         return pos;

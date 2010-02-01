@@ -39,5 +39,16 @@ public class Definition {
 
         return text.substring(m.end()).trim();
     }
+    
+    /* Gets first line from the text. */
+    public static String getFirstLine (String page_title, String text) {
+
+        int pos = 0;
+
+        if((pos = text.indexOf("\n")) == -1)
+            return text;
+
+        return text.substring(0, pos);
+    }
 
 }

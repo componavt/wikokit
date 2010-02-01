@@ -13,10 +13,11 @@ import wikt.constant.ContextLabel;
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;
 import wikt.multi.ru.WMeaningRu;
+import wikt.multi.en.WMeaningEn;
 
 /** Meaning consists of <PRE>
  * # Definition (preceded by "#", which causes automatic numbering).
- * and Quotations.      </PRE>
+ * #* and Quotations.      </PRE>
  */
 public class WMeaning {
 
@@ -104,14 +105,15 @@ public class WMeaning {
 
         if(l  == LanguageType.ru) {
 
-            // get context labels, definitions, and quotations
+            // get context labels, definitions, and quotations... todo
             /*   if(0==wm.length) {
                     return NULL_WMEANING_ARRAY;
             }*/
           wm = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
 
-        //} else if(l == LanguageType.en) {
-          //  return WordEn;
+        } else if(l == LanguageType.en) {
+            wm = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
 
@@ -125,27 +127,30 @@ public class WMeaning {
         return wm;
     }
 
-    /** Parses one definition line, i.e. extracts {{label.}}, definition,
+    /** Parses one definition (one line in Russian, several lines in English 
+     * Wiktionary), i.e. extracts {{label.}}, definition,
      * {{example|Quotation sentence.}}, creates and fills a meaning (WMeaning).
      * @param wikt_lang     language of Wiktionary
      * @param page_title    word which are described in this article 'text'
      * @param lang_section  language of this section of an article
-     * @param line          definition line
+     * @param def_text      text of one definition
      * @return WMeaning or null if the line is not started from "#"
      */
     public static WMeaning parseOneDefinition(LanguageType wikt_lang,
                     String page_title,
                     LanguageType lang_section,
-                    String line)
+                    String def_text)
     {
         WMeaning wm = NULL_WMEANING;
 
         LanguageType l = wikt_lang;
 
         if(l  == LanguageType.ru) {
-            wm = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+            wm = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, def_text);
 
-        //} else if(l == LanguageType.en) {
+        } else if(l == LanguageType.en) {
+            wm = WMeaningEn.parseOneDefinition(wikt_lang, page_title, lang_section, def_text);
+
           //  return WordEn;
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;

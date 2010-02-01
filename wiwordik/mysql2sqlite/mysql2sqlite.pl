@@ -2,7 +2,7 @@
 
 # DESCRIPTION: 
 #
-#   Parse text or russian synonym dictionary, build @synsets, @synwords
+#   Converts the parsed Wiktionary database dump from MySQL into SQLite.
 #
 # AUTHOR:       Andrew Krizhanovsky (http://code.google.com/p/wikokit)
 # START DATE:   17.12.2009 17:44:28

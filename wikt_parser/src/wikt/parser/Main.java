@@ -50,10 +50,16 @@ public class Main {
         */
         
         // russian
-        wiki_lang = LanguageType.ru;
+        /* wiki_lang = LanguageType.ru;
         wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
+        */ 
         
+        // russian
+        wiki_lang = LanguageType.en;
+        wikt_conn.Open       (Connect.ENWIKT_HOST,        Connect.ENWIKT_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
+        wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
+
         category_name = "Викисловарь:Избранные статьи";
             // "Викисловарь:Избранные статьи";
             // "Слово дня";

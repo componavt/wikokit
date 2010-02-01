@@ -11,10 +11,11 @@ import wikt.constant.Relation;
 import wikt.word.WRelation;
 import wikt.util.WikiText;
 
-import wikipedia.language.Encodings;
-import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
 import wikipedia.sql.Statistics;
+import wikipedia.sql.PageTableBase;
+import wikipedia.language.Encodings;
+
 import java.sql.*;
 
 import java.util.List;
@@ -42,13 +43,32 @@ public class TRelation {
     /** Semantic relation. */
     private TRelationType relation_type;    // int relation_type_id
 
+    /** Summary of the definition for which synonyms (antonyms, etc.) are being given,
+     * e.g. "flrink with cumplus" or "furp" in text
+     * <PRE>
+     * * (''flrink with cumplus''): [[flrink]], [[pigglehick]]
+     * * (''furp''): [[furp]], [[whoodleplunk]]
+     * </PRE>
+     *
+     * Disadvantage: the summary "flrink with cumplus" is repeated twice 
+     *              in table for "flrink" and "pigglehick".
+     *
+     * Comment: is used in English Wiktionary, see http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained#Synonyms
+     * It is not used in Russian Wiktionary (NULL in database).
+     */
+    private String meaning_summary;
+    
     private final static TRelation[] NULL_TRELATION_ARRAY = new TRelation[0];
 
-    public TRelation(int _id,TMeaning _meaning,TWikiText _wiki_text,TRelationType _relation_type) {
+    public TRelation(int _id,TMeaning _meaning,TWikiText _wiki_text,
+                    TRelationType _relation_type,String _meaning_summary)
+    {
         id              = _id;
         meaning         = _meaning;
         wiki_text       = _wiki_text;
         relation_type   = _relation_type;
+
+        meaning_summary = _meaning_summary;
     }
 
     /** Gets unique ID from database */
@@ -59,6 +79,11 @@ public class TRelation {
     /** Gets meaning from database */
     public TMeaning getMeaning() {
         return meaning;
+    }
+
+    /** Gets a summary of the semantic relation meaning (e.g. title of list of synonyms). */
+    public String getMeaningSummary() {
+        return meaning_summary;
     }
 
     /** Gets text (wikified sometimes). */
@@ -93,13 +118,19 @@ public class TRelation {
             TRelationType trelation_type = TRelationType.getRelationFast(r);
             WRelation[] wr = m_relations.get(r);
             if(meaning_n < wr.length && null != wr[meaning_n]) {
-                WikiText[] phrases = wr[meaning_n].get();
+
+                WRelation cur_rel = wr[meaning_n];
+
+                String meaning_summary = cur_rel.getMeaningSummary();
+
+                WikiText[] phrases = cur_rel.get();
                 for(WikiText p : phrases) {
 
                     TWikiText twiki_text = TWikiText.storeToDB(connect, p);
 
                     if(null != twiki_text) {
-                        TRelation.insert(connect, tmeaning, twiki_text, trelation_type);
+                        TRelation.insert(connect, tmeaning, twiki_text, 
+                                        trelation_type, meaning_summary);
                     }
                 }
             }
@@ -108,14 +139,21 @@ public class TRelation {
 
     /** Inserts record into the table 'relation'.<br><br>
      * INSERT INTO relation (meaning_id,wiki_text_id,relation_type_id) VALUES (11,12,13);
+     * or
+     * INSERT INTO relation (meaning_id,wiki_text_id,relation_type_id,meaning_summary) VALUES (11,12,13,"sum");
+     *
      * @param meaning       corresponding meaning of the word
      * @param wiki_text     synonym word (or phrase), or antonym, etc.
      * @param relation_type semantic relation
+     * @param meaning_summary summary of the definition for which synonyms
+     *                      (antonyms, etc.) are being given. It could be null.
+     *
      * @return null if data is absent
      */
     public static TRelation insert (Connect connect,
-            TMeaning meaning,TWikiText wiki_text,TRelationType relation_type) {
-            
+            TMeaning meaning,TWikiText wiki_text,TRelationType relation_type,
+            String meaning_summary) {
+
         if(null == meaning || null == wiki_text || null == relation_type) {
             System.err.println("Error (wikt_parsed TRelation.insert()):: null arguments, meaning="+meaning+", wiki_text="+wiki_text+", relation_type="+relation_type);
             return null;
@@ -127,21 +165,36 @@ public class TRelation {
         TRelation relation = null;
         try
         {
+            boolean b_sum = null != meaning_summary && meaning_summary.length() > 0;
+
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO relation (meaning_id,wiki_text_id,relation_type_id) VALUES (");
+            str_sql.append("INSERT INTO relation (meaning_id,wiki_text_id,relation_type_id");
+
+            if(b_sum)
+                str_sql.append(",meaning_summary");
+            
+            str_sql.append(") VALUES (");
+
             str_sql.append(meaning.getID());
             str_sql.append(",");
             str_sql.append(wiki_text.getID());
             str_sql.append(",");
             str_sql.append(relation_type.getID());
+            
+            if(b_sum) {
+                str_sql.append(",\"");
+                str_sql.append(PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, meaning_summary));
+                str_sql.append("\"");
+            }
+            
             str_sql.append(")");
             s.executeUpdate (str_sql.toString());
-            
+
             s = connect.conn.createStatement ();
             rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
-                relation = new TRelation(rs.getInt("id"), meaning, wiki_text, relation_type);
-            
+                relation = new TRelation(rs.getInt("id"), meaning, wiki_text, 
+                                    relation_type, meaning_summary);
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TRelation.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
@@ -152,7 +205,7 @@ public class TRelation {
     }
 
     /** Selects rows from the table 'relation' by the meaning_id.<br><br>.
-     * SELECT id,wiki_text_id,relation_type_id FROM relation WHERE meaning_id=11;
+     * SELECT id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE meaning_id=11;
      * @return empty array if data is absent
      */
     public static TRelation[] get (Connect connect,TMeaning meaning) {
@@ -169,7 +222,7 @@ public class TRelation {
         
         try {
             s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,wiki_text_id,relation_type_id FROM relation WHERE meaning_id=");
+            str_sql.append("SELECT id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE meaning_id=");
             str_sql.append(meaning.getID());
             rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
@@ -181,7 +234,11 @@ public class TRelation {
                 if(null != wt && null != r) {
                     if(null == list_rel)
                                list_rel = new ArrayList<TRelation>();
-                    list_rel.add(new TRelation(id, meaning, wt, r));
+
+                    byte[] bb = rs.getBytes("meaning_summary");
+                    String sum = null == bb ? null : Encodings.bytesToUTF8(bb);
+                    
+                    list_rel.add(new TRelation(id, meaning, wt, r, sum));
                 }
             }
         } catch(SQLException ex) {
@@ -197,7 +254,7 @@ public class TRelation {
     }
 
     /** Selects row from the table 'relation' by ID.<br><br>
-     * SELECT meaning_id,wiki_text_id,relation_type_id FROM relation WHERE id=1;
+     * SELECT meaning_id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE id=1;
      * @return null if data is absent
      */
     public static TRelation getByID (Connect connect,int id) {
@@ -208,7 +265,7 @@ public class TRelation {
 
         try {
             s = connect.conn.createStatement ();
-            str_sql.append("SELECT meaning_id,wiki_text_id,relation_type_id FROM relation WHERE id=");
+            str_sql.append("SELECT meaning_id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE id=");
             str_sql.append(id);
             rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
@@ -216,8 +273,13 @@ public class TRelation {
                 TMeaning      m = TMeaning. getByID( connect,   rs.getInt("meaning_id"));
                 TWikiText    wt = TWikiText.getByID( connect,   rs.getInt("wiki_text_id"));
                 TRelationType r = TRelationType.getRelationFast(rs.getInt("relation_type_id"));
-                if(null != m && null != wt && null != r)
-                    relation = new TRelation(id, m, wt, r);
+                if(null != m && null != wt && null != r) {
+
+                    byte[] bb = rs.getBytes("meaning_summary");
+                    String sum = null == bb ? null : Encodings.bytesToUTF8(bb);
+                    
+                    relation = new TRelation(id, m, wt, r, sum);
+                }
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TRelation.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());

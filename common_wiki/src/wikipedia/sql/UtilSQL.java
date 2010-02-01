@@ -1,7 +1,6 @@
 
 package wikipedia.sql;
 
-import wikipedia.sql.Connect;
 import java.sql.*;
 
 /** Misc SQL routines.

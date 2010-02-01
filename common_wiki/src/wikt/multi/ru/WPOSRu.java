@@ -31,10 +31,10 @@ import java.util.ArrayList;
  * 
  * (and a level 3 in English Wiktionary: ===Verb===)
  * 
- * See http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%A7%D0%B0%D1%81%D1%82%D0%B8_%D1%80%D0%B5%D1%87%D0%B8
- *     http://ru.wiktionary.org/wiki/Викисловарь:Части речи
+ * @see http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%A7%D0%B0%D1%81%D1%82%D0%B8_%D1%80%D0%B5%D1%87%D0%B8
+ *      http://ru.wiktionary.org/wiki/Викисловарь:Части речи
  *
- * See http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей
+ * @see http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей
  */
 public class WPOSRu {
 
@@ -78,9 +78,10 @@ public class WPOSRu {
             //"\\A===\\s*Морфологические и синтаксические свойства\\s*===\\s*\\n\\s*(..)");
 
 
-    /** Gets true, if str is known header, e.g. "References".
+    /** Gets true, if str is known header, e.g. "References",
+     * but it's not a part of speech name, e.g. "Verb".
      */
-    public static boolean isSecondLevelHeaderWord (String str)
+    public static boolean isSecondLevelHeaderWordNotPOS (String str)
     {
         if(str.equalsIgnoreCase("Ссылки"))
             return true;
@@ -118,7 +119,7 @@ public class WPOSRu {
         Matcher m = ptrn_2nd_level.matcher(lt.text.toString());
         boolean b_next = m.find();
 
-        if(b_next && m.groupCount() > 0 && isSecondLevelHeaderWord(m.group(1)))
+        if(b_next && m.groupCount() > 0 && isSecondLevelHeaderWordNotPOS(m.group(1)))
             b_next = false; // it's usual header, e.g. "Links", not a == Verb I ==
         
         if(!b_next) {   // check: "{{заголовок|sq|add=I}}")
@@ -371,7 +372,7 @@ public class WPOSRu {
             }
         }
         
-        return new POSText(p_type, text.toString());
+        return new POSText(p_type, text);
     }
     
     

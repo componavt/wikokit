@@ -9,6 +9,7 @@ package wikt.word;
 import wikipedia.language.LanguageType;
 
 import wikt.multi.ru.WRedirectRu;
+import wikt.multi.en.WRedirectEn;
 
 /** Redirect related functions in wiki and Wiktionary.
  */
@@ -34,9 +35,9 @@ public class WRedirect {
 
         if(l  == LanguageType.ru) {
             redirect_dest = WRedirectRu.getRedirect(page_title, text);
-        //} else if(l == LanguageType.en) {
-          //  return WordEn;
-        //} //else if(code.equalsIgnoreCase( "simple" )) {
+        } else if(l == LanguageType.en) {
+            redirect_dest = WRedirectEn.getRedirect(page_title, text);
+        //} else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
 
             // todo

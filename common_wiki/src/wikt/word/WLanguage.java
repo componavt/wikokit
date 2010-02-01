@@ -10,8 +10,9 @@ package wikt.word;
 import wikt.util.LangText;
 //import wikt.util.POSText;
 import wikipedia.language.LanguageType;
-import wikt.multi.ru.WLanguageRu;
 
+import wikt.multi.ru.WLanguageRu;
+import wikt.multi.en.WLanguageEn;
 
 /** Language lets you know the language of the word in question. It is almost 
  * always in a level two heading. ==English== {{-ru-}}
@@ -85,8 +86,9 @@ public class WLanguage {
         
         if(l  == LanguageType.ru) {
             lang_sections = WLanguageRu.splitToLanguageSections(page_title, text);
-        //} else if(l == LanguageType.en) {
-          //  return WordEn;
+        } else if(l == LanguageType.en) {
+            lang_sections = WLanguageEn.splitToLanguageSections(page_title, text);
+
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
             
