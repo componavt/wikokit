@@ -22,7 +22,7 @@ public class WRelationEnTest {
             empty_relation, 
             empty_relation2,
             bark, man, man2, women, nationality, airplane;
-    
+    // todo parse: man
     public WRelationEnTest() {
     }
 
@@ -97,7 +97,7 @@ public class WRelationEnTest {
                 "* [[latrate]] {{i|obsolete}}\n" +
                 "\n" +
                 "=====Translations=====\n";
-
+/* todo
         man = "{{en-noun|men}}\n" +
                 "\n" +
                 "# An adult [[male]] [[human]].\n" +
@@ -120,7 +120,7 @@ public class WRelationEnTest {
                 "* [[boy]]\n" +
                 "\n" +
                 "====Derived terms====\n";
-
+*/
         man2 = "# {{colloquial|lang=fo}} [[one]], [[they]] {{i|indefinite third person singular pronoun}}\n" +
                 "\n" +
                 "====Synonyms====\n" +
@@ -248,7 +248,47 @@ public class WRelationEnTest {
         assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("head"));
         assertTrue(synonym_row_0[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("pseudanthium"));
     }
+    
+    /* # {{colloquial|lang=fo}} [[one]], [[they]] {{i|indefinite third person singular pronoun}}
+     * 
+     * ====Synonyms====
+     * * {{sense|standard}} [[mann]]
+     * 
+     * ---- (Dividing line between languages)
+     */
+    @Test
+    public void testParse_with_Dividing_line() {
+        System.out.println("parse_with_Dividing_line");
+        WRelation[] r;
+        String str;
+        
+        LanguageType wikt_lang = LanguageType.en; // English Wiktionary
+        String page_title = "test_man2";
+        POSText pt = new POSText(POS.noun, man2);
 
+        Map<Relation, WRelation[]> result = WRelationEn.parse(wikt_lang, page_title, pt);
+
+        assertTrue(result.size() > 0);
+        assertTrue(result.containsKey(Relation.synonymy));
+
+        // ====Synonyms====
+        // * {{sense|standard}} [[mann]]
+        //
+        // ----
+
+        r = result.get(Relation.synonymy);
+        assertEquals(1, r.length);
+
+        str = r[0].getMeaningSummary();
+        assertNotNull(str);
+        assertTrue(str.equalsIgnoreCase("standard"));
+
+        WikiText[] synonym_row_0 = r[0].get();
+        assertEquals(1, synonym_row_0.length);
+        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("mann"));
+        assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("mann"));
+    }
+    
     /* Tests wrong order: "Related terms" should be after "Synonyms" in really,
      * but sometimes:
      * {{en-verb}}

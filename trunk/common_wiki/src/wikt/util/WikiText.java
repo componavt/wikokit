@@ -100,6 +100,33 @@ public class WikiText {
         
         return (WikiText[])wt_list.toArray(NULL_WIKITEXT_ARRAY);
     }
+
+
+    /** Creates array of wiki words (words with hyperlinks) without any parsing.
+     *
+     * @param wikified_words words which are already without [[wikification]],
+     *              e.g. translation extracted from {{t|lang_code|wiki_word}}
+     * @return empty array if there is no text.
+     */
+    public static WikiText[] createWithoutParsing(String page_title,
+                                                    List<String> wikified_words)
+    {
+        int size = wikified_words.size();
+        if(0 == size)
+            return NULL_WIKITEXT_ARRAY;
+
+        WikiText[] wt = new WikiText[size];
+        int i=0;
+        for(String w : wikified_words) {
+
+            WikiWord[] ww_array1 = new WikiWord[1];
+            ww_array1[0] = new WikiWord(w, w, null);
+
+            wt[i++] = new WikiText(w, ww_array1);
+        }
+
+        return wt;
+    }
 }
 
 

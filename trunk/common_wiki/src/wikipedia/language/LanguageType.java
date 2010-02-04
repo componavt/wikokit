@@ -102,6 +102,11 @@ public class LanguageType {
             throw new NullPointerException("Null LanguageType");
         return lt;
     }
+
+    /** Checks weather exists the language name in English. */
+    public static boolean hasEnglishName(String english) {
+        return english2lang.containsKey(english);
+    }
     
     /** Gets LanguageType by language name in English */
     public static LanguageType getByEnglishName (String english)
@@ -118,7 +123,7 @@ public class LanguageType {
     public static Map<String, LanguageType> getAllLanguages() {
         return code2lang;
     }
-    
+
     // English Wiktionary specific codes
     public static final LanguageType translingual = new LanguageType("translingual", "Translingual", "Translingual");
 
@@ -432,6 +437,8 @@ public class LanguageType {
     public static final LanguageType de_formal = new LanguageType("de-formal", "Deutsch (Sie-Form)", "German - formal address (\"Sie\")");
     public static final LanguageType dif    = new LanguageType("dif", "Dieri", "Dieri");// Диери
     public static final LanguageType dk     = new LanguageType("dk", "Dansk (deprecated:da)", "Unused code currently falls back to Danish, da is correct for the language");
+    public static final LanguageType duj    = new LanguageType("duj", "Datiwuy", "Datiwuy");
+
     public static final LanguageType en_gb  = new LanguageType("en-gb", "British English", "British English");
     public static final LanguageType fiu_vro = new LanguageType("fiu-vro", "VГµro", "VГµro");
 
@@ -517,7 +524,10 @@ public class LanguageType {
     public static final LanguageType tlh    = new LanguageType("tlh", "tlhIngan-Hol", "Klingon"); // - no interlanguage links allowed
 
     public static final LanguageType val    = new LanguageType("val", "Vehes", "Vehes");// ?
+    
     public static final LanguageType xbc    = new LanguageType("xbc", "Bactrian", "Bactrian");// Бактрийский
+    public static final LanguageType xsr    = new LanguageType("xsr", "Sherpa", "Sherpa");// Шерпский
+
     public static final LanguageType yua    = new LanguageType("yua", "Yucatec Maya", "Yucatec Maya");// Юкатекский
     public static final LanguageType yue    = new LanguageType("yue", "зІµиЄћ", "Cantonese");
 
