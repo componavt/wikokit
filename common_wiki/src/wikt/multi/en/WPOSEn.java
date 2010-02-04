@@ -8,21 +8,13 @@ package wikt.multi.en;
 
 import wikt.util.POSText;
 import wikt.util.LangText;
-//import wikt.constant.POSType;
 import wikt.constant.POS;
-//import wikt.multi.ru.POSTypeRu;
-
-import wikipedia.util.StringUtilRegular;
-
-import wikipedia.language.LanguageType;
-import wikipedia.text.WikiParser;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /** Splits text to fragments related to different parts of speech (POS).
  * POS is a level 3 or 4 header in English Wiktionary:

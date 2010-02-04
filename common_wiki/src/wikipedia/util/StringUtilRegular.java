@@ -180,11 +180,12 @@ public class StringUtilRegular {
     // Wiktionary 
     
     /** Gets position of 2nd, 3rd or 4th level header ===? Header ===? */
-    private final static Pattern ptrn_234_level = Pattern.compile(
-            "===?=?\\s*[^=]+\\s*===?=?\\s*\\n");
+    private final static Pattern ptrn_2345_level = Pattern.compile(
+            //"===?=?\\s*[^=]+\\s*===?=?\\s*\\n");
+            "={2,5}\\s*[^=]+\\s*={2,5}\\s*\\n");
     
     /** Gets position of first header in text from start_pos,
-     * e.g. 2nd, 3rd or 4th level header ==?=? Header ==?=?,
+     * e.g. 2nd, 3rd, 4th, or 5th level header ==?=?=? Header ==?=?=?,
      * If header is absent then return -1.
      */
     public static int getFirstHeaderPosition(int start_pos, String text) {
@@ -195,9 +196,9 @@ public class StringUtilRegular {
         }
         
         if(0 == start_pos) {
-            m = ptrn_234_level.matcher(text);
+            m = ptrn_2345_level.matcher(text);
         } else {
-            m = ptrn_234_level.matcher(text.substring(start_pos));
+            m = ptrn_2345_level.matcher(text.substring(start_pos));
         }
         
         if (m.find()){

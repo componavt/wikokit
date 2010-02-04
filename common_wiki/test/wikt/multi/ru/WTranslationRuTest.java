@@ -311,7 +311,7 @@ public class WTranslationRuTest {
         assertEquals(0, result.length );
     }
 
-    /** At least one translation block should exists.
+    /** At least one translation block should exists (for Russian words in Russian Wiktionary).
      *
         ===Перевод===
         *

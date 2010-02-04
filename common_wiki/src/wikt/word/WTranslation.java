@@ -11,6 +11,7 @@ import wikt.util.WikiText;
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;
 import wikt.multi.ru.WTranslationRu;
+import wikt.multi.en.WTranslationEn;
 
 /** Translations of Wiktionary word.
  * 
@@ -94,10 +95,11 @@ public class WTranslation {
             /*   if(0==wm.length) {
                     return NULL_WTRANSLATION_ARRAY;
             }*/
-          wt = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+            wt = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
 
-        //} else if(l == LanguageType.en) {
-          //  return WordEn;
+        } else if(l == LanguageType.en) {
+            wt = WTranslationEn.parse(wikt_lang, lang_section, page_title, pt);
+            
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
 
@@ -132,8 +134,9 @@ public class WTranslation {
         if(l  == LanguageType.ru) {
             wt = WTranslationRu.parseOneTranslationBox(wikt_lang, page_title, line);
 
-        //} else if(l == LanguageType.en) {
-          //  return WordEn;
+        } else if(l == LanguageType.en) {
+            wt = WTranslationEn.parseOneTranslationBox(wikt_lang, page_title, line);
+            
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
 

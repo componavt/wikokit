@@ -10,6 +10,7 @@ package wikt.word;
 import wikt.util.WikiText;
 import wikipedia.language.LanguageType;
 import wikt.multi.ru.WTranslationEntryRu;
+import wikt.multi.en.WTranslationEntryEn;
 
 /** One line in the Translation section, i.e. a translation to one language.
  */
@@ -56,10 +57,11 @@ public class WTranslationEntry {
         LanguageType l = wikt_lang;
 
         if(l  == LanguageType.ru) {
-          wte = WTranslationEntryRu.parse(page_title, text);
+            wte = WTranslationEntryRu.parse(page_title, text);
 
-        //} else if(l == LanguageType.en) {
-          //  return WordEn;
+        } else if(l == LanguageType.en) {
+            wte = WTranslationEntryEn.parse(page_title, text);
+            
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
 

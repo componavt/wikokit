@@ -1,15 +1,17 @@
-/* WTranslationRu.java - corresponds to a Translations level of a word in
- * Russian Wiktionary.
+/* WTranslationEn.java - corresponds to a Translations level of a word in
+ * English Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
-package wikt.multi.ru;
+package wikt.multi.en;
 
 import wikipedia.language.LanguageType;
-import wikipedia.util.StringUtilRegular;
+
 import wikt.util.POSText;
+import wikipedia.util.StringUtilRegular;
+
 import wikt.word.WTranslation;
 import wikt.word.WTranslationEntry;
 
@@ -19,32 +21,29 @@ import java.util.regex.Matcher;
 import java.util.List;
 import java.util.ArrayList;
 
-/** Translations of Russian Wiktionary word.
+/** Translations of English Wiktionary word.
  *
- * @see http://ru.wiktionary.org/wiki/Викисловарь:Правила оформления статей#Перевод
+ * @see http://en.wiktionary.org/wiki/Wiktionary:Translations
  */
-public class WTranslationRu {
+public class WTranslationEn {
 
     private final static WTranslation[]      NULL_WTRANSLATION_ARRAY      = new WTranslation[0];
     private final static WTranslationEntry[] NULL_WTRANSLATIONENTRY_ARRAY = new WTranslationEntry[0];
 
-    /** Gets position after === Перевод === */
-    private final static Pattern ptrn_translation_3th_level = Pattern.compile(
-            "===?\\s*Перевод\\s*===?\\s*\\n");
+    /** Gets position after ====Translations==== */
+    private final static Pattern ptrn_translation_level = Pattern.compile(
+            "(?m)^={3,5}\\s*Translations\\s*={3,5}\\s*$");
 
-    
-    /** Gets a header of translation box template "{{перев-блок|header"
-     *                                        or  "{{перев-блок|header|"
-     *                                        or  "{{перев-блок"        - header is absent
-     *                                        or  "{{перев-блок||"      - header is absent
-     *                                            "|en="
+    /** Gets a header of translation box template "{{trans-top|header}}"
+     *                                        or  "{{trans-top|header|}}"
+     *                                        or  "{{trans-top}}"   - header is absent
+     *                                        or  "{{trans-top||}}" - header is absent
+     *                                            "* French: {{t|fr|orange|f}}"
      */
     private final static Pattern ptrn_translation_box_header = Pattern.compile(
-            // "\\Q{{перев-блок|\\E(.*?)\\|?\\n\\|");
-               "\\Q{{перев-блок\\E\\|?(.*?)\\|?\\n\\|");
-            // "\\Q{{перев-блок\\E\\|?(.*?)|?\\n");      // vim      {{перев-блок|\?\(.*\)|\?\n
-            
-    
+               "\\Q{{trans-top\\E\\|?(.*?)\\|?\\}\\}");
+            // RE: \Q{{trans-top\E\|?(.*?)\|?\}\}
+
     /** Parses text (related to the POS), creates and fill array of translations (WTranslation).
      * @param wikt_lang     language of Wiktionary
      * @param page_title    word which are described in this article 'text'
@@ -67,42 +66,42 @@ public class WTranslationRu {
             return NULL_WTRANSLATION_ARRAY;
         }
 
-        // 1. gets position in text after === Перевод ===
+        // 1. gets position in text after ====Translations====
         String text_source = text_source_sb.toString();
-        Matcher m = ptrn_translation_3th_level.matcher(text_source_sb);
+        Matcher m = ptrn_translation_level.matcher(text_source_sb);
         boolean b_next = m.find();
 
         if(!b_next) {   // there is no translation section!
-            if(lang_section == LanguageType.ru)
+            if(lang_section == LanguageType.en)
                 System.out.println("Warning in WTranslationRu.parse(): The Russian word '"+
                         page_title + "' has no section === Перевод ===.");
             return NULL_WTRANSLATION_ARRAY;
         }
 
         // one more check that there is any translation
-        if(!text_source.contains("{{перев-блок")) {
-            System.out.println("Warning in WTranslationRu.parse(): " + "The Russian word '" + page_title +
-                    "' has section === Перевод === but there is no any translation box \"{{перев-блок\".");
+        if(!text_source.contains("{{trans-top|")) {
+            System.out.println("Warning in WTranslationEn.parse(): " + "The English word '" + page_title +
+                    "' has section ====Translation==== but there is no any translation box \"{{перев-блок\".");
             return NULL_WTRANSLATION_ARRAY;
         }
 
-        // x = gets position of the next 2nd or 3rd level block == See also or Bibliography ==
-        // gets text till x of the last brackets: "}}"
+        // x = gets position of the next 2nd - 5th level block == See also or Bibliography ==
+        // gets text till the last: "{{trans-bottom}}"
         String text = StringUtilRegular.getTextTillFirstHeaderPosition(m.end(), text_source);
-        
+
         int len = text.length();
         if(0 == len) {
             return NULL_WTRANSLATION_ARRAY;
         }
-        
+
         List<WTranslation> wt_list = new ArrayList<WTranslation>();
 
-        int prev_end = 0;           // previous end of previous translation box
+        int prev_end = 1; // previous end of previous translation box + len("\n")=1
         boolean to_continue = true;
         while(to_continue) {
-            
-            // 3. gets next substring "{{перев-блок"
-            int next_end = text.indexOf("{{перев-блок", prev_end + 1);
+
+            // 3. gets next substring "{{trans-top|"
+            int next_end = text.indexOf("{{trans-top|", prev_end + 1);
             if(-1 == next_end) {
                 to_continue = false;
 
@@ -132,7 +131,7 @@ public class WTranslationRu {
                 to_continue = -1 != next_end && next_end < len;
             prev_end = next_end;
         }
-
+/*
         if(!atLeastOneTranslationExists(wt_list))
             return NULL_WTRANSLATION_ARRAY;
 
@@ -140,43 +139,15 @@ public class WTranslationRu {
             System.out.println("Warning in WTranslationRu.parse(): The article '"+
                         page_title + "' has several translation boxes, but not all of them have headers.");
         }
-        
+*/
         return( (WTranslation[])wt_list.toArray(NULL_WTRANSLATION_ARRAY) );
     }
 
-    /** Checks, wheather all the translation boxes have headers. */
-    public static boolean allTranslationsHaveHeader(List<WTranslation> wt_list)
-    {
-        for(WTranslation wt : wt_list) {
-            if (0 == wt.getHeader().length()) {
-                return false;
-            }
-        }
-        return true;
-    }
-    
-    /** Returens true, if there is at least one translation entry
-     * in any of the translation boxes.
-     */
-    public static boolean atLeastOneTranslationExists(List<WTranslation> wt_list)
-    {
-        for(WTranslation wt : wt_list) {
-            if (wt.getTranslationsNumber() > 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /** Chops close brackets "}}" */
-    private final static Pattern ptrn_double_close_curly_brackets = Pattern.compile(
-            "\\n?\\Q}}\\E[\\n\\s]*$");                          // gvim: \n\?}}\n\?\Z
-            //"\\n?\\Q}}\\E[\\n\\s]*\\z");                          // gvim: \n\?}}\n\?\Z
 
     /** Parses one translation box, i.e. extracts languages and a list of
      * translations (wikified words) for each language,
      * creates and fills WTranslation.
-     * 
+     *
      * @param wikt_lang     language of Wiktionary
      * @param page_title    word which are described in this article 'text'
      * @param text          translaton box text
@@ -202,20 +173,27 @@ public class WTranslationRu {
             text_wo_header = text;
 
         // chop close brackets "}}"
-        Matcher m_bracket = ptrn_double_close_curly_brackets.matcher(text_wo_header);
-        String t = m_bracket.replaceFirst("");      // text without header and without brackets
+        //Matcher m_bracket = ptrn_double_close_curly_brackets.matcher(text_wo_header);
+        //String t = m_bracket.replaceFirst("");      // text without header and without brackets
 
-        String[] lines = t.split("\n\\|");
-        
+        String[] lines = text_wo_header.split("\n");
+
         List<WTranslationEntry> wte_list = new ArrayList<WTranslationEntry>();
-        for(String s : lines) {                                                         // for each language (for each line)
+        for(String s : lines) {
+            // skip:
+            // {{trans-bottom}}
+
+            // skip
+            // {{trans-mid}}
+
+            // for each language (for each line)
             WTranslationEntry wte = WTranslationEntry.parse(wikt_lang, page_title, s);
-            
+
             if(null != wte) {
                 wte_list.add(wte);
             }
         }
-        
+
         return new WTranslation(
                         meaning_summary,
                         (WTranslationEntry[])wte_list.toArray(NULL_WTRANSLATIONENTRY_ARRAY));
