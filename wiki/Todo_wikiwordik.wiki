@@ -10,9 +10,16 @@ Todo:
 
 = DB layout changes =
 
-Todo storing Translation data from "`*` Arabic: {{t|ar|حاسوب|m|sc=Arab|tr=ħasūb}}":
+== Translation entry ==
+
+Goal: storing Translation data from "`*` Arabic: {{t|ar|حاسوب|m|sc=Arab|tr=ħasūb}}".
+
+One record in `translation_entry` contains one translation (word or phrase). Thus one line in Wiktionary translation box corresponds to several records in the table `translation_entry`. See [http://en.wiktionary.org/wiki/Template_talk:t#Documentation {{t}}]
+
+Todo:
   # add fields gender, number, sc (script template), tr (transliteration), alt (alternate form of the word) to the table `translation_entry`
-  # What is better?: One record in `translation_entry` for one translation word (todo), or one line (several words) for one language (current implementation). 
+
+== Todo == 
 
 In future:
   # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria]
