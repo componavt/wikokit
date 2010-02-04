@@ -10,16 +10,20 @@ Todo:
 
 = DB layout changes =
 
-Todo now:
-  # page.is_redirect (done)
-  # page.redirect_target (done)
-  # + lang_pos.redirect_type (e.g. Wordform, Misspelling)
-  # + i18n: "See нелётный (Redirect)" vs. "См. нелётный (Перенаправление)"
+Todo storing Translation data from "`*` Arabic: {{t|ar|حاسوب|m|sc=Arab|tr=ħasūb}}":
+  # add fields gender, number, sc (script template), tr (transliteration), alt (alternate form of the word) to the table `translation_entry`
+  # What is better?: One record in `translation_entry` for one translation word (todo), or one line (several words) for one language (current implementation). 
 
 In future:
   # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria]
   # + field `relation.page_id`. It will replace (partly) `wiki_text_id` for one-word-relation, e.g. [[aircraft]], but not "[[aeroplane]] (брит.)" for "airplane" entry
   # rename `lang_pos.etymology_n` to `lang_pos.etymology_id`, create table `etymology`
+
+REDIRECT # (todo and done):
+  # page.is_redirect (done)
+  # page.redirect_target (done)
+  # + lang_pos.redirect_type (e.g. Wordform, Misspelling)
+  # + i18n: "See нелётный (Redirect)" vs. "См. нелётный (Перенаправление)"
 
 Done:
   # remove the field `meaning.definition`
