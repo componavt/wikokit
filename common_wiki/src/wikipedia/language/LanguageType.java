@@ -11,6 +11,9 @@ package wikipedia.language;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
+
 
 /** Languages of wiki: code and name, e.g. ru and Russian. 
  *
@@ -123,7 +126,24 @@ public class LanguageType {
     public static Map<String, LanguageType> getAllLanguages() {
         return code2lang;
     }
+    
+    
+    /** Set of unknown language codes, which were found during parsing.
+     * There is only one message for one uknown language code (for concise logging).
+     */
+    private static Set<String> unknown_lang_code = new HashSet<String>();
 
+    /** Checks weather exists the unknown language code 'code'. */
+    public static boolean hasUnknownLangCode(String code) {
+        return unknown_lang_code.contains(code);
+    }
+
+    /** Adds unknown language code 'code'. */
+    public static boolean addUnknownLangCode(String code) {
+        return unknown_lang_code.add(code);
+    }
+    
+    
     // English Wiktionary specific codes
     public static final LanguageType translingual = new LanguageType("translingual", "Translingual", "Translingual");
 
@@ -140,6 +160,9 @@ public class LanguageType {
     public static final LanguageType el = new LanguageType("el", "О•О»О»О·ОЅО№ОєО¬", "Greek");
     public static final LanguageType el_dhi = new LanguageType("el.dhi", "Greek", "Greek dhi");// Греческий демот.
     public static final LanguageType el_kat = new LanguageType("el.kat", "Greek", "Greek kat");// Греческий кафар.
+
+    public static final LanguageType ig     = new LanguageType("ig", "Igbo", "Igbo");
+    public static final LanguageType ibo    = new LanguageType("ibo","Igbo", "Igbo");// Игбо
 
     public static final LanguageType kl     = new LanguageType("kl", "Kalaallisut", "Inuktitut, Greenlandic/Greenlandic/Kalaallisut (kal)");
     public static final LanguageType kal     = new LanguageType("kal", "Kalaallisut", "Inuktitut, Greenlandic/Greenlandic/Kalaallisut (kal)");
@@ -677,7 +700,6 @@ public class LanguageType {
     public static final LanguageType ia = new LanguageType("ia", "Interlingua", "Interlingua (IALA)");
     public static final LanguageType id = new LanguageType("id", "Bahasa Indonesia", "Indonesian");
     public static final LanguageType ie = new LanguageType("ie", "Interlingue", "Interlingue (Occidental)");
-    public static final LanguageType ig = new LanguageType("ig", "Igbo", "Igbo");
     public static final LanguageType ii = new LanguageType("ii", "к†‡к‰™", "Sichuan Yi");
     public static final LanguageType ik = new LanguageType("ik", "IГ±upiak", "Inupiak (Inupiatun, Northwest Alaska / Inupiatun, North Alaskan)");
     

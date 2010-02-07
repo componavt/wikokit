@@ -108,11 +108,11 @@ public class WTranslationEnTest {
         assertTrue(result[0].getHeader().equalsIgnoreCase( "fruit of the orange tree" ));
         assertTrue(result[1].getHeader().equalsIgnoreCase( "colour of an orange" ));
 
-        // {{trans-top|fruit of the orange tree}}
-        // * French: {{t|fr|orange|f}}
-        WikiText[] wt_fruit = result[1].getTranslationIntoLanguage(LanguageType.fr);
+        // {{trans-top|colour of an orange}}
+        // * German: {{t|de|Orange|n}}
+        WikiText[] wt_fruit = result[1].getTranslationIntoLanguage(LanguageType.de);
         assertEquals(1, wt_fruit.length );
-        assertTrue(wt_fruit[0].getVisibleText().   equalsIgnoreCase( "orange" ) );
+        assertTrue(wt_fruit[0].getVisibleText().equalsIgnoreCase( "Orange" ) );
 
         WikiWord[] ww_fruit = wt_fruit[0].getWikiWords();
         assertEquals(1, ww_fruit.length );
@@ -137,6 +137,28 @@ public class WTranslationEnTest {
         assertEquals(0, result.length );
     }
 
+    // if there is only header without translations, then result is null.
+    @Test
+    public void testParse_only_header_wo_translations() {
+        System.out.println("parse_only_header_wo_translations");
+        LanguageType wikt_lang = LanguageType.en; // English Wiktionary
+        String page_title = "orange";
+
+        String str = "{{trans-top|fruit of the orange tree}}";
+
+        WTranslation result = WTranslationEn.parseOneTranslationBox(wikt_lang, page_title,
+                                str);
+        assertNull(result);
+
+        // + empty lines
+        str = str + "\n";
+
+        result = WTranslationEn.parseOneTranslationBox(wikt_lang, page_title,
+                                str);
+        assertNull(result);
+    }
+
+
     @Test
     public void testParseOneTranslationBox() {
         System.out.println("parseOneTranslationBox");
@@ -150,20 +172,13 @@ public class WTranslationEnTest {
         assertTrue(result.getHeader().equalsIgnoreCase("fruit of the orange tree"));
 
         WTranslationEntry[] trans_all = result.getTranslations();
-        assertEquals(5, trans_all.length);
+        assertEquals(6, trans_all.length);
 
         {
             // 1. English orange_division1
-            /* orange_division1 = "{{trans-top|fruit of the orange tree}}\n" +
-                "* French: {{t|fr|orange|f}}\n" + // 5 languages, though 6 lines
-                "* German: {{t|de|Orange|f}}\n" +
-                "{{trans-mid}}\n" +
-                "* Japanese: {{t|ja|オレンジ|tr=orenji}}\n" +
-                "* Russian: {{t|ru|апельсин|m|tr=apelsin}}\n" +
-                "* Serbian\n" +
-                "*: Cyrillic: {{t|sr|наранџа|f}}, {{t|sr|поморанџа|f}}\n" +
-                "*: Roman: {{t|sr|narandža|f}}, {{t|sr|pomorandža|f}}\n" +
-                "{{trans-bottom}}\n";*/
+            // orange_division1 = "{{trans-top|fruit of the orange tree}}\n" +
+            //    "* French: {{t|fr|orange|f}}\n" + // 5 languages, though 6 lines
+            //    ...
 
             WTranslationEntry trans_fr = trans_all[0];
             assertEquals(LanguageType.fr, trans_fr.getLanguage());
@@ -173,19 +188,44 @@ public class WTranslationEnTest {
 
             assertTrue(ww_en[0].getVisibleText().equalsIgnoreCase( "orange" ) );
         }
-        {/*
-            // 2. Russian:
-            // * Russian: {{t|ru|апельсин|m|tr=apelsin}}
-
-            WTranslationEntry trans_ko = trans_all[7];
-            assertEquals(LanguageType.ko, trans_ko.getLanguage());
-
-            WikiText[] ww_ko = trans_ko.getWikiPhrases();
-            assertEquals(1, ww_ko.length);
-
-            assertTrue(ww_ko[0].getVisibleText().equalsIgnoreCase( "비행기" ) );
-          */
-        }
     }
-    
+
+    // test several translation into one language:
+    @Test
+    public void testParseOneTranslationBox_several_translations_into_one_language() {
+        System.out.println("parseOneTranslationBox_several_translations_into_one_language");
+        LanguageType wikt_lang = LanguageType.en; // English Wiktionary
+        String page_title = "orange";
+
+        WTranslation result = WTranslationEn.parseOneTranslationBox(wikt_lang, page_title,
+                orange_division1);
+        assertTrue(null != result);
+
+        WTranslationEntry[] trans_all = result.getTranslations();
+        assertEquals(6, trans_all.length);
+        
+        // 1. English orange_division1
+        /* orange_division1 = "{{trans-top|fruit of the orange tree}}\n" +
+            ...
+            "* Serbian\n" +
+            "*: Cyrillic: {{t|sr|наранџа|f}}, {{t|sr|поморанџа|f}}\n" +
+            "*: Roman: {{t|sr|narandža|f}}, {{t|sr|pomorandža|f}}\n" +
+            "{{trans-bottom}}\n";*/
+
+        // *: Cyrillic: {{t|sr|наранџа|f}}, {{t|sr|поморанџа|f}}
+        WTranslationEntry trans_sr4 = trans_all[4];
+        assertEquals(LanguageType.sr, trans_sr4.getLanguage());
+
+        WikiText[] ww_sr = trans_sr4.getWikiPhrases();
+        assertEquals(2, ww_sr.length);
+
+        // *: Roman: {{t|sr|narandža|f}}, {{t|sr|pomorandža|f}}
+        WTranslationEntry trans_sr5 = trans_all[5];
+        assertEquals(LanguageType.sr, trans_sr5.getLanguage());
+        
+        ww_sr = trans_sr5.getWikiPhrases();
+        assertEquals(2, ww_sr.length);
+        
+        assertTrue(ww_sr[0].getVisibleText().equalsIgnoreCase( "narandža" ) );
+    }
 }

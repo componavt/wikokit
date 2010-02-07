@@ -264,6 +264,42 @@ public class WMeaningEnTest {
     }
 
     @Test
+    public void testParse_1_meaning() {
+        System.out.println("parse_1_meaning");
+
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        wikt_lang       = LanguageType.en; // English Wiktionary
+        page_title      = "airplane";
+        lang_section    = LanguageType.en; // English word
+
+        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        String _definition1 = "First definition";
+        String _definition2 = "Second definition.";
+        WikiWord[] ww = new WikiWord[4];
+
+        str =   "{{en-noun}}\n" +
+                "# {{US}} A powered heavier-than air [[aircraft]] with fixed [[wing]]s.\n" +
+                "\n" +
+                "====Synonyms====\n" +
+                "* [[aeroplane]].\n" +
+                "\n" +
+                "\n";
+
+        _definition1 = "{{US}} A powered heavier-than air [[aircraft]] with fixed [[wing]]s.";
+
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+        assertNotNull(result);
+        assertEquals(1, result.length);
+        assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
+    }
+
+    @Test
     public void testParse_Quatation_header() {
         System.out.println("parse_Quatation_header");
 

@@ -89,11 +89,12 @@ public class WTranslationEntryEn {
                 continue;
             
             if(!LanguageType.has(lang_code)) {
-                // todo (for simple and concise logging)
-                // to check - only one message for one uknown language code
-                
-                System.out.println("Warning in WTranslationEntryEn.parse(): The article '"+
-                            page_title + "' has translation into unknown language with code: " + lang_code + ".");
+                // concise logging: only one message for one uknown language code
+                if(!LanguageType.hasUnknownLangCode(lang_code)) {
+                    LanguageType.addUnknownLangCode(lang_code);
+                    System.out.println("Warning in WTranslationEntryEn.parse(): The article '"+
+                                page_title + "' has translation into unknown language with code: " + lang_code + ".");
+                }
                 if(lang_code.length() > 7)
                     System.out.println("Error in WTranslationEntryEn.parse(): The article '"+
                             page_title + "' has too long unknown language code: " + lang_code + ".");
