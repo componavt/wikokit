@@ -85,14 +85,33 @@ public class WTranslationEntryRuTest {
 
         text = "en=";
         result = WTranslationEntryRu.parse(page_title, text);
-        assertEquals(null, result);
+        assertNull(result);
 
         text = "en= ";
         result = WTranslationEntryRu.parse(page_title, text);
-        assertEquals(null, result);
+        assertNull(result);
 
+        // without any warning, since there is no any translations after=
         text = "unknown language=";
         result = WTranslationEntryRu.parse(page_title, text);
         assertEquals(null, result);
+    }
+
+    // Warning test: two unknown language codes, but only one Warning message
+    // should be printed!
+    @Test
+    public void testParse_two_unknown_language_codes() {
+        System.out.println("parse_two_unknown_language_codes: Attention! Should be only one warning about unknown language code!");
+
+        String page_title = "колокольчик";
+        String text = "en=[[little]] [[bell]], [[handbell]], [[doorbell]]";
+
+        // unknown language code "unknown"
+        text = "unknown=some text";
+        WTranslationEntry result = WTranslationEntryRu.parse(page_title, text);
+        assertEquals(null, result);
+        
+        result = WTranslationEntryRu.parse(page_title, text);
+        assertNull(result);
     }
 }

@@ -13,7 +13,6 @@ import wikt.word.WQuote;
 import wikipedia.language.LanguageType;
 import wikt.util.POSText;
 import wikt.util.Definition;
-import wikt.util.WikiWord;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -31,7 +30,7 @@ public class WMeaningEn {
 
     /** Gets position before first header ^===, e.g. */
     private final static Pattern ptrn_meaning_header_start = Pattern.compile(
-            "(?m)^===");
+            "\n===");    //"(?m)^===");
 
     /** Gets position before first meaning started by "#"
         // # Meaning 1
@@ -63,13 +62,12 @@ public class WMeaningEn {
                     POSText pt)
     {
         // === Level III or IV. Meaning (definition) ===
-        if(null == pt.getText()) {
+        if(null == pt.getText())
             return NULL_WMEANING_ARRAY;
-        }
+
         StringBuffer text = pt.getText();
-        if(0 == text.length()) {
+        if(0 == text.length())
             return NULL_WMEANING_ARRAY;
-        }
 
         // 1. gets position in text before first ^=== (e.g. ====Synonyms====)
         Matcher m = ptrn_meaning_header_start.matcher(text.toString());
@@ -102,8 +100,8 @@ public class WMeaningEn {
             // todo
             // e.g. # ...
             System.out.println("Warning in WMeaningEn.parse(): The article '" +
-                        page_title + "', language section '" +
-                        lang_section.toString() + "' has no definition.");
+                        page_title + "', '" +
+                        lang_section.toString() + "' language section has no # Definition.");
             return NULL_WMEANING_ARRAY;
         }
 

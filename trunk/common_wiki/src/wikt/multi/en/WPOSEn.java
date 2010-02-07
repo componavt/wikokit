@@ -75,6 +75,30 @@ public class WPOSEn {
         return false;
     }
 
+    /** Cuts (if it is presented) the header (===POS Name===) and return
+     * POSText list with one element.
+     * Since it is known that this LangText object 'lt' contains exactly
+     * one POS section.
+     *
+     * @param lt    .text with only one POS section
+     */
+    private static List<POSText> cutHeaderFromAlonePOSSection (
+                                    LangText lt, Matcher m)
+    {
+        List<POSText> pos_section_alone = new ArrayList<POSText>(1);
+
+        String alone_POS_text = "";
+        m.reset();
+        if(m.find())
+            alone_POS_text = lt.text.toString().substring(m.end());
+        else
+            alone_POS_text = lt.text.toString();
+
+        m.reset();
+        POS pos = getFirstPOS(m);
+        pos_section_alone.add( new POSText(pos, new StringBuffer(alone_POS_text)) );
+        return pos_section_alone;
+    }
     /** page_title - word which are described in this article 'text'
      * @param lt    .text will be parsed and splitted,
      *              .lang is not using now, may be in future...
@@ -89,19 +113,11 @@ public class WPOSEn {
         }
 
         Matcher m = ptrn_3_or_4_level.matcher(lt.text.toString());
-
+        
         int n_pos = countPOSSections(m);
         
-        if(n_pos <= 1) {// there is only one ===Third of forth level POS header===
-                        // in this language in this etymology for this word
-            List<POSText> pos_section_alone = new ArrayList<POSText>(1);
-                        
-            m.reset();
-            POS pos = getFirstPOS(m);
-            pos_section_alone.add( new POSText(pos, lt.text) );
-            
-            return pos_section_alone;
-        }
+        if(n_pos <= 1) // there is only one ===Third of forth level POS header===
+            return cutHeaderFromAlonePOSSection(lt,m); // in this language in this etymology for this word                
         // else: there are at least two sections: POS
 
         // 1. Gets POS and 
@@ -117,7 +133,6 @@ public class WPOSEn {
         // POS block = substring(end_old, start_new)
         //                       end_old = end_new  = m.end()
         //                                start_new = m.start()
-        int end_old;
 
         // First POS header
         String  pos_header, pos_header_old = "";
@@ -131,7 +146,7 @@ public class WPOSEn {
         pos_header_old = pos_header;
         assert(POSTypeEn.has(pos_header));
         assert(b_next);
-        end_old = m.end();
+        int end_old = m.end();
         
     search_POS:
         while(b_next) {

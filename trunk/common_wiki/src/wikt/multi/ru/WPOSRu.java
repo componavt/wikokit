@@ -272,8 +272,8 @@ public class WPOSRu {
             POSText pt = guessPOS (current_pos_section);
 
             if(null != pt.getPOSType()) { // OK. It's POS header, though it's possible that p=unknown :(
-                current_pos_section.setLength(0);
                 pos_sections.add(pt);
+                current_pos_section.setLength(0);                
                 
             } else {
                 // null, if this is another 2nd level header, e.g. Bibliography or References
@@ -344,7 +344,7 @@ public class WPOSRu {
         POS p_type = POS.unknown;
         
         if(null == text || 0 == text.length()) {
-            return new POSText(p_type, text.toString());
+            return new POSText(p_type, "");
         }
         
         Matcher m = ptrn_morpho_then_2letters.matcher(text.toString());
@@ -372,7 +372,7 @@ public class WPOSRu {
             }
         }
         
-        return new POSText(p_type, text);
+        return new POSText(p_type, new StringBuffer(text));
     }
     
     

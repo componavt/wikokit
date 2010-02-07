@@ -73,14 +73,14 @@ public class WTranslationEn {
 
         if(!b_next) {   // there is no translation section!
             if(lang_section == LanguageType.en)
-                System.out.println("Warning in WTranslationRu.parse(): The Russian word '"+
+                System.out.println("Warning in WTranslationRu.parse(): The English word '"+
                         page_title + "' has no section === Перевод ===.");
             return NULL_WTRANSLATION_ARRAY;
         }
 
         // one more check that there is any translation
         if(!text_source.contains("{{trans-top|")) {
-            System.out.println("Warning in WTranslationEn.parse(): " + "The English word '" + page_title +
+            System.out.println("Warning in WTranslationEn.parse(): The English word '" + page_title +
                     "' has section ====Translation==== but there is no any translation box \"{{перев-блок\".");
             return NULL_WTRANSLATION_ARRAY;
         }
@@ -90,9 +90,8 @@ public class WTranslationEn {
         String text = StringUtilRegular.getTextTillFirstHeaderPosition(m.end(), text_source);
 
         int len = text.length();
-        if(0 == len) {
+        if(0 == len)
             return NULL_WTRANSLATION_ARRAY;
-        }
 
         List<WTranslation> wt_list = new ArrayList<WTranslation>();
 
@@ -104,19 +103,7 @@ public class WTranslationEn {
             int next_end = text.indexOf("{{trans-top|", prev_end + 1);
             if(-1 == next_end) {
                 to_continue = false;
-
-                // gets text till first line "\n}}\n" or "{{unfinished"
-                /*int unfinished_template_pos = text.indexOf("{{unfinished", prev_end + 1);
-                if(-1 != unfinished_template_pos)
-                    next_end = unfinished_template_pos;
-                else {*/
-                    // search first "\n}}", i.e. end of translation template
-                    int e = text.indexOf("\n}}", prev_end + 12);
-                    if(-1 != e)
-                        next_end = e + 3; // + len("\n}}")
-                    else
-                        next_end = len;
-                //}
+                next_end = len;
             }
             String trans_block = text.substring(prev_end, next_end);
 
@@ -124,9 +111,9 @@ public class WTranslationEn {
 
             // return WTranslation or null if the translation text block was not found.
             WTranslation wt = WTranslation.parseOneTranslationBox(wikt_lang, page_title, trans_block);
-            if(null != wt) {
+            if(null != wt)
                 wt_list.add(wt);
-            }
+            
             if(to_continue)
                 to_continue = -1 != next_end && next_end < len;
             prev_end = next_end;
@@ -163,36 +150,37 @@ public class WTranslationEn {
         // 1. extract header (meaning summary, first line in translation box)
         Matcher m = ptrn_translation_box_header.matcher(text.toString());
         boolean b_found = m.find();
-
         // System.out.println("WTranslationRu.parseOneTranslationBox(): The article '"+page_title + "'.");
 
         if(b_found) {   // there is a header
             meaning_summary = m.group(1);
-            text_wo_header = text.substring(m.end());    // text without header
+            if(text.length() <= m.end() + 1)
+                return null;                // header without text
+            text_wo_header = text.substring(m.end() + 1);   // text without header
         } else
             text_wo_header = text;
 
-        // chop close brackets "}}"
-        //Matcher m_bracket = ptrn_double_close_curly_brackets.matcher(text_wo_header);
-        //String t = m_bracket.replaceFirst("");      // text without header and without brackets
-
         String[] lines = text_wo_header.split("\n");
 
-        List<WTranslationEntry> wte_list = new ArrayList<WTranslationEntry>();
+        List<WTranslationEntry> wte_list = null;
         for(String s : lines) {
-            // skip:
-            // {{trans-bottom}}
-
-            // skip
-            // {{trans-mid}}
-
+            
+            s = s.trim();
+            if(s.equalsIgnoreCase("{{trans-mid}}")) continue;
+            if(s.equalsIgnoreCase("{{trans-bottom}}")) break;
+            
             // for each language (for each line)
             WTranslationEntry wte = WTranslationEntry.parse(wikt_lang, page_title, s);
 
             if(null != wte) {
+                if(null == wte_list)
+                    wte_list = new ArrayList<WTranslationEntry>();
                 wte_list.add(wte);
             }
         }
+
+        if(wte_list.size() == 0)
+            return null;
 
         return new WTranslation(
                         meaning_summary,

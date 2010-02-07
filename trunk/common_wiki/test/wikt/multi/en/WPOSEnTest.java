@@ -82,7 +82,7 @@ public class WPOSEnTest {
 
         assertEquals(1, result.length);
         assertEquals(POS.verb, result[0].getPOSType());
-        assertTrue(result[0].getText().toString().equalsIgnoreCase(source_text));
+        assertTrue(result[0].getText().toString().equalsIgnoreCase("===It's not a Part Of Speech Name==="));
 
         // case 1: noun and verb
         //
@@ -200,6 +200,37 @@ public class WPOSEnTest {
         
         assertEquals(POS.verb, result[0].getPOSType());
         assertTrue(result[1].getText().toString().equalsIgnoreCase(s2_result));
+    }
+
+    // POS of foreign words in English Wiktionary.
+    @Test
+    public void testSplitToPOSSections_onePOS() {
+        System.out.println("splitToPOSSections_onePOS");
+        String s1, s2, s1_result, s2_result;
+
+        String source_text;
+        LangText source_lt;
+        LangText[] etymology_sections;
+        POSText[] result;
+        String page_title;
+
+        // case 1: "Verb form" and "Participle" in Russian word article
+        //
+        s1 = "===Verb form===\n" +
+             "'''испо́льзуем''' (ispól'zujem)\n";
+
+        s1_result = "'''испо́льзуем''' (ispól'zujem)\n";
+
+        source_lt = new LangText(LanguageType.ru);
+        source_lt.text = new StringBuffer(s1);
+
+        page_title = "pos_ru_word-1";
+        etymology_sections = WEtymologyEn.splitToEtymologySections(page_title, source_lt);
+        result = WPOSEn.splitToPOSSections(page_title, etymology_sections);
+
+        assertEquals(1, result.length);
+        assertEquals(POS.verb, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(s1_result));
     }
 
 }

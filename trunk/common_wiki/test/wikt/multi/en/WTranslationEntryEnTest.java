@@ -106,7 +106,7 @@ public class WTranslationEntryEnTest {
     // should be printed!
     @Test
     public void testParse_two_unknown_language_codes() {
-        System.out.println("parameters_two_unknown_language_codes");
+        System.out.println("parameters_two_unknown_language_codes: Attention! Should be only one warning about unknown language code!");
 
         String page_title = "butterfly";
         String text = "*Latin: {{t-|unkn1|papilio|alt=pāpíliō}}";
@@ -116,6 +116,11 @@ public class WTranslationEntryEnTest {
         text = "*Latin: {{t-|unkn1|papilio|alt=pāpíliō}}";
         result = WTranslationEntryEn.parse(page_title, text);
         assertNull(result);
+
+        // without any warning, since there is no any translations in second parameter
+        text = "*Latin: {{t-|unkn1||alt=pāpíliō}}";
+        result = WTranslationEntryEn.parse(page_title, text);
+        assertEquals(null, result);
     }
 
 }
