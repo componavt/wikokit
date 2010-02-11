@@ -230,24 +230,24 @@ is divided into following sections:
                     =================
     -->
     <target depends="init" if="netbeans.home" name="-debug-start-debugger">
-        <nbjavafxstart addressproperty="javafx.address" name="${application.title}" transport="dt_socket">
+        <nbjpdastart addressproperty="javafx.address" name="${application.title}" transport="dt_socket">
             <classpath>
                 <path path="${javac.classpath}"/>
             </classpath>
             <sourcepath>
                 <path path="${src.dir}"/>
             </sourcepath>
-        </nbjavafxstart>
+        </nbjpdastart>
     </target>
     <target depends="init" if="netbeans.home" name="-debug-start-debugger-stepinto">
-        <nbjavafxstart addressproperty="javafx.address" name="${application.title}" stopclassname="${main.class}" transport="dt_socket">
+        <nbjpdastart addressproperty="javafx.address" name="${application.title}" stopclassname="${main.class}" transport="dt_socket">
             <classpath>
                 <path path="${javac.classpath}"/>
             </classpath>
             <sourcepath>
                 <path path="${src.dir}"/>
             </sourcepath>
-        </nbjavafxstart>
+        </nbjpdastart>
     </target>
     <target depends="init,compile" if="standard.execution.trigger" name="-debug-start-debuggee">
         <property name="application.args" value=""/>
@@ -292,7 +292,7 @@ is divided into following sections:
     -->
     <target depends="init" name="-javadoc-build">
         <mkdir dir="${dist.javadoc.dir}"/>
-        <javadoc author="${javadoc.author}" classpath="${javac.classpath}" destdir="${dist.javadoc.dir}" executable="${platform.fxhome}/bin/javafxdoc${binary.extension}" failonerror="true" private="${javadoc.private}" useexternalfile="true" version="${javadoc.version}">
+        <javadoc author="${javadoc.author}" classpath="${javac.classpath}" destdir="${dist.javadoc.dir}" encoding="${source.encoding}" executable="${platform.fxhome}/bin/javafxdoc${binary.extension}" failonerror="true" private="${javadoc.private}" useexternalfile="true" version="${javadoc.version}">
             <fileset dir="${src.dir}" includes="**/*.fx"/>
         </javadoc>
         <condition property="javadoc.available">

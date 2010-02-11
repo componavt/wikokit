@@ -62,4 +62,29 @@ public class WLanguageEnTest {
         assertEquals("swedish-word", result[1].text.toString());
     }
 
+    /** Sometimes language names are wikified :(, see e.g. "nu" */
+    @Test
+    public void testSplitToLanguageSections_wikified_lang_name() {
+        System.out.println("splitToLanguageSections_wikified_lang_name");
+        String source_text;
+        LangText[] result;
+
+        // ==[[Ewe]]==
+        source_text = "Before \n==[[Ewe]]==\n word";
+        result = WLanguageEn.splitToLanguageSections("test_word1_en", new StringBuffer(source_text));
+        assertEquals(1, result.length);
+        assertEquals(LanguageType.ewe, result[0].getLanguage());
+        assertEquals("Before \nword", result[0].text.toString());
+
+        // ==[[Ewe]]== and ==[[Catalan]]==
+        source_text = "Before \n==[[Ewe]]==\n ewe-word \n==[[Catalan]]==\n catalan-word";
+        result = WLanguageEn.splitToLanguageSections("test_word2_en", new StringBuffer(source_text));
+        assertEquals(2, result.length);
+        assertEquals(LanguageType.ewe, result[0].getLanguage());
+        assertEquals("Before \newe-word \n", result[0].text.toString());
+
+        assertEquals(LanguageType.ca, result[1].getLanguage());
+        assertEquals("catalan-word", result[1].text.toString());
+    }
+
 }

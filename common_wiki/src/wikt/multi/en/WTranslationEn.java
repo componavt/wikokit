@@ -72,16 +72,16 @@ public class WTranslationEn {
         boolean b_next = m.find();
 
         if(!b_next) {   // there is no translation section!
-            if(lang_section == LanguageType.en)
-                System.out.println("Warning in WTranslationRu.parse(): The English word '"+
-                        page_title + "' has no section === Перевод ===.");
+            //if(lang_section == LanguageType.en)
+            //    System.out.println("Warning in WTranslationEn.parse(): The English word '"+
+            //            page_title + "' has no section ====Translation====.");
             return NULL_WTRANSLATION_ARRAY;
         }
 
         // one more check that there is any translation
         if(!text_source.contains("{{trans-top|")) {
-            System.out.println("Warning in WTranslationEn.parse(): The English word '" + page_title +
-                    "' has section ====Translation==== but there is no any translation box \"{{перев-блок\".");
+            //System.out.println("Warning in WTranslationEn.parse(): The English word '" + page_title +
+            //        "' has section ====Translation==== but there is no any translation box \"{{trans-top|\".");
             return NULL_WTRANSLATION_ARRAY;
         }
 
@@ -179,7 +179,7 @@ public class WTranslationEn {
             }
         }
 
-        if(wte_list.size() == 0)
+        if(null == wte_list || wte_list.size() == 0)
             return null;
 
         return new WTranslation(

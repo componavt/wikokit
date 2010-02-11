@@ -88,8 +88,10 @@ public class POS {
     
     public static final POS phrase          = new POS("phrase");
     public static final POS idiom           = new POS("idiom");
-    
-    
+
+    // debated POS level 3 headers
+    public static final POS numeral         = new POS("numeral");
+
     // other descriptors that identify the usage of the entry, but which are not (strictly speaking) parts of speech:
     public static final POS acronym         = new POS("acronym");
     

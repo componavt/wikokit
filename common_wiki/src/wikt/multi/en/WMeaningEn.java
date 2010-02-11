@@ -30,7 +30,7 @@ public class WMeaningEn {
 
     /** Gets position before first header ^===, e.g. */
     private final static Pattern ptrn_meaning_header_start = Pattern.compile(
-            "\n===");    //"(?m)^===");
+            "(?m)^={3,5}");  //"\n===");    //"(?m)^===");
 
     /** Gets position before first meaning started by "#"
         // # Meaning 1
@@ -70,24 +70,30 @@ public class WMeaningEn {
             return NULL_WMEANING_ARRAY;
 
         // 1. gets position in text before first ^=== (e.g. ====Synonyms====)
-        Matcher m = ptrn_meaning_header_start.matcher(text.toString());
+        //Matcher m = ptrn_meaning_header_start.matcher(text.toString());
         
-        int pos_start_meanings = 0;
         int pos_end_meanings; // position of end of definitions and examples
-        if(m.find())
-            pos_end_meanings = m.start();
-        else
+        if(-1 == (pos_end_meanings = text.toString().indexOf("\n===")))  //m.find())
             pos_end_meanings = text.length();
             
         // gets position of first definition (first "#")
-        m = ptrn_first_meaning.matcher(text.toString());
+        //Matcher m = ptrn_first_meaning.matcher(text.toString());
 
         boolean b_exist_definition = true;
-        if(m.find())
+        int pos_start_meanings;
+
+        if(text.toString().charAt(0) == '#')
+            pos_start_meanings = 0;
+        else {
+            if(-1 == (pos_start_meanings = text.toString().indexOf("\n#")))
+                b_exist_definition = false;
+        }
+
+        /*if(m.find())
             pos_start_meanings = m.start();
         else
             b_exist_definition = false; // pos_start_meanings = 0;
-        
+        */
         String defs_text = ""; // text with definitions and examples
 
         if(b_exist_definition && pos_start_meanings < pos_end_meanings)

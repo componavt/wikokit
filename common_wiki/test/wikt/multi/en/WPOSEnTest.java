@@ -206,9 +206,8 @@ public class WPOSEnTest {
     @Test
     public void testSplitToPOSSections_onePOS() {
         System.out.println("splitToPOSSections_onePOS");
-        String s1, s2, s1_result, s2_result;
+        String s1, s1_result;
 
-        String source_text;
         LangText source_lt;
         LangText[] etymology_sections;
         POSText[] result;
@@ -232,5 +231,51 @@ public class WPOSEnTest {
         assertEquals(POS.verb, result[0].getPOSType());
         assertTrue(result[0].getText().toString().equalsIgnoreCase(s1_result));
     }
+    
+    // One POS. Tests sub-function cutHeaderFromAlonePOSSection.
+    @Test
+    public void testSplitToPOSSections_onePOS_cutHeaderFromAlonePOSSection() {
+        System.out.println("splitToPOSSections_onePOS_cutHeaderFromAlonePOSSection");
+        String s_header, s_noun, source_text;
+        LangText source_lt;
+        LangText[] etymology_sections;
+        POSText[] result;
+        String page_title;
+
+        s_header = "[[Image:Ryanair.arp.750pix.jpg|thumb|right|250 px|Boeing 737 airplane.]]\n" +
+                "===Etymology===\n" +
+                "From {{term|aeroplane||lang=en}}\n" +
+                "\n" +
+                "===Pronunciation===\n" +
+                "* {{audio|en-us-airplane.ogg|Audio (US)}}\n" +
+                "\n" +
+                "===Noun===\n";
+
+        s_noun = "{{en-noun}}\n" +
+                "# {{US}} A powered heavier-than air [[aircraft]] with fixed [[wing]]s.\n" +
+                "\n" +
+                "====Synonyms====\n" +
+                "* [[aeroplane]].\n" +
+                "\n" +
+                "\n";
+
+        source_text = s_header + s_noun;
+
+        source_lt = new LangText(LanguageType.en);
+        source_lt.text = new StringBuffer(source_text);
+
+        page_title = "pos_word-1";
+        etymology_sections = WEtymologyEn.splitToEtymologySections(page_title, source_lt);
+        result = WPOSEn.splitToPOSSections(page_title, etymology_sections);
+
+        assertEquals(1, result.length);
+        assertEquals(POS.noun, result[0].getPOSType());
+
+        System.out.println("pos_section="+result[0].getText().toString());
+
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(s_noun));
+    }
+
+
 
 }

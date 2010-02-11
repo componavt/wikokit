@@ -21,7 +21,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "airplane", // "police", "clock", "chess",
+        "a", "the", "y", "at", "too", "an", "on",
         "адджындзинад",
         "Свирь",
         "Aare",
@@ -42,7 +42,6 @@ public class PageTableAll {
 
         "ы", // Russian letter
         "Abessinia", "Arabian", "Asianus", "Avernus", "Guatemala", "baba", // unknown language code 'null'
-        "a", // -lang-
         "FDR", // abbrev
         "барак",
         "мзда",
@@ -59,7 +58,7 @@ public class PageTableAll {
         "unser", "um", "twin", "tuus", "tu", "top", "tomo", "toki", "title",
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
-        "-iti-", "-лык", "-io-", "zwölf", "Википедия",
+        "-iti-", "-лык", "-io-", "zwölf", "Википедия", "bread"
 
         // uncomment for next dump
         // "кулёма",   // skip <ref>
@@ -90,7 +89,10 @@ public class PageTableAll {
         System.out.println("Total pages: " + n_total);
         t_start = System.currentTimeMillis();
 
-        WiktParser.clearDatabase(wikt_parsed_conn, native_lang);
+        if(0 == n_start_from)
+            WiktParser.clearDatabase(wikt_parsed_conn, native_lang);
+        else
+            WiktParser.initWithoutClearDatabase(wikt_parsed_conn, native_lang);
         
         try {
             s = wikt_conn.conn.createStatement ();
@@ -102,6 +104,8 @@ public class PageTableAll {
             int n_cur = 0;
             while (rs.next ())
             {
+//if (n_cur >= 1)
+//  break;
                 n_cur ++;
                 if(n_start_from >= 0 && n_start_from > n_cur)
                     continue;
@@ -114,13 +118,13 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                if (n_cur < debug_pages.length)
+                /*if (n_cur < debug_pages.length)
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur-1]);
                     //page_title = wikt_conn.enc.EncodeFromJava("one"); // будуаръ centi- всё-равно
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-                
+                */
                 if(DEBUG && 0 == n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
@@ -140,9 +144,6 @@ public class PageTableAll {
                 }
 
                 WiktParser.parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
-
-if (n_cur >= 1)
-  break;
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());

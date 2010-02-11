@@ -4,6 +4,7 @@ wiwordik 0.04 2010-02-??
     B
     
   Added (from programmer's point of view)
+    Now one language can have several language codes and several names.
     Added fields meaning_summary and label_id to the table relation. 
     Fixed bug: SQL exception is treated carefully now, when the Wiktionary page has the error: two language headers, e.g. == English == and == English == again.
     Added error message for the case the Wiktionary article about foreign word contains translation section.
