@@ -69,7 +69,17 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation_entry");
 
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "index_native");
+
         IndexForeign.generateTables(wikt_parsed_conn, native_lang);
+    }
+
+    public static void initWithoutClearDatabase (Connect wikt_parsed_conn, LanguageType native_lang) {
+        TLang.createFastMaps(wikt_parsed_conn);
+
+        TPOS.createFastMaps(wikt_parsed_conn);
+
+        TRelationType.createFastMaps(wikt_parsed_conn);
     }
 
     /** Parses the set of Wiktionary pages, 
@@ -171,8 +181,8 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
                 PageTableBase.getArticleText(wikt_conn, page_title));
 
         if(0 == str.length()) {
-            System.out.println("Error in WiktParser.parseWiktionaryEntry(): The article with the title '"+
-                    page_title + "' has no text in Wiktionary.");
+            //System.out.println("Error in WiktParser.parseWiktionaryEntry(): The article with the title '"+
+            //        page_title + "' has no text in Wiktionary.");
             return;
         }
 

@@ -87,7 +87,14 @@ public class POSTypeEn extends POSType {
     
     public static final POSType symbol          = new POSTypeEn("Symbol",       POS.symbol);
     public static final POSType letter          = new POSTypeEn("Letter",       POS.letter);
-    
+
+    // debated POS level 3 headers
+    public static final POSType number          = new POSTypeEn("Numeral",      POS.numeral);
+    public static final POSType numeral         = new POSTypeEn("Number",       POS.numeral);
+    public static final POSType cardinal_number = new POSTypeEn("Cardinal number", POS.numeral);
+    public static final POSType ordinal_number  = new POSTypeEn("Ordinal number", POS.numeral);
+    public static final POSType cardinal_numeral = new POSTypeEn("Cardinal numeral", POS.numeral);
+    public static final POSType ordinal_numeral = new POSTypeEn("Ordinal numeral", POS.numeral);
     
     // other headers in use
     public static final POSType particle        = new POSTypeEn("Particle",     POS.particle);  // 	(language) particles, CJKV languages, and some others; see tok, ne.

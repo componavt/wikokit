@@ -48,10 +48,19 @@ public class WLanguageEn {
         if(null == english_lang_name)
             return null;
 
-        lang_type = LanguageType.getByEnglishName( english_lang_name ); // i.e. skip the whole article if the first lang code is unknown
-        if (null == lang_type)
-            System.out.println("Warning: unknown language name: '" + english_lang_name + "' for the word '" + page_title + "' in WLanguageEn.getLanguageType()");
-    
+        int len = english_lang_name.length();
+        if( len > 4 && english_lang_name.charAt(0) == '[')  // e.g. ==[[Ewe]]==
+            lang_type = LanguageType.getByEnglishName( english_lang_name.substring(2, len-2));
+        else
+            lang_type = LanguageType.getByEnglishName( english_lang_name ); // i.e. skip the whole article if the first lang code is unknown
+        
+        if (null == lang_type) {
+            if(!LanguageType.hasUnknownLangName(english_lang_name)) {
+                LanguageType.addUnknownLangName(english_lang_name);
+                System.out.println("Warning in WLanguageEn.getLanguageType(): The article '"+
+                        page_title + "' has section with unknown language: " + english_lang_name + ".");
+            }
+        }
         return lang_type;
     }
 

@@ -16,7 +16,7 @@ import java.sql.*;
 
 import java.util.List;
 import java.util.ArrayList;
-import wikipedia.language.LanguageType;
+//import wikipedia.language.LanguageType;
 
 
 /** An operations with the table 'lang_pos' in MySQL wiktionary_parsed database.

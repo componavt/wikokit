@@ -290,10 +290,24 @@ public class WMeaningEnTest {
                 "\n" +
                 "\n";
 
-        _definition1 = "{{US}} A powered heavier-than air [[aircraft]] with fixed [[wing]]s.";
+        _definition1 = "{{US}} A powered heavier-than air aircraft with fixed wings.";
 
         pt = new POSText(POS.noun, str);
         WMeaning[] result = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+        assertNotNull(result);
+        assertEquals(1, result.length);
+        assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
+
+        // test 2: zero of symbols before the definition #
+        str =   "# {{US}} A powered heavier-than air [[aircraft]] with fixed [[wing]]s.\n" +
+                "\n" +
+                "====Synonyms====\n" +
+                "* [[aeroplane]].\n" +
+                "\n" +
+                "\n";
+
+        pt = new POSText(POS.noun, str);
+        result = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
         assertNotNull(result);
         assertEquals(1, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));

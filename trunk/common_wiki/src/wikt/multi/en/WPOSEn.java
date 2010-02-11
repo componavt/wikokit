@@ -50,11 +50,13 @@ public class WPOSEn {
 
     private final static List<POSText> NULL_POS_TEXT_LIST = new ArrayList<POSText>(0);
 
-    /** start of the POS block
+    /** start of the POS block: [\w {}], 
+     * \s (space) since there is "===Proper noun==="
+     * {} (brackets) since there is "==={{abbreviation}}==="
      */
     private final static Pattern ptrn_3_or_4_level = Pattern.compile(  // Vim: ^==\s*\([^=]\+\)\s*==\s*\Z
-            // RE: ^====?\s*([\w ]+)\s*====?\s*           //"(?m)^\\s*==");
-            "(?m)^====?\\s*([\\w ]+)\\s*====?\\s*");
+            // RE: ^====?\s*([\w {}]+)\s*====?\s*           //"(?m)^\\s*==");
+            "(?m)^====?\\s*([\\w {}]+)\\s*====?\\s*");
 
     /** Gets true, if str is known header, e.g. "References",
      * but it's not a part of speech name, e.g. "Verb".
@@ -86,17 +88,27 @@ public class WPOSEn {
                                     LangText lt, Matcher m)
     {
         List<POSText> pos_section_alone = new ArrayList<POSText>(1);
-
-        String alone_POS_text = "";
         m.reset();
-        if(m.find())
-            alone_POS_text = lt.text.toString().substring(m.end());
-        else
-            alone_POS_text = lt.text.toString();
+        
+        while(m.find()) {
 
-        m.reset();
-        POS pos = getFirstPOS(m);
-        pos_section_alone.add( new POSText(pos, new StringBuffer(alone_POS_text)) );
+            String pos_header = m.group(1);
+
+            if(m.groupCount() > 0 && POSTypeEn.has(pos_header)) {
+
+                pos_section_alone.add( new POSText(
+                        POSTypeEn.get(pos_header),
+                        new StringBuffer(          // text after === POS ===
+                                lt.text.toString().substring(m.end()))) );
+
+                return pos_section_alone;
+            }
+        }
+
+        // save all text for unknown POS
+        pos_section_alone.add( new POSText(
+                        POS.unknown,
+                        lt.text) );
         return pos_section_alone;
     }
     /** page_title - word which are described in this article 'text'

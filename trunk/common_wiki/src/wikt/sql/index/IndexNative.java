@@ -10,7 +10,7 @@ package wikt.sql.index;
 import wikt.sql.*;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
+//import wikipedia.language.LanguageType;
 
 import java.sql.*;
 

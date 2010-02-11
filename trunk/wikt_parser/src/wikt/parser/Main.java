@@ -28,16 +28,35 @@ public class Main {
      * </B><BR>
      */
     public static void main(String[] args) {
-        
-        LanguageType wiki_lang;
-        String  category_name;
-        
+                
         // Connect to Wiktionary database
         Connect wikt_conn = new Connect();
         
         // Connect to wikt_parsed database
         Connect wikt_parsed_conn = new Connect();
-        
+
+        if(args.length != 2) {
+            System.out.println("Wiktionary parser.\n" +
+            "Usage:\n  run_wikt_parser.bat language_code n_start_from\n" +
+                    "Arguments:\n" +
+                    "  language_code - language code of MySQL Wiktionary database to be parsed\n" +
+                    "  n_start_from - number of records in database to start from\n" +
+                    "Examples: run_wikt_parser.bat en 0\n"
+                    );
+            return;
+        }
+
+        String s = args[0];
+        if(!LanguageType.has(s)) {
+            System.out.println("Error. Unknown language code '" + s + "'. Stop.");
+            return;
+        }
+        LanguageType wiki_lang = LanguageType.get(s);
+        System.out.println("OK. language code is '" + s + "'");
+
+        int n_start_from = Integer.parseInt(args[1]);
+        System.out.println("OK. n_start_from=" + n_start_from);
+
         /*
         // simple
         wiki_lang = LanguageType.simple;
@@ -49,18 +68,22 @@ public class Main {
                                             // "American_poets" 9 docs  - OK
         */
         
-        // russian
-        /* wiki_lang = LanguageType.ru;
-        wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
-        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
-        */ 
+        // Russian
+        if(LanguageType.ru == wiki_lang) {
+            wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
+            wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
+        } else {
+            // English
+            if(LanguageType.en == wiki_lang) {
+                wikt_conn.Open       (Connect.ENWIKT_HOST,        Connect.ENWIKT_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
+                wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
+            } else {
+                System.out.println("This language code ('" + s + "') is not supported yet. Stop.");
+                return;
+            }
+        }        
         
-        // russian
-        wiki_lang = LanguageType.en;
-        wikt_conn.Open       (Connect.ENWIKT_HOST,        Connect.ENWIKT_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
-        wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
-
-        category_name = "Викисловарь:Избранные статьи";
+        String category_name = "Викисловарь:Избранные статьи";
             // "Викисловарь:Избранные статьи";
             // "Слово дня";
             // "Статья недели", "Слово дня"
@@ -70,7 +93,7 @@ public class Main {
         WiktParser w = new WiktParser();
 //        w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
         
-        int n_start_from = 0;
+
         PageTableAll.parseAllPages(wiki_lang, wikt_conn, wikt_parsed_conn, n_start_from);
         
         wikt_conn.Close();
