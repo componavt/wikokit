@@ -21,7 +21,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "a", "the", "y", "at", "too", "an", "on",
+        "a", "the", "y", "at", "too", "an", "on", "ai",
         "адджындзинад",
         "Свирь",
         "Aare",
