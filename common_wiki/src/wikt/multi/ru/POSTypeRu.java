@@ -81,7 +81,9 @@ public class POSTypeRu extends POSType {
     // {{прил en|round|слоги=round}}
     public static final POSType adjective           = new POSTypeRu("прил",     POS.adjective); // "прилагательное",
     public static final POSType adjective_old_en    = new POSTypeRu("Adjective",POS.adjective);
-    
+
+    // todo + preposition
+    // public static final POSType preposition     = new POSTypeEn("Preposition",  POS.preposition);
     
     // other headers in use
     public static final POSType particle1            = new POSTypeRu("part",     POS.particle); // частица, part ru, part-ru
