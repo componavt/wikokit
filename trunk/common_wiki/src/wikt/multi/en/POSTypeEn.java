@@ -62,7 +62,7 @@ public class POSTypeEn extends POSType {
     public static final POSType conjunction     = new POSTypeEn("Conjunction",  POS.conjunction);
     public static final POSType interjection    = new POSTypeEn("Interjection", POS.interjection);
     public static final POSType preposition     = new POSTypeEn("Preposition",  POS.preposition);
-    
+    public static final POSType prepositional_phrase = new POSTypeEn("Prepositional phrase",  POS.prepositional_phrase);
     
     // Additional commonly used grammatical headers are:
     public static final POSType proper_noun     = new POSTypeEn("Proper noun",  POS.proper_noun);

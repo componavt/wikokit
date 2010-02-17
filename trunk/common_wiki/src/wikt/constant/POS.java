@@ -88,6 +88,7 @@ public class POS {
     
     public static final POS phrase          = new POS("phrase");
     public static final POS idiom           = new POS("idiom");
+    public static final POS prepositional_phrase = new POS("prepositional phrase");
 
     // debated POS level 3 headers
     public static final POS numeral         = new POS("numeral");
