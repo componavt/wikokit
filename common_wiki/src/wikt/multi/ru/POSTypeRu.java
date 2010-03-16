@@ -82,7 +82,7 @@ public class POSTypeRu extends POSType {
     public static final POSType adjective           = new POSTypeRu("прил",     POS.adjective); // "прилагательное",
     public static final POSType adjective_old_en    = new POSTypeRu("Adjective",POS.adjective);
 
-    // todo + preposition
+    // todo + preposition Предлог
     // public static final POSType preposition     = new POSTypeEn("Preposition",  POS.preposition);
     
     // other headers in use
