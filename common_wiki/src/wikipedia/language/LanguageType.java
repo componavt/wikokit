@@ -602,7 +602,8 @@ public class LanguageType {
     public static final LanguageType hif_deva = new LanguageType("hif-deva", "а¤«а¤јаҐЂа¤њаҐЂ а¤№а¤їа¤ЁаҐЌа¤¦аҐЂ", "Fiji Hindi (devangari)");
     public static final LanguageType hif_latn = new LanguageType("hif-latn", "Fiji Hindi", "Fiji Hindi (latin)");
 
-    public static final LanguageType ht = new LanguageType("ht", "KreyГІl ayisyen", "Haitian Creole");
+    public static final LanguageType hmn    = new LanguageType("hmn", "Hmong", "Hmong");// мяо
+    public static final LanguageType ht     = new LanguageType("ht", "KreyГІl ayisyen", "Haitian Creole");
     
     public static final LanguageType ike_cans = new LanguageType("ike-cans", "бђѓб“„б’ѓб‘Ћб‘ђб‘¦", "Inuktitut, Eastern Canadian/Eastern Canadian \"Eskimo\"/\"Eastern Arctic Eskimo\"/Inuit (Unified Canadian Aboriginal Syllabics)");
     public static final LanguageType ike_latn = new LanguageType("ike-latn", "inuktitut", "Inuktitut, Eastern Canadian (Latin script)");
