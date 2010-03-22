@@ -10,6 +10,9 @@ Todo:
 
 = DB layout changes =
 
+To add INDEX keys IN SQL:
+  # wiki_text_words.wiki_text_id: INDEX wiki_text_id
+
 == Translation entry ==
 
 Goal: storing Translation data from "`*` Arabic: {{t|ar|حاسوب|m|sc=Arab|tr=ħasūb}}".
