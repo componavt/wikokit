@@ -226,9 +226,12 @@ public class Connect {
         String classname = "com.mysql.jdbc.Driver";
         try {
             Class.forName(classname).newInstance(); 
-                                  //String s = "jdbc:mysql://"+db_host+"/"+db_name;
             conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name, user, pass);
-            
+
+            // jdbc:mysql://localhost/test?user=testuser&password=testpass
+//            String s = "jdbc:mysql://"+db_host+"/"+db_name +"&user="+ user +"&password="+ pass;
+//            conn = DriverManager.getConnection(s);
+
             // ?autoReconnect=true&useUnbufferedInput=false
             //conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name+"?useUnicode=true&characterEncoding=UTF-8", user, pass);
             //conn = DriverManager.getConnection("jdbc:mysql://localhost/"+db_name, user, pass);
@@ -261,6 +264,10 @@ public class Connect {
 "\n(javawiki and enwiki) then update fields 'db_name_en' and 'user_en'" +
 "\nin /home/user_name/.wikibrowser.server.props" +
 "\nSee more information at https://sourceforge.net/projects/synarcher" +
+"\n" +
+"\n4. Create the parsed Wiktionary database, e.g. enwikt20091228_parsed;" +
+"\n  mysql> use enwikt20091228_parsed;" +
+"\n  mysql> SOURCE wikokit\\wikt_parser\\doc\\wikt_parsed_empty.sql " +
 "\nThank you."
                     );
         }
