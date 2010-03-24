@@ -30,7 +30,7 @@ The number of entries and selected types of lexical semantic information availab
 
 == Number of semantic relations for each language ==
 
-|| Language code || Languge  || synonymy || antonymy || hypernymy || hyponymy || holonymy || meronymy || total ||
+|| Language code || Language  || synonymy || antonymy || hypernymy || hyponymy || holonymy || meronymy || total ||
 || zh-tw || Chinese (Taiwan) || 0 || 0 || 1 || 0 || 0 || 0 || 1 ||
 || slovio || Slovio || 4 || 1 || 0 || 0 || 0 || 0 || 5 ||
 || pl || Polish || 42 || 8 || 11 || 2 || 0 || 0 || 63 ||
