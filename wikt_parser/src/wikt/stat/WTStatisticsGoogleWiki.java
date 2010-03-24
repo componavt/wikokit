@@ -1,6 +1,7 @@
 /* WTStatistics.java - Statistics of the database of the parsed Wiktionary.
+ * Wiki format defined by code.google.com
  *
- * Copyright (c) 2009-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
@@ -11,53 +12,34 @@ import wikt.constant.Relation;
 import wikipedia.language.LanguageType;
 
 import java.util.Map;
-//import java.util.Collection;
 
 /** Statistics of the database of the parsed Wiktionary.
+ * Wiki format defined by code.google.com
  *
- * The result could be inserted into the Wiktionary page.
- * @see todo
+ * @see http://code.google.com/p/wikokit/wiki/SQLWiktParsedPhantasmagoria
  */
-public class WTStatistics {
+public class WTStatisticsGoogleWiki {
 
-    public static void printHeader (String db_name) {
-
-        System.out.println("\nThe parsed database name: " + db_name +"<ref>" +
-                "This (or more recent) database would be available at the project site " +
-                "[http://code.google.com/p/wikokit wikokit], see Download section." +
-                "</ref>");
-    }
-    public static void printFooter () {
-
-        System.out.println("\n== References ==\n<references />\n");
-    }
 
     /** Prints statistics about relations in Wiktionary.
      *
      * @param m_lang_rel_n map of maps with number of synonyms, antonyms, etc.
      * in English, Russian etc. (lang -> relations -> count)
      */
-    public static void printRelationsPerLanguage (
-                        String db_name,
-                        Map<LanguageType, Map<Relation,Integer>> m_lang_rel_n) {
-
-        System.out.println("\n== Statistics of semantic relations in the Wiktionary parsed database ==");
-        printHeader (db_name);
-        System.out.println("\nLanguages with semantic relations: " + m_lang_rel_n.size());
+    public static void printRelationsPerLanguage (Map<LanguageType, Map<Relation,Integer>> m_lang_rel_n) {
 
         // print header line
-        System.out.println("{| class=\"sortable prettytable\"");
-        System.out.print("! Language name || Language code ||");
-
+        System.out.println("== Number of semantic relations for each language ==");
+        System.out.print("|| Language || Language code ");
         //Collection<Relation> all_rel = Relation.getAllRelations();
         Relation[] all_rel = {  Relation.synonymy,  Relation.antonymy,
                                 Relation.hypernymy, Relation.hyponymy,
                                 Relation.holonymy,  Relation.meronymy};
-        
-        System.out.print(" total"); // " Number of semantic relations"
+
         for(Relation r : all_rel) {
             System.out.print(" || " + r.toString());
         }
+        System.out.println(" || total ||");
 
         // print values
         for(LanguageType lang : m_lang_rel_n.keySet()) {
@@ -65,28 +47,23 @@ public class WTStatistics {
                 System.out.println(lang.toString() + " : 0");
             else {*/
 
-                //System.out.print("|| " + lang.getName() + " || " + lang.getCode());
-            System.out.println("\n|-\n! " + lang.getName() + " || " + lang.getCode());
-//|-
-//! Abaza
-            
-            Map<Relation,Integer> rel_n = m_lang_rel_n.get(lang);
+                System.out.print("|| " + lang.getName() + " || " + lang.getCode());
 
-            int total = 0; // number of relations for one language: synonyms + antonyms + ...
-            for(Relation r : all_rel)
-                total += (rel_n.containsKey(r) ? rel_n.get(r) : 0);
-            System.out.print("|| " + total + " ||");
+                Map<Relation,Integer> rel_n = m_lang_rel_n.get(lang);
 
-            for(Relation r : all_rel) {
-                int n = rel_n.containsKey(r) ? rel_n.get(r) : 0;
-                System.out.print(" || " + n);
-                total += n;
-            }
+                int total = 0; // number of relations for one language: synonyms + antonyms + ...
+                for(Relation r : all_rel) {
+                    int n = rel_n.containsKey(r) ? rel_n.get(r) : 0;
+                    System.out.print(" || " + n);
+                    total += n;
+                }
+                System.out.println(" || " + total + " ||");
+            //}
         }
-        System.out.println("\n|}");
-        printFooter();
+
+        System.out.println("\nLanguages with relations:" + m_lang_rel_n.size());
     }
-    
+
     /** Prints statistics about translations in Wiktionary.
      *
      * @param m_lang_n map of maps with number of translations into
@@ -95,7 +72,7 @@ public class WTStatistics {
     public static void printTranslationPerLanguage (Map<LanguageType, Integer> m_lang_n) {
 
         int total = 0; // total number of translations
-        
+
         // print header line
         System.out.print("|| Language code || Language || n ||");
 
@@ -106,7 +83,7 @@ public class WTStatistics {
             else {*/
 
                 System.out.print("|| " + lang.getCode() + " || " + lang.getName());
-                
+
                 int n = m_lang_n.get(lang);
                 System.out.println(" || " + n + " ||");
 
@@ -117,5 +94,5 @@ public class WTStatistics {
         System.out.println("\nThere are translations into " + m_lang_n.size() + " languages.");
         System.out.println("\nTotal translations: " + total);
     }
-    
+
 }

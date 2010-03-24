@@ -146,7 +146,9 @@ public class RelationTableAll {
         wikt_parsed_conn.Close();
 
         System.out.println();
-        WTStatistics.printRelationsPerLanguage(m);
+        String db_name = wikt_parsed_conn.getDBName();
+        WTStatistics.printRelationsPerLanguage(db_name, m);
+        //WTStatisticsGoogleWiki.printRelationsPerLanguage(m);
     }
 
 }
