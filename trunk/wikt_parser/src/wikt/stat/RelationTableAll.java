@@ -41,7 +41,7 @@ public class RelationTableAll {
         int n_unknown_lang_pos = 0; // relations which belong to words with unknown language and POS
 
         int n_total = Statistics.Count(wikt_parsed_conn, "relation");
-        System.out.println("Total relations: " + n_total);
+        //System.out.println("Total relations: " + n_total);
         t_start = System.currentTimeMillis();
 
         Map<LanguageType, Map<Relation,Integer>> m_lang_rel_n = new HashMap<LanguageType, Map<Relation,Integer>>();
@@ -122,11 +122,11 @@ public class RelationTableAll {
         long  t_end;
         t_end  = System.currentTimeMillis();
         t_work = (t_end - t_start)/1000f; // in sec
-        System.out.println("\n\nTime sec:" + t_work +
+        System.out.println("\nTime sec:" + t_work +
                 "\nTotal relations: " + n_total +
                 "\nUnknown: " + n_unknown_lang_pos + " (relations which belong to words with unknown language and POS)"
                 );
-
+                
         return m_lang_rel_n;
     }
 
@@ -142,13 +142,18 @@ public class RelationTableAll {
         TPOS.createFastMaps(wikt_parsed_conn);
         TRelationType.createFastMaps(wikt_parsed_conn);
 
-        Map<LanguageType, Map<Relation,Integer>> m = RelationTableAll.countRelationsPerLanguage(wikt_parsed_conn);        
-        wikt_parsed_conn.Close();
-
-        System.out.println();
         String db_name = wikt_parsed_conn.getDBName();
-        WTStatistics.printRelationsPerLanguage(db_name, m);
+        System.out.println("\n== Statistics of semantic relations in the Wiktionary parsed database ==");
+        WTStatistics.printHeader (db_name);
+
+        Map<LanguageType, Map<Relation,Integer>> m = RelationTableAll.countRelationsPerLanguage(wikt_parsed_conn);
+        wikt_parsed_conn.Close();
+        System.out.println("\nLanguages with semantic relations: " + m.size());
+        System.out.println();
+
         //WTStatisticsGoogleWiki.printRelationsPerLanguage(m);
+        WTStatistics.printRelationsPerLanguage(db_name, m);
+        WTStatistics.printFooter();
     }
 
 }

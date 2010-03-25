@@ -61,7 +61,7 @@ public class TranslationTableAll {
         int n_unknown_lang_pos = 0; // translations into unknown languages
 
         int n_total = Statistics.Count(wikt_parsed_conn, "translation");
-        System.out.println("Total translation boxes (translated meanings of words): " + n_total);
+        //System.out.println("Total translation boxes (translated meanings of words): " + n_total);
         t_start = System.currentTimeMillis();
 
         Map<LanguageType, Integer> m_lang_n = new HashMap<LanguageType, Integer>();
@@ -138,11 +138,11 @@ public class TranslationTableAll {
         long  t_end;
         t_end  = System.currentTimeMillis();
         t_work = (t_end - t_start)/1000f; // in sec
-        System.out.println("\n\nTime sec:" + t_work +
-                "\nTotal translations: " + n_total +
+        System.out.println(//"\nTime sec:" + t_work +
+                "\nTotal translation boxes (translated meanings of words): " + n_total +
                 "\nUnknown: " + n_unknown_lang_pos + " (words which have translations but have unknown language code and POS)"
                 );
-
+        
         return m_lang_n;
     }
 
@@ -158,11 +158,17 @@ public class TranslationTableAll {
         TPOS.createFastMaps(wikt_parsed_conn);
         //TRelationType.createFastMaps(wikt_parsed_conn);
 
+        String db_name = wikt_parsed_conn.getDBName();
+        System.out.println("\n== Statistics of translations in the Wiktionary parsed database ==");
+        WTStatistics.printHeader (db_name);
+
         Map<LanguageType, Integer> m = TranslationTableAll.countTranslationPerLanguage(wikt_parsed_conn);
         wikt_parsed_conn.Close();
 
         System.out.println();
         WTStatistics.printTranslationPerLanguage(m);
+        System.out.println("\nThere are translations into " + m.size() + " languages.");
+        WTStatistics.printFooter();
     }
 
 }
