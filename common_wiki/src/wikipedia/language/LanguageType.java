@@ -282,6 +282,10 @@ public class LanguageType {
     public static final LanguageType kv     = LanguageType.addNonUnique(kom, "kv", "Komi-Zyrian");// cyrillic is common script but also written in latin script
     public static final LanguageType kpv    = LanguageType.addNonUniqueCode(kom, "kpv");//
 
+    public static final LanguageType mn = new LanguageType("mn", "Mongolian", "Mongolian");
+    public static final LanguageType khk = new LanguageType("khk", "Khalkha Mongolian", "Khalkha Mongolian");  // Halh Mongolian (Cyrillic) (ISO 639-3: khk)
+    public static final LanguageType xal = new LanguageType("xal", "Kalmyk", "Kalmyk"); //Kalmyk-Oirat (Kalmuk, Kalmuck, Kalmack, Qalmaq, Kalmytskii Jazyk, Khal:mag, Oirat, Volga Oirat, European Oirat, Western Mongolian)
+
     public static final LanguageType mrv    = new LanguageType("mrv", "Mangareva", "Mangareva");// Мангаревский
     public static final LanguageType mrv2   = LanguageType.addNonUniqueName(kom, "Mangarevan");
 
@@ -723,7 +727,7 @@ public class LanguageType {
 
     public static final LanguageType ze = new LanguageType("ze", "Zeneize", "Zeneize");// Генуэзский диалект лигурского языка
     
-    public static final LanguageType zh = new LanguageType("zh", "дё­ж–‡", "(ZhЕЌng WГ©n) - Chinese");
+    public static final LanguageType zh = new LanguageType("zh", "Chinese", "Chinese");// (ZhЕЌng WГ©n)
     public static final LanguageType zh_nan = new LanguageType("zh-nan", "Min-nan", "Min Nan");//Китайский (южноминьский) Min Nan, Minnan, or Min-nan, Southern Min
 
     public static final LanguageType zh_cn = new LanguageType("zh-cn", "Chinese (PRC)", "Chinese (PRC)");
@@ -923,7 +927,7 @@ public class LanguageType {
     public static final LanguageType mi = new LanguageType("mi", "MДЃori", "Maori");
     public static final LanguageType mk = new LanguageType("mk", "РњР°РєРµРґРѕРЅСЃРєРё", "Macedonian");
     public static final LanguageType ml = new LanguageType("ml", "аґ®аґІаґЇаґѕаґіаґ‚", "Malayalam");
-    public static final LanguageType mn = new LanguageType("mn", "РњРѕРЅРіРѕР»", "Halh Mongolian (Cyrillic) (ISO 639-3: khk)");
+
     public static final LanguageType mo = new LanguageType("mo", "РњРѕР»РґРѕРІРµРЅСЏСЃРєСЌ", "Moldovan");
     public static final LanguageType mr = new LanguageType("mr", "а¤®а¤°а¤ѕа¤ аҐЂ", "Marathi");
     public static final LanguageType ms = new LanguageType("ms", "Bahasa Melayu", "Malay");
@@ -1040,7 +1044,7 @@ public class LanguageType {
     public static final LanguageType war = new LanguageType("war", "Winaray", "Waray-Waray");
     public static final LanguageType wo = new LanguageType("wo", "Wolof", "Wolof");
     public static final LanguageType wuu = new LanguageType("wuu", "еђґиЇ­", "Wu Chinese");
-    public static final LanguageType xal = new LanguageType("xal", "РҐР°Р»СЊРјРі", "Kalmyk-Oirat (Kalmuk, Kalmuck, Kalmack, Qalmaq, Kalmytskii Jazyk, Khal:mag, Oirat, Volga Oirat, European Oirat, Western Mongolian)");
+    
     public static final LanguageType xmf = new LanguageType("xmf", "бѓ›бѓђбѓ бѓ’бѓђбѓљбѓЈбѓ бѓ", "Mingrelian");
     public static final LanguageType ydd = new LanguageType("ydd", "ЧћЧ™Ч–ЧЁЧ—ЦѕЧ™Ч™ЦґЧ“Ч™Ч©", "Eastern Yiddish");
     public static final LanguageType yi = new LanguageType("yi", "Ч™Ч™ЦґЧ“Ч™Ч©", "Yiddish");
