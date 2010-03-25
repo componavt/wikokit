@@ -16,6 +16,7 @@ import java.util.Map;
 /** Statistics of the database of the parsed Wiktionary.
  *
  * The result could be inserted into the Wiktionary page.
+ * @see http://ru.wiktionary.org/wiki/User:AKA MBG/Статистика:Семантические отношения
  * @see todo
  */
 public class WTStatistics {
@@ -40,10 +41,6 @@ public class WTStatistics {
     public static void printRelationsPerLanguage (
                         String db_name,
                         Map<LanguageType, Map<Relation,Integer>> m_lang_rel_n) {
-
-        System.out.println("\n== Statistics of semantic relations in the Wiktionary parsed database ==");
-        printHeader (db_name);
-        System.out.println("\nLanguages with semantic relations: " + m_lang_rel_n.size());
 
         // print header line
         System.out.println("{| class=\"sortable prettytable\"");
@@ -84,7 +81,6 @@ public class WTStatistics {
             }
         }
         System.out.println("\n|}");
-        printFooter();
     }
     
     /** Prints statistics about translations in Wiktionary.
@@ -97,25 +93,27 @@ public class WTStatistics {
         int total = 0; // total number of translations
         
         // print header line
-        System.out.print("|| Language code || Language || n ||");
-
+        // print header line
+        System.out.println("{| class=\"sortable prettytable\"");
+        System.out.println("! Language name || Language code || Number");
+        
         // print values
         for(LanguageType lang : m_lang_n.keySet()) {
             /*if(!m_lang_rel_n.containsKey(lang))
                 System.out.println(lang.toString() + " : 0");
             else {*/
-
-                System.out.print("|| " + lang.getCode() + " || " + lang.getName());
                 
                 int n = m_lang_n.get(lang);
-                System.out.println(" || " + n + " ||");
-
+                System.out.println("|-\n! " + lang.getName() + " || " + lang.getCode() + " || " + n);
+                //System.out.print("|| " + lang.getCode() + " || " + lang.getName());
+                // System.out.println(" || " + n + " ||");
+                
                 total += n;
             //}
         }
-
-        System.out.println("\nThere are translations into " + m_lang_n.size() + " languages.");
-        System.out.println("\nTotal translations: " + total);
+        System.out.println("|}");
+        
+        System.out.println(  "Total translations: " + total);
     }
     
 }
