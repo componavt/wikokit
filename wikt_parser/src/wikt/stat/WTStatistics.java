@@ -72,7 +72,7 @@ public class WTStatistics {
             int total = 0; // number of relations for one language: synonyms + antonyms + ...
             for(Relation r : all_rel)
                 total += (rel_n.containsKey(r) ? rel_n.get(r) : 0);
-            System.out.print("|| " + total + " ||");
+            System.out.print("|| " + total);
 
             for(Relation r : all_rel) {
                 int n = rel_n.containsKey(r) ? rel_n.get(r) : 0;

@@ -139,9 +139,9 @@ public class TranslationTableAll {
         t_end  = System.currentTimeMillis();
         t_work = (t_end - t_start)/1000f; // in sec
         System.out.println(//"\nTime sec:" + t_work +
-                "\nTotal translation boxes (translated meanings of words): " + n_total +
-                "\nUnknown: " + n_unknown_lang_pos + " (words which have translations but have unknown language code and POS)"
-                );
+            "\nTotal translation boxes (translated meanings of words): " + n_total +
+            "\n\nUnknown<ref>'''Unknown''' - words which have translations but have unknown language code and POS</ref>: "
+            + n_unknown_lang_pos);
         
         return m_lang_n;
     }
