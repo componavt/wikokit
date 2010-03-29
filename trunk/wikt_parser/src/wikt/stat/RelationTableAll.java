@@ -123,9 +123,9 @@ public class RelationTableAll {
         t_end  = System.currentTimeMillis();
         t_work = (t_end - t_start)/1000f; // in sec
         System.out.println("\nTime sec:" + t_work +
-                "\nTotal relations: " + n_total +
-                "\nUnknown: " + n_unknown_lang_pos + " (relations which belong to words with unknown language and POS)"
-                );
+            "\nTotal relations: " + n_total +
+            "\n\nUnknown<ref>'''Unknown''' - relations which belong to words with unknown language and POS</ref>: " +
+            n_unknown_lang_pos);
                 
         return m_lang_rel_n;
     }
@@ -135,8 +135,11 @@ public class RelationTableAll {
         // Connect to wikt_parsed database
         Connect wikt_parsed_conn = new Connect();
 
-        // russian
-        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+        // Russian
+        //wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+
+        // English
+        wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
 
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
