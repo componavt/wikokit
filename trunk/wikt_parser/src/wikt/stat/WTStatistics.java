@@ -104,7 +104,7 @@ public class WTStatistics {
             else {*/
                 
                 int n = m_lang_n.get(lang);
-                System.out.println("|-\n! " + lang.getName() + " || " + lang.getCode() + " || " + n);
+                System.out.println("|-\n! " + lang.getName() + " || " + lang.getCode() + "\n|| " + n);
                 //System.out.print("|| " + lang.getCode() + " || " + lang.getName());
                 // System.out.println(" || " + n + " ||");
                 
