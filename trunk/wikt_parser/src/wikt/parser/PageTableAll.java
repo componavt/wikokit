@@ -18,10 +18,16 @@ import java.sql.*;
 public class PageTableAll {
     private static final boolean DEBUG = true;
     
-    /** pages which caused crash of program (Russian Wikipedia) - for fast debug */
+    /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
         "airplane", // temp
+
+        // English Wiktionary
+        "ai", "alo", "anu", "ban", "bat", "us", "we", "",
+
+
+        // Russian Wiktionary
         "a", "the", "y", "at", "too", "an", "on", "ai",
         "адджындзинад",
         "Свирь",

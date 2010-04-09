@@ -42,8 +42,8 @@ var native_lang : LanguageType;
 
 function init() {
 
-    native_lang = LanguageType.ru;
-    //native_lang = LanguageType.en;
+    //native_lang = LanguageType.ru;
+    native_lang = LanguageType.en;
 
     // MySQL
     if(LanguageType.ru == native_lang) {
