@@ -24,7 +24,8 @@ public class PageTableAll {
         "airplane", // temp
 
         // English Wiktionary
-        "ai", "alo", "anu", "ban", "bat", "us", "we", "",
+        "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
+        "amana", "ke", "kali", "let", "met", "", "", "", "", "", "", "", "", "",
 
 
         // Russian Wiktionary
