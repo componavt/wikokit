@@ -192,9 +192,9 @@ public class LanguageType {
      */
     public static LanguageType addNonUniqueCode(LanguageType lt, String code) {
 
-        if(code.length() > 8) {
+        if(code.length() > 12) {
             System.out.println("Error in LanguageType.addNonUniqueCode(): the language code '"+code+
-                    "' is too long (.length() > 8)!");
+                    "' is too long (.length() > 12)!");// zh-classical
             return null;
         }
 
@@ -406,6 +406,7 @@ public class LanguageType {
     public static final LanguageType tzt    = LanguageType.addNonUniqueCode(tzj, "tzt");
     
     // Wu, Chinese, etc.
+    public static final LanguageType zh     = new LanguageType("zh", "Chinese", "Chinese");// (ZhЕЌng WГ©n)
     public static final LanguageType cmn    = new LanguageType("cmn", "Mandarin", "Mandarin");
     
     public static final LanguageType ltc    = new LanguageType("ltc", "Middle Chinese", "Middle Chinese");
@@ -414,11 +415,9 @@ public class LanguageType {
     
     public static final LanguageType wuu    = new LanguageType("wuu", "Wu", "Wu");// У (китайский диалект)
 
-    public static final LanguageType zh     = new LanguageType("zh", "Chinese", "Chinese");// (ZhЕЌng WГ©n)
-
     // todo : enwikt:template:zh-ts -> trad. (zh-tw), simpl. (zh-cn)
     public static final LanguageType zh_tw = new LanguageType("zh-tw", "Traditional Chinese", "Traditional Chinese");// Китайский (традиц.)
-    public static final LanguageType zh_hant = LanguageType.addNonUnique(zh_tw, "zh-hant", "Traditional Chinese");// Chinese written using the Traditional Chinese script
+    public static final LanguageType zh_hant = LanguageType.addNonUniqueCode(zh_tw, "zh-hant");// Chinese written using the Traditional Chinese script
 
     public static final LanguageType zh_cn = new LanguageType("zh-cn", "Simplified Chinese", "Simplified Chinese");// Китайский (упрощ.)
     public static final LanguageType zh_hans = LanguageType.addNonUnique(zh_cn, "zh-hans", "Chinese (PRC)");// Chinese written using the Simplified Chinese script
