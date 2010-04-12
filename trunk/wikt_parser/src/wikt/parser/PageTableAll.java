@@ -25,7 +25,7 @@ public class PageTableAll {
 
         // English Wiktionary
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
-        "amana", "ke", "kali", "let", "met", "", "", "", "", "", "", "", "", "",
+        "amana", "ke", "kali", "let", "met", "chan", "bo", "m", "", "", "", "", "", "",
 
 
         // Russian Wiktionary
