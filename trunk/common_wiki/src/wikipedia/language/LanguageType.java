@@ -310,6 +310,9 @@ public class LanguageType {
     public static final LanguageType ilo = new LanguageType("ilo", "Ilokano", "Ilokano");
     public static final LanguageType ilo2= LanguageType.addNonUniqueName(ilo, "Ilocano");
 
+    public static final LanguageType ina = new LanguageType("ina", "Interlingua", "Interlingua");// Интерлингва
+    public static final LanguageType ia  = LanguageType.addNonUniqueCode(ina, "ia");
+
     public static final LanguageType iu = new LanguageType("iu", "бђѓб“„б’ѓб‘Ћб‘ђб‘¦", "Inuktitut");// (macro language - do no localise, see ike/ikt - falls back to ike-cans)
     public static final LanguageType ike_cans = new LanguageType("ike-cans", "бђѓб“„б’ѓб‘Ћб‘ђб‘¦", "Inuktitut, Eastern Canadian");// /Eastern Canadian \"Eskimo\"/\"Eastern Arctic Eskimo\"/Inuit (Unified Canadian Aboriginal Syllabics)
     public static final LanguageType ike_latn = new LanguageType("ike-latn", "inuktitut", "Inuktitut, Eastern Canadian (Latin)");// Latin script
@@ -354,6 +357,9 @@ public class LanguageType {
 
     public static final LanguageType pcm    = new LanguageType("pcm", "Nigerian Pidgin", "Nigerian Pidgin");//
     public static final LanguageType pcm2   = LanguageType.addNonUniqueName(pcm, "Naija");
+
+    public static final LanguageType run = new LanguageType("run", "Kirundi", "Kirundi");// Кирунди
+    public static final LanguageType rn  = LanguageType.addNonUnique(run, "rn", "Rundi");// Рунди
 
     public static final LanguageType smo    = new LanguageType("smo", "Gagana Samoa", "Samoan");// Самоанский
     public static final LanguageType sm     = LanguageType.addNonUniqueCode(smo, "sm");
@@ -968,7 +974,7 @@ public class LanguageType {
     public static final LanguageType hu = new LanguageType("hu", "Magyar", "Hungarian");
     public static final LanguageType hy = new LanguageType("hy", "ХЂХЎХµХҐЦЂХҐХ¶", "Armenian");
     public static final LanguageType hz = new LanguageType("hz", "Otsiherero", "Herero");
-    public static final LanguageType ia = new LanguageType("ia", "Interlingua", "Interlingua");
+    
     public static final LanguageType id = new LanguageType("id", "Bahasa Indonesia", "Indonesian");
     public static final LanguageType ie = new LanguageType("ie", "Interlingue", "Interlingue (Occidental)");
     public static final LanguageType ii = new LanguageType("ii", "к†‡к‰™", "Sichuan Yi");
@@ -1074,7 +1080,7 @@ public class LanguageType {
     public static final LanguageType qu = new LanguageType("qu", "Runa Simi", "Quechua");
     public static final LanguageType rif = new LanguageType("rif", "Tarifit", "Tarifit");
     public static final LanguageType rmy = new LanguageType("rmy", "Romani", "Vlax Romany");
-    public static final LanguageType rn = new LanguageType("rn", "Kirundi", "Rundi/Kirundi/Urundi");
+    
     public static final LanguageType ro = new LanguageType("ro", "RomГўnДѓ", "Romanian");
     
     public static final LanguageType ru = new LanguageType("ru", "Р СѓСЃСЃРєРёР№", "Russian");
@@ -1091,7 +1097,7 @@ public class LanguageType {
     public static final LanguageType se = new LanguageType("se", "SГЎmegiella", "Northern Sami");
     public static final LanguageType sei = new LanguageType("sei", "Cmique Itom", "Seri");
     public static final LanguageType sg = new LanguageType("sg", "SГ¤ngГ¶", "Sango/Sangho");
-    public static final LanguageType sh = new LanguageType("sh", "Srpskohrvatski / РЎСЂРїСЃРєРѕС…СЂРІР°С‚СЃРєРё", "Serbo-Croatian");
+    public static final LanguageType sh = new LanguageType("sh", "Srpskohrvatski / РЎСЂРїСЃРєРѕС…СЂРІР°С‚СЃРєРё", "Serbo-Croatian");// Сербскохорватский
     public static final LanguageType shi = new LanguageType("shi", "TaЕЎlбёҐiyt", "Tachelhit");
     public static final LanguageType si = new LanguageType("si", "а·ѓа·’а¶‚а·„а¶Ѕ", "Sinhalese");
     public static final LanguageType simple = new LanguageType("simple", "Simple English", "Simple English");

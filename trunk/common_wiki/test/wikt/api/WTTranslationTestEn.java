@@ -51,7 +51,7 @@ public class WTTranslationTestEn {
      * Direct translation, i.e. get TranslationBox, get TranslationEntry from it.
      */
     @Test
-    public void testGetDirectTranslation_ru() {
+    public void testGetDirectTranslation_en() {
         System.out.println("getDirectTranslation_en");
         Connect connect = enwikt_parsed_conn;
         LanguageType target_lang;
@@ -85,8 +85,8 @@ public class WTTranslationTestEn {
      * Backward translation, i.e. get title of page which has a TranslationBox with the given word.
      */
     @Test
-    public void testGetBackwardTranslation_ru() {
-        System.out.println("getBackwardTranslation_ru");
+    public void testGetBackwardTranslation_en() {
+        System.out.println("getBackwardTranslation_en");
         Connect connect = enwikt_parsed_conn;
         LanguageType foreign_lang;
         String word;
@@ -97,149 +97,120 @@ public class WTTranslationTestEn {
         transl_words = WTTranslation.getBackwardTranslation(connect, foreign_lang, "some word");
         assertEquals(0, transl_words.length);
 
-        // English to Old English: æppel (ang):
-        // "apple" -> [[æppel]] ''m''
-        word = "æppel";
-        foreign_lang = LanguageType.ang;
+        // English to French: abjurer (fr):
+        // "abjure" -> [[abjurer]] ''m''
+        word = "abjurer";
+        foreign_lang = LanguageType.fr;
 
         transl_words = WTTranslation.getBackwardTranslation(connect, foreign_lang, word);
         assertTrue(transl_words.length > 0);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "apple"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "abjure"));
 
         // English to German:
-        // 1) "apple" (fruit) -> [[Apfel]] m
-        // 2) "apple" (wood) -> [[Apfelholz]] n
-        word = "Apfel";
+        // 1a) "amend" (to make better) -> [[verbessern]], [[ausbessern]]
+        // 1b) "improve" (to make something better) -> [[verbessern]]
+        // 1c) "ameliorate" (to become better) -> [[verbessern]]
+
+        word = "verbessern";
         foreign_lang = LanguageType.de;
 
         transl_words = WTTranslation.getBackwardTranslation(connect, foreign_lang, word);
-        assertTrue(transl_words.length >= 2);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "Apfel"));
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "Apfelholz"));
+        assertTrue(transl_words.length >= 3);
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "amend"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "improve"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "ameliorate"));
     }
 
     /** Translates the word from source to target language.
      * String [] translate (Connect connect,LanguageType source_lang,LanguageType target_lang,String word);
      */
-/*    @Test
+    @Test
     public void testTranslate_from_native_into_foreign() {
-        System.out.println("translate_from_native_into_foreign_ru");
-        Connect connect = ruwikt_parsed_conn;
+        System.out.println("translate_from_native_into_foreign_en");
+        Connect connect = enwikt_parsed_conn;
         LanguageType source_lang, target_lang;
 
         String[] transl_words;
 
         // Test translation for the word which is absent in Wiktionary
-        source_lang = LanguageType.en;
-        target_lang = LanguageType.ru;
+        source_lang = LanguageType.ru;
+        target_lang = LanguageType.en;
         transl_words = WTTranslation.translate(connect, source_lang, target_lang, "The word absent in Wiktionary");
         assertEquals(0, transl_words.length);
 
 
-        source_lang = LanguageType.ru;
-        String word = "самолёт";
+        source_lang = LanguageType.en;
+        String word = "expand";
 
-        // Russian to German: [[Flugzeug]] {{n}}
-        target_lang = LanguageType.de;
-
-        transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
-        assertTrue(transl_words.length > 0);
-        assertEquals(1, transl_words.length);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "Flugzeug"));
-
-        // Russian to English: [[airplane]], [[plane]], [[aircraft]]
-        target_lang = LanguageType.en;
+        // English to French: [[agrandir]]
+        target_lang = LanguageType.fr;
 
         transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
-        assertTrue(transl_words.length >= 3);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "airplane"));
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "plane"));
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "aircraft"));
+        assertTrue(transl_words.length >= 2);
+        //assertEquals(1, transl_words.length);
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "agrandir"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "élaborer"));
+        
+        
+        word = "maudlin";
+        // English to Spanish: [[lloraduelos]], [[mujerzuela]], [[llorona]], [[llorica]]
+        target_lang = LanguageType.es;
+
+        transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
+        assertTrue(transl_words.length >= 4);
+
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "lloraduelos"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "mujerzuela"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "llorona"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "llorica"));
     }
-*/
-    /** Translates the word from source to target language (S).
-        String [] translate (Connect connect,String source_lang,String target_lang,String word)
-     */
-/*    @Test
-    public void testTranslate_4args_1_Strings_ru() {
-        System.out.println("translate_Strings_ru");
-        Connect connect = ruwikt_parsed_conn;
-        String source_lang, target_lang, word;
-        String[] transl_words;
-        source_lang = "ru";
-        word = "самолёт";
 
-        // Russian to German: [[Flugzeug]] {{n}}
-        target_lang = "de";
-
-        transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
-        assertTrue(transl_words.length > 0);
-        assertEquals(1, transl_words.length);
-        assertEquals("Flugzeug", transl_words[0]);
-
-        // Russian to English: [[airplane]], [[plane]], [[aircraft]]
-        target_lang = "en";
-
-        transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
-        assertTrue(transl_words.length > 0);
-        assertEquals(3, transl_words.length);
-    }*/
-
-    /** Translates from Foreign (German, English) into Native (Russian) language. */
-/*    @Test
-    public void testTranslate_fromForeignToNative_getMeaningOfForeignWord_ru() {
-        System.out.println("translate_fromForeignToNative_getMeaningOfForeignWord_ru");
-        Connect connect = ruwikt_parsed_conn;
-        //String source_lang, target_lang, word;
+    /** Translates from Foreign (German, Russian) into Native (English) language. */
+    @Test
+    public void testTranslate_fromForeignToNative_getMeaningOfForeignWord_en() {
+        System.out.println("translate_fromForeignToNative_getMeaningOfForeignWord_en");
+        Connect connect = enwikt_parsed_conn;
         String[] transl_words;
 
-        // Russian to German: "самолёт" -> [[Flugzeug]] {{n}}
-        // German to Russian: Flugzeug -> [[самолёт]], [[аэроплан]]
+        // English to German: airplane -> [[Flugzeug]] {{n}}
+        // German to English: Flugzeug -> [[airplane]]
+        transl_words = WTTranslation.translate(connect, "de", "en", "Flugzeug"); // from German to English
+        assertTrue(transl_words.length >= 1);
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "airplane"));
 
-        transl_words = WTTranslation.translate(connect, "de", "ru", "Flugzeug"); // from German to Russian
-        assertTrue(transl_words.length >= 2);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт"));
-        // assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт, аэроплан"));
+        // English to Icelandic: [[airplane]] -> [[flugvél]]
+        // Icelandic to English: flugvél -> # [[airplane]]
+        transl_words = WTTranslation.translate(connect, "is", "en", "flugvél");
+        assertTrue(transl_words.length >= 1);
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "airplane"));
 
-        // Russian to English: "самолёт" -> [[airplane]], [[plane]], [[aircraft]]
-        // English to Russian: airplane -> # {{амер.}} [[аэроплан]]
-        // en ("airplane") -> ru should be: "самолёт", "аэроплан"
-
-        transl_words = WTTranslation.translate(connect, "en", "ru", "airplane");
-        assertTrue(transl_words.length >= 2);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "самолёт"));
-        // assertTrue(StringUtil.containsIgnoreCase(transl_words, "{{амер.}} самолёт, аэроплан"));
-
-        // English to Russian: car -> ...
-
-        transl_words = WTTranslation.translate(connect, "en", "ru", "car");
-        assertTrue(transl_words.length >= 5);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "автомобиль"));
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "вагон"));
-    }*/
+        // Finnish to English: karavaani -> caravan
+        transl_words = WTTranslation.translate(connect, "fi", "en", "karavaani");
+        assertTrue(transl_words.length >= 1);
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "caravan"));
+    }
 
     /** Translates the word from foreign into another foreign
      */
- /*   @Test
-    public void testTranslate_from_foreign_into_foreign_via_ru() {
-        System.out.println("translate_from_foreign_into_foreign_via_ru");
-        Connect connect = ruwikt_parsed_conn;
+    @Test
+    public void testTranslate_from_foreign_into_foreign_via_en() {
+        System.out.println("translate_from_foreign_into_foreign_via_en");
+        Connect connect = enwikt_parsed_conn;
         LanguageType source_lang, target_lang;
 
         String[] transl_words;
-        source_lang = LanguageType.en;
-        String word = "airplane";
+        source_lang = LanguageType.fi;
+        String word = "karavaani";
 
-        // English to German:
-        // airplane -> самолёт -> [[Flugzeug]] {{n}}
-        // plane    -> ?? ->
-        // aircraft -> ?? ->
-        target_lang = LanguageType.de;
+        // Finnish to Bulgarian:
+        // karavaani -> caravan -> [[керван]], [[каравана]]
+        target_lang = LanguageType.bg;
 
         transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
-        assertTrue(transl_words.length > 0);
-        assertTrue(StringUtil.containsIgnoreCase(transl_words, "Flugzeug"));
-    }*/
+        assertTrue(transl_words.length >= 2);
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "керван"));
+        assertTrue(StringUtil.containsIgnoreCase(transl_words, "каравана"));
+    }
 
 
 

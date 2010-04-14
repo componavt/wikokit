@@ -2,30 +2,26 @@
 
 # DESCRIPTION: 
 #
-#   Delete redirect lines in the text file.
+#   Adds transaction commands: BEGIN...COMMIT every 50 000 lines 
 #
 # AUTHOR:       Andrew Krizhanovsky (http://code.google.com/p/wikokit)
-# START DATE:   17.12.2009 17:44:28
+# START DATE:   2010
 # FINISH DATE:  
 # SEE: 
-#   Talk:Xml2sql   http://meta.wikimedia.org/wiki/Talk:Xml2sql
-#   MySQL 2 SQLite http://www.perlmonks.org/index.pl?node_id=150476
+#   Let's speed up SQLite http://componavt.livejournal.com/3393.html
 
 use strict;
 no strict 'refs';
 
-use DBI;
 use Getopt::Std;
 
 my( $headline, $str_today, $fn_in, $fn_out, $fn_log, $fn_err, $fsize);
-my( $text);
+my( $n_period, $n_line);
 
 my( $log_text, $err_text);
-my( $synsets, $synwords, %unique_synwords);
-my( $i, $set, $w);
+my( $n_transaction, $add_text_start, $add_text_middle, $add_text_end);
 
-
-$headline = "del_redirect_in_pages-articles_xml V0.01 (GNU-GPL) 2009 AKA MBG \n";
+$headline = "add_transactions.pl V0.01 (GNU-GPL) 2010 AKA MBG\n";
 # --------------------------------------------------------------
 # subroutine help_exit
 # --------------------------------------------------------------
@@ -34,9 +30,9 @@ sub help_exit
 {
 	if ($#ARGV != 1){
 		print "\n".$headline."\n".
-        "Usage:\n  del_redirect_in_pages-articles_xml.exe in_dump.sql > out\n".
-        "  wiki-pages-articles.xml - dump of Wiki database\n".
-        "Examples: del_redirect_in_pages-articles_xml.exe wiki-pages-articles.xml out.xml";
+        "Usage:\n  add_transactions.exe in_dump.sql out\n".
+        "  in_dump.sql - dump of the SQLite database\n".
+        "Examples: add_transactions.exe in_dump.sql out.xml";
 	}
 	
 	if (1 != $#ARGV){
@@ -56,6 +52,9 @@ sub help_exit
   $fn_err = $fn_in."_error";
   $fn_out = $ARGV[1];
 
+  # number of lines (in dump file) between each commit
+  $n_period = 10000;
+
   # open, copy files to buffer, close
   # h - FILE HANDLE
   # --------------------------------------------------------------
@@ -67,22 +66,39 @@ sub help_exit
 
   open (h_out,">".$fn_out) or die ("Cannot open output file ".$fn_out);
 
-  my @index;
-  my @tablename;
-  my $b_table_mode = 0; # current lines belong to the CREATE TABLE SQL command
+  #my $b_table_mode = 0; # current lines belong to the CREATE TABLE SQL command
+
+  $add_text_start = "\n\nBEGIN;\n\n";
+  $add_text_middle = "\n\nCOMMIT;\nBEGIN;\n\n";
+  $add_text_end = "\n\nCOMMIT;\n\n";
  
+  print h_out $add_text_start;
+ 
+  $n_line = 0;
+  $n_transaction = 1;
   LINE: while(<h_in>)
   {
-      my($line) = $_;             # file line
-      chomp($line);
+       $n_line ++;
+
+      if (0 == $n_line % $n_period) {   # $n_period-th line
+          $n_transaction ++;
+          print h_out $add_text_middle;
+          print ".";
+      }
+      
+      #my($line) = $_;             # file line
+      # chomp($line);
 
       # remove lines with text "<redirect />"
       # next LINE if $line =~ s/^\s*\<redirect\s\/\>//;
-      next LINE if -1 ne index $line, "<redirect />";
+      # next LINE if -1 ne index $line, "<redirect />";
 
       # Print the line to the result file and add a newline
-      print h_out $line."\n";
+      print h_out $_;
   }
+
+  print h_out $add_text_end;
+  print "Number of transactions: ".$n_transaction;
   
   EXIT:
   # close output&log file
