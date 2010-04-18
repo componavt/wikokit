@@ -109,7 +109,7 @@ public class TPOS {
         int size = tpos.length;
         if(tpos.length != POS.size())
             System.out.println("Warning (wikt_parsed TPOS.java createFastMaps()):: POS.size (" + POS.size()
-                    + ") is not equal to size of table 'lang_pos'("+ size +"). Is the database outdated?");
+                    + ") is not equal to size of table 'part_of_speech'("+ size +"). Is the database outdated?");
 
         if(null != id2pos && id2pos.size() > 0)
             id2pos.clear();
