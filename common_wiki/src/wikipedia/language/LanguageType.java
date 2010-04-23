@@ -1,4 +1,4 @@
-// current: Aramaic arc tmr
+// current: Algerian Arabic 	arq
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
  * LanguageType.java - code of languages in wiki.
@@ -255,9 +255,6 @@ public class LanguageType {
     public static final LanguageType aar = new LanguageType("aar", "Afar", "Afar");// Афар/Афарский
     public static final LanguageType aa = LanguageType.addNonUniqueCode(aar, "aa");
 
-    public static final LanguageType aao = new LanguageType("aao", "Saharan Arabic", "Saharan Arabic");
-    public static final LanguageType aao2 = LanguageType.addNonUniqueName(aao, "Algerian Saharan Arabic");
-
     public static final LanguageType abk = new LanguageType("abk", "РђТ§СЃСѓР°", "Abkhaz");// Абхазский
     public static final LanguageType ab  = LanguageType.addNonUniqueCode(abk, "ab");
     
@@ -307,18 +304,51 @@ public class LanguageType {
     public static final LanguageType apk2 = LanguageType.addNonUniqueName(apk, "Kiowa Apache");
     public static final LanguageType apw = new LanguageType("apw", "Western Apache", "Western Apache");// Западно-апачский
     
+    
+    // Arabic ------------
     public static final LanguageType ara = new LanguageType("ara", "Ш§Щ„Ш№Ш±ШЁЩЉШ©", "Arabic");
     public static final LanguageType ar = LanguageType.addNonUniqueCode(ara, "ar");
 
     public static final LanguageType arb = new LanguageType("arb", "Standard Arabic", "Standard Arabic");// Арабский литературный
     public static final LanguageType arb2 = LanguageType.addNonUniqueName(arb, "Modern Standard Arabic");
     public static final LanguageType arb3 = LanguageType.addNonUniqueName(arb, "Literary Arabic");
+    
+    public static final LanguageType aao = new LanguageType("aao", "Saharan Arabic", "Saharan Arabic");
+    public static final LanguageType aao2 = LanguageType.addNonUniqueName(aao, "Algerian Saharan Arabic");
+    
+    public static final LanguageType acx = new LanguageType("acx", "Omani Arabic", "Omani Arabic");
+    public static final LanguageType aeb = new LanguageType("aeb", "Tunisian Arabic", "Tunisian Arabic");
+    public static final LanguageType afb = new LanguageType("afb", "Gulf Arabic", "Gulf Arabic");
+
+    public static final LanguageType ajp = new LanguageType("ajp", "South Levantine Arabic", "South Levantine Arabic");
+    public static final LanguageType apc = new LanguageType("apc", "North Levantine Arabic", "North Levantine Arabic");
+
+    public static final LanguageType apd = new LanguageType("apd", "Sudanese Arabic", "Sudanese Arabic");
+
+    public static final LanguageType arq = new LanguageType("arq", "Algerian Arabic", "Algerian Arabic");// Алжирский диалект арабского
+    public static final LanguageType ars = new LanguageType("ars", "Najdi Arabic", "Najdi Arabic");
+    public static final LanguageType ary = new LanguageType("ary", "Moroccan Arabic", "Moroccan Arabic");
+    public static final LanguageType arz = new LanguageType("arz", "Щ…ШµШ±Щ‰", "Egyptian Arabic");
+    
+    public static final LanguageType ayl = new LanguageType("ayl", "Libyan Arabic", "Libyan Arabic");
+    public static final LanguageType ayl2 = LanguageType.addNonUniqueName(ayl, "Sulaimitian Arabic");
+    
+    public static final LanguageType ayp = new LanguageType("ayp", "North Mesopotamian Arabic", "North Mesopotamian Arabic");
+
+    public static final LanguageType pga = new LanguageType("pga", "Juba Arabic", "Juba Arabic");
+    
+    public static final LanguageType shu = new LanguageType("shu", "Chadian Arabic", "Chadian Arabic");
+    public static final LanguageType shu2 = LanguageType.addNonUniqueName(shu, "Shuwa Arabic");
+    // ------------ eo Arabic
+
 
     // Aramaic ------------
     public static final LanguageType arc = new LanguageType("arc", "ЬђЬЄЬЎЬќЬђ", "Aramaic");
-    public static final LanguageType arc2 = LanguageType.addNonUniqueName(arc, "Literary Arabic");
-    public static final LanguageType arc3 = LanguageType.addNonUniqueName(arc, "Official Aramaic");
+    public static final LanguageType arc2 = LanguageType.addNonUniqueName(arc, "Official Aramaic");
     public static final LanguageType tmr = LanguageType.addNonUnique(arc, "tmr", "Jewish Babylonian Aramaic");
+
+                                     // only in Russian Wiktionary:
+    public static final LanguageType arc_jud = LanguageType.addNonUniqueCode(arc, "arc.jud");//Арамейский (иуд.) ???
     
     public static final LanguageType sam = new LanguageType("sam", "Samaritan Aramaic", "Samaritan Aramaic");
     
@@ -328,10 +358,9 @@ public class LanguageType {
 
     public static final LanguageType tru = new LanguageType("tru", "Turoyo", "Turoyo");// Туройо
     public static final LanguageType tru2 = LanguageType.addNonUniqueName(tru, "Surayt");
-    
-    public static final LanguageType arc_jud = new LanguageType("arc.jud", "Aramaic", "Aramaic");//Арамейский (иуд.) ???
 
-    // Absent yet in English Wiktionary:
+    // Yet absent Aramaic languages in English Wiktionary:
+    //
     // oar – Old Aramaic    Ancient Aramaic
     // public static final LanguageType aii    = new LanguageType("aii", "Assyrian Neo-Aramaic", "Assyrian Neo-Aramaic");
     // aij – Lishanid Noshan, Neo-Aramaic or Judeo-Aramaic
@@ -350,7 +379,8 @@ public class LanguageType {
     // syn – Senaya
     // trg – Lishán Didán
     // ------------ eo Aramaic
-    
+
+
     public static final LanguageType are = new LanguageType("are", "Arrernte", "Arrernte");
     public static final LanguageType are2 = LanguageType.addNonUniqueName(are, "Western Arrernte");
     public static final LanguageType aer = LanguageType.addNonUnique(are, "aer", "Eastern Arrernte");
@@ -429,15 +459,16 @@ public class LanguageType {
     public static final LanguageType kal    = new LanguageType("kal", "Kalaallisut", "Greenlandic");
     public static final LanguageType kl     = LanguageType.addNonUniqueCode(kal, "kl");// add lang names? : Inuktitut, Greenlandic/Kalaallisut as addNonUniqueName(kal, "");
 
-    public static final LanguageType kaz    = new LanguageType("kaz", "ТљР°Р·Р°Т›С€Р°", "Kazakh");
-    public static final LanguageType kk     = LanguageType.addNonUniqueCode(kaz, "kk");
-
     public static final LanguageType knw    = new LanguageType("knw", "!Kung", "!Kung");
     public static final LanguageType knw2   = LanguageType.addNonUniqueName(knw, "Kung-Ekoka");
     public static final LanguageType oun    = new LanguageType("oun", "ǃOǃung", "!O!ung");
     public static final LanguageType mwj    = new LanguageType("mwj", "Maligo", "Maligo");
-    
-    public static final LanguageType kk_arab = new LanguageType("kk-arab", "Kazakh Arabic", "Kazakh Arabic");
+
+    // Kazakh ------------
+    public static final LanguageType kaz    = new LanguageType("kaz", "ТљР°Р·Р°Т›С€Р°", "Kazakh");
+    public static final LanguageType kk     = LanguageType.addNonUniqueCode(kaz, "kk");
+
+    public static final LanguageType kk_arab = LanguageType.addNonUniqueCode(kaz, "kk-arab");// Kazakh Arabic
     public static final LanguageType kk_cyrl = LanguageType.addNonUniqueCode(kaz, "kk-cyrl");// Kazakh Cyrillic
     public static final LanguageType kk_latn = LanguageType.addNonUniqueCode(kaz, "kk-latn");// Kazakh Latin
 
@@ -445,14 +476,40 @@ public class LanguageType {
     public static final LanguageType kk_kz   = LanguageType.addNonUniqueCode(kaz, "kk-kz");// Kazakh (Kazakhstan)
     public static final LanguageType kk_tr   = LanguageType.addNonUniqueCode(kaz, "kk-tr");// Kazakh (Turkey)
 
+                                     // Russian Wiktionary
     public static final LanguageType kk_arab2 = LanguageType.addNonUniqueCode(kaz, "kk.arab");// Kazakh Arabic
     public static final LanguageType kk_cyr = LanguageType.addNonUniqueCode(kaz, "kk.cyr");// Kazakh Cyrillic
     public static final LanguageType kk_lat = LanguageType.addNonUniqueCode(kaz, "kk.lat");// Kazakh Latin
+    // ------------ eo Kazakh
+
 
     public static final LanguageType kom    = new LanguageType("kom", "Komi", "Komi");// Коми-зырянский
     public static final LanguageType koi    = LanguageType.addNonUnique(kom, "koi", "Komi-Permyak");// Коми-пермяцкий
     public static final LanguageType kv     = LanguageType.addNonUnique(kom, "kv", "Komi-Zyrian");// cyrillic is common script but also written in latin script
     public static final LanguageType kpv    = LanguageType.addNonUniqueCode(kom, "kpv");//
+
+    
+    // Kurdish ------------
+    public static final LanguageType ku = new LanguageType("ku", "Kurdish", "Kurdish");// Курдский
+    public static final LanguageType kur = LanguageType.addNonUniqueCode(ku, "kur");
+    
+    public static final LanguageType ckb = LanguageType.addNonUnique(ku, "ckb", "Soranî");// Сорани
+    public static final LanguageType ckb2 = LanguageType.addNonUniqueName(ku, "Central Kurdish");
+
+    public static final LanguageType sdh = LanguageType.addNonUnique(ku, "sdh", "Southern Kurdish");// Южнокурдский
+
+    public static final LanguageType kmr = LanguageType.addNonUnique(ku, "kmr", "Kurmanji");// Курманджи
+    public static final LanguageType kmr2 = LanguageType.addNonUniqueName(ku, "Northern Kurdish");
+    
+    public static final LanguageType ku_latn = LanguageType.addNonUniqueCode(ku, "ku-latn");// "Northern Kurdish Latin script"
+    public static final LanguageType ku_arab = LanguageType.addNonUniqueCode(ku, "ku-arab");// "Northern Kurdish Arabic script"
+
+                                     // Russian Wiktionary
+    public static final LanguageType ku_cyr = LanguageType.addNonUniqueCode(ku, "ku.cyr");// Kurdish Cyrillic
+    public static final LanguageType ku_lat2 = LanguageType.addNonUniqueCode(ku, "ku.lat");// Kurdish Latin script
+    public static final LanguageType ku_arab2 = LanguageType.addNonUniqueCode(ku, "ku.arab");// Northern Kurdish Arabic script
+    // ------------ eo Kurdish
+
 
     public static final LanguageType luo = new LanguageType("luo", "Dholuo", "Dholuo");// Долуо
     public static final LanguageType luo2   = LanguageType.addNonUniqueName(luo, "Luo");
@@ -696,10 +753,6 @@ public class LanguageType {
     public static final LanguageType krl    = new LanguageType("krl", "Karjalan kieli", "Karelian");// Карельский
     public static final LanguageType kum    = new LanguageType("kum", "Kumyk", "Kumyk");// Кумыкский
 
-    public static final LanguageType ku_cyr = new LanguageType("ku.cyr", "Kurdish Cyrillic", "Kurdish Cyrillic");
-    public static final LanguageType ku_lat2 = new LanguageType("ku.lat", "Kurdish Latin script", "Kurdish Latin script");
-    public static final LanguageType ku_arab2 = new LanguageType("ku.arab", "Kurdish Arabic script", "Northern Kurdish Arabic script");
-
     public static final LanguageType liv    = new LanguageType("liv", "Livonian ", "Livonian");// Livonian - Ливский
 
     public static final LanguageType mаs    = new LanguageType("mas", "Maasai", "Maasai");// Масайский
@@ -803,22 +856,16 @@ public class LanguageType {
     public static final LanguageType abm = new LanguageType("abm", "Abanyom", "Abanyom");
 
     public static final LanguageType ach = new LanguageType("ach", "Acholi", "Acholi");
-    public static final LanguageType acx = new LanguageType("acx", "Omani Arabic", "Omani Arabic");
     
     public static final LanguageType ade = new LanguageType("ade", "Adele", "Adele");
     public static final LanguageType adj = new LanguageType("adj", "Adioukrou", "Adioukrou");
     public static final LanguageType adt = new LanguageType("adt", "Adnyamathanha", "Adnyamathanha");
     
-    public static final LanguageType aeb = new LanguageType("aeb", "Tunisian Arabic", "Tunisian Arabic");
-    public static final LanguageType afb = new LanguageType("afb", "Gulf Arabic", "Gulf Arabic");
     public static final LanguageType agj = new LanguageType("agj", "Argobba", "Argobba");
     public static final LanguageType ahs = new LanguageType("ahs", "Ashe", "Ashe");
     public static final LanguageType aiw = new LanguageType("aiw", "Aari", "Aari");// Аари
     public static final LanguageType aji = new LanguageType("aji", "Ajië", "Ajië");
 
-    public static final LanguageType ajp = new LanguageType("ajp", "South Levantine Arabic", "South Levantine Arabic");
-    public static final LanguageType apc = new LanguageType("apc", "North Levantine Arabic", "North Levantine Arabic");
-   
     public static final LanguageType ake = new LanguageType("ake", "Akawaio", "Akawaio");
     public static final LanguageType akg = new LanguageType("akg", "Anakalangu", "Anakalangu");// Анакалангу
     public static final LanguageType akk = new LanguageType("akk", "Akkadian", "Akkadian");// Аккадский
@@ -834,12 +881,13 @@ public class LanguageType {
     public static final LanguageType and = new LanguageType("and", "Ansus", "Ansus");
     public static final LanguageType anp = new LanguageType("anp", "Angika", "Angika");
     public static final LanguageType ant = new LanguageType("ant", "Antakarinya", "Antakarinya");
-    public static final LanguageType apd = new LanguageType("apd", "Sudanese Arabic", "Sudanese Arabic");
+    
     public static final LanguageType apj = new LanguageType("apj", "Jicarilla", "Jicarilla");
     public static final LanguageType apl = new LanguageType("apl", "Lipan", "Lipan");// Липан
     public static final LanguageType apm = new LanguageType("apm", "Chiricahua", "Chiricahua");
-
     public static final LanguageType apy = new LanguageType("apy", "Apalaí", "Apalaí");
+    public static final LanguageType arn = new LanguageType("arn", "Mapudungun", "Mapudungun");// Арауканский
+    public static final LanguageType arp = new LanguageType("arp", "Arapaho", "Arapaho");
 
     public static final LanguageType bat_smg = new LanguageType("bat-smg", "ЕЅemaitД—ЕЎka", "Samogitian");
     public static final LanguageType bal = new LanguageType("bal", "Balochi", "Balochi");// Белуджский
@@ -893,13 +941,6 @@ public class LanguageType {
     public static final LanguageType krh    = new LanguageType("krh", "Kurama", "Kurama");
 
     public static final LanguageType kok    = new LanguageType("kok", "Konkani", "Konkani");// Конкани
-    public static final LanguageType ku     = new LanguageType("ku", "Kurdish", "Kurdish");
-    public static final LanguageType kur    = new LanguageType("kur", "Kurdish", "Kurdish");
-    public static final LanguageType ckb    = new LanguageType("ckb", "Central Kurdish", "Central Kurdish");
-    public static final LanguageType kmr    = new LanguageType("kmr", "Northern Kurdish", "Northern Kurdish");
-    public static final LanguageType sdh    = new LanguageType("sdh", "Southern Kurdish", "Southern Kurdish");
-    public static final LanguageType ku_latn = new LanguageType("ku-latn", "Northern Kurdish Latin script", "Northern Kurdish Latin script");
-    public static final LanguageType ku_arab = new LanguageType("ku-arab", "Northern Kurdish Arabic script", "Northern Kurdish Arabic script");
 
     public static final LanguageType ksh_c_a = new LanguageType("ksh-c-a", "Ripoarisch c a", "Ripuarian c a");
     public static final LanguageType ksh_p_b = new LanguageType("ksh-p-b", "Ripoarisch p b", "Ripuarian p b");
@@ -1026,10 +1067,6 @@ public class LanguageType {
      *    %s/\(\t'[^'-]\+\)-\([^'-]\+' => \)/\1_\2/g
      * (44 languages, exception: zh-min-nan, be-x-old) */
     // 3. %s/\t'\([^']\+\)' => ['"]\([^']\+\)['"],[ \t]*/    public static final LanguageType \1 = new LanguageType("\1", "\2");/
-    
-    
-    public static final LanguageType arn = new LanguageType("arn", "Mapudungun", "Mapudungun");// Арауканский
-    public static final LanguageType arz = new LanguageType("arz", "Щ…ШµШ±Щ‰", "Egyptian Spoken Arabic");
     public static final LanguageType as = new LanguageType("as", "а¦…а¦ёа¦®а§Ђа§џа¦ѕ", "Assamese");
     public static final LanguageType ast = new LanguageType("ast", "Asturianu", "Asturian");
     public static final LanguageType av = new LanguageType("av", "РђРІР°СЂ", "Avar");
