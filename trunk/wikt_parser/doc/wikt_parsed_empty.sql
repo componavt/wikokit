@@ -13,8 +13,8 @@ CREATE  TABLE IF NOT EXISTS `page` (
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   `word_count` INT(6) UNSIGNED NOT NULL COMMENT 'number of words in the article' ,
   `wiki_link_count` INT(6) NOT NULL COMMENT 'number of wikified words (out-bound links) in the article' ,
-  `is_in_wiktionary` TINYINT(1) NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
-  `is_redirect` TINYINT(1) NULL COMMENT 'Hard redirect defined by #REDIRECT' ,
+  `is_in_wiktionary` TINYINT(1)  NULL COMMENT 'true, if the page_title exists in Wiktionary' ,
+  `is_redirect` TINYINT(1)  NULL COMMENT 'Hard redirect defined by #REDIRECT' ,
   `redirect_target` VARCHAR(255) NULL COMMENT 'Redirected (target or destination) page' ,
   PRIMARY KEY (`id`) ,
   INDEX `idx_page_title` (`page_title`(7) ASC) )
@@ -213,7 +213,8 @@ CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
   `wiki_text_id` INT(10) UNSIGNED NOT NULL ,
   `page_id` INT(10) UNSIGNED NOT NULL ,
   `page_inflection_id` INT(10) UNSIGNED NULL ,
-  PRIMARY KEY (`id`) )
+  PRIMARY KEY (`id`) ,
+  INDEX `wiki_text_id` (`wiki_text_id` ASC) )
 ENGINE = InnoDB
 COMMENT = 'Binds wiki_text with wiki words (inflection)';
 
@@ -271,7 +272,7 @@ DROP TABLE IF EXISTS `index_native` ;
 CREATE  TABLE IF NOT EXISTS `index_native` (
   `page_id` INT(10) UNSIGNED NOT NULL COMMENT 'Copy of page.id' ,
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'page.page_title of this Wiktionary article in native language' ,
-  `has_relation` TINYINT(1) NULL COMMENT 'true, if there is any semantic relation in this Wiktionary article' ,
+  `has_relation` TINYINT(1)  NULL COMMENT 'true, if there is any semantic relation in this Wiktionary article' ,
   UNIQUE INDEX `page_id` (`page_id` ASC) ,
   INDEX `idx_page_title` (`page_title`(7) ASC) )
 ENGINE = InnoDB
