@@ -21,7 +21,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "airplane", // temp
+        "tangata", // temp
 
         // English Wiktionary
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
@@ -113,7 +113,7 @@ public class PageTableAll {
             while (rs.next ())
             {
 //if (n_cur >= 1)
-//  break;
+  //break;
                 n_cur ++;
                 if(n_start_from >= 0 && n_start_from > n_cur)
                     continue;
@@ -126,13 +126,13 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
                 
                 // test problem pages:
-                if (n_cur < debug_pages.length)
+/*                if (n_cur < debug_pages.length)
                     page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur-1]);
                     //page_title = wikt_conn.enc.EncodeFromJava("one"); // будуаръ centi- всё-равно
                 else 
                     break;
                 //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-                
+  */
                 if(DEBUG && 0 == n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;

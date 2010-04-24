@@ -1,4 +1,4 @@
-// current: Algerian Arabic 	arq
+// current: Aneityum aty
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
  * LanguageType.java - code of languages in wiki.
@@ -75,6 +75,20 @@ public class LanguageType {
         // only name in English is used now, name is skipped
         this.name           = english_name;
         this.english_name   = english_name;
+
+        // check the uniqueness of the language code and the english_name
+        String name_prev = code2name.get(code);
+        LanguageType english_name_prev = english2lang.get(english_name);
+        
+        if(null != name_prev)
+            System.out.println("Error in LanguageType.LanguageType(): duplication of code! The language code="+code+
+                    " language='"+english_name+
+                    "'. Check the maps code2name and english2lang.");
+
+        if(null != english_name_prev)
+            System.out.println("Error in LanguageType.LanguageType(): duplication of language! The language code="+code+
+                    " language='"+english_name+
+                    "'. Check the maps code2name and english2lang.");
 
         code2name.put(code, name);
         code2lang.put(code, this);
@@ -280,7 +294,7 @@ public class LanguageType {
     public static final LanguageType agx    = new LanguageType("agx", "Aghul", "Aghul");// Агульский
     public static final LanguageType agx2 = LanguageType.addNonUniqueName(agx, "Agul");
     
-    public static final LanguageType aka = new LanguageType("ak", "Akan", "Akan");// Акан
+    public static final LanguageType aka = new LanguageType("aka", "Akan", "Akan");// Акан
     public static final LanguageType ak  = LanguageType.addNonUniqueCode(aka, "ak");
     public static final LanguageType fat = new LanguageType("fat", "Fante", "Fante");// Фанти
     public static final LanguageType fat2 = LanguageType.addNonUniqueName(fat, "Fanti");
@@ -359,7 +373,7 @@ public class LanguageType {
     public static final LanguageType tru = new LanguageType("tru", "Turoyo", "Turoyo");// Туройо
     public static final LanguageType tru2 = LanguageType.addNonUniqueName(tru, "Surayt");
 
-    // Yet absent Aramaic languages in English Wiktionary:
+    // not yet in English Wiktionary:
     //
     // oar – Old Aramaic    Ancient Aramaic
     // public static final LanguageType aii    = new LanguageType("aii", "Assyrian Neo-Aramaic", "Assyrian Neo-Aramaic");
@@ -390,6 +404,9 @@ public class LanguageType {
 
     public static final LanguageType arg = new LanguageType("arg", "AragonГ©s", "Aragonese");// Арагонский
     public static final LanguageType an = LanguageType.addNonUniqueCode(arg, "an");
+    
+    public static final LanguageType aru = new LanguageType("aru", "Aruá", "Arua");
+    public static final LanguageType aru2 = LanguageType.addNonUniqueName(aru, "Aruá");
 
     public static final LanguageType ave = new LanguageType("ave", "Avestan", "Avestan");// Авестийский
     public static final LanguageType ae = LanguageType.addNonUniqueCode(ave, "ae");
@@ -400,6 +417,9 @@ public class LanguageType {
     public static final LanguageType be = new LanguageType("be", "Р‘РµР»Р°СЂСѓСЃРєР°СЏ", "Belarusian");// Belarusian normative
     public static final LanguageType be_tarask = new LanguageType("be-tarask", "Р‘РµР»Р°СЂСѓСЃРєР°СЏ (С‚Р°СЂР°С€РєРµРІС–С†Р°)", "Belarusian (Taraškievica)");// Belarusian in Taraskievica orthography
     public static final LanguageType be_x_old  = LanguageType.addNonUniqueCode(be_tarask, "be_x_old");// compat link
+    
+    public static final LanguageType btk = new LanguageType("btk", "Batak", "Batak");// Батакский
+    public static final LanguageType bya = LanguageType.addNonUniqueCode(btk, "bya");
 
     public static final LanguageType bug = new LanguageType("bug", "бЁ…бЁ” бЁ•бЁбЁЃбЁ—", "Buginese");// Бугийский
     public static final LanguageType bug2 = LanguageType.addNonUniqueName(bug, "Bugi");
@@ -409,7 +429,31 @@ public class LanguageType {
 
     public static final LanguageType chk = new LanguageType("chk", "Chuukese", "Chuukese");
     public static final LanguageType chk2 = LanguageType.addNonUniqueName(chk, "Trukese");
+
+
+    // Creole ------------
+    public static final LanguageType rop = new LanguageType("rop", "Kriol", "Kriol");
+    public static final LanguageType rop2 = LanguageType.addNonUniqueName(rop, "Australian Kriol");
+
+    public static final LanguageType brc = new LanguageType("brc", "Berbice Creole Dutch", "Berbice Creole Dutch");
+    public static final LanguageType brc2 = LanguageType.addNonUniqueName(brc, "Berbice Dutch Creole");
     
+    public static final LanguageType ht = new LanguageType("ht", "Haitian Creole", "Haitian Creole");// Гаитянский креольский
+    public static final LanguageType hat = LanguageType.addNonUniqueCode(ht, "hat");
+    
+    public static final LanguageType jam = new LanguageType("jam", "Jamaican Creole", "Jamaican Creole");// Ямайский креольский
+    public static final LanguageType jam2 = LanguageType.addNonUniqueName(jam, "Jamaican Patois");
+    public static final LanguageType jam3 = LanguageType.addNonUniqueName(jam, "Patois");
+    public static final LanguageType jam4 = LanguageType.addNonUniqueName(jam, "Jamaican");
+    
+    public static final LanguageType tcs = new LanguageType("tcs", "Torres Strait Creole", "Torres Strait Creole");
+    
+    // not yet in English Wiktionary:
+    // * Belize Kriol, bzj - Belizean Creole, Belizean Creole English
+    // * Guinea-Bissau Creole pov
+    // ------------ eo Creole
+
+
     public static final LanguageType crh_latn = new LanguageType("crh-latn", "Crimean Tatar (Latin)", "Crimean Tatar (Latin)");
     public static final LanguageType crh_cyrl = LanguageType.addNonUnique(crh_latn, "crh-cyrl", "Crimean Tatar (Cyrillic)");
     public static final LanguageType crh_crimean_tatar = LanguageType.addNonUniqueName(crh_latn, "Crimean Tatar");
@@ -427,6 +471,31 @@ public class LanguageType {
     public static final LanguageType el_dhi = LanguageType.addNonUniqueCode(el, "el.dhi");// Греческий демот.
     public static final LanguageType el_kat = LanguageType.addNonUniqueCode(el, "el.kat");// Греческий кафар.
 
+
+    // Persian ------------
+    public static final LanguageType fa = new LanguageType("fa", "ЩЃШ§Ш±ШіЫЊ", "Persian");
+    
+    public static final LanguageType jpr = new LanguageType("jpr", "Judeo-Persian", "Judeo-Persian");// Еврейско-персидский
+    public static final LanguageType jpr2 = LanguageType.addNonUniqueName(jpr, "Dzhidi");
+    public static final LanguageType jpr3 = LanguageType.addNonUniqueName(jpr, "Judæo-Persian");
+    public static final LanguageType jpr4 = LanguageType.addNonUniqueName(jpr, "Jidi");
+    
+    public static final LanguageType pal = new LanguageType("pal", "Middle Persian", "Middle Persian");// Среднеперсидский
+    
+    public static final LanguageType peo = new LanguageType("peo", "Old Persian", "Old Persian");// Древнеперсидский
+    // not yet in English Wiktionary:
+    // fas – Persian
+    // prs – Eastern Persian
+    // pes – Western Persian
+    // tgk – Tajik
+    // aiq – Aimaq
+    // bhh – Bukharic
+    // drw – Darwazi
+    // haz – Hazaragi
+    // phv – Pahlavani
+    // ------------ eo Persian
+    
+    
     public static final LanguageType frr = new LanguageType("frr", "North Frisian", "North Frisian");
     public static final LanguageType frs = new LanguageType("frs", "Eastern Frisian", "Eastern Frisian");
     public static final LanguageType fy = new LanguageType("fy", "Frysk", "West Frisian");// Фризский
@@ -487,6 +556,9 @@ public class LanguageType {
     public static final LanguageType koi    = LanguageType.addNonUnique(kom, "koi", "Komi-Permyak");// Коми-пермяцкий
     public static final LanguageType kv     = LanguageType.addNonUnique(kom, "kv", "Komi-Zyrian");// cyrillic is common script but also written in latin script
     public static final LanguageType kpv    = LanguageType.addNonUniqueCode(kom, "kpv");//
+    
+    public static final LanguageType ks = new LanguageType("ks", "Kashmiri", "Kashmiri");// Кашмири
+    public static final LanguageType kas = LanguageType.addNonUniqueCode(ks, "kas");//
 
     
     // Kurdish ------------
@@ -521,8 +593,27 @@ public class LanguageType {
     public static final LanguageType khk = new LanguageType("khk", "Khalkha Mongolian", "Khalkha Mongolian");  // Halh Mongolian (Cyrillic) (ISO 639-3: khk)
     public static final LanguageType xal = new LanguageType("xal", "Kalmyk", "Kalmyk"); //Kalmyk-Oirat (Kalmuk, Kalmuck, Kalmack, Qalmaq, Kalmytskii Jazyk, Khal:mag, Oirat, Volga Oirat, European Oirat, Western Mongolian)
 
+    public static final LanguageType mi = new LanguageType("mi", "MДЃori", "Maori");// Маори
+    public static final LanguageType mri = LanguageType.addNonUnique(mi, "mri", "Māori");
+
     public static final LanguageType mrv = new LanguageType("mrv", "Mangareva", "Mangareva");// Мангаревский
     public static final LanguageType mrv2   = LanguageType.addNonUniqueName(kom, "Mangarevan");
+
+    public static final LanguageType nv = new LanguageType("nv", "DinГ© bizaad", "Navajo");// Навахо
+    public static final LanguageType nav = LanguageType.addNonUniqueCode(nv, "nav");
+    
+    
+    // Punjabi ------------
+    public static final LanguageType pa = new LanguageType("pa", "аЁЄа©°аЁњаЁѕаЁ¬а©Ђ", "Punjabi");
+    public static final LanguageType pa2 = LanguageType.addNonUniqueName(pa, "Panjabi");
+    
+    public static final LanguageType lah = new LanguageType("lah", "Lahnda", "Lahnda");
+
+    // not yet in English Wiktionary:
+    // * pnb – Western Panjabi
+    // * pmu – Mirpur Punjabi
+    // ------------ eo Punjabi
+    
 
     public static final LanguageType pam = new LanguageType("pam", "Kapampangan", "Kapampangan");
     public static final LanguageType pam2 = LanguageType.addNonUniqueName(pam, "Pampanga");
@@ -536,12 +627,16 @@ public class LanguageType {
     public static final LanguageType ryn = new LanguageType("ryn", "Northern Amami", "Northern Amami");
     public static final LanguageType ams = new LanguageType("ams", "Southern Amami", "Southern Amami");
     public static final LanguageType ams2 = LanguageType.addNonUniqueName(pcm, "Southern Amami-Oshima");
+
+    public static final LanguageType sah = new LanguageType("sah", "Sakha", "Sakha");// Якутский
+    public static final LanguageType sah2 = LanguageType.addNonUniqueName(sah, "Yakut");
     
     public static final LanguageType smo    = new LanguageType("smo", "Gagana Samoa", "Samoan");// Самоанский
     public static final LanguageType sm     = LanguageType.addNonUniqueCode(smo, "sm");
 
+    
     // Albanian ------------
-    public static final LanguageType sqi = new LanguageType("sq", "Shqip", "Albanian");
+    public static final LanguageType sqi = new LanguageType("sqi", "Shqip", "Albanian");
     public static final LanguageType sq  = LanguageType.addNonUniqueCode(sqi, "sq");
 
     public static final LanguageType aln  = new LanguageType("aln", "Gege", "Gheg");//
@@ -556,6 +651,7 @@ public class LanguageType {
     public static final LanguageType als = new LanguageType("als", "Tosk", "Tosk");
     public static final LanguageType als2 = LanguageType.addNonUniqueName(als, "Tosk Albanian");
     // ------------ eo Albanian
+
 
     public static final LanguageType srp    = new LanguageType("srp", "РЎСЂРїСЃРєРё / Srpski", "Serbian");
     public static final LanguageType sr     = LanguageType.addNonUniqueCode(srp, "sr");
@@ -600,36 +696,19 @@ public class LanguageType {
     
     public static final LanguageType tzj    = new LanguageType("tzj", "Tz'utujil", "Tz'utujil");
     public static final LanguageType tzt    = LanguageType.addNonUniqueCode(tzj, "tzt");
-    
-    // Wu, Chinese, etc.
-    public static final LanguageType zh     = new LanguageType("zh", "Chinese", "Chinese");// (ZhЕЌng WГ©n)
-    public static final LanguageType cmn    = new LanguageType("cmn", "Mandarin", "Mandarin");
-    
-    public static final LanguageType ltc    = new LanguageType("ltc", "Middle Chinese", "Middle Chinese");
-    public static final LanguageType ltc2   = LanguageType.addNonUniqueName(ltc, "Ancient Chinese");
-    public static final LanguageType ltc3   = LanguageType.addNonUniqueName(ltc, "Late Middle Chinese");
-    
-    public static final LanguageType wuu    = new LanguageType("wuu", "Wu", "Wu");// У (китайский диалект)
 
-    // todo : enwikt:template:zh-ts -> trad. (zh-tw), simpl. (zh-cn)
-    public static final LanguageType zh_tw = new LanguageType("zh-tw", "Traditional Chinese", "Traditional Chinese");// Китайский (традиц.)
-    public static final LanguageType zh_hant = LanguageType.addNonUniqueCode(zh_tw, "zh-hant");// Chinese written using the Traditional Chinese script
 
-    public static final LanguageType zh_cn = new LanguageType("zh-cn", "Simplified Chinese", "Simplified Chinese");// Китайский (упрощ.)
-    public static final LanguageType zh_hans = LanguageType.addNonUnique(zh_cn, "zh-hans", "Chinese (PRC)");// Chinese written using the Simplified Chinese script
-    
-    public static final LanguageType lzh = new LanguageType("lzh", "ж–‡иЁЂ", "Classical Chinese");
-    public static final LanguageType och = LanguageType.addNonUnique(lzh, "och", "Old Chinese");
-    public static final LanguageType zh_classical = LanguageType.addNonUnique(lzh, "zh-classical", "Literary Chinese");
-    
-    public static final LanguageType nan = new LanguageType("nan", "BГўn-lГўm-gГє", "Min Nan");//Китайский (южноминьский) Min Nan, Minnan, or Min-nan, Southern Min
-    public static final LanguageType zh_min_nan = LanguageType.addNonUniqueCode(nan, "zh-min-nan");
-    public static final LanguageType zh_nan = LanguageType.addNonUniqueCode(nan, "zh-nan");
-    
-    public static final LanguageType yue = new LanguageType("yue", "зІµиЄћ", "Cantonese");
-    public static final LanguageType zh_yue = LanguageType.addNonUniqueCode(yue, "zh-yue");
-    // eo Chinese
+    // Welsh ------------
+    public static final LanguageType cy = new LanguageType("cy", "Cymraeg", "Welsh");// Валлийский
+    public static final LanguageType cym = LanguageType.addNonUniqueCode(cy, "cym");
+    public static final LanguageType wel = LanguageType.addNonUniqueCode(cy, "wel");
 
+    public static final LanguageType owl = new LanguageType("owl", "Hen Gymraeg", "Old Welsh");// Древневаллийский
+
+    public static final LanguageType wlm = new LanguageType("wlm", "Middle Welsh", "Middle Welsh");// cel
+    // ------------ eo Welsh
+
+    
     public static final LanguageType xho    = new LanguageType("xho", "isiXhosa", "Xhosa");// Коса
     public static final LanguageType xh     = LanguageType.addNonUniqueCode(xho, "xh");
     public static final LanguageType xho_хhosan = LanguageType.addNonUniqueName(xho, "Xhosan");
@@ -637,6 +716,58 @@ public class LanguageType {
     public static final LanguageType xto    = new LanguageType("xto", "Tocharian",  "Tocharian");// Тохарские
     public static final LanguageType xto2   = LanguageType.addNonUniqueName(xto,    "Tocharian A");
     public static final LanguageType txb    = LanguageType.addNonUnique(xto, "txb", "Tocharian B");
+    
+    public static final LanguageType wrh = new LanguageType("wrh", "Wiradhuri", "Wiradhuri");
+    public static final LanguageType wrh2 = LanguageType.addNonUniqueName(wrh, "Wiradjuri");
+
+
+    // Chinese ------------
+    public static final LanguageType zh = new LanguageType("zh", "Chinese", "Chinese");// (ZhЕЌng WГ©n)
+    public static final LanguageType cmn = new LanguageType("cmn", "Mandarin", "Mandarin");
+
+    public static final LanguageType ltc = new LanguageType("ltc", "Middle Chinese", "Middle Chinese");
+    public static final LanguageType ltc2 = LanguageType.addNonUniqueName(ltc, "Ancient Chinese");
+    public static final LanguageType ltc3 = LanguageType.addNonUniqueName(ltc, "Late Middle Chinese");
+
+    public static final LanguageType wuu    = new LanguageType("wuu", "Wu", "Wu");// У (китайский диалект)
+
+            // todo : enwikt:template:zh-ts -> trad. (zh-tw), simpl. (zh-cn)
+    public static final LanguageType zh_tw = new LanguageType("zh-tw", "Traditional Chinese", "Traditional Chinese");// Китайский (традиц.)
+    public static final LanguageType zh_hant = LanguageType.addNonUniqueCode(zh_tw, "zh-hant");// Chinese written using the Traditional Chinese script
+
+    public static final LanguageType zh_cn = new LanguageType("zh-cn", "Simplified Chinese", "Simplified Chinese");// Китайский (упрощ.)
+    public static final LanguageType zh_hans = LanguageType.addNonUnique(zh_cn, "zh-hans", "Chinese (PRC)");// Chinese written using the Simplified Chinese script
+
+    public static final LanguageType lzh = new LanguageType("lzh", "ж–‡иЁЂ", "Classical Chinese");
+    public static final LanguageType och = LanguageType.addNonUnique(lzh, "och", "Old Chinese");
+    public static final LanguageType zh_classical = LanguageType.addNonUnique(lzh, "zh-classical", "Literary Chinese");
+
+    public static final LanguageType nan = new LanguageType("nan", "BГўn-lГўm-gГє", "Min Nan");//Китайский (южноминьский) Min Nan, Minnan, or Min-nan, Southern Min
+    public static final LanguageType zh_min_nan = LanguageType.addNonUniqueCode(nan, "zh-min-nan");
+    public static final LanguageType zh_nan = LanguageType.addNonUniqueCode(nan, "zh-nan");
+    
+    public static final LanguageType yue = new LanguageType("yue", "зІµиЄћ", "Cantonese");
+    public static final LanguageType zh_yue = LanguageType.addNonUniqueCode(yue, "zh-yue");
+    // ------------ eo Chinese
+    
+
+    public static final LanguageType zu = new LanguageType("zu", "isiZulu", "Zulu");
+    public static final LanguageType zul = LanguageType.addNonUniqueCode(zu, "zul");
+    
+
+    // Zazaki ------------
+    public static final LanguageType zza = new LanguageType("zza", "Zazaki", "Zazaki");// Зазаки
+    
+    public static final LanguageType kiu = new LanguageType("kiu", "Kirmanjki", "Kirmanjki");
+    public static final LanguageType kiu2 = LanguageType.addNonUniqueName(kiu, "Northern Zazaki");
+
+    public static final LanguageType diq = new LanguageType("diq", "Dimli", "Dimli");
+    public static final LanguageType diq2 = LanguageType.addNonUniqueName(diq, "Southern Zazaki");
+    // ------------ eo Zazaki
+
+
+
+
 
 
     // Russian Wiktionary specific codes
@@ -673,7 +804,8 @@ public class LanguageType {
     public static final LanguageType art    = new LanguageType("art", "Toki pona", "Toki pona (art)");// Токипона
     public static final LanguageType art_oou= new LanguageType("art-oou", "oou", "oou");// Ооу
 
-    public static final LanguageType asm    = new LanguageType("asm", "Assamese", "Assamese");// Ассамский
+    public static final LanguageType asm = new LanguageType("asm", "Assamese", "Assamese");// Ассамский
+    public static final LanguageType as = LanguageType.addNonUniqueCode(asm, "as");
     
     public static final LanguageType bdk    = new LanguageType("bdk", "Budukh", "Budukh");// Будухский
     public static final LanguageType bem    = new LanguageType("bem", "Bemba", "Bemba");// Бемба
@@ -702,7 +834,7 @@ public class LanguageType {
     public static final LanguageType de_a   = new LanguageType("de-a", "de-a", "de-a");// Немецкий (австрийский)
     public static final LanguageType dlg    = new LanguageType("dlg", "Dolgan", "Dolgan");// Долганский
     public static final LanguageType dng    = new LanguageType("dng", "Dungan", "Dungan");// Дунганский
-    public static final LanguageType drw    = new LanguageType("drw", "Drow (Dungeons & Dragons)", "Drow (Dungeons & Dragons)");// Дроу
+
     public static final LanguageType dum    = new LanguageType("dum", "Middle Dutch", "Middle Dutch");// Нидерландский средневековый
 
     public static final LanguageType egy    = new LanguageType("egy", "Egyptian", "Egyptian");// Египетский
@@ -714,7 +846,7 @@ public class LanguageType {
     public static final LanguageType eve    = new LanguageType("eve", "Even", "Even");// Эвенский
     public static final LanguageType evn    = new LanguageType("evn", "Evenki", "Evenki");// Эвенкийский
 
-    public static final LanguageType fic_drw = new LanguageType("fic-drw", "Drow (Dungeons & Dragons)", "Drow (Dungeons & Dragons)");// Дроу
+    public static final LanguageType fic_drw = new LanguageType("fic_drw", "Drow (Dungeons & Dragons)", "Drow (Dungeons & Dragons)");// Дроу, fic_drw - code in Russian Wiktionary
     public static final LanguageType fon    = new LanguageType("fon", "Fon", "Fon");// Фон
 
     public static final LanguageType fr_be  = new LanguageType("fr-be", "Belgian French", "Belgian French");// Французский (бельгийский)
@@ -739,8 +871,7 @@ public class LanguageType {
     public static final LanguageType izh    = new LanguageType("izh", "Ingrian", "Ingrian");// Ижорский
 
     public static final LanguageType jct    = new LanguageType("jct", "Krymchak", "Krymchak");// Крымчакский
-
-    public static final LanguageType kas    = new LanguageType("kas", "Kashmiri", "Kashmiri");// Кашмири
+    
     public static final LanguageType kbd    = new LanguageType("kbd", "Kabardian", "Kabardian");// Кабардино-черкесский
     public static final LanguageType kca    = new LanguageType("kca", "Khanty", "Khanty");// Хантыйский
     public static final LanguageType kdr    = new LanguageType("kdr", "Karaim", "Karaim");// Караимский
@@ -757,8 +888,7 @@ public class LanguageType {
 
     public static final LanguageType mаs    = new LanguageType("mas", "Maasai", "Maasai");// Масайский
     public static final LanguageType mgm    = new LanguageType("mgm", "Mambae", "Mambae");// Мамбай
-    public static final LanguageType mnk    = new LanguageType("mnk", "Mandinka", "Mandinka");// Мандиго
-    public static final LanguageType man_lat= new LanguageType("man.lat", "Mandinka", "Mandinka");// Мандиго
+    public static final LanguageType mnk    = new LanguageType("mnk", "Mandinka", "Mandinka");// Мандинка
 
     public static final LanguageType mns    = new LanguageType("mns", "Mansi", "Mansi");// Мансийский
     public static final LanguageType mos    = new LanguageType("mos", "Mossi", "Mossi");// Море
@@ -802,7 +932,6 @@ public class LanguageType {
     public static final LanguageType sot    = new LanguageType("sot", "Sesotho", "Sesotho");// Сесото
     
     public static final LanguageType solresol = new LanguageType("solresol", "Solresol", "Solresol");// Сольресоль
-    public static final LanguageType sol    = new LanguageType("sol", "Solresol", "Solresol");// Сольресоль
 
     public static final LanguageType sux    = new LanguageType("sux", "Sumerian", "Sumerian");// Шумерский
     public static final LanguageType sva    = new LanguageType("sva", "Svan", "Svan");// Сванский
@@ -835,9 +964,7 @@ public class LanguageType {
     public static final LanguageType yrk    = new LanguageType("yrk", "Nenets", "Nenets");// Ненецкий
     
     public static final LanguageType zko    = new LanguageType("zko", "Kott", "Kott");// Коттский
-    public static final LanguageType zza    = new LanguageType("zza", "Zazaki", "Zazaki");// зазаки
 
-    
 
 
 
@@ -888,6 +1015,9 @@ public class LanguageType {
     public static final LanguageType apy = new LanguageType("apy", "Apalaí", "Apalaí");
     public static final LanguageType arn = new LanguageType("arn", "Mapudungun", "Mapudungun");// Арауканский
     public static final LanguageType arp = new LanguageType("arp", "Arapaho", "Arapaho");
+    public static final LanguageType arw = new LanguageType("arw", "Arawak", "Arawak");// Аравакский
+    public static final LanguageType ase = new LanguageType("ase", "American Sign Language", "American Sign Language");// Амслен
+    public static final LanguageType aty = new LanguageType("aty", "Aneityum", "Aneityum");
 
     public static final LanguageType bat_smg = new LanguageType("bat-smg", "ЕЅemaitД—ЕЎka", "Samogitian");
     public static final LanguageType bal = new LanguageType("bal", "Balochi", "Balochi");// Белуджский
@@ -896,9 +1026,6 @@ public class LanguageType {
     public static final LanguageType bho = new LanguageType("bho", "а¤­аҐ‹а¤ња¤ЄаҐЃа¤°аҐЂ", "Bhojpuri");// Бходжпури
     
     public static final LanguageType brh    = new LanguageType("brh", "Brahui", "Brahui");// Брауи
-
-    public static final LanguageType btk    = new LanguageType("btk", "Batak", "Batak");// Батакский
-    public static final LanguageType bya    = new LanguageType("bya", "Batak", "Batak");// Батакский
     
     public static final LanguageType cab    = new LanguageType("cab", "Garifuna", "Garifuna");
     public static final LanguageType cbk_zam = new LanguageType("cbk-zam", "Chavacano de Zamboanga", "Zamboanga Chavacano");
@@ -907,10 +1034,7 @@ public class LanguageType {
     public static final LanguageType cic    = new LanguageType("cic", "Chickasaw", "Chickasaw");// Чикасо
 
     public static final LanguageType cui    = new LanguageType("cui", "Cuiba", "Cuiba");
-
-    public static final LanguageType cy     = new LanguageType("cy", "Cymraeg", "Welsh");// Валлийский
-    public static final LanguageType cym    = new LanguageType("cym", "Cymraeg", "Welsh");// Валлийский
-
+    
     public static final LanguageType de_formal = new LanguageType("de-formal", "Deutsch (Sie-Form)", "German - formal address (\"Sie\")");
     public static final LanguageType dif    = new LanguageType("dif", "Dieri", "Dieri");// Диери
     public static final LanguageType dk     = new LanguageType("dk", "Dansk (deprecated:da)", "Unused code currently falls back to Danish, da is correct for the language");
@@ -931,7 +1055,6 @@ public class LanguageType {
     public static final LanguageType gsw = new LanguageType("gsw", "Alemannisch", "Alemannic");
 
     public static final LanguageType hmn    = new LanguageType("hmn", "Hmong", "Hmong");// мяо
-    public static final LanguageType ht     = new LanguageType("ht", "KreyГІl ayisyen", "Haitian Creole");
     
     public static final LanguageType ith_lat = new LanguageType("ith.lat", "Ithkuil", "Ithkuil");// Ифкуиль
 
@@ -976,14 +1099,11 @@ public class LanguageType {
     public static final LanguageType nb = new LanguageType("nb", "Norwegian (Bokmal)", "Bokmål");// Букмол
     public static final LanguageType nob = LanguageType.addNonUnique(nb, "nob", "Norwegian Bokmål");
 
-    public static final LanguageType nv     = new LanguageType("nv", "DinГ© bizaad", "Navajo");
-    public static final LanguageType nav    = new LanguageType("nv", "DinГ© bizaad", "Navajo");
-    
     public static final LanguageType nds    = new LanguageType("nds", "PlattdГјГјtsch", "Low German \'\'or\'\' Low Saxon");
     public static final LanguageType nds_nl = new LanguageType("nds-nl", "Nedersaksisch", "Dutch Low Saxon");
 
     public static final LanguageType ood    = new LanguageType("ood", "O'odham", "O'odham");// Оодхам
-
+    
     public static final LanguageType pcd    = new LanguageType("pcd", "Picard", "Picard");// Пикардский
     public static final LanguageType pjt    = new LanguageType("pjt", "Pitjantjatjara", "Pitjantjatjara");// aus
     public static final LanguageType kdd    = new LanguageType("kdd", "Yankunytjatjara", "Yankunytjatjara");// aus
@@ -1003,7 +1123,7 @@ public class LanguageType {
     public static final LanguageType ruq_latn = new LanguageType("ruq-latn", "VlДѓheЕџte", "Megleno-Romanian (Latin script)");
 
     public static final LanguageType rap    = new LanguageType("rap", "Rapa Nui", "Rapa Nui");// Рапануйский
-    public static final LanguageType rar    = new LanguageType("rap", "Rarotongan", "Rarotongan");// Раротонга
+    public static final LanguageType rar    = new LanguageType("rar", "Rarotongan", "Rarotongan");// Раротонга
     public static final LanguageType rhg    = new LanguageType("rhg", "Rohingya", "Rohingya");
     public static final LanguageType ryu    = new LanguageType("ryu", "Okinawan", "Okinawan");
     
@@ -1013,7 +1133,6 @@ public class LanguageType {
 
     public static final LanguageType smn    = new LanguageType("smn", "Inari Sami", "Inari Sami");// Инари-саамский
     
-    public static final LanguageType tcs = new LanguageType("tcs", "Torres Strait Creole", "Torres Strait Creole");
     public static final LanguageType tig    = new LanguageType("tig", "Tigre", "Tigre");// Тигре
 
     public static final LanguageType ton    = new LanguageType("ton", "Tongan", "Tongan");// Тонганский
@@ -1036,12 +1155,9 @@ public class LanguageType {
 
     public static final LanguageType wad    = new LanguageType("wad", "Wandamen", "Wandamen");
 
-    public static final LanguageType wim    = new LanguageType("wim", "Wik-Mungknh", "Wik-Mungknh");
-    public static final LanguageType wim2 = LanguageType.addNonUniqueName(wim, "Wik-Mungkan");
-
-    public static final LanguageType wlm    = new LanguageType("wlm", "Middle Welsh", "Middle Welsh");// cel
-    public static final LanguageType wrh    = new LanguageType("wim", "Wiradjuri", "Wiradjuri");
-    public static final LanguageType wrh2   = LanguageType.addNonUniqueName(wrh, "Wiradhuri");
+    public static final LanguageType wim = new LanguageType("wim", "Wik-Mungkan", "Wik-Mungkan");
+    
+    public static final LanguageType wyb = new LanguageType("wyb", "Wangaaybuwan-Ngiyambaa", "Wangaaybuwan-Ngiyambaa");
 
     public static final LanguageType xbc    = new LanguageType("xbc", "Bactrian", "Bactrian");// Бактрийский
     public static final LanguageType xno    = new LanguageType("xno", "Anglo-Norman", "Anglo-Norman");// Англо-нормандский
@@ -1053,9 +1169,7 @@ public class LanguageType {
     public static final LanguageType zai    = new LanguageType("zai", "Isthmus Zapotec", "Isthmus Zapotec");
     public static final LanguageType ze = new LanguageType("ze", "Zeneize", "Zeneize");// Генуэзский диалект лигурского языка
     
-    public static final LanguageType zu     = new LanguageType("zu", "isiZulu", "Cantonese");
-
-
+    
     // automatically
     /** Vim commands to convert mediawiki/languages/Names.php to the following
      * lines:
@@ -1067,8 +1181,8 @@ public class LanguageType {
      *    %s/\(\t'[^'-]\+\)-\([^'-]\+' => \)/\1_\2/g
      * (44 languages, exception: zh-min-nan, be-x-old) */
     // 3. %s/\t'\([^']\+\)' => ['"]\([^']\+\)['"],[ \t]*/    public static final LanguageType \1 = new LanguageType("\1", "\2");/
-    public static final LanguageType as = new LanguageType("as", "а¦…а¦ёа¦®а§Ђа§џа¦ѕ", "Assamese");
-    public static final LanguageType ast = new LanguageType("ast", "Asturianu", "Asturian");
+    
+    public static final LanguageType ast = new LanguageType("ast", "Asturianu", "Asturian");// Астурийский
     public static final LanguageType av = new LanguageType("av", "РђРІР°СЂ", "Avar");
     public static final LanguageType avk = new LanguageType("avk", "Kotava", "Kotava");
     public static final LanguageType ay = new LanguageType("ay", "Aymar aru", "Aymara");
@@ -1110,8 +1224,6 @@ public class LanguageType {
     public static final LanguageType da = new LanguageType("da", "Dansk", "Danish");
     public static final LanguageType de = new LanguageType("de", "Deutsch", "German");
     
-    public static final LanguageType diq = new LanguageType("diq", "Zazaki", "Zazaki");
-    
     public static final LanguageType dsb = new LanguageType("dsb", "Dolnoserbski", "Lower Sorbian");
     public static final LanguageType dv = new LanguageType("dv", "Ю‹ЮЁЮ€Ю¬ЮЂЮЁЮ„Ю¦ЮђЮ°", "Dhivehi");
     public static final LanguageType dz = new LanguageType("dz", "аЅ‡аЅјаЅ„ај‹аЅЃ", "Bhutani");
@@ -1124,7 +1236,7 @@ public class LanguageType {
     public static final LanguageType et = new LanguageType("et", "Eesti", "Estonian");
     public static final LanguageType eu = new LanguageType("eu", "Euskara", "Basque");
     public static final LanguageType ext = new LanguageType("ext", "EstremeГ±u", "Extremaduran");
-    public static final LanguageType fa = new LanguageType("fa", "ЩЃШ§Ш±ШіЫЊ", "Persian");
+
     public static final LanguageType ff = new LanguageType("ff", "Fulfulde", "Fulfulde, Maasina");
     public static final LanguageType fi = new LanguageType("fi", "Suomi", "Finnish");
     
@@ -1187,7 +1299,6 @@ public class LanguageType {
     public static final LanguageType kr = new LanguageType("kr", "Kanuri", "Kanuri, Central");
     public static final LanguageType kri = new LanguageType("kri", "Krio", "Krio");
     public static final LanguageType krj = new LanguageType("krj", "Kinaray-a", "Kinaray-a");
-    public static final LanguageType ks = new LanguageType("ks", "а¤•а¤¶аҐЌа¤®аҐЂа¤°аҐЂ - (ЩѓШґЩ…ЩЉШ±ЩЉ)", "Kashmiri");
     public static final LanguageType ksh = new LanguageType("ksh", "Ripoarisch", "Ripuarian");
 	
     public static final LanguageType kw = new LanguageType("kw", "Kernewek", "Cornish");
@@ -1213,7 +1324,6 @@ public class LanguageType {
     public static final LanguageType mg = new LanguageType("mg", "Malagasy", "Malagasy");
     public static final LanguageType mh = new LanguageType("mh", "Ebon", "Marshallese");
     
-    public static final LanguageType mi = new LanguageType("mi", "MДЃori", "Maori");
     public static final LanguageType mk = new LanguageType("mk", "РњР°РєРµРґРѕРЅСЃРєРё", "Macedonian");
     public static final LanguageType ml = new LanguageType("ml", "аґ®аґІаґЇаґѕаґіаґ‚", "Malayalam");
 
@@ -1245,7 +1355,7 @@ public class LanguageType {
     public static final LanguageType om = new LanguageType("om", "Oromoo", "Oromo");
     public static final LanguageType or = new LanguageType("or", "а¬“а­ња¬їа¬†", "Oriya");
     public static final LanguageType os = new LanguageType("os", "РСЂРѕРЅР°Сѓ", "Ossetic");
-    public static final LanguageType pa = new LanguageType("pa", "аЁЄа©°аЁњаЁѕаЁ¬а©Ђ", "Eastern Punjabi (pan)");
+    
     public static final LanguageType pag = new LanguageType("pag", "Pangasinan", "Pangasinan");
 
     public static final LanguageType pap = new LanguageType("pap", "Papiamentu", "Papiamentu");
@@ -1273,7 +1383,7 @@ public class LanguageType {
     
     public static final LanguageType rw = new LanguageType("rw", "Kinyarwanda", "Kinyarwanda");
     public static final LanguageType sa = new LanguageType("sa", "а¤ёа¤‚а¤ёаҐЌа¤•аҐѓа¤¤", "Sanskrit");
-    public static final LanguageType sah = new LanguageType("sah", "РЎР°С…Р° С‚С‹Р»Р°", "Sakha");
+    
     public static final LanguageType sc = new LanguageType("sc", "Sardu", "Sardinian");
     public static final LanguageType scn = new LanguageType("scn", "Sicilianu", "Sicilian");
     public static final LanguageType sco = new LanguageType("sco", "Scots", "Scots");
