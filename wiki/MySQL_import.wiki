@@ -5,6 +5,12 @@
 
 At this moment, there is more information about import here: [http://synarcher.sourceforge.net synarcher].
 
+= MediaWiki =
+ 
+My beloved WAMP tutorial pages: 
+[http://fastec.altervista.org/Apache_PHP_MySQL.php Ultimate How To], 
+[http://www.softtime.ru/article/index.php?id_article=95 in Russian].
+
 = Xml2sql =
 
 == Intro ==
