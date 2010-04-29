@@ -50,6 +50,8 @@ Merge two files (with tables structure and data) into one:
 
 == SQLite shell ==
 
+Read the note "[http://componavt.livejournal.com/3393.html Let's speed up SQLite]".
+
 Run SQLite, load and backup the SQLite database:
 {{{
 sqlite3
