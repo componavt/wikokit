@@ -29,7 +29,7 @@ Vim regular expressions (manual mode):
 %s/CHARACTER SET latin1 COLLATE latin1_bin\s*//g    // remove "CHAR... "
 }}}
 
-Update this file if the stucture of the Wiktionary parsed database is changed.
+Update this file if the stucture of the Wiktionary parsed database is changed, if new language codes were added.
 
 == Data conversion ===
 Dump data of the the Wiktionary parsed database:
