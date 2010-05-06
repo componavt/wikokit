@@ -128,7 +128,7 @@ public class WMeaningRuTest {
         assertTrue(null == result);
     }
 
-     @Test
+    @Test
     public void testParseOneDefinition_morpheme_template() {
         System.out.println("parseOneDefinition_morpheme_template_ru");
         LanguageType wikt_lang;
@@ -152,6 +152,35 @@ public class WMeaningRuTest {
         line = "# {{морфема tt|часть=существительному, прилагательному, числительному|ряд=зад|образует=существительные|знач=«абстракции, множества, группы объектов»}}";
         result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
         assertTrue(null == result);
+    }
+
+    // Remove a temporary empty label {{помета?|XX}}, where XX - language code
+    @Test
+    public void testParse_skip_temporary_empty_label_pometa_question() {
+        System.out.println("parseOneDefinition__skip_temporary_empty_label_pometa_question");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        String line;
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "наробляти";
+        lang_section    = LanguageType.uk; // Ukrainian word
+
+        // test 1
+        line = "# {{помета?|uk}}  {{пример|}}";
+        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        assertTrue(null == result);
+
+        // test 2
+        // todo remove empty "{{помета?|sq}}" -> [[шелковица]], [[тутовое дерево]]
+        page_title      = "man";
+        lang_section    = LanguageType.sq; // Albanian word
+        line = "#{{помета?|sq}} [[шелковица]], [[тутовое дерево]] {{пример|}}";
+        //String _line = "[[шелковица]], [[тутовое дерево]]";
+        String _line = "шелковица, тутовое дерево";
+        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        assertTrue(result.getDefinition().equalsIgnoreCase(_line));
     }
 
     @Test

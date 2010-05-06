@@ -2,7 +2,7 @@
 
 -- MySQL dump 10.13  Distrib 5.1.37, for Win32 (ia32)
 --
--- Host: localhost    Database: enwikt20100106_parsed
+-- Host: localhost    Database: ruwikt20100405_parsed
 -- ------------------------------------------------------
 -- Server version	5.1.37-community-log
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
@@ -13,13 +13,73 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table "index_aa"
+-- Table structure for table "index_aaa"
 --
 
-DROP TABLE IF EXISTS "index_aa";
+DROP TABLE IF EXISTS "index_aaa";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_aa" (
+CREATE TABLE "index_aaa" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_aab"
+--
+
+DROP TABLE IF EXISTS "index_aab";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aab" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_aae"
+--
+
+DROP TABLE IF EXISTS "index_aae";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aae" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_aak"
+--
+
+DROP TABLE IF EXISTS "index_aak";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aak" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_aao"
+--
+
+DROP TABLE IF EXISTS "index_aao";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aao" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -43,13 +103,73 @@ CREATE TABLE "index_aar" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_ab"
+-- Table structure for table "index_aat"
 --
 
-DROP TABLE IF EXISTS "index_ab";
+DROP TABLE IF EXISTS "index_aat";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ab" (
+CREATE TABLE "index_aat" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_abe"
+--
+
+DROP TABLE IF EXISTS "index_abe";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_abe" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_abk"
+--
+
+DROP TABLE IF EXISTS "index_abk";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_abk" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_abl"
+--
+
+DROP TABLE IF EXISTS "index_abl";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_abl" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_abm"
+--
+
+DROP TABLE IF EXISTS "index_abm";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_abm" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -103,6 +223,126 @@ CREATE TABLE "index_ace" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_ach"
+--
+
+DROP TABLE IF EXISTS "index_ach";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ach" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_acr"
+--
+
+DROP TABLE IF EXISTS "index_acr";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_acr" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_acv"
+--
+
+DROP TABLE IF EXISTS "index_acv";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_acv" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_acx"
+--
+
+DROP TABLE IF EXISTS "index_acx";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_acx" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ada"
+--
+
+DROP TABLE IF EXISTS "index_ada";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ada" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ade"
+--
+
+DROP TABLE IF EXISTS "index_ade";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ade" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_adj"
+--
+
+DROP TABLE IF EXISTS "index_adj";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_adj" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_adt"
+--
+
+DROP TABLE IF EXISTS "index_adt";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_adt" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_ady"
 --
 
@@ -118,13 +358,58 @@ CREATE TABLE "index_ady" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_af"
+-- Table structure for table "index_adz"
 --
 
-DROP TABLE IF EXISTS "index_af";
+DROP TABLE IF EXISTS "index_adz";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_af" (
+CREATE TABLE "index_adz" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_aeb"
+--
+
+DROP TABLE IF EXISTS "index_aeb";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aeb" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_afb"
+--
+
+DROP TABLE IF EXISTS "index_afb";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_afb" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_afr"
+--
+
+DROP TABLE IF EXISTS "index_afr";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_afr" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -148,6 +433,21 @@ CREATE TABLE "index_agf" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_agj"
+--
+
+DROP TABLE IF EXISTS "index_agj";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_agj" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_agx"
 --
 
@@ -163,13 +463,13 @@ CREATE TABLE "index_agx" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_aie"
+-- Table structure for table "index_ahs"
 --
 
-DROP TABLE IF EXISTS "index_aie";
+DROP TABLE IF EXISTS "index_ahs";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_aie" (
+CREATE TABLE "index_ahs" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -178,13 +478,13 @@ CREATE TABLE "index_aie" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_aii"
+-- Table structure for table "index_aie"
 --
 
-DROP TABLE IF EXISTS "index_aii";
+DROP TABLE IF EXISTS "index_aie";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_aii" (
+CREATE TABLE "index_aie" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -283,13 +583,58 @@ CREATE TABLE "index_ajg" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_ak"
+-- Table structure for table "index_aji"
 --
 
-DROP TABLE IF EXISTS "index_ak";
+DROP TABLE IF EXISTS "index_aji";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ak" (
+CREATE TABLE "index_aji" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ajp"
+--
+
+DROP TABLE IF EXISTS "index_ajp";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ajp" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_aka"
+--
+
+DROP TABLE IF EXISTS "index_aka";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aka" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ake"
+--
+
+DROP TABLE IF EXISTS "index_ake";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ake" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -328,6 +673,51 @@ CREATE TABLE "index_akk" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_akl"
+--
+
+DROP TABLE IF EXISTS "index_akl";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_akl" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_akz"
+--
+
+DROP TABLE IF EXISTS "index_akz";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_akz" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_alc"
+--
+
+DROP TABLE IF EXISTS "index_alc";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_alc" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_ale"
 --
 
@@ -335,6 +725,21 @@ DROP TABLE IF EXISTS "index_ale";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_ale" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ali"
+--
+
+DROP TABLE IF EXISTS "index_ali";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ali" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -365,6 +770,21 @@ DROP TABLE IF EXISTS "index_alp";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_alp" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_alq"
+--
+
+DROP TABLE IF EXISTS "index_alq";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_alq" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -418,13 +838,13 @@ CREATE TABLE "index_alt" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_am"
+-- Table structure for table "index_alu"
 --
 
-DROP TABLE IF EXISTS "index_am";
+DROP TABLE IF EXISTS "index_alu";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_am" (
+CREATE TABLE "index_alu" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -433,13 +853,13 @@ CREATE TABLE "index_am" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_amh"
+-- Table structure for table "index_am"
 --
 
-DROP TABLE IF EXISTS "index_amh";
+DROP TABLE IF EXISTS "index_am";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_amh" (
+CREATE TABLE "index_am" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -463,13 +883,73 @@ CREATE TABLE "index_amk" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_an"
+-- Table structure for table "index_amn"
 --
 
-DROP TABLE IF EXISTS "index_an";
+DROP TABLE IF EXISTS "index_amn";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_an" (
+CREATE TABLE "index_amn" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ams"
+--
+
+DROP TABLE IF EXISTS "index_ams";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ams" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_amt"
+--
+
+DROP TABLE IF EXISTS "index_amt";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_amt" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_amu"
+--
+
+DROP TABLE IF EXISTS "index_amu";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_amu" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_and"
+--
+
+DROP TABLE IF EXISTS "index_and";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_and" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -493,6 +973,156 @@ CREATE TABLE "index_ang" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_anp"
+--
+
+DROP TABLE IF EXISTS "index_anp";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_anp" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ant"
+--
+
+DROP TABLE IF EXISTS "index_ant";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ant" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apc"
+--
+
+DROP TABLE IF EXISTS "index_apc";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apc" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apd"
+--
+
+DROP TABLE IF EXISTS "index_apd";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apd" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apj"
+--
+
+DROP TABLE IF EXISTS "index_apj";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apj" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apk"
+--
+
+DROP TABLE IF EXISTS "index_apk";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apk" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apl"
+--
+
+DROP TABLE IF EXISTS "index_apl";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apl" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apm"
+--
+
+DROP TABLE IF EXISTS "index_apm";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apm" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apw"
+--
+
+DROP TABLE IF EXISTS "index_apw";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apw" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_apy"
+--
+
+DROP TABLE IF EXISTS "index_apy";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_apy" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_aqc"
 --
 
@@ -508,13 +1138,28 @@ CREATE TABLE "index_aqc" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_ar"
+-- Table structure for table "index_ara"
 --
 
-DROP TABLE IF EXISTS "index_ar";
+DROP TABLE IF EXISTS "index_ara";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ar" (
+CREATE TABLE "index_ara" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_arb"
+--
+
+DROP TABLE IF EXISTS "index_arb";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_arb" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -538,13 +1183,13 @@ CREATE TABLE "index_arc" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_arc.jud"
+-- Table structure for table "index_are"
 --
 
-DROP TABLE IF EXISTS "index_arc.jud";
+DROP TABLE IF EXISTS "index_are";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_arc.jud" (
+CREATE TABLE "index_are" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -553,13 +1198,13 @@ CREATE TABLE "index_arc.jud" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_arc.syr"
+-- Table structure for table "index_arg"
 --
 
-DROP TABLE IF EXISTS "index_arc.syr";
+DROP TABLE IF EXISTS "index_arg";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_arc.syr" (
+CREATE TABLE "index_arg" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -575,6 +1220,51 @@ DROP TABLE IF EXISTS "index_arn";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_arn" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_arp"
+--
+
+DROP TABLE IF EXISTS "index_arp";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_arp" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_arq"
+--
+
+DROP TABLE IF EXISTS "index_arq";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_arq" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ars"
+--
+
+DROP TABLE IF EXISTS "index_ars";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ars" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -613,6 +1303,51 @@ CREATE TABLE "index_art-oou" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_aru"
+--
+
+DROP TABLE IF EXISTS "index_aru";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aru" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_arw"
+--
+
+DROP TABLE IF EXISTS "index_arw";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_arw" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ary"
+--
+
+DROP TABLE IF EXISTS "index_ary";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ary" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_arz"
 --
 
@@ -628,13 +1363,13 @@ CREATE TABLE "index_arz" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_as"
+-- Table structure for table "index_ase"
 --
 
-DROP TABLE IF EXISTS "index_as";
+DROP TABLE IF EXISTS "index_ase";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_as" (
+CREATE TABLE "index_ase" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -665,6 +1400,36 @@ DROP TABLE IF EXISTS "index_ast";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_ast" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_atv"
+--
+
+DROP TABLE IF EXISTS "index_atv";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_atv" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_aty"
+--
+
+DROP TABLE IF EXISTS "index_aty";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_aty" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -718,6 +1483,51 @@ CREATE TABLE "index_avk" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_awa"
+--
+
+DROP TABLE IF EXISTS "index_awa";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_awa" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_awk"
+--
+
+DROP TABLE IF EXISTS "index_awk";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_awk" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_axm"
+--
+
+DROP TABLE IF EXISTS "index_axm";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_axm" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_ay"
 --
 
@@ -725,6 +1535,36 @@ DROP TABLE IF EXISTS "index_ay";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_ay" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ayl"
+--
+
+DROP TABLE IF EXISTS "index_ayl";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ayl" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ayp"
+--
+
+DROP TABLE IF EXISTS "index_ayp";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ayp" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -823,6 +1663,21 @@ CREATE TABLE "index_bar" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_bas"
+--
+
+DROP TABLE IF EXISTS "index_bas";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_bas" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_bat-smg"
 --
 
@@ -913,13 +1768,13 @@ CREATE TABLE "index_be-tarask" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_be-x-old"
+-- Table structure for table "index_bem"
 --
 
-DROP TABLE IF EXISTS "index_be-x-old";
+DROP TABLE IF EXISTS "index_bem";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_be-x-old" (
+CREATE TABLE "index_bem" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -928,13 +1783,13 @@ CREATE TABLE "index_be-x-old" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_bem"
+-- Table structure for table "index_bew"
 --
 
-DROP TABLE IF EXISTS "index_bem";
+DROP TABLE IF EXISTS "index_bew";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_bem" (
+CREATE TABLE "index_bew" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -958,13 +1813,13 @@ CREATE TABLE "index_bg" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_bh"
+-- Table structure for table "index_bho"
 --
 
-DROP TABLE IF EXISTS "index_bh";
+DROP TABLE IF EXISTS "index_bho";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_bh" (
+CREATE TABLE "index_bho" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -1108,6 +1963,21 @@ CREATE TABLE "index_br" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_brc"
+--
+
+DROP TABLE IF EXISTS "index_brc";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_brc" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_brh"
 --
 
@@ -1213,21 +2083,6 @@ CREATE TABLE "index_bxr" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_bya"
---
-
-DROP TABLE IF EXISTS "index_bya";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_bya" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_byn"
 --
 
@@ -1250,6 +2105,36 @@ DROP TABLE IF EXISTS "index_ca";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_ca" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_caa"
+--
+
+DROP TABLE IF EXISTS "index_caa";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_caa" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_cab"
+--
+
+DROP TABLE IF EXISTS "index_cab";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_cab" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -1363,6 +2248,21 @@ CREATE TABLE "index_ch" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_chc"
+--
+
+DROP TABLE IF EXISTS "index_chc";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_chc" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_chg"
 --
 
@@ -1370,6 +2270,21 @@ DROP TABLE IF EXISTS "index_chg";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_chg" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_chk"
+--
+
+DROP TABLE IF EXISTS "index_chk";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_chk" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -1498,13 +2413,13 @@ CREATE TABLE "index_chy" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_cjs"
+-- Table structure for table "index_cic"
 --
 
-DROP TABLE IF EXISTS "index_cjs";
+DROP TABLE IF EXISTS "index_cic";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_cjs" (
+CREATE TABLE "index_cic" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -1513,13 +2428,13 @@ CREATE TABLE "index_cjs" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_ckb"
+-- Table structure for table "index_cjs"
 --
 
-DROP TABLE IF EXISTS "index_ckb";
+DROP TABLE IF EXISTS "index_cjs";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ckb" (
+CREATE TABLE "index_cjs" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -1678,6 +2593,36 @@ CREATE TABLE "index_cu" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_cui"
+--
+
+DROP TABLE IF EXISTS "index_cui";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_cui" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_cuk"
+--
+
+DROP TABLE IF EXISTS "index_cuk";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_cuk" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_cv"
 --
 
@@ -1700,21 +2645,6 @@ DROP TABLE IF EXISTS "index_cy";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_cy" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_cym"
---
-
-DROP TABLE IF EXISTS "index_cym";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_cym" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -1873,21 +2803,6 @@ CREATE TABLE "index_dng" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_drw"
---
-
-DROP TABLE IF EXISTS "index_drw";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_drw" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_dsb"
 --
 
@@ -2000,6 +2915,21 @@ DROP TABLE IF EXISTS "index_eml";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_eml" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_en"
+--
+
+DROP TABLE IF EXISTS "index_en";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_en" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -2218,6 +3148,21 @@ CREATE TABLE "index_fa" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_fat"
+--
+
+DROP TABLE IF EXISTS "index_fat";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_fat" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_ff"
 --
 
@@ -2248,13 +3193,13 @@ CREATE TABLE "index_fi" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_fic-drw"
+-- Table structure for table "index_fic_drw"
 --
 
-DROP TABLE IF EXISTS "index_fic-drw";
+DROP TABLE IF EXISTS "index_fic_drw";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_fic-drw" (
+CREATE TABLE "index_fic_drw" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -2300,6 +3245,21 @@ DROP TABLE IF EXISTS "index_fj";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_fj" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_fkv"
+--
+
+DROP TABLE IF EXISTS "index_fkv";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_fkv" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -2443,13 +3403,28 @@ CREATE TABLE "index_frp" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_fry"
+-- Table structure for table "index_frr"
 --
 
-DROP TABLE IF EXISTS "index_fry";
+DROP TABLE IF EXISTS "index_frr";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_fry" (
+CREATE TABLE "index_frr" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_frs"
+--
+
+DROP TABLE IF EXISTS "index_frs";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_frs" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -2465,6 +3440,21 @@ DROP TABLE IF EXISTS "index_fur";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_fur" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_fy"
+--
+
+DROP TABLE IF EXISTS "index_fy";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_fy" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -2893,36 +3883,6 @@ CREATE TABLE "index_hif" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_hif-deva"
---
-
-DROP TABLE IF EXISTS "index_hif-deva";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_hif-deva" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_hif-latn"
---
-
-DROP TABLE IF EXISTS "index_hif-latn";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_hif-latn" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_hil"
 --
 
@@ -2945,6 +3905,21 @@ DROP TABLE IF EXISTS "index_hit";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_hit" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_hmn"
+--
+
+DROP TABLE IF EXISTS "index_hmn";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_hmn" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3050,21 +4025,6 @@ DROP TABLE IF EXISTS "index_hz";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_hz" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_ia"
---
-
-DROP TABLE IF EXISTS "index_ia";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ia" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3185,6 +4145,21 @@ DROP TABLE IF EXISTS "index_ilo";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_ilo" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ina"
+--
+
+DROP TABLE IF EXISTS "index_ina";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ina" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3358,6 +4333,21 @@ CREATE TABLE "index_ja" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_jam"
+--
+
+DROP TABLE IF EXISTS "index_jam";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_jam" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_jbo"
 --
 
@@ -3380,6 +4370,21 @@ DROP TABLE IF EXISTS "index_jct";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_jct" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_jpr"
+--
+
+DROP TABLE IF EXISTS "index_jpr";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_jpr" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3478,21 +4483,6 @@ CREATE TABLE "index_kal" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_kas"
---
-
-DROP TABLE IF EXISTS "index_kas";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_kas" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_kaz"
 --
 
@@ -3530,6 +4520,21 @@ DROP TABLE IF EXISTS "index_kca";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_kca" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_kdd"
+--
+
+DROP TABLE IF EXISTS "index_kdd";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_kdd" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3583,6 +4588,21 @@ CREATE TABLE "index_kg" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_khk"
+--
+
+DROP TABLE IF EXISTS "index_khk";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_khk" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_ki"
 --
 
@@ -3605,6 +4625,21 @@ DROP TABLE IF EXISTS "index_kim";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_kim" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_kiu"
+--
+
+DROP TABLE IF EXISTS "index_kiu";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_kiu" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3643,21 +4678,6 @@ CREATE TABLE "index_kjh" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_kk-arab"
---
-
-DROP TABLE IF EXISTS "index_kk-arab";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_kk-arab" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_km"
 --
 
@@ -3673,13 +4693,13 @@ CREATE TABLE "index_km" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_kmr"
+-- Table structure for table "index_kn"
 --
 
-DROP TABLE IF EXISTS "index_kmr";
+DROP TABLE IF EXISTS "index_kn";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_kmr" (
+CREATE TABLE "index_kn" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3688,13 +4708,13 @@ CREATE TABLE "index_kmr" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_kn"
+-- Table structure for table "index_knw"
 --
 
-DROP TABLE IF EXISTS "index_kn";
+DROP TABLE IF EXISTS "index_knw";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_kn" (
+CREATE TABLE "index_knw" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -3943,81 +4963,6 @@ CREATE TABLE "index_ku" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_ku-arab"
---
-
-DROP TABLE IF EXISTS "index_ku-arab";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ku-arab" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_ku-latn"
---
-
-DROP TABLE IF EXISTS "index_ku-latn";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ku-latn" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_ku.arab"
---
-
-DROP TABLE IF EXISTS "index_ku.arab";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ku.arab" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_ku.cyr"
---
-
-DROP TABLE IF EXISTS "index_ku.cyr";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ku.cyr" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_ku.lat"
---
-
-DROP TABLE IF EXISTS "index_ku.lat";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ku.lat" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_kum"
 --
 
@@ -4025,21 +4970,6 @@ DROP TABLE IF EXISTS "index_kum";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_kum" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_kur"
---
-
-DROP TABLE IF EXISTS "index_kur";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_kur" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -4123,6 +5053,21 @@ CREATE TABLE "index_lad" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_lah"
+--
+
+DROP TABLE IF EXISTS "index_lah";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_lah" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_lb"
 --
 
@@ -4198,36 +5143,6 @@ CREATE TABLE "index_lfn" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_lg"
---
-
-DROP TABLE IF EXISTS "index_lg";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_lg" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_li"
---
-
-DROP TABLE IF EXISTS "index_li";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_li" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_lij"
 --
 
@@ -4235,6 +5150,21 @@ DROP TABLE IF EXISTS "index_lij";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_lij" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_lim"
+--
+
+DROP TABLE IF EXISTS "index_lim";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_lim" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -4348,6 +5278,21 @@ CREATE TABLE "index_lt" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_ltc"
+--
+
+DROP TABLE IF EXISTS "index_ltc";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ltc" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_ltg"
 --
 
@@ -4355,6 +5300,36 @@ DROP TABLE IF EXISTS "index_ltg";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_ltg" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_lug"
+--
+
+DROP TABLE IF EXISTS "index_lug";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_lug" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_luo"
+--
+
+DROP TABLE IF EXISTS "index_luo";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_luo" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -4393,6 +5368,21 @@ CREATE TABLE "index_lv" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_lzh"
+--
+
+DROP TABLE IF EXISTS "index_lzh";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_lzh" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_lzz"
 --
 
@@ -4415,21 +5405,6 @@ DROP TABLE IF EXISTS "index_mai";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_mai" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_man.lat"
---
-
-DROP TABLE IF EXISTS "index_man.lat";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_man.lat" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -4550,6 +5525,21 @@ DROP TABLE IF EXISTS "index_mi";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_mi" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_miq"
+--
+
+DROP TABLE IF EXISTS "index_miq";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_miq" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -4775,6 +5765,21 @@ DROP TABLE IF EXISTS "index_mwf";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_mwf" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_mwj"
+--
+
+DROP TABLE IF EXISTS "index_mwj";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_mwj" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5232,6 +6237,21 @@ CREATE TABLE "index_odt" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_ofs"
+--
+
+DROP TABLE IF EXISTS "index_ofs";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ofs" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_oj"
 --
 
@@ -5247,6 +6267,21 @@ CREATE TABLE "index_oj" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_oko"
+--
+
+DROP TABLE IF EXISTS "index_oko";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_oko" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_om"
 --
 
@@ -5254,6 +6289,21 @@ DROP TABLE IF EXISTS "index_om";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_om" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ood"
+--
+
+DROP TABLE IF EXISTS "index_ood";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ood" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5307,6 +6357,36 @@ CREATE TABLE "index_os" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_oun"
+--
+
+DROP TABLE IF EXISTS "index_oun";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_oun" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_owl"
+--
+
+DROP TABLE IF EXISTS "index_owl";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_owl" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_pa"
 --
 
@@ -5329,6 +6409,21 @@ DROP TABLE IF EXISTS "index_pag";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_pag" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_pal"
+--
+
+DROP TABLE IF EXISTS "index_pal";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_pal" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5397,6 +6492,21 @@ CREATE TABLE "index_pcd" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_pcm"
+--
+
+DROP TABLE IF EXISTS "index_pcm";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_pcm" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_pdc"
 --
 
@@ -5427,6 +6537,21 @@ CREATE TABLE "index_pdt" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_peo"
+--
+
+DROP TABLE IF EXISTS "index_peo";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_peo" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_pfl"
 --
 
@@ -5434,6 +6559,21 @@ DROP TABLE IF EXISTS "index_pfl";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_pfl" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_pga"
+--
+
+DROP TABLE IF EXISTS "index_pga";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_pga" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5494,6 +6634,21 @@ DROP TABLE IF EXISTS "index_pinyin";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_pinyin" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_pjt"
+--
+
+DROP TABLE IF EXISTS "index_pjt";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_pjt" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5757,6 +6912,36 @@ CREATE TABLE "index_rap" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_rar"
+--
+
+DROP TABLE IF EXISTS "index_rar";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_rar" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_rhg"
+--
+
+DROP TABLE IF EXISTS "index_rhg";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_rhg" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_rif"
 --
 
@@ -5817,13 +7002,13 @@ CREATE TABLE "index_rmy" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_rn"
+-- Table structure for table "index_ro"
 --
 
-DROP TABLE IF EXISTS "index_rn";
+DROP TABLE IF EXISTS "index_ro";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_rn" (
+CREATE TABLE "index_ro" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5832,13 +7017,13 @@ CREATE TABLE "index_rn" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_ro"
+-- Table structure for table "index_roa"
 --
 
-DROP TABLE IF EXISTS "index_ro";
+DROP TABLE IF EXISTS "index_roa";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ro" (
+CREATE TABLE "index_roa" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5877,21 +7062,6 @@ CREATE TABLE "index_roa-tara" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_roh"
---
-
-DROP TABLE IF EXISTS "index_roh";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_roh" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_rom"
 --
 
@@ -5922,13 +7092,13 @@ CREATE TABLE "index_romaji" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_ru"
+-- Table structure for table "index_rop"
 --
 
-DROP TABLE IF EXISTS "index_ru";
+DROP TABLE IF EXISTS "index_rop";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_ru" (
+CREATE TABLE "index_rop" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -5944,6 +7114,21 @@ DROP TABLE IF EXISTS "index_ru-old";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_ru-old" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_run"
+--
+
+DROP TABLE IF EXISTS "index_run";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_run" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -6027,6 +7212,36 @@ CREATE TABLE "index_rw" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_ryn"
+--
+
+DROP TABLE IF EXISTS "index_ryn";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ryn" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_ryu"
+--
+
+DROP TABLE IF EXISTS "index_ryu";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_ryu" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_sa"
 --
 
@@ -6049,6 +7264,21 @@ DROP TABLE IF EXISTS "index_sah";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_sah" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_sam"
+--
+
+DROP TABLE IF EXISTS "index_sam";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_sam" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -6147,21 +7377,6 @@ CREATE TABLE "index_sdc" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_sdh"
---
-
-DROP TABLE IF EXISTS "index_sdh";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_sdh" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_se"
 --
 
@@ -6207,6 +7422,21 @@ CREATE TABLE "index_sel" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_seu"
+--
+
+DROP TABLE IF EXISTS "index_seu";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_seu" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_sg"
 --
 
@@ -6214,6 +7444,21 @@ DROP TABLE IF EXISTS "index_sg";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_sg" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_sga"
+--
+
+DROP TABLE IF EXISTS "index_sga";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_sga" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -6244,6 +7489,21 @@ DROP TABLE IF EXISTS "index_shi";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_shi" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_shu"
+--
+
+DROP TABLE IF EXISTS "index_shu";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_shu" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -6507,21 +7767,6 @@ CREATE TABLE "index_so" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_sol"
---
-
-DROP TABLE IF EXISTS "index_sol";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_sol" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_solresol"
 --
 
@@ -6552,13 +7797,13 @@ CREATE TABLE "index_sot" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_sq"
+-- Table structure for table "index_sqi"
 --
 
-DROP TABLE IF EXISTS "index_sq";
+DROP TABLE IF EXISTS "index_sqi";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_sq" (
+CREATE TABLE "index_sqi" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -7017,21 +8262,6 @@ CREATE TABLE "index_tly" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_tn"
---
-
-DROP TABLE IF EXISTS "index_tn";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_tn" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_to"
 --
 
@@ -7122,6 +8352,21 @@ CREATE TABLE "index_tpi" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_tpn"
+--
+
+DROP TABLE IF EXISTS "index_tpn";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_tpn" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_tr"
 --
 
@@ -7144,6 +8389,36 @@ DROP TABLE IF EXISTS "index_translingual";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_translingual" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_tru"
+--
+
+DROP TABLE IF EXISTS "index_tru";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_tru" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_tsn"
+--
+
+DROP TABLE IF EXISTS "index_tsn";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_tsn" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -7227,13 +8502,28 @@ CREATE TABLE "index_tvl" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_tw"
+-- Table structure for table "index_twf"
 --
 
-DROP TABLE IF EXISTS "index_tw";
+DROP TABLE IF EXISTS "index_twf";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_tw" (
+CREATE TABLE "index_twf" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_twi"
+--
+
+DROP TABLE IF EXISTS "index_twi";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_twi" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -7249,6 +8539,21 @@ DROP TABLE IF EXISTS "index_tyv";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_tyv" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_tzj"
+--
+
+DROP TABLE IF EXISTS "index_tzj";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_tzj" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -7512,6 +8817,21 @@ CREATE TABLE "index_vls" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_vma"
+--
+
+DROP TABLE IF EXISTS "index_vma";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_vma" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_vol"
 --
 
@@ -7572,6 +8892,21 @@ CREATE TABLE "index_wa" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_wad"
+--
+
+DROP TABLE IF EXISTS "index_wad";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_wad" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_war"
 --
 
@@ -7602,6 +8937,21 @@ CREATE TABLE "index_wim" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_wlm"
+--
+
+DROP TABLE IF EXISTS "index_wlm";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_wlm" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_wo"
 --
 
@@ -7617,6 +8967,21 @@ CREATE TABLE "index_wo" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_wrh"
+--
+
+DROP TABLE IF EXISTS "index_wrh";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_wrh" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_wuu"
 --
 
@@ -7624,6 +8989,21 @@ DROP TABLE IF EXISTS "index_wuu";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_wuu" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_wyb"
+--
+
+DROP TABLE IF EXISTS "index_wyb";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_wyb" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -7662,6 +9042,21 @@ CREATE TABLE "index_xbc" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_xcl"
+--
+
+DROP TABLE IF EXISTS "index_xcl";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_xcl" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_xho"
 --
 
@@ -7692,6 +9087,21 @@ CREATE TABLE "index_xmf" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_xno"
+--
+
+DROP TABLE IF EXISTS "index_xno";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_xno" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_xrn"
 --
 
@@ -7714,6 +9124,36 @@ DROP TABLE IF EXISTS "index_xsr";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_xsr" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_xto"
+--
+
+DROP TABLE IF EXISTS "index_xto";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_xto" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table "index_xvn"
+--
+
+DROP TABLE IF EXISTS "index_xvn";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_xvn" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -7857,6 +9297,21 @@ CREATE TABLE "index_za" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table "index_zai"
+--
+
+DROP TABLE IF EXISTS "index_zai";
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE "index_zai" (
+  "id" int(10) NOT NULL PRIMARY KEY,
+  "foreign_word" varchar(255) NOT NULL,
+  "foreign_has_definition" tinyint(1) NOT NULL,
+  "native_page_title" varchar(255) DEFAULT NULL
+);
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table "index_ze"
 --
 
@@ -7902,21 +9357,6 @@ CREATE TABLE "index_zh" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_zh-classical"
---
-
-DROP TABLE IF EXISTS "index_zh-classical";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-classical" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table "index_zh-cn"
 --
 
@@ -7924,126 +9364,6 @@ DROP TABLE IF EXISTS "index_zh-cn";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE "index_zh-cn" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-hans"
---
-
-DROP TABLE IF EXISTS "index_zh-hans";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-hans" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-hant"
---
-
-DROP TABLE IF EXISTS "index_zh-hant";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-hant" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-hk"
---
-
-DROP TABLE IF EXISTS "index_zh-hk";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-hk" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-min-nan"
---
-
-DROP TABLE IF EXISTS "index_zh-min-nan";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-min-nan" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-mo"
---
-
-DROP TABLE IF EXISTS "index_zh-mo";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-mo" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-my"
---
-
-DROP TABLE IF EXISTS "index_zh-my";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-my" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-nan"
---
-
-DROP TABLE IF EXISTS "index_zh-nan";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-nan" (
-  "id" int(10) NOT NULL PRIMARY KEY,
-  "foreign_word" varchar(255) NOT NULL,
-  "foreign_has_definition" tinyint(1) NOT NULL,
-  "native_page_title" varchar(255) DEFAULT NULL
-);
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table "index_zh-sg"
---
-
-DROP TABLE IF EXISTS "index_zh-sg";
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-sg" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -8067,13 +9387,13 @@ CREATE TABLE "index_zh-tw" (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table "index_zh-yue"
+-- Table structure for table "index_zko"
 --
 
-DROP TABLE IF EXISTS "index_zh-yue";
+DROP TABLE IF EXISTS "index_zko";
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE "index_zh-yue" (
+CREATE TABLE "index_zko" (
   "id" int(10) NOT NULL PRIMARY KEY,
   "foreign_word" varchar(255) NOT NULL,
   "foreign_has_definition" tinyint(1) NOT NULL,
@@ -8369,20 +9689,44 @@ CREATE TABLE "wikipedia" (
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2010-04-02 14:15:50
+-- Dump completed on 2010-04-29 10:43:52
 
 
 -- Index list
 
-CREATE INDEX "index_aa_foreign_native" ON "index_aa" ("foreign_word","native_page_title");
-CREATE INDEX "index_aa_foreign_word" ON "index_aa" ("foreign_word");
-CREATE INDEX "index_aa_native_page_title" ON "index_aa" ("native_page_title");
+CREATE INDEX "index_aaa_foreign_native" ON "index_aaa" ("foreign_word","native_page_title");
+CREATE INDEX "index_aaa_foreign_word" ON "index_aaa" ("foreign_word");
+CREATE INDEX "index_aaa_native_page_title" ON "index_aaa" ("native_page_title");
+CREATE INDEX "index_aab_foreign_native" ON "index_aab" ("foreign_word","native_page_title");
+CREATE INDEX "index_aab_foreign_word" ON "index_aab" ("foreign_word");
+CREATE INDEX "index_aab_native_page_title" ON "index_aab" ("native_page_title");
+CREATE INDEX "index_aae_foreign_native" ON "index_aae" ("foreign_word","native_page_title");
+CREATE INDEX "index_aae_foreign_word" ON "index_aae" ("foreign_word");
+CREATE INDEX "index_aae_native_page_title" ON "index_aae" ("native_page_title");
+CREATE INDEX "index_aak_foreign_native" ON "index_aak" ("foreign_word","native_page_title");
+CREATE INDEX "index_aak_foreign_word" ON "index_aak" ("foreign_word");
+CREATE INDEX "index_aak_native_page_title" ON "index_aak" ("native_page_title");
+CREATE INDEX "index_aao_foreign_native" ON "index_aao" ("foreign_word","native_page_title");
+CREATE INDEX "index_aao_foreign_word" ON "index_aao" ("foreign_word");
+CREATE INDEX "index_aao_native_page_title" ON "index_aao" ("native_page_title");
 CREATE INDEX "index_aar_foreign_native" ON "index_aar" ("foreign_word","native_page_title");
 CREATE INDEX "index_aar_foreign_word" ON "index_aar" ("foreign_word");
 CREATE INDEX "index_aar_native_page_title" ON "index_aar" ("native_page_title");
-CREATE INDEX "index_ab_foreign_native" ON "index_ab" ("foreign_word","native_page_title");
-CREATE INDEX "index_ab_foreign_word" ON "index_ab" ("foreign_word");
-CREATE INDEX "index_ab_native_page_title" ON "index_ab" ("native_page_title");
+CREATE INDEX "index_aat_foreign_native" ON "index_aat" ("foreign_word","native_page_title");
+CREATE INDEX "index_aat_foreign_word" ON "index_aat" ("foreign_word");
+CREATE INDEX "index_aat_native_page_title" ON "index_aat" ("native_page_title");
+CREATE INDEX "index_abe_foreign_native" ON "index_abe" ("foreign_word","native_page_title");
+CREATE INDEX "index_abe_foreign_word" ON "index_abe" ("foreign_word");
+CREATE INDEX "index_abe_native_page_title" ON "index_abe" ("native_page_title");
+CREATE INDEX "index_abk_foreign_native" ON "index_abk" ("foreign_word","native_page_title");
+CREATE INDEX "index_abk_foreign_word" ON "index_abk" ("foreign_word");
+CREATE INDEX "index_abk_native_page_title" ON "index_abk" ("native_page_title");
+CREATE INDEX "index_abl_foreign_native" ON "index_abl" ("foreign_word","native_page_title");
+CREATE INDEX "index_abl_foreign_word" ON "index_abl" ("foreign_word");
+CREATE INDEX "index_abl_native_page_title" ON "index_abl" ("native_page_title");
+CREATE INDEX "index_abm_foreign_native" ON "index_abm" ("foreign_word","native_page_title");
+CREATE INDEX "index_abm_foreign_word" ON "index_abm" ("foreign_word");
+CREATE INDEX "index_abm_native_page_title" ON "index_abm" ("native_page_title");
 CREATE INDEX "index_abq_foreign_native" ON "index_abq" ("foreign_word","native_page_title");
 CREATE INDEX "index_abq_foreign_word" ON "index_abq" ("foreign_word");
 CREATE INDEX "index_abq_native_page_title" ON "index_abq" ("native_page_title");
@@ -8392,24 +9736,60 @@ CREATE INDEX "index_abs_native_page_title" ON "index_abs" ("native_page_title");
 CREATE INDEX "index_ace_foreign_native" ON "index_ace" ("foreign_word","native_page_title");
 CREATE INDEX "index_ace_foreign_word" ON "index_ace" ("foreign_word");
 CREATE INDEX "index_ace_native_page_title" ON "index_ace" ("native_page_title");
+CREATE INDEX "index_ach_foreign_native" ON "index_ach" ("foreign_word","native_page_title");
+CREATE INDEX "index_ach_foreign_word" ON "index_ach" ("foreign_word");
+CREATE INDEX "index_ach_native_page_title" ON "index_ach" ("native_page_title");
+CREATE INDEX "index_acr_foreign_native" ON "index_acr" ("foreign_word","native_page_title");
+CREATE INDEX "index_acr_foreign_word" ON "index_acr" ("foreign_word");
+CREATE INDEX "index_acr_native_page_title" ON "index_acr" ("native_page_title");
+CREATE INDEX "index_acv_foreign_native" ON "index_acv" ("foreign_word","native_page_title");
+CREATE INDEX "index_acv_foreign_word" ON "index_acv" ("foreign_word");
+CREATE INDEX "index_acv_native_page_title" ON "index_acv" ("native_page_title");
+CREATE INDEX "index_acx_foreign_native" ON "index_acx" ("foreign_word","native_page_title");
+CREATE INDEX "index_acx_foreign_word" ON "index_acx" ("foreign_word");
+CREATE INDEX "index_acx_native_page_title" ON "index_acx" ("native_page_title");
+CREATE INDEX "index_ada_foreign_native" ON "index_ada" ("foreign_word","native_page_title");
+CREATE INDEX "index_ada_foreign_word" ON "index_ada" ("foreign_word");
+CREATE INDEX "index_ada_native_page_title" ON "index_ada" ("native_page_title");
+CREATE INDEX "index_ade_foreign_native" ON "index_ade" ("foreign_word","native_page_title");
+CREATE INDEX "index_ade_foreign_word" ON "index_ade" ("foreign_word");
+CREATE INDEX "index_ade_native_page_title" ON "index_ade" ("native_page_title");
+CREATE INDEX "index_adj_foreign_native" ON "index_adj" ("foreign_word","native_page_title");
+CREATE INDEX "index_adj_foreign_word" ON "index_adj" ("foreign_word");
+CREATE INDEX "index_adj_native_page_title" ON "index_adj" ("native_page_title");
+CREATE INDEX "index_adt_foreign_native" ON "index_adt" ("foreign_word","native_page_title");
+CREATE INDEX "index_adt_foreign_word" ON "index_adt" ("foreign_word");
+CREATE INDEX "index_adt_native_page_title" ON "index_adt" ("native_page_title");
 CREATE INDEX "index_ady_foreign_native" ON "index_ady" ("foreign_word","native_page_title");
 CREATE INDEX "index_ady_foreign_word" ON "index_ady" ("foreign_word");
 CREATE INDEX "index_ady_native_page_title" ON "index_ady" ("native_page_title");
-CREATE INDEX "index_af_foreign_native" ON "index_af" ("foreign_word","native_page_title");
-CREATE INDEX "index_af_foreign_word" ON "index_af" ("foreign_word");
-CREATE INDEX "index_af_native_page_title" ON "index_af" ("native_page_title");
+CREATE INDEX "index_adz_foreign_native" ON "index_adz" ("foreign_word","native_page_title");
+CREATE INDEX "index_adz_foreign_word" ON "index_adz" ("foreign_word");
+CREATE INDEX "index_adz_native_page_title" ON "index_adz" ("native_page_title");
+CREATE INDEX "index_aeb_foreign_native" ON "index_aeb" ("foreign_word","native_page_title");
+CREATE INDEX "index_aeb_foreign_word" ON "index_aeb" ("foreign_word");
+CREATE INDEX "index_aeb_native_page_title" ON "index_aeb" ("native_page_title");
+CREATE INDEX "index_afb_foreign_native" ON "index_afb" ("foreign_word","native_page_title");
+CREATE INDEX "index_afb_foreign_word" ON "index_afb" ("foreign_word");
+CREATE INDEX "index_afb_native_page_title" ON "index_afb" ("native_page_title");
+CREATE INDEX "index_afr_foreign_native" ON "index_afr" ("foreign_word","native_page_title");
+CREATE INDEX "index_afr_foreign_word" ON "index_afr" ("foreign_word");
+CREATE INDEX "index_afr_native_page_title" ON "index_afr" ("native_page_title");
 CREATE INDEX "index_agf_foreign_native" ON "index_agf" ("foreign_word","native_page_title");
 CREATE INDEX "index_agf_foreign_word" ON "index_agf" ("foreign_word");
 CREATE INDEX "index_agf_native_page_title" ON "index_agf" ("native_page_title");
+CREATE INDEX "index_agj_foreign_native" ON "index_agj" ("foreign_word","native_page_title");
+CREATE INDEX "index_agj_foreign_word" ON "index_agj" ("foreign_word");
+CREATE INDEX "index_agj_native_page_title" ON "index_agj" ("native_page_title");
 CREATE INDEX "index_agx_foreign_native" ON "index_agx" ("foreign_word","native_page_title");
 CREATE INDEX "index_agx_foreign_word" ON "index_agx" ("foreign_word");
 CREATE INDEX "index_agx_native_page_title" ON "index_agx" ("native_page_title");
+CREATE INDEX "index_ahs_foreign_native" ON "index_ahs" ("foreign_word","native_page_title");
+CREATE INDEX "index_ahs_foreign_word" ON "index_ahs" ("foreign_word");
+CREATE INDEX "index_ahs_native_page_title" ON "index_ahs" ("native_page_title");
 CREATE INDEX "index_aie_foreign_native" ON "index_aie" ("foreign_word","native_page_title");
 CREATE INDEX "index_aie_foreign_word" ON "index_aie" ("foreign_word");
 CREATE INDEX "index_aie_native_page_title" ON "index_aie" ("native_page_title");
-CREATE INDEX "index_aii_foreign_native" ON "index_aii" ("foreign_word","native_page_title");
-CREATE INDEX "index_aii_foreign_word" ON "index_aii" ("foreign_word");
-CREATE INDEX "index_aii_native_page_title" ON "index_aii" ("native_page_title");
 CREATE INDEX "index_ain_foreign_native" ON "index_ain" ("foreign_word","native_page_title");
 CREATE INDEX "index_ain_foreign_word" ON "index_ain" ("foreign_word");
 CREATE INDEX "index_ain_native_page_title" ON "index_ain" ("native_page_title");
@@ -8428,24 +9808,48 @@ CREATE INDEX "index_aja_native_page_title" ON "index_aja" ("native_page_title");
 CREATE INDEX "index_ajg_foreign_native" ON "index_ajg" ("foreign_word","native_page_title");
 CREATE INDEX "index_ajg_foreign_word" ON "index_ajg" ("foreign_word");
 CREATE INDEX "index_ajg_native_page_title" ON "index_ajg" ("native_page_title");
-CREATE INDEX "index_ak_foreign_native" ON "index_ak" ("foreign_word","native_page_title");
-CREATE INDEX "index_ak_foreign_word" ON "index_ak" ("foreign_word");
-CREATE INDEX "index_ak_native_page_title" ON "index_ak" ("native_page_title");
+CREATE INDEX "index_aji_foreign_native" ON "index_aji" ("foreign_word","native_page_title");
+CREATE INDEX "index_aji_foreign_word" ON "index_aji" ("foreign_word");
+CREATE INDEX "index_aji_native_page_title" ON "index_aji" ("native_page_title");
+CREATE INDEX "index_ajp_foreign_native" ON "index_ajp" ("foreign_word","native_page_title");
+CREATE INDEX "index_ajp_foreign_word" ON "index_ajp" ("foreign_word");
+CREATE INDEX "index_ajp_native_page_title" ON "index_ajp" ("native_page_title");
+CREATE INDEX "index_aka_foreign_native" ON "index_aka" ("foreign_word","native_page_title");
+CREATE INDEX "index_aka_foreign_word" ON "index_aka" ("foreign_word");
+CREATE INDEX "index_aka_native_page_title" ON "index_aka" ("native_page_title");
+CREATE INDEX "index_ake_foreign_native" ON "index_ake" ("foreign_word","native_page_title");
+CREATE INDEX "index_ake_foreign_word" ON "index_ake" ("foreign_word");
+CREATE INDEX "index_ake_native_page_title" ON "index_ake" ("native_page_title");
 CREATE INDEX "index_akg_foreign_native" ON "index_akg" ("foreign_word","native_page_title");
 CREATE INDEX "index_akg_foreign_word" ON "index_akg" ("foreign_word");
 CREATE INDEX "index_akg_native_page_title" ON "index_akg" ("native_page_title");
 CREATE INDEX "index_akk_foreign_native" ON "index_akk" ("foreign_word","native_page_title");
 CREATE INDEX "index_akk_foreign_word" ON "index_akk" ("foreign_word");
 CREATE INDEX "index_akk_native_page_title" ON "index_akk" ("native_page_title");
+CREATE INDEX "index_akl_foreign_native" ON "index_akl" ("foreign_word","native_page_title");
+CREATE INDEX "index_akl_foreign_word" ON "index_akl" ("foreign_word");
+CREATE INDEX "index_akl_native_page_title" ON "index_akl" ("native_page_title");
+CREATE INDEX "index_akz_foreign_native" ON "index_akz" ("foreign_word","native_page_title");
+CREATE INDEX "index_akz_foreign_word" ON "index_akz" ("foreign_word");
+CREATE INDEX "index_akz_native_page_title" ON "index_akz" ("native_page_title");
+CREATE INDEX "index_alc_foreign_native" ON "index_alc" ("foreign_word","native_page_title");
+CREATE INDEX "index_alc_foreign_word" ON "index_alc" ("foreign_word");
+CREATE INDEX "index_alc_native_page_title" ON "index_alc" ("native_page_title");
 CREATE INDEX "index_ale_foreign_native" ON "index_ale" ("foreign_word","native_page_title");
 CREATE INDEX "index_ale_foreign_word" ON "index_ale" ("foreign_word");
 CREATE INDEX "index_ale_native_page_title" ON "index_ale" ("native_page_title");
+CREATE INDEX "index_ali_foreign_native" ON "index_ali" ("foreign_word","native_page_title");
+CREATE INDEX "index_ali_foreign_word" ON "index_ali" ("foreign_word");
+CREATE INDEX "index_ali_native_page_title" ON "index_ali" ("native_page_title");
 CREATE INDEX "index_aln_foreign_native" ON "index_aln" ("foreign_word","native_page_title");
 CREATE INDEX "index_aln_foreign_word" ON "index_aln" ("foreign_word");
 CREATE INDEX "index_aln_native_page_title" ON "index_aln" ("native_page_title");
 CREATE INDEX "index_alp_foreign_native" ON "index_alp" ("foreign_word","native_page_title");
 CREATE INDEX "index_alp_foreign_word" ON "index_alp" ("foreign_word");
 CREATE INDEX "index_alp_native_page_title" ON "index_alp" ("native_page_title");
+CREATE INDEX "index_alq_foreign_native" ON "index_alq" ("foreign_word","native_page_title");
+CREATE INDEX "index_alq_foreign_word" ON "index_alq" ("foreign_word");
+CREATE INDEX "index_alq_native_page_title" ON "index_alq" ("native_page_title");
 CREATE INDEX "index_alr_foreign_native" ON "index_alr" ("foreign_word","native_page_title");
 CREATE INDEX "index_alr_foreign_word" ON "index_alr" ("foreign_word");
 CREATE INDEX "index_alr_native_page_title" ON "index_alr" ("native_page_title");
@@ -8455,57 +9859,126 @@ CREATE INDEX "index_als_native_page_title" ON "index_als" ("native_page_title");
 CREATE INDEX "index_alt_foreign_native" ON "index_alt" ("foreign_word","native_page_title");
 CREATE INDEX "index_alt_foreign_word" ON "index_alt" ("foreign_word");
 CREATE INDEX "index_alt_native_page_title" ON "index_alt" ("native_page_title");
+CREATE INDEX "index_alu_foreign_native" ON "index_alu" ("foreign_word","native_page_title");
+CREATE INDEX "index_alu_foreign_word" ON "index_alu" ("foreign_word");
+CREATE INDEX "index_alu_native_page_title" ON "index_alu" ("native_page_title");
 CREATE INDEX "index_am_foreign_native" ON "index_am" ("foreign_word","native_page_title");
 CREATE INDEX "index_am_foreign_word" ON "index_am" ("foreign_word");
 CREATE INDEX "index_am_native_page_title" ON "index_am" ("native_page_title");
-CREATE INDEX "index_amh_foreign_native" ON "index_amh" ("foreign_word","native_page_title");
-CREATE INDEX "index_amh_foreign_word" ON "index_amh" ("foreign_word");
-CREATE INDEX "index_amh_native_page_title" ON "index_amh" ("native_page_title");
 CREATE INDEX "index_amk_foreign_native" ON "index_amk" ("foreign_word","native_page_title");
 CREATE INDEX "index_amk_foreign_word" ON "index_amk" ("foreign_word");
 CREATE INDEX "index_amk_native_page_title" ON "index_amk" ("native_page_title");
-CREATE INDEX "index_an_foreign_native" ON "index_an" ("foreign_word","native_page_title");
-CREATE INDEX "index_an_foreign_word" ON "index_an" ("foreign_word");
-CREATE INDEX "index_an_native_page_title" ON "index_an" ("native_page_title");
+CREATE INDEX "index_amn_foreign_native" ON "index_amn" ("foreign_word","native_page_title");
+CREATE INDEX "index_amn_foreign_word" ON "index_amn" ("foreign_word");
+CREATE INDEX "index_amn_native_page_title" ON "index_amn" ("native_page_title");
+CREATE INDEX "index_ams_foreign_native" ON "index_ams" ("foreign_word","native_page_title");
+CREATE INDEX "index_ams_foreign_word" ON "index_ams" ("foreign_word");
+CREATE INDEX "index_ams_native_page_title" ON "index_ams" ("native_page_title");
+CREATE INDEX "index_amt_foreign_native" ON "index_amt" ("foreign_word","native_page_title");
+CREATE INDEX "index_amt_foreign_word" ON "index_amt" ("foreign_word");
+CREATE INDEX "index_amt_native_page_title" ON "index_amt" ("native_page_title");
+CREATE INDEX "index_amu_foreign_native" ON "index_amu" ("foreign_word","native_page_title");
+CREATE INDEX "index_amu_foreign_word" ON "index_amu" ("foreign_word");
+CREATE INDEX "index_amu_native_page_title" ON "index_amu" ("native_page_title");
+CREATE INDEX "index_and_foreign_native" ON "index_and" ("foreign_word","native_page_title");
+CREATE INDEX "index_and_foreign_word" ON "index_and" ("foreign_word");
+CREATE INDEX "index_and_native_page_title" ON "index_and" ("native_page_title");
 CREATE INDEX "index_ang_foreign_native" ON "index_ang" ("foreign_word","native_page_title");
 CREATE INDEX "index_ang_foreign_word" ON "index_ang" ("foreign_word");
 CREATE INDEX "index_ang_native_page_title" ON "index_ang" ("native_page_title");
+CREATE INDEX "index_anp_foreign_native" ON "index_anp" ("foreign_word","native_page_title");
+CREATE INDEX "index_anp_foreign_word" ON "index_anp" ("foreign_word");
+CREATE INDEX "index_anp_native_page_title" ON "index_anp" ("native_page_title");
+CREATE INDEX "index_ant_foreign_native" ON "index_ant" ("foreign_word","native_page_title");
+CREATE INDEX "index_ant_foreign_word" ON "index_ant" ("foreign_word");
+CREATE INDEX "index_ant_native_page_title" ON "index_ant" ("native_page_title");
+CREATE INDEX "index_apc_foreign_native" ON "index_apc" ("foreign_word","native_page_title");
+CREATE INDEX "index_apc_foreign_word" ON "index_apc" ("foreign_word");
+CREATE INDEX "index_apc_native_page_title" ON "index_apc" ("native_page_title");
+CREATE INDEX "index_apd_foreign_native" ON "index_apd" ("foreign_word","native_page_title");
+CREATE INDEX "index_apd_foreign_word" ON "index_apd" ("foreign_word");
+CREATE INDEX "index_apd_native_page_title" ON "index_apd" ("native_page_title");
+CREATE INDEX "index_apj_foreign_native" ON "index_apj" ("foreign_word","native_page_title");
+CREATE INDEX "index_apj_foreign_word" ON "index_apj" ("foreign_word");
+CREATE INDEX "index_apj_native_page_title" ON "index_apj" ("native_page_title");
+CREATE INDEX "index_apk_foreign_native" ON "index_apk" ("foreign_word","native_page_title");
+CREATE INDEX "index_apk_foreign_word" ON "index_apk" ("foreign_word");
+CREATE INDEX "index_apk_native_page_title" ON "index_apk" ("native_page_title");
+CREATE INDEX "index_apl_foreign_native" ON "index_apl" ("foreign_word","native_page_title");
+CREATE INDEX "index_apl_foreign_word" ON "index_apl" ("foreign_word");
+CREATE INDEX "index_apl_native_page_title" ON "index_apl" ("native_page_title");
+CREATE INDEX "index_apm_foreign_native" ON "index_apm" ("foreign_word","native_page_title");
+CREATE INDEX "index_apm_foreign_word" ON "index_apm" ("foreign_word");
+CREATE INDEX "index_apm_native_page_title" ON "index_apm" ("native_page_title");
+CREATE INDEX "index_apw_foreign_native" ON "index_apw" ("foreign_word","native_page_title");
+CREATE INDEX "index_apw_foreign_word" ON "index_apw" ("foreign_word");
+CREATE INDEX "index_apw_native_page_title" ON "index_apw" ("native_page_title");
+CREATE INDEX "index_apy_foreign_native" ON "index_apy" ("foreign_word","native_page_title");
+CREATE INDEX "index_apy_foreign_word" ON "index_apy" ("foreign_word");
+CREATE INDEX "index_apy_native_page_title" ON "index_apy" ("native_page_title");
 CREATE INDEX "index_aqc_foreign_native" ON "index_aqc" ("foreign_word","native_page_title");
 CREATE INDEX "index_aqc_foreign_word" ON "index_aqc" ("foreign_word");
 CREATE INDEX "index_aqc_native_page_title" ON "index_aqc" ("native_page_title");
-CREATE INDEX "index_ar_foreign_native" ON "index_ar" ("foreign_word","native_page_title");
-CREATE INDEX "index_ar_foreign_word" ON "index_ar" ("foreign_word");
-CREATE INDEX "index_ar_native_page_title" ON "index_ar" ("native_page_title");
+CREATE INDEX "index_ara_foreign_native" ON "index_ara" ("foreign_word","native_page_title");
+CREATE INDEX "index_ara_foreign_word" ON "index_ara" ("foreign_word");
+CREATE INDEX "index_ara_native_page_title" ON "index_ara" ("native_page_title");
+CREATE INDEX "index_arb_foreign_native" ON "index_arb" ("foreign_word","native_page_title");
+CREATE INDEX "index_arb_foreign_word" ON "index_arb" ("foreign_word");
+CREATE INDEX "index_arb_native_page_title" ON "index_arb" ("native_page_title");
 CREATE INDEX "index_arc_foreign_native" ON "index_arc" ("foreign_word","native_page_title");
 CREATE INDEX "index_arc_foreign_word" ON "index_arc" ("foreign_word");
 CREATE INDEX "index_arc_native_page_title" ON "index_arc" ("native_page_title");
-CREATE INDEX "index_arc.jud_foreign_native" ON "index_arc.jud" ("foreign_word","native_page_title");
-CREATE INDEX "index_arc.jud_foreign_word" ON "index_arc.jud" ("foreign_word");
-CREATE INDEX "index_arc.jud_native_page_title" ON "index_arc.jud" ("native_page_title");
-CREATE INDEX "index_arc.syr_foreign_native" ON "index_arc.syr" ("foreign_word","native_page_title");
-CREATE INDEX "index_arc.syr_foreign_word" ON "index_arc.syr" ("foreign_word");
-CREATE INDEX "index_arc.syr_native_page_title" ON "index_arc.syr" ("native_page_title");
+CREATE INDEX "index_are_foreign_native" ON "index_are" ("foreign_word","native_page_title");
+CREATE INDEX "index_are_foreign_word" ON "index_are" ("foreign_word");
+CREATE INDEX "index_are_native_page_title" ON "index_are" ("native_page_title");
+CREATE INDEX "index_arg_foreign_native" ON "index_arg" ("foreign_word","native_page_title");
+CREATE INDEX "index_arg_foreign_word" ON "index_arg" ("foreign_word");
+CREATE INDEX "index_arg_native_page_title" ON "index_arg" ("native_page_title");
 CREATE INDEX "index_arn_foreign_native" ON "index_arn" ("foreign_word","native_page_title");
 CREATE INDEX "index_arn_foreign_word" ON "index_arn" ("foreign_word");
 CREATE INDEX "index_arn_native_page_title" ON "index_arn" ("native_page_title");
+CREATE INDEX "index_arp_foreign_native" ON "index_arp" ("foreign_word","native_page_title");
+CREATE INDEX "index_arp_foreign_word" ON "index_arp" ("foreign_word");
+CREATE INDEX "index_arp_native_page_title" ON "index_arp" ("native_page_title");
+CREATE INDEX "index_arq_foreign_native" ON "index_arq" ("foreign_word","native_page_title");
+CREATE INDEX "index_arq_foreign_word" ON "index_arq" ("foreign_word");
+CREATE INDEX "index_arq_native_page_title" ON "index_arq" ("native_page_title");
+CREATE INDEX "index_ars_foreign_native" ON "index_ars" ("foreign_word","native_page_title");
+CREATE INDEX "index_ars_foreign_word" ON "index_ars" ("foreign_word");
+CREATE INDEX "index_ars_native_page_title" ON "index_ars" ("native_page_title");
 CREATE INDEX "index_art_foreign_native" ON "index_art" ("foreign_word","native_page_title");
 CREATE INDEX "index_art_foreign_word" ON "index_art" ("foreign_word");
 CREATE INDEX "index_art_native_page_title" ON "index_art" ("native_page_title");
 CREATE INDEX "index_art-oou_foreign_native" ON "index_art-oou" ("foreign_word","native_page_title");
 CREATE INDEX "index_art-oou_foreign_word" ON "index_art-oou" ("foreign_word");
 CREATE INDEX "index_art-oou_native_page_title" ON "index_art-oou" ("native_page_title");
+CREATE INDEX "index_aru_foreign_native" ON "index_aru" ("foreign_word","native_page_title");
+CREATE INDEX "index_aru_foreign_word" ON "index_aru" ("foreign_word");
+CREATE INDEX "index_aru_native_page_title" ON "index_aru" ("native_page_title");
+CREATE INDEX "index_arw_foreign_native" ON "index_arw" ("foreign_word","native_page_title");
+CREATE INDEX "index_arw_foreign_word" ON "index_arw" ("foreign_word");
+CREATE INDEX "index_arw_native_page_title" ON "index_arw" ("native_page_title");
+CREATE INDEX "index_ary_foreign_native" ON "index_ary" ("foreign_word","native_page_title");
+CREATE INDEX "index_ary_foreign_word" ON "index_ary" ("foreign_word");
+CREATE INDEX "index_ary_native_page_title" ON "index_ary" ("native_page_title");
 CREATE INDEX "index_arz_foreign_native" ON "index_arz" ("foreign_word","native_page_title");
 CREATE INDEX "index_arz_foreign_word" ON "index_arz" ("foreign_word");
 CREATE INDEX "index_arz_native_page_title" ON "index_arz" ("native_page_title");
-CREATE INDEX "index_as_foreign_native" ON "index_as" ("foreign_word","native_page_title");
-CREATE INDEX "index_as_foreign_word" ON "index_as" ("foreign_word");
-CREATE INDEX "index_as_native_page_title" ON "index_as" ("native_page_title");
+CREATE INDEX "index_ase_foreign_native" ON "index_ase" ("foreign_word","native_page_title");
+CREATE INDEX "index_ase_foreign_word" ON "index_ase" ("foreign_word");
+CREATE INDEX "index_ase_native_page_title" ON "index_ase" ("native_page_title");
 CREATE INDEX "index_asm_foreign_native" ON "index_asm" ("foreign_word","native_page_title");
 CREATE INDEX "index_asm_foreign_word" ON "index_asm" ("foreign_word");
 CREATE INDEX "index_asm_native_page_title" ON "index_asm" ("native_page_title");
 CREATE INDEX "index_ast_foreign_native" ON "index_ast" ("foreign_word","native_page_title");
 CREATE INDEX "index_ast_foreign_word" ON "index_ast" ("foreign_word");
 CREATE INDEX "index_ast_native_page_title" ON "index_ast" ("native_page_title");
+CREATE INDEX "index_atv_foreign_native" ON "index_atv" ("foreign_word","native_page_title");
+CREATE INDEX "index_atv_foreign_word" ON "index_atv" ("foreign_word");
+CREATE INDEX "index_atv_native_page_title" ON "index_atv" ("native_page_title");
+CREATE INDEX "index_aty_foreign_native" ON "index_aty" ("foreign_word","native_page_title");
+CREATE INDEX "index_aty_foreign_word" ON "index_aty" ("foreign_word");
+CREATE INDEX "index_aty_native_page_title" ON "index_aty" ("native_page_title");
 CREATE INDEX "index_av_foreign_native" ON "index_av" ("foreign_word","native_page_title");
 CREATE INDEX "index_av_foreign_word" ON "index_av" ("foreign_word");
 CREATE INDEX "index_av_native_page_title" ON "index_av" ("native_page_title");
@@ -8515,9 +9988,24 @@ CREATE INDEX "index_ave_native_page_title" ON "index_ave" ("native_page_title");
 CREATE INDEX "index_avk_foreign_native" ON "index_avk" ("foreign_word","native_page_title");
 CREATE INDEX "index_avk_foreign_word" ON "index_avk" ("foreign_word");
 CREATE INDEX "index_avk_native_page_title" ON "index_avk" ("native_page_title");
+CREATE INDEX "index_awa_foreign_native" ON "index_awa" ("foreign_word","native_page_title");
+CREATE INDEX "index_awa_foreign_word" ON "index_awa" ("foreign_word");
+CREATE INDEX "index_awa_native_page_title" ON "index_awa" ("native_page_title");
+CREATE INDEX "index_awk_foreign_native" ON "index_awk" ("foreign_word","native_page_title");
+CREATE INDEX "index_awk_foreign_word" ON "index_awk" ("foreign_word");
+CREATE INDEX "index_awk_native_page_title" ON "index_awk" ("native_page_title");
+CREATE INDEX "index_axm_foreign_native" ON "index_axm" ("foreign_word","native_page_title");
+CREATE INDEX "index_axm_foreign_word" ON "index_axm" ("foreign_word");
+CREATE INDEX "index_axm_native_page_title" ON "index_axm" ("native_page_title");
 CREATE INDEX "index_ay_foreign_native" ON "index_ay" ("foreign_word","native_page_title");
 CREATE INDEX "index_ay_foreign_word" ON "index_ay" ("foreign_word");
 CREATE INDEX "index_ay_native_page_title" ON "index_ay" ("native_page_title");
+CREATE INDEX "index_ayl_foreign_native" ON "index_ayl" ("foreign_word","native_page_title");
+CREATE INDEX "index_ayl_foreign_word" ON "index_ayl" ("foreign_word");
+CREATE INDEX "index_ayl_native_page_title" ON "index_ayl" ("native_page_title");
+CREATE INDEX "index_ayp_foreign_native" ON "index_ayp" ("foreign_word","native_page_title");
+CREATE INDEX "index_ayp_foreign_word" ON "index_ayp" ("foreign_word");
+CREATE INDEX "index_ayp_native_page_title" ON "index_ayp" ("native_page_title");
 CREATE INDEX "index_az_foreign_native" ON "index_az" ("foreign_word","native_page_title");
 CREATE INDEX "index_az_foreign_word" ON "index_az" ("foreign_word");
 CREATE INDEX "index_az_native_page_title" ON "index_az" ("native_page_title");
@@ -8536,6 +10024,9 @@ CREATE INDEX "index_ban_native_page_title" ON "index_ban" ("native_page_title");
 CREATE INDEX "index_bar_foreign_native" ON "index_bar" ("foreign_word","native_page_title");
 CREATE INDEX "index_bar_foreign_word" ON "index_bar" ("foreign_word");
 CREATE INDEX "index_bar_native_page_title" ON "index_bar" ("native_page_title");
+CREATE INDEX "index_bas_foreign_native" ON "index_bas" ("foreign_word","native_page_title");
+CREATE INDEX "index_bas_foreign_word" ON "index_bas" ("foreign_word");
+CREATE INDEX "index_bas_native_page_title" ON "index_bas" ("native_page_title");
 CREATE INDEX "index_bat-smg_foreign_native" ON "index_bat-smg" ("foreign_word","native_page_title");
 CREATE INDEX "index_bat-smg_foreign_word" ON "index_bat-smg" ("foreign_word");
 CREATE INDEX "index_bat-smg_native_page_title" ON "index_bat-smg" ("native_page_title");
@@ -8554,18 +10045,18 @@ CREATE INDEX "index_be_native_page_title" ON "index_be" ("native_page_title");
 CREATE INDEX "index_be-tarask_foreign_native" ON "index_be-tarask" ("foreign_word","native_page_title");
 CREATE INDEX "index_be-tarask_foreign_word" ON "index_be-tarask" ("foreign_word");
 CREATE INDEX "index_be-tarask_native_page_title" ON "index_be-tarask" ("native_page_title");
-CREATE INDEX "index_be-x-old_foreign_native" ON "index_be-x-old" ("foreign_word","native_page_title");
-CREATE INDEX "index_be-x-old_foreign_word" ON "index_be-x-old" ("foreign_word");
-CREATE INDEX "index_be-x-old_native_page_title" ON "index_be-x-old" ("native_page_title");
 CREATE INDEX "index_bem_foreign_native" ON "index_bem" ("foreign_word","native_page_title");
 CREATE INDEX "index_bem_foreign_word" ON "index_bem" ("foreign_word");
 CREATE INDEX "index_bem_native_page_title" ON "index_bem" ("native_page_title");
+CREATE INDEX "index_bew_foreign_native" ON "index_bew" ("foreign_word","native_page_title");
+CREATE INDEX "index_bew_foreign_word" ON "index_bew" ("foreign_word");
+CREATE INDEX "index_bew_native_page_title" ON "index_bew" ("native_page_title");
 CREATE INDEX "index_bg_foreign_native" ON "index_bg" ("foreign_word","native_page_title");
 CREATE INDEX "index_bg_foreign_word" ON "index_bg" ("foreign_word");
 CREATE INDEX "index_bg_native_page_title" ON "index_bg" ("native_page_title");
-CREATE INDEX "index_bh_foreign_native" ON "index_bh" ("foreign_word","native_page_title");
-CREATE INDEX "index_bh_foreign_word" ON "index_bh" ("foreign_word");
-CREATE INDEX "index_bh_native_page_title" ON "index_bh" ("native_page_title");
+CREATE INDEX "index_bho_foreign_native" ON "index_bho" ("foreign_word","native_page_title");
+CREATE INDEX "index_bho_foreign_word" ON "index_bho" ("foreign_word");
+CREATE INDEX "index_bho_native_page_title" ON "index_bho" ("native_page_title");
 CREATE INDEX "index_bi_foreign_native" ON "index_bi" ("foreign_word","native_page_title");
 CREATE INDEX "index_bi_foreign_word" ON "index_bi" ("foreign_word");
 CREATE INDEX "index_bi_native_page_title" ON "index_bi" ("native_page_title");
@@ -8593,6 +10084,9 @@ CREATE INDEX "index_bqi_native_page_title" ON "index_bqi" ("native_page_title");
 CREATE INDEX "index_br_foreign_native" ON "index_br" ("foreign_word","native_page_title");
 CREATE INDEX "index_br_foreign_word" ON "index_br" ("foreign_word");
 CREATE INDEX "index_br_native_page_title" ON "index_br" ("native_page_title");
+CREATE INDEX "index_brc_foreign_native" ON "index_brc" ("foreign_word","native_page_title");
+CREATE INDEX "index_brc_foreign_word" ON "index_brc" ("foreign_word");
+CREATE INDEX "index_brc_native_page_title" ON "index_brc" ("native_page_title");
 CREATE INDEX "index_brh_foreign_native" ON "index_brh" ("foreign_word","native_page_title");
 CREATE INDEX "index_brh_foreign_word" ON "index_brh" ("foreign_word");
 CREATE INDEX "index_brh_native_page_title" ON "index_brh" ("native_page_title");
@@ -8614,15 +10108,18 @@ CREATE INDEX "index_bug_native_page_title" ON "index_bug" ("native_page_title");
 CREATE INDEX "index_bxr_foreign_native" ON "index_bxr" ("foreign_word","native_page_title");
 CREATE INDEX "index_bxr_foreign_word" ON "index_bxr" ("foreign_word");
 CREATE INDEX "index_bxr_native_page_title" ON "index_bxr" ("native_page_title");
-CREATE INDEX "index_bya_foreign_native" ON "index_bya" ("foreign_word","native_page_title");
-CREATE INDEX "index_bya_foreign_word" ON "index_bya" ("foreign_word");
-CREATE INDEX "index_bya_native_page_title" ON "index_bya" ("native_page_title");
 CREATE INDEX "index_byn_foreign_native" ON "index_byn" ("foreign_word","native_page_title");
 CREATE INDEX "index_byn_foreign_word" ON "index_byn" ("foreign_word");
 CREATE INDEX "index_byn_native_page_title" ON "index_byn" ("native_page_title");
 CREATE INDEX "index_ca_foreign_native" ON "index_ca" ("foreign_word","native_page_title");
 CREATE INDEX "index_ca_foreign_word" ON "index_ca" ("foreign_word");
 CREATE INDEX "index_ca_native_page_title" ON "index_ca" ("native_page_title");
+CREATE INDEX "index_caa_foreign_native" ON "index_caa" ("foreign_word","native_page_title");
+CREATE INDEX "index_caa_foreign_word" ON "index_caa" ("foreign_word");
+CREATE INDEX "index_caa_native_page_title" ON "index_caa" ("native_page_title");
+CREATE INDEX "index_cab_foreign_native" ON "index_cab" ("foreign_word","native_page_title");
+CREATE INDEX "index_cab_foreign_word" ON "index_cab" ("foreign_word");
+CREATE INDEX "index_cab_native_page_title" ON "index_cab" ("native_page_title");
 CREATE INDEX "index_cbk-zam_foreign_native" ON "index_cbk-zam" ("foreign_word","native_page_title");
 CREATE INDEX "index_cbk-zam_foreign_word" ON "index_cbk-zam" ("foreign_word");
 CREATE INDEX "index_cbk-zam_native_page_title" ON "index_cbk-zam" ("native_page_title");
@@ -8644,9 +10141,15 @@ CREATE INDEX "index_cel_native_page_title" ON "index_cel" ("native_page_title");
 CREATE INDEX "index_ch_foreign_native" ON "index_ch" ("foreign_word","native_page_title");
 CREATE INDEX "index_ch_foreign_word" ON "index_ch" ("foreign_word");
 CREATE INDEX "index_ch_native_page_title" ON "index_ch" ("native_page_title");
+CREATE INDEX "index_chc_foreign_native" ON "index_chc" ("foreign_word","native_page_title");
+CREATE INDEX "index_chc_foreign_word" ON "index_chc" ("foreign_word");
+CREATE INDEX "index_chc_native_page_title" ON "index_chc" ("native_page_title");
 CREATE INDEX "index_chg_foreign_native" ON "index_chg" ("foreign_word","native_page_title");
 CREATE INDEX "index_chg_foreign_word" ON "index_chg" ("foreign_word");
 CREATE INDEX "index_chg_native_page_title" ON "index_chg" ("native_page_title");
+CREATE INDEX "index_chk_foreign_native" ON "index_chk" ("foreign_word","native_page_title");
+CREATE INDEX "index_chk_foreign_word" ON "index_chk" ("foreign_word");
+CREATE INDEX "index_chk_native_page_title" ON "index_chk" ("native_page_title");
 CREATE INDEX "index_chm_foreign_native" ON "index_chm" ("foreign_word","native_page_title");
 CREATE INDEX "index_chm_foreign_word" ON "index_chm" ("foreign_word");
 CREATE INDEX "index_chm_native_page_title" ON "index_chm" ("native_page_title");
@@ -8671,12 +10174,12 @@ CREATE INDEX "index_chu.glag_native_page_title" ON "index_chu.glag" ("native_pag
 CREATE INDEX "index_chy_foreign_native" ON "index_chy" ("foreign_word","native_page_title");
 CREATE INDEX "index_chy_foreign_word" ON "index_chy" ("foreign_word");
 CREATE INDEX "index_chy_native_page_title" ON "index_chy" ("native_page_title");
+CREATE INDEX "index_cic_foreign_native" ON "index_cic" ("foreign_word","native_page_title");
+CREATE INDEX "index_cic_foreign_word" ON "index_cic" ("foreign_word");
+CREATE INDEX "index_cic_native_page_title" ON "index_cic" ("native_page_title");
 CREATE INDEX "index_cjs_foreign_native" ON "index_cjs" ("foreign_word","native_page_title");
 CREATE INDEX "index_cjs_foreign_word" ON "index_cjs" ("foreign_word");
 CREATE INDEX "index_cjs_native_page_title" ON "index_cjs" ("native_page_title");
-CREATE INDEX "index_ckb_foreign_native" ON "index_ckb" ("foreign_word","native_page_title");
-CREATE INDEX "index_ckb_foreign_word" ON "index_ckb" ("foreign_word");
-CREATE INDEX "index_ckb_native_page_title" ON "index_ckb" ("native_page_title");
 CREATE INDEX "index_ckt_foreign_native" ON "index_ckt" ("foreign_word","native_page_title");
 CREATE INDEX "index_ckt_foreign_word" ON "index_ckt" ("foreign_word");
 CREATE INDEX "index_ckt_native_page_title" ON "index_ckt" ("native_page_title");
@@ -8707,15 +10210,18 @@ CREATE INDEX "index_csb_native_page_title" ON "index_csb" ("native_page_title");
 CREATE INDEX "index_cu_foreign_native" ON "index_cu" ("foreign_word","native_page_title");
 CREATE INDEX "index_cu_foreign_word" ON "index_cu" ("foreign_word");
 CREATE INDEX "index_cu_native_page_title" ON "index_cu" ("native_page_title");
+CREATE INDEX "index_cui_foreign_native" ON "index_cui" ("foreign_word","native_page_title");
+CREATE INDEX "index_cui_foreign_word" ON "index_cui" ("foreign_word");
+CREATE INDEX "index_cui_native_page_title" ON "index_cui" ("native_page_title");
+CREATE INDEX "index_cuk_foreign_native" ON "index_cuk" ("foreign_word","native_page_title");
+CREATE INDEX "index_cuk_foreign_word" ON "index_cuk" ("foreign_word");
+CREATE INDEX "index_cuk_native_page_title" ON "index_cuk" ("native_page_title");
 CREATE INDEX "index_cv_foreign_native" ON "index_cv" ("foreign_word","native_page_title");
 CREATE INDEX "index_cv_foreign_word" ON "index_cv" ("foreign_word");
 CREATE INDEX "index_cv_native_page_title" ON "index_cv" ("native_page_title");
 CREATE INDEX "index_cy_foreign_native" ON "index_cy" ("foreign_word","native_page_title");
 CREATE INDEX "index_cy_foreign_word" ON "index_cy" ("foreign_word");
 CREATE INDEX "index_cy_native_page_title" ON "index_cy" ("native_page_title");
-CREATE INDEX "index_cym_foreign_native" ON "index_cym" ("foreign_word","native_page_title");
-CREATE INDEX "index_cym_foreign_word" ON "index_cym" ("foreign_word");
-CREATE INDEX "index_cym_native_page_title" ON "index_cym" ("native_page_title");
 CREATE INDEX "index_da_foreign_native" ON "index_da" ("foreign_word","native_page_title");
 CREATE INDEX "index_da_foreign_word" ON "index_da" ("foreign_word");
 CREATE INDEX "index_da_native_page_title" ON "index_da" ("native_page_title");
@@ -8746,9 +10252,6 @@ CREATE INDEX "index_dlg_native_page_title" ON "index_dlg" ("native_page_title");
 CREATE INDEX "index_dng_foreign_native" ON "index_dng" ("foreign_word","native_page_title");
 CREATE INDEX "index_dng_foreign_word" ON "index_dng" ("foreign_word");
 CREATE INDEX "index_dng_native_page_title" ON "index_dng" ("native_page_title");
-CREATE INDEX "index_drw_foreign_native" ON "index_drw" ("foreign_word","native_page_title");
-CREATE INDEX "index_drw_foreign_word" ON "index_drw" ("foreign_word");
-CREATE INDEX "index_drw_native_page_title" ON "index_drw" ("native_page_title");
 CREATE INDEX "index_dsb_foreign_native" ON "index_dsb" ("foreign_word","native_page_title");
 CREATE INDEX "index_dsb_foreign_word" ON "index_dsb" ("foreign_word");
 CREATE INDEX "index_dsb_native_page_title" ON "index_dsb" ("native_page_title");
@@ -8773,6 +10276,9 @@ CREATE INDEX "index_el_native_page_title" ON "index_el" ("native_page_title");
 CREATE INDEX "index_eml_foreign_native" ON "index_eml" ("foreign_word","native_page_title");
 CREATE INDEX "index_eml_foreign_word" ON "index_eml" ("foreign_word");
 CREATE INDEX "index_eml_native_page_title" ON "index_eml" ("native_page_title");
+CREATE INDEX "index_en_foreign_native" ON "index_en" ("foreign_word","native_page_title");
+CREATE INDEX "index_en_foreign_word" ON "index_en" ("foreign_word");
+CREATE INDEX "index_en_native_page_title" ON "index_en" ("native_page_title");
 CREATE INDEX "index_en-au_foreign_native" ON "index_en-au" ("foreign_word","native_page_title");
 CREATE INDEX "index_en-au_foreign_word" ON "index_en-au" ("foreign_word");
 CREATE INDEX "index_en-au_native_page_title" ON "index_en-au" ("native_page_title");
@@ -8815,15 +10321,18 @@ CREATE INDEX "index_ext_native_page_title" ON "index_ext" ("native_page_title");
 CREATE INDEX "index_fa_foreign_native" ON "index_fa" ("foreign_word","native_page_title");
 CREATE INDEX "index_fa_foreign_word" ON "index_fa" ("foreign_word");
 CREATE INDEX "index_fa_native_page_title" ON "index_fa" ("native_page_title");
+CREATE INDEX "index_fat_foreign_native" ON "index_fat" ("foreign_word","native_page_title");
+CREATE INDEX "index_fat_foreign_word" ON "index_fat" ("foreign_word");
+CREATE INDEX "index_fat_native_page_title" ON "index_fat" ("native_page_title");
 CREATE INDEX "index_ff_foreign_native" ON "index_ff" ("foreign_word","native_page_title");
 CREATE INDEX "index_ff_foreign_word" ON "index_ff" ("foreign_word");
 CREATE INDEX "index_ff_native_page_title" ON "index_ff" ("native_page_title");
 CREATE INDEX "index_fi_foreign_native" ON "index_fi" ("foreign_word","native_page_title");
 CREATE INDEX "index_fi_foreign_word" ON "index_fi" ("foreign_word");
 CREATE INDEX "index_fi_native_page_title" ON "index_fi" ("native_page_title");
-CREATE INDEX "index_fic-drw_foreign_native" ON "index_fic-drw" ("foreign_word","native_page_title");
-CREATE INDEX "index_fic-drw_foreign_word" ON "index_fic-drw" ("foreign_word");
-CREATE INDEX "index_fic-drw_native_page_title" ON "index_fic-drw" ("native_page_title");
+CREATE INDEX "index_fic_drw_foreign_native" ON "index_fic_drw" ("foreign_word","native_page_title");
+CREATE INDEX "index_fic_drw_foreign_word" ON "index_fic_drw" ("foreign_word");
+CREATE INDEX "index_fic_drw_native_page_title" ON "index_fic_drw" ("native_page_title");
 CREATE INDEX "index_fil_foreign_native" ON "index_fil" ("foreign_word","native_page_title");
 CREATE INDEX "index_fil_foreign_word" ON "index_fil" ("foreign_word");
 CREATE INDEX "index_fil_native_page_title" ON "index_fil" ("native_page_title");
@@ -8833,6 +10342,9 @@ CREATE INDEX "index_fiu-vro_native_page_title" ON "index_fiu-vro" ("native_page_
 CREATE INDEX "index_fj_foreign_native" ON "index_fj" ("foreign_word","native_page_title");
 CREATE INDEX "index_fj_foreign_word" ON "index_fj" ("foreign_word");
 CREATE INDEX "index_fj_native_page_title" ON "index_fj" ("native_page_title");
+CREATE INDEX "index_fkv_foreign_native" ON "index_fkv" ("foreign_word","native_page_title");
+CREATE INDEX "index_fkv_foreign_word" ON "index_fkv" ("foreign_word");
+CREATE INDEX "index_fkv_native_page_title" ON "index_fkv" ("native_page_title");
 CREATE INDEX "index_fo_foreign_native" ON "index_fo" ("foreign_word","native_page_title");
 CREATE INDEX "index_fo_foreign_word" ON "index_fo" ("foreign_word");
 CREATE INDEX "index_fo_native_page_title" ON "index_fo" ("native_page_title");
@@ -8860,12 +10372,18 @@ CREATE INDEX "index_fro_native_page_title" ON "index_fro" ("native_page_title");
 CREATE INDEX "index_frp_foreign_native" ON "index_frp" ("foreign_word","native_page_title");
 CREATE INDEX "index_frp_foreign_word" ON "index_frp" ("foreign_word");
 CREATE INDEX "index_frp_native_page_title" ON "index_frp" ("native_page_title");
-CREATE INDEX "index_fry_foreign_native" ON "index_fry" ("foreign_word","native_page_title");
-CREATE INDEX "index_fry_foreign_word" ON "index_fry" ("foreign_word");
-CREATE INDEX "index_fry_native_page_title" ON "index_fry" ("native_page_title");
+CREATE INDEX "index_frr_foreign_native" ON "index_frr" ("foreign_word","native_page_title");
+CREATE INDEX "index_frr_foreign_word" ON "index_frr" ("foreign_word");
+CREATE INDEX "index_frr_native_page_title" ON "index_frr" ("native_page_title");
+CREATE INDEX "index_frs_foreign_native" ON "index_frs" ("foreign_word","native_page_title");
+CREATE INDEX "index_frs_foreign_word" ON "index_frs" ("foreign_word");
+CREATE INDEX "index_frs_native_page_title" ON "index_frs" ("native_page_title");
 CREATE INDEX "index_fur_foreign_native" ON "index_fur" ("foreign_word","native_page_title");
 CREATE INDEX "index_fur_foreign_word" ON "index_fur" ("foreign_word");
 CREATE INDEX "index_fur_native_page_title" ON "index_fur" ("native_page_title");
+CREATE INDEX "index_fy_foreign_native" ON "index_fy" ("foreign_word","native_page_title");
+CREATE INDEX "index_fy_foreign_word" ON "index_fy" ("foreign_word");
+CREATE INDEX "index_fy_native_page_title" ON "index_fy" ("native_page_title");
 CREATE INDEX "index_ga_foreign_native" ON "index_ga" ("foreign_word","native_page_title");
 CREATE INDEX "index_ga_foreign_word" ON "index_ga" ("foreign_word");
 CREATE INDEX "index_ga_native_page_title" ON "index_ga" ("native_page_title");
@@ -8950,18 +10468,15 @@ CREATE INDEX "index_hi_native_page_title" ON "index_hi" ("native_page_title");
 CREATE INDEX "index_hif_foreign_native" ON "index_hif" ("foreign_word","native_page_title");
 CREATE INDEX "index_hif_foreign_word" ON "index_hif" ("foreign_word");
 CREATE INDEX "index_hif_native_page_title" ON "index_hif" ("native_page_title");
-CREATE INDEX "index_hif-deva_foreign_native" ON "index_hif-deva" ("foreign_word","native_page_title");
-CREATE INDEX "index_hif-deva_foreign_word" ON "index_hif-deva" ("foreign_word");
-CREATE INDEX "index_hif-deva_native_page_title" ON "index_hif-deva" ("native_page_title");
-CREATE INDEX "index_hif-latn_foreign_native" ON "index_hif-latn" ("foreign_word","native_page_title");
-CREATE INDEX "index_hif-latn_foreign_word" ON "index_hif-latn" ("foreign_word");
-CREATE INDEX "index_hif-latn_native_page_title" ON "index_hif-latn" ("native_page_title");
 CREATE INDEX "index_hil_foreign_native" ON "index_hil" ("foreign_word","native_page_title");
 CREATE INDEX "index_hil_foreign_word" ON "index_hil" ("foreign_word");
 CREATE INDEX "index_hil_native_page_title" ON "index_hil" ("native_page_title");
 CREATE INDEX "index_hit_foreign_native" ON "index_hit" ("foreign_word","native_page_title");
 CREATE INDEX "index_hit_foreign_word" ON "index_hit" ("foreign_word");
 CREATE INDEX "index_hit_native_page_title" ON "index_hit" ("native_page_title");
+CREATE INDEX "index_hmn_foreign_native" ON "index_hmn" ("foreign_word","native_page_title");
+CREATE INDEX "index_hmn_foreign_word" ON "index_hmn" ("foreign_word");
+CREATE INDEX "index_hmn_native_page_title" ON "index_hmn" ("native_page_title");
 CREATE INDEX "index_ho_foreign_native" ON "index_ho" ("foreign_word","native_page_title");
 CREATE INDEX "index_ho_foreign_word" ON "index_ho" ("foreign_word");
 CREATE INDEX "index_ho_native_page_title" ON "index_ho" ("native_page_title");
@@ -8983,9 +10498,6 @@ CREATE INDEX "index_hy_native_page_title" ON "index_hy" ("native_page_title");
 CREATE INDEX "index_hz_foreign_native" ON "index_hz" ("foreign_word","native_page_title");
 CREATE INDEX "index_hz_foreign_word" ON "index_hz" ("foreign_word");
 CREATE INDEX "index_hz_native_page_title" ON "index_hz" ("native_page_title");
-CREATE INDEX "index_ia_foreign_native" ON "index_ia" ("foreign_word","native_page_title");
-CREATE INDEX "index_ia_foreign_word" ON "index_ia" ("foreign_word");
-CREATE INDEX "index_ia_native_page_title" ON "index_ia" ("native_page_title");
 CREATE INDEX "index_ibo_foreign_native" ON "index_ibo" ("foreign_word","native_page_title");
 CREATE INDEX "index_ibo_foreign_word" ON "index_ibo" ("foreign_word");
 CREATE INDEX "index_ibo_native_page_title" ON "index_ibo" ("native_page_title");
@@ -9010,6 +10522,9 @@ CREATE INDEX "index_ike-latn_native_page_title" ON "index_ike-latn" ("native_pag
 CREATE INDEX "index_ilo_foreign_native" ON "index_ilo" ("foreign_word","native_page_title");
 CREATE INDEX "index_ilo_foreign_word" ON "index_ilo" ("foreign_word");
 CREATE INDEX "index_ilo_native_page_title" ON "index_ilo" ("native_page_title");
+CREATE INDEX "index_ina_foreign_native" ON "index_ina" ("foreign_word","native_page_title");
+CREATE INDEX "index_ina_foreign_word" ON "index_ina" ("foreign_word");
+CREATE INDEX "index_ina_native_page_title" ON "index_ina" ("native_page_title");
 CREATE INDEX "index_inh_foreign_native" ON "index_inh" ("foreign_word","native_page_title");
 CREATE INDEX "index_inh_foreign_word" ON "index_inh" ("foreign_word");
 CREATE INDEX "index_inh_native_page_title" ON "index_inh" ("native_page_title");
@@ -9043,12 +10558,18 @@ CREATE INDEX "index_izh_native_page_title" ON "index_izh" ("native_page_title");
 CREATE INDEX "index_ja_foreign_native" ON "index_ja" ("foreign_word","native_page_title");
 CREATE INDEX "index_ja_foreign_word" ON "index_ja" ("foreign_word");
 CREATE INDEX "index_ja_native_page_title" ON "index_ja" ("native_page_title");
+CREATE INDEX "index_jam_foreign_native" ON "index_jam" ("foreign_word","native_page_title");
+CREATE INDEX "index_jam_foreign_word" ON "index_jam" ("foreign_word");
+CREATE INDEX "index_jam_native_page_title" ON "index_jam" ("native_page_title");
 CREATE INDEX "index_jbo_foreign_native" ON "index_jbo" ("foreign_word","native_page_title");
 CREATE INDEX "index_jbo_foreign_word" ON "index_jbo" ("foreign_word");
 CREATE INDEX "index_jbo_native_page_title" ON "index_jbo" ("native_page_title");
 CREATE INDEX "index_jct_foreign_native" ON "index_jct" ("foreign_word","native_page_title");
 CREATE INDEX "index_jct_foreign_word" ON "index_jct" ("foreign_word");
 CREATE INDEX "index_jct_native_page_title" ON "index_jct" ("native_page_title");
+CREATE INDEX "index_jpr_foreign_native" ON "index_jpr" ("foreign_word","native_page_title");
+CREATE INDEX "index_jpr_foreign_word" ON "index_jpr" ("foreign_word");
+CREATE INDEX "index_jpr_native_page_title" ON "index_jpr" ("native_page_title");
 CREATE INDEX "index_jut_foreign_native" ON "index_jut" ("foreign_word","native_page_title");
 CREATE INDEX "index_jut_foreign_word" ON "index_jut" ("foreign_word");
 CREATE INDEX "index_jut_native_page_title" ON "index_jut" ("native_page_title");
@@ -9067,9 +10588,6 @@ CREATE INDEX "index_kab_native_page_title" ON "index_kab" ("native_page_title");
 CREATE INDEX "index_kal_foreign_native" ON "index_kal" ("foreign_word","native_page_title");
 CREATE INDEX "index_kal_foreign_word" ON "index_kal" ("foreign_word");
 CREATE INDEX "index_kal_native_page_title" ON "index_kal" ("native_page_title");
-CREATE INDEX "index_kas_foreign_native" ON "index_kas" ("foreign_word","native_page_title");
-CREATE INDEX "index_kas_foreign_word" ON "index_kas" ("foreign_word");
-CREATE INDEX "index_kas_native_page_title" ON "index_kas" ("native_page_title");
 CREATE INDEX "index_kaz_foreign_native" ON "index_kaz" ("foreign_word","native_page_title");
 CREATE INDEX "index_kaz_foreign_word" ON "index_kaz" ("foreign_word");
 CREATE INDEX "index_kaz_native_page_title" ON "index_kaz" ("native_page_title");
@@ -9079,6 +10597,9 @@ CREATE INDEX "index_kbd_native_page_title" ON "index_kbd" ("native_page_title");
 CREATE INDEX "index_kca_foreign_native" ON "index_kca" ("foreign_word","native_page_title");
 CREATE INDEX "index_kca_foreign_word" ON "index_kca" ("foreign_word");
 CREATE INDEX "index_kca_native_page_title" ON "index_kca" ("native_page_title");
+CREATE INDEX "index_kdd_foreign_native" ON "index_kdd" ("foreign_word","native_page_title");
+CREATE INDEX "index_kdd_foreign_word" ON "index_kdd" ("foreign_word");
+CREATE INDEX "index_kdd_native_page_title" ON "index_kdd" ("native_page_title");
 CREATE INDEX "index_kdr_foreign_native" ON "index_kdr" ("foreign_word","native_page_title");
 CREATE INDEX "index_kdr_foreign_word" ON "index_kdr" ("foreign_word");
 CREATE INDEX "index_kdr_native_page_title" ON "index_kdr" ("native_page_title");
@@ -9088,30 +10609,33 @@ CREATE INDEX "index_ket_native_page_title" ON "index_ket" ("native_page_title");
 CREATE INDEX "index_kg_foreign_native" ON "index_kg" ("foreign_word","native_page_title");
 CREATE INDEX "index_kg_foreign_word" ON "index_kg" ("foreign_word");
 CREATE INDEX "index_kg_native_page_title" ON "index_kg" ("native_page_title");
+CREATE INDEX "index_khk_foreign_native" ON "index_khk" ("foreign_word","native_page_title");
+CREATE INDEX "index_khk_foreign_word" ON "index_khk" ("foreign_word");
+CREATE INDEX "index_khk_native_page_title" ON "index_khk" ("native_page_title");
 CREATE INDEX "index_ki_foreign_native" ON "index_ki" ("foreign_word","native_page_title");
 CREATE INDEX "index_ki_foreign_word" ON "index_ki" ("foreign_word");
 CREATE INDEX "index_ki_native_page_title" ON "index_ki" ("native_page_title");
 CREATE INDEX "index_kim_foreign_native" ON "index_kim" ("foreign_word","native_page_title");
 CREATE INDEX "index_kim_foreign_word" ON "index_kim" ("foreign_word");
 CREATE INDEX "index_kim_native_page_title" ON "index_kim" ("native_page_title");
+CREATE INDEX "index_kiu_foreign_native" ON "index_kiu" ("foreign_word","native_page_title");
+CREATE INDEX "index_kiu_foreign_word" ON "index_kiu" ("foreign_word");
+CREATE INDEX "index_kiu_native_page_title" ON "index_kiu" ("native_page_title");
 CREATE INDEX "index_kj_foreign_native" ON "index_kj" ("foreign_word","native_page_title");
 CREATE INDEX "index_kj_foreign_word" ON "index_kj" ("foreign_word");
 CREATE INDEX "index_kj_native_page_title" ON "index_kj" ("native_page_title");
 CREATE INDEX "index_kjh_foreign_native" ON "index_kjh" ("foreign_word","native_page_title");
 CREATE INDEX "index_kjh_foreign_word" ON "index_kjh" ("foreign_word");
 CREATE INDEX "index_kjh_native_page_title" ON "index_kjh" ("native_page_title");
-CREATE INDEX "index_kk-arab_foreign_native" ON "index_kk-arab" ("foreign_word","native_page_title");
-CREATE INDEX "index_kk-arab_foreign_word" ON "index_kk-arab" ("foreign_word");
-CREATE INDEX "index_kk-arab_native_page_title" ON "index_kk-arab" ("native_page_title");
 CREATE INDEX "index_km_foreign_native" ON "index_km" ("foreign_word","native_page_title");
 CREATE INDEX "index_km_foreign_word" ON "index_km" ("foreign_word");
 CREATE INDEX "index_km_native_page_title" ON "index_km" ("native_page_title");
-CREATE INDEX "index_kmr_foreign_native" ON "index_kmr" ("foreign_word","native_page_title");
-CREATE INDEX "index_kmr_foreign_word" ON "index_kmr" ("foreign_word");
-CREATE INDEX "index_kmr_native_page_title" ON "index_kmr" ("native_page_title");
 CREATE INDEX "index_kn_foreign_native" ON "index_kn" ("foreign_word","native_page_title");
 CREATE INDEX "index_kn_foreign_word" ON "index_kn" ("foreign_word");
 CREATE INDEX "index_kn_native_page_title" ON "index_kn" ("native_page_title");
+CREATE INDEX "index_knw_foreign_native" ON "index_knw" ("foreign_word","native_page_title");
+CREATE INDEX "index_knw_foreign_word" ON "index_knw" ("foreign_word");
+CREATE INDEX "index_knw_native_page_title" ON "index_knw" ("native_page_title");
 CREATE INDEX "index_ko_foreign_native" ON "index_ko" ("foreign_word","native_page_title");
 CREATE INDEX "index_ko_foreign_word" ON "index_ko" ("foreign_word");
 CREATE INDEX "index_ko_native_page_title" ON "index_ko" ("native_page_title");
@@ -9160,27 +10684,9 @@ CREATE INDEX "index_ksi_native_page_title" ON "index_ksi" ("native_page_title");
 CREATE INDEX "index_ku_foreign_native" ON "index_ku" ("foreign_word","native_page_title");
 CREATE INDEX "index_ku_foreign_word" ON "index_ku" ("foreign_word");
 CREATE INDEX "index_ku_native_page_title" ON "index_ku" ("native_page_title");
-CREATE INDEX "index_ku-arab_foreign_native" ON "index_ku-arab" ("foreign_word","native_page_title");
-CREATE INDEX "index_ku-arab_foreign_word" ON "index_ku-arab" ("foreign_word");
-CREATE INDEX "index_ku-arab_native_page_title" ON "index_ku-arab" ("native_page_title");
-CREATE INDEX "index_ku-latn_foreign_native" ON "index_ku-latn" ("foreign_word","native_page_title");
-CREATE INDEX "index_ku-latn_foreign_word" ON "index_ku-latn" ("foreign_word");
-CREATE INDEX "index_ku-latn_native_page_title" ON "index_ku-latn" ("native_page_title");
-CREATE INDEX "index_ku.arab_foreign_native" ON "index_ku.arab" ("foreign_word","native_page_title");
-CREATE INDEX "index_ku.arab_foreign_word" ON "index_ku.arab" ("foreign_word");
-CREATE INDEX "index_ku.arab_native_page_title" ON "index_ku.arab" ("native_page_title");
-CREATE INDEX "index_ku.cyr_foreign_native" ON "index_ku.cyr" ("foreign_word","native_page_title");
-CREATE INDEX "index_ku.cyr_foreign_word" ON "index_ku.cyr" ("foreign_word");
-CREATE INDEX "index_ku.cyr_native_page_title" ON "index_ku.cyr" ("native_page_title");
-CREATE INDEX "index_ku.lat_foreign_native" ON "index_ku.lat" ("foreign_word","native_page_title");
-CREATE INDEX "index_ku.lat_foreign_word" ON "index_ku.lat" ("foreign_word");
-CREATE INDEX "index_ku.lat_native_page_title" ON "index_ku.lat" ("native_page_title");
 CREATE INDEX "index_kum_foreign_native" ON "index_kum" ("foreign_word","native_page_title");
 CREATE INDEX "index_kum_foreign_word" ON "index_kum" ("foreign_word");
 CREATE INDEX "index_kum_native_page_title" ON "index_kum" ("native_page_title");
-CREATE INDEX "index_kur_foreign_native" ON "index_kur" ("foreign_word","native_page_title");
-CREATE INDEX "index_kur_foreign_word" ON "index_kur" ("foreign_word");
-CREATE INDEX "index_kur_native_page_title" ON "index_kur" ("native_page_title");
 CREATE INDEX "index_kw_foreign_native" ON "index_kw" ("foreign_word","native_page_title");
 CREATE INDEX "index_kw_foreign_word" ON "index_kw" ("foreign_word");
 CREATE INDEX "index_kw_native_page_title" ON "index_kw" ("native_page_title");
@@ -9196,6 +10702,9 @@ CREATE INDEX "index_la_native_page_title" ON "index_la" ("native_page_title");
 CREATE INDEX "index_lad_foreign_native" ON "index_lad" ("foreign_word","native_page_title");
 CREATE INDEX "index_lad_foreign_word" ON "index_lad" ("foreign_word");
 CREATE INDEX "index_lad_native_page_title" ON "index_lad" ("native_page_title");
+CREATE INDEX "index_lah_foreign_native" ON "index_lah" ("foreign_word","native_page_title");
+CREATE INDEX "index_lah_foreign_word" ON "index_lah" ("foreign_word");
+CREATE INDEX "index_lah_native_page_title" ON "index_lah" ("native_page_title");
 CREATE INDEX "index_lb_foreign_native" ON "index_lb" ("foreign_word","native_page_title");
 CREATE INDEX "index_lb_foreign_word" ON "index_lb" ("foreign_word");
 CREATE INDEX "index_lb_native_page_title" ON "index_lb" ("native_page_title");
@@ -9211,15 +10720,12 @@ CREATE INDEX "index_lez_native_page_title" ON "index_lez" ("native_page_title");
 CREATE INDEX "index_lfn_foreign_native" ON "index_lfn" ("foreign_word","native_page_title");
 CREATE INDEX "index_lfn_foreign_word" ON "index_lfn" ("foreign_word");
 CREATE INDEX "index_lfn_native_page_title" ON "index_lfn" ("native_page_title");
-CREATE INDEX "index_lg_foreign_native" ON "index_lg" ("foreign_word","native_page_title");
-CREATE INDEX "index_lg_foreign_word" ON "index_lg" ("foreign_word");
-CREATE INDEX "index_lg_native_page_title" ON "index_lg" ("native_page_title");
-CREATE INDEX "index_li_foreign_native" ON "index_li" ("foreign_word","native_page_title");
-CREATE INDEX "index_li_foreign_word" ON "index_li" ("foreign_word");
-CREATE INDEX "index_li_native_page_title" ON "index_li" ("native_page_title");
 CREATE INDEX "index_lij_foreign_native" ON "index_lij" ("foreign_word","native_page_title");
 CREATE INDEX "index_lij_foreign_word" ON "index_lij" ("foreign_word");
 CREATE INDEX "index_lij_native_page_title" ON "index_lij" ("native_page_title");
+CREATE INDEX "index_lim_foreign_native" ON "index_lim" ("foreign_word","native_page_title");
+CREATE INDEX "index_lim_foreign_word" ON "index_lim" ("foreign_word");
+CREATE INDEX "index_lim_native_page_title" ON "index_lim" ("native_page_title");
 CREATE INDEX "index_liv_foreign_native" ON "index_liv" ("foreign_word","native_page_title");
 CREATE INDEX "index_liv_foreign_word" ON "index_liv" ("foreign_word");
 CREATE INDEX "index_liv_native_page_title" ON "index_liv" ("native_page_title");
@@ -9241,24 +10747,33 @@ CREATE INDEX "index_loz_native_page_title" ON "index_loz" ("native_page_title");
 CREATE INDEX "index_lt_foreign_native" ON "index_lt" ("foreign_word","native_page_title");
 CREATE INDEX "index_lt_foreign_word" ON "index_lt" ("foreign_word");
 CREATE INDEX "index_lt_native_page_title" ON "index_lt" ("native_page_title");
+CREATE INDEX "index_ltc_foreign_native" ON "index_ltc" ("foreign_word","native_page_title");
+CREATE INDEX "index_ltc_foreign_word" ON "index_ltc" ("foreign_word");
+CREATE INDEX "index_ltc_native_page_title" ON "index_ltc" ("native_page_title");
 CREATE INDEX "index_ltg_foreign_native" ON "index_ltg" ("foreign_word","native_page_title");
 CREATE INDEX "index_ltg_foreign_word" ON "index_ltg" ("foreign_word");
 CREATE INDEX "index_ltg_native_page_title" ON "index_ltg" ("native_page_title");
+CREATE INDEX "index_lug_foreign_native" ON "index_lug" ("foreign_word","native_page_title");
+CREATE INDEX "index_lug_foreign_word" ON "index_lug" ("foreign_word");
+CREATE INDEX "index_lug_native_page_title" ON "index_lug" ("native_page_title");
+CREATE INDEX "index_luo_foreign_native" ON "index_luo" ("foreign_word","native_page_title");
+CREATE INDEX "index_luo_foreign_word" ON "index_luo" ("foreign_word");
+CREATE INDEX "index_luo_native_page_title" ON "index_luo" ("native_page_title");
 CREATE INDEX "index_luy_foreign_native" ON "index_luy" ("foreign_word","native_page_title");
 CREATE INDEX "index_luy_foreign_word" ON "index_luy" ("foreign_word");
 CREATE INDEX "index_luy_native_page_title" ON "index_luy" ("native_page_title");
 CREATE INDEX "index_lv_foreign_native" ON "index_lv" ("foreign_word","native_page_title");
 CREATE INDEX "index_lv_foreign_word" ON "index_lv" ("foreign_word");
 CREATE INDEX "index_lv_native_page_title" ON "index_lv" ("native_page_title");
+CREATE INDEX "index_lzh_foreign_native" ON "index_lzh" ("foreign_word","native_page_title");
+CREATE INDEX "index_lzh_foreign_word" ON "index_lzh" ("foreign_word");
+CREATE INDEX "index_lzh_native_page_title" ON "index_lzh" ("native_page_title");
 CREATE INDEX "index_lzz_foreign_native" ON "index_lzz" ("foreign_word","native_page_title");
 CREATE INDEX "index_lzz_foreign_word" ON "index_lzz" ("foreign_word");
 CREATE INDEX "index_lzz_native_page_title" ON "index_lzz" ("native_page_title");
 CREATE INDEX "index_mai_foreign_native" ON "index_mai" ("foreign_word","native_page_title");
 CREATE INDEX "index_mai_foreign_word" ON "index_mai" ("foreign_word");
 CREATE INDEX "index_mai_native_page_title" ON "index_mai" ("native_page_title");
-CREATE INDEX "index_man.lat_foreign_native" ON "index_man.lat" ("foreign_word","native_page_title");
-CREATE INDEX "index_man.lat_foreign_word" ON "index_man.lat" ("foreign_word");
-CREATE INDEX "index_man.lat_native_page_title" ON "index_man.lat" ("native_page_title");
 CREATE INDEX "index_map-bms_foreign_native" ON "index_map-bms" ("foreign_word","native_page_title");
 CREATE INDEX "index_map-bms_foreign_word" ON "index_map-bms" ("foreign_word");
 CREATE INDEX "index_map-bms_native_page_title" ON "index_map-bms" ("native_page_title");
@@ -9283,6 +10798,9 @@ CREATE INDEX "index_mhr_native_page_title" ON "index_mhr" ("native_page_title");
 CREATE INDEX "index_mi_foreign_native" ON "index_mi" ("foreign_word","native_page_title");
 CREATE INDEX "index_mi_foreign_word" ON "index_mi" ("foreign_word");
 CREATE INDEX "index_mi_native_page_title" ON "index_mi" ("native_page_title");
+CREATE INDEX "index_miq_foreign_native" ON "index_miq" ("foreign_word","native_page_title");
+CREATE INDEX "index_miq_foreign_word" ON "index_miq" ("foreign_word");
+CREATE INDEX "index_miq_native_page_title" ON "index_miq" ("native_page_title");
 CREATE INDEX "index_mk_foreign_native" ON "index_mk" ("foreign_word","native_page_title");
 CREATE INDEX "index_mk_foreign_word" ON "index_mk" ("foreign_word");
 CREATE INDEX "index_mk_native_page_title" ON "index_mk" ("native_page_title");
@@ -9328,6 +10846,9 @@ CREATE INDEX "index_mus_native_page_title" ON "index_mus" ("native_page_title");
 CREATE INDEX "index_mwf_foreign_native" ON "index_mwf" ("foreign_word","native_page_title");
 CREATE INDEX "index_mwf_foreign_word" ON "index_mwf" ("foreign_word");
 CREATE INDEX "index_mwf_native_page_title" ON "index_mwf" ("native_page_title");
+CREATE INDEX "index_mwj_foreign_native" ON "index_mwj" ("foreign_word","native_page_title");
+CREATE INDEX "index_mwj_foreign_word" ON "index_mwj" ("foreign_word");
+CREATE INDEX "index_mwj_native_page_title" ON "index_mwj" ("native_page_title");
 CREATE INDEX "index_mwl_foreign_native" ON "index_mwl" ("foreign_word","native_page_title");
 CREATE INDEX "index_mwl_foreign_word" ON "index_mwl" ("foreign_word");
 CREATE INDEX "index_mwl_native_page_title" ON "index_mwl" ("native_page_title");
@@ -9417,12 +10938,21 @@ CREATE INDEX "index_oc_native_page_title" ON "index_oc" ("native_page_title");
 CREATE INDEX "index_odt_foreign_native" ON "index_odt" ("foreign_word","native_page_title");
 CREATE INDEX "index_odt_foreign_word" ON "index_odt" ("foreign_word");
 CREATE INDEX "index_odt_native_page_title" ON "index_odt" ("native_page_title");
+CREATE INDEX "index_ofs_foreign_native" ON "index_ofs" ("foreign_word","native_page_title");
+CREATE INDEX "index_ofs_foreign_word" ON "index_ofs" ("foreign_word");
+CREATE INDEX "index_ofs_native_page_title" ON "index_ofs" ("native_page_title");
 CREATE INDEX "index_oj_foreign_native" ON "index_oj" ("foreign_word","native_page_title");
 CREATE INDEX "index_oj_foreign_word" ON "index_oj" ("foreign_word");
 CREATE INDEX "index_oj_native_page_title" ON "index_oj" ("native_page_title");
+CREATE INDEX "index_oko_foreign_native" ON "index_oko" ("foreign_word","native_page_title");
+CREATE INDEX "index_oko_foreign_word" ON "index_oko" ("foreign_word");
+CREATE INDEX "index_oko_native_page_title" ON "index_oko" ("native_page_title");
 CREATE INDEX "index_om_foreign_native" ON "index_om" ("foreign_word","native_page_title");
 CREATE INDEX "index_om_foreign_word" ON "index_om" ("foreign_word");
 CREATE INDEX "index_om_native_page_title" ON "index_om" ("native_page_title");
+CREATE INDEX "index_ood_foreign_native" ON "index_ood" ("foreign_word","native_page_title");
+CREATE INDEX "index_ood_foreign_word" ON "index_ood" ("foreign_word");
+CREATE INDEX "index_ood_native_page_title" ON "index_ood" ("native_page_title");
 CREATE INDEX "index_or_foreign_native" ON "index_or" ("foreign_word","native_page_title");
 CREATE INDEX "index_or_foreign_word" ON "index_or" ("foreign_word");
 CREATE INDEX "index_or_native_page_title" ON "index_or" ("native_page_title");
@@ -9432,12 +10962,21 @@ CREATE INDEX "index_orv_native_page_title" ON "index_orv" ("native_page_title");
 CREATE INDEX "index_os_foreign_native" ON "index_os" ("foreign_word","native_page_title");
 CREATE INDEX "index_os_foreign_word" ON "index_os" ("foreign_word");
 CREATE INDEX "index_os_native_page_title" ON "index_os" ("native_page_title");
+CREATE INDEX "index_oun_foreign_native" ON "index_oun" ("foreign_word","native_page_title");
+CREATE INDEX "index_oun_foreign_word" ON "index_oun" ("foreign_word");
+CREATE INDEX "index_oun_native_page_title" ON "index_oun" ("native_page_title");
+CREATE INDEX "index_owl_foreign_native" ON "index_owl" ("foreign_word","native_page_title");
+CREATE INDEX "index_owl_foreign_word" ON "index_owl" ("foreign_word");
+CREATE INDEX "index_owl_native_page_title" ON "index_owl" ("native_page_title");
 CREATE INDEX "index_pa_foreign_native" ON "index_pa" ("foreign_word","native_page_title");
 CREATE INDEX "index_pa_foreign_word" ON "index_pa" ("foreign_word");
 CREATE INDEX "index_pa_native_page_title" ON "index_pa" ("native_page_title");
 CREATE INDEX "index_pag_foreign_native" ON "index_pag" ("foreign_word","native_page_title");
 CREATE INDEX "index_pag_foreign_word" ON "index_pag" ("foreign_word");
 CREATE INDEX "index_pag_native_page_title" ON "index_pag" ("native_page_title");
+CREATE INDEX "index_pal_foreign_native" ON "index_pal" ("foreign_word","native_page_title");
+CREATE INDEX "index_pal_foreign_word" ON "index_pal" ("foreign_word");
+CREATE INDEX "index_pal_native_page_title" ON "index_pal" ("native_page_title");
 CREATE INDEX "index_pam_foreign_native" ON "index_pam" ("foreign_word","native_page_title");
 CREATE INDEX "index_pam_foreign_word" ON "index_pam" ("foreign_word");
 CREATE INDEX "index_pam_native_page_title" ON "index_pam" ("native_page_title");
@@ -9450,15 +10989,24 @@ CREATE INDEX "index_pau_native_page_title" ON "index_pau" ("native_page_title");
 CREATE INDEX "index_pcd_foreign_native" ON "index_pcd" ("foreign_word","native_page_title");
 CREATE INDEX "index_pcd_foreign_word" ON "index_pcd" ("foreign_word");
 CREATE INDEX "index_pcd_native_page_title" ON "index_pcd" ("native_page_title");
+CREATE INDEX "index_pcm_foreign_native" ON "index_pcm" ("foreign_word","native_page_title");
+CREATE INDEX "index_pcm_foreign_word" ON "index_pcm" ("foreign_word");
+CREATE INDEX "index_pcm_native_page_title" ON "index_pcm" ("native_page_title");
 CREATE INDEX "index_pdc_foreign_native" ON "index_pdc" ("foreign_word","native_page_title");
 CREATE INDEX "index_pdc_foreign_word" ON "index_pdc" ("foreign_word");
 CREATE INDEX "index_pdc_native_page_title" ON "index_pdc" ("native_page_title");
 CREATE INDEX "index_pdt_foreign_native" ON "index_pdt" ("foreign_word","native_page_title");
 CREATE INDEX "index_pdt_foreign_word" ON "index_pdt" ("foreign_word");
 CREATE INDEX "index_pdt_native_page_title" ON "index_pdt" ("native_page_title");
+CREATE INDEX "index_peo_foreign_native" ON "index_peo" ("foreign_word","native_page_title");
+CREATE INDEX "index_peo_foreign_word" ON "index_peo" ("foreign_word");
+CREATE INDEX "index_peo_native_page_title" ON "index_peo" ("native_page_title");
 CREATE INDEX "index_pfl_foreign_native" ON "index_pfl" ("foreign_word","native_page_title");
 CREATE INDEX "index_pfl_foreign_word" ON "index_pfl" ("foreign_word");
 CREATE INDEX "index_pfl_native_page_title" ON "index_pfl" ("native_page_title");
+CREATE INDEX "index_pga_foreign_native" ON "index_pga" ("foreign_word","native_page_title");
+CREATE INDEX "index_pga_foreign_word" ON "index_pga" ("foreign_word");
+CREATE INDEX "index_pga_native_page_title" ON "index_pga" ("native_page_title");
 CREATE INDEX "index_pi_foreign_native" ON "index_pi" ("foreign_word","native_page_title");
 CREATE INDEX "index_pi_foreign_word" ON "index_pi" ("foreign_word");
 CREATE INDEX "index_pi_native_page_title" ON "index_pi" ("native_page_title");
@@ -9471,6 +11019,9 @@ CREATE INDEX "index_pih_native_page_title" ON "index_pih" ("native_page_title");
 CREATE INDEX "index_pinyin_foreign_native" ON "index_pinyin" ("foreign_word","native_page_title");
 CREATE INDEX "index_pinyin_foreign_word" ON "index_pinyin" ("foreign_word");
 CREATE INDEX "index_pinyin_native_page_title" ON "index_pinyin" ("native_page_title");
+CREATE INDEX "index_pjt_foreign_native" ON "index_pjt" ("foreign_word","native_page_title");
+CREATE INDEX "index_pjt_foreign_word" ON "index_pjt" ("foreign_word");
+CREATE INDEX "index_pjt_native_page_title" ON "index_pjt" ("native_page_title");
 CREATE INDEX "index_pl_foreign_native" ON "index_pl" ("foreign_word","native_page_title");
 CREATE INDEX "index_pl_foreign_word" ON "index_pl" ("foreign_word");
 CREATE INDEX "index_pl_native_page_title" ON "index_pl" ("native_page_title");
@@ -9522,6 +11073,12 @@ CREATE INDEX "index_qya_native_page_title" ON "index_qya" ("native_page_title");
 CREATE INDEX "index_rap_foreign_native" ON "index_rap" ("foreign_word","native_page_title");
 CREATE INDEX "index_rap_foreign_word" ON "index_rap" ("foreign_word");
 CREATE INDEX "index_rap_native_page_title" ON "index_rap" ("native_page_title");
+CREATE INDEX "index_rar_foreign_native" ON "index_rar" ("foreign_word","native_page_title");
+CREATE INDEX "index_rar_foreign_word" ON "index_rar" ("foreign_word");
+CREATE INDEX "index_rar_native_page_title" ON "index_rar" ("native_page_title");
+CREATE INDEX "index_rhg_foreign_native" ON "index_rhg" ("foreign_word","native_page_title");
+CREATE INDEX "index_rhg_foreign_word" ON "index_rhg" ("foreign_word");
+CREATE INDEX "index_rhg_native_page_title" ON "index_rhg" ("native_page_title");
 CREATE INDEX "index_rif_foreign_native" ON "index_rif" ("foreign_word","native_page_title");
 CREATE INDEX "index_rif_foreign_word" ON "index_rif" ("foreign_word");
 CREATE INDEX "index_rif_native_page_title" ON "index_rif" ("native_page_title");
@@ -9534,33 +11091,33 @@ CREATE INDEX "index_rmr_native_page_title" ON "index_rmr" ("native_page_title");
 CREATE INDEX "index_rmy_foreign_native" ON "index_rmy" ("foreign_word","native_page_title");
 CREATE INDEX "index_rmy_foreign_word" ON "index_rmy" ("foreign_word");
 CREATE INDEX "index_rmy_native_page_title" ON "index_rmy" ("native_page_title");
-CREATE INDEX "index_rn_foreign_native" ON "index_rn" ("foreign_word","native_page_title");
-CREATE INDEX "index_rn_foreign_word" ON "index_rn" ("foreign_word");
-CREATE INDEX "index_rn_native_page_title" ON "index_rn" ("native_page_title");
 CREATE INDEX "index_ro_foreign_native" ON "index_ro" ("foreign_word","native_page_title");
 CREATE INDEX "index_ro_foreign_word" ON "index_ro" ("foreign_word");
 CREATE INDEX "index_ro_native_page_title" ON "index_ro" ("native_page_title");
+CREATE INDEX "index_roa_foreign_native" ON "index_roa" ("foreign_word","native_page_title");
+CREATE INDEX "index_roa_foreign_word" ON "index_roa" ("foreign_word");
+CREATE INDEX "index_roa_native_page_title" ON "index_roa" ("native_page_title");
 CREATE INDEX "index_roa-rup_foreign_native" ON "index_roa-rup" ("foreign_word","native_page_title");
 CREATE INDEX "index_roa-rup_foreign_word" ON "index_roa-rup" ("foreign_word");
 CREATE INDEX "index_roa-rup_native_page_title" ON "index_roa-rup" ("native_page_title");
 CREATE INDEX "index_roa-tara_foreign_native" ON "index_roa-tara" ("foreign_word","native_page_title");
 CREATE INDEX "index_roa-tara_foreign_word" ON "index_roa-tara" ("foreign_word");
 CREATE INDEX "index_roa-tara_native_page_title" ON "index_roa-tara" ("native_page_title");
-CREATE INDEX "index_roh_foreign_native" ON "index_roh" ("foreign_word","native_page_title");
-CREATE INDEX "index_roh_foreign_word" ON "index_roh" ("foreign_word");
-CREATE INDEX "index_roh_native_page_title" ON "index_roh" ("native_page_title");
 CREATE INDEX "index_rom_foreign_native" ON "index_rom" ("foreign_word","native_page_title");
 CREATE INDEX "index_rom_foreign_word" ON "index_rom" ("foreign_word");
 CREATE INDEX "index_rom_native_page_title" ON "index_rom" ("native_page_title");
 CREATE INDEX "index_romaji_foreign_native" ON "index_romaji" ("foreign_word","native_page_title");
 CREATE INDEX "index_romaji_foreign_word" ON "index_romaji" ("foreign_word");
 CREATE INDEX "index_romaji_native_page_title" ON "index_romaji" ("native_page_title");
-CREATE INDEX "index_ru_foreign_native" ON "index_ru" ("foreign_word","native_page_title");
-CREATE INDEX "index_ru_foreign_word" ON "index_ru" ("foreign_word");
-CREATE INDEX "index_ru_native_page_title" ON "index_ru" ("native_page_title");
+CREATE INDEX "index_rop_foreign_native" ON "index_rop" ("foreign_word","native_page_title");
+CREATE INDEX "index_rop_foreign_word" ON "index_rop" ("foreign_word");
+CREATE INDEX "index_rop_native_page_title" ON "index_rop" ("native_page_title");
 CREATE INDEX "index_ru-old_foreign_native" ON "index_ru-old" ("foreign_word","native_page_title");
 CREATE INDEX "index_ru-old_foreign_word" ON "index_ru-old" ("foreign_word");
 CREATE INDEX "index_ru-old_native_page_title" ON "index_ru-old" ("native_page_title");
+CREATE INDEX "index_run_foreign_native" ON "index_run" ("foreign_word","native_page_title");
+CREATE INDEX "index_run_foreign_word" ON "index_run" ("foreign_word");
+CREATE INDEX "index_run_native_page_title" ON "index_run" ("native_page_title");
 CREATE INDEX "index_ruq_foreign_native" ON "index_ruq" ("foreign_word","native_page_title");
 CREATE INDEX "index_ruq_foreign_word" ON "index_ruq" ("foreign_word");
 CREATE INDEX "index_ruq_native_page_title" ON "index_ruq" ("native_page_title");
@@ -9576,12 +11133,21 @@ CREATE INDEX "index_ruq-latn_native_page_title" ON "index_ruq-latn" ("native_pag
 CREATE INDEX "index_rw_foreign_native" ON "index_rw" ("foreign_word","native_page_title");
 CREATE INDEX "index_rw_foreign_word" ON "index_rw" ("foreign_word");
 CREATE INDEX "index_rw_native_page_title" ON "index_rw" ("native_page_title");
+CREATE INDEX "index_ryn_foreign_native" ON "index_ryn" ("foreign_word","native_page_title");
+CREATE INDEX "index_ryn_foreign_word" ON "index_ryn" ("foreign_word");
+CREATE INDEX "index_ryn_native_page_title" ON "index_ryn" ("native_page_title");
+CREATE INDEX "index_ryu_foreign_native" ON "index_ryu" ("foreign_word","native_page_title");
+CREATE INDEX "index_ryu_foreign_word" ON "index_ryu" ("foreign_word");
+CREATE INDEX "index_ryu_native_page_title" ON "index_ryu" ("native_page_title");
 CREATE INDEX "index_sa_foreign_native" ON "index_sa" ("foreign_word","native_page_title");
 CREATE INDEX "index_sa_foreign_word" ON "index_sa" ("foreign_word");
 CREATE INDEX "index_sa_native_page_title" ON "index_sa" ("native_page_title");
 CREATE INDEX "index_sah_foreign_native" ON "index_sah" ("foreign_word","native_page_title");
 CREATE INDEX "index_sah_foreign_word" ON "index_sah" ("foreign_word");
 CREATE INDEX "index_sah_native_page_title" ON "index_sah" ("native_page_title");
+CREATE INDEX "index_sam_foreign_native" ON "index_sam" ("foreign_word","native_page_title");
+CREATE INDEX "index_sam_foreign_word" ON "index_sam" ("foreign_word");
+CREATE INDEX "index_sam_native_page_title" ON "index_sam" ("native_page_title");
 CREATE INDEX "index_sat_foreign_native" ON "index_sat" ("foreign_word","native_page_title");
 CREATE INDEX "index_sat_foreign_word" ON "index_sat" ("foreign_word");
 CREATE INDEX "index_sat_native_page_title" ON "index_sat" ("native_page_title");
@@ -9600,9 +11166,6 @@ CREATE INDEX "index_sd_native_page_title" ON "index_sd" ("native_page_title");
 CREATE INDEX "index_sdc_foreign_native" ON "index_sdc" ("foreign_word","native_page_title");
 CREATE INDEX "index_sdc_foreign_word" ON "index_sdc" ("foreign_word");
 CREATE INDEX "index_sdc_native_page_title" ON "index_sdc" ("native_page_title");
-CREATE INDEX "index_sdh_foreign_native" ON "index_sdh" ("foreign_word","native_page_title");
-CREATE INDEX "index_sdh_foreign_word" ON "index_sdh" ("foreign_word");
-CREATE INDEX "index_sdh_native_page_title" ON "index_sdh" ("native_page_title");
 CREATE INDEX "index_se_foreign_native" ON "index_se" ("foreign_word","native_page_title");
 CREATE INDEX "index_se_foreign_word" ON "index_se" ("foreign_word");
 CREATE INDEX "index_se_native_page_title" ON "index_se" ("native_page_title");
@@ -9612,15 +11175,24 @@ CREATE INDEX "index_sei_native_page_title" ON "index_sei" ("native_page_title");
 CREATE INDEX "index_sel_foreign_native" ON "index_sel" ("foreign_word","native_page_title");
 CREATE INDEX "index_sel_foreign_word" ON "index_sel" ("foreign_word");
 CREATE INDEX "index_sel_native_page_title" ON "index_sel" ("native_page_title");
+CREATE INDEX "index_seu_foreign_native" ON "index_seu" ("foreign_word","native_page_title");
+CREATE INDEX "index_seu_foreign_word" ON "index_seu" ("foreign_word");
+CREATE INDEX "index_seu_native_page_title" ON "index_seu" ("native_page_title");
 CREATE INDEX "index_sg_foreign_native" ON "index_sg" ("foreign_word","native_page_title");
 CREATE INDEX "index_sg_foreign_word" ON "index_sg" ("foreign_word");
 CREATE INDEX "index_sg_native_page_title" ON "index_sg" ("native_page_title");
+CREATE INDEX "index_sga_foreign_native" ON "index_sga" ("foreign_word","native_page_title");
+CREATE INDEX "index_sga_foreign_word" ON "index_sga" ("foreign_word");
+CREATE INDEX "index_sga_native_page_title" ON "index_sga" ("native_page_title");
 CREATE INDEX "index_sh_foreign_native" ON "index_sh" ("foreign_word","native_page_title");
 CREATE INDEX "index_sh_foreign_word" ON "index_sh" ("foreign_word");
 CREATE INDEX "index_sh_native_page_title" ON "index_sh" ("native_page_title");
 CREATE INDEX "index_shi_foreign_native" ON "index_shi" ("foreign_word","native_page_title");
 CREATE INDEX "index_shi_foreign_word" ON "index_shi" ("foreign_word");
 CREATE INDEX "index_shi_native_page_title" ON "index_shi" ("native_page_title");
+CREATE INDEX "index_shu_foreign_native" ON "index_shu" ("foreign_word","native_page_title");
+CREATE INDEX "index_shu_foreign_word" ON "index_shu" ("foreign_word");
+CREATE INDEX "index_shu_native_page_title" ON "index_shu" ("native_page_title");
 CREATE INDEX "index_si_foreign_native" ON "index_si" ("foreign_word","native_page_title");
 CREATE INDEX "index_si_foreign_word" ON "index_si" ("foreign_word");
 CREATE INDEX "index_si_native_page_title" ON "index_si" ("native_page_title");
@@ -9672,18 +11244,15 @@ CREATE INDEX "index_sn_native_page_title" ON "index_sn" ("native_page_title");
 CREATE INDEX "index_so_foreign_native" ON "index_so" ("foreign_word","native_page_title");
 CREATE INDEX "index_so_foreign_word" ON "index_so" ("foreign_word");
 CREATE INDEX "index_so_native_page_title" ON "index_so" ("native_page_title");
-CREATE INDEX "index_sol_foreign_native" ON "index_sol" ("foreign_word","native_page_title");
-CREATE INDEX "index_sol_foreign_word" ON "index_sol" ("foreign_word");
-CREATE INDEX "index_sol_native_page_title" ON "index_sol" ("native_page_title");
 CREATE INDEX "index_solresol_foreign_native" ON "index_solresol" ("foreign_word","native_page_title");
 CREATE INDEX "index_solresol_foreign_word" ON "index_solresol" ("foreign_word");
 CREATE INDEX "index_solresol_native_page_title" ON "index_solresol" ("native_page_title");
 CREATE INDEX "index_sot_foreign_native" ON "index_sot" ("foreign_word","native_page_title");
 CREATE INDEX "index_sot_foreign_word" ON "index_sot" ("foreign_word");
 CREATE INDEX "index_sot_native_page_title" ON "index_sot" ("native_page_title");
-CREATE INDEX "index_sq_foreign_native" ON "index_sq" ("foreign_word","native_page_title");
-CREATE INDEX "index_sq_foreign_word" ON "index_sq" ("foreign_word");
-CREATE INDEX "index_sq_native_page_title" ON "index_sq" ("native_page_title");
+CREATE INDEX "index_sqi_foreign_native" ON "index_sqi" ("foreign_word","native_page_title");
+CREATE INDEX "index_sqi_foreign_word" ON "index_sqi" ("foreign_word");
+CREATE INDEX "index_sqi_native_page_title" ON "index_sqi" ("native_page_title");
 CREATE INDEX "index_srn_foreign_native" ON "index_srn" ("foreign_word","native_page_title");
 CREATE INDEX "index_srn_foreign_word" ON "index_srn" ("foreign_word");
 CREATE INDEX "index_srn_native_page_title" ON "index_srn" ("native_page_title");
@@ -9774,9 +11343,6 @@ CREATE INDEX "index_tlh_native_page_title" ON "index_tlh" ("native_page_title");
 CREATE INDEX "index_tly_foreign_native" ON "index_tly" ("foreign_word","native_page_title");
 CREATE INDEX "index_tly_foreign_word" ON "index_tly" ("foreign_word");
 CREATE INDEX "index_tly_native_page_title" ON "index_tly" ("native_page_title");
-CREATE INDEX "index_tn_foreign_native" ON "index_tn" ("foreign_word","native_page_title");
-CREATE INDEX "index_tn_foreign_word" ON "index_tn" ("foreign_word");
-CREATE INDEX "index_tn_native_page_title" ON "index_tn" ("native_page_title");
 CREATE INDEX "index_to_foreign_native" ON "index_to" ("foreign_word","native_page_title");
 CREATE INDEX "index_to_foreign_word" ON "index_to" ("foreign_word");
 CREATE INDEX "index_to_native_page_title" ON "index_to" ("native_page_title");
@@ -9795,12 +11361,21 @@ CREATE INDEX "index_tpc_native_page_title" ON "index_tpc" ("native_page_title");
 CREATE INDEX "index_tpi_foreign_native" ON "index_tpi" ("foreign_word","native_page_title");
 CREATE INDEX "index_tpi_foreign_word" ON "index_tpi" ("foreign_word");
 CREATE INDEX "index_tpi_native_page_title" ON "index_tpi" ("native_page_title");
+CREATE INDEX "index_tpn_foreign_native" ON "index_tpn" ("foreign_word","native_page_title");
+CREATE INDEX "index_tpn_foreign_word" ON "index_tpn" ("foreign_word");
+CREATE INDEX "index_tpn_native_page_title" ON "index_tpn" ("native_page_title");
 CREATE INDEX "index_tr_foreign_native" ON "index_tr" ("foreign_word","native_page_title");
 CREATE INDEX "index_tr_foreign_word" ON "index_tr" ("foreign_word");
 CREATE INDEX "index_tr_native_page_title" ON "index_tr" ("native_page_title");
 CREATE INDEX "index_translingual_foreign_native" ON "index_translingual" ("foreign_word","native_page_title");
 CREATE INDEX "index_translingual_foreign_word" ON "index_translingual" ("foreign_word");
 CREATE INDEX "index_translingual_native_page_title" ON "index_translingual" ("native_page_title");
+CREATE INDEX "index_tru_foreign_native" ON "index_tru" ("foreign_word","native_page_title");
+CREATE INDEX "index_tru_foreign_word" ON "index_tru" ("foreign_word");
+CREATE INDEX "index_tru_native_page_title" ON "index_tru" ("native_page_title");
+CREATE INDEX "index_tsn_foreign_native" ON "index_tsn" ("foreign_word","native_page_title");
+CREATE INDEX "index_tsn_foreign_word" ON "index_tsn" ("foreign_word");
+CREATE INDEX "index_tsn_native_page_title" ON "index_tsn" ("native_page_title");
 CREATE INDEX "index_tso_foreign_native" ON "index_tso" ("foreign_word","native_page_title");
 CREATE INDEX "index_tso_foreign_word" ON "index_tso" ("foreign_word");
 CREATE INDEX "index_tso_native_page_title" ON "index_tso" ("native_page_title");
@@ -9816,12 +11391,18 @@ CREATE INDEX "index_tup_native_page_title" ON "index_tup" ("native_page_title");
 CREATE INDEX "index_tvl_foreign_native" ON "index_tvl" ("foreign_word","native_page_title");
 CREATE INDEX "index_tvl_foreign_word" ON "index_tvl" ("foreign_word");
 CREATE INDEX "index_tvl_native_page_title" ON "index_tvl" ("native_page_title");
-CREATE INDEX "index_tw_foreign_native" ON "index_tw" ("foreign_word","native_page_title");
-CREATE INDEX "index_tw_foreign_word" ON "index_tw" ("foreign_word");
-CREATE INDEX "index_tw_native_page_title" ON "index_tw" ("native_page_title");
+CREATE INDEX "index_twf_foreign_native" ON "index_twf" ("foreign_word","native_page_title");
+CREATE INDEX "index_twf_foreign_word" ON "index_twf" ("foreign_word");
+CREATE INDEX "index_twf_native_page_title" ON "index_twf" ("native_page_title");
+CREATE INDEX "index_twi_foreign_native" ON "index_twi" ("foreign_word","native_page_title");
+CREATE INDEX "index_twi_foreign_word" ON "index_twi" ("foreign_word");
+CREATE INDEX "index_twi_native_page_title" ON "index_twi" ("native_page_title");
 CREATE INDEX "index_tyv_foreign_native" ON "index_tyv" ("foreign_word","native_page_title");
 CREATE INDEX "index_tyv_foreign_word" ON "index_tyv" ("foreign_word");
 CREATE INDEX "index_tyv_native_page_title" ON "index_tyv" ("native_page_title");
+CREATE INDEX "index_tzj_foreign_native" ON "index_tzj" ("foreign_word","native_page_title");
+CREATE INDEX "index_tzj_foreign_word" ON "index_tzj" ("foreign_word");
+CREATE INDEX "index_tzj_native_page_title" ON "index_tzj" ("native_page_title");
 CREATE INDEX "index_tzm_foreign_native" ON "index_tzm" ("foreign_word","native_page_title");
 CREATE INDEX "index_tzm_foreign_word" ON "index_tzm" ("foreign_word");
 CREATE INDEX "index_tzm_native_page_title" ON "index_tzm" ("native_page_title");
@@ -9873,6 +11454,9 @@ CREATE INDEX "index_vi_native_page_title" ON "index_vi" ("native_page_title");
 CREATE INDEX "index_vls_foreign_native" ON "index_vls" ("foreign_word","native_page_title");
 CREATE INDEX "index_vls_foreign_word" ON "index_vls" ("foreign_word");
 CREATE INDEX "index_vls_native_page_title" ON "index_vls" ("native_page_title");
+CREATE INDEX "index_vma_foreign_native" ON "index_vma" ("foreign_word","native_page_title");
+CREATE INDEX "index_vma_foreign_word" ON "index_vma" ("foreign_word");
+CREATE INDEX "index_vma_native_page_title" ON "index_vma" ("native_page_title");
 CREATE INDEX "index_vol_foreign_native" ON "index_vol" ("foreign_word","native_page_title");
 CREATE INDEX "index_vol_foreign_word" ON "index_vol" ("foreign_word");
 CREATE INDEX "index_vol_native_page_title" ON "index_vol" ("native_page_title");
@@ -9885,36 +11469,60 @@ CREATE INDEX "index_vro_native_page_title" ON "index_vro" ("native_page_title");
 CREATE INDEX "index_wa_foreign_native" ON "index_wa" ("foreign_word","native_page_title");
 CREATE INDEX "index_wa_foreign_word" ON "index_wa" ("foreign_word");
 CREATE INDEX "index_wa_native_page_title" ON "index_wa" ("native_page_title");
+CREATE INDEX "index_wad_foreign_native" ON "index_wad" ("foreign_word","native_page_title");
+CREATE INDEX "index_wad_foreign_word" ON "index_wad" ("foreign_word");
+CREATE INDEX "index_wad_native_page_title" ON "index_wad" ("native_page_title");
 CREATE INDEX "index_war_foreign_native" ON "index_war" ("foreign_word","native_page_title");
 CREATE INDEX "index_war_foreign_word" ON "index_war" ("foreign_word");
 CREATE INDEX "index_war_native_page_title" ON "index_war" ("native_page_title");
 CREATE INDEX "index_wim_foreign_native" ON "index_wim" ("foreign_word","native_page_title");
 CREATE INDEX "index_wim_foreign_word" ON "index_wim" ("foreign_word");
 CREATE INDEX "index_wim_native_page_title" ON "index_wim" ("native_page_title");
+CREATE INDEX "index_wlm_foreign_native" ON "index_wlm" ("foreign_word","native_page_title");
+CREATE INDEX "index_wlm_foreign_word" ON "index_wlm" ("foreign_word");
+CREATE INDEX "index_wlm_native_page_title" ON "index_wlm" ("native_page_title");
 CREATE INDEX "index_wo_foreign_native" ON "index_wo" ("foreign_word","native_page_title");
 CREATE INDEX "index_wo_foreign_word" ON "index_wo" ("foreign_word");
 CREATE INDEX "index_wo_native_page_title" ON "index_wo" ("native_page_title");
+CREATE INDEX "index_wrh_foreign_native" ON "index_wrh" ("foreign_word","native_page_title");
+CREATE INDEX "index_wrh_foreign_word" ON "index_wrh" ("foreign_word");
+CREATE INDEX "index_wrh_native_page_title" ON "index_wrh" ("native_page_title");
 CREATE INDEX "index_wuu_foreign_native" ON "index_wuu" ("foreign_word","native_page_title");
 CREATE INDEX "index_wuu_foreign_word" ON "index_wuu" ("foreign_word");
 CREATE INDEX "index_wuu_native_page_title" ON "index_wuu" ("native_page_title");
+CREATE INDEX "index_wyb_foreign_native" ON "index_wyb" ("foreign_word","native_page_title");
+CREATE INDEX "index_wyb_foreign_word" ON "index_wyb" ("foreign_word");
+CREATE INDEX "index_wyb_native_page_title" ON "index_wyb" ("native_page_title");
 CREATE INDEX "index_xal_foreign_native" ON "index_xal" ("foreign_word","native_page_title");
 CREATE INDEX "index_xal_foreign_word" ON "index_xal" ("foreign_word");
 CREATE INDEX "index_xal_native_page_title" ON "index_xal" ("native_page_title");
 CREATE INDEX "index_xbc_foreign_native" ON "index_xbc" ("foreign_word","native_page_title");
 CREATE INDEX "index_xbc_foreign_word" ON "index_xbc" ("foreign_word");
 CREATE INDEX "index_xbc_native_page_title" ON "index_xbc" ("native_page_title");
+CREATE INDEX "index_xcl_foreign_native" ON "index_xcl" ("foreign_word","native_page_title");
+CREATE INDEX "index_xcl_foreign_word" ON "index_xcl" ("foreign_word");
+CREATE INDEX "index_xcl_native_page_title" ON "index_xcl" ("native_page_title");
 CREATE INDEX "index_xho_foreign_native" ON "index_xho" ("foreign_word","native_page_title");
 CREATE INDEX "index_xho_foreign_word" ON "index_xho" ("foreign_word");
 CREATE INDEX "index_xho_native_page_title" ON "index_xho" ("native_page_title");
 CREATE INDEX "index_xmf_foreign_native" ON "index_xmf" ("foreign_word","native_page_title");
 CREATE INDEX "index_xmf_foreign_word" ON "index_xmf" ("foreign_word");
 CREATE INDEX "index_xmf_native_page_title" ON "index_xmf" ("native_page_title");
+CREATE INDEX "index_xno_foreign_native" ON "index_xno" ("foreign_word","native_page_title");
+CREATE INDEX "index_xno_foreign_word" ON "index_xno" ("foreign_word");
+CREATE INDEX "index_xno_native_page_title" ON "index_xno" ("native_page_title");
 CREATE INDEX "index_xrn_foreign_native" ON "index_xrn" ("foreign_word","native_page_title");
 CREATE INDEX "index_xrn_foreign_word" ON "index_xrn" ("foreign_word");
 CREATE INDEX "index_xrn_native_page_title" ON "index_xrn" ("native_page_title");
 CREATE INDEX "index_xsr_foreign_native" ON "index_xsr" ("foreign_word","native_page_title");
 CREATE INDEX "index_xsr_foreign_word" ON "index_xsr" ("foreign_word");
 CREATE INDEX "index_xsr_native_page_title" ON "index_xsr" ("native_page_title");
+CREATE INDEX "index_xto_foreign_native" ON "index_xto" ("foreign_word","native_page_title");
+CREATE INDEX "index_xto_foreign_word" ON "index_xto" ("foreign_word");
+CREATE INDEX "index_xto_native_page_title" ON "index_xto" ("native_page_title");
+CREATE INDEX "index_xvn_foreign_native" ON "index_xvn" ("foreign_word","native_page_title");
+CREATE INDEX "index_xvn_foreign_word" ON "index_xvn" ("foreign_word");
+CREATE INDEX "index_xvn_native_page_title" ON "index_xvn" ("native_page_title");
 CREATE INDEX "index_ydd_foreign_native" ON "index_ydd" ("foreign_word","native_page_title");
 CREATE INDEX "index_ydd_foreign_word" ON "index_ydd" ("foreign_word");
 CREATE INDEX "index_ydd_native_page_title" ON "index_ydd" ("native_page_title");
@@ -9942,6 +11550,9 @@ CREATE INDEX "index_yux_native_page_title" ON "index_yux" ("native_page_title");
 CREATE INDEX "index_za_foreign_native" ON "index_za" ("foreign_word","native_page_title");
 CREATE INDEX "index_za_foreign_word" ON "index_za" ("foreign_word");
 CREATE INDEX "index_za_native_page_title" ON "index_za" ("native_page_title");
+CREATE INDEX "index_zai_foreign_native" ON "index_zai" ("foreign_word","native_page_title");
+CREATE INDEX "index_zai_foreign_word" ON "index_zai" ("foreign_word");
+CREATE INDEX "index_zai_native_page_title" ON "index_zai" ("native_page_title");
 CREATE INDEX "index_ze_foreign_native" ON "index_ze" ("foreign_word","native_page_title");
 CREATE INDEX "index_ze_foreign_word" ON "index_ze" ("foreign_word");
 CREATE INDEX "index_ze_native_page_title" ON "index_ze" ("native_page_title");
@@ -9951,42 +11562,15 @@ CREATE INDEX "index_zea_native_page_title" ON "index_zea" ("native_page_title");
 CREATE INDEX "index_zh_foreign_native" ON "index_zh" ("foreign_word","native_page_title");
 CREATE INDEX "index_zh_foreign_word" ON "index_zh" ("foreign_word");
 CREATE INDEX "index_zh_native_page_title" ON "index_zh" ("native_page_title");
-CREATE INDEX "index_zh-classical_foreign_native" ON "index_zh-classical" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-classical_foreign_word" ON "index_zh-classical" ("foreign_word");
-CREATE INDEX "index_zh-classical_native_page_title" ON "index_zh-classical" ("native_page_title");
 CREATE INDEX "index_zh-cn_foreign_native" ON "index_zh-cn" ("foreign_word","native_page_title");
 CREATE INDEX "index_zh-cn_foreign_word" ON "index_zh-cn" ("foreign_word");
 CREATE INDEX "index_zh-cn_native_page_title" ON "index_zh-cn" ("native_page_title");
-CREATE INDEX "index_zh-hans_foreign_native" ON "index_zh-hans" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-hans_foreign_word" ON "index_zh-hans" ("foreign_word");
-CREATE INDEX "index_zh-hans_native_page_title" ON "index_zh-hans" ("native_page_title");
-CREATE INDEX "index_zh-hant_foreign_native" ON "index_zh-hant" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-hant_foreign_word" ON "index_zh-hant" ("foreign_word");
-CREATE INDEX "index_zh-hant_native_page_title" ON "index_zh-hant" ("native_page_title");
-CREATE INDEX "index_zh-hk_foreign_native" ON "index_zh-hk" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-hk_foreign_word" ON "index_zh-hk" ("foreign_word");
-CREATE INDEX "index_zh-hk_native_page_title" ON "index_zh-hk" ("native_page_title");
-CREATE INDEX "index_zh-min-nan_foreign_native" ON "index_zh-min-nan" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-min-nan_foreign_word" ON "index_zh-min-nan" ("foreign_word");
-CREATE INDEX "index_zh-min-nan_native_page_title" ON "index_zh-min-nan" ("native_page_title");
-CREATE INDEX "index_zh-mo_foreign_native" ON "index_zh-mo" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-mo_foreign_word" ON "index_zh-mo" ("foreign_word");
-CREATE INDEX "index_zh-mo_native_page_title" ON "index_zh-mo" ("native_page_title");
-CREATE INDEX "index_zh-my_foreign_native" ON "index_zh-my" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-my_foreign_word" ON "index_zh-my" ("foreign_word");
-CREATE INDEX "index_zh-my_native_page_title" ON "index_zh-my" ("native_page_title");
-CREATE INDEX "index_zh-nan_foreign_native" ON "index_zh-nan" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-nan_foreign_word" ON "index_zh-nan" ("foreign_word");
-CREATE INDEX "index_zh-nan_native_page_title" ON "index_zh-nan" ("native_page_title");
-CREATE INDEX "index_zh-sg_foreign_native" ON "index_zh-sg" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-sg_foreign_word" ON "index_zh-sg" ("foreign_word");
-CREATE INDEX "index_zh-sg_native_page_title" ON "index_zh-sg" ("native_page_title");
 CREATE INDEX "index_zh-tw_foreign_native" ON "index_zh-tw" ("foreign_word","native_page_title");
 CREATE INDEX "index_zh-tw_foreign_word" ON "index_zh-tw" ("foreign_word");
 CREATE INDEX "index_zh-tw_native_page_title" ON "index_zh-tw" ("native_page_title");
-CREATE INDEX "index_zh-yue_foreign_native" ON "index_zh-yue" ("foreign_word","native_page_title");
-CREATE INDEX "index_zh-yue_foreign_word" ON "index_zh-yue" ("foreign_word");
-CREATE INDEX "index_zh-yue_native_page_title" ON "index_zh-yue" ("native_page_title");
+CREATE INDEX "index_zko_foreign_native" ON "index_zko" ("foreign_word","native_page_title");
+CREATE INDEX "index_zko_foreign_word" ON "index_zko" ("foreign_word");
+CREATE INDEX "index_zko_native_page_title" ON "index_zko" ("native_page_title");
 CREATE INDEX "index_zu_foreign_native" ON "index_zu" ("foreign_word","native_page_title");
 CREATE INDEX "index_zu_foreign_word" ON "index_zu" ("foreign_word");
 CREATE INDEX "index_zu_native_page_title" ON "index_zu" ("native_page_title");

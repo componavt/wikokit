@@ -31,6 +31,7 @@ public class WMeaningRu {
     /** Gets position after ==== Значение ==== */
     private final static Pattern ptrn_meaning_4th_level = Pattern.compile(
             "====?\\s*Значение\\s*====?\\s*\\n");
+
     
     /** Parses text (related to the POS), creates and fill array of meanings (WMeaning).
      * @param wikt_lang     language of Wiktionary
@@ -138,6 +139,10 @@ public class WMeaningRu {
         // todo
         // ...
         ContextLabel[] labels = new ContextLabel[0];
+
+        line = LabelRu.removeEmptyLabelPometa(line);
+        if(line.length() == 0)
+            return null;
         
         // extract definition by parsing wiki-text
         

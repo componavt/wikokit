@@ -9,6 +9,9 @@ package wikt.multi.ru;
 
 import wikt.constant.ContextLabel;
 
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 /** Contexual information for definitions, or Synonyms, or Translations 
  * in Russian Wiktionary.
  * <PRE>
@@ -20,8 +23,40 @@ public class LabelRu extends ContextLabel {
     private LabelRu(String label,String name,String category) {
         super(label, name, category);
     }
+
+
+
     
+    /** Temporary empty label {{помета?|XX}}, where XX - language code
+     *  e.g. {{помета?|uk}} or {{помета?|sq}}.
+     */
+    private final static Pattern ptrn_label_pometa_question = Pattern.compile(
+    // Vim: \Q{{помета?|\E[^}|]*?\}\}
+            "\\Q{{помета?|\\E[^}|]*?\\}\\}"
+            );
+
+    /** Removes a temporary empty label {{помета?|XX}}, where XX - language code, 
+     * e.g. {{помета?|uk}} or {{помета?|sq}}
+     *
+     * @param line          definition line
+     * @return definition text line without "{{помета?|...}}"
+     */
+    public static String removeEmptyLabelPometa(String line)
+    {
+        Matcher m = ptrn_label_pometa_question.matcher(line);
+        if(m.find()){ // there is "{{помета?|...}}"
+            StringBuffer sb = new StringBuffer();
+            m.appendReplacement(sb, "");
+            m.appendTail(sb);
+            return sb.toString().trim();
+        }
+        return line;
+    }
+
+
+
+
     public static final ContextLabel p      = new LabelRu("п.",    "переносное значение",  "");
     public static final ContextLabel ustar  = new LabelRu("устар.","устарелое",            "Устаревшие выражения");
-    
+
 }
