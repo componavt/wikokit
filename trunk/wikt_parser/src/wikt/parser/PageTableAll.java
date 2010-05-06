@@ -29,7 +29,7 @@ public class PageTableAll {
 
 
         // Russian Wiktionary
-        "a", "the", "y", "at", "too", "an", "on", "ai",
+        "a", "the", "y", "at", "too", "an", "on", "ai", "Будда",
         "адджындзинад",
         "Свирь",
         "Aare",
@@ -112,8 +112,8 @@ public class PageTableAll {
             int n_cur = 0;
             while (rs.next ())
             {
-if (n_cur >= 1)
-  break;
+//if (n_cur >= 1)
+//  break;
                 n_cur ++;
                 if(n_start_from >= 0 && n_start_from > n_cur)
                     continue;
