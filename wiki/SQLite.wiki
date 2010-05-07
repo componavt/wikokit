@@ -15,7 +15,7 @@ The wiwordik application will be distributed with SQLite file.
 
 Prepare only once the SQLite file with table structures of the the Wiktionary parsed database (automatic mode):
   * `cd ./wiwordik/mysql2sqlite`
-  * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > wikt_parsed_structure_source.sql`
+  * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary ruwikt20100405_parsed > wikt_parsed_structure_source.sql`
   * `mysql2sqlite.bat`
 
 The result file with SQLite tables' structure is `wikt_parsed_structure.sql`.
@@ -33,7 +33,7 @@ Update this file if the stucture of the Wiktionary parsed database is changed, i
 
 == Data conversion ===
 Dump data of the the Wiktionary parsed database:
-  * `mysqldump -u root -p --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20090707_parsed > ruwikt20090707_parsed_data.sql`
+  * `mysqldump -u root -p --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20100405_parsed > ruwikt20100405_parsed_data.sql`
 
 Vim regular expressions in order to change data of INSERT commands into SQLite format:
 {{{                             
@@ -46,7 +46,7 @@ Vim regular expressions in order to change data of INSERT commands into SQLite f
 == Data and tables merging ==
 
 Merge two files (with tables structure and data) into one:
-  * `ruwikt20090707_parsed_data.sql += wikt_parsed_structure.sql`
+  * `ruwikt20100405_parsed_data.sql += wikt_parsed_structure.sql`
 
 == SQLite shell ==
 
@@ -55,14 +55,14 @@ Read the note "[http://componavt.livejournal.com/3393.html Let's speed up SQLite
 Run SQLite, load and backup the SQLite database:
 {{{
 sqlite3
-.read "C:/w/bin/ruwikt20090707_parsed_data.sql"
+.read "C:/w/bin/ruwikt20100405_parsed_data.sql"
 PRAGMA integrity_check;
-.backup "C:/w/bin/ruwikt20090707.sqlite"
+.backup "C:/w/bin/ruwikt20100405.sqlite"
 }}}
 
 == SQLite file location ==
 
-Copy SQLite file `ruwikt20090707.sqlite` to the folder `./wikokit/wiwordik/`.
+Copy SQLite file `ruwikt20100405.sqlite` to the folder `./wikokit/wiwordik/`.
 
 == Java ==
 
@@ -75,7 +75,7 @@ Check that the file `common_wiki\src\wikipedia\sql\Connect.java` contains the li
 {{{
 private void OpenSQLite() {
 ...
-String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
+String s = "jdbc:sqlite:C:/w/bin/ruwikt20100405.sqlite";
 }}}
 
 = See also =
