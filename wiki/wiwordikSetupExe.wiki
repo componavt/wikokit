@@ -18,20 +18,20 @@ The SQLite database file should exist:
 
 == Compilation ==
 
-Compile wiwordik files into one file (e.g. `wiwordik-setup-0.01.jar`):
+Compile wiwordik files into one file (e.g. `wiwordik-setup-0.04.jar`):
 {{{
 cd wikokit/wiwordik/
 compile-wiwordik-izpack.bat
 cd ../releases/
-java -jar wiwordik-setup-0.01.jar
+java -jar wiwordik-setup-0.04.jar
 }}}
 
-Convert into EXE file (e.g. `wiwordik-setup-0.01.exe`):
+Convert into EXE file (e.g. `wiwordik-setup-0.04.exe`):
   * Add `izpack2exe.exe` into your %PATH%
 
 {{{
 cd wikokit/releases/
-izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.01.jar --output=wiwordik-setup-0.01.exe --launch-file=wiwordik.bat
+izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.04.jar --output=wiwordik-setup-0.04.exe --launch-file=wiwordik.bat
 }}}
 
 = Software requirements =
