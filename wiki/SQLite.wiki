@@ -20,7 +20,7 @@ Prepare only once the SQLite file with table structures of the the Wiktionary pa
 
 The result file with SQLite tables' structure is `wikt_parsed_structure.sql`.
 
-Vim regular expressions (manual mode):
+Or in manual mode (Vim regular expressions):
 {{{
 %s/COMMENT.*/,/g    // remove COMMENT
 %s/unsigned\s*//g   // remove "unsigned"
