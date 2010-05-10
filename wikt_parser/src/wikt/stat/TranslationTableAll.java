@@ -42,13 +42,14 @@ public class TranslationTableAll {
     // 6. average number of translation languages (for words which have at least one translation).
 
 
-    /** Counts number of translations of native word' meaning into each foreign language
-     * by selecting all records from the table 'translation' from the database
-     * of the parsed Wiktionary.<br><br>
+    /** Counts number of translations of native word's meaning into each 
+     * foreign language by selecting all records from the table 'translation'
+     * from the database of the parsed Wiktionary.<br><br>
      * SELECT * FROM translation;
      *
-     * @param connect connection to the database of the parsed Wiktionary
-     * @return map of language into a number of translation boxes which contain   synonyms (etc.) in English (etc.)
+     * @param connect   connection to the database of the parsed Wiktionary
+     * @return map      from the language into a number of translation boxes
+     *                  which contain synonyms, antonyms, etc. in English (etc.)
      */
     public static Map<LanguageType, Integer> countTranslationPerLanguage (Connect wikt_parsed_conn) {
         // translation -> lang -> count

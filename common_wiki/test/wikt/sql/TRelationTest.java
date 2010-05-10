@@ -182,7 +182,7 @@ public class TRelationTest {
 
     @Test
     public void testStoreToDB() {
-        System.out.println("storeToDB_ru");
+        System.out.println("storeToDB");
         //Connect conn = ruwikt_parsed_conn;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
@@ -202,6 +202,29 @@ public class TRelationTest {
         TRelation[] trelation = TRelation.get(conn, meaning); //TRelationType trelation_synonymy = TRelationType.getRelationFast(Relation.synonymy);
         assertNotNull(trelation);
         assertEquals(4, trelation.length);
+    }
+
+    @Test
+    public void testCount() {
+        System.out.println("count");
+        //Connect conn = ruwikt_parsed_conn;
+
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "car";
+        POSText pt = new POSText(POS.noun, car_text);
+
+        Map<Relation, WRelation[]> m_relations = WRelationRu.parse(wikt_lang, page_title, pt);
+        assertNotNull(m_relations);
+        assertTrue(m_relations.size() > 0);
+        assertTrue(m_relations.containsKey(Relation.synonymy));
+
+        // let's check second meaning (i.e. [1]):
+        // synonyms: [[automobile]]
+        // hyponyms: [[truck]], [[van]], [[bus]]
+        TRelation.storeToDB(conn, meaning, 1, m_relations);
+
+        int trelation_number = TRelation.count(conn, meaning);
+        assertEquals(4, trelation_number);
     }
 
     @Test
@@ -265,7 +288,6 @@ public class TRelationTest {
 
     
     //public static Relation getRelationType (Connect connect,String word1,String word2) {
-
     @Test
     public void testGetRelationType () {
         System.out.println("getRelationType _ru");

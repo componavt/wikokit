@@ -103,7 +103,7 @@ public class WMeaning {
 
         LanguageType l = wikt_lang;
 
-        if(l  == LanguageType.ru) {
+        if(l == LanguageType.ru) {
 
             // get context labels, definitions, and quotations... todo
             /*   if(0==wm.length) {
@@ -145,7 +145,7 @@ public class WMeaning {
 
         LanguageType l = wikt_lang;
 
-        if(l  == LanguageType.ru) {
+        if(l == LanguageType.ru) {
             wm = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, def_text);
 
         } else if(l == LanguageType.en) {
