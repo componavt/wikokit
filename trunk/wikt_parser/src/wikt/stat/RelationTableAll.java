@@ -1,6 +1,6 @@
 /* RelationTableAll.java - relations' statistics in the database of the parsed Wiktionary.
  *
- * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2005-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
@@ -8,6 +8,7 @@ package wikt.stat;
 
 import wikt.constant.Relation;
 import wikipedia.language.LanguageType;
+import wikt.api.WTRelation;
 
 import wikipedia.sql.*;
 import wikt.sql.*;
@@ -17,11 +18,21 @@ import java.sql.*;
 import java.util.Map;
 import java.util.HashMap;
 
+import java.util.List;
+import java.util.ArrayList;
+
 
 /** Relations' statistics in the database of the parsed Wiktionary.
  */
 public class RelationTableAll {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
+
+    /** Let's constrain the maximum number of semantic relation for one word
+     * in one language */
+    private static final int max_relation = 100;
+
+    /** List of the words with the maximum number of semantic relations. */
+    private static final List<TLangPOS> words_rich_in_relations = new ArrayList<TLangPOS>();
 
     /** Counts number of semantic relations for each language
      * by selecting all relations from the database of the parsed Wiktionary.<br><br>
@@ -30,7 +41,8 @@ public class RelationTableAll {
      * @param connect connection to the database of the parsed Wiktionary
      * @return map of maps with number of synonyms (etc.) in English (etc.)
      */
-    public static Map<LanguageType, Map<Relation,Integer>> countRelationsPerLanguage (Connect wikt_parsed_conn) {
+    public static Map<LanguageType, Map<Relation,Integer>> countRelationsPerLanguage (
+                                                    Connect wikt_parsed_conn) {
         // lang -> relations -> count
 
         Statement   s = null;
@@ -86,9 +98,9 @@ public class RelationTableAll {
                                m_lang_rel_n.put(lang, rel_n);
                             }
                             
-                            if(DEBUG && 0 == n_cur % 1000) {   // % 100
-                                //if(n_cur > 33)
-                                  //  break;
+                            if(0 == n_cur % 1000) {   // % 100
+                                if(DEBUG && n_cur > 333)
+                                    break;
                                 long    t_cur, t_remain;
 
                                 t_cur  = System.currentTimeMillis() - t_start;
@@ -130,16 +142,103 @@ public class RelationTableAll {
         return m_lang_rel_n;
     }
 
+    /** Counts number of semantic relations for each number of relations per 
+     * word. Fills the list of the words with the maximum number of semantic
+     * relations (RelationTableAll.words_rich_in_relations).<br><br>
+     * 
+     * SELECT * FROM lang_pos;
+     *
+     * @param connect connection to the database of the parsed Wiktionary
+     * @param threshold_relations number (or more) of relations the word have
+     *                          to have in order to be included into the
+     *                          list RelationTableAll.words_rich_in_relations
+     *
+     * @return histogram with number of semantic relations, i.e.
+     * [0] = number of words (one language, one part of speech) without any semantic relations,
+     * [1] = number of words with one relation, etc.
+     */
+    public static int[] countRelationsHistogram (Connect wikt_parsed_conn,
+                                                    int threshold_relations) {
+        // lang_pos -> meaning -> relations -> count
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        long    t_start;
+        float   t_work;
+
+        int n_total = Statistics.Count(wikt_parsed_conn, "lang_pos");
+        // System.out.println("Total relations: " + n_total);
+        t_start = System.currentTimeMillis();
+
+        int[] rel_histogram = new int[max_relation];
+
+        try {
+            s = wikt_parsed_conn.conn.createStatement ();
+            s.executeQuery ("SELECT id FROM lang_pos");
+            rs = s.getResultSet ();
+            int n_cur = 0;
+            while (rs.next ())
+            {
+                n_cur ++;
+                int id = rs.getInt("id");
+                TLangPOS lang_pos = new TLangPOS(id, null, null, null, 0, "");
+
+                int n_relation = WTRelation.getNumberByPageLang(wikt_parsed_conn, lang_pos);
+
+                if(n_relation >= threshold_relations) {
+                    TLangPOS lang_pos_real = TLangPOS.getByID (wikt_parsed_conn, id);// real, i.e. with filled fields, non empty
+                    words_rich_in_relations.add(lang_pos_real);// List of the words with the maximum number of semantic relations.
+
+                    if(n_relation > max_relation - 1)
+                        System.out.println("Error (RelationTableAll.countRelationsHistogram()): n_relation=" +
+                            n_relation + " > max_relation for the word=" +
+                            lang_pos_real.getPage().getPageTitle());
+                }
+
+                if(n_relation < max_relation)
+                    rel_histogram [n_relation] ++;
+
+                if(0 == n_cur % 1000) {   // % 100
+                    if(DEBUG && n_cur > 333)
+                        break;
+
+                    long    t_cur, t_remain;
+
+                    t_cur  = System.currentTimeMillis() - t_start;
+                    t_remain = (long)((n_total - n_cur) * t_cur/(60f*1000f*(float)(n_cur)));
+                    t_cur = (long)(t_cur/(60f*1000f));
+
+                    System.out.println(n_cur + ": " +
+                        ", duration: "  + t_cur +   // t_cur/(60f*1000f) +
+                        " min, remain: " + t_remain +
+                        " min");
+                }
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (RelationTableAll.countRelationsHistogram()): " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return rel_histogram;
+    }
+
+
+
     public static void main(String[] args) {
 
         // Connect to wikt_parsed database
         Connect wikt_parsed_conn = new Connect();
+        int threshold_relations;
 
         // Russian
+        /*threshold_relations = 12;
+        if(DEBUG) threshold_relations = 3;
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
-
+*/
         // English
-        //wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
+        threshold_relations = 10;
+        wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
 
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
@@ -150,13 +249,20 @@ public class RelationTableAll {
         WTStatistics.printHeader (db_name);
 
         Map<LanguageType, Map<Relation,Integer>> m = RelationTableAll.countRelationsPerLanguage(wikt_parsed_conn);
-        wikt_parsed_conn.Close();
+
+        int[] rel_histogram = RelationTableAll.countRelationsHistogram(wikt_parsed_conn, threshold_relations);
+        
         System.out.println("\nLanguages with semantic relations: " + m.size());
         System.out.println();
 
         //WTStatisticsGoogleWiki.printRelationsPerLanguage(m);
-        WTStatistics.printRelationsPerLanguage(db_name, m);
+        WTStatistics.printRelationsPerLanguage(m);
+        WTStatistics.printRelationsHistogram(rel_histogram);
+        WTStatistics.printWordsWithManyRelations(wikt_parsed_conn,
+                                words_rich_in_relations, threshold_relations);
         WTStatistics.printFooter();
+
+        wikt_parsed_conn.Close();
     }
 
 }

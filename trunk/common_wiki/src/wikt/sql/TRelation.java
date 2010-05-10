@@ -253,6 +253,41 @@ public class TRelation {
         return (TRelation[])list_rel.toArray(NULL_TRELATION_ARRAY);
     }
 
+
+    /** Counts number of rows from the table 'relation' related to the meaning_id.<br><br>.
+     * SELECT COUNT(*) as a FROM relation WHERE meaning_id=11;
+     * @return empty array if data is absent
+     */
+    public static int count (Connect connect,TMeaning meaning) {
+
+        if(null == meaning) {
+            System.err.println("Error (wikt_parsed TRelation.count()):: null argument: meaning.");
+            return 0;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuffer str_sql = new StringBuffer();
+        int n = 0;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT COUNT(*) AS n FROM relation WHERE meaning_id=");
+            str_sql.append(meaning.getID());
+            rs = s.executeQuery (str_sql.toString());
+            if (rs.next ())
+                n = rs.getInt("n");
+            
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TRelation.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        
+        return n;
+    }
+
     /** Selects row from the table 'relation' by ID.<br><br>
      * SELECT meaning_id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE id=1;
      * @return null if data is absent

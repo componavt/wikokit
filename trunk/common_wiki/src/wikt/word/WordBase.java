@@ -9,6 +9,7 @@ package wikt.word;
 //import wikt.util.LangText;
 import wikipedia.language.LanguageType;
 import wikipedia.text.WikiParser;
+import wikipedia.text.ReferenceParser;
 //import wikt.word.ru.WordRu;
 
 
@@ -44,8 +45,9 @@ public class WordBase {
         
         page_title = _page_title;
 
-        // remove <!-- comments -->
-        StringBuffer s = WikiParser.removeHTMLComments(text);
+        // remove <!-- comments --> and <ref> ... </ref>
+        StringBuffer s = WikiParser.removeHTMLComments(
+                            ReferenceParser.removeReferences (text));
 
         redirect_target = WRedirect.getRedirect(wikt_lang, page_title, s);
 

@@ -1,7 +1,7 @@
 /* WTRelation.java - high-level functions for manipulations with semantic
  *                   relations in Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2009-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
@@ -67,4 +67,18 @@ public class WTRelation {
         return (String[])relations_lists.toArray(NULL_STRING_ARRAY);
     }
 
+    /** Gets the number of semantic relations by page_title and language. The sum
+     * of relations for each type of semantic relation, for all meanings.
+     *
+     * @return 0, if there is no at all relations of this kind
+     */
+    public static int getNumberByPageLang(Connect connect,
+                                            TLangPOS lang_pos) {
+        int n_rels = 0;
+        TMeaning[] mm = TMeaning.get(connect, lang_pos);
+        for(TMeaning m : mm)
+            n_rels += TRelation.count(connect, m);
+
+        return n_rels;
+    }
 }

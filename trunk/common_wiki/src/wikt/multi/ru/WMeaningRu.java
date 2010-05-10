@@ -127,6 +127,8 @@ public class WMeaningRu {
         line = line.replace("{{пример}}", "");
         line = line.replace("{{пример перевод|}}", ""); // todo check - does exist this example
 
+        line = line.replace("[[]]", ""); // empty definition
+
         line = Definition.stripNumberSign(page_title, line);
 
         if(0 == line.length())

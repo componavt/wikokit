@@ -53,7 +53,7 @@ function init() {
     }
 
     // SQLite                                   //Connect.testSQLite();
-    //wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
+//    wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
 
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
     TPOS.createFastMaps(wikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
@@ -244,7 +244,7 @@ var scene: Scene = Scene {
 
 // Application User Interface
 var stage: Stage = Stage {
-    title: "Wiwordik 0.03 ({wikt_parsed_conn.getDBName()})"
+    title: "Wiwordik 0.04 ({wikt_parsed_conn.getDBName()})"
     //    resizable: false
     visible: true
     //    style: StageStyle.TRANSPARENT
