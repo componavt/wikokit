@@ -22,7 +22,7 @@ Install [http://javafx.com/downloads JavaFX SDK].
 = Download =
 
 Windows executable file (include GUI and the parsed Wiktionary database):
-  * [http://wikokit.googlecode.com/files/wiwordik-setup-0.03.exe wiwordik-setup-0.03.exe]
+  * [http://wikokit.googlecode.com/files/wiwordik-setup-0.04.exe wiwordik-setup-0.04.exe]
 
 The software was tested on Microsoft Windows XP - it works.
 
