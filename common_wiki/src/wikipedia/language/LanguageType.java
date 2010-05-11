@@ -1,4 +1,4 @@
-// current: Binisayâ 	bns
+// current: Bishnupriya Manipuri 	bpy
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
  * LanguageType.java - code of languages in wiki.
@@ -503,6 +503,10 @@ public class LanguageType {
     public static final LanguageType bn = new LanguageType("bn", "Bengali", "Bengali");// Бенгальский
     public static final LanguageType ben = LanguageType.addNonUnique(bn, "ben", "Bangla");
 
+    public static final LanguageType bo = new LanguageType("bo", "аЅ–аЅјаЅ‘ај‹аЅЎаЅІаЅ‚", "Tibetan");// Тибетский
+    public static final LanguageType bo2 = LanguageType.addNonUniqueName(bo, "Standard Tibetan");
+    public static final LanguageType bo3 = LanguageType.addNonUniqueName(bo, "Central Tibetan");
+
     public static final LanguageType br = new LanguageType("br", "Brezhoneg", "Breton");
     public static final LanguageType bre = LanguageType.addNonUniqueCode(br, "bre");
     public static final LanguageType obt = new LanguageType("obt", "Old Breton", "Old Breton");// Древнебретонский
@@ -826,17 +830,22 @@ public class LanguageType {
     
     public static final LanguageType tzj    = new LanguageType("tzj", "Tz'utujil", "Tz'utujil");
     public static final LanguageType tzt    = LanguageType.addNonUniqueCode(tzj, "tzt");
-    
+
+
     // Visayan ------------
-    // Binisayâ 	bns
-
     public static final LanguageType akl = new LanguageType("akl", "Aklanon", "Aklanon");
-
+    public static final LanguageType ceb = new LanguageType("ceb", "Cebuano", "Cebuano");// Себуанский
+    public static final LanguageType hil = new LanguageType("hil", "Ilonggo", "Hiligaynon");// Хилигайнон
+    public static final LanguageType krj = new LanguageType("krj", "Kinaray-a", "Kinaray-a");// Кинарайский
+    public static final LanguageType tsg = new LanguageType("tsg", "Tausug", "Tausug");
+    
+    public static final LanguageType war = new LanguageType("war", "Winaray", "Waray");// Варайский
+    public static final LanguageType war2 = LanguageType.addNonUniqueName(war, "Waray-Waray");
     // not yet in English Wiktionary:
     // Ati 	ati
-    
     // ------------ eo Visayan
 
+    
     // Welsh ------------
     public static final LanguageType cy = new LanguageType("cy", "Cymraeg", "Welsh");// Валлийский
     public static final LanguageType cym = LanguageType.addNonUniqueCode(cy, "cym");
@@ -1173,7 +1182,12 @@ public class LanguageType {
     public static final LanguageType bjz = new LanguageType("bjz", "Baruga", "Baruga");
     public static final LanguageType bku = new LanguageType("bku", "Buhid", "Buhid");
     public static final LanguageType bla = new LanguageType("bla", "Blackfoot", "Blackfoot");// Блэкфут
-    
+    public static final LanguageType bns = new LanguageType("bns", "Bundeli", "Bundeli");
+    public static final LanguageType bot = new LanguageType("bot", "Bongo", "Bongo");
+    public static final LanguageType bou = new LanguageType("bou", "Bondei", "Bondei");
+    public static final LanguageType bpl = new LanguageType("bpl", "Broome Pearling Lugger Pidgin", "Broome Pearling Lugger Pidgin");
+    public static final LanguageType bpy = new LanguageType("bpy", "Bishnupriya Manipuri", "Bishnupriya Manipuri");// Бишнуприя-манипури
+
     public static final LanguageType brh    = new LanguageType("brh", "Brahui", "Brahui");// Брауи
     
     public static final LanguageType cab    = new LanguageType("cab", "Garifuna", "Garifuna");
@@ -1322,8 +1336,6 @@ public class LanguageType {
 
     public static final LanguageType bcc = new LanguageType("bcc", "ШЁЩ„Щ€Ъ†ЫЊ Щ…Ъ©Ш±Ш§Щ†ЫЊ", "Southern Balochi");
 
-    public static final LanguageType bo = new LanguageType("bo", "аЅ–аЅјаЅ‘ај‹аЅЎаЅІаЅ‚", "Tibetan");
-    public static final LanguageType bpy = new LanguageType("bpy", "а¦‡а¦®а¦ѕа¦° а¦ а¦ѕа¦°/а¦¬а¦їа¦·а§Ќа¦Ја§Ѓа¦Єа§Ќа¦°а¦їа¦Їа¦ја¦ѕ а¦®а¦Ја¦їа¦Єа§Ѓа¦°а§Ђ", "Bishnupriya Manipuri");
     public static final LanguageType bqi = new LanguageType("bqi", "ШЁШ®ШЄЩЉШ§Ш±ЩЉ", "Bakthiari");
     
     public static final LanguageType bs = new LanguageType("bs", "Bosanski", "Bosnian");
@@ -1334,7 +1346,6 @@ public class LanguageType {
     
     public static final LanguageType cdo = new LanguageType("cdo", "MГ¬ng-dД•М¤ng-ngб№іМ„", "Min Dong");
     public static final LanguageType ce = new LanguageType("ce", "РќРѕС…С‡РёР№РЅ", "Chechen");
-    public static final LanguageType ceb = new LanguageType("ceb", "Cebuano", "Cebuano");
     public static final LanguageType ch = new LanguageType("ch", "Chamoru", "Chamorro");
     public static final LanguageType cho = new LanguageType("cho", "Choctaw", "Choctaw");
     public static final LanguageType chr = new LanguageType("chr", "бЏЈбЋібЋ©", "Cherokee");
@@ -1389,7 +1400,6 @@ public class LanguageType {
     public static final LanguageType he = new LanguageType("he", "ЧўЧ‘ЧЁЧ™ЧЄ", "Hebrew");
     public static final LanguageType hi = new LanguageType("hi", "а¤№а¤їа¤ЁаҐЌа¤¦аҐЂ", "Hindi");
     
-    public static final LanguageType hil = new LanguageType("hil", "Ilonggo", "Hiligaynon");
     public static final LanguageType ho = new LanguageType("ho", "Hiri Motu", "Hiri Motu");
     public static final LanguageType hr = new LanguageType("hr", "Hrvatski", "Croatian");
     public static final LanguageType hsb = new LanguageType("hsb", "Hornjoserbsce", "Upper Sorbian");
@@ -1423,7 +1433,6 @@ public class LanguageType {
     
     public static final LanguageType kr = new LanguageType("kr", "Kanuri", "Kanuri, Central");
     public static final LanguageType kri = new LanguageType("kri", "Krio", "Krio");
-    public static final LanguageType krj = new LanguageType("krj", "Kinaray-a", "Kinaray-a");
     public static final LanguageType ksh = new LanguageType("ksh", "Ripoarisch", "Ripuarian");
 	
     public static final LanguageType kw = new LanguageType("kw", "Kernewek", "Cornish");
@@ -1560,7 +1569,6 @@ public class LanguageType {
     public static final LanguageType vi = new LanguageType("vi", "Tiбєїng Viб»‡t", "Vietnamese");
     public static final LanguageType vls = new LanguageType("vls", "West-Vlams", "West Flemish");
     public static final LanguageType wa = new LanguageType("wa", "Walon", "Walloon");
-    public static final LanguageType war = new LanguageType("war", "Winaray", "Waray-Waray");
     public static final LanguageType wo = new LanguageType("wo", "Wolof", "Wolof");
     
     public static final LanguageType xmf = new LanguageType("xmf", "бѓ›бѓђбѓ бѓ’бѓђбѓљбѓЈбѓ бѓ", "Mingrelian");
