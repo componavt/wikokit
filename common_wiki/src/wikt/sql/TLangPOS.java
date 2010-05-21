@@ -13,7 +13,12 @@ import wikipedia.language.Encodings;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
 import java.sql.*;
+import wikt.constant.Relation;
 
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 //import wikipedia.language.LanguageType;
@@ -93,9 +98,53 @@ public class TLangPOS {
         return pos;
     }
 
-    /** Gets meaning (already loaded from database). */
+    /** Gets meaning (already loaded from database, @see getRecursive). */
     public TMeaning[] getMeaning() {
         return meaning;
+    }
+
+    /** Gets number of meanings (already loaded from database, @see getRecursive). */
+    public int countMeanings() {
+        return meaning.length;
+    }
+
+    /** Gets number of types of semantic relations defined for the meanings, 
+     * e.g. only Synonymy means '1', Synonymy + Antonymy = 2, etc.
+     *
+     * Remark: relations should be already loaded, @see getRecursive. */
+    public int countRelationTypes() {
+        
+        Set<Relation> rel_types = new HashSet<Relation>();
+
+        for(TMeaning m : meaning) {
+            Set<Relation> relation = m.getRelation().keySet();
+            rel_types.addAll(relation);
+        }
+
+        return rel_types.size();
+    }
+    
+    /** Increments the number of semantic relations per types for the meanings,
+     * i.e. number of synonyms for all meanings of this words,
+     *      number of antonyms for all meanings of this word, etc.
+     *
+     * Remark: relations should be already loaded, @see getRecursive. */
+    public void addNumberOfRelationPerType(Map<Relation, Integer> m_result) {
+
+        for(TMeaning m : meaning) {
+            Map<Relation, TRelation[]> m_trel = m.getRelation();
+
+            for(Relation r : m_trel.keySet()) {
+                int add = m_trel.get(r).length;
+
+                if(m_result.containsKey(r)) {
+                    int old = m_result.get(r);
+                    m_result.put(r, old + add);
+                } else {
+                    m_result.put(r, add);
+                }
+            }
+        }
     }
     
     /** Inserts record into the table 'page'.<br><br>
