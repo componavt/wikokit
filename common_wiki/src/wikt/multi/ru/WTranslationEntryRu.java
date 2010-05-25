@@ -56,7 +56,8 @@ public class WTranslationEntryRu {
         
         // 2. translation wikified text
         String trans_text = text.substring(pos_equal_sign+1);
-        if(0 == trans_text.length())
+        if(0 == trans_text.length() ||
+                trans_text.equalsIgnoreCase("[[]]"))
             return null;
 
         WikiText[] wt = WikiText.create(page_title, trans_text);
