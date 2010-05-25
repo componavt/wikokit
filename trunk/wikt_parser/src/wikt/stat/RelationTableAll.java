@@ -112,7 +112,7 @@ public class RelationTableAll {
                             }
                             
                             if(0 == n_cur % 1000) {   // % 100
-                                if(DEBUG && n_cur > 3333)
+                                if(DEBUG && n_cur > 333)
                                     break;
                                 long    t_cur, t_remain;
 
@@ -264,7 +264,7 @@ public class RelationTableAll {
                             n_relation + " > max_relation for the word=" + page_title);
 
                 if(0 == n_cur % 1000) {   // % 100
-                    if(DEBUG && n_cur > 3333)
+                    if(DEBUG && n_cur > 333)
                         break;
 
                     long    t_cur, t_remain;

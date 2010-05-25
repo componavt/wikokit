@@ -21,7 +21,8 @@ public class WTranslationRuTest {
             kolokolchik_text, kolokolchik_text_1_translation_box,
             kosa_text_1_translation_box_without_header,
             unfinished_template, translation_without_pipe,
-            page_end, empty_translation_with_category, absent_translation_block;
+            page_end, empty_translation, empty_translation_with_category,
+            absent_translation_block;
 
     public WTranslationRuTest() {
     }
@@ -123,6 +124,12 @@ public class WTranslationRuTest {
                 "}}\n" +
                 "\n" +
                 "[[Категория:Россиянки]]\n" + unfinished_template;
+
+        empty_translation = "=== Перевод ===\n" +
+                "{{перев-блок||\n" +
+                "|en=[[]]\n" +
+                "|de=[[]]\n" +
+                "}}\n";
 
         translation_without_pipe = "=== Перевод ===\n" +
                 "{{перев-блок\n" +
@@ -305,6 +312,25 @@ public class WTranslationRuTest {
         LanguageType lang_section = LanguageType.ru; // Russian word
 
         String s = empty_translation_with_category;
+        POSText pt = new POSText(POS.noun, s);
+
+        WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
+        assertEquals(0, result.length );
+    }
+
+    /* tests categories before unfinished_template, e.g.
+        {{перев-блок||
+        |en=[[]]
+        }}
+     */
+    @Test
+    public void testParseTranslation_empty_wiki_links() {
+        System.out.println("parse_empty_wiki_links");
+        LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
+        String page_title = "самолёт";
+        LanguageType lang_section = LanguageType.ru; // Russian word
+
+        String s = empty_translation;
         POSText pt = new POSText(POS.noun, s);
 
         WTranslation[] result = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);

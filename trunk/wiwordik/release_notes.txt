@@ -1,3 +1,12 @@
+wiwordik 0.0X 2010-0X-XX
+  Added (from user's point of view):
+    Fixed bug: empty wiki links in translations (in Russian Wiktionary), i.e. "[[]]" are omitted now.
+    ...
+    ...
+    
+  Added (from programmer's point of view)
+    Added translations of language codes into Russian. About 340 translations.
+
 wiwordik 0.04 2010-05-08
   Added (from user's point of view):
     Removed almost empty entries (Russian Wiktionary) 1) only with the label {{помета|?}}, 2) with empty definition, e.g. "[[]]".

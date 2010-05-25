@@ -120,15 +120,16 @@ public class PageTableAll {
                 String page_title = e.EncodeFromDB(db_str);
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), enc.GetUser()); // ISO8859_1 UTF8
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
-/*
+
+                if(DEBUG) {
                     // test problem pages:
                     if (n_cur < debug_pages.length + 1)
                         page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur-1]);
                         //page_title = wikt_conn.enc.EncodeFromJava("one"); // будуаръ centi- всё-равно
                     else
-                        break;
-                    //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-*/
+                        break;  //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
+                }
+
                 if(DEBUG && 0 == n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
