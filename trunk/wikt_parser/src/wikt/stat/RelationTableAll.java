@@ -314,7 +314,7 @@ public class RelationTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of semantic relations in the Wiktionary parsed database ==");
-        WTStatistics.printHeader (db_name);
+        WikiPrinterStat.printHeader (db_name);
 
         Map<LanguageType, Map<Relation,Integer>> m = RelationTableAll.countRelationsPerLanguage(wikt_parsed_conn);
 
@@ -326,15 +326,15 @@ public class RelationTableAll {
         System.out.println();
 
         //WTStatisticsGoogleWiki.printRelationsPerLanguage(m);
-        WTStatistics.printRelationsPerLanguage(native_lang, m);
-        WTStatistics.printRelationsHistogram(rel_histogram);
+        WikiPrinterStat.printRelationsPerLanguage(native_lang, m);
+        WikiPrinterStat.printRelationsHistogram(rel_histogram);
 
-        WTStatistics.printRelationsTypeHistogram (rel_type_histogram, m_relation_type_number);
+        WikiPrinterStat.printRelationsTypeHistogram (rel_type_histogram, m_relation_type_number);
         
-        WTStatistics.printWordsWithManyRelations(wikt_parsed_conn,
+        WikiPrinterStat.printWordsWithManyRelations(wikt_parsed_conn,
                                 words_rich_in_relations, threshold_relations,
                                                          threshold_type_relations);
-        WTStatistics.printFooter();
+        WikiPrinterStat.printFooter();
 
         wikt_parsed_conn.Close();
     }
