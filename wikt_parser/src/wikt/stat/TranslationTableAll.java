@@ -164,15 +164,15 @@ public class TranslationTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of translations in the Wiktionary parsed database ==");
-        WTStatistics.printHeader (db_name);
+        WikiPrinterStat.printHeader (db_name);
 
         Map<LanguageType, Integer> m = TranslationTableAll.countTranslationPerLanguage(wikt_parsed_conn);
         wikt_parsed_conn.Close();
 
         System.out.println();
-        WTStatistics.printTranslationPerLanguage(m);
+        WikiPrinterStat.printTranslationPerLanguage(m);
         System.out.println("\nThere are translations into " + m.size() + " languages.");
-        WTStatistics.printFooter();
+        WikiPrinterStat.printFooter();
     }
 
 }

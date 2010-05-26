@@ -1,4 +1,4 @@
-// current: Chol ctu
+// current: Dakota dak
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
  * LanguageType.java - code of languages in wiki.
@@ -595,10 +595,6 @@ public class LanguageType {
 
     public static final LanguageType chp = new LanguageType("chp", "Chipewyan", "Chipewyan");
     public static final LanguageType chp2 = LanguageType.addNonUniqueName(chp, "Dene Suline");
-
-    public static final LanguageType cjy = new LanguageType("cjy", "Jinyu", "Jinyu");
-    public static final LanguageType cjy2 = LanguageType.addNonUniqueName(cjy, "Jin Chinese");
-    public static final LanguageType cjy3 = LanguageType.addNonUniqueName(cjy, "Jin-yu");
     
     public static final LanguageType co = new LanguageType("co", "Corsu", "Corsican");
     public static final LanguageType cos = LanguageType.addNonUniqueCode(co, "cos");
@@ -646,8 +642,17 @@ public class LanguageType {
     public static final LanguageType chu_glag = LanguageType.addNonUnique(cu, "chu.glag", "Old Church Slavonic (Glagolitic)");// in Russian Wiktionary
     public static final LanguageType chu_ru = LanguageType.addNonUnique(cu, "chu-ru", "Church Slavonic");// Russian Wiktionary
 
-    public static final LanguageType cuk    = new LanguageType("cuk", "Kuna", "Kuna");
-    public static final LanguageType kvn    = LanguageType.addNonUniqueCode(cuk, "kvn");
+    public static final LanguageType cuh = new LanguageType("cuh", "Chuka", "Chuka");
+    public static final LanguageType cuh2 = LanguageType.addNonUniqueName(cuh, "Gichuka");
+
+    public static final LanguageType cuk = new LanguageType("cuk", "Kuna", "Kuna");
+    public static final LanguageType kvn = LanguageType.addNonUniqueCode(cuk, "kvn");
+
+    public static final LanguageType cv = new LanguageType("cv", "Р§ДѓРІР°С€Р»Р°", "Chuvash");
+    public static final LanguageType chv = LanguageType.addNonUniqueCode(cv, "chv");
+
+    public static final LanguageType da = new LanguageType("da", "Dansk", "Danish");
+    public static final LanguageType dan = LanguageType.addNonUniqueCode(da, "dan");
 
     public static final LanguageType ewe    = new LanguageType("ewe", "Ewe", "Ewe");
     public static final LanguageType ee     = LanguageType.addNonUniqueCode(ewe, "ee");
@@ -1024,6 +1029,12 @@ public class LanguageType {
     public static final LanguageType zh = new LanguageType("zh", "Chinese", "Chinese");
     public static final LanguageType cmn = new LanguageType("cmn", "Mandarin", "Mandarin");
 
+    public static final LanguageType czh = LanguageType.addNonUnique(zh, "czh", "Huizhou");
+
+    public static final LanguageType cjy = new LanguageType("cjy", "Jinyu", "Jinyu");
+    public static final LanguageType cjy2 = LanguageType.addNonUniqueName(cjy, "Jin Chinese");
+    public static final LanguageType cjy3 = LanguageType.addNonUniqueName(cjy, "Jin-yu");
+    
     public static final LanguageType ltc = new LanguageType("ltc", "Middle Chinese", "Middle Chinese");
     public static final LanguageType ltc2 = LanguageType.addNonUniqueName(ltc, "Ancient Chinese");
     public static final LanguageType ltc3 = LanguageType.addNonUniqueName(ltc, "Late Middle Chinese");
@@ -1044,7 +1055,10 @@ public class LanguageType {
     public static final LanguageType nan = new LanguageType("nan", "BГўn-lГўm-gГє", "Min Nan");// Min Nan, Minnan, or Min-nan, Southern Min
     public static final LanguageType zh_min_nan = LanguageType.addNonUniqueCode(nan, "zh-min-nan");
     public static final LanguageType zh_nan = LanguageType.addNonUniqueCode(nan, "zh-nan");
-    
+
+    public static final LanguageType czo = new LanguageType("czo", "Min Zhong", "Min Zhong");
+    public static final LanguageType czo2 = LanguageType.addNonUniqueName(czo, "Central Min");
+
     public static final LanguageType yue = new LanguageType("yue", "зІµиЄћ", "Cantonese");
     public static final LanguageType zh_yue = LanguageType.addNonUniqueCode(yue, "zh-yue");
     // ------------ eo Chinese
@@ -1340,14 +1354,13 @@ public class LanguageType {
     public static final LanguageType cop = new LanguageType("cop", "Coptic", "Coptic");
     public static final LanguageType cpg = new LanguageType("cpg", "Cappadocian Greek", "Cappadocian Greek");
     public static final LanguageType ctg = new LanguageType("ctg", "Chittagonian", "Chittagonian");
-
-    
-
-    public static final LanguageType cui    = new LanguageType("cui", "Cuiba", "Cuiba");
+    public static final LanguageType ctu = new LanguageType("ctu", "Chol", "Chol");
+    public static final LanguageType cui = new LanguageType("cui", "Cuiba", "Cuiba");
+    public static final LanguageType cwe = new LanguageType("cwe", "Kwere", "Kwere");
     
     public static final LanguageType de_formal = new LanguageType("de-formal", "Deutsch (Sie-Form)", "German - formal address (\"Sie\")");
     public static final LanguageType dif    = new LanguageType("dif", "Dieri", "Dieri");
-    public static final LanguageType dk     = new LanguageType("dk", "Dansk (deprecated:da)", "Unused code currently falls back to Danish, da is correct for the language");
+    
     public static final LanguageType duj    = new LanguageType("duj", "Datiwuy", "Datiwuy");
 
     public static final LanguageType en_gb  = new LanguageType("en-gb", "British English", "British English");
@@ -1485,9 +1498,6 @@ public class LanguageType {
     public static final LanguageType bqi = new LanguageType("bqi", "ШЁШ®ШЄЩЉШ§Ш±ЩЉ", "Bakthiari");
     public static final LanguageType bto = new LanguageType("bto", "Iriga Bicolano", "Iriga Bicolano/Rinconada Bikol");
     
-    public static final LanguageType cv = new LanguageType("cv", "Р§ДѓРІР°С€Р»Р°", "Chuvash");
-
-    public static final LanguageType da = new LanguageType("da", "Dansk", "Danish");
     public static final LanguageType de = new LanguageType("de", "Deutsch", "German");
     
     public static final LanguageType dsb = new LanguageType("dsb", "Dolnoserbski", "Lower Sorbian");
