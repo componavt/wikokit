@@ -46,6 +46,10 @@ public class RelationTableAll {
     private static final Map<Relation,Integer>[] m_relation_type_number = new HashMap[max_type_relation];
     // <Relation,Integer> ()
 
+    /** Number of words (pairs: language & part of speech)
+     * with semantic relations */
+    private static int lang_pos_with_relations;
+
 
     /** Counts number of semantic relations for each language
      * by selecting all relations from the database of the parsed Wiktionary.<br><br>
@@ -163,6 +167,7 @@ public class RelationTableAll {
      * (3) 'words_rich_in_relations' - list of the words with the maximum number
      * of semantic relations, or the maximum number of types of semantic relations;
      * (4) 'm_relation_type_number'
+     * (5) 'lang_pos_with_relations' number of lang_pos with semantic relations
      * .<br><br>
      * 
      * SELECT * FROM lang_pos;
@@ -191,7 +196,7 @@ public class RelationTableAll {
         long    t_start;
 
         int n_total = Statistics.Count(wikt_parsed_conn, "lang_pos");
-        // System.out.println("Total relations: " + n_total);
+        lang_pos_with_relations = 0;
         t_start = System.currentTimeMillis();
 
         try {
@@ -211,7 +216,7 @@ public class RelationTableAll {
                 String page_title = "";
                 if(n_relation > 1) {
                     // there is a reason to calculate: number of types of semantic relations
-
+                    
                     TLangPOS lang_pos_real = TLangPOS.getByID (wikt_parsed_conn, id);// real, i.e. with filled fields, non empty
                     if(null == lang_pos_real)
                         continue;
@@ -262,6 +267,9 @@ public class RelationTableAll {
                 else
                     System.out.println("Error (RelationTableAll.countRelationsHistogram()): n_relation=" +
                             n_relation + " > max_relation for the word=" + page_title);
+
+                if(n_relation > 0)
+                    lang_pos_with_relations ++;
 
                 if(0 == n_cur % 1000) {   // % 100
                     if(DEBUG && n_cur > 333)
@@ -321,7 +329,8 @@ public class RelationTableAll {
         // fills rel_histogram, rel_types_histogram
         RelationTableAll.countRelationsHistogram(wikt_parsed_conn, 
                                 threshold_relations, threshold_type_relations);
-        
+
+        System.out.println("\nWords (pairs: language & part of speech) with semantic relations: " + lang_pos_with_relations);
         System.out.println("\nLanguages with semantic relations: " + m.size());
         System.out.println();
 
@@ -334,6 +343,7 @@ public class RelationTableAll {
         WikiPrinterStat.printWordsWithManyRelations(wikt_parsed_conn,
                                 words_rich_in_relations, threshold_relations,
                                                          threshold_type_relations);
+
         WikiPrinterStat.printFooter();
 
         wikt_parsed_conn.Close();
