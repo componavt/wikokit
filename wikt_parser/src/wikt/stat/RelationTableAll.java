@@ -15,6 +15,7 @@ import wikt.sql.*;
 
 import java.sql.*;
 
+import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -25,7 +26,7 @@ import java.util.ArrayList;
 /** Relations' statistics in the database of the parsed Wiktionary.
  */
 public class RelationTableAll {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     /** Let's constrain the maximum number of semantic relation for one word
      * in one language */
@@ -49,6 +50,10 @@ public class RelationTableAll {
     /** Number of words (pairs: language & part of speech)
      * with semantic relations */
     private static int lang_pos_with_relations;
+
+    /** Number of (Language & POS level) entries per language. **/
+    private static final Map<LanguageType,Integer> m_lang_entries_number = new HashMap();
+
 
 
     /** Counts number of semantic relations for each language
@@ -159,6 +164,22 @@ public class RelationTableAll {
         return m_lang_rel_n;
     }
 
+     /** Initialize (set to zero) number of entries for each language. */
+    public static void initLangEntries () {
+
+        Set<LanguageType> languages = TLang.getAllLanguages().keySet();
+        for(LanguageType lang : languages)
+            m_lang_entries_number.put(lang, 0);
+    }
+
+
+    /** Increments number of entries for the given language 'lt'.
+     */
+    public static void incLangEntry (LanguageType lt) {
+        int old = m_lang_entries_number.get(lt);
+        m_lang_entries_number.put(lt, old + 1);
+    }
+
     /** Counts number of semantic relations for each number of relations per 
      * word. Fills 
      * (1) 'rel_histogram' - number of words per number of semantic relations;
@@ -208,20 +229,19 @@ public class RelationTableAll {
             {
                 n_cur ++;
                 int id = rs.getInt("id");
-                TLangPOS lang_pos_only_id = new TLangPOS(id, null, null, null, 0, "");
+                TLangPOS lang_pos_not_recursive = TLangPOS.getByID (wikt_parsed_conn, id);// fields are not filled recursively
+                if(null == lang_pos_not_recursive)
+                    continue;
+                incLangEntry(lang_pos_not_recursive.getLang().getLanguage());
+                TPage tpage = lang_pos_not_recursive.getPage();
+                String page_title = tpage.getPageTitle();
 
-                int n_relation = WTRelation.getNumberByPageLang(wikt_parsed_conn, lang_pos_only_id);
+                int n_relation = WTRelation.getNumberByPageLang(wikt_parsed_conn, lang_pos_not_recursive);
                 int n_type_relation = 0;
 
-                String page_title = "";
                 if(n_relation > 1) {
                     // there is a reason to calculate: number of types of semantic relations
                     
-                    TLangPOS lang_pos_real = TLangPOS.getByID (wikt_parsed_conn, id);// real, i.e. with filled fields, non empty
-                    if(null == lang_pos_real)
-                        continue;
-                    TPage tpage = lang_pos_real.getPage();
-                    page_title = tpage.getPageTitle();
                     TLangPOS lang_pos = null;
                     {   // calculate lang_pos with filled fields in order
                         // to get number of meanings by getRecursive, etc.
@@ -304,21 +324,22 @@ public class RelationTableAll {
         int threshold_relations, threshold_type_relations;
 
         // Russian
-        LanguageType native_lang = LanguageType.ru;
+/*        LanguageType native_lang = LanguageType.ru;
         threshold_relations = 14;
         threshold_type_relations = 5;
         if(DEBUG) threshold_relations = 3;
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
-
+*/
         // English
-      /*LanguageType native_lang = LanguageType.en;
+        LanguageType native_lang = LanguageType.en;
         threshold_relations = 10;
         threshold_type_relations = 3;
         wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
-*/
+
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
         TRelationType.createFastMaps(wikt_parsed_conn);
+        RelationTableAll.initLangEntries();
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of semantic relations in the Wiktionary parsed database ==");
@@ -335,7 +356,7 @@ public class RelationTableAll {
         System.out.println();
 
         //WTStatisticsGoogleWiki.printRelationsPerLanguage(m);
-        WikiPrinterStat.printRelationsPerLanguage(native_lang, m);
+        WikiPrinterStat.printRelationsPerLanguage(native_lang, m, m_lang_entries_number);
         WikiPrinterStat.printRelationsHistogram(rel_histogram);
 
         WikiPrinterStat.printRelationsTypeHistogram (rel_type_histogram, m_relation_type_number);

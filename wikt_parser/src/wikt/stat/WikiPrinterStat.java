@@ -42,19 +42,27 @@ public class WikiPrinterStat {
      *
      * @param m_lang_rel_n map of maps with number of synonyms, antonyms, etc.
      * in English, Russian etc. (lang -> relations -> count)
+     *
+     * @param m_lang_entries_number number of (Language & POS level) entries per language
      */
     public static void printRelationsPerLanguage (
                         LanguageType native_lang,
-                        Map<LanguageType, Map<Relation,Integer>> m_lang_rel_n) {
-
+                        Map<LanguageType, Map<Relation,Integer>> m_lang_rel_n,
+                        Map<LanguageType,Integer> m_lang_entries_number)
+    {
         // print header line
-        System.out.println("=== Number of relations per languge ===\n");
+        System.out.println("=== Number of relations per languge ===");
 
+        System.out.println("\n'''Number of entries''' is a number of (Language & POS level) entries per language. E.g. the Wiktionary article \"[[:en:rook|rook]]\" contains three English and two Dutch entries of Part Of Speech level.");
+        System.out.println("\n'''Total''' is a total number of relations, i.e. synonyms + antonyms + etc...\n");
+        
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.print("! Language name || Language code ||");
+        System.out.print("! Language name || Language code || ");
 
         if(LanguageType.en != native_lang)
             System.out.print("in " + native_lang.getName() + " ||");
+
+        System.out.print("Number of entries || ");
 
         //Collection<Relation> all_rel = Relation.getAllRelations();
         Relation[] all_rel = {  Relation.synonymy,  Relation.antonymy,
@@ -80,6 +88,8 @@ public class WikiPrinterStat {
                     local_name = lang.translateTo(native_lang);
                 System.out.print(" || " + local_name);
             }
+            System.out.print(" || " + m_lang_entries_number.get(lang));
+
 //|-
 //! Abaza            
             Map<Relation,Integer> rel_n = m_lang_rel_n.get(lang);

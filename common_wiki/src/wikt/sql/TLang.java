@@ -125,6 +125,16 @@ public class TLang {
     public static TLang get(LanguageType lt) {
         return getTLangFast(getIDFast(lt));
     }
+
+    /** Gets the map from language to ID (ID in the table 'lang').
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static Map<LanguageType, Integer> getAllLanguages() {
+        return lang2id;
+    }
+
     
     /** Parses and extracts language codes from the string 'lang_codes'. 
      * 
@@ -228,6 +238,7 @@ public class TLang {
         }
         return( (TLang[])tlang_list.toArray(NULL_TLANG_ARRAY) );
     }
+
 
     /** Deletes all records from the table 'lang',
      * loads language code and name from LanguageType.java,
