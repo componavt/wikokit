@@ -446,7 +446,8 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal ulk = new LanguageTypeRu("Мериам", LanguageType.ulk);
     public static final LanguageTypeLocal uk = new LanguageTypeRu("Украинский", LanguageType.uk);
     public static final LanguageTypeLocal uz = new LanguageTypeRu("Узбекский", LanguageType.uz);
-
+    
+    public static final LanguageTypeLocal ve = new LanguageTypeRu("Венда", LanguageType.ve);
     public static final LanguageTypeLocal vep = new LanguageTypeRu("Вепсский", LanguageType.vep);
     public static final LanguageTypeLocal vi = new LanguageTypeRu("Вьетнамский", LanguageType.vi);
     public static final LanguageTypeLocal vot = new LanguageTypeRu("Водский", LanguageType.vot);

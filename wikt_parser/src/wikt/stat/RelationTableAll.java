@@ -361,7 +361,7 @@ public class RelationTableAll {
 
         WikiPrinterStat.printRelationsTypeHistogram (rel_type_histogram, m_relation_type_number);
         
-        WikiPrinterStat.printWordsWithManyRelations(wikt_parsed_conn,
+        WikiPrinterStat.printWordsWithManyRelations(native_lang, wikt_parsed_conn,
                                 words_rich_in_relations, threshold_relations,
                                                          threshold_type_relations);
 

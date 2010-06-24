@@ -206,6 +206,7 @@ public class WikiPrinterStat {
      * @param threshold_relations the minimum number of relations of these words
      */
     public static void printWordsWithManyRelations (
+                        LanguageType native_lang,
                         Connect wikt_parsed_conn,
                         List<TLangPOS> words_rich_in_relations,
                         int threshold_relations,
@@ -232,6 +233,10 @@ public class WikiPrinterStat {
 
             int n_relation = WTRelation.getNumberByPageLang(wikt_parsed_conn, lang_pos);
             int n_types_relation = lang_pos.countRelationTypes();
+
+            // wikitext has problems with a symbol '/', so print [[:/]] instead of a subpage link: [[/]]
+            if(page_title.equalsIgnoreCase("/"))
+                page_title = ":/";
 
             System.out.print("\n|-\n|| [[" + page_title + "]] || " + n_relation +
                     " || " + n_types_relation +
