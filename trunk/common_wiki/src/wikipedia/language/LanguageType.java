@@ -1,4 +1,4 @@
-// current: Dakota dak
+// current: Taita dav
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
  * LanguageType.java - code of languages in wiki.
@@ -659,6 +659,11 @@ public class LanguageType {
     public static final LanguageType da = new LanguageType("da", "Dansk", "Danish");
     public static final LanguageType dan = LanguageType.addNonUniqueCode(da, "dan");
 
+    public static final LanguageType dar = new LanguageType("dar", "Dargwa", "Dargwa");
+    public static final LanguageType dar2 = LanguageType.addNonUniqueName(dar, "Dargin");
+
+    
+
     public static final LanguageType ewe    = new LanguageType("ewe", "Ewe", "Ewe");
     public static final LanguageType ee     = LanguageType.addNonUniqueCode(ewe, "ee");
 
@@ -1128,6 +1133,10 @@ public class LanguageType {
     public static final LanguageType uz = new LanguageType("uz", "Ўзбекча", "Uzbek");
     public static final LanguageType uzb = LanguageType.addNonUniqueCode(uz, "uzb");
 
+    public static final LanguageType ve = new LanguageType("ve", "Venda", "Venda");
+    public static final LanguageType ven = LanguageType.addNonUnique(ve, "ven", "Tshivenda");
+    public static final LanguageType ve2 = LanguageType.addNonUniqueName(ve, "Luvenda");
+
     public static final LanguageType vi = new LanguageType("vi", "Tiếng Việt", "Vietnamese");
     public static final LanguageType vie = LanguageType.addNonUniqueCode(vi, "vie");
 
@@ -1288,7 +1297,6 @@ public class LanguageType {
     public static final LanguageType cjs    = new LanguageType("cjs", "Shor", "Shor");
     public static final LanguageType ckt = new LanguageType("ckt", "Chukchi", "Chukchi");
 
-    public static final LanguageType dar    = new LanguageType("dar", "Dargin", "Dargin");
     public static final LanguageType de_a   = new LanguageType("de-a", "de-a", "de-a");
     public static final LanguageType dlg    = new LanguageType("dlg", "Dolgan", "Dolgan");
     public static final LanguageType dng    = new LanguageType("dng", "Dungan", "Dungan");
@@ -1507,7 +1515,9 @@ public class LanguageType {
     public static final LanguageType ctu = new LanguageType("ctu", "Chol", "Chol");
     public static final LanguageType cui = new LanguageType("cui", "Cuiba", "Cuiba");
     public static final LanguageType cwe = new LanguageType("cwe", "Kwere", "Kwere");
-    
+
+    public static final LanguageType dak = new LanguageType("dak", "Dakota", "Dakota");
+
     public static final LanguageType de_formal = new LanguageType("de-formal", "Deutsch (Sie-Form)", "German - formal address (\"Sie\")");
     public static final LanguageType dif    = new LanguageType("dif", "Dieri", "Dieri");
     
@@ -1796,7 +1806,6 @@ public class LanguageType {
     public static final LanguageType ug = new LanguageType("ug", "UyghurcheвЂЋ / Ш¦Ы‡ЩЉШєЫ‡Ш±Ъ†Ы•", "Uyghur");
     public static final LanguageType ur = new LanguageType("ur", "Ш§Ш±ШЇЩ€", "Urdu");
 
-    public static final LanguageType ve = new LanguageType("ve", "Tshivenda", "Venda");
     public static final LanguageType vec = new LanguageType("vec", "VГЁneto", "Venetian");
     public static final LanguageType vls = new LanguageType("vls", "West-Vlams", "West Flemish");
     public static final LanguageType wa = new LanguageType("wa", "Walon", "Walloon");
