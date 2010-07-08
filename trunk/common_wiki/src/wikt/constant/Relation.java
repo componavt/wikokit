@@ -68,15 +68,15 @@ public class Relation {
 
     //public static final Relation unknown          = new Relation("unknown");        /** The relation is unknown :( */
 
-    public static final Relation synonymy           = new Relation("synonymy");
-    public static final Relation antonymy           = new Relation("antonymy");
-    public static final Relation hypernymy          = new Relation("hypernymy");
-    public static final Relation hyponymy           = new Relation("hyponymy");
-    public static final Relation holonymy           = new Relation("holonymy");
-    public static final Relation meronymy           = new Relation("meronymy");
-    public static final Relation troponymy          = new Relation("troponymy");
-    public static final Relation coordinate_term    = new Relation("coordinate term");
-    public static final Relation otherwise_related  = new Relation("otherwise related");   // See also
+    public static final Relation synonymy           = new Relation("synonyms");
+    public static final Relation antonymy           = new Relation("antonyms");
+    public static final Relation hypernymy          = new Relation("hypernyms");
+    public static final Relation hyponymy           = new Relation("hyponyms");
+    public static final Relation holonymy           = new Relation("holonyms");
+    public static final Relation meronymy           = new Relation("meronyms");
+    public static final Relation troponymy          = new Relation("troponyms");
+    public static final Relation coordinate_term    = new Relation("coordinate terms");
+    public static final Relation otherwise_related  = new Relation("see also");   // See also
 
     
     //private final static Relation[] NULL_RELATION_ARRAY = new Relation[0];
