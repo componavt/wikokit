@@ -85,6 +85,7 @@ is divided into following sections:
         <condition else="" property="sign.arg" value="-sign">
             <istrue value="${jnlp.signed}"/>
         </condition>
+        <property name="jnlp.update.model" value="always"/>
         <property name="javadoc.preview" value="true"/>
         <property name="source.encoding" value="${file.encoding}"/>
         <condition else="" property="binary.extension" value=".exe">
@@ -93,6 +94,9 @@ is divided into following sections:
         <property name="javafx.profile" value="desktop"/>
         <condition property="midp.execution.trigger">
             <equals arg1="${javafx.profile}" arg2="mobile"/>
+        </condition>
+        <condition property="tv.execution.trigger">
+            <equals arg1="${javafx.profile}" arg2="tv"/>
         </condition>
         <condition property="jnlp.execution.trigger">
             <and>
@@ -113,11 +117,14 @@ is divided into following sections:
                     <isset property="jnlp.execution.trigger"/>
                     <isset property="applet.execution.trigger"/>
                     <isset property="midp.execution.trigger"/>
+                    <isset property="tv.execution.trigger"/>
                 </or>
             </not>
         </condition>
         <property name="run.jvmargs" value=""/>
-        <available file="${platform.fxhome}/emulator/bin/emulator${binary.extension}" property="emulator.available"/>
+        <property name="packager.options" value=""/>
+        <available file="${platform.fxhome}/emulator/mobile/bin/emulator${binary.extension}" property="emulator.available"/>
+        <available file="${platform.fxhome}/emulator/tv/bin/cvm${binary.extension}" property="tvemulator.available"/>
     </target>
     <target name="-post-init">
         <!-- Empty placeholder for easier customization.-->
@@ -127,6 +134,11 @@ is divided into following sections:
         <fail unless="build.dir">Must set build.dir</fail>
         <fail unless="dist.dir">Must set dist.dir</fail>
         <fail unless="dist.javadoc.dir">Must set dist.javadoc.dir</fail>
+        <fail message="Must set application main class">
+            <condition>
+                <length length="0" string="${main.class}"/>
+            </condition>
+        </fail>
     </target>
     <target depends="-pre-init,-init-private,-init-user,-init-project,-do-init,-post-init,-init-check" name="init"/>
     <!--
@@ -142,7 +154,7 @@ is divided into following sections:
         <!-- You can override this target in the ../build.xml file.-->
     </target>
     <target depends="init,deps-jar,-pre-compile" name="-do-compile">
-        <exec executable="${platform.fxhome}/bin/javafxpackager${binary.extension}" failonerror="true">
+        <exec executable="${platform.fxhome}/bin/javafxpackager${binary.extension}" failonerror="true" logerror="true">
             <arg value="-src"/>
             <arg value="${src.dir}"/>
             <arg value="-workdir"/>
@@ -168,6 +180,9 @@ is divided into following sections:
             <arg value="${draggable.arg}"/>
             <arg value="${pack200.arg}"/>
             <arg value="${sign.arg}"/>
+            <arg value="-updatecheck"/>
+            <arg value="${jnlp.update.model}"/>
+            <arg line="${packager.options}"/>
             <arg value="-cp"/>
             <arg path="${javac.classpath}"/>
         </exec>
@@ -201,10 +216,22 @@ is divided into following sections:
         <condition else="-Xdescriptor:" property="emulator.exec.arg" value="-Xjam:install=">
             <istrue value="${jad.install}"/>
         </condition>
-        <exec executable="${platform.fxhome}/emulator/bin/emulator${binary.extension}" failonerror="true">
+        <exec executable="${platform.fxhome}/emulator/mobile/bin/emulator${binary.extension}" failonerror="true" logerror="true">
             <arg value="${run.jvmargs}"/>
             <arg value="${emulator.exec.arg}${jad.file}"/>
             <arg value="-Xdevice:${mobile.device}"/>
+        </exec>
+    </target>
+    <target depends="jar" description="Start TV execution" if="tv.execution.trigger" name="tv-run">
+        <fail message="Current platform does not include tv emulator necessary for the execution." unless="tvemulator.available"/>
+        <property location="${dist.dir}/${application.title}.jar" name="jar.file"/>
+        <exec executable="${platform.fxhome}/bin/javafx${binary.extension}" failonerror="true" logerror="true">
+            <arg value="-profile"/>
+            <arg value="tv"/>
+            <arg value="-classpath"/>
+            <arg value="${jar.file}"/>
+            <arg value="${main.class}"/>
+            <arg value="${run.jvmargs}"/>
         </exec>
     </target>
     <target depends="init,jar" if="applet.execution.trigger" name="browser-run">
@@ -218,18 +245,18 @@ is divided into following sections:
         <condition else="${java.home}" property="javaws.home" value="/usr">
             <os family="mac"/>
         </condition>
-        <exec executable="${javaws.home}/bin/javaws" failonerror="true">
+        <exec executable="${javaws.home}/bin/javaws" failonerror="true" logerror="true">
             <env key="JAVAWS_VM_ARGS" value="${run.jvmargs}"/>
             <arg file="${dist.dir}/${application.title}.jnlp"/>
         </exec>
     </target>
-    <target depends="init,compile,jar,standard-run,browser-run,jws-run,midp-run" description="Run an application." name="run"/>
+    <target depends="init,compile,jar,standard-run,browser-run,jws-run,midp-run,tv-run" description="Run an application." name="run"/>
     <!--
                     =================
                     DEBUGGING SECTION
                     =================
     -->
-    <target depends="init" if="netbeans.home" name="-debug-start-debugger">
+    <target depends="init" if="netbeans.home" name="-debug-start-debugger" unless="midp.execution.trigger">
         <nbjpdastart addressproperty="javafx.address" name="${application.title}" transport="dt_socket">
             <classpath>
                 <path path="${javac.classpath}"/>
@@ -239,7 +266,7 @@ is divided into following sections:
             </sourcepath>
         </nbjpdastart>
     </target>
-    <target depends="init" if="netbeans.home" name="-debug-start-debugger-stepinto">
+    <target depends="init" if="netbeans.home" name="-debug-start-debugger-stepinto" unless="midp.execution.trigger">
         <nbjpdastart addressproperty="javafx.address" name="${application.title}" stopclassname="${main.class}" transport="dt_socket">
             <classpath>
                 <path path="${javac.classpath}"/>
@@ -267,32 +294,66 @@ is divided into following sections:
         <condition else="-Xdescriptor:" property="emulator.exec.arg" value="-Xjam:install=">
             <istrue value="${jad.install}"/>
         </condition>
-        <exec executable="${platform.fxhome}/emulator/bin/emulator${binary.extension}">
-            <arg value="${run.jvmargs}"/>
-            <arg value="${emulator.exec.arg}${jad.file}"/>
+        <script language="javascript"><![CDATA[
+                importClass(java.net.Socket);
+                socket = new Socket();
+                socket.bind(null);
+                project.setNewProperty("javafx.address", socket.getLocalPort());
+                socket.close();
+            ]]></script>
+        <parallel failonany="true">
+            <exec executable="${platform.fxhome}/emulator/mobile/bin/emulator${binary.extension}" failonerror="true" logerror="true">
+                <arg value="${run.jvmargs}"/>
+                <arg value="${emulator.exec.arg}${jad.file}"/>
+                <arg value="-Xdebug"/>
+                <arg value="-Xrunjdwp:transport=dt_socket,address=${javafx.address},server=y,suspend=y"/>
+            </exec>
+            <sequential>
+                <sleep seconds="6"/>
+                <nbjpdaconnect address="${javafx.address}" name="${application.title}" transport="dt_socket">
+                    <classpath>
+                        <path path="${javac.classpath}"/>
+                    </classpath>
+                    <sourcepath>
+                        <path path="${src.dir}"/>
+                    </sourcepath>
+                </nbjpdaconnect>
+            </sequential>
+        </parallel>
+    </target>
+    <target if="tv.execution.trigger" name="-debug-tv-debuggee">
+        <fail message="Current platform does not include tv emulator necessary for the debugging." unless="tvemulator.available"/>
+        <property location="${dist.dir}/${application.title}.jar" name="jar.file"/>
+        <exec executable="${platform.fxhome}/bin/javafx${binary.extension}" failonerror="true" logerror="true">
             <arg value="-Xdebug"/>
             <arg value="-Xrunjdwp:transport=dt_socket,address=${javafx.address},server=n"/>
+            <arg value="-profile"/>
+            <arg value="tv"/>
+            <arg value="-classpath"/>
+            <arg value="${jar.file}"/>
+            <arg value="${main.class}"/>
+            <arg value="${run.jvmargs}"/>
         </exec>
     </target>
     <target if="jnlp.execution.trigger" name="-debug-javaws-debuggee">
         <condition else="${java.home}" property="javaws.home" value="/usr">
             <os family="mac"/>
         </condition>
-        <exec executable="${javaws.home}/bin/javaws">
+        <exec executable="${javaws.home}/bin/javaws" failonerror="true" logerror="true">
             <env key="JAVAWS_VM_ARGS" value="-Xdebug -Xnoagent -Djava.compiler=none -Xrunjdwp:transport=dt_socket,address=${javafx.address} ${run.jvmargs}"/>
             <arg file="${dist.dir}/${application.title}.jnlp"/>
         </exec>
     </target>
-    <target depends="init,compile,-debug-start-debugger,-debug-start-debuggee,-debug-javaws-debuggee,-debug-midp-debuggee" description="Debug project in IDE." if="netbeans.home" name="debug"/>
-    <target depends="init,compile,-debug-start-debugger-stepinto,-debug-start-debuggee,-debug-javaws-debuggee,-debug-midp-debuggee" if="netbeans.home" name="debug-stepinto"/>
+    <target depends="init,compile,-debug-start-debugger,-debug-start-debuggee,-debug-javaws-debuggee,-debug-midp-debuggee,-debug-tv-debuggee" description="Debug project in IDE." if="netbeans.home" name="debug"/>
+    <target depends="init,compile,-debug-start-debugger-stepinto,-debug-start-debuggee,-debug-javaws-debuggee,-debug-midp-debuggee,-debug-tv-debuggee" if="netbeans.home" name="debug-stepinto"/>
     <!--
                     ===============
                     JAVADOC SECTION
                     ===============
     -->
-    <target depends="init" name="-javadoc-build">
+    <target depends="jar" name="-javadoc-build">
         <mkdir dir="${dist.javadoc.dir}"/>
-        <javadoc author="${javadoc.author}" classpath="${javac.classpath}" destdir="${dist.javadoc.dir}" encoding="${source.encoding}" executable="${platform.fxhome}/bin/javafxdoc${binary.extension}" failonerror="true" private="${javadoc.private}" useexternalfile="true" version="${javadoc.version}">
+        <javadoc author="${javadoc.author}" classpath="${javac.classpath}:${build.dir}/compiled" destdir="${dist.javadoc.dir}" encoding="${source.encoding}" executable="${platform.fxhome}/bin/javafxdoc${binary.extension}" failonerror="true" private="${javadoc.private}" useexternalfile="true" version="${javadoc.version}">
             <fileset dir="${src.dir}" includes="**/*.fx"/>
         </javadoc>
         <condition property="javadoc.available">
