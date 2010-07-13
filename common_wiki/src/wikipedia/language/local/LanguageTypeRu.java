@@ -353,19 +353,24 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     // kmr ku public static final LanguageTypeLocal kmr = new LanguageTypeRu("Курманджи", LanguageType.kmr);
     public static final LanguageTypeLocal km = new LanguageTypeRu("Кхмерский", LanguageType.km);
     public static final LanguageTypeLocal kn = new LanguageTypeRu("Каннада", LanguageType.kn);
-
     public static final LanguageTypeLocal ko = new LanguageTypeRu("Корейский", LanguageType.ko);
-    public static final LanguageTypeLocal koi = new LanguageTypeRu("Коми-пермяцкий", LanguageType.koi);
-    public static final LanguageTypeLocal kok = new LanguageTypeRu("Конкани", LanguageType.kok);
+    public static final LanguageTypeLocal kv = new LanguageTypeRu("Коми", LanguageType.kv);
     // kom public static final LanguageTypeLocal kom = new LanguageTypeRu("Коми-зырянский", LanguageType.kom);
+    public static final LanguageTypeLocal kok = new LanguageTypeRu("Конкани", LanguageType.kok);
     public static final LanguageTypeLocal kpy = new LanguageTypeRu("Корякский", LanguageType.kpy);
+    public static final LanguageTypeLocal kr = new LanguageTypeRu("Канури", LanguageType.kr);
     public static final LanguageTypeLocal krc = new LanguageTypeRu("Карачаево-балкарский", LanguageType.krc);
     public static final LanguageTypeLocal krj = new LanguageTypeRu("Кинарайский", LanguageType.krj);
     public static final LanguageTypeLocal krl = new LanguageTypeRu("Карельский", LanguageType.krl);
-    public static final LanguageTypeLocal ks = new LanguageTypeRu("Кашмири", LanguageType.ks);
+    public static final LanguageTypeLocal kru = new LanguageTypeRu("Курух", LanguageType.kru);
+    public static final LanguageTypeLocal ks = new LanguageTypeRu("Кашмирский", LanguageType.ks);
+    public static final LanguageTypeLocal ksb = new LanguageTypeRu("Шамбала", LanguageType.ksb);
     // ku public static final LanguageTypeLocal ku = new LanguageTypeRu("Курдский", LanguageType.ku);
     public static final LanguageTypeLocal kum = new LanguageTypeRu("Кумыкский", LanguageType.kum);
+    public static final LanguageTypeLocal kut = new LanguageTypeRu("Кутенай", LanguageType.kut);
+    public static final LanguageTypeLocal kw = new LanguageTypeRu("Корнский", LanguageType.kw);
     public static final LanguageTypeLocal ky = new LanguageTypeRu("Киргизский", LanguageType.ky);
+    public static final LanguageTypeLocal kyh = new LanguageTypeRu("Карук", LanguageType.kyh);
 
     public static final LanguageTypeLocal la = new LanguageTypeRu("Латинский", LanguageType.la);
     public static final LanguageTypeLocal lb = new LanguageTypeRu("Люксембургский", LanguageType.lb);

@@ -1,4 +1,4 @@
-// current: Korean 	ko 	kor
+// current: Latin la
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
  * LanguageType.java - code of languages in wiki.
@@ -1082,8 +1082,16 @@ public class LanguageType {
     public static final LanguageType ka = new LanguageType("ka", "Georgian", "Georgian");
     public static final LanguageType kat = LanguageType.addNonUniqueCode(ka, "kat");
 
+    public static final LanguageType kayah = new LanguageType("kayah", "Kayah", "Kayah");
+    public static final LanguageType kxf = LanguageType.addNonUnique(kayah, "kxf", "Karen, Manumanaw");
+    public static final LanguageType kvu = LanguageType.addNonUnique(kayah, "kvu", "Karen, Yinbaw");
+    public static final LanguageType kvy = LanguageType.addNonUnique(kayah, "kvy", "Karen, Yintale");
+    public static final LanguageType eky = LanguageType.addNonUnique(kayah, "eky", "Eastern Kayah");
+    public static final LanguageType kyu = LanguageType.addNonUnique(kayah, "kyu", "Western Kayah");
+    
     public static final LanguageType kal    = new LanguageType("kal", "Kalaallisut", "Greenlandic");
     public static final LanguageType kl     = LanguageType.addNonUniqueCode(kal, "kl");// add lang names? : Inuktitut, Greenlandic/Kalaallisut as addNonUniqueName(kal, "");
+
 
 
     // Kazakh ------------
@@ -1131,20 +1139,39 @@ public class LanguageType {
     public static final LanguageType oun = LanguageType.addNonUnique(knw, "oun", "Kung-Ekoka");
     public static final LanguageType mwj = LanguageType.addNonUnique(knw, "mwj", "Maligo");
 
-
     public static final LanguageType ko = new LanguageType("ko", "Korean", "Korean");
     public static final LanguageType kor = LanguageType.addNonUniqueCode(ko, "kor");
     public static final LanguageType oko = LanguageType.addNonUnique(ko, "oko", "Old Korean");
     public static final LanguageType okm = LanguageType.addNonUnique(ko, "okm", "Middle Korean");
 
-    public static final LanguageType kom    = new LanguageType("kom", "Komi", "Komi");
-    public static final LanguageType koi    = LanguageType.addNonUnique(kom, "koi", "Komi-Permyak");
-    public static final LanguageType kv     = LanguageType.addNonUnique(kom, "kv", "Komi-Zyrian");// cyrillic is common script but also written in latin script
-    public static final LanguageType kpv    = LanguageType.addNonUniqueCode(kom, "kpv");
+    public static final LanguageType kok = new LanguageType("kok", "Konkani", "Konkani");
+    public static final LanguageType gom = LanguageType.addNonUniqueCode(kok, "gom");
+
+    public static final LanguageType kv = new LanguageType("kv", "Komi", "Komi");
+    public static final LanguageType kom = LanguageType.addNonUniqueCode(kv, "kom");
+    public static final LanguageType koi = LanguageType.addNonUnique(kv, "koi", "Komi-Permyak");
+    public static final LanguageType kpv = LanguageType.addNonUnique(kv, "kpv", "Komi-Zyrian");// cyrillic is common script but also written in latin script
     
+    public static final LanguageType kpe = new LanguageType("kpe", "Kpelle", "Kpelle");
+    public static final LanguageType gkp = LanguageType.addNonUnique(kpe, "gkp", "Guinea Kpelle");
+    public static final LanguageType xpe = LanguageType.addNonUnique(kpe, "xpe", "Liberia Kpelle");
+
+    public static final LanguageType kr = new LanguageType("kr", "Kanuri", "Kanuri");
+    public static final LanguageType kau = LanguageType.addNonUniqueCode(kr, "kau");
+    public static final LanguageType knc = LanguageType.addNonUnique(kr, "knc", "Central Kanuri");
+    public static final LanguageType kby = LanguageType.addNonUnique(kr, "kby", "Manga Kanuri");
+    public static final LanguageType krt = LanguageType.addNonUnique(kr, "krt", "Tumari Kanuri");
+    public static final LanguageType bms = LanguageType.addNonUnique(kr, "bms", "Bilma Kanuri");
+    public static final LanguageType kbl = LanguageType.addNonUnique(kr, "kbl", "Kanembu");
+
     public static final LanguageType ks = new LanguageType("ks", "Kashmiri", "Kashmiri");
     public static final LanguageType kas = LanguageType.addNonUniqueCode(ks, "kas");
 
+    public static final LanguageType ksi = new LanguageType("ksi", "I'saka", "I'saka");
+    public static final LanguageType ksi2 = LanguageType.addNonUniqueName(ksi, "Isaka");
+    public static final LanguageType ksi3 = LanguageType.addNonUniqueName(ksi, "Krisa");
+    
+    
     
     // Kurdish ------------
     public static final LanguageType ku = new LanguageType("ku", "Kurdish", "Kurdish");
@@ -1167,9 +1194,14 @@ public class LanguageType {
     public static final LanguageType ku_arab2 = LanguageType.addNonUniqueCode(ku, "ku.arab");// Northern Kurdish Arabic script
     // ------------ eo Kurdish
 
+
     
+    public static final LanguageType kw = new LanguageType("kw", "Kernewek", "Cornish");
+    public static final LanguageType cor = LanguageType.addNonUniqueCode(kw, "cor");
+
     public static final LanguageType ky = new LanguageType("ky", "Kyrgyz", "Kyrgyz");
     public static final LanguageType kir = LanguageType.addNonUnique(ky, "kir", "Kirghiz");
+
 
     public static final LanguageType lg = new LanguageType("lg", "Luganda", "Luganda");
     public static final LanguageType lug = LanguageType.addNonUnique(lg, "lug", "Ganda");
@@ -1634,9 +1666,8 @@ public class LanguageType {
     public static final LanguageType kim    = new LanguageType("kim", "Tofa", "Tofa");
 
     public static final LanguageType kpy    = new LanguageType("kpy", "Koryak", "Koryak");
-    public static final LanguageType krc    = new LanguageType("krc", "Karachay-Balkar", "Karachay-Balkar");
-    public static final LanguageType krl    = new LanguageType("krl", "Karjalan kieli", "Karelian");
-    public static final LanguageType kum    = new LanguageType("kum", "Kumyk", "Kumyk");
+
+
 
     public static final LanguageType liv    = new LanguageType("liv", "Livonian ", "Livonian");
 
@@ -1917,15 +1948,27 @@ public class LanguageType {
     public static final LanguageType kln = new LanguageType("kln", "Kalenjin", "Kalenjin");
     public static final LanguageType km = new LanguageType("km", "Khmer", "Khmer");
     public static final LanguageType kmb = new LanguageType("kmb", "Kimbundu", "Kimbundu");
-
-    public static final LanguageType krh    = new LanguageType("krh", "Kurama", "Kurama");
-    public static final LanguageType kok    = new LanguageType("kok", "Konkani", "Konkani");
+    public static final LanguageType kos = new LanguageType("kos", "Kosraean", "Kosraean");
+    public static final LanguageType kpg = new LanguageType("kpg", "Kapingamarangi", "Kapingamarangi");
+    public static final LanguageType krc = new LanguageType("krc", "Karachay-Balkar", "Karachay-Balkar");    
+    public static final LanguageType krh = new LanguageType("krh", "Kurama", "Kurama");
+    public static final LanguageType krl = new LanguageType("krl", "Karjalan kieli", "Karelian");
+    public static final LanguageType kru = new LanguageType("kru", "Kurukh", "Kurukh");
+    public static final LanguageType ksb = new LanguageType("ksb", "Shambala", "Shambala");
 
     public static final LanguageType ksh_c_a = new LanguageType("ksh-c-a", "Ripoarisch c a", "Ripuarian c a");
     public static final LanguageType ksh_p_b = new LanguageType("ksh-p-b", "Ripoarisch p b", "Ripuarian p b");
-    
-    public static final LanguageType ksi    = new LanguageType("ksi", "Krisa", "Krisa");
-    public static final LanguageType kyi    = new LanguageType("kyi", "Kiput", "Kiput");
+
+    public static final LanguageType ktn = new LanguageType("ktn", "Karitiâna", "Karitiâna");
+    public static final LanguageType kuc = new LanguageType("kuc", "Kwinsu", "Kwinsu");
+    public static final LanguageType kud = new LanguageType("kud", "'Auhelawa", "'Auhelawa");
+    public static final LanguageType kuj = new LanguageType("kuj", "Kuria", "Kuria");
+    public static final LanguageType kum = new LanguageType("kum", "Къумукъ", "Kumyk");
+    public static final LanguageType kut = new LanguageType("kut", "Kutenai", "Kutenai");
+    public static final LanguageType kya = new LanguageType("kya", "Kwaya", "Kwaya");
+    public static final LanguageType kyh = new LanguageType("kyh", "Karok", "Karok");
+    public static final LanguageType kyi = new LanguageType("kyi", "Kiput", "Kiput");
+    public static final LanguageType kzg = new LanguageType("kzg", "Kikai", "Kikai");
 
     public static final LanguageType lb = new LanguageType("lb", "Lëtzebuergesch", "Luxembourgish");
 
@@ -2038,9 +2081,12 @@ public class LanguageType {
 
 
     
-    public static final LanguageType kr = new LanguageType("kr", "Kanuri", "Kanuri, Central");
+
+
+
     public static final LanguageType kri = new LanguageType("kri", "Krio", "Krio");
-    public static final LanguageType kw = new LanguageType("kw", "Kernewek", "Cornish");
+
+
 
     public static final LanguageType la = new LanguageType("la", "Latina", "Latin");
     public static final LanguageType lad = new LanguageType("lad", "Ladino", "Ladino");
