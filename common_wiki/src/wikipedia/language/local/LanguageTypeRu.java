@@ -432,10 +432,16 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal ms = new LanguageTypeRu("Малайский", LanguageType.ms);
     public static final LanguageTypeLocal mt = new LanguageTypeRu("Мальтийский", LanguageType.mt);
     public static final LanguageTypeLocal mtm = new LanguageTypeRu("Маторский", LanguageType.mtm);
-
-
+    public static final LanguageTypeLocal mul = new LanguageTypeRu("Международное обозначение", LanguageType.mul);// Межъязыковой
+    public static final LanguageTypeLocal mus = new LanguageTypeRu("Крикский", LanguageType.mus);
+    public static final LanguageTypeLocal mwl = new LanguageTypeRu("Мирандский", LanguageType.mwl);
+    public static final LanguageTypeLocal mxi = new LanguageTypeRu("Мосарабский", LanguageType.mxi);
     public static final LanguageTypeLocal my = new LanguageTypeRu("Бирманский", LanguageType.my);
+    public static final LanguageTypeLocal myp = new LanguageTypeRu("Пираха", LanguageType.myp);
+    public static final LanguageTypeLocal myv = new LanguageTypeRu("Эрзянский", LanguageType.myv);
+    public static final LanguageTypeLocal mzn = new LanguageTypeRu("Мазендеранский", LanguageType.mzn);
 
+    public static final LanguageTypeLocal na = new LanguageTypeRu("Науруанский", LanguageType.na);
     public static final LanguageTypeLocal nah = new LanguageTypeRu("Астекский", LanguageType.nah);
     public static final LanguageTypeLocal nan = new LanguageTypeRu("Китайский (южноминьский)", LanguageType.nan);
     public static final LanguageTypeLocal nb = new LanguageTypeRu("Букмол", LanguageType.nb);
