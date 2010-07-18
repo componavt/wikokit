@@ -347,7 +347,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal kha = new LanguageTypeRu("Кхаси", LanguageType.kha);
     public static final LanguageTypeLocal kho = new LanguageTypeRu("Хотаносакский", LanguageType.kho);
     public static final LanguageTypeLocal ki = new LanguageTypeRu("Кикуйю", LanguageType.ki);
-    public static final LanguageTypeLocal kj = new LanguageTypeRu("Кваньяма", LanguageType.kj);
+    public static final LanguageTypeLocal kj = new LanguageTypeRu("Ошивамбо", LanguageType.kj);
     public static final LanguageTypeLocal kim = new LanguageTypeRu("Тофаларский", LanguageType.kim);
     public static final LanguageTypeLocal kjh = new LanguageTypeRu("Хакасский", LanguageType.kjh);
     // kmr ku public static final LanguageTypeLocal kmr = new LanguageTypeRu("Курманджи", LanguageType.kmr);
@@ -383,6 +383,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal lfn = new LanguageTypeRu("Лингва франка нова", LanguageType.lfn);
     public static final LanguageTypeLocal lg = new LanguageTypeRu("Луганда", LanguageType.lg);
     public static final LanguageTypeLocal li = new LanguageTypeRu("Лимбургский", LanguageType.li);
+    public static final LanguageTypeLocal lif = new LanguageTypeRu("Лимбу", LanguageType.lif);
     public static final LanguageTypeLocal lij = new LanguageTypeRu("Лигурский", LanguageType.lij);
     public static final LanguageTypeLocal liv = new LanguageTypeRu("Ливский", LanguageType.liv);
     public static final LanguageTypeLocal lld = new LanguageTypeRu("Ладинский", LanguageType.lld);
@@ -444,17 +445,28 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal na = new LanguageTypeRu("Науруанский", LanguageType.na);
     public static final LanguageTypeLocal nah = new LanguageTypeRu("Астекский", LanguageType.nah);
     public static final LanguageTypeLocal nan = new LanguageTypeRu("Китайский (южноминьский)", LanguageType.nan);
+    public static final LanguageTypeLocal nap = new LanguageTypeRu("Неаполитанский", LanguageType.nap);
+    public static final LanguageTypeLocal naq = new LanguageTypeRu("Нама", LanguageType.naq);
     public static final LanguageTypeLocal nb = new LanguageTypeRu("Букмол", LanguageType.nb);
     public static final LanguageTypeLocal nds = new LanguageTypeRu("Нижненемецкий", LanguageType.nds);
     public static final LanguageTypeLocal ne = new LanguageTypeRu("Непальский", LanguageType.ne);
     public static final LanguageTypeLocal new_ = new LanguageTypeRu("Неварский", LanguageType.new_);
+    public static final LanguageTypeLocal nia = new LanguageTypeRu("Ниасский", LanguageType.nia);
     public static final LanguageTypeLocal nio = new LanguageTypeRu("Нганасанский", LanguageType.nio);
+    public static final LanguageTypeLocal niu = new LanguageTypeRu("Ниуэ", LanguageType.niu);
     public static final LanguageTypeLocal niv = new LanguageTypeRu("Нивхский", LanguageType.niv);
     public static final LanguageTypeLocal nl = new LanguageTypeRu("Нидерландский", LanguageType.nl);
+    public static final LanguageTypeLocal nmn = new LanguageTypeRu("Къхонг", LanguageType.nmn);
     public static final LanguageTypeLocal nn = new LanguageTypeRu("Нюнорск", LanguageType.nn);
     public static final LanguageTypeLocal no = new LanguageTypeRu("Норвежский", LanguageType.no);
     public static final LanguageTypeLocal nog = new LanguageTypeRu("Ногайский", LanguageType.nog);
     public static final LanguageTypeLocal non = new LanguageTypeRu("Древнеисландский", LanguageType.non);
+    public static final LanguageTypeLocal nov = new LanguageTypeRu("Новиаль", LanguageType.nov);
+    public static final LanguageTypeLocal nqo = new LanguageTypeRu("Нко", LanguageType.nqo);
+    public static final LanguageTypeLocal nrn = new LanguageTypeRu("Норн", LanguageType.nrn);
+    public static final LanguageTypeLocal nso = new LanguageTypeRu("Северный сото", LanguageType.nso);
+
+
     public static final LanguageTypeLocal num = new LanguageTypeRu("Ниуафооу", LanguageType.num);
     public static final LanguageTypeLocal nv = new LanguageTypeRu("Навахо", LanguageType.nv);
     public static final LanguageTypeLocal ny = new LanguageTypeRu("Ньянджа", LanguageType.ny);
