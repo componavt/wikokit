@@ -1,4 +1,4 @@
-// current: Piro 	pie
+// current: Polish 	pl 	pol
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
  * LanguageType.java - code of languages in wiki.
@@ -1635,8 +1635,14 @@ public class LanguageType {
     public static final LanguageType pi = new LanguageType("pi", "Pāli", "Pali");
     public static final LanguageType pli = LanguageType.addNonUniqueCode(pi, "pli");
 
+    public static final LanguageType pih = new LanguageType("pih", "Pitcairn-Norfolk", "Pitcairn-Norfolk");
+    public static final LanguageType pih2 = LanguageType.addNonUniqueName(pih, "Pitkern");
+    public static final LanguageType pih3 = LanguageType.addNonUniqueName(pih, "Pitcairnese");
+    public static final LanguageType pih4 = LanguageType.addNonUniqueName(pih, "Norfuk");
+    public static final LanguageType pih5 = LanguageType.addNonUniqueName(pih, "Norfolk");
 
-
+    public static final LanguageType pit = new LanguageType("pit", "Pitta-Pitta", "Pitta-Pitta");
+    public static final LanguageType pit2 = LanguageType.addNonUniqueName(pit, "Pitta Pitta");
 
 
     public static final LanguageType pua = new LanguageType("pua", "Purepecha", "Purepecha");
@@ -1739,6 +1745,8 @@ public class LanguageType {
     public static final LanguageType tix2   = LanguageType.addNonUniqueName(tix, "Tiwa");
     public static final LanguageType twf    = new LanguageType("twf", "Taos", "Taos");
     public static final LanguageType twf2   = LanguageType.addNonUniqueName(twf, "Northern Tiwa");
+    public static final LanguageType pie = LanguageType.addNonUnique(tix, "pie", "Piro");
+    public static final LanguageType PIE = new LanguageType("PIE", "Proto-Indo-European", "Proto-Indo-European");// Russian Wiktionary
     
     public static final LanguageType tgk    = new LanguageType("tgk", "Tajik", "Tajik");
     public static final LanguageType tg     = LanguageType.addNonUnique(tgk, "tg", "Tajiki");
@@ -2010,7 +2018,8 @@ public class LanguageType {
 
 
 
-    public static final LanguageType PIE    = new LanguageType("PIE", "Proto-Indo-European", "Proto-Indo-European");
+    
+
     public static final LanguageType pinyin = new LanguageType("pinyin", "Pinyin", "Pinyin");
     public static final LanguageType pmt    = new LanguageType("pmt", "Tuamotuan", "Tuamotuan");
     public static final LanguageType pox    = new LanguageType("pox", "Polabian", "Polabian");
@@ -2394,9 +2403,11 @@ public class LanguageType {
     public static final LanguageType pbr = new LanguageType("pbr", "Pangwa", "Pangwa");
     public static final LanguageType pcd = new LanguageType("pcd", "Picard", "Picard");
     public static final LanguageType phn = new LanguageType("phn", "Phoenician", "Phoenician");
+    public static final LanguageType pim = new LanguageType("pim", "Powhatan", "Powhatan");
+    public static final LanguageType pis = new LanguageType("pis", "Pijin", "Pijin");
+    public static final LanguageType piw = new LanguageType("piw", "Pimbwe", "Pimbwe");
+    public static final LanguageType pjt = new LanguageType("pjt", "Pitjantjatjara", "Pitjantjatjara");
 
-
-    public static final LanguageType pjt    = new LanguageType("pjt", "Pitjantjatjara", "Pitjantjatjara");
     public static final LanguageType kdd    = new LanguageType("kdd", "Yankunytjatjara", "Yankunytjatjara");
     public static final LanguageType pt_br  = new LanguageType("pt-br", "PortuguГЄs do Brasil", "Brazilian Portuguese");
 
@@ -2492,9 +2503,9 @@ public class LanguageType {
     public static final LanguageType jut = new LanguageType("jut", "Jysk", "Jutish / Jutlandic");
 
     public static final LanguageType kri = new LanguageType("kri", "Krio", "Krio");
+
+
     
-    
-    public static final LanguageType pih = new LanguageType("pih", "Norfuk / Pitkern", "Norfuk/Pitcairn/Norfolk");
     public static final LanguageType pl = new LanguageType("pl", "Polski", "Polish");
     public static final LanguageType plm = new LanguageType("plm", "Palembang", "Palembang");
     public static final LanguageType pms = new LanguageType("pms", "PiemontГЁis", "Piedmontese");
