@@ -494,8 +494,11 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal peo = new LanguageTypeRu("Древнеперсидский", LanguageType.peo);
     public static final LanguageTypeLocal phn = new LanguageTypeRu("Финикийский", LanguageType.phn);
     public static final LanguageTypeLocal pi = new LanguageTypeRu("Пали", LanguageType.pi);
-
+    public static final LanguageTypeLocal pih = new LanguageTypeRu("Питкэрнский-Норфолкский", LanguageType.pih);
+    public static final LanguageTypeLocal pis = new LanguageTypeRu("Пиджин Соломоновых островов", LanguageType.pis);
     public static final LanguageTypeLocal pinyin = new LanguageTypeRu("Пиньинь", LanguageType.pinyin);
+    public static final LanguageTypeLocal pjt = new LanguageTypeRu("Питьянтьятьяра", LanguageType.pjt);
+
     public static final LanguageTypeLocal pl = new LanguageTypeRu("Польский", LanguageType.pl);
     public static final LanguageTypeLocal pmt = new LanguageTypeRu("Туамоту", LanguageType.pmt);
     public static final LanguageTypeLocal pnt = new LanguageTypeRu("Понтийский", LanguageType.pnt);
