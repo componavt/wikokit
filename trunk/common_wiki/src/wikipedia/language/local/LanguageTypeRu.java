@@ -626,20 +626,35 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal uby = new LanguageTypeRu("Убыхский", LanguageType.uby);
     public static final LanguageTypeLocal udi = new LanguageTypeRu("Удинский", LanguageType.udi);
     public static final LanguageTypeLocal udm = new LanguageTypeRu("Удмуртский", LanguageType.udm);
+    public static final LanguageTypeLocal ug = new LanguageTypeRu("Уйгурский", LanguageType.ug);
     public static final LanguageTypeLocal uga = new LanguageTypeRu("Угаритский", LanguageType.uga);
+    public static final LanguageTypeLocal uk = new LanguageTypeRu("Украинский", LanguageType.uk);
     public static final LanguageTypeLocal ulc = new LanguageTypeRu("Ульчский", LanguageType.ulc);
     public static final LanguageTypeLocal ulk = new LanguageTypeRu("Мериам", LanguageType.ulk);
-    public static final LanguageTypeLocal uk = new LanguageTypeRu("Украинский", LanguageType.uk);
+    public static final LanguageTypeLocal umb = new LanguageTypeRu("Умбунду", LanguageType.umb);
+    public static final LanguageTypeLocal ur = new LanguageTypeRu("Урду", LanguageType.ur);
+    public static final LanguageTypeLocal ute = new LanguageTypeRu("Юте", LanguageType.ute);
+
     public static final LanguageTypeLocal uz = new LanguageTypeRu("Узбекский", LanguageType.uz);
-    
+
+    public static final LanguageTypeLocal vai = new LanguageTypeRu("Ваи", LanguageType.vai);
     public static final LanguageTypeLocal ve = new LanguageTypeRu("Венда", LanguageType.ve);
     public static final LanguageTypeLocal vec = new LanguageTypeRu("Венетский", LanguageType.vec);
     public static final LanguageTypeLocal vep = new LanguageTypeRu("Вепсский", LanguageType.vep);
     public static final LanguageTypeLocal vi = new LanguageTypeRu("Вьетнамский", LanguageType.vi);
+    public static final LanguageTypeLocal vls = new LanguageTypeRu("Фламандский", LanguageType.vls);
+    public static final LanguageTypeLocal vmw = new LanguageTypeRu("Макуа", LanguageType.vmw);
+    public static final LanguageTypeLocal vol = new LanguageTypeRu("Волапюк", LanguageType.vol);
     public static final LanguageTypeLocal vot = new LanguageTypeRu("Водский", LanguageType.vot);
-    public static final LanguageTypeLocal vro = new LanguageTypeRu("Выруский диалект", LanguageType.vro);
+    public static final LanguageTypeLocal vro = new LanguageTypeRu("Выруский", LanguageType.vro);
 
+    public static final LanguageTypeLocal wa = new LanguageTypeRu("Валлонский", LanguageType.wa);
+    public static final LanguageTypeLocal wam = new LanguageTypeRu("Массачусетский", LanguageType.wam);
     public static final LanguageTypeLocal war = new LanguageTypeRu("Варайский", LanguageType.war);
+    public static final LanguageTypeLocal was = new LanguageTypeRu("Уошо", LanguageType.was);
+    public static final LanguageTypeLocal wbp = new LanguageTypeRu("Вальбири", LanguageType.wbp);
+
+
     public static final LanguageTypeLocal wlm = new LanguageTypeRu("Средневаллийский", LanguageType.wlm);
     public static final LanguageTypeLocal wo = new LanguageTypeRu("Волоф", LanguageType.wo);
     public static final LanguageTypeLocal wuu = new LanguageTypeRu("У (китайский диалект)", LanguageType.wuu);
