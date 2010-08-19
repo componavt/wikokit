@@ -1,0 +1,13 @@
+#summary Getting started with Wiktionary parser.
+#labels Featured,Phase-Implementation,Phase-Deploy,Wiktionary,parser
+
+= Introduction =
+
+You can convert the database of Wiktionary into the machine-readable format. English Wiktionary and Russian Wiktionary are supported now.
+
+= A Step-by-Step Guide =
+
+A step-by-step guide to launching your Wiktionary parser:
+  * Download the latest [http://download.wikimedia.org/backup-index.html Wiktionary dump]
+  * [MySQL_import Import Wiktionary database into local MySQL database]
+  * ...
