@@ -101,7 +101,18 @@ public class LanguageType {
         code2lang.put(code, this);
         english2lang.put(english_name, this);
 
-        System.out.println("todo check error: leading spaces, e.g. \"Livonian \" ");
+        checksPrefixSuffixSpace(code);
+        checksPrefixSuffixSpace(english_name);
+    }
+
+    /** Checks whitespace characters in the prefix or suffix of a string.
+     * Prints "error" message if there is any.
+     */
+    private static void checksPrefixSuffixSpace(String s) {
+
+        if(s.charAt(0) == ' ' || s.charAt(s.length()-1) == ' ')
+            System.out.println("Error in LanguageType.LanguageType(): there are leading spaces in code " +
+                    "or language name, string='"+s+"'.");
     }
 
     /** Gets language code. */
@@ -198,6 +209,7 @@ public class LanguageType {
      */
     public static LanguageType addNonUniqueName(LanguageType lt, String english_name) {
 
+        checksPrefixSuffixSpace(english_name);
         if(english_name.length() == 0) {
             System.out.println("Error in LanguageType.addNonUniqueName(): empty language name! The language code="+lt+".");
             return null;
@@ -223,6 +235,7 @@ public class LanguageType {
      */
     public static LanguageType addNonUniqueCode(LanguageType lt, String code) {
 
+        checksPrefixSuffixSpace(code);
         if(code.length() > 12) {
             System.out.println("Error in LanguageType.addNonUniqueCode(): the language code '"+code+
                     "' is too long (.length() > 12)!");// zh-classical
@@ -529,7 +542,7 @@ public class LanguageType {
 
     // Bena: {{bez}}, {{yun}}
     public static final LanguageType bez = new LanguageType("bez", "Bena", "Bena");
-    public static final LanguageType yun = new LanguageType("bez", "Binna", "Binna");
+    public static final LanguageType yun = new LanguageType("yun", "Binna", "Binna");
 
     public static final LanguageType bg = new LanguageType("bg", "Р‘СЉР»РіР°СЂСЃРєРё", "Bulgarian");
     public static final LanguageType bul = LanguageType.addNonUniqueCode(bg, "bul");
@@ -782,7 +795,7 @@ public class LanguageType {
 
     public static final LanguageType dyu = new LanguageType("dyu", "Dioula", "Dioula");
     public static final LanguageType dyu2 = LanguageType.addNonUniqueName(dyu, "Dyula");
-    public static final LanguageType dyu3 = LanguageType.addNonUniqueName(dyu, "Dyula");
+    public static final LanguageType dyu3 = LanguageType.addNonUniqueName(dyu, "Diula");
     public static final LanguageType dyu4 = LanguageType.addNonUniqueName(dyu, "Jula");
 
     public static final LanguageType dz = new LanguageType("dz", "Jong-kă", "Dzongkha");
@@ -862,6 +875,7 @@ public class LanguageType {
 
     // Persian ------------
     public static final LanguageType fa = new LanguageType("fa", "Persian", "Persian");
+    public static final LanguageType fas = LanguageType.addNonUniqueCode(fa, "fas");
     public static final LanguageType def = LanguageType.addNonUnique(fa, "def", "Dezfuli");
 
     public static final LanguageType jpr = new LanguageType("jpr", "Judeo-Persian", "Judeo-Persian");
@@ -874,7 +888,6 @@ public class LanguageType {
     public static final LanguageType peo = new LanguageType("peo", "Old Persian", "Old Persian");
     public static final LanguageType prs = new LanguageType("prs", "Eastern Persian", "Eastern Persian");
     // not yet in English Wiktionary:
-    public static final LanguageType fas = LanguageType.addNonUnique(fa, "fas", "Persian");
     public static final LanguageType pes = LanguageType.addNonUnique(fa, "pes", "Western Persian");
     public static final LanguageType aiq = LanguageType.addNonUnique(fa, "aiq", "Aimaq");
     public static final LanguageType bhh = LanguageType.addNonUnique(fa, "bhh", "Bukharic");
@@ -1198,7 +1211,7 @@ public class LanguageType {
 
     public static final LanguageType knw = new LanguageType("knw", "!Kung", "!Kung");
     public static final LanguageType knw2 = LanguageType.addNonUniqueName(knw, "Kung-Ekoka");
-    public static final LanguageType oun = LanguageType.addNonUnique(knw, "oun", "Kung-Ekoka");
+    public static final LanguageType oun = LanguageType.addNonUnique(knw, "oun", "!O!ung");
     public static final LanguageType mwj = LanguageType.addNonUnique(knw, "mwj", "Maligo");
 
     public static final LanguageType ko = new LanguageType("ko", "Korean", "Korean");

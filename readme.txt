@@ -1,4 +1,4 @@
-wikokit 0.12.6 (c) 2005-2008, Andrew.Krizhanovsky at gmail.com
+wikokit (c) 2005-2010, Andrew.Krizhanovsky at gmail.com
 http://code.google.com/p/wikokit/
                                                   
 Previous project name Synarcher.
