@@ -3,7 +3,7 @@
 
 = Introduction =
 
-You can convert the database of Wiktionary into the machine-readable format. English Wiktionary and Russian Wiktionary are supported now.
+This guide helps you convert the database of Wiktionary into the machine-readable format. English Wiktionary and Russian Wiktionary are supported now.
 
 = A Step-by-Step Guide =
 
