@@ -30,7 +30,7 @@ perl del_redirect_in_pages-articles_xml.pl in_file out_file
 }}}
 
 = See also ==
-  * [[categorylinks]]
+  * [categorylinks]
 
 == Links ==
   * [http://meta.wikimedia.org/wiki/Talk:Xml2sql Talk:Xml2sql (meta)]
