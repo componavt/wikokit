@@ -33,5 +33,5 @@ perl del_redirect_in_pages-articles_xml.pl in_file out_file
   * [[categorylinks]]
 
 == Links ==
-  * [http://meta.wikimedia.org/wiki/Talk:Xml2sql Talk:Xml2sql (meta)
+  * [http://meta.wikimedia.org/wiki/Talk:Xml2sql Talk:Xml2sql (meta)]
   * [http://synarcher.sourceforge.net How to solve problems with import of revision.sql]. Search the line: ALTER TABLE revision 
