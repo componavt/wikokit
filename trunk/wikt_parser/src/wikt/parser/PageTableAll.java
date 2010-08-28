@@ -21,11 +21,12 @@ public class PageTableAll {
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "corailleur", // temp
+        "raggiavo", // temp
 
         // English Wiktionary
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
-        "amana", "ke", "kali", "let", "met", "chan", "bo", "m", "", "", "", "", "", "",
+        "amana", "ke", "kali", "let", "met", "chan", "bo", "m", 
+        "raggiavo", "raggiamo", // Template:form of
 
 
         // Russian Wiktionary
@@ -33,6 +34,8 @@ public class PageTableAll {
         "адджындзинад",
         "Свирь",
         "Aare",
+        "Saule", "galva", "sūris", "грано", // duplication of lang headers for : LanguageType.addNonUnique
+        "лым", "помидор", "Saule", "entre",
         "ridiculous",
         "picogray",
         "бор",

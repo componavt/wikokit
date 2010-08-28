@@ -1,11 +1,7 @@
 
 package wikt.multi.en;
 
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
-import wikt.constant.POS;
-
-import wikipedia.sql.Connect;
+//import wikipedia.sql.Connect;
 import wikt.constant.POS;
 import wikt.constant.ContextLabel;
 import wikt.util.WikiWord;
@@ -24,7 +20,7 @@ import wikt.word.WMeaning;
 
 public class WMeaningEnTest {
 
-    Connect     connect_enwikt; // connect_simplewikt;
+    //Connect     connect_enwikt; // connect_simplewikt;
 
     public WMeaningEnTest() {
     }
@@ -39,13 +35,13 @@ public class WMeaningEnTest {
 
     @Before
     public void setUp() {
-        connect_enwikt = new Connect();
-        connect_enwikt.Open(Connect.ENWIKT_HOST,Connect.ENWIKT_DB,Connect.ENWIKT_USER,Connect.ENWIKT_PASS,LanguageType.ru);
+        //connect_enwikt = new Connect();
+        //connect_enwikt.Open(Connect.ENWIKT_HOST,Connect.ENWIKT_DB,Connect.ENWIKT_USER,Connect.ENWIKT_PASS,LanguageType.ru);
     }
 
     @After
     public void tearDown() {
-        connect_enwikt.Close();
+        //connect_enwikt.Close();
     }
 
     @Test
@@ -54,7 +50,6 @@ public class WMeaningEnTest {
         LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
-        String line;
 
         wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "luck";
@@ -84,8 +79,8 @@ public class WMeaningEnTest {
 
         WQuote[] _quote = null;
 
-        WMeaning expResult1 = new WMeaning(page_title, _labels, _def1_result, _quote);//_quote1_result);
-        WMeaning expResult2 = new WMeaning(page_title, _labels, _def2_result, _quote);//_quote2_result);
+        WMeaning expResult1 = new WMeaning(page_title, _labels, _def1_result, _quote, false);//_quote1_result);
+        WMeaning expResult2 = new WMeaning(page_title, _labels, _def2_result, _quote, false);//_quote2_result);
 
         // 1
         WMeaning result1 = WMeaningEn.parseOneDefinition(
@@ -117,6 +112,38 @@ public class WMeaningEnTest {
         ww_result = result2.getWikiWords();
         assertEquals(2, ww_result.length);
     }
+
+
+    @Test
+    public void testParseOneDefinition_en_form_of_template() {
+        System.out.println("parseOneDefinition_en_form_of_template");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+
+        wikt_lang       = LanguageType.en; // English Wiktionary
+        page_title      = "raggiamo";
+        lang_section    = LanguageType.en; // English word
+
+        String _def1_source =
+            "# {{form of|[[first-person|First-person]] [[plural]] [[present tense]]|[[raggiare#Italian|raggiare]]|lang=Italian}}";
+
+        String _def2_source =
+            "# {{form of|[[first-person|First-person]] [[singular]] [[imperfect tense]]|[[raggiare#Italian|raggiare]]|lang=Italian}}";
+
+        // 1
+        WMeaning result1 = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, _def1_source);
+        assertNotNull(result1);
+        assertTrue(result1.hasTemplateNotDefinition());
+
+        // 2
+        WMeaning result2 = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, _def2_source);
+        assertNotNull(result2);
+        assertTrue(result2.hasTemplateNotDefinition());
+    }
+
 
     @Test
     public void testParseOneDefinition_en_labels_and_WikiWord() {

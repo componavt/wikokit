@@ -159,8 +159,8 @@ public class WMeaningRu {
         // 5. extract quotations
         WQuote[] quote = null;
         // todo ...
-        
-        return new WMeaning(page_title, labels, wiki_definition, quote);
+
+        return new WMeaning(page_title, labels, wiki_definition, quote, false);
     }
 
 }

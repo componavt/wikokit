@@ -103,4 +103,58 @@ public class WLanguage {
         return lang_sections;
     }
 
+
+    /** True if the meaning section contains only templates (e.g. {{form of|}}
+     * or {{plural of|}}), i.e. there are no any real definitions,
+     * there are only references to main (normal) forms of the word.
+     *
+     * @param lang          parsed entry stored into the array of objects WLanguage
+     * @param wikt_lang     language of Wiktionary
+     */
+    public static boolean hasOnlyTemplatesWithoutDefinitions (
+                                LanguageType wikt_lang, WLanguage[] lang)
+    {
+        boolean b = false;
+        if(wikt_lang  == LanguageType.en) {
+            b = hasOnlyTemplatesWithoutDefinitions(lang);
+        }
+        //else if(l == LanguageType.ru) {
+        //} else { throw new NullPointerException("Null LanguageType");
+        //}
+        return b;
+    }
+
+    /** True if the meaning section contains only templates, 
+     * e.g. {{form_of|}}, or {{plural of|}},
+     * i.e. there are only references to main (normal) forms of the word,
+     * and there are no any real definitions.
+     *
+     * @param lang      parsed entry stored into the array of objects WLanguage
+     */
+    private static boolean hasOnlyTemplatesWithoutDefinitions (
+                                WLanguage[] lang)
+    {
+        boolean at_least_one_template = false;
+
+        for(int i=0; i<lang.length; i++) {
+            assert(null != lang[i]);
+
+            WPOS[] wpos = lang[i].getAllPOS();
+            for(int j=0; j<wpos.length; j++) {
+
+                assert(null != wpos[j]);
+                WMeaning[] wm = wpos[j].getAllMeanings();
+
+                for(WMeaning m : wm) {
+                    if(!m.hasTemplateNotDefinition())
+                        return false;
+                    
+                    at_least_one_template = true;
+                }
+            }
+        }
+        return at_least_one_template;
+    }
+
+
 }

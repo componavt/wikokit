@@ -33,6 +33,8 @@ public class WordBase {
      */
     private String  redirect_target;
 
+    private final static WLanguage[] NULL_WLANGUAGE_ARRAY = new WLanguage[0];
+
 
     /** Parses the article text.
      * Creates and stores parsed data to the word (WordBase)
@@ -55,6 +57,10 @@ public class WordBase {
             //LangText[] lang_sections = WLanguage.splitToLanguageSections(wikt_lang, page_title, s);
             lang = WLanguage.parse(wikt_lang, page_title, s);
         }
+
+        if(WLanguage.hasOnlyTemplatesWithoutDefinitions(wikt_lang, lang))
+            lang = NULL_WLANGUAGE_ARRAY;
+
     }
     
     /** Gets an article title in Wiktionary. */

@@ -29,6 +29,11 @@ public class WMeaning {
 
     private WikiText definition;
 
+    /** True, if there is template {{form of|}}, or {{plural of|}}, 
+     * instead of usual text in the definition. (enwikt)
+     */
+    private boolean  template_not_def;
+
     /** Word definition, e.g. "bullets" from text "# {{idiom}} [[bullet]]s" */
     //private StringBuffer    definition;
 
@@ -45,6 +50,7 @@ public class WMeaning {
         labels = null;
         definition = null;
         quote = null;
+        template_not_def = false;
     }
 
     /** Constructor.
@@ -53,13 +59,23 @@ public class WMeaning {
      * @param _labels
      * @param _definition wikified text of the definition
      * @param _quote
+     * @param _template_not_def true if there is template (e.g. {{form of|}} or
+     * {{plural of|}}) instead of definiton text (in enwikt)
      */
-    public WMeaning(String page_title,ContextLabel[] _labels, String _definition, WQuote[] _quote) {
+    public WMeaning(String page_title,ContextLabel[] _labels,
+                    String _definition, WQuote[] _quote, boolean _template_not_def) {
         labels = _labels;
         definition = WikiText.createOnePhrase(page_title, _definition);
         quote = _quote;
+        template_not_def = _template_not_def;
     }
+
     
+    /** True if there is template “form of” instead of definiton text (in enwikt). */
+    public boolean hasTemplateNotDefinition() {
+        return template_not_def;
+    }
+
     /** Gets array of context labels in the definition. */
     public ContextLabel[] getLabels() {
         return labels;
