@@ -81,14 +81,15 @@ public class Connect {
     //public final static String RUWIKT_DB   = "ruwikt20090122?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String RUWIKT_DB   = "ruwikt20090707?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String RUWIKT_DB   = "ruwikt20091228?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    public final static String RUWIKT_DB   = "ruwikt20100405?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    //public final static String RUWIKT_DB   = "ruwikt20100405?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_DB   = "ruwikt20100817?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // Russian Wiktionary parsed database
     //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
     //public final static String RUWIKT_PARSED_DB = "ruwikt20090707_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String RUWIKT_PARSED_DB = "ruwikt20091228_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    public final static String RUWIKT_PARSED_DB = "ruwikt20100405_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20100817_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     //public final static String RUWIKT_SQLITE = "ruwikt20090707.sqlite";

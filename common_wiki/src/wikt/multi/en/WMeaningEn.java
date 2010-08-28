@@ -27,6 +27,7 @@ import java.util.ArrayList;
 public class WMeaningEn {
 
     private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];
+    private final static ContextLabel[] NULL_CONTEXTLABEL_ARRAY = new ContextLabel[0];
 
     /** Gets position before first header ^===, e.g. */
     private final static Pattern ptrn_meaning_header_start = Pattern.compile(
@@ -169,6 +170,15 @@ public class WMeaningEn {
         if(0 == line.length())
             return null;
 
+        boolean form_of = false;
+        if(line.startsWith("{{form of|") ||
+           line.startsWith("{{plural of|"))
+        {
+            form_of = true;
+            return new WMeaning("", NULL_CONTEXTLABEL_ARRAY, "", null, form_of);
+        }
+        
+
         //if(line.startsWith("{{морфема"))
         //    return null;    // skip now, todo (parse) in future
 
@@ -191,7 +201,7 @@ public class WMeaningEn {
         WQuote[] quote = null;
         // todo ...
 
-        return new WMeaning(page_title, labels, wiki_definition, quote);
+        return new WMeaning(page_title, labels, wiki_definition, quote, form_of);
     }
 
 }

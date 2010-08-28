@@ -1,6 +1,6 @@
 /* WLanguageRu.java - corresponds to a language level of Russian Wiktionary word.
  *
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
