@@ -79,8 +79,8 @@ public class WMeaningEnTest {
 
         WQuote[] _quote = null;
 
-        WMeaning expResult1 = new WMeaning(page_title, _labels, _def1_result, _quote, false);//_quote1_result);
-        WMeaning expResult2 = new WMeaning(page_title, _labels, _def2_result, _quote, false);//_quote2_result);
+        //WMeaning expResult1 = new WMeaning(page_title, _labels, _def1_result, _quote, false);//_quote1_result);
+        //WMeaning expResult2 = new WMeaning(page_title, _labels, _def2_result, _quote, false);//_quote2_result);
 
         // 1
         WMeaning result1 = WMeaningEn.parseOneDefinition(
@@ -119,29 +119,33 @@ public class WMeaningEnTest {
         System.out.println("parseOneDefinition_en_form_of_template");
         LanguageType wikt_lang;
         LanguageType lang_section;
-        String page_title;
+        String page_title, source;
+        WMeaning wm;
 
         wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "raggiamo";
         lang_section    = LanguageType.en; // English word
 
-        String _def1_source =
-            "# {{form of|[[first-person|First-person]] [[plural]] [[present tense]]|[[raggiare#Italian|raggiare]]|lang=Italian}}";
+        // 1 form of
+        source = "# {{form of|[[first-person|First-person]] [[plural]] [[present tense]]|[[raggiare#Italian|raggiare]]|lang=Italian}}";
+        wm = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.hasTemplateNotDefinition());
 
-        String _def2_source =
-            "# {{form of|[[first-person|First-person]] [[singular]] [[imperfect tense]]|[[raggiare#Italian|raggiare]]|lang=Italian}}";
+        // 2 plural of
+        source = "# {{plural of| }}";
+        wm = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.hasTemplateNotDefinition());
 
-        // 1
-        WMeaning result1 = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, _def1_source);
-        assertNotNull(result1);
-        assertTrue(result1.hasTemplateNotDefinition());
-
-        // 2
-        WMeaning result2 = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, _def2_source);
-        assertNotNull(result2);
-        assertTrue(result2.hasTemplateNotDefinition());
+        // 3 es-verb form of
+        source = "# {{es-verb form of|mood=ger|ending=er|verb=hacer}}";
+        wm = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.hasTemplateNotDefinition());
     }
 
 

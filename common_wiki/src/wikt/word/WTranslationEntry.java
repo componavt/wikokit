@@ -38,6 +38,18 @@ public class WTranslationEntry {
         return phrases;
     }
 
+    /** Frees memory recursively. */
+    public void free ()
+    {
+        if(null != phrases) {
+            for(int i=0; i<phrases.length; i++) {
+                phrases[i].free();
+                phrases[i] = null;
+            }
+            phrases = null;
+        }
+    }
+
 
     /** Parses one entry (one line) of a translation box,
      * extracts a language and a list of translations (wikified words) for this language,

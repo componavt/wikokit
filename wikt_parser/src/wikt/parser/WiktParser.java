@@ -192,6 +192,9 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         // parses wiki text 'str', stores to the object 'word'
         WordBase word = new WordBase(page_title, native_lang, str);
 
+        if(word.hasOnlyTemplatesWithoutDefinitions())
+            return;
+
         if(word.isEmpty()) {
             System.out.println("Warning in WiktParser.parseWiktionaryEntry(): The article with the title '"+
                     page_title + "' after convert wiki to text: has no text.");

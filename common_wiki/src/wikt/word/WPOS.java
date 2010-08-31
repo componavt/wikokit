@@ -18,6 +18,7 @@ import wikt.multi.en.WEtymologyEn;
 import wikt.multi.en.WPOSEn;
 
 import java.util.Map;
+import java.util.Collection;
 
 
 /** Part of Speech may be a misnomer... It is the key descriptor for the 
@@ -81,6 +82,34 @@ public class WPOS {
     /** Gets all translations. */
     public WTranslation[] getAllTranslation() {
         return translation;
+    }
+
+    /** Frees memory recursively. */
+    public void free ()
+    {
+        if(null != meaning) {
+            for(int i=0; i<meaning.length; i++) {
+                meaning[i].free();
+                meaning[i] = null;
+            }
+            meaning = null;
+        }
+
+        if(null != relation) {
+            for(WRelation[] wr : relation.values())
+                for(WRelation r : wr)
+                    r.free();
+            relation.clear();
+            relation = null;
+        }
+
+        if(null != translation) {
+            for(int i=0; i<translation.length; i++) {
+                translation[i].free();
+                translation[i] = null;
+            }
+            translation = null;
+        }
     }
 
 

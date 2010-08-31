@@ -33,8 +33,17 @@ public class WordBase {
      */
     private String  redirect_target;
 
-    private final static WLanguage[] NULL_WLANGUAGE_ARRAY = new WLanguage[0];
+    /** True, if there are templates {{form of|}} or {{plural of|}},
+     * there are no any other text in the definition. (enwikt)
+     */
+    private boolean  template_not_def;
 
+    /** True if there are template (e.g. {{form of|}}, {{plural of|}}),
+     * {{es-verb form of|}}) instead of definiton text (in enwikt). */
+    public boolean hasOnlyTemplatesWithoutDefinitions() {
+        return template_not_def;
+    }
+    
 
     /** Parses the article text.
      * Creates and stores parsed data to the word (WordBase)
@@ -57,10 +66,7 @@ public class WordBase {
             //LangText[] lang_sections = WLanguage.splitToLanguageSections(wikt_lang, page_title, s);
             lang = WLanguage.parse(wikt_lang, page_title, s);
         }
-
-        if(WLanguage.hasOnlyTemplatesWithoutDefinitions(wikt_lang, lang))
-            lang = NULL_WLANGUAGE_ARRAY;
-
+        template_not_def = WLanguage.hasOnlyTemplatesWithoutDefinitions(wikt_lang, lang);
     }
     
     /** Gets an article title in Wiktionary. */

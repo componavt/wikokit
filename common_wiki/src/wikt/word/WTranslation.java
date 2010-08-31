@@ -69,6 +69,18 @@ public class WTranslation {
         return null;
     }
 
+    /** Frees memory recursively. */
+    public void free ()
+    {
+        if(null != entry) {
+            for(int i=0; i<entry.length; i++) {
+                entry[i].free();
+                entry[i] = null;
+            }
+            entry = null;
+        }
+    }
+
     /** Parses text (related to the Translation), creates and fills array of 
      * translations (WTranslation) for each meaning of a word.
      *
