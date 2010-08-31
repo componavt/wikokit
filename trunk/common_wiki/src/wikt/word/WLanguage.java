@@ -41,8 +41,18 @@ public class WLanguage {
     }
 
     private final static WLanguage[] NULL_WLANGUAGE_ARRAY = new WLanguage[0];
-    
-    /** Parses text, creates and fill array of homonym (WLanguage) for each language
+
+    /** Frees memory recursively. */
+    public void free ()
+    {
+        if(null != wpos) {
+            for(WPOS p : wpos)
+                p.free();
+            wpos = null;
+        }
+    }
+
+    /** Parses text, creates and fills array of homonym (WLanguage) for each language
      * @param wikt_lang     language of Wiktionary
      * @param page_title    word which are described in this article 'text'
      * @param text
@@ -67,7 +77,50 @@ public class WLanguage {
             wl[i].wpos = WPOS.parse(wikt_lang, page_title, lang_sections[i]);
         }
         
-        return wl;
+        return reduceNonUniqueLanguages (page_title, wl);
+    }
+
+    /** Reduces number of languages, removes any non unique languages.
+     * E.g. "kom" and "koi" refer to "kv" language code, see LanguageType.java
+     * So if the entry contains the description of two words: "kom" and "koi",
+     * then only the first one will be parsed ("kom"), the second ("koi") will be rejected.
+     *
+     * Side effect: the non unique languages ([] sources) will be set to NULL.
+     *
+     * @param page_title    word which are described in this article 'text'
+     * @param source        entry text parsed and stored into the objects
+     * @return
+     */
+    private static WLanguage[] reduceNonUniqueLanguages (
+                    String page_title,WLanguage[] source)
+    {
+        // 1. let's check that does exist any duplication
+        int duplication = 0;
+        for(int i=0; i<source.length; i++) {
+            for(int j=i+1; j<source.length; j++) {
+                if(source[i].lang == source[j].lang) {
+                    source[i].free();
+                    source[i] = null;
+                    duplication ++;
+                    break;
+                }
+            }
+        }
+        if(0 == duplication)
+            return source;
+
+        // 2. copy without duplication, i.e. skip empty (null) elements of array
+        assert(source.length - duplication > 0);
+
+        WLanguage[] dest = new WLanguage[source.length - duplication];
+        int dest_i = 0;
+        for(int i=0; i<source.length; i++) {
+            if(null != source[i]) {
+                dest [dest_i] = source[i];
+                dest_i ++;
+            }
+        }        
+        return dest;
     }
     
     

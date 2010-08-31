@@ -70,7 +70,7 @@ public class WMeaningRuTest {
         
         WQuote[] _quote = null;
 
-        WMeaning expResult = new WMeaning(page_title, _labels, _definition_wiki, _quote);      // expResult[0] = new WMeaning();
+        //WMeaning expResult = new WMeaning(page_title, _labels, _definition_wiki, _quote, false);      // expResult[0] = new WMeaning();
 
         line =  "# летательный [[аппарат]] тяжелее [[воздух]]а с жёстким [[крыло]]м и собственным [[мотор]]ом {{пример|Самолёт-истребитель.}} {{пример|Военный cамолёт.}} {{пример|Эскадрилья самолётов.}}";
         

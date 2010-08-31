@@ -701,7 +701,7 @@ public class LanguageType {
     public static final LanguageType cuk = new LanguageType("cuk", "Kuna", "Kuna");
     public static final LanguageType kvn = LanguageType.addNonUniqueCode(cuk, "kvn");
 
-    public static final LanguageType cv = new LanguageType("cv", "Р§ДѓРІР°С€Р»Р°", "Chuvash");
+    public static final LanguageType cv = new LanguageType("cv", "Čăvašla", "Chuvash");
     public static final LanguageType chv = LanguageType.addNonUniqueCode(cv, "chv");
 
     public static final LanguageType da = new LanguageType("da", "Dansk", "Danish");

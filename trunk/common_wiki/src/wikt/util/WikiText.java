@@ -55,6 +55,18 @@ public class WikiText {
         return wiki_words;
     }
 
+    /** Frees memory recursively. */
+    public void free ()
+    {
+        if(null != wiki_words) {
+            for(int i=0; i<wiki_words.length; i++)
+                wiki_words[i] = null;
+            wiki_words = null;
+        }
+    }
+
+
+
     /** Parses text, creates array of wiki words (words with hyperlinks),
      * e.g. text is "[[little]] [[bell]]", wiki_words[]="little", "bell"
      */

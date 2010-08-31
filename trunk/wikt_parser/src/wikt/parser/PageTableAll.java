@@ -1,6 +1,6 @@
 /* PageTableAll.java - parses all pages in the Wiktionary table 'page' (source database).
  *
- * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2005-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
@@ -21,7 +21,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "raggiavo", // temp
+        ///"sss", // temp ai    лым бор
 
         // English Wiktionary
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
@@ -30,15 +30,15 @@ public class PageTableAll {
 
 
         // Russian Wiktionary
-        "a", "the", "y", "at", "too", "an", "on", "ai", "Будда", "кулёма",
+        "a", "the", "y", "at", "too", "an", "on", "Будда", "кулёма",
         "адджындзинад",
         "Свирь",
         "Aare",
         "Saule", "galva", "sūris", "грано", // duplication of lang headers for : LanguageType.addNonUnique
-        "лым", "помидор", "Saule", "entre",
+        "лым", "помидор", "entre",
         "ridiculous",
         "picogray",
-        "бор",
+        "бор", "замок",
         "герб",     // &#160; in definition
         "губить",   // &#160; in semantic relations (synonym)
 

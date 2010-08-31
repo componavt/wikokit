@@ -53,6 +53,18 @@ public class WMeaning {
         template_not_def = false;
     }
 
+        /** Frees memory recursively. */
+    public void free ()
+    {
+        labels = null;
+
+        if(null != quote) {
+            //for(WQuote q : quote)
+                //q.free();
+            quote = null;
+        }
+    }
+
     /** Constructor.
      *
      * @param page_title
@@ -71,7 +83,8 @@ public class WMeaning {
     }
 
     
-    /** True if there is template “form of” instead of definiton text (in enwikt). */
+    /** True if there is template (e.g. {{form of|}} or {{plural of|}})
+     * instead of definiton text (in enwikt). */
     public boolean hasTemplateNotDefinition() {
         return template_not_def;
     }

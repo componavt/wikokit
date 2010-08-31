@@ -145,7 +145,7 @@ public class WPOSRu {
             end = m.start();
         else {
             end = 0;    // there is only one POS block, e.g. ==Verb I==, it is a little strange ...
-            System.out.println("Warning: there is only one POS block, e.g. ==Verb I== for the word '" + page_title + "' with language code  '" + lt.getLanguage().toString() + "' in WPOSRu.splitToPOSSections()");
+            System.out.println("Warning: there is only one POS block, e.g. ==Verb I== for the word '" + page_title + "' with language code '" + lt.getLanguage().toString() + "' in WPOSRu.splitToPOSSections()");
         }
         
         while(b_next) {

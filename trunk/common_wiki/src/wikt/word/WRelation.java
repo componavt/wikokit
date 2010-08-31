@@ -69,6 +69,19 @@ public class WRelation {
         return meaning_summary;
     }
 
+    /** Frees memory recursively. */
+    public void free ()
+    {
+        // WikiText wt
+        if(null != phrases) {
+            for(int i=0; i<phrases.length; i++) {
+                phrases[i].free();
+                phrases[i] = null;
+            }
+            phrases = null;
+        }
+    }
+
     /** Parses text (related to the semantic relations, e.g. synonymy),
      * creates and fills array of related words (WRelation) for each meaning of a word.
      *
