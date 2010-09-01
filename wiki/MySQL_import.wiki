@@ -12,8 +12,11 @@ My beloved WAMP tutorial pages:
 [http://www.softtime.ru/article/index.php?id_article=95 in Russian].
 
 = Xml2sql =
+Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL. 
 
-== Intro ==
+== Redirect and errors ==
+
+=== Intro ===
 
 The problem is the {{{"<redirect />"}}} element in the XML file.
 
@@ -22,12 +25,26 @@ The error message is:
 ./xml2sql unexpected element <redirect> ./xml2sql: parsing aborted at line 33 pos 16.
 }}}
 
-== Solution ==
+=== Solution ===
 
 Strip of the redirect-tags by using a perl script [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/redirect_in_pages-articles.xml2sql/del_redirect_in_pages-articles_xml.pl `del_redirect_in_pages-articles_xml.pl`] with the following format:
 {{{
 perl del_redirect_in_pages-articles_xml.pl in_file out_file
 }}}
+
+== Xml2sql ==
+Download [http://meta.wikimedia.org/wiki/Xml2sql Xml2sql].
+{{{
+$ cd /var/lib/mediawiki-1.16.0.enwikt.20100824/
+$ bzip2 -d enwiktionary-20100824-pages-articles.xml.bz2
+$ xml2sql -m enwiktionary-20100824-pages-articles.xml
+}}}
+      # it generates three files: page.sql, revision.sql and text.sql
+{{{
+$ mysql -u root -p enwikt20100824
+mysql$ SOURCE /temp/page.sql;SOURCE /temp/text.sql;SOURCE /temp/revision.sql; 
+}}}
+      # I do not recommend here SOURCE pagelinks.sql;SOURCE categorylinks.sql; see description below
 
 = See also ==
   * [categorylinks]
