@@ -29,9 +29,10 @@ NameVirtualHost *:80
     CustomLog D:/all/inetpub/logs/wikt_ru_log.txt common
 </VirtualHost>
 }}}
-Open in browser `localhost`.
-Database name, e.g. `enwikt20100824`.
-Storage Engine: `MyISAM`.
+  * Restart Apache.
+  * Open in browser `localhost`.
+  * Database name, e.g. `enwikt20100824`.
+  * Storage Engine: `MyISAM`.
 
 = Xml2sql =
 Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL. 
