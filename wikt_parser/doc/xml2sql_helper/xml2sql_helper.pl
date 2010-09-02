@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 
-# DESCRIPTION: 
+# DESCRIPTION:   .
 #
 #   Deletes redirect lines in the text file <redirect />.
 #   Deletes <DiscussionThreading>\n...\n</DiscussionThreading>
