@@ -85,6 +85,15 @@ mysql$ ALTER TABLE revision ADD COLUMN rev_len INT(10) UNSIGNED DEFAULT NULL AFT
 
 I do not recommend "SOURCE pagelinks.sql;SOURCE categorylinks.sql;" for very big Wikipedias, e.g. English Wikipedia, see description here [http://synarcher.sourceforge.net/#install_linux Synarcher] (read text after "Tables pagelinks and categorylinks require special attention...").
 
+=== Grant privilegies ==
+Add the user (e.g. 'javawiki') to MySQL database. Grant privileges at database levels (e.g. 'ruwiki' database). Open MySQL command-line and run commands:
+{{{
+        mysql>CREATE USER javawiki;
+        mysql>GRANT SELECT ON ruwiki.* TO javawiki@'localhost';
+        (with password; from any computer>GRANT SELECT PRIVILEGES ON ruwiki.* TO javawiki identified by '12345')
+        mysql>FLUSH PRIVILEGES;
+}}}
+
 = See also ==
   * [categorylinks]
 
