@@ -37,11 +37,11 @@ NameVirtualHost *:80
 = Xml2sql =
 Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL. 
 
-== Redirect and errors ==
+== Errors (Redirect, DiscussionThreading) ==
 
 === Intro ===
 
-The problem is the {{{"<redirect />"}}} element in the XML file.
+The problem are the {{{"<redirect />"}}} and {{{"<DiscussionThreading>"}}} elements in the XML file.
 
 The error message is: 
 {{{
@@ -50,10 +50,13 @@ The error message is:
 
 === Solution ===
 
-Strip of the redirect-tags by using a perl script [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/redirect_in_pages-articles.xml2sql/del_redirect_in_pages-articles_xml.pl `del_redirect_in_pages-articles_xml.pl`] with the following format:
+http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/xml2sql_helper/xml2sql_helper.pl
+
+Strip of the redirect-tags by using a perl script [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/xml2sql_helper/xml2sql_helper.pl `xml2sql_helper.pl`] with the following format:
 {{{
-perl del_redirect_in_pages-articles_xml.pl in_file out_file
+perl xml2sql_helper in_file out_file
 }}}
+Where `in_file` is `enwiktionary-20100824-pages-articles.xml`.
 
 == Xml2sql ==
 Download [http://meta.wikimedia.org/wiki/Xml2sql Xml2sql].
