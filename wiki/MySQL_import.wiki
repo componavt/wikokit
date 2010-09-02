@@ -11,6 +11,28 @@ My beloved WAMP tutorial pages:
 [http://fastec.altervista.org/Apache_PHP_MySQL.php Ultimate How To], 
 [http://www.softtime.ru/article/index.php?id_article=95 in Russian].
 
+Download [http://www.mediawiki.org/wiki/MediaWiki MediaWiki]. Unzip it, e.g. to:
+{{{
+D:\all\inetpub\mediawiki-1.16.0.enwikt.20100824 
+}}}
+Open file `httpd.conf`
+{{{
+gvim "C:\w\Apache Software Foundation\Apache2.2\conf\httpd.conf" 
+}}}
+Add the following text to it
+{{{
+NameVirtualHost *:80
+<VirtualHost *:80>
+    DocumentRoot D:/all/inetpub/mediawiki-1.16.0.enwikt.20100824
+    ServerName  enwikt
+    ErrorLog D:/all/inetpub/logs/wikt_ru_error_log.txt
+    CustomLog D:/all/inetpub/logs/wikt_ru_log.txt common
+</VirtualHost>
+}}}
+Open in browser `localhost`.
+Database name, e.g. `enwikt20100824`.
+Storage Engine: MyISAM.
+
 = Xml2sql =
 Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL. 
 
