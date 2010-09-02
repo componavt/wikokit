@@ -65,10 +65,15 @@ $ cd /var/lib/mediawiki-1.16.0.enwikt.20100824/
 $ bzip2 -d enwiktionary-20100824-pages-articles.xml.bz2
 $ xml2sql -m enwiktionary-20100824-pages-articles.xml
 }}}
-      # it generates three files: page.sql, revision.sql and text.sql
+Xml2sql generates three files: page.sql, revision.sql and text.sql
+
+== MySQL ==
 {{{
-$ mysql -u root -p enwikt20100824
-mysql$ SOURCE /temp/page.sql;SOURCE /temp/text.sql;SOURCE /temp/revision.sql; 
+$ mysql -u root -p
+USE enwikt20100824
+mysql$ SOURCE /temp/page.sql
+mysql$ SOURCE /temp/text.sql
+mysql$ SOURCE /temp/revision.sql 
 }}}
       # I do not recommend here SOURCE pagelinks.sql;SOURCE categorylinks.sql; see description below
 
