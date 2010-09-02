@@ -73,7 +73,17 @@ mysql$ SOURCE /temp/page.sql
 mysql$ SOURCE /temp/text.sql
 mysql$ SOURCE /temp/revision.sql 
 }}}
-      # I do not recommend here SOURCE pagelinks.sql;SOURCE categorylinks.sql; see description below
+
+If there is the error (due to `revision.sql`): _"ERROR 1136 (21S01): Column count doesn't match value count at row 1"_, then try the following commands (see [http://www.mediawiki.org/wiki/Talk:Revision_table#Problem%20with%20import%20wiki%20to%20MySQL MediaWiki/Talk:Revision_table]):
+
+remove two fields, load by _SOURCE_, and return (add) two fields back:
+{{{
+mysql$ ALTER TABLE revision DROP COLUMN rev_len, DROP COLUMN rev_parent_id; 
+mysql$ SOURCE /temp/revision.sql
+mysql$ ALTER TABLE revision ADD COLUMN rev_len INT(10) UNSIGNED DEFAULT NULL AFTER rev_deleted, ADD COLUMN rev_parent_id INT(10) UNSIGNED DEFAULT NULL AFTER rev_len;
+}}}
+
+I do not recommend "SOURCE pagelinks.sql;SOURCE categorylinks.sql;" for very big Wikipedias, e.g. English Wikipedia, see description here [http://synarcher.sourceforge.net/#install_linux Synarcher] (read text after "Tables pagelinks and categorylinks require special attention...").
 
 = See also ==
   * [categorylinks]
