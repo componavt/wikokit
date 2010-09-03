@@ -103,7 +103,7 @@ public class PageTableAll {
         
         try {
             s = wikt_conn.conn.createStatement ();
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append("SELECT page_title FROM page WHERE page_namespace=0 AND page_is_redirect=0");
             s.executeQuery(sb.toString());      //GetTitleByIDQuery(rs, s, sb);
             rs = s.getResultSet ();
@@ -124,14 +124,14 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), enc.GetUser()); // ISO8859_1 UTF8
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
 
-                if(DEBUG) {
+                /*if(DEBUG) {
                     // test problem pages:
                     if (n_cur < debug_pages.length + 1)
                         page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur-1]);
                         //page_title = wikt_conn.enc.EncodeFromJava("one"); // будуаръ centi- всё-равно
                     else
                         break;  //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
-                }
+                }*/
 
                 if(DEBUG && 0 == n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
