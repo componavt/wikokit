@@ -11,4 +11,5 @@ A step-by-step guide to launching your Wiktionary parser:
   * Download the latest [http://download.wikimedia.org/backup-index.html Wiktionary dump]
   * [MySQL_import Import Wiktionary database into local MySQL database]
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
+  * [SetupNetBeansForParsing Setup NetBeans environment for parsing]
   * ...
