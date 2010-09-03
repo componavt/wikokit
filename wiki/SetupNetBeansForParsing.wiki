@@ -5,9 +5,15 @@
 Add your content here.
 
 
-= Details =
+= Connect.java =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Open file `wikipedia.sql.Connect.java`.
+
+Add lines:
+{{{
+// English Wiktionary database
+public final static String ENWIKT_DB = "enwikt20100824?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+
+// English Wiktionary parsed database
+public final static String ENWIKT_PARSED_DB = "enwikt20100824_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+}}}
