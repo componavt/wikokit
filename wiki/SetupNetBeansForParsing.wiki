@@ -44,6 +44,14 @@ mysql$ DROP DATABASE enwikt20100824_parsed;
 mysql$ CREATE DATABASE enwikt20100824_parsed;
 mysql$ USE enwikt20100824_parsed
 mysql$ SOURCE D:\all\projects\java\synonyms\wikokit\wikt_parser\doc\wikt_parsed_empty.sql
+}}}
+
+Read twice very attentively parameters of your MySQL config file (tune your server to make it as fast as possible):
+{{{
+NET STOP MySQL
+gvim "C:\w\MySQL\MySQL Server 5.1\my.ini"
+NET START MySQL
+}}}
 
 $cd /enwikt20100824/wikt_parser
 $run_wikt_parser.bat en 0
