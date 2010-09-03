@@ -93,7 +93,7 @@ The result database is ready. It could be used as a source for the Wiktionary pa
 Add the user (e.g. 'javawiki') to MySQL database. Grant privileges at database levels (e.g. 'ruwiki' database). Open MySQL command-line and run commands:
 {{{
         mysql>CREATE USER javawiki;
-        mysql>GRANT SELECT ON ruwiki.* TO javawiki@'localhost';
+        mysql>GRANT SELECT ON ruwiki.* TO javawiki@'%';
         (with password; from any computer>GRANT SELECT PRIVILEGES ON ruwiki.* TO javawiki identified by '12345')
         mysql>FLUSH PRIVILEGES;
 }}}
