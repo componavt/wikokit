@@ -53,6 +53,8 @@ gvim "C:\w\MySQL\MySQL Server 5.1\my.ini"
 NET START MySQL
 }}}
 
+OK. Run it:
+{{{
 $cd /enwikt20100824/wikt_parser
 $run_wikt_parser.bat en 0
 }}}
