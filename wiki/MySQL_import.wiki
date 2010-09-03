@@ -85,6 +85,10 @@ mysql$ ALTER TABLE revision ADD COLUMN rev_len INT(10) UNSIGNED DEFAULT NULL AFT
 
 I do not recommend "SOURCE pagelinks.sql;SOURCE categorylinks.sql;" for very big Wikipedias, e.g. English Wikipedia, see description here [http://synarcher.sourceforge.net/#install_linux Synarcher] (read text after "Tables pagelinks and categorylinks require special attention...").
 
+The result database is ready. It could be used as a source for the Wiktionary parser. Let's dump it into file (just in case):
+
+    * mysqldump --opt -u root -p --compatible=ansi --default-character-set=binary enwikt20100824 > enwikt20100824.sql 
+
 === Grant privilegies ==
 Add the user (e.g. 'javawiki') to MySQL database. Grant privileges at database levels (e.g. 'ruwiki' database). Open MySQL command-line and run commands:
 {{{
