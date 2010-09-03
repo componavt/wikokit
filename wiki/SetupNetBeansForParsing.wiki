@@ -1,4 +1,5 @@
 #summary Setup NetBeans environment for parsing.
+#labels Phase-Implementation,MySQL,MRD,parsing
 
 = Introduction =
 
@@ -17,3 +18,12 @@ public final static String ENWIKT_DB = "enwikt20100824?useUnicode=false&characte
 // English Wiktionary parsed database
 public final static String ENWIKT_PARSED_DB = "enwikt20100824_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 }}}
+
+= wikt_parser =
+
+  * Set *wikt_parser* as a main project in NetBeans.
+  * Compile it.
+  * Open project properties / Run. Set:
+    * Main class: `wikt.parser.Main`
+    * Arguments: `en 0`
+    * VM options: `-Xms1212m -Xmx1212m -Xmn16m -XX:+DisableExplicitGC -verbose:gc`
