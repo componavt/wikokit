@@ -98,6 +98,9 @@ Add the user (e.g. 'javawiki') to MySQL database. Grant privileges at database l
         mysql>FLUSH PRIVILEGES;
 }}}
 
+= Next step =
+  * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
+
 = See also ==
   * [categorylinks]
 
