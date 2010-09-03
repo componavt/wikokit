@@ -78,32 +78,24 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    //public final static String RUWIKT_DB   = "ruwikt20090122?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    //public final static String RUWIKT_DB   = "ruwikt20090707?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    //public final static String RUWIKT_DB   = "ruwikt20091228?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    //public final static String RUWIKT_DB   = "ruwikt20100405?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     public final static String RUWIKT_DB   = "ruwikt20100817?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // Russian Wiktionary parsed database
-    //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    //public final static String RUWIKT_PARSED_DB = "ruwikt20090122_parsed?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
-    //public final static String RUWIKT_PARSED_DB = "ruwikt20090707_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    //public final static String RUWIKT_PARSED_DB = "ruwikt20091228_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     public final static String RUWIKT_PARSED_DB = "ruwikt20100817_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     //public final static String RUWIKT_SQLITE = "ruwikt20090707.sqlite";
     public final static String RUWIKT_SQLITE = "ruwikt20100405.sqlite";
 
-    // English Wiktionary
+    // English Wiktionary database
     // use: connect_ruwikt.Open(Connect.WP_EN_HOST,Connect.WP_EN_DB,Connect.WP_EN_USER,Connect.WP_EN_PASS);
-    public final static String ENWIKT_HOST   = "localhost";
-    public final static String ENWIKT_USER   = "javawiki";
-    public final static String ENWIKT_PASS   = "";
-    public final static String ENWIKT_DB   = "enwikt20100106?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_HOST  = "localhost";
+    public final static String ENWIKT_USER  = "javawiki";
+    public final static String ENWIKT_PASS  = "";
+    public final static String ENWIKT_DB = "enwikt20100824?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
-    // Russian Wiktionary parsed database
-    public final static String ENWIKT_PARSED_DB = "enwikt20100106_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    // English Wiktionary parsed database
+    public final static String ENWIKT_PARSED_DB = "enwikt20100824_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     public final static String ENWIKT_SQLITE = "enwikt20100106.sqlite";

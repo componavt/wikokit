@@ -1534,6 +1534,7 @@ public class LanguageType {
     public static final LanguageType nci = LanguageType.addNonUnique(nah, "nci", "Classical Nahuatl");
     public static final LanguageType nhx = LanguageType.addNonUnique(nah, "nhx", "Isthmus-Mecayapan Nahuatl");
     public static final LanguageType npl = LanguageType.addNonUnique(nah, "npl", "Southeastern Puebla Nahuatl");
+    public static final LanguageType ppl = LanguageType.addNonUnique(nah, "ppl", "Pipil");
 
     public static final LanguageType nam = new LanguageType("nam", "Ngan'gityemerri", "Ngan'gityemerri");
     public static final LanguageType nam2 = LanguageType.addNonUniqueName(nam, "Nangikurrunggurr");
