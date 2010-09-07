@@ -12,4 +12,5 @@ A step-by-step guide to launching your Wiktionary parser:
   * [MySQL_import Import Wiktionary database into local MySQL database]
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
   * [SetupNetBeansForParsing Setup NetBeans environment for parsing]
+  * [SQLite Convert the Wiktionary parsed database (MySQL) into SQLite file]
   * ...
