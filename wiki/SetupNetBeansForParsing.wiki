@@ -61,3 +61,6 @@ $run_wikt_parser.bat en 0
 
 = Previous step =
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
+
+= Next step =
+  * [SQLite Convert the Wiktionary parsed database (MySQL) into SQLite file]
