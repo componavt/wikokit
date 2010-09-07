@@ -1,4 +1,4 @@
-#summary Setup NetBeans environment for parsing.
+#summary Setup NetBeans environment for parsing, run parser.
 #labels Phase-Implementation,MySQL,MRD,parsing
 
 = Introduction =
