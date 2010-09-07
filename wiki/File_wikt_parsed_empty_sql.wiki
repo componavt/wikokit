@@ -39,7 +39,7 @@ ALTER TABLE `relation` DROP INDEX `idx_software_key` ,
 ADD INDEX `idx_software_key` ( `software_key` ( 3 ) );
 
 = Previous step =
-  * [MySQL_import Import Wiktionary database into local MySQL database]]
+  * [MySQL_import Import Wiktionary database into local MySQL database]
 
 = Next step =
-  * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
+  * [SetupNetBeansForParsing Setup NetBeans environment for parsing, run parser]
