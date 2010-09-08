@@ -8,7 +8,7 @@ But...
 The user will be happy do not install MySQL, 
 so we need to dump Wiktionary parsed database (MySQL) and to convert into SQLite format.
 
-The wiwordik application will be distributed with SQLite file.
+The wiwordik application is distributed with SQLite file.
 
 = Conversion =
 == Tables' structure preparations ==
