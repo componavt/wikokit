@@ -79,6 +79,12 @@ private void OpenSQLite() {
 String s = "jdbc:sqlite:C:/w/bin/ruwikt20100405.sqlite";
 }}}
 
+=== Java libraries ==
+
+Check that you have the latest versions of the libs:
+  * [http://www.xerial.org/trac/Xerial/wiki/SQLiteJDBC SQLiteJDBC]
+  * [http://dev.mysql.com/downloads/connector/j/5.1.html#downloads mysql-connector-java] (Connector/J 5.1.13 or later)
+
 = See also =
   * [wiwordikSetupExe] - How to compile wiwordik-setup-X.XX.jar and .exe with the created SQLite data file
 
