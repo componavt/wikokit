@@ -48,6 +48,10 @@ Vim regular expressions in order to change data of INSERT commands into SQLite f
 Merge two files (with tables structure and data) into one:
   * `ruwikt20100405_parsed_data.sql += wikt_parsed_structure.sql`
 
+But... split `wikt_parsed_structure.sql` so, that:
+  * `CREATE TABLE...` at the top of the file
+  * `CREATE INDEX...` at the end of the file
+
 == SQLite shell ==
 
 Read the note "[http://componavt.livejournal.com/3393.html Let's speed up SQLite]".
