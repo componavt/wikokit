@@ -57,6 +57,7 @@ Run SQLite, load and backup the SQLite database:
 sqlite3
 .read "C:/w/bin/ruwikt20100405_parsed_data.sql"
 PRAGMA integrity_check;
+VACUUM;
 .backup "C:/w/bin/ruwikt20100405.sqlite"
 }}}
 
