@@ -57,7 +57,6 @@ public class TranslationTableAll {
         Statement   s = null;
         ResultSet   rs= null;
         long    t_start;
-        float   t_work;
 
         int n_unknown_lang_pos = 0; // translations into unknown languages
 
@@ -137,6 +136,7 @@ public class TranslationTableAll {
         }
 
         long  t_end;
+        float   t_work;
         t_end  = System.currentTimeMillis();
         t_work = (t_end - t_start)/1000f; // in sec
         System.out.println(//"\nTime sec:" + t_work +
@@ -153,9 +153,11 @@ public class TranslationTableAll {
         Connect wikt_parsed_conn = new Connect();
 
         // Russian
+        LanguageType native_lang = LanguageType.ru;
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
         // English
+        //LanguageType native_lang = LanguageType.en;
         //wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
 
         TLang.createFastMaps(wikt_parsed_conn);
@@ -170,7 +172,7 @@ public class TranslationTableAll {
         wikt_parsed_conn.Close();
 
         System.out.println();
-        WikiPrinterStat.printTranslationPerLanguage(m);
+        WikiPrinterStat.printTranslationPerLanguage(native_lang, m);
         System.out.println("\nThere are translations into " + m.size() + " languages.");
         WikiPrinterStat.printFooter();
     }

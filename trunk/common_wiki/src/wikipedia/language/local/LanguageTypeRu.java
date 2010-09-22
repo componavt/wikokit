@@ -193,7 +193,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal co = new LanguageTypeRu("Корсиканский", LanguageType.co);
     public static final LanguageTypeLocal com = new LanguageTypeRu("Команчский", LanguageType.com);
     public static final LanguageTypeLocal cop = new LanguageTypeRu("Коптский", LanguageType.cop);
-    public static final LanguageTypeLocal cpg = new LanguageTypeRu("Каппадокийский", LanguageType.cpg);
+    // el public static final LanguageTypeLocal cpg = new LanguageTypeRu("Каппадокийский", LanguageType.cpg);
     public static final LanguageTypeLocal crh = new LanguageTypeRu("Крымскотатарский", LanguageType.crh);
     public static final LanguageTypeLocal cs = new LanguageTypeRu("Чешский", LanguageType.cs);
     public static final LanguageTypeLocal csb = new LanguageTypeRu("Кашубский", LanguageType.csb);
@@ -228,9 +228,9 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal elx = new LanguageTypeRu("Эламский", LanguageType.elx);
     public static final LanguageTypeLocal eml = new LanguageTypeRu("Эмилиано-романьольский", LanguageType.eml);
     public static final LanguageTypeLocal en = new LanguageTypeRu("Английский", LanguageType.en);
-    public static final LanguageTypeLocal en_au = new LanguageTypeRu("Английский (австралийский диалект)", LanguageType.en_au);
-    public static final LanguageTypeLocal en_nz = new LanguageTypeRu("Новозеландский вариант английского языка", LanguageType.en_nz);
-    public static final LanguageTypeLocal en_us = new LanguageTypeRu("Английский (американский)", LanguageType.en_us);
+    // en public static final LanguageTypeLocal en_au = new LanguageTypeRu("Английский (австралийский диалект)", LanguageType.en_au);
+    // en public static final LanguageTypeLocal en_nz = new LanguageTypeRu("Новозеландский вариант английского языка", LanguageType.en_nz);
+    // en public static final LanguageTypeLocal en_us = new LanguageTypeRu("Английский (американский)", LanguageType.en_us);
     public static final LanguageTypeLocal enm = new LanguageTypeRu("Среднеанглийский", LanguageType.enm);
     public static final LanguageTypeLocal eo = new LanguageTypeRu("Эсперанто", LanguageType.eo);
     public static final LanguageTypeLocal es = new LanguageTypeRu("Испанский", LanguageType.es);
@@ -253,8 +253,8 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal fo = new LanguageTypeRu("Фарерский", LanguageType.fo);
     public static final LanguageTypeLocal fon = new LanguageTypeRu("Фон", LanguageType.fon);
     public static final LanguageTypeLocal fr = new LanguageTypeRu("Французский", LanguageType.fr);
-    public static final LanguageTypeLocal fr_be = new LanguageTypeRu("Французский (бельгийский)", LanguageType.fr_be);
-    public static final LanguageTypeLocal fr_ch = new LanguageTypeRu("Французский (швейцарский)", LanguageType.fr_ch);
+    // fr public static final LanguageTypeLocal fr_be = new LanguageTypeRu("Французский (бельгийский)", LanguageType.fr_be);
+    // fr public static final LanguageTypeLocal fr_ch = new LanguageTypeRu("Французский (швейцарский)", LanguageType.fr_ch);
     public static final LanguageTypeLocal frm = new LanguageTypeRu("Среднефранцузский", LanguageType.frm);
     public static final LanguageTypeLocal fro = new LanguageTypeRu("Старофранцузский", LanguageType.fro);
     public static final LanguageTypeLocal frp = new LanguageTypeRu("Франкопровансальский", LanguageType.frp);
@@ -264,7 +264,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal ga = new LanguageTypeRu("Ирландский", LanguageType.ga);
     public static final LanguageTypeLocal gag = new LanguageTypeRu("Гагаузский", LanguageType.gag);
     public static final LanguageTypeLocal gan = new LanguageTypeRu("Гань", LanguageType.gan);
-    public static final LanguageTypeLocal gd = new LanguageTypeRu("Шотландский", LanguageType.gd);
+    public static final LanguageTypeLocal gd = new LanguageTypeRu("Шотландский (кельтский)", LanguageType.gd);
     public static final LanguageTypeLocal gez = new LanguageTypeRu("Геэз", LanguageType.gez);
     public static final LanguageTypeLocal gil = new LanguageTypeRu("Кирибати", LanguageType.gil);
     public static final LanguageTypeLocal gl = new LanguageTypeRu("Галисийский", LanguageType.gl);
@@ -498,12 +498,12 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal pi = new LanguageTypeRu("Пали", LanguageType.pi);
     public static final LanguageTypeLocal pih = new LanguageTypeRu("Питкэрнский-Норфолкский", LanguageType.pih);
     public static final LanguageTypeLocal pis = new LanguageTypeRu("Пиджин Соломоновых островов", LanguageType.pis);
-    public static final LanguageTypeLocal pinyin = new LanguageTypeRu("Пиньинь", LanguageType.pinyin);
+    // zh public static final LanguageTypeLocal pinyin = new LanguageTypeRu("Пиньинь", LanguageType.pinyin);
     public static final LanguageTypeLocal pjt = new LanguageTypeRu("Питьянтьятьяра", LanguageType.pjt);
     public static final LanguageTypeLocal pl = new LanguageTypeRu("Польский", LanguageType.pl);
     public static final LanguageTypeLocal pms = new LanguageTypeRu("Пьемонтский", LanguageType.pms);
     public static final LanguageTypeLocal pmt = new LanguageTypeRu("Туамоту", LanguageType.pmt);
-    public static final LanguageTypeLocal pnt = new LanguageTypeRu("Понтийский", LanguageType.pnt);
+    // el public static final LanguageTypeLocal pnt = new LanguageTypeRu("Понтийский", LanguageType.pnt);
     public static final LanguageTypeLocal pox = new LanguageTypeRu("Полабский", LanguageType.pox);
     public static final LanguageTypeLocal ppol = new LanguageTypeRu("Протополинезийский", LanguageType.ppol);
     public static final LanguageTypeLocal prg = new LanguageTypeRu("Прусский", LanguageType.prg);
@@ -571,7 +571,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal solresol = new LanguageTypeRu("Сольресоль", LanguageType.solresol);
     public static final LanguageTypeLocal so = new LanguageTypeRu("Сомалийский", LanguageType.so);
     public static final LanguageTypeLocal sog = new LanguageTypeRu("Согдийский", LanguageType.sog);
-    public static final LanguageTypeLocal sot = new LanguageTypeRu("Сесото", LanguageType.sot);
+    // st public static final LanguageTypeLocal sot = new LanguageTypeRu("Сесото", LanguageType.sot);
     public static final LanguageTypeLocal sov = new LanguageTypeRu("Сонсорол", LanguageType.sov);
     public static final LanguageTypeLocal sqi = new LanguageTypeRu("Албанский", LanguageType.sqi);
     public static final LanguageTypeLocal sr = new LanguageTypeRu("Сербский", LanguageType.sr);
@@ -613,7 +613,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal tpi = new LanguageTypeRu("Ток-писин", LanguageType.tpi);
     public static final LanguageTypeLocal tr = new LanguageTypeRu("Турецкий", LanguageType.tr);
     public static final LanguageTypeLocal tru = new LanguageTypeRu("Туройо", LanguageType.tru);
-    public static final LanguageTypeLocal tsd = new LanguageTypeRu("Цаконский", LanguageType.tsd);
+    // el public static final LanguageTypeLocal tsd = new LanguageTypeRu("Цаконский", LanguageType.tsd);
     public static final LanguageTypeLocal tsi = new LanguageTypeRu("Цимшианский", LanguageType.tsi);
     public static final LanguageTypeLocal tsn = new LanguageTypeRu("Тсвана", LanguageType.tsn);
     public static final LanguageTypeLocal tso = new LanguageTypeRu("Тсонга", LanguageType.tso);
@@ -685,7 +685,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal xtg = new LanguageTypeRu("Галльский", LanguageType.xtg);
     public static final LanguageTypeLocal xto = new LanguageTypeRu("Тохарский", LanguageType.xto);
     public static final LanguageTypeLocal xum = new LanguageTypeRu("Умбрский", LanguageType.xum);
-    public static final LanguageTypeLocal xve = new LanguageTypeRu("Венетский", LanguageType.xve);
+    public static final LanguageTypeLocal xve = new LanguageTypeRu("Венетский (древний)", LanguageType.xve);
     public static final LanguageTypeLocal xvn = new LanguageTypeRu("Вандальский", LanguageType.xvn);
 
     public static final LanguageTypeLocal yej = new LanguageTypeRu("Еврейско-греческий", LanguageType.yej);

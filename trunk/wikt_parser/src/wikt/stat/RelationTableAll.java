@@ -322,9 +322,9 @@ public class RelationTableAll {
         // Connect to wikt_parsed database
         Connect wikt_parsed_conn = new Connect();
         int threshold_relations, threshold_type_relations;
-
+/*
         // Russian
-/*        LanguageType native_lang = LanguageType.ru;
+        LanguageType native_lang = LanguageType.ru;
         threshold_relations = 14;
         threshold_type_relations = 5;
         if(DEBUG) threshold_relations = 3;

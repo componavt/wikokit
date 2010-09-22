@@ -27,6 +27,10 @@ public class PageTableAll {
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
         "amana", "ke", "kali", "let", "met", "chan", "bo", "m", 
         "raggiavo", "raggiamo", // Template:form of
+        "centonovantaquattresimi", // Template:plural of
+        "for all intensive purposes", "illegal number", // too much <references />
+        "kenoviiva", "forward slash", "\\", // backslash
+        "Australopithecus", "cm", // Error (TranslationTableAll.countTranslationPerLanguage()): There is a translation box from a foreign language, code=mul,
 
 
         // Russian Wiktionary
