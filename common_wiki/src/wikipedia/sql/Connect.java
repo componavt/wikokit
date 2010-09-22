@@ -84,8 +84,7 @@ public class Connect {
     public final static String RUWIKT_PARSED_DB = "ruwikt20100817_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
-    //public final static String RUWIKT_SQLITE = "ruwikt20090707.sqlite";
-    public final static String RUWIKT_SQLITE = "ruwikt20100405.sqlite";
+    public final static String RUWIKT_SQLITE = "ruwikt20100817.sqlite";
 
     // English Wiktionary database
     // use: connect_ruwikt.Open(Connect.WP_EN_HOST,Connect.WP_EN_DB,Connect.WP_EN_USER,Connect.WP_EN_PASS);
@@ -97,8 +96,8 @@ public class Connect {
     // English Wiktionary parsed database
     public final static String ENWIKT_PARSED_DB = "enwikt20100824_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
-    // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
-    public final static String ENWIKT_SQLITE = "enwikt20100106.sqlite";
+    public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20100824.sqlite";
+    //public final static String ENWIKT_SQLITE = "enwikt20100824.sqlite";
 
     
     // IDF (inverse document frequency) database

@@ -222,7 +222,7 @@ public class WikiPrinterStat {
 
         System.out.println("\n{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         System.out.print("! Word || Number<br>of<br>relations || Types<br>of<br>semantic<br>relations || Number<br>of<br>meanings || POS || Language code || Language name");
-        
+
         for(TLangPOS lang_pos : words_rich_in_relations) {
             
             String page_title = lang_pos.getPage().getPageTitle();
@@ -253,15 +253,21 @@ public class WikiPrinterStat {
      * @param m_lang_n map of maps with number of translations into
      * English, Russian etc. (lang -> count)
      */
-    public static void printTranslationPerLanguage (Map<LanguageType, Integer> m_lang_n) {
+    public static void printTranslationPerLanguage (
+                                    LanguageType native_lang,
+                                    Map<LanguageType, Integer> m_lang_n) {
 
         int total = 0; // total number of translations
         
         // print header line
         // print header line
         System.out.println("{| class=\"sortable prettytable\"");
-        System.out.println("! Language name || Language code || Number");
-        
+        System.out.print("! Language name || Language code || Number");
+
+        if(LanguageType.en != native_lang)
+            System.out.print("|| in " + native_lang.getName());
+        System.out.println();
+
         // print values
         for(LanguageType lang : m_lang_n.keySet()) {
             /*if(!m_lang_rel_n.containsKey(lang))
@@ -269,10 +275,18 @@ public class WikiPrinterStat {
             else {*/
                 
                 int n = m_lang_n.get(lang);
-                System.out.println("|-\n! " + lang.getName() + " || " + lang.getCode() + "\n|| " + n);
+                System.out.print("|-\n! " + lang.getName() + " || " + lang.getCode() + "\n|| " + n);
                 //System.out.print("|| " + lang.getCode() + " || " + lang.getName());
                 // System.out.println(" || " + n + " ||");
-                
+
+                if(LanguageType.en != native_lang) {
+                    String local_name = "";
+                    if (lang.hasTranslation(native_lang))
+                        local_name = lang.translateTo(native_lang);
+                    System.out.print(" || " + local_name);
+                }
+                System.out.println();
+
                 total += n;
             //}
         }
