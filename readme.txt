@@ -37,7 +37,7 @@ See gpl.txt and "notice" for license details.
 wikokit is provided as binary (wikokit-X.X.X.tar.gz) and full source code 
 (wikokit-X.X.X.src.tar.gz).
 
---- rewrite below
+--- rewrite below.
 
 Synarcher searches synonyms (and related words) in a set of texts of special 
 structure (like Wikipedia and other wiki-resources).
