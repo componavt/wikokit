@@ -34,6 +34,7 @@ public class PageTableAll {
 
 
         // Russian Wiktionary
+        "!", "процессуальное право", "материальное право", "вздуть", "голубой",
         "a", "the", "y", "at", "too", "an", "on", "Будда", "кулёма",
         "адджындзинад",
         "Свирь",
@@ -55,7 +56,7 @@ public class PageTableAll {
         "агиохронотопоним", "при-", // TWikiText.java storeToDB())::
                                     // two very long wiki_text has the same 100 first symbols. Insertion failed
 
-        "ы", // Russian letter
+        "ы", "й", "-ичн", "-ка", // Russian letters and suffix
         "Abessinia", "Arabian", "Asianus", "Avernus", "Guatemala", "baba", // unknown language code 'null'
         "FDR", // abbrev
         "барак",
@@ -65,7 +66,7 @@ public class PageTableAll {
         "всё-равно",// soft-error redirect, template "{{wrongname|}}" = "{{misspelling of|}}"
         "маня",     // soft redirect, prints the word normal form (lemma)
         "негритянка",
-        "borda", "one", "vai", // -lang-
+        "borda", "one", "vai", "aqhsna", // -lang- --lang--
         "шах",  // TMeaning.insert()):: null argument lang_pos
         "злато", "зограф", "кан", "кар", "карта",
         "журавль", "игнатовец", "мурашкинец", 

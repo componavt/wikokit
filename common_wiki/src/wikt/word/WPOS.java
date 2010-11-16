@@ -119,7 +119,7 @@ public class WPOS {
 
     private Map<Relation, WRelation[]> relation*/
     
-    /** Parses text, creates and fill array of meanings (WLanguage), 
+    /** Parses text, creates and fills array of meanings (WLanguage),
      * semantic relations, translations.
      * 
      * @param wikt_lang     language of Wiktionary
