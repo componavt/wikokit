@@ -524,7 +524,10 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal rmr = new LanguageTypeRu("Кало", LanguageType.rmr);
     // rn run public static final LanguageTypeLocal rn = new LanguageTypeRu("Рунди", LanguageType.rn);
     public static final LanguageTypeLocal ro = new LanguageTypeRu("Румынский", LanguageType.ro);
+    public static final LanguageTypeLocal roa_gal = new LanguageTypeRu("Галло", LanguageType.roa_gal);
+    public static final LanguageTypeLocal roa_nor = new LanguageTypeRu("Нормандский", LanguageType.roa_nor);
     public static final LanguageTypeLocal roa_tara = new LanguageTypeRu("Тарантинский", LanguageType.roa_tara);
+    public static final LanguageTypeLocal roa_ptg = new LanguageTypeRu("Галисийско-португальский", LanguageType.roa_ptg);
     public static final LanguageTypeLocal rom = new LanguageTypeRu("Цыганский", LanguageType.rom);
     public static final LanguageTypeLocal romaji = new LanguageTypeRu("Ромадзи", LanguageType.romaji);
     public static final LanguageTypeLocal rtm = new LanguageTypeRu("Ротуманский", LanguageType.rtm);
@@ -655,6 +658,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal wam = new LanguageTypeRu("Массачусетский", LanguageType.wam);
     public static final LanguageTypeLocal war = new LanguageTypeRu("Варайский", LanguageType.war);
     public static final LanguageTypeLocal was = new LanguageTypeRu("Уошо", LanguageType.was);
+    public static final LanguageTypeLocal wba = new LanguageTypeRu("Варао", LanguageType.wba);
     public static final LanguageTypeLocal wbp = new LanguageTypeRu("Вальбири", LanguageType.wbp);
     public static final LanguageTypeLocal wlm = new LanguageTypeRu("Средневаллийский", LanguageType.wlm);
     public static final LanguageTypeLocal wo = new LanguageTypeRu("Волоф", LanguageType.wo);
