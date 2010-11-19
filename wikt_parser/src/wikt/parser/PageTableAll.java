@@ -24,6 +24,7 @@ public class PageTableAll {
         ///"sss", // temp ai    лым бор
 
         // English Wiktionary
+        "Main Page", // should be omitted
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
         "amana", "ke", "kali", "let", "met", "chan", "bo", "m", 
         "raggiavo", "raggiamo", // Template:form of
