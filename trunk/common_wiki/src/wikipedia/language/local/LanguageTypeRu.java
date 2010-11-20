@@ -188,6 +188,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal chumas = new LanguageTypeRu("Чумашский", LanguageType.chumas);
     // cu chu_ru public static final LanguageTypeLocal chu_ru = new LanguageTypeRu("Церковнославянский", LanguageType.chu_ru);
     public static final LanguageTypeLocal chy = new LanguageTypeRu("Шайенский", LanguageType.chy);
+    public static final LanguageTypeLocal cia = new LanguageTypeRu("Чиа-чиа", LanguageType.cia);
     public static final LanguageTypeLocal cic = new LanguageTypeRu("Чикасо", LanguageType.cic);
     public static final LanguageTypeLocal cjs = new LanguageTypeRu("Шорский", LanguageType.cjs);
     public static final LanguageTypeLocal ckb = new LanguageTypeRu("Сорани", LanguageType.ckb);
