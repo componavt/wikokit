@@ -628,7 +628,6 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal tt = new LanguageTypeRu("Татарский", LanguageType.tt);
     public static final LanguageTypeLocal ttt = new LanguageTypeRu("Татский", LanguageType.ttt);
     public static final LanguageTypeLocal tum = new LanguageTypeRu("Тумбука", LanguageType.tum);
-    public static final LanguageTypeLocal tup = new LanguageTypeRu("Тупи-гуарани", LanguageType.tup);
     public static final LanguageTypeLocal tvl = new LanguageTypeRu("Тувалу", LanguageType.tvl);
     // aka -> twi public static final LanguageTypeLocal twi = new LanguageTypeRu("Чви", LanguageType.twi);
     public static final LanguageTypeLocal ty = new LanguageTypeRu("Таитянский", LanguageType.ty);
