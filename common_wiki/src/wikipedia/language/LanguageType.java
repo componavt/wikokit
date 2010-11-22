@@ -1769,33 +1769,37 @@ public class LanguageType {
     // zlm 	Colloquial Malay
 
     public static final LanguageType plm = LanguageType.addNonUnique(ms, "plm", "Palembang");
-    // abs 	Ambonese Malay
-    public static final LanguageType abs    = new LanguageType("abs", "abs", "Ambonese");
+    
+    public static final LanguageType abs = new LanguageType("abs", "abs", "Ambonese");
+    public static final LanguageType abs2 = LanguageType.addNonUniqueCode(abs, "Ambonese Malay");
 
-    // bpq 	Banda Malay
-    // btj 	Bacanese Malay
-    // bve 	Berau Malay
-    // bvu 	Bukit Malay
-    // ccm 	Malaccan Creole Malay
-    // coa 	Cocos Islands Malay
-    // jax 	Jambi Malay
-    // lrt 	Larantuka Malay
-    // max 	North Moluccan Malay
-    // mbf 	Baba Malay
-    // meo 	Kedah Malay
-    // mfa 	Pattani Malay
-    // mfp 	Makassar Malay
-    // mhp 	Balinese Malay
-    // mkn 	Kupang Malay
-    // mqg 	Kota Bangun Kutai Malay
-    // msi 	Sabah Malay
-    // pmy 	Papuan Malay
-    // pse 	Central Malay
-    // sci 	Sri Lankan Creole Malay
-    // vkt 	Tenggarong Kutai Malay
-    // xmm 	Manado Malay
-    // zmi 	Negeri Sembilan Malay
-    // zsm 	Standard Malay
+    // in enwikt, but not in enwiki:
+    // bpq Banda Malay
+    // ccm Malaccan Creole Malay
+    
+    public static final LanguageType btj = LanguageType.addNonUnique(ms, "btj", "Bacanese Malay");
+    public static final LanguageType bve = LanguageType.addNonUnique(ms, "bve", "Berau Malay");
+    public static final LanguageType bvu = LanguageType.addNonUnique(ms, "bvu", "Bukit Malay");
+    public static final LanguageType coa = LanguageType.addNonUnique(ms, "coa", "Cocos Islands Malay");
+    public static final LanguageType jax = LanguageType.addNonUnique(ms, "jax", "Jambi Malay");
+    public static final LanguageType lrt = LanguageType.addNonUnique(ms, "lrt", "Larantuka Malay");
+    public static final LanguageType max = LanguageType.addNonUnique(ms, "max", "North Moluccan Malay");
+    public static final LanguageType mbf = LanguageType.addNonUnique(ms, "mbf", "Baba Malay");
+
+    // meo Kedah Malay
+    // mfa Pattani Malay
+    // mfp Makassar Malay
+    // mhp Balinese Malay
+    // mkn Kupang Malay
+    // mqg Kota Bangun Kutai Malay
+    // msi Sabah Malay
+    // pmy Papuan Malay
+    // pse Central Malay
+    // sci Sri Lankan Creole Malay
+    // vkt Tenggarong Kutai Malay
+    // xmm Manado Malay
+    // zmi Negeri Sembilan Malay
+    // zsm Standard Malay
     // ------------ eo Malay
     
 
