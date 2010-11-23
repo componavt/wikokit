@@ -1,4 +1,4 @@
-// current: Malay
+// current: Manchu
 // list: http://en.wiktionary.org/wiki/Special:Statistics
 
 // Мои любимые коды языков в ISO 639-3: bug, mud, nah, odt, fur, gui, gun, ksi, kum, lav, max, ln, src, msi, xmm, lol,
@@ -702,9 +702,9 @@ public class LanguageType {
     public static final LanguageType bgn = LanguageType.addNonUnique(bal, "bgn", "Western Balochi");
     public static final LanguageType bcc = LanguageType.addNonUnique(bal, "bcc", "Southern Balochi");
 
-
-    public static final LanguageType ban = new LanguageType("ban", "Bali", "Bali");// Balinese or Bali language (Nigeria)?
-    public static final LanguageType ban2 = LanguageType.addNonUniqueName(ban, "Balinese");
+    public static final LanguageType ban = new LanguageType("ban", "Basa Bali", "Balinese");// Balinese or Bali (Nigeria)?
+    public static final LanguageType bcn = new LanguageType("bcn", "Bibaali", "Bibaali");
+    public static final LanguageType bcp = new LanguageType("bcp", "Bali", "Bali");
 
     public static final LanguageType bas = new LanguageType("bas", "Basaa", "Basaa");
     public static final LanguageType bas2 = LanguageType.addNonUniqueName(bas, "Bissa");
@@ -1766,16 +1766,9 @@ public class LanguageType {
     // ms 	Malay 	msa
     public static final LanguageType ms = new LanguageType("ms", "Bahasa Melayu", "Malay");
     public static final LanguageType zlm = LanguageType.addNonUniqueCode(ms, "zlm");
-    // zlm 	Colloquial Malay
-
-    public static final LanguageType plm = LanguageType.addNonUnique(ms, "plm", "Palembang");
     
-    public static final LanguageType abs = new LanguageType("abs", "abs", "Ambonese");
+    public static final LanguageType abs = new LanguageType("abs", "Ambonese", "Ambonese");
     public static final LanguageType abs2 = LanguageType.addNonUniqueCode(abs, "Ambonese Malay");
-
-    // in enwikt, but not in enwiki:
-    // bpq Banda Malay
-    // ccm Malaccan Creole Malay
     
     public static final LanguageType btj = LanguageType.addNonUnique(ms, "btj", "Bacanese Malay");
     public static final LanguageType bve = LanguageType.addNonUnique(ms, "bve", "Berau Malay");
@@ -1785,21 +1778,29 @@ public class LanguageType {
     public static final LanguageType lrt = LanguageType.addNonUnique(ms, "lrt", "Larantuka Malay");
     public static final LanguageType max = LanguageType.addNonUnique(ms, "max", "North Moluccan Malay");
     public static final LanguageType mbf = LanguageType.addNonUnique(ms, "mbf", "Baba Malay");
+    public static final LanguageType meo = LanguageType.addNonUnique(ms, "meo", "Kedah Malay");
+    public static final LanguageType mfa = LanguageType.addNonUnique(ms, "mfa", "Pattani Malay");
+    public static final LanguageType mqg = LanguageType.addNonUnique(ms, "mqg", "Kota Bangun Kutai Malay");
+    public static final LanguageType msi = LanguageType.addNonUnique(ms, "msi", "Sabah Malay");
+    public static final LanguageType plm = LanguageType.addNonUnique(ms, "plm", "Palembang");
+    public static final LanguageType pmy = LanguageType.addNonUnique(ms, "pmy", "Papuan Malay");
+    public static final LanguageType pse = LanguageType.addNonUnique(ms, "pse", "Central Malay");
 
-    // meo Kedah Malay
-    // mfa Pattani Malay
+    public static final LanguageType sci = new LanguageType("sci", "Sri Lankan Malay", "Sri Lankan Malay");
+    public static final LanguageType sci2 = LanguageType.addNonUniqueCode(sci, "Sri Lankan Creole Malay");
+
+    public static final LanguageType vkt = LanguageType.addNonUnique(ms, "vkt", "Tenggarong Kutai Malay");
+    public static final LanguageType xmm = LanguageType.addNonUnique(ms, "xmm", "Manado Malay");
+    public static final LanguageType zmi = LanguageType.addNonUnique(ms, "zmi", "Negeri Sembilan Malay");
+    public static final LanguageType zsm = LanguageType.addNonUnique(ms, "zsm", "Standard Malay");
+
+    // in enwikt, but not in enwiki:
+    // bpq Banda Malay
+    // ccm Malaccan Creole Malay
     // mfp Makassar Malay
     // mhp Balinese Malay
     // mkn Kupang Malay
-    // mqg Kota Bangun Kutai Malay
-    // msi Sabah Malay
-    // pmy Papuan Malay
-    // pse Central Malay
-    // sci Sri Lankan Creole Malay
-    // vkt Tenggarong Kutai Malay
-    // xmm Manado Malay
-    // zmi Negeri Sembilan Malay
-    // zsm Standard Malay
+    // zlm Colloquial Malay
     // ------------ eo Malay
     
 
