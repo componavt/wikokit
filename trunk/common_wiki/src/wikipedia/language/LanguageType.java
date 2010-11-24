@@ -1,7 +1,7 @@
-// current: Manchu
+// current: North Frisian
 // list: http://en.wiktionary.org/wiki/Special:Statistics
 
-// Мои любимые коды языков в ISO 639-3: bug, mud, nah, odt, fur, gui, gun, ksi, kum, lav, max, ln, src, msi, xmm, lol,
+// Мои любимые коды языков в ISO 639-3: bug, mud, nah, odt, fur, gui, gun, ksi, kum, lav, max, ln, src, msi, chm, xmm, lol, sms
 
 // current: 01.log  unknown language: Woiwurrung
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
@@ -1048,8 +1048,8 @@ public class LanguageType {
     public static final LanguageType en_nz = LanguageType.addNonUnique(en, "en-nz", "New Zealand English");// Russian Wiktionary
     public static final LanguageType en_us = LanguageType.addNonUnique(en, "en-us", "American English");// Russian Wiktionary
 
-    public static final LanguageType ang    = new LanguageType("ang", "Anglo-Saxon", "Old English");
-    public static final LanguageType oen    = LanguageType.addNonUnique(ang, "oen", "Anglo-Saxon");
+    public static final LanguageType ang = new LanguageType("ang", "Anglo-Saxon", "Old English");
+    public static final LanguageType oen = LanguageType.addNonUnique(ang, "oen", "Anglo-Saxon");
 
     public static final LanguageType simple = new LanguageType("simple", "Simple English", "Simple English");
 
@@ -1142,7 +1142,7 @@ public class LanguageType {
     public static final LanguageType frs = new LanguageType("frs", "Eastern Frisian", "Eastern Frisian");
 
     public static final LanguageType fy = new LanguageType("fy", "Frysk", "West Frisian");
-    public static final LanguageType fry = LanguageType.addNonUniqueCode(fy, "fry");
+    public static final LanguageType fry = LanguageType.addNonUnique(fy, "fry", "Western Frisian");
     
     public static final LanguageType stq = new LanguageType("stq", "Seeltersk", "Saterland Frisian");
     public static final LanguageType ofs = new LanguageType("ofs", "Old Frisian", "Old Frisian");
@@ -1216,7 +1216,7 @@ public class LanguageType {
     public static final LanguageType gut2 = LanguageType.addNonUniqueName(gut, "Maléku Jaíka");
 
     public static final LanguageType gv = new LanguageType("gv", "Gaelg", "Manx");
-    public static final LanguageType glv = LanguageType.addNonUniqueCode(gv, "glv");
+    public static final LanguageType glv = LanguageType.addNonUnique(gv, "glv", "Manx Gaelic");
 
     public static final LanguageType ha = new LanguageType("ha", "Hausa", "Hausa");
     public static final LanguageType hau = LanguageType.addNonUniqueCode(ha, "hau");
@@ -1558,6 +1558,7 @@ public class LanguageType {
 
     public static final LanguageType lo = new LanguageType("lo", "Laotian", "Lao");
     public static final LanguageType lao = LanguageType.addNonUnique(lo, "lao", "Laotian");
+    public static final LanguageType pht = LanguageType.addNonUnique(lo, "pht", "Phu Thai");
 
     public static final LanguageType loc = new LanguageType("loc", "Onhan", "Onhan");
     public static final LanguageType loc2 = LanguageType.addNonUniqueName(loc, "Inonhan");
@@ -1734,11 +1735,16 @@ public class LanguageType {
 
     public static final LanguageType mn = new LanguageType("mn", "Mongolian", "Mongolian");
     public static final LanguageType mon = LanguageType.addNonUniqueCode(mn, "mon");
+    public static final LanguageType cmg = LanguageType.addNonUnique(mn, "cmg", "Classical Mongolian");
     public static final LanguageType khk = LanguageType.addNonUnique(mn, "khk", "Khalkha Mongolian");
     public static final LanguageType mvf = LanguageType.addNonUnique(mn, "mvf", "Peripheral Mongolian");
+    public static final LanguageType xng = LanguageType.addNonUnique(mn, "xng", "Middle Mongolian");
 
     public static final LanguageType mni = new LanguageType("mni", "Meitei", "Meitei");
     public static final LanguageType mni2 = LanguageType.addNonUniqueName(mni, "Manipuri");
+
+    public static final LanguageType mnw = new LanguageType("mnw", "Mon", "Mon");
+    public static final LanguageType omx = LanguageType.addNonUnique(mnw, "omx", "Old Mon");
 
     public static final LanguageType mo = new LanguageType("mo", "Moldovenească", "Moldovan");
     public static final LanguageType mol = LanguageType.addNonUniqueName(mo, "Moldavian");
@@ -1748,6 +1754,7 @@ public class LanguageType {
     
     public static final LanguageType mr = new LanguageType("mr", "Marathi", "Marathi");
     public static final LanguageType mar = LanguageType.addNonUniqueCode(mr, "mar");
+    public static final LanguageType omr = LanguageType.addNonUnique(mr, "omr", "Old Marathi");
 
     public static final LanguageType mop = new LanguageType("mop", "Mopan", "Mopan");
     public static final LanguageType mop2 = LanguageType.addNonUniqueName(mop, "Mopán");
@@ -1837,7 +1844,7 @@ public class LanguageType {
     public static final LanguageType mzn2 = LanguageType.addNonUniqueName(mzn, "Mazanderani");
 
     public static final LanguageType na = new LanguageType("na", "Dorerin Naoero", "Nauruan");
-    public static final LanguageType nau = LanguageType.addNonUniqueCode(na, "nau");
+    public static final LanguageType nau = LanguageType.addNonUnique(na, "nau", "Nauru");
 
 
 
@@ -1921,15 +1928,19 @@ public class LanguageType {
     // Norwegian ------------
     public static final LanguageType no = new LanguageType("no", "Norwegian", "Norwegian");
     public static final LanguageType nor = LanguageType.addNonUniqueCode(no, "nor");
-    
+    public static final LanguageType gmq_mno = LanguageType.addNonUnique(no, "gmq-mno", "Middle Norwegian");
+
     public static final LanguageType nn = new LanguageType("nn", "Norwegian Nynorsk", "Norwegian Nynorsk");
     public static final LanguageType nno = LanguageType.addNonUnique(nn, "nno", "Nynorsk");
     
     public static final LanguageType nb = new LanguageType("nb", "Bokmål", "Bokmål");
     public static final LanguageType nob = LanguageType.addNonUnique(nb, "nob", "Norwegian Bokmål");
+
+    public static final LanguageType rmg = new LanguageType("rmg", "Rodi", "Rodi");
+    public static final LanguageType rmg2 = LanguageType.addNonUniqueName(no, "Traveller Norwegian");
     // ------------ eo Norwegian
 
-    
+
 
     public static final LanguageType noo = new LanguageType("noo", "Nuu-chah-nulth", "Nuu-chah-nulth");
     public static final LanguageType noo2 = LanguageType.addNonUniqueName(noo, "Nootka");
@@ -1972,6 +1983,10 @@ public class LanguageType {
     public static final LanguageType oji = LanguageType.addNonUniqueCode(oj, "oji");
 
     public static final LanguageType ciw = LanguageType.addNonUnique(oj, "ciw", "Chippewa");
+    public static final LanguageType ciw2 = LanguageType.addNonUniqueName(oj, "Ojibway");
+    public static final LanguageType ciw3 = LanguageType.addNonUniqueName(oj, "Ojibwemowin");
+    public static final LanguageType ciw4 = LanguageType.addNonUniqueName(oj, "Southwestern Ojibwa");
+
     public static final LanguageType otw = LanguageType.addNonUnique(oj, "otw", "Ottawa");
 
     public static final LanguageType alq = new LanguageType("alq", "Algonquin", "Algonquin");
@@ -2005,8 +2020,9 @@ public class LanguageType {
 
     public static final LanguageType os = new LanguageType("os", "Иронау", "Ossetian");
     public static final LanguageType oss = LanguageType.addNonUnique(os, "oss", "Ossetic");
+    public static final LanguageType os2 = LanguageType.addNonUniqueName(os, "Ossete");
 
-    
+
 
     // Punjabi ------------
     public static final LanguageType pa = new LanguageType("pa", "Punjabi", "Punjabi");
@@ -2030,16 +2046,16 @@ public class LanguageType {
     public static final LanguageType pau = new LanguageType("pau", "Palauan", "Palauan");
     public static final LanguageType pau2 = LanguageType.addNonUniqueName(pau, "Palau");
 
-    public static final LanguageType pcm    = new LanguageType("pcm", "Nigerian Pidgin", "Nigerian Pidgin");
-    public static final LanguageType pcm2   = LanguageType.addNonUniqueName(pcm, "Naija");
+    public static final LanguageType pcm = new LanguageType("pcm", "Nigerian Pidgin", "Nigerian Pidgin");
+    public static final LanguageType pcm2 = LanguageType.addNonUniqueName(pcm, "Naija");
 
     public static final LanguageType pi = new LanguageType("pi", "Pāli", "Pali");
     public static final LanguageType pli = LanguageType.addNonUniqueCode(pi, "pli");
 
     public static final LanguageType pih = new LanguageType("pih", "Pitcairn-Norfolk", "Pitcairn-Norfolk");
-    public static final LanguageType pih2 = LanguageType.addNonUniqueName(pih, "Pitkern");
+    public static final LanguageType cpe_pit = LanguageType.addNonUnique(pih, "cpe-pit", "Pitkern");// enwikt code
     public static final LanguageType pih3 = LanguageType.addNonUniqueName(pih, "Pitcairnese");
-    public static final LanguageType pih4 = LanguageType.addNonUniqueName(pih, "Norfuk");
+    public static final LanguageType cpe_nor = LanguageType.addNonUnique(pih, "cpe-nor", "Norfuk");// enwikt code
     public static final LanguageType pih5 = LanguageType.addNonUniqueName(pih, "Norfolk");
 
     public static final LanguageType pit = new LanguageType("pit", "Pitta-Pitta", "Pitta-Pitta");
@@ -2047,6 +2063,7 @@ public class LanguageType {
 
     public static final LanguageType pl = new LanguageType("pl", "Polski", "Polish");
     public static final LanguageType pol = LanguageType.addNonUniqueCode(pl, "pol");
+    public static final LanguageType zlw_opl = LanguageType.addNonUnique(pl, "zlw-opl", "Old Polish");// enwikt code
 
     public static final LanguageType ps = new LanguageType("ps", "Pashto", "Pashto");
     public static final LanguageType pus = LanguageType.addNonUniqueCode(ps, "pus");
@@ -2194,9 +2211,28 @@ public class LanguageType {
     public static final LanguageType slovio_c = LanguageType.addNonUnique(slovio, "slovio-c", "Slovio (Cyrillic)");// ruwikt
     public static final LanguageType slovio_l = LanguageType.addNonUnique(slovio, "slovio-l", "Slovio (Latin)");// ruwikt
 
+
+
+    // Sami ------------
     public static final LanguageType se = new LanguageType("se", "Davvisámegiella", "Northern Sami");
     public static final LanguageType sme = LanguageType.addNonUniqueCode(se, "sme");
 
+    public static final LanguageType sjd = new LanguageType("sjd", "Kildin Sami", "Kildin Sami");
+    public static final LanguageType sjk = new LanguageType("sjk", "Kemi Sami", "Kemi Sami");
+    public static final LanguageType sjt = new LanguageType("sjt", "Ter Sami", "Ter Sami");
+    public static final LanguageType sma = new LanguageType("sma", "Southern Sami", "Southern Sami");
+    public static final LanguageType smj = new LanguageType("smj", "Julevsámegiella", "Lule Sami");
+    public static final LanguageType smn = new LanguageType("smn", "Inari Sami", "Inari Sami");
+
+    public static final LanguageType sms = new LanguageType("sms", "Skolt Sami", "Skolt Sami");
+    public static final LanguageType sia = LanguageType.addNonUnique(sms, "sia", "Akkala Sami");
+
+    // sje Pite Sami        // does not have an written language
+    // sju 	Ume Sami
+    // ------------ eo Sami
+
+
+    
     public static final LanguageType sg = new LanguageType("sg", "Sängö", "Sango");
     public static final LanguageType sag = LanguageType.addNonUniqueCode(sg, "sag");
 
@@ -2315,6 +2351,10 @@ public class LanguageType {
 
     public static final LanguageType th = new LanguageType("th", "Phasa Thai", "Thai");
     public static final LanguageType tha = LanguageType.addNonUniqueCode(th, "tha");
+    public static final LanguageType nod = new LanguageType("nod", "Northern Thai", "Northern Thai");
+    public static final LanguageType sou = LanguageType.addNonUnique(th, "sou", "Southern Thai");
+    public static final LanguageType tts = new LanguageType("tts", "Isan", "Isan");
+    public static final LanguageType tts2 = LanguageType.addNonUniqueName(tts, "Northeastern Thai");
 
     public static final LanguageType tix = new LanguageType("tix", "Southern Tiwa", "Southern Tiwa");
     public static final LanguageType tix2 = LanguageType.addNonUniqueName(tix, "Tiwa");
@@ -2549,7 +2589,7 @@ public class LanguageType {
     public static final LanguageType gan = new LanguageType("gan", "Gàn", "Gan");
 
     public static final LanguageType ltc = new LanguageType("ltc", "Middle Chinese", "Middle Chinese");
-    public static final LanguageType ltc2 = LanguageType.addNonUnique(ltc, "Ancient Chinese", "zhx-mid");
+    public static final LanguageType ltc2 = LanguageType.addNonUnique(ltc, "zhx-mid", "Ancient Chinese");
     public static final LanguageType ltc3 = LanguageType.addNonUniqueName(ltc, "Late Middle Chinese");
 
     public static final LanguageType mnp = new LanguageType("mnp", "Min Bei", "Min Bei");
@@ -2643,9 +2683,10 @@ public class LanguageType {
     public static final LanguageType cel = new LanguageType("cel", "Tselinsky", "Tselinsky");// Целинский - in English?
     public static final LanguageType chg    = new LanguageType("chg", "Chagatai", "Chagatai");
 
-    public static final LanguageType chm = new LanguageType("chm", "Mari", "Mari");
-    public static final LanguageType mhr = new LanguageType("mhr", "РћР»С‹Рє РњР°СЂРёР№", "Eastern Mari");
-    public static final LanguageType mrj = new LanguageType("mrj", "Western Mari", "Western Mari");
+    public static final LanguageType chm = new LanguageType("chm", "марий йылме", "Mari");
+    public static final LanguageType mhr = LanguageType.addNonUnique(chm, "mhr", "Eastern Mari");
+    public static final LanguageType mhr2 = LanguageType.addNonUniqueName(chm, "Meadow Mari");
+    public static final LanguageType mrj = LanguageType.addNonUnique(chm, "mrj", "Western Mari");
 
     public static final LanguageType cjs    = new LanguageType("cjs", "Shor", "Shor");
     public static final LanguageType ckt = new LanguageType("ckt", "Chukchi", "Chukchi");
@@ -2691,8 +2732,9 @@ public class LanguageType {
 
     public static final LanguageType xrn = new LanguageType("xrn", "Arin", "Arin");
 
-    public static final LanguageType ykg    = new LanguageType("ykg", "Northern Yukaghir", "Northern Yukaghir");
-    public static final LanguageType yux    = new LanguageType("yux", "Southern Yukaghir", "Southern dYukaghir");
+    public static final LanguageType ykg = new LanguageType("ykg", "wadul", "Tundra Yukaghir");
+    public static final LanguageType ykg2 = LanguageType.addNonUniqueName(solresol, "Northern Yukaghir");
+    public static final LanguageType yux = new LanguageType("yux", "Southern Yukaghir", "Southern Yukaghir");
     
 
 
@@ -2950,6 +2992,7 @@ public class LanguageType {
     public static final LanguageType men = new LanguageType("men", "Mende", "Mende");
     public static final LanguageType mer = new LanguageType("mer", "Meru", "Meru");
     public static final LanguageType meu = new LanguageType("meu", "Motu", "Motu");
+    public static final LanguageType mfe = new LanguageType("mfe", "Kreol Morisyen", "Mauritian Creole");
     public static final LanguageType mfn = new LanguageType("mfn", "Cross River Mbembe", "Cross River Mbembe");
     public static final LanguageType mgh = new LanguageType("mgh", "Makhuwa-Meetto", "Makhuwa-Meetto");
     public static final LanguageType mgm = new LanguageType("mgm", "Mambae", "Mambae");
@@ -2964,7 +3007,7 @@ public class LanguageType {
     public static final LanguageType miq = new LanguageType("miq", "Mískitu", "Miskito");
     public static final LanguageType mnc = new LanguageType("mnc", "Manchu", "Manchu");
     public static final LanguageType mns = new LanguageType("mns", "Mansi", "Mansi");
-    public static final LanguageType mnw = new LanguageType("mnw", "Mon", "Mon");    
+    
     public static final LanguageType moh = new LanguageType("moh", "Mohawk", "Mohawk");
     public static final LanguageType mpa = new LanguageType("mpa", "Mpoto", "Mpoto");
     public static final LanguageType mpl = new LanguageType("mpl", "Middle Watut", "Middle Watut");
@@ -3014,7 +3057,6 @@ public class LanguageType {
     public static final LanguageType nys = new LanguageType("nys", "Nyunga", "Nyunga");
 
     public static final LanguageType obm = new LanguageType("obm", "Moabite", "Moabite");
-    
     public static final LanguageType old = new LanguageType("old", "Mochi", "Mochi");    
     public static final LanguageType ood = new LanguageType("ood", "O'odham", "O'odham");
     public static final LanguageType orv = new LanguageType("orv", "Old East Slavic", "Old East Slavic");
@@ -3077,14 +3119,7 @@ public class LanguageType {
     public static final LanguageType shn = new LanguageType("shn", "Shan", "Shan");
     public static final LanguageType shp = new LanguageType("shp", "Shipibo", "Shipibo");
     public static final LanguageType sid = new LanguageType("sid", "Sidamo", "Sidamo");
-    public static final LanguageType sjd = new LanguageType("sjd", "Kildin Sami", "Kildin Sami");
-    public static final LanguageType sjk = new LanguageType("sjk", "Kemi Sami", "Kemi Sami");
-    public static final LanguageType sjt = new LanguageType("sjt", "Ter Sami", "Ter Sami");
     public static final LanguageType ski = new LanguageType("ski", "Sika", "Sika");
-    public static final LanguageType sma = new LanguageType("sma", "Southern Sami", "Southern Sami");
-    public static final LanguageType smj = new LanguageType("smj", "Julevsámegiella", "Lule Sami");
-    public static final LanguageType smn = new LanguageType("smn", "Inari Sami", "Inari Sami");
-    public static final LanguageType sms = new LanguageType("sms", "Skolt Sami", "Skolt Sami");
     public static final LanguageType snk = new LanguageType("snk", "Sooninkanxanne", "Soninke");
     public static final LanguageType sog = new LanguageType("sog", "Sogdian", "Sogdian");
     public static final LanguageType sov = new LanguageType("sov", "Sonsorolese", "Sonsorolese");
@@ -3199,6 +3234,7 @@ public class LanguageType {
     public static final LanguageType yii = new LanguageType("yii", "Yidiny", "Yidiny");
     public static final LanguageType yij = new LanguageType("yij", "Yindjibarndi", "Yindjibarndi");
     public static final LanguageType ymm = new LanguageType("ymm", "Maay", "Maay");
+    public static final LanguageType ymo = new LanguageType("ymo", "Yangum Mon", "Yangum Mon");
     public static final LanguageType yrk = new LanguageType("yrk", "Nenets", "Nenets");
     public static final LanguageType yua = new LanguageType("yua", "Yucatec Maya", "Yucatec Maya");
 
