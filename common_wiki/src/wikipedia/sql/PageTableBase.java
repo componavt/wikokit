@@ -103,7 +103,7 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
             s.close ();
 
         } catch(SQLException ex) {
-            System.err.println("SQLException in PageTable.getArticleText():: sql='" + str_sql + 
+            System.err.println("SQLException in PageTableBase.getArticleText():: sql='" + str_sql +
                     "' " + ex.getMessage());
         }
         return old_text;
@@ -294,7 +294,7 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
             s.close ();
 
         } catch(SQLException ex) {
-            System.err.println("SQLException (PageTable.java GetIDByTitleNamespace): sql='" + sb.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (PageTableBase.java GetIDByTitleNamespace): sql='" + sb.toString() + "' " + ex.getMessage());
         }
 
         return page_id;
@@ -361,7 +361,7 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
                 //        "; is_redirect="+page_data.page_is_redirect);
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (PageTable.java getTitleByID()): " + ex.getMessage());
+            System.err.println("SQLException (PageTableBase.java getTitleByID()): " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -458,7 +458,7 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
                     ns = PageNamespace.get(i_ns);
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (PageTable.java GetNamespaceByID()): " + ex.getMessage());
+            System.err.println("SQLException (PageTableBase.java GetNamespaceByID()): " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }

@@ -69,6 +69,10 @@ public class StringUtilTest extends TestCase {
         unescaped = "New's coming!";
         escaped   = StringUtil.escapeChars(unescaped);
         assertEquals(escaped, "New\\'s coming!");
+
+        unescaped = "\\";
+        escaped   = StringUtil.escapeChars(unescaped);
+        assertEquals("\\\\", escaped);
     }    
     
     public void testEscapeCharDollarAndBackslash(){

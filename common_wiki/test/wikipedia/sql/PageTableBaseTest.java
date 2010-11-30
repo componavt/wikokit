@@ -12,7 +12,7 @@ import java.util.*;
 
 public class PageTableBaseTest extends TestCase {
 
-    public  Connect  connect, connect_ru, connect_simple;
+    public  Connect  connect, connect_ru, connect_simple, ruwikt_conn;
     //public  SessionHolder    session;
     static String[] iwiki_example = {"ru:", "fa:وب جهان‌گستر","br:World Wide","lt:Žiniatinklis","lv:Globālais tīmeklis","th:เวิลด์ไวด์เว็บ","tr:Dünya Çapında Ağ"};
 
@@ -44,7 +44,10 @@ public class PageTableBaseTest extends TestCase {
         
         connect_ru = new Connect();
         connect_ru.Open(Connect.WP_RU_HOST,Connect.WP_RU_DB,Connect.WP_RU_USER,Connect.WP_RU_PASS,LanguageType.ru); //Java:MySQL ISO8859_1:latin1
-        
+
+        ruwikt_conn = new Connect();
+        ruwikt_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+
         connect_simple = new Connect();
         connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,Connect.WP_USER,Connect.WP_PASS,LanguageType.simple);
         
@@ -65,6 +68,7 @@ public class PageTableBaseTest extends TestCase {
         connect.Close();
         connect_ru.Close();
         connect_simple.Close();
+        ruwikt_conn.Close();
     }
 
     public static Test suite() {
@@ -128,7 +132,7 @@ public class PageTableBaseTest extends TestCase {
         assertTrue( s.length() > 12);
         assertEquals( "#REDIRECT [[", s.substring(0, 12));
     }
-    
+
     public void testGetArticleText_simple_Momotaro() {
         System.out.println("getArticleText_simple_Momotaro");
         String s;
