@@ -89,7 +89,11 @@ public class StringUtil {
             System.out.println("Error in StringUtil.escapeChars(), argument is null.");
             return NULL_STRING;
         }
-        StringBuffer result = new StringBuffer();
+
+        if (text.equalsIgnoreCase("\\"))
+            return "\\\\";
+
+        StringBuilder result = new StringBuilder();
         StringCharacterIterator iterator = new StringCharacterIterator(text);
         char character =  iterator.current();
         while (character != StringCharacterIterator.DONE ){
