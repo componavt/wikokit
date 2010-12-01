@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 
 public class TRelationTest {
 
-    Connect   conn; // ruwikt_parsed_conn
+    Connect conn, enwikt_parsed_conn, ruwikt_parsed_conn;
     
     TPOS pos;
     TLang lang;
@@ -34,8 +34,6 @@ public class TRelationTest {
     TLangPOS lang_pos;
     TMeaning meaning;
     String car_text, car_meaning_summary;
-
-    Connect   connect_enwikt;
     
     String hrunk_text, hrunk_meaning_summary1, hrunk_meaning_summary2;
     
@@ -52,14 +50,14 @@ public class TRelationTest {
 
     @Before
     public void setUp() {
-        //ruwikt_parsed_conn = new Connect();
-        //ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+        ruwikt_parsed_conn = new Connect();
+        ruwikt_parsed_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_PARSED_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
 
-        connect_enwikt = new Connect();
-        connect_enwikt.Open(Connect.ENWIKT_HOST,Connect.ENWIKT_PARSED_DB,Connect.ENWIKT_USER,Connect.ENWIKT_PASS,LanguageType.ru);
+        enwikt_parsed_conn = new Connect();
+        enwikt_parsed_conn.Open(Connect.ENWIKT_HOST,Connect.ENWIKT_PARSED_DB,Connect.ENWIKT_USER,Connect.ENWIKT_PASS,LanguageType.ru);
 
-        // conn = ruwikt_parsed_conn;
-        conn = connect_enwikt;
+        conn = ruwikt_parsed_conn;
+        //conn = enwikt_parsed_conn;
         //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
 
         TLang.recreateTable(conn);    // once upon a time: create Wiktionary parsed db
@@ -164,13 +162,10 @@ public class TRelationTest {
 
     @After
     public void tearDown() {
-        // Connect conn = ruwikt_parsed_conn;
-        //Connect conn = connect_enwikt;
-        
         TPage.delete    (conn, page_title);
         TLangPOS.delete (conn, page);
         TMeaning.delete (conn, meaning);
-
+        
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
         UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");

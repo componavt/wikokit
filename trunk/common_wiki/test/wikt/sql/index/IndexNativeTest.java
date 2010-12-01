@@ -54,24 +54,22 @@ public class IndexNativeTest {
 
         TPage p = null;
         p = TPage.get(conn, page_title);
-        if(null != p) {
+        if(null != p)
             TPage.delete(conn, page_title);
-        }
 
         TPage p0 = TPage.insert(conn, page_title, word_count, wiki_link_count,
                                 is_in_wiktionary, redirect_target);
-        assertTrue(null != p0);
+        assertNotNull(p0);
 
         // IndexNative i_old = IndexNative.get(conn, page_title);
         IndexNative i = IndexNative.insert(conn, p0, has_relation);
 
-        assertTrue(i != null);
+        assertNotNull(i);
         assertTrue(i.getID() > 0);
         assertTrue(i.hasRelation());
         
         String s = i.getPageTitle();
         assertEquals(s, page_title);
-
 
         // delete temporary DB record
 
@@ -79,7 +77,7 @@ public class IndexNativeTest {
         IndexNative.delete(conn, p0);
 
         i = IndexNative.get(conn, page_title);
-        assertTrue(p == null);
+        assertNull(i);
 
         // delete record in tpage
         TPage.delete(conn, page_title);

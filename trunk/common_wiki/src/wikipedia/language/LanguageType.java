@@ -1,8 +1,8 @@
 // current: Translingual
 // list: http://en.wiktionary.org/wiki/Special:Statistics
 
-// Мои любимые коды языков в ISO 639-3: bug, mud, sin, fur, gun, lav, kum, nah, vot, odt, gui, ksi, max, ln, src, rar, str, msi, chm, alt, xmm, lol, sms
-// it is my lovest language codes in ISO 639-3
+// 
+// it is 
 // current: 01.log  unknown language: Woiwurrung
 // http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 /*
