@@ -57,6 +57,8 @@ public class TPage {
     private final static TPage[]    NULL_TPAGE_ARRAY    = new TPage[0];
     private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];
 
+//    private final static PreparedStatement GET_LAST_INSERT_ID = con.prepareStatement("SELECT LAST_INSERT_ID()");
+
     public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,
                  boolean _is_in_wiktionary,
                  String _redirect_target)
@@ -163,7 +165,7 @@ public class TPage {
             boolean is_in_wiktionary,String redirect_target) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TPage page = null;
         boolean is_redirect = null != redirect_target && redirect_target.length() > 0;
         try
@@ -192,12 +194,12 @@ public class TPage {
             }
 
             str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
+            int i = s.executeUpdate (str_sql.toString());
 
             s = connect.conn.createStatement ();
             rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
             if (rs.next ())
-                page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count, 
+                page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count,
                                  is_in_wiktionary, redirect_target);
                 
         }catch(SQLException ex) {
