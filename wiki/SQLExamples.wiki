@@ -1,0 +1,17 @@
+#summary How to extract some information from the database wikt_parsed of the parsed Wiktionary. SQL query examples.
+
+= Introduction =
+
+Download the parsed Wiktionary database from this site, e.g. `enwikt20XXXX_parsed.zip`. Unzip and upload to your local MySQL database.
+
+See the structure (tables and relations) of the Wiktionary parsed database in the page [File_wikt_parsed_empty_sql].
+
+= SQL query examples =
+== From page to definitions ==
+
+It's given an english word, e.g. [http://en.wiktionary.org/wiki/transient transient]. The aim is to get all the definitions.
+
+It could be concluded that from the figure with tables and relations of the Wiktionary parsed database (see above) the following sequence of tables should be used: `page` -> `lang_pos` -> `meaning` -> `wiki_text`.
+
+1. Table `page`.
+
