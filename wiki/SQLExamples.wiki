@@ -14,3 +14,33 @@ It's given an english word, e.g. [http://en.wiktionary.org/wiki/transient transi
 It could be concluded (from the figure with tables and relations of the Wiktionary parsed database, see above) that the following sequence of tables should be used: `page` -> `lang_pos` -> `meaning` -> `wiki_text`.
 
 1. Table `page`.
+
+{{{
+mysql$ SELECT id FROM page WHERE page_title="transient";
+}}}
+
+|| *id* || 
+|| 33823 ||
+
+2. The code of English language is *en*. Let's select identifier (`lang_id`) from the table `lang`.
+
+{{{
+mysql> SELECT * FROM lang WHERE code="en";
+}}}
+
+|| *id* || *name* || *code* || *n_foreign_POS* || *n_translations* ||
+|| 245 || English || en || 265060 || 0 ||
+
+3. Table `page` -> `lang_pos`.
+
+{{{
+mysql> SELECT * FROM lang_pos WHERE page_id=33823 AND lang_id=245;
+}}}
+
+|| id      || page_id || pos_id || lang_id || etymology_n || lemma || redirect_type ||
+|| 1110123 ||   33823 ||      3 ||     245 ||           0 ||       ||          NULL ||
+|| 1110124 ||   33823 ||     11 ||     245 ||           1 ||       ||          NULL ||
+
+There are two records in the table `lang_pos` with different part of speech identifier (field `pos_id`, see the table `part_of_speech`). Let's work with adjective (first record, pos_id=3), then lang_pos.id=1110123
+
+4. Table `lang_pos` -> `meaning`.
