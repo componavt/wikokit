@@ -1,4 +1,5 @@
 #summary How to extract some information from the database wikt_parsed of the parsed Wiktionary. SQL query examples.
+#labels SQL,wikt_parsed
 
 = Introduction =
 
@@ -16,7 +17,7 @@ It could be concluded (from the figure with tables and relations of the Wiktiona
 1. Table `page`.
 
 {{{
-mysql$ SELECT id FROM page WHERE page_title="transient";
+mysql> SELECT id FROM page WHERE page_title="transient";
 }}}
 
 || *id* || 
@@ -59,3 +60,14 @@ mysql> SELECT * FROM meaning WHERE lang_pos_id=1110123;
 || 1431940 ||     1110123 ||         6 ||      1589112 ||
 
 OK. There are 7 definitions for the adjective [http://en.wiktionary.org/wiki/transient transient].
+
+5. Table `meaning` -> `wiki_text`.
+
+Let's extract the text of the first meaning from the table `wiki_text`.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=1589097;
+}}}
+
+|| id      || text                                           ||
+|| 1589097 || Passing or disappearing with time; transitory. ||
