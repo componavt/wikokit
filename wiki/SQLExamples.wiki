@@ -44,3 +44,18 @@ mysql> SELECT * FROM lang_pos WHERE page_id=33823 AND lang_id=245;
 There are two records in the table `lang_pos` with different part of speech identifier (field `pos_id`, see the table `part_of_speech`). Let's work with adjective (first record, pos_id=3), then lang_pos.id=1110123
 
 4. Table `lang_pos` -> `meaning`.
+
+{{{
+mysql> SELECT * FROM meaning WHERE lang_pos_id=1110123;
+}}}
+
+|| id      || lang_pos_id || meaning_n || wiki_text_id ||
+|| 1431934 ||     1110123 ||         0 ||      1589097 ||
+|| 1431935 ||     1110123 ||         1 ||      1589106 ||
+|| 1431936 ||     1110123 ||         2 ||      1589107 ||
+|| 1431937 ||     1110123 ||         3 ||      1589109 ||
+|| 1431938 ||     1110123 ||         4 ||      1589110 ||
+|| 1431939 ||     1110123 ||         5 ||      1589111 ||
+|| 1431940 ||     1110123 ||         6 ||      1589112 ||
+
+OK. There are 7 definitions for the adjective [http://en.wiktionary.org/wiki/transient transient].
