@@ -99,8 +99,8 @@ public class IndexNative {
                                         TPage   page,
                                         boolean has_relation) {
         Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        ResultSet  rs = null;
+        StringBuilder str_sql = new StringBuilder();
         IndexNative index_native = null;
         
         try
@@ -143,7 +143,7 @@ public class IndexNative {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         
         TPage       tp = TPage.get(connect, page_title);
         if(null == tp)
@@ -186,7 +186,7 @@ public class IndexNative {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
 

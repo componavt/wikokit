@@ -18,7 +18,7 @@ import wikt.constant.Relation;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.HashMap;
+//import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
 //import wikipedia.language.LanguageType;
@@ -166,7 +166,7 @@ public class TLangPOS {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TLangPOS lang_pos = null;
 
         lang_pos = getUniqueByPagePOSLangEtymology (connect, page, lang, pos, etymology_n);
@@ -235,7 +235,7 @@ public class TLangPOS {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TLangPOS> list_lp = null;
 
         try {
@@ -287,7 +287,7 @@ public class TLangPOS {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TLangPOS lang_pos = null;
 
         try {
@@ -355,7 +355,7 @@ public class TLangPOS {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TLang> list_lang = null;
 
         try {
@@ -394,7 +394,7 @@ public class TLangPOS {
     public static TLangPOS getByID (Connect connect,int id) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TLangPOS lang_pos = null;
         
         try {
@@ -436,7 +436,7 @@ public class TLangPOS {
         
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
             str_sql.append("DELETE FROM lang_pos WHERE page_id=");

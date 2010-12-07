@@ -101,7 +101,7 @@ public class IndexForeign {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         boolean b_native_word = null != native_page_title && native_page_title.length() > 0;
 
         try
@@ -213,7 +213,7 @@ public class IndexForeign {
     {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
 
         int size = 0;
         try {
@@ -290,7 +290,7 @@ public class IndexForeign {
     {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
 
         int size = 0;
         try {
@@ -346,7 +346,7 @@ public class IndexForeign {
             
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
 
         List<IndexForeign> if_list = null;
 
@@ -441,7 +441,7 @@ public class IndexForeign {
         
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         boolean b_native_word = null != native_page_title && native_page_title.length() > 0;
 
         try

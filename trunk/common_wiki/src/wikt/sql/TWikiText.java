@@ -99,7 +99,7 @@ public class TWikiText {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TWikiText wiki_text = null;
         try
         {
@@ -133,7 +133,7 @@ public class TWikiText {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TWikiText   wiki_text = null;
         
         try {
@@ -164,7 +164,7 @@ public class TWikiText {
     public static TWikiText getByID (Connect connect,int id) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TWikiText wiki_text = null;
 
         try {
@@ -185,6 +185,27 @@ public class TWikiText {
         }
         return wiki_text;
     }
+
+
+    /** Deletes row from the table 'wiki_text' and deletes related rows
+     * from the table 'wiki_text_words'.<br><br>
+     */
+    public static void deleteWithWords (Connect connect, TWikiText wiki_text) {
+
+        if(null == wiki_text) {
+            System.err.println("Error (wikt_parsed TWikiText.deleteWithWords()):: null argument wiki_text.");
+            return;
+        }
+
+        // 2. delete WikiTextWords by WikiText.ID
+        TWikiTextWords[] ww = TWikiTextWords.getByWikiText(connect, wiki_text);
+        for(TWikiTextWords w : ww)
+            TWikiTextWords.delete(connect, w);
+
+        // 3. delete WikiText
+        TWikiText.delete(connect, wiki_text);
+    }
+    
     
     /** Deletes row from the table 'wiki_text' by a value of ID.<br><br>
      * DELETE FROM wiki_text WHERE id=1;
@@ -196,14 +217,41 @@ public class TWikiText {
             System.err.println("Error (wikt_parsed TWikiText.delete()):: null argument wiki_text.");
             return;
         }
-        
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
             str_sql.append("DELETE FROM wiki_text WHERE id=");
             str_sql.append(wiki_text.getID());
+            s.execute (str_sql.toString());
+        } catch(SQLException ex) {
+            System.err.println("SQLException (wikt_parsed TWikiText.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+    }
+
+    /** Deletes row from the table 'wiki_text' by a value of a wiki_text string.<br><br>
+     * DELETE FROM wiki_text WHERE wiki_text="wiki_text";
+     * @param  wiki_text  wiki text (without wikification)
+     */
+    public static void delete (Connect connect,String wiki_text) {
+
+        if(0 == wiki_text.length()) {
+            System.err.println("Error (wikt_parsed TWikiText.delete()):: empty string wiki_text.");
+            return;
+        }
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuilder str_sql = new StringBuilder();
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("DELETE FROM wiki_text WHERE text=\"");
+            str_sql.append( PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+                            connect, wiki_text));
+            str_sql.append('"');
             s.execute (str_sql.toString());
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TWikiText.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());

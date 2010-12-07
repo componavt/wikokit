@@ -9,11 +9,11 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import wikipedia.sql.Connect;
 
-import wikipedia.sql.UtilSQL;
+//import wikipedia.sql.UtilSQL;
 import wikipedia.language.LanguageType;
-import wikt.constant.ContextLabel;
-import wikt.util.WikiWord;
-import wikt.word.WQuote;
+//import wikt.constant.ContextLabel;
+//import wikt.util.WikiWord;
+//import wikt.word.WQuote;
 import wikt.word.WMeaning;
 import wikt.multi.ru.WMeaningRu;
 
@@ -41,12 +41,6 @@ public class TWikiTextTest {
     @After
     public void tearDown() {
         Connect conn = ruwikt_parsed_conn;
-        
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "inflection");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page_inflection");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
 
         ruwikt_parsed_conn.Close();
     }
@@ -67,8 +61,8 @@ public class TWikiTextTest {
         page_title      = "airplane";
         lang_section    = LanguageType.en; // English word
 
-        String _definition = "A programmable calculations";
-        String line =  "# A [[programmable]] [[calculation]]s";
+        String _definition = "A programmable_test calculation_tests_test";
+        String line =  "# A [[programmable_test]] [[calculation_test]]s_test";
         WMeaning wmeaning = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
         assertNotNull(wmeaning);
         assertTrue(wmeaning.getDefinition().equalsIgnoreCase(_definition));
@@ -77,8 +71,8 @@ public class TWikiTextTest {
         assertNotNull(twiki_text);
 
         // check that two pages should appear in table 'page': "programmable" and "calculation"
-        TPage page_programmable = TPage.get(conn, "programmable");
-        TPage page_calculation = TPage.get(conn, "calculation");
+        TPage page_programmable = TPage.get(conn, "programmable_test");
+        TPage page_calculation = TPage.get(conn, "calculation_test");
         assertNotNull(page_programmable);
         assertNotNull(page_calculation);
 
@@ -87,7 +81,7 @@ public class TWikiTextTest {
         assertNotNull(wiki_text);
 
         // check that 1 record should appear in tables 'inflection', 'page_inflection'
-        TInflection infl_calculations = TInflection.get(conn, "calculations");
+        TInflection infl_calculations = TInflection.get(conn, "calculation_tests_test");
         assertNotNull(infl_calculations);
 
         TPageInflection pti_calc = TPageInflection.get(conn, page_calculation, infl_calculations);
@@ -98,6 +92,25 @@ public class TWikiTextTest {
         TWikiTextWords w_prog = TWikiTextWords.getByWikiTextAndPageAndInflection(conn, wiki_text, page_programmable, null);
         assertNotNull(w_calc);
         assertNotNull(w_prog);
+
+
+        // delete temporary records
+
+        // wiki_text = "A programmable_test calculation_tests_test"
+        // Attention: words of this wiki_text should be deleted before the line "TWikiText.deleteWithWords(conn, w_text);"
+        TWikiText.deleteWithWords(conn, twiki_text);
+        
+        String[] pages_test = {"programmable_test", "calculation_test"};
+        for(String p: pages_test) {
+            TWikiText w_text = TWikiText.get(conn, p);
+            if(null != w_text)
+                TWikiText.deleteWithWords(conn, w_text);
+            TPage.delete(conn, p);
+        }
+
+        // inflection = "calculation_tests_test"
+        TInflection.delete(conn, infl_calculations);
+        TPageInflection.delete(conn, pti_calc);
     }
 
     @Test

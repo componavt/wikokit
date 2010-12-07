@@ -22,10 +22,11 @@ public class PageTableAll {
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "\\", // temp ai    лым бор
+        "dog", // temp ai    лым бор
 
         // English Wiktionary
         "Main Page", // should be omitted
+        "dog", // empty?
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
         "amana", "ke", "kali", "let", "met", "chan", "bo", "m", 
         "raggiavo", "raggiamo", // Template:form of
@@ -118,8 +119,8 @@ public class PageTableAll {
             int n_cur = 0;
             while (rs.next ())
             {
-//if (n_cur >= 1)
-  //  break;
+if (n_cur >= 1)
+    break;
                 n_cur ++;
                 if(n_start_from >= 0 && n_start_from > n_cur)
                     continue;

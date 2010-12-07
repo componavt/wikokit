@@ -232,6 +232,7 @@ public class TTranslation {
         
         for(TWikiText w : one_word_wiki_text) {
             TTranslationEntry[] trans_entries = TTranslationEntry.getByWikiTextAndLanguage(connect, w, target_tlang);
+
             for(TTranslationEntry e : trans_entries) {
                 TTranslation trans = e.getTranslation();
 
@@ -268,7 +269,7 @@ public class TTranslation {
     /** Gets articles which contain the given translation.
      *
      * @param source_tlang      language of sought pages (language of page)
-     * @param translation_page  given translation (target language)
+     * @param translation_page  given translation (page title in target language)
      * @param target_tlang      language of translations
      * @return empty array if data is absent
      */
@@ -316,8 +317,8 @@ public class TTranslation {
                    meaning_summary = "";
 
         Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        ResultSet  rs = null;
+        StringBuilder str_sql = new StringBuilder();
         TTranslation trans = null;
         try
         {
@@ -336,14 +337,17 @@ public class TTranslation {
                 str_sql.append("," + meaning.getID());
             
             str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
+            if(s.executeUpdate (str_sql.toString()) > 0) {
+                rs = connect.conn.prepareStatement( "SELECT LAST_INSERT_ID() AS id" ).executeQuery();
 
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                trans = new TTranslation(rs.getInt("id"), lang_pos, meaning_summary, meaning);
+                if (rs.next ()) {
+                    trans = new TTranslation(rs.getInt("id"), lang_pos, meaning_summary, meaning);
+                    //System.out.println("TTranslation.insert()):: summary='" + meaning_summary +
+                    //        "'; id=" + rs.getInt("id") + "; lang='" + lang_pos.getLang().getLanguage().getName()+ "'");
+                }
+            }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslation.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TTranslation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -358,7 +362,7 @@ public class TTranslation {
     public static TTranslation getByID (Connect connect,int id) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TTranslation trans = null;
         
         try {
@@ -398,7 +402,7 @@ public class TTranslation {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TTranslation> list_trans = null;
 
         try {
@@ -445,7 +449,7 @@ public class TTranslation {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TTranslation ttrans = null;
 
         try {
@@ -472,6 +476,23 @@ public class TTranslation {
         return ttrans;
     }
 
+    /** Deletes row from the table 'translation' and deletes related rows
+     * from the table 'translation_entry'.
+     */
+    public static void deleteWithEntries (Connect connect,TTranslation trans) {
+
+        if(null == trans) {
+            System.err.println("Error (wikt_parsed TTranslation.deleteWithEntries()):: null argument 'translation'");
+            return;
+        }
+        
+        TTranslationEntry[] ee = TTranslationEntry.getByTranslation(connect, trans);
+        //ee = TTranslationEntry.getByLanguageAndTranslation(conn, t, lp.getLang());
+        for(TTranslationEntry e : ee)
+            TTranslationEntry.delete(connect, e);
+        TTranslation.delete(connect, trans);
+    }
+
     /** Deletes row from the table 'translation' by a value of ID.<br>
      *  DELETE FROM translation WHERE id=1;
      * @param  id  unique ID in the table `translation`
@@ -485,12 +506,14 @@ public class TTranslation {
         
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
             str_sql.append("DELETE FROM translation WHERE id=");
             str_sql.append(trans.getID());
             s.execute (str_sql.toString());
+            //System.out.println("TTranslation.delete()):: summary='" + trans.getMeaningSummary() +
+            //        "'; id=" + trans.getID());
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TTranslation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
