@@ -57,8 +57,6 @@ public class TPage {
     private final static TPage[]    NULL_TPAGE_ARRAY    = new TPage[0];
     private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];
 
-//    private final static PreparedStatement GET_LAST_INSERT_ID = con.prepareStatement("SELECT LAST_INSERT_ID()");
-
     public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,
                  boolean _is_in_wiktionary,
                  String _redirect_target)
@@ -82,6 +80,11 @@ public class TPage {
         wiki_link_count = 0;
         is_in_wiktionary = false;
     }*/
+
+    @Override
+    public String toString() {
+        return "id=" + id + "; page_title=" + page_title;
+    }
     
     /** Gets unique ID from database */
     public int getID() {
@@ -194,14 +197,15 @@ public class TPage {
             }
 
             str_sql.append(")");
-            int i = s.executeUpdate (str_sql.toString());
-
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count,
-                                 is_in_wiktionary, redirect_target);
-                
+            if(s.executeUpdate (str_sql.toString()) > 0) {
+                rs = connect.conn.prepareStatement( "SELECT LAST_INSERT_ID() AS id" ).executeQuery();
+                if (rs.next ()) {
+                    page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count,
+                                     is_in_wiktionary, redirect_target);
+                    //System.out.println("TPage insert()):: id=" + rs.getInt("id") +
+                    //    "; page_title='" + page_title + "'");
+                }
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
@@ -223,7 +227,7 @@ public class TPage {
     {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try
         {
             s = connect.conn.createStatement ();
@@ -272,7 +276,7 @@ public class TPage {
                               
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TPage       tp = null;
 
         try {
@@ -322,7 +326,7 @@ public class TPage {
         
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TPage       tp = null;
         
         try {
@@ -401,7 +405,7 @@ public class TPage {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TPage> tp_list = null;
         
         if(0==limit)
@@ -512,7 +516,7 @@ public class TPage {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
 
@@ -521,9 +525,9 @@ public class TPage {
             str_sql.append("DELETE FROM page WHERE page_title=\"");
             str_sql.append(safe_title);
             str_sql.append("\"");
-            
             s.execute (str_sql.toString());
-
+            //System.out.println("TPage delete()):: page_title='" + page_title + "'");
+            
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {

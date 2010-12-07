@@ -10,7 +10,9 @@ import wikt.multi.ru.WTranslationRu;
 import wikt.word.WTranslation;
 //import wikt.word.WTranslationEntry;
 
-import wikipedia.sql.UtilSQL;
+//import wikipedia.sql.UtilSQL;
+import wikt.sql.index.IndexForeign;
+
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -61,20 +63,20 @@ public class TTranslationTest {
         
         kolokolchik_text = "text before \n" +
             "===Перевод===\n" +
-            "{{перев-блок|звонок|\n" +
-            "|en=[[little]] [[bell]], [[handbell]], [[doorbell]]\n" +
-            "|de=[[Glöckchen]], [[Schelle]], [[Klingel]]\n" +
-            "|os=[[мыр-мыраг]], [[хъуытаз]] {{m}}\n" +
-            "|fr=[[sonnette]], [[clochette]], [[clarine]]; (у скота) [[sonnaille]]\n" +
+            "{{перев-блок|звонок_test|\n" +
+            "|en=[[little]] [[bell_test]], [[handbell_test]], [[doorbell_test]]\n" +
+            "|de=[[Glöckchen_test]], [[Schelle_test]], [[Klingel_test]]\n" +
+            "|os=[[мыр-мыраг_test]], [[хъуытаз_test]] {{m}}\n" +
+            "|fr=[[sonnette_test]], [[clochette_test]], [[clarine_test]]; (у скота) [[sonnaille_test]]\n" +
             "}}\n" +
-            "{{перев-блок|оркестровый инструмент|\n" +
-            "|en=[[glockenspiel]]\n" +
+            "{{перев-блок|оркестровый инструмент_test|\n" +
+            "|en=[[glockenspiel_test]]\n" +
             "}}\n" +
             "\n" +
-            "{{перев-блок|цветок\n" +
-            "|en=[[bluebell]], [[bellflower]], [[campanula]]\n" +
-            "|os=[[дзæнгæрæг]], [[къæрцгæнæг]]\n" +
-            "|fr=[[campanule]], [[clochette]]\n" +
+            "{{перев-блок|цветок_test\n" +
+            "|en=[[bluebell_test]], [[bellflower_test]], [[campanula_test]]\n" +
+            "|os=[[дзæнгæрæг_test]], [[къæрцгæнæг_test]]\n" +
+            "|fr=[[campanule_test]], [[clochette_test]]\n" +
             "}}\n" +
             "\n" +
             "===Библиография===\n" +
@@ -84,16 +86,16 @@ public class TTranslationTest {
             "[[Категория:Музыкальные инструменты]]\n";
             
         kolokolchik_text_1_translation_box = "{{перев-блок|цветок\n" +
-            "|en=[[bluebell]], [[bellflower]], [[campanula]]\n" +
-            "|os=[[дзæнгæрæг]], [[къæрцгæнæг]]\n" +
-            "|fr=[[campanule]], [[clochette]]\n" +
+            "|en=[[bluebell_test]], [[bellflower_test]], [[campanula_test]]\n" +
+            "|os=[[дзæнгæрæг_test]], [[къæрцгæнæг_test]]\n" +
+            "|fr=[[campanule_test]], [[clochette_test]]\n" +
             "}}\n";
 
-        kosa_text_1_translation_box_without_header = "{{перев-блок\n" +
-            "|en=[[braid]], [[plait]], [[pigtail]], [[queue]]\n" +
-            "|de=[[Zopf]] {{m}} -es, Zöpfe\n" +
-            "|fr=[[natte]] {{f}}; [[couette]] {{f}}, [[tresse]] <i>f</i>\n" +
-            "}}\n";
+        /*kosa_text_1_translation_box_without_header = "{{перев-блок\n" +
+            "|en=[[braid_test]], [[plait_test]], [[pigtail_test]], [[queue_test]]\n" +
+            "|de=[[Zopf_test]] {{m}} -es, Zöpfe\n" +
+            "|fr=[[natte_test]] {{f}}; [[couette_test]] {{f}}, [[tresse_test]] <i>f</i>\n" +
+            "}}\n";*/
 
         Connect conn = ruwikt_parsed_conn;
 
@@ -119,7 +121,7 @@ public class TTranslationTest {
             page = TPage.get(conn, page_title);
         }
 
-        int lang_id = TLang.getIDFast(lang_section); //227;
+        int lang_id = TLang.getIDFast(lang_section);
         TLang lang = TLang.getTLangFast(lang_id);
 
         int etymology_n = 0;
@@ -151,21 +153,84 @@ public class TTranslationTest {
     @After
     public void tearDown() {
         Connect conn = ruwikt_parsed_conn;
-        
+
+        String[] pages_test = {
+            "handbell_test", "doorbell_test", "glockenspiel_test", "bluebell_test", "bellflower_test", "campanula_test", // en
+            "Glöckchen_test", "Schelle_test", "Klingel_test", // de
+            "мыр-мыраг_test", "дзæнгæрæг_test", "къæрцгæнæг_test", // os
+            "sonnette_test", "clarine_test", "campanule_test", "clochette_test", // fr
+            
+            // phrases (more than one wiki word)
+            "little bell_test", "bell_test", // // [[little]] [[bell_test]],
+            "(у скота) sonnaille_test", "sonnaille_test", // (у скота) [[sonnaille_test]]
+            "хъуытаз_test {{m}}", "хъуытаз_test", // [[хъуытаз_test]] {{m}}
+
+            // translation header
+            "звонок_test", // {{перев-блок|звонок_test
+            "оркестровый инструмент_test", // {{перев-блок|оркестровый инструмент_test
+            "цветок_test", // {{перев-блок|цветок_test
+        };
+
+        // delete temporary DB record
+        // index_de
+        IndexForeign.delete(conn, "Glöckchen_test", "колокольчик_test", native_lang, LanguageType.de);
+        IndexForeign.delete(conn, "Schelle_test", "колокольчик_test", native_lang, LanguageType.de);
+        IndexForeign.delete(conn, "Klingel_test", "колокольчик_test", native_lang, LanguageType.de);
+
+        // index_en
+        IndexForeign.delete(conn, "little bell_test", "колокольчик_test", native_lang, LanguageType.en);
+        IndexForeign.delete(conn, "handbell_test", "колокольчик_test", native_lang, LanguageType.en);
+        IndexForeign.delete(conn, "doorbell_test", "колокольчик_test", native_lang, LanguageType.en);
+        IndexForeign.delete(conn, "glockenspiel_test", "колокольчик_test", native_lang, LanguageType.en);
+        IndexForeign.delete(conn, "bluebell_test", "колокольчик_test", native_lang, LanguageType.en);
+        IndexForeign.delete(conn, "bellflower_test", "колокольчик_test", native_lang, LanguageType.en);
+        IndexForeign.delete(conn, "campanula_test", "колокольчик_test", native_lang, LanguageType.en);
+
+        // index_fr
+        IndexForeign.delete(conn, "sonnette_test", "колокольчик_test", native_lang, LanguageType.fr);
+        IndexForeign.delete(conn, "clochette_test", "колокольчик_test", native_lang, LanguageType.fr);
+        IndexForeign.delete(conn, "clarine_test", "колокольчик_test", native_lang, LanguageType.fr);
+        IndexForeign.delete(conn, "(у скота) sonnaille_test", "колокольчик_test", native_lang, LanguageType.fr);
+        IndexForeign.delete(conn, "campanule_test", "колокольчик_test", native_lang, LanguageType.fr);
+
+        // index_os
+        IndexForeign.delete(conn, "мыр-мыраг_test", "колокольчик_test", native_lang, LanguageType.os);
+        IndexForeign.delete(conn, "хъуытаз_test {{m}}", "колокольчик_test", native_lang, LanguageType.os);
+        IndexForeign.delete(conn, "дзæнгæрæг_test", "колокольчик_test", native_lang, LanguageType.os);
+        IndexForeign.delete(conn, "къæрцгæнæг_test", "колокольчик_test", native_lang, LanguageType.os);
+
+        page_title = "колокольчик_test";
+        page = TPage.get(conn, page_title);
+
+        TLangPOS[] ar_lang_pos = TLangPOS.get(conn, page);
+        for(TLangPOS lp : ar_lang_pos) {
+            TTranslation[] tt = TTranslation.getByLangPOS(conn, lp);
+
+            for(TTranslation t : tt)
+                TTranslation.deleteWithEntries(conn, t);
+        }
+
+        for(String p: pages_test) {
+            TWikiText wiki_text = TWikiText.get(conn, p);   // 1. get WikiText by pages_test
+            if(null != wiki_text)
+                TWikiText.deleteWithWords(conn, wiki_text);
+            TPage.delete(conn, p);
+        }
+
         TLangPOS.delete(conn, page);
         TPage.delete(conn, page_title);
         TMeaning.delete(conn, meaning);
-
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
-        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "lang_pos");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "translation");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "translation_entry");
         
-        conn.Close();
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "lang_pos");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "translation");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "translation_entry");
+        
+        //conn.Close();
     }
 
     @Test
@@ -203,16 +268,16 @@ public class TTranslationTest {
         //                                      -> ? translation -> lang_pos -> page
         // звонок
         // fr=[[sonnette]]
-        TPage fr_page = TPage.get(conn, "sonnette");
+        TPage fr_page = TPage.get(conn, "sonnette_test");
         assertNotNull(fr_page);
 
-        // there is no English translation for French word "sonette"
+        // there is no English translation for French word "sonnette"
         target_lang = TLang.get(LanguageType.en);
         TPage[] ru_source = TTranslation.fromTranslationsToPage(conn, source_lang, fr_page, target_lang);
         assertNotNull(ru_source);
         assertEquals(0, ru_source.length);
 
-        // there is 1 French translation for French word "sonette"
+        // there is 1 French translation for French word "sonnette"
         target_lang = TLang.get(LanguageType.fr);
         ru_source = TTranslation.fromTranslationsToPage(conn, source_lang, fr_page, target_lang);
         assertNotNull(ru_source);
@@ -231,7 +296,7 @@ public class TTranslationTest {
         }
         
         //  "{{перев-блок|звонок|\n" +
-        //      "|en=[[little]] [[bell]], [[handbell]], [[doorbell]]\n" +
+        //      "|en=[[little]] [[bell]], [[handbell]], [[doorbell_test]]\n" +
         //  "{{перев-блок|оркестровый инструмент|\n" +
         //      "|en=[[glockenspiel]]\n" +
         //  "{{перев-блок|цветок\n" +
@@ -239,8 +304,8 @@ public class TTranslationTest {
         LanguageType source_lang = LanguageType.ru;
         LanguageType target_lang = LanguageType.en;
 
-        // there is 1 translation Russian ("колокольчик") -> English ("doorbell")
-        String en_translation = "doorbell";
+        // there is 1 translation Russian ("колокольчик") -> English ("doorbell_test")
+        String en_translation = "doorbell_test";
         String[] ru_source = TTranslation.fromTranslationsToPage(conn, source_lang, en_translation, target_lang);
         assertNotNull(ru_source);
         assertEquals(1, ru_source.length);
@@ -251,27 +316,30 @@ public class TTranslationTest {
     public void testFromTranslationsToPage_UpperCaseConflict () {
         System.out.println("fromTranslationsToPage_strings");
         Connect conn = ruwikt_parsed_conn;
-
-        // 1. let's check conflict: "plane" and "Plane"
-        String de_page_title = "Plane";
         String redirect_target = null;
 
-        TPage de_page = TPage.get(conn, de_page_title);
-        assertNull(de_page);
-        de_page = TPage.insert(conn, de_page_title, 0, 0, false, redirect_target);
-        assertNotNull(de_page);
+        // 1. let's check conflict: "plane" and "Plane"
+        {
+            String de_page_title = "Plane_test";
 
+            TPage de_page = TPage.get(conn, de_page_title);
+            assertNull(de_page);
+            de_page = TPage.insert(conn, de_page_title, 0, 0, false, redirect_target);
+            assertNotNull(de_page);
+
+            TPage.delete(conn, de_page_title);
+        }
 
         // 2. let's check more than one translations: "самолёт" -> "plane" and "план" -> "plane"
         TLang lang = TLang.get(LanguageType.ru);
         int etymology_n = 0;
         String lemma = "";
-//        WTranslation[] wtrans_all_;
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
         LanguageType lang_section = LanguageType.ru; // Russian word
 
+        // block I
         {
-            page_title = "самолёт";
+            page_title = "самолёт_test";
             page = TPage.insert(conn, page_title, 0, 0, false, redirect_target);
             assertNotNull(page);
             lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
@@ -280,8 +348,8 @@ public class TTranslationTest {
             String samolyot_text = "text before \n" +
                 "===Перевод===\n" +
                 "{{перев-блок||\n" +
-                "|en=[[airplane]], [[plane]], [[aircraft]]\n" +
-                "|bg=[[самолет]], [[аероплан]]\n" +
+                "|en=[[airplane_test]], [[plane_test]], [[aircraft_test]]\n" +
+                "|bg=[[самолет_test]], [[аероплан_test]]\n" +
                 "}}\n";
             POSText pt = new POSText(POS.noun, samolyot_text);
             wtrans_all = WTranslationRu.parse(wikt_lang, lang_section, page_title, pt);
@@ -292,8 +360,9 @@ public class TTranslationTest {
             }
         }
 
+        // block II
         {
-            page_title = "план";
+            page_title = "план_test";
             page = TPage.insert(conn, page_title, 0, 0, false, redirect_target);
             assertNotNull(page);
             lang_pos = TLangPOS.insert(conn, page, lang, pos, etymology_n, lemma);
@@ -301,12 +370,12 @@ public class TTranslationTest {
 
             String plan_text = "text before \n" +
                 "===Перевод===\n" +
-                "{{перев-блок|схема, чертёж|\n" +
-                "|en=[[map]], [[plane]], [[scheme]]\n" +
+                "{{перев-блок|схема, чертёж_test|\n" +
+                "|en=[[map_test]], [[plane2_test]], [[scheme_test]]\n" +
                 "}}\n" +
                 "\n" +
-                "{{перев-блок|программа|\n" +
-                "|en=[[plan]], [[draft]], [[scheme]], [[contrivance]], [[road map]]\n" +
+                "{{перев-блок|программа_test|\n" +
+                "|en=[[plan_test]], [[draft_test]], [[scheme_test]], [[contrivance_test]], [[road map_test]]\n" +
                 "}}\n";
 
             POSText pt = new POSText(POS.noun, plan_text);
@@ -317,7 +386,7 @@ public class TTranslationTest {
                                         lang_pos, meaning, wtrans);
             }
         }
-
+/*
         //  "|en=[[airplane]], [[plane]], [[aircraft]]\n" +
         //      самолёт
         //  "|en=[[map]], [[plane]], [[scheme]]\n" +
@@ -325,15 +394,89 @@ public class TTranslationTest {
         LanguageType source_lang = LanguageType.ru;
         LanguageType target_lang = LanguageType.en;
 
-        // there is 2 translation Russian ("самолёт", "план") -> English ("plane")
-        String en_translation = "plane";
+        // there are 2 translations: Russian ("самолёт", "план") -> English ("plane")
+        String en_translation = "plane_test";
         String[] ru_source = TTranslation.fromTranslationsToPage(conn, source_lang, en_translation, target_lang);
         assertNotNull(ru_source);
         assertEquals(2, ru_source.length);
-        assertTrue( ru_source[0].equals("самолёт") ||
-                    ru_source[1].equals("самолёт")    );
-    }
+        assertTrue( (ru_source[0].equals("самолёт_test") || ru_source[1].equals("самолёт_test")) &&
+                    (ru_source[0].equals("план_test")    || ru_source[1].equals("план_test"))       );
+*/
+        // INSERT INTO "translation_entry" VALUES (869,42,262,1382);
 
+        // delete temporary DB record of block I
+        {
+            page_title = "самолёт_test";
+            page = TPage.get(conn, page_title);
+
+            IndexForeign.delete(conn, "airplane_test", "самолёт_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "plane_test", "самолёт_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "aircraft_test", "самолёт_test", native_lang, LanguageType.en);
+
+            IndexForeign.delete(conn, "самолет_test", "самолёт_test", native_lang, LanguageType.bg);
+            IndexForeign.delete(conn, "аероплан_test", "самолёт_test", native_lang, LanguageType.bg);
+
+            TLangPOS[] ar_lang_pos = TLangPOS.get(conn, page);
+            for(TLangPOS lp : ar_lang_pos) {
+                TTranslation[] tt = TTranslation.getByLangPOS(conn, lp);
+
+                for(TTranslation t : tt)
+                    TTranslation.deleteWithEntries(conn, t);
+            }
+
+            String[] pages_test = {
+            "самолёт_test",  // ru
+            "аероплан_test", "самолет_test",    // bg
+            "airplane_test", "plane_test", "aircraft_test", // en
+            };
+            for(String p: pages_test) {
+                TWikiText wiki_text = TWikiText.get(conn, p);   // 1. get WikiText by pages_test
+                if(null != wiki_text)
+                    TWikiText.deleteWithWords(conn, wiki_text);
+                TPage.delete(conn, p);
+            }
+
+            TLangPOS.delete(conn, page);
+            TPage.delete(conn, page_title);
+        }
+
+        // delete temporary DB record of block II
+        {
+            page_title = "план_test";
+            page = TPage.get(conn, page_title);
+
+            IndexForeign.delete(conn, "map_test", "план_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "plane2_test", "план_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "scheme_test", "план_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "plan_test", "план_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "draft_test", "план_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "contrivance_test", "план_test", native_lang, LanguageType.en);
+            IndexForeign.delete(conn, "road map_test", "план_test", native_lang, LanguageType.en);
+            
+            TLangPOS[] ar_lang_pos = TLangPOS.get(conn, page);
+            for(TLangPOS lp : ar_lang_pos) {
+                TTranslation[] tt = TTranslation.getByLangPOS(conn, lp);
+
+                for(TTranslation t : tt)
+                    TTranslation.deleteWithEntries(conn, t);
+            }
+
+            String[] pages_test = {
+                "scheme_test", "plan_test", "plane2_test", "draft_test", "contrivance_test",
+                "map_test", "road map_test",
+                "схема, чертёж_test", "программа_test" }; // translation headers
+            for(String p: pages_test) {
+                TWikiText wiki_text = TWikiText.get(conn, p);   // 1. get WikiText by pages_test
+                if(null != wiki_text)
+                    TWikiText.deleteWithWords(conn, wiki_text);
+                TPage.delete(conn, p);
+            }
+
+            TLangPOS.delete(conn, page);
+            TPage.delete(conn, page_title);
+        }
+    }
+/*
     @Test
     public void testInsert() {
         System.out.println("insert");
@@ -435,4 +578,5 @@ public class TTranslationTest {
 
         TTranslation.delete(conn, trans);
     }
+ */
 }

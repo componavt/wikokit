@@ -65,7 +65,7 @@ public class TMeaning {
 
     private final static Map<Relation, TRelation[]> NULL_MAP_RELATION_TRELATION_ARRAY = new HashMap<Relation, TRelation[]>();
     private final static TMeaning[] NULL_TMEANING_ARRAY = new TMeaning[0];
-    private final static TRelation[] NULL_TRELATION_ARRAY = new TRelation[0];
+    //private final static TRelation[] NULL_TRELATION_ARRAY = new TRelation[0];
 
     /** Constructor.
      * @param _id
@@ -137,8 +137,8 @@ public class TMeaning {
         }
 
         Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        ResultSet  rs = null;
+        StringBuilder str_sql = new StringBuilder();
         TMeaning meaning = null;
         int         wiki_text_id = 0;
         try
@@ -162,9 +162,11 @@ public class TMeaning {
 
             s = connect.conn.createStatement ();
             rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
+            if (rs.next ()) {
                 meaning = new TMeaning(rs.getInt("id"), lang_pos, lang_pos.getID(),
                                         meaning_n, wiki_text, wiki_text_id);
+                //System.out.println("TMeaning.insert()):: wiki_text='" + wiki_text.getText() + "'; meaning_n=" + meaning_n);
+            }
 
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TMeaning.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
@@ -343,15 +345,18 @@ public class TMeaning {
             System.err.println("Error (wikt_parsed TMeaning.delete()):: null argument meaning");
             return;
         }
-        
         Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        ResultSet  rs = null;
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
             str_sql.append("DELETE FROM meaning WHERE id=");
             str_sql.append(meaning.getID());
             s.execute (str_sql.toString());
+
+            //System.out.println("TMeaning.delete()):: wiki_text='" + meaning.getWikiText().getText() +
+            //        "'; meaning_n=" + meaning.getMeaningNumber());
+
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TMeaning.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {

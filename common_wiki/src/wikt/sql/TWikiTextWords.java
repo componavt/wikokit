@@ -152,8 +152,8 @@ public class TWikiTextWords {
             return null;
 
         Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        ResultSet  rs = null;
+        StringBuilder str_sql = new StringBuilder();
         TWikiTextWords words = null;
         try
         {
@@ -174,11 +174,13 @@ public class TWikiTextWords {
 
             s = connect.conn.createStatement ();
             rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
+            if (rs.next ()) {
                 words = new TWikiTextWords(rs.getInt("id"), wiki_text, page, page_inflection);
+                //System.out.println("TWikiTextWords.insert()):: wiki_text='" + wiki_text.getText() + "'; id=" + rs.getInt("id") + "; page='" + page.getPageTitle() + "'");
+            }
                 
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiTextWords.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TWikiTextWords.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -200,7 +202,7 @@ public class TWikiTextWords {
             
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TWikiTextWords> list_words = null;
         
         try {
@@ -247,13 +249,14 @@ public class TWikiTextWords {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TWikiTextWords> list_words = null;
 
         try {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,wiki_text_id,page_inflection_id FROM wiki_text_words WHERE page_id=");
             str_sql.append(page.getID());
+            System.out.println("TWikiTextWords.getByPage SQL=" + str_sql);
             rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
@@ -294,7 +297,7 @@ public class TWikiTextWords {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TWikiTextWords word = null;
 
         try {
@@ -330,7 +333,7 @@ public class TWikiTextWords {
     public static TWikiTextWords getByID (Connect connect,int id) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TWikiTextWords word = null;
         
         try {
@@ -373,7 +376,7 @@ public class TWikiTextWords {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TWikiTextWords word = null;
 
         try {
@@ -452,6 +455,7 @@ public class TWikiTextWords {
         List<TWikiText> list_texts = null;
         
         TWikiTextWords[] words = TWikiTextWords.getByPage(connect, page);
+        System.out.println("getOneWordWikiTextByPage words.length=" + words.length);
         for(TWikiTextWords w : words) {
             
             TWikiText wiki_text = w.getWikiText();
@@ -484,12 +488,13 @@ public class TWikiTextWords {
         
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
             str_sql.append("DELETE FROM wiki_text_words WHERE id=");
             str_sql.append(word.getID());
             s.execute (str_sql.toString());
+            //System.out.println("TWikiTextWords.delete()):: wiki_text='" + word.getWikiText().getText() + "'; id=" + word.getID());
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TWikiTextWords.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {

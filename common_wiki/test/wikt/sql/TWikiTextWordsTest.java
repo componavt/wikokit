@@ -2,7 +2,7 @@
 package wikt.sql;
 
 import wikt.util.WikiWord;
-import wikipedia.sql.UtilSQL;
+//import wikipedia.sql.UtilSQL;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -86,16 +86,18 @@ public class TWikiTextWordsTest {
     @After
     public void tearDown() {
         Connect conn = ruwikt_parsed_conn;
-        
+
+
+
         TPage.delete(conn, page_title);
         TInflection.delete(conn, infl);
         TPageInflection.delete(conn, page_infl);
         TWikiText.delete(conn, wiki_text);
 
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "inflection");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page_inflection");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "inflection");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page_inflection");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
         
         ruwikt_parsed_conn.Close();
     }
@@ -105,12 +107,12 @@ public class TWikiTextWordsTest {
         System.out.println("storeToDB_ru");
         Connect conn = ruwikt_parsed_conn;
         TWikiTextWords twtw;
-        StringBuffer s_wiki_text = new StringBuffer("Having a [[pleasant]] [[taste|tasting]], ... one [[sugar]]xyz.");
+        StringBuffer s_wiki_text = new StringBuffer("Having a [[pleasant_test]] [[taste_test|tasting_test]], ... one [[sugar_test]]s_test.");
         WikiWord[] wiki_words = WikiWord.getWikiWords(page_title, s_wiki_text);
 
-        //ww[0] = new WikiWord("pleasant","pleasant",  null);
-        //ww[1] = new WikiWord("taste",   "tasting",   null);
-        //ww[2] = new WikiWord("sugar",   "sugarxyz",  null);
+        //ww[0] = new WikiWord("pleasant_test","pleasant_test",  null);
+        //ww[1] = new WikiWord("taste_test",   "tasting_test",   null);
+        //ww[2] = new WikiWord("sugar_test",   "sugar_tests_test",null);
 
         for(WikiWord word : wiki_words) {
             TWikiTextWords.storeToDB (conn, wiki_text, word);
@@ -134,8 +136,40 @@ public class TWikiTextWordsTest {
             twtw = TWikiTextWords.getByWikiTextAndPageAndInflection(conn, wiki_text, p, p_infl);
             assertNotNull(twtw);
         }
+
+
+        // delete temporary records
+        {
+            TWikiText.deleteWithWords(conn, wiki_text);
+            for(WikiWord word : wiki_words) {
+
+                String s_page       = word.getWordLink();
+                String s_inflection = word.getWordVisible();
+
+                TPage p = TPage.get(conn, s_page);
+
+                TPageInflection p_infl;
+                if(0 != s_page.compareTo(s_inflection)) {
+                    TInflection i = TInflection.get(conn, s_inflection);
+                    p_infl = TPageInflection.get(conn, p, i);
+
+                    // delete temporary records; inflection = "tasting_test", "sugar_tests_test"
+                    TInflection.delete(conn, i);
+                    TPageInflection.delete(conn, p_infl);
+                }
+            }
+
+            String[] pages_test = {"pleasant_test", "taste_test", "sugar_test"};
+            for(String p: pages_test) {
+                TWikiText w_text = TWikiText.get(conn, p);
+                if(null != w_text)
+                    TWikiText.deleteWithWords(conn, w_text);
+                TPage.delete(conn, p);
+            }
+        }
+
     }
-    
+
     @Test
     public void testGetPageForOneWordWikiText() {
         System.out.println("getPageForOneWordWikiText");
@@ -154,7 +188,7 @@ public class TWikiTextWordsTest {
 
         TWikiTextWords.delete(conn, word);
     }
-    
+
     @Test
     public void testGetOneWordWikiTextByPage () {
         System.out.println("getOneWordWikiTextByPage");
@@ -268,5 +302,4 @@ public class TWikiTextWordsTest {
         }
         TWikiTextWords.delete(conn, word0);
     }
-
 }
