@@ -256,7 +256,6 @@ public class TWikiTextWords {
             s = connect.conn.createStatement ();
             str_sql.append("SELECT id,wiki_text_id,page_inflection_id FROM wiki_text_words WHERE page_id=");
             str_sql.append(page.getID());
-            System.out.println("TWikiTextWords.getByPage SQL=" + str_sql);
             rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
@@ -455,7 +454,6 @@ public class TWikiTextWords {
         List<TWikiText> list_texts = null;
         
         TWikiTextWords[] words = TWikiTextWords.getByPage(connect, page);
-        System.out.println("getOneWordWikiTextByPage words.length=" + words.length);
         for(TWikiTextWords w : words) {
             
             TWikiText wiki_text = w.getWikiText();

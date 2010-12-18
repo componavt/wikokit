@@ -476,7 +476,7 @@ public class TTranslationTest {
             TPage.delete(conn, page_title);
         }
     }
-/*
+
     @Test
     public void testInsert() {
         System.out.println("insert");
@@ -504,8 +504,8 @@ public class TTranslationTest {
         System.out.println("insert__meaning_null");
         Connect conn = ruwikt_parsed_conn;
 
-        meaning = null;
-        TTranslation trans = TTranslation.insert(conn, lang_pos, meaning_summary, meaning);
+        TMeaning meaning_local = null;
+        TTranslation trans = TTranslation.insert(conn, lang_pos, meaning_summary, meaning_local);
         assertNotNull(trans);
 
         TLangPOS _lang_pos = trans.getLangPOS();
@@ -539,8 +539,8 @@ public class TTranslationTest {
         System.out.println("getByID_WithMeaningNULL");
         Connect conn = ruwikt_parsed_conn;
 
-        meaning = null;
-        TTranslation trans = TTranslation.insert(conn, lang_pos, meaning_summary, meaning);
+        TMeaning meaning_local = null;
+        TTranslation trans = TTranslation.insert(conn, lang_pos, meaning_summary, meaning_local);
         assertNotNull(trans);
 
         TTranslation trans2 = TTranslation.getByID(conn, trans.getID());
@@ -578,5 +578,4 @@ public class TTranslationTest {
 
         TTranslation.delete(conn, trans);
     }
- */
 }

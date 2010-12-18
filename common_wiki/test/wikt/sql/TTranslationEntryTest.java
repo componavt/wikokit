@@ -3,7 +3,7 @@ package wikt.sql;
 
 import wikipedia.language.LanguageType;
 import wikt.constant.POS;
-import wikipedia.sql.UtilSQL;
+//import wikipedia.sql.UtilSQL;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -156,15 +156,6 @@ public class TTranslationEntryTest {
         TMeaning.delete(conn, meaning);
         TWikiText.delete(conn, wiki_text);
 
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
-        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "lang_pos");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "translation");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "translation_entry");
-
         conn.Close();
     }
 
@@ -264,27 +255,30 @@ public class TTranslationEntryTest {
         {   // + 1 to array
             
             TLangPOS lang_pos2 = TLangPOS.insert(conn, page, lang, TPOS.get(POS.verb), 0, "");
-
+            
             int meaning_n = 1;
-            meaning = TMeaning.insert(conn, lang_pos2, meaning_n, wiki_text);
+            TMeaning meaning_local = TMeaning.insert(conn, lang_pos2, meaning_n, wiki_text);
             assertNotNull(meaning);
 
-            trans = TTranslation.insert(conn, lang_pos2, meaning_summary, meaning);
+            TTranslation trans_local = TTranslation.insert(conn, lang_pos2, meaning_summary, meaning_local);
             assertNotNull(trans);
 
-            trans_entry = TTranslationEntry.insert(conn, trans, lang, wiki_text);
+            TTranslationEntry trans_entry_local = TTranslationEntry.insert(conn, trans_local, lang, wiki_text);
             assertNotNull(trans_entry);
 
             // result: 2 elements
             list_entry = TTranslationEntry.getByWikiTextAndLanguage(conn, wiki_text, lang);
             assertNotNull(list_entry);
             assertEquals(2, list_entry.length);
-        }
 
+            TTranslation.delete(conn, trans_local);
+            TTranslationEntry.delete(conn, trans_entry_local);
+            TMeaning.delete(conn, meaning_local);
+        }
         TTranslation.delete(conn, trans);
         TTranslationEntry.delete(conn, trans_entry);
     }
-    
+
     @Test
     public void testGetByID() {
         System.out.println("insert");

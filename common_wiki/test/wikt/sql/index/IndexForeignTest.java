@@ -61,16 +61,15 @@ public class IndexForeignTest {
         TPage.delete(conn, native_page_title);
     }
 
-    /**
-     * Test of generateTables method, of class IndexForeign.
-     */
-    @Test
-    public void testGenerateTables() {
-        System.out.println("generateTables");
 
-        LanguageType native_lang = LanguageType.ru;
-        IndexForeign.generateTables(ruwikt_parsed_conn, native_lang);
-    }
+    // deletes all index tables
+    //@Test
+    //public void testGenerateTables() {
+    //    System.out.println("generateTables");
+
+    //    LanguageType native_lang = LanguageType.ru;
+        //IndexForeign.generateTables(ruwikt_parsed_conn, native_lang); - 
+    //}
 
     @Test
     public void testInsert() {
@@ -156,10 +155,10 @@ public class IndexForeignTest {
     public void testHasAndInsertIfAbsent() {
         System.out.println("has and insertIfAbsent");
         Connect conn = ruwikt_parsed_conn;
-        TPage native_page;
-        String s, foreign_word, prefix_foreign_word;
+        //TPage native_page;
+        String s, foreign_word; //prefix_foreign_word;
         LanguageType native_lang, foreign_lang;
-        IndexForeign[] index_foreign;
+        //IndexForeign[] index_foreign;
         boolean foreign_has_definition, b_has;
 
         int count;
