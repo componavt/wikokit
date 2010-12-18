@@ -10,17 +10,22 @@ package wiwordik.word_card;
 import wikt.sql.*;
 import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
-import wikt.constant.POS;
-import wikt.constant.Relation;
+//import wikt.constant.POS;
+//import wikt.constant.Relation;
 
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.Group;
+//import javafx.scene.Group;
 
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+//import javafx.scene.paint.Color;
 
 import javafx.ext.swing.SwingScrollPane;
+//import javafx.scene.control.ScrollView;
+
+//import javafx.scene.control.ListView;
+//import javafx.scene.layout.LayoutInfo;
+
 import javafx.ext.swing.SwingList;
 import javafx.ext.swing.SwingListItem;
 
@@ -69,6 +74,21 @@ public class WCTranslation {
                     //    SwingListItem{text:"De: a;lksdjf"}, ]
                     }
             }
+
+            /*ScrollView {
+                height: bind scroll_height  // 165
+                width: bind scroll_width  // 165
+                //scrollable: true
+                //font: Font {  size: font_size }
+                fitToWidth: true
+
+                //view:
+                node:
+                    SwingList{items: bind swing_list_group
+                    //SwingList{items: [
+                    //    SwingListItem{text:"De: a;lksdjf"}, ]
+                    }
+            }*/
         ]
     };
 

@@ -8,7 +8,7 @@ import wikt.constant.Relation;
 import wikt.word.WRelation;
 import wikt.multi.ru.WRelationRu;
 import wikipedia.sql.Connect;
-import wikipedia.sql.UtilSQL;
+//import wikipedia.sql.UtilSQL;
 
 import java.util.Map;
 //import java.util.Collection;
@@ -28,7 +28,7 @@ public class TRelationTest {
     TPOS pos;
     TLang lang;
     TPage page;
-    String page_title, wiki_text_str;
+    String page_title, page_title2, wiki_text_str;
     TRelationType relation_type;
     TWikiText wiki_text;
     TLangPOS lang_pos;
@@ -70,7 +70,7 @@ public class TRelationTest {
         TRelationType.createFastMaps(conn);
 
         
-        page_title = conn.enc.EncodeFromJava("car");    // test_TRelation
+        page_title = conn.enc.EncodeFromJava("car_test");    // test_TRelation
 
         // insert page, get page_id
         int word_count = 7;
@@ -87,7 +87,8 @@ public class TRelationTest {
         }
 
         // add "automobile"
-        TPage.insert(conn, "automobile", word_count, wiki_link_count, 
+        page_title2 = "automobile_test";
+        TPage.insert(conn, page_title2, word_count, wiki_link_count,
                      is_in_wiktionary, redirect_target);
 
         // get lang
@@ -125,8 +126,8 @@ public class TRelationTest {
         car_text =  "=== Произношение ===\n" +
                     "==== Значение ====\n" +
                     "==== Синонимы ====\n" +
-                    "# [[carriage]]\n" +
-                    "# [[automobile]]\n" +
+                    "# [[carriage_test]]\n" +
+                    "# [[automobile_test]]\n" +
                     "# -\n" +
                     "# -\n" +
                     "# -\n" +
@@ -134,7 +135,7 @@ public class TRelationTest {
                     "==== Антонимы ====\n" +
                     "\n" +
                     "==== Гиперонимы ====\n" +
-                    "# [[vehicle]]\n" +
+                    "# [[vehicle_test]]\n" +
                     "# -\n" +
                     "# -\n" +
                     "# -\n" +
@@ -142,7 +143,7 @@ public class TRelationTest {
                     "\n" +
                     "==== Гипонимы ====\n" +
                     "# -\n" +
-                    "# [[truck]], [[van]], [[bus]]\n" +
+                    "# [[truck_test]], [[van_test]], [[bus_test]]\n" +
                     "# -\n" +
                     "\n" +
                     "===Родственные слова===\n";
@@ -153,24 +154,39 @@ public class TRelationTest {
                 "# Definition hrunk 2.\n" +
                 "\n" +
                 "====Synonyms====\n" +
-                "* (''flrink with cumplus''): [[flrink]], [[pigglehick]]\n" +
-                "* (''furp''): [[furp]], [[whoodleplunk]]";
+                "* (''flrink with cumplus_test''): [[flrink_test]], [[pigglehick_test]]\n" +
+                "* (''furp_test''): [[furp_test]], [[whoodleplunk_test]]";
 
-        hrunk_meaning_summary1 = "flrink with cumplus";
-        hrunk_meaning_summary2 = "furp";
+        hrunk_meaning_summary1 = "flrink with cumplus_test";
+        hrunk_meaning_summary2 = "furp_test";
     }
 
     @After
     public void tearDown() {
+        // delete temporary records 
+
+        String[] pages_test = {
+                "carriage_test", "automobile_test",
+                "vehicle_test",
+                "truck_test", "van_test", "bus_test"};
+
+        for(String p: pages_test) {
+            TWikiText wiki_text2 = TWikiText.get(conn, p);   // 1. get WikiText by pages_test
+            if(null != wiki_text2)
+                TWikiText.deleteWithWords(conn, wiki_text2);
+            TPage.delete(conn, p);
+        }
+
         TPage.delete    (conn, page_title);
+        TPage.delete    (conn, page_title2);
         TLangPOS.delete (conn, page);
         TMeaning.delete (conn, meaning);
-        
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
-        UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
+        TWikiText.delete(conn, wiki_text_str);
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "page");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "relation");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "meaning");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text");
+        //UtilSQL.deleteAllRecordsResetAutoIncrement(conn, "wiki_text_words");
         
         conn.Close();
     }
@@ -181,7 +197,7 @@ public class TRelationTest {
         //Connect conn = ruwikt_parsed_conn;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
-        String page_title = "car";
+        //String page_title = "car";
         POSText pt = new POSText(POS.noun, car_text);
 
         Map<Relation, WRelation[]> m_relations = WRelationRu.parse(wikt_lang, page_title, pt);
@@ -197,6 +213,9 @@ public class TRelationTest {
         TRelation[] trelation = TRelation.get(conn, meaning); //TRelationType trelation_synonymy = TRelationType.getRelationFast(Relation.synonymy);
         assertNotNull(trelation);
         assertEquals(4, trelation.length);
+
+        for(TRelation t : trelation)
+            TRelation.delete(conn, t);
     }
 
     @Test
@@ -205,7 +224,6 @@ public class TRelationTest {
         //Connect conn = ruwikt_parsed_conn;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
-        String page_title = "car";
         POSText pt = new POSText(POS.noun, car_text);
 
         Map<Relation, WRelation[]> m_relations = WRelationRu.parse(wikt_lang, page_title, pt);
@@ -220,6 +238,10 @@ public class TRelationTest {
 
         int trelation_number = TRelation.count(conn, meaning);
         assertEquals(4, trelation_number);
+
+        TRelation[] trelation = TRelation.get(conn, meaning);
+        for(TRelation t : trelation)
+            TRelation.delete(conn, t);
     }
 
     @Test
@@ -266,7 +288,7 @@ public class TRelationTest {
         array_rel = TRelation.get(conn, meaning);
         assertEquals(0, array_rel.length);
     }
-    
+  
     @Test
     public void testGetByID_ru() {
         System.out.println("getByID_ru");
@@ -279,9 +301,11 @@ public class TRelationTest {
         TRelation r2 = TRelation.getByID(conn, r.getID());
         assertTrue(null != r2);
         assertEquals(wiki_text_str, r2.getWikiText().getText());
+
+        TRelation.delete(conn, r);
     }
 
-    
+   
     //public static Relation getRelationType (Connect connect,String word1,String word2) {
     @Test
     public void testGetRelationType () {
@@ -289,7 +313,6 @@ public class TRelationTest {
         //Connect conn = ruwikt_parsed_conn;
 
         LanguageType wikt_lang = LanguageType.ru; // Russian Wiktionary
-        String page_title = "car";
         POSText pt = new POSText(POS.noun, car_text);
 
         Map<Relation, WRelation[]> m_relations = WRelationRu.parse(wikt_lang, page_title, pt);
@@ -300,17 +323,20 @@ public class TRelationTest {
         TRelation.storeToDB(conn, meaning, 1, m_relations);
 
         Relation r;
-        r = TRelation.getRelationType(conn, "car", "car");
+        r = TRelation.getRelationType(conn, "car_test", "car_test");
         assertNull(r);
 
-        r = TRelation.getRelationType(conn, "car", "absent word");
+        r = TRelation.getRelationType(conn, "car_test", "absent word");
         assertNull(r);
 
-        r = TRelation.getRelationType(conn, "automobile", "car");
+        r = TRelation.getRelationType(conn, "automobile_test", "car_test");
         assertEquals(Relation.synonymy, r);
 
-        r = TRelation.getRelationType(conn, "car", "van");
+        r = TRelation.getRelationType(conn, "car_test", "van_test");
         assertEquals(Relation.hyponymy, r);
-    }
 
+        TRelation[] trelation = TRelation.get(conn, meaning);
+        for(TRelation t : trelation)
+            TRelation.delete(conn, t);
+    }
 }

@@ -110,7 +110,7 @@ public class TRelation {
     public static void storeToDB (Connect connect,TMeaning tmeaning,int meaning_n,
                                   Map<Relation, WRelation[]> m_relations) {
 
-        if(null == tmeaning || null == m_relations || m_relations.size() == 0) return;
+        if(null == tmeaning || null == m_relations || m_relations.isEmpty()) return;
 
         Collection<Relation> rr = m_relations.keySet();
         for(Relation r : rr) {
@@ -161,7 +161,7 @@ public class TRelation {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TRelation relation = null;
         try
         {
@@ -217,7 +217,7 @@ public class TRelation {
         
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TRelation> list_rel = null;
         
         try {
@@ -267,7 +267,7 @@ public class TRelation {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         int n = 0;
 
         try {
@@ -295,7 +295,7 @@ public class TRelation {
     public static TRelation getByID (Connect connect,int id) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TRelation relation = null;
 
         try {
@@ -338,7 +338,7 @@ public class TRelation {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
             str_sql.append("DELETE FROM relation WHERE id=");
@@ -372,7 +372,7 @@ public class TRelation {
         if(-1 == n_total)
             return null;
         t_start = System.currentTimeMillis();
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         Map<String,List<String>> m_words = null;
 
         try {

@@ -220,13 +220,11 @@ public class TTranslationEntry {
             str_sql.append(wiki_text.getID());
             str_sql.append(" AND lang_id=");
             str_sql.append(lang.getID());
-            System.out.println("TTranslationEntry.getByWikiTextAndLanguage, SQL=" + str_sql.toString());
             rs = s.executeQuery (str_sql.toString());
             while (rs.next ())
             {
                 TTranslation trans = TTranslation.getByID(connect, rs.getInt("translation_id"));
                 if(null != trans) {
-                    System.out.println("TTranslationEntry.getByWikiTextAndLanguage, Yes, wiki_text=" + wiki_text.getText());
                     if(null == list_entry)
                         list_entry = new ArrayList<TTranslationEntry>();
                     list_entry.add(new TTranslationEntry(rs.getInt("id"), trans, lang, wiki_text));
