@@ -11,6 +11,7 @@ mysql$ USE enwikt20100824_parsed
 mysql$ SOURCE D:\all\projects\java\synonyms\wikokit\wikt_parser\doc\wikt_parsed_empty.sql
 mysql$ GRANT SELECT ON enwikt20100824.* TO javawiki@'%';
 mysql$ GRANT ALL ON enwikt20100824_parsed.* TO javawiki@'%';
+mysql$ FLUSH PRIVILEGES;
 }}}
 
 = Details =
