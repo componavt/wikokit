@@ -1,4 +1,4 @@
-wiwordik 0.0X 2010-0X-XX
+wiwordik 0.0X 2011-0X-XX
   Added (from user's point of view):
     Fixed bug: empty wiki links in translations (in Russian Wiktionary), i.e. "[[]]" are omitted now.
     ...
@@ -6,6 +6,8 @@ wiwordik 0.0X 2010-0X-XX
     
   Added (from programmer's point of view)
     Added translations of language codes into Russian. About 340 translations.
+    JUnit tests corrupted the parsed Wiktionary database, now they are corrrected.
+ 
 
 wiwordik 0.04 2010-05-08
   Added (from user's point of view):

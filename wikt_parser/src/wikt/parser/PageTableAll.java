@@ -17,16 +17,29 @@ import java.sql.*;
  */
 public class PageTableAll {
     private static final boolean DEBUG = true;
-    private static final boolean ONLY_DEBUG_PAGES = true;
+    private static final boolean ONLY_DEBUG_PAGES = false;
     
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "dog", // temp ai    лым бор
+        //"dog", // temp ai    лым бор
 
+        "chien",
+        "rain cats and dogs",
+        "connotation",
+        "gerku",
+        "wolf",
+        "can",
+        "собака",
+        "baby",
+        "bush dog",
+        "god",
+        "dog"
+
+        /*
         // English Wiktionary
         "Main Page", // should be omitted
-        "dog", // empty?
+        //"dog", // empty?
         "ai", "alo", "anu", "ban", "bat", "us", "we", "camel", "re",
         "amana", "ke", "kali", "let", "met", "chan", "bo", "m", 
         "raggiavo", "raggiamo", // Template:form of
@@ -78,6 +91,7 @@ public class PageTableAll {
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
         "-iti-", "-лык", "-io-", "zwölf", "Википедия", "bread"
+                */
     };
     
     /** Selects all pages (not categories, not redirects), 
@@ -119,8 +133,8 @@ public class PageTableAll {
             int n_cur = 0;
             while (rs.next ())
             {
-if (n_cur >= 1)
-    break;
+//if (n_cur >= 1)
+//    break;
                 n_cur ++;
                 if(n_start_from >= 0 && n_start_from > n_cur)
                     continue;
