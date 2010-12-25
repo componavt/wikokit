@@ -2628,6 +2628,9 @@ public class LanguageType {
     public static final LanguageType xto2 = LanguageType.addNonUniqueName(xto,   "Tocharian A");
     public static final LanguageType txb = LanguageType.addNonUnique(xto, "txb", "Tocharian B");
 
+    public static final LanguageType yai = new LanguageType("yai", "яғнобӣ зивок", "Yaghnobi");
+    public static final LanguageType yai2 = LanguageType.addNonUniqueName(yai, "Yagnobi");
+
     public static final LanguageType yi = new LanguageType("yi", "Yiddish", "Yiddish");
     public static final LanguageType yid = LanguageType.addNonUniqueCode(yi, "yid");
     public static final LanguageType ydd = LanguageType.addNonUnique(yi, "ydd", "Eastern Yiddish");
@@ -2961,6 +2964,8 @@ public class LanguageType {
     public static final LanguageType din = new LanguageType("din", "Dinka", "Dinka");
     public static final LanguageType dlm = new LanguageType("dlm", "Dalmatian", "Dalmatian");
     public static final LanguageType doe = new LanguageType("doe", "Doe", "Doe");
+    public static final LanguageType doz = new LanguageType("doz", "Dorze", "Dorze");
+
     public static final LanguageType drl = new LanguageType("drl", "Darling", "Darling");
     public static final LanguageType dsn = new LanguageType("dsn", "Dusner", "Dusner");
     public static final LanguageType dua = new LanguageType("dua", "Duala", "Duala");
@@ -3045,6 +3050,7 @@ public class LanguageType {
     public static final LanguageType kdd = new LanguageType("kdd", "Yankunytjatjara", "Yankunytjatjara");
     public static final LanguageType kde = new LanguageType("kde", "Makonde", "Makonde");
     public static final LanguageType ked = new LanguageType("ked", "Wakerewe", "Kerewe");
+    public static final LanguageType kgg = new LanguageType("kgg", "Kusunda", "Kusunda");
     public static final LanguageType kha = new LanguageType("kha", "Khasi", "Khasi");
     public static final LanguageType kho = new LanguageType("kho", "Khotanese", "Khotanese");
     public static final LanguageType khw = new LanguageType("khw", "Khowar", "Khowar");
