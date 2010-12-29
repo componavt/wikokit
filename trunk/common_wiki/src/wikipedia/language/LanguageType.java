@@ -2177,6 +2177,10 @@ public class LanguageType {
     public static final LanguageType brc = new LanguageType("brc", "Berbice Creole Dutch", "Berbice Creole Dutch");
     public static final LanguageType brc2 = LanguageType.addNonUniqueName(brc, "Berbice Dutch Creole");
 
+    public static final LanguageType gcf = new LanguageType("gcf", "Antillean Creole", "Antillean Creole");
+    public static final LanguageType gcf2 = LanguageType.addNonUniqueName(gcf, "Guadeloupean Creole French");
+    public static final LanguageType acf = LanguageType.addNonUnique(gcf, "acf", "Saint Lucian Creole French");
+    
     public static final LanguageType ht = new LanguageType("ht", "Kreyòl ayisyen", "Haitian Creole");
     public static final LanguageType hat = LanguageType.addNonUnique(ht, "hat", "Kreyòl");
     public static final LanguageType ht2 = LanguageType.addNonUniqueName(ht, "Haitian");
@@ -2186,6 +2190,10 @@ public class LanguageType {
     public static final LanguageType jam3 = LanguageType.addNonUniqueName(jam, "Patois");
     public static final LanguageType jam4 = LanguageType.addNonUniqueName(jam, "Jamaican");
     public static final LanguageType jam5 = LanguageType.addNonUniqueName(jam, "Patwa");
+
+    public static final LanguageType rcf = new LanguageType("rcf", "Kreol Réyoné", "Réunion Creole");
+    public static final LanguageType rcf2 = LanguageType.addNonUniqueName(rcf, "Réunion Creole French");
+    public static final LanguageType rcf3 = LanguageType.addNonUniqueName(rcf, "Reunionese Creole");
 
     public static final LanguageType tcs = new LanguageType("tcs", "Torres Strait Creole", "Torres Strait Creole");
     public static final LanguageType tcs2 = LanguageType.addNonUniqueName(tcs, "Big Thap");
@@ -2340,7 +2348,7 @@ public class LanguageType {
 
 
     public static final LanguageType sr = new LanguageType("sr", "Srpski", "Serbian");
-    public static final LanguageType srp = LanguageType.addNonUniqueCode(sr, "srp");
+    public static final LanguageType srp = LanguageType.addNonUnique(sr, "srp", "Montenegrin");
     public static final LanguageType sr_c = LanguageType.addNonUnique(sr, "sr-c", "Serbian (Cyrillic)");// Russian Wiktionary
     public static final LanguageType sr_l = LanguageType.addNonUnique(sr, "sr-l", "Serbian (Latin)");// Russian Wiktionary
 
@@ -2993,6 +3001,7 @@ public class LanguageType {
     public static final LanguageType gaa = new LanguageType("gaa", "Ga", "Ga");
     public static final LanguageType gag = new LanguageType("gag", "Gagauz", "Gagauz");
     public static final LanguageType gay = new LanguageType("gay", "Gayo", "Gayo");
+    public static final LanguageType gdm = new LanguageType("gdm", "Laal", "Laal");
     public static final LanguageType gil = new LanguageType("gil", "Gilbertese", "Gilbertese");
     public static final LanguageType gld = new LanguageType("gld", "Nanai", "Nanai");
     public static final LanguageType glk = new LanguageType("glk", "Gilaki", "Gilaki");
