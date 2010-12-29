@@ -24,7 +24,7 @@ public class PageTableAll {
     private static final String[] debug_pages = {
         //"dog", // temp ai    лым бор
 
-        "chien",
+        /*"chien", some common words, e.g. dog are absent in the db
         "rain cats and dogs",
         "connotation",
         "gerku",
@@ -34,9 +34,9 @@ public class PageTableAll {
         "baby",
         "bush dog",
         "god",
-        "dog"
+        "dog"*/
 
-        /*
+        
         // English Wiktionary
         "Main Page", // should be omitted
         //"dog", // empty?
@@ -47,7 +47,9 @@ public class PageTableAll {
         "for all intensive purposes", "illegal number", // too much <references />
         "kenoviiva", "forward slash", "\\", // backslash
         "Australopithecus", "cm", // Error (TranslationTableAll.countTranslationPerLanguage()): There is a translation box from a foreign language, code=mul,
-
+        "save someone's bacon", // section with unknown language: Alternative phrases.
+        "iman", // section with unknown language: See also.
+        
 
         // Russian Wiktionary
         "!", "процессуальное право", "материальное право", "вздуть", "голубой",
@@ -91,7 +93,6 @@ public class PageTableAll {
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
         "-iti-", "-лык", "-io-", "zwölf", "Википедия", "bread"
-                */
     };
     
     /** Selects all pages (not categories, not redirects), 
