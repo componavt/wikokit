@@ -71,3 +71,7 @@ mysql> SELECT * FROM wiki_text WHERE id=1589097;
 
 || id      || text                                           ||
 || 1589097 || Passing or disappearing with time; transitory. ||
+
+= See also =
+  * [GettingStartedWiktionaryParser]
+  * [d2rqMappingSPARQL]
