@@ -1,0 +1,29 @@
+#summary How to map Wiktionary parsed database (MySQL) to RDF database by D2RQ.
+
+= Introduction =
+
+[http://www4.wiwiss.fu-berlin.de/bizer/d2rq/ D2RQ] platform enables applications to access a RDF-view on a non-RDF database via the SPARQL Protocol.
+
+= Setup =
+
+Create MySQL user and provide access to the parsed Wiktionary database:
+{{{
+mysql> CREATE USER rdfmapper;
+mysql> GRANT SELECT ON ruwikt20101101_parsed.* TO rdfmapper@'%';
+mysql> FLUSH PRIVILEGES;
+}}}
+
+Download and install [http://www4.wiwiss.fu-berlin.de/bizer/d2rq/ D2RQ].
+{{{
+cd C:\w\d2r-server-0.7\
+}}}
+
+Generate *.n3 mapping file by the scheme of MySQL database:
+{{{
+generate-mapping -o mapping-wikt_parsed_source.n3 -u rdfmapper jdbc:mysql://localhost/ruwikt20101101_parsed
+}}}
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
