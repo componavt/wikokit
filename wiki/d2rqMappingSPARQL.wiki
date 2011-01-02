@@ -52,6 +52,7 @@ http://localhost:2020
 Let's find all definitions for the English word "dog":
 
 Open URL: http://localhost:2020/snorql/
+
 Paste SPARQL request:
 {{{
 SELECT ?langId ?pageId ?langPosId ?wikiTextId ?wikiText
