@@ -39,3 +39,37 @@ Run server:
 cd C:\w\d2r-server-0.7\
 d2r-server mapping-wikt_parsed.n3
 }}}
+
+Open web browser:
+{{{
+http://localhost:2020
+}}}
+
+= SPARQL examples =
+
+== Meaning definition by word and language ==
+
+Let's find all definitions for the English word "dog":
+
+Open URL: http://localhost:2020/snorql/
+Paste SPARQL request:
+{{{
+SELECT ?langId ?pageId ?langPosId ?wikiTextId ?wikiText
+WHERE {
+    ?lang vocab:lang_code "en";
+          vocab:lang_id ?langId.
+
+    ?page vocab:page_page_title "dog";
+          vocab:page_id ?pageId.
+
+    ?lang_pos vocab:lang_pos_page_id ?pageId;
+              vocab:lang_pos_lang_id ?langId;
+              vocab:lang_pos_id ?langPosId.
+
+    ?meaning vocab:meaning_id ?langPosId;
+             vocab:meaning_wiki_text_id ?wikiTextId.
+
+    ?wiki_text vocab:wiki_text_id ?wikiTextId;
+               vocab:wiki_text_text ?wikiText.
+}
+}}}
