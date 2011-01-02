@@ -47,7 +47,7 @@ http://localhost:2020
 
 = SPARQL examples =
 
-== Meaning definition by word and language ==
+== Get definition (meaning) by word and language ==
 
 Let's find all definitions for the English word "dog":
 
