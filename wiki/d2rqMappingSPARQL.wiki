@@ -75,5 +75,13 @@ WHERE {
 }
 }}}
 
+== Get list of synonyms ==
+
+Todo ...
+
+== Translate word from one language to another ==
+
+Todo ...
+
 = See also =
   * [SQLExamples]
