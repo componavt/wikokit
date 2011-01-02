@@ -1,4 +1,5 @@
 #summary How to map Wiktionary parsed database (MySQL) to RDF database by D2RQ.
+#labels d2rq,Phase-Deploy,SPARQL
 
 = Introduction =
 
@@ -18,12 +19,19 @@ Download and install [http://www4.wiwiss.fu-berlin.de/bizer/d2rq/ D2RQ].
 cd C:\w\d2r-server-0.7\
 }}}
 
-Generate *.n3 mapping file by the scheme of MySQL database:
+Generate `.n3` mapping file by the scheme of MySQL database:
 {{{
 generate-mapping -o mapping-wikt_parsed_source.n3 -u rdfmapper jdbc:mysql://localhost/ruwikt20101101_parsed
 }}}
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+Change the following lines in the `.n3` mapping file:
+  * delete lines with `index_ith.lat.foreign_has_definition` (_temporary_);
+  * change `vocab` to `wikpa` (WIktionary PArsed database):
+{{{
+%s/vocab/wikpa/g
+}}}
+  * add lines:
+{{{
+map:Configuration a d2rq:Configuration;
+    d2rq:resultSizeLimit 33.
+}}}
