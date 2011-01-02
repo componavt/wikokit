@@ -15,13 +15,11 @@ mysql> FLUSH PRIVILEGES;
 }}}
 
 Download and install [http://www4.wiwiss.fu-berlin.de/bizer/d2rq/ D2RQ].
-{{{
-cd C:\w\d2r-server-0.7\
-}}}
 
 Generate `.n3` mapping file by the scheme of MySQL database:
 {{{
-generate-mapping -o mapping-wikt_parsed_source.n3 -u rdfmapper jdbc:mysql://localhost/ruwikt20101101_parsed
+cd C:\w\d2r-server-0.7\
+generate-mapping -o mapping-wikt_parsed.n3 -u rdfmapper jdbc:mysql://localhost/ruwikt20101101_parsed
 }}}
 
 Change the following lines in the `.n3` mapping file:
@@ -34,4 +32,10 @@ Change the following lines in the `.n3` mapping file:
 {{{
 map:Configuration a d2rq:Configuration;
     d2rq:resultSizeLimit 33.
+}}}
+
+Run server:
+{{{
+cd C:\w\d2r-server-0.7\
+d2r-server mapping-wikt_parsed.n3
 }}}
