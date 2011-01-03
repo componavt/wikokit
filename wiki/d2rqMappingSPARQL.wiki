@@ -1,5 +1,5 @@
 #summary How to map Wiktionary parsed database (MySQL) to RDF database by D2RQ.
-#labels d2rq,Phase-Deploy,SPARQL,wikt_parsed
+#labels d2rq,Phase-Deploy,SPARQL,wikt_parsed,Jena
 
 = Introduction =
 
@@ -72,6 +72,55 @@ WHERE {
 
     ?wiki_text wikpa:wiki_text_id ?wikiTextId;
                wikpa:wiki_text_text ?wikiText.
+}
+}}}
+
+You can access these data from Java code by using [http://en.wikipedia.org/wiki/Jena_%28framework%29 Jena]:
+{{{
+package wikpasparql;
+
+import com.hp.hpl.jena.query.Query;
+import com.hp.hpl.jena.query.QueryExecutionFactory;
+import com.hp.hpl.jena.query.QueryFactory;
+import com.hp.hpl.jena.query.QuerySolution;
+import com.hp.hpl.jena.query.ResultSet;
+
+import de.fuberlin.wiwiss.d2rq.ModelD2RQ;
+
+public class SPARQLExample {
+
+	public static void main(String[] args) {
+        ModelD2RQ m = new ModelD2RQ("file:mapping-wikt_parsed.n3");
+		
+        String sparql = 
+            "PREFIX wikpa: <http://localhost:2020/wikpa/resource/>" +
+            "SELECT ?langId ?pageId ?wikiText WHERE {" +
+            "   ?lang wikpa:lang_code \"en\"; " +
+            "         wikpa:lang_id ?langId. " +
+            
+            "   ?page wikpa:page_page_title \"dog\"; " +
+            "         wikpa:page_id ?pageId." +
+            
+            "   ?lang_pos wikpa:lang_pos_page_id ?pageId; " +
+            "         wikpa:lang_pos_lang_id ?langId; " +
+            "         wikpa:lang_pos_id ?langPosId. " +
+
+            "   ?meaning wikpa:meaning_id ?langPosId; " +
+            "         wikpa:meaning_wiki_text_id ?wikiTextId. " +
+
+            "   ?wiki_text wikpa:wiki_text_id ?wikiTextId; " +
+            "         wikpa:wiki_text_text ?wikiText. " +
+		    "}";
+		
+		Query q = QueryFactory.create(sparql); 
+		ResultSet rs = QueryExecutionFactory.create(q, m).execSelect();
+		while (rs.hasNext()) {
+			QuerySolution row = rs.nextSolution();
+			System.out.println("langID: " + row.getLiteral("langId").getString());
+			System.out.println("pageId: " + row.getLiteral("pageId").getString());
+			System.out.println("wikiText: " + row.getLiteral("wikiText").getString());
+		}
+	}
 }
 }}}
 
