@@ -1,6 +1,6 @@
 /* LanguageTypeRu.java - name of languages in Russian.
  *
- * Copyright (c) 2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2010-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
@@ -14,8 +14,7 @@ import java.util.HashMap;
 
 /** Languages of wiki: name in Russian and link to the LanguageType codes.
  *
- * Source of data: 
- *
+ * Source of data:
  * Russian Wikipedia: http://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%B4%D1%8B_%D1%8F%D0%B7%D1%8B%D0%BA%D0%BE%D0%B2
  *
  * Russian Wiktionary:
@@ -734,5 +733,4 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal zkt = new LanguageTypeRu("Киданьский", LanguageType.zkt);
     public static final LanguageTypeLocal zun = new LanguageTypeRu("Зуни", LanguageType.zun);
     public static final LanguageTypeLocal zza = new LanguageTypeRu("Зазаки", LanguageType.zza);
-
 }
