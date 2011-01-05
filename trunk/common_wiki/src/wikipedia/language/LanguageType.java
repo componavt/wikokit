@@ -6,7 +6,7 @@
  */
 
 //http://ru.wiktionary.org/w/index.php?title=%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%BF%D0%B5%D1%80%D0%B5%D0%B2-%D0%B1%D0%BB%D0%BE%D0%BA&diff=next&oldid=1243557
-// http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
+//http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages#Template_table
 
 package wikipedia.language;
 
