@@ -1,7 +1,7 @@
 /* IndexNative.java - SQL operations with the table 'index_native' in Wiktionary
  * parsed database.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
