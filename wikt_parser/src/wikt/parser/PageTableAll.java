@@ -49,7 +49,7 @@ public class PageTableAll {
         "Australopithecus", "cm", // Error (TranslationTableAll.countTranslationPerLanguage()): There is a translation box from a foreign language, code=mul,
         "save someone's bacon", // section with unknown language: Alternative phrases.
         "iman", // section with unknown language: See also.
-        
+        "ОЭЗ", // 'ru' language section has no # Definition
 
         // Russian Wiktionary
         "!", "процессуальное право", "материальное право", "вздуть", "голубой",

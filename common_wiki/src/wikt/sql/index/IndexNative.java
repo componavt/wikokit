@@ -67,7 +67,7 @@ public class IndexNative {
     {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
 
         int size = 0;
         try {
