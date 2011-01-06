@@ -560,6 +560,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
 
     public static final LanguageTypeLocal sa = new LanguageTypeRu("Санскрит", LanguageType.sa);
     public static final LanguageTypeLocal sad = new LanguageTypeRu("Сандаве", LanguageType.sad);
+    public static final LanguageTypeLocal sag = new LanguageTypeRu("Санго", LanguageType.sag);
     public static final LanguageTypeLocal sah = new LanguageTypeRu("Якутский", LanguageType.sah);
     public static final LanguageTypeLocal sat = new LanguageTypeRu("Сантали", LanguageType.sat);
     public static final LanguageTypeLocal scn = new LanguageTypeRu("Сицилийский", LanguageType.scn);
