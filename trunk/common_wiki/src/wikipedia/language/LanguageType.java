@@ -348,6 +348,12 @@ public class LanguageType {
     public static final LanguageType roa_ptg2 = LanguageType.addNonUniqueName(roa_ptg, "Old Portuguese");
     public static final LanguageType roa_ptg3 = LanguageType.addNonUniqueName(roa_ptg, "Galician Portuguese");
 
+    public static final LanguageType tgt = new LanguageType("tgt", "Tagbanwa", "Tagbanwa");
+    public static final LanguageType tgt2 = LanguageType.addNonUniqueName(tgt, "Central Tagbanwa");
+    public static final LanguageType tgt3 = LanguageType.addNonUniqueName(tgt, "Tagbanwa script");
+
+
+
 
     // more than one language code (or language name) for one language
     public static final LanguageType aar = new LanguageType("aar", "Afar", "Afar");
@@ -842,6 +848,10 @@ public class LanguageType {
     
     public static final LanguageType ce = new LanguageType("ce", "Нохчийн мотт", "Chechen");
     public static final LanguageType che = LanguageType.addNonUniqueCode(ce, "che");
+
+    public static final LanguageType cjm = new LanguageType("cjm", "Eastern Cham", "Eastern Cham");
+    public static final LanguageType cjm2 = LanguageType.addNonUniqueName(cjm, "Cham");
+    public static final LanguageType cja = LanguageType.addNonUnique(cjm, "cja", "Western Cham");
 
     public static final LanguageType ch = new LanguageType("ch", "Chamoru", "Chamorro");
     public static final LanguageType cha = LanguageType.addNonUniqueCode(ch, "cha");
@@ -3087,6 +3097,7 @@ public class LanguageType {
     public static final LanguageType hsn = new LanguageType("hsn", "Xiang", "Xiang");
     public static final LanguageType huh = new LanguageType("huh", "Huilliche", "Huilliche");
     public static final LanguageType hup = new LanguageType("hup", "Na:tinixwe Mixine:whe", "Hupa");
+    public static final LanguageType huq = new LanguageType("huq", "Tsat", "Tsat");
     public static final LanguageType hur = new LanguageType("hur", "Halkomelem", "Halkomelem");
 
     public static final LanguageType ith_lat = new LanguageType("ith_lat", "Ithkuil", "Ithkuil");// Without dot for D2RQ
