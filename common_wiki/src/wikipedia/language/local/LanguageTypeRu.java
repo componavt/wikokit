@@ -312,6 +312,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal hu = new LanguageTypeRu("Венгерский", LanguageType.hu);
     public static final LanguageTypeLocal huh = new LanguageTypeRu("Уильиче", LanguageType.huh);
     public static final LanguageTypeLocal hup = new LanguageTypeRu("Хупа", LanguageType.hup);
+    public static final LanguageTypeLocal huq = new LanguageTypeRu("Цатский", LanguageType.huq);
     public static final LanguageTypeLocal hur = new LanguageTypeRu("Халкомелем", LanguageType.hur);
     public static final LanguageTypeLocal hy = new LanguageTypeRu("Армянский", LanguageType.hy);
     public static final LanguageTypeLocal hz = new LanguageTypeRu("Гереро", LanguageType.hz);
@@ -620,6 +621,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal te = new LanguageTypeRu("Телугу", LanguageType.te);
     public static final LanguageTypeLocal tgk = new LanguageTypeRu("Таджикский", LanguageType.tgk);
     public static final LanguageTypeLocal tgl = new LanguageTypeRu("Тагaльский", LanguageType.tgl);
+    public static final LanguageTypeLocal tgt = new LanguageTypeRu("Tagbanwa", LanguageType.tgt);
     public static final LanguageTypeLocal th = new LanguageTypeRu("Тайский", LanguageType.th);
     public static final LanguageTypeLocal tig = new LanguageTypeRu("Тигре", LanguageType.tig);
     public static final LanguageTypeLocal tir = new LanguageTypeRu("Тигринья", LanguageType.tir);

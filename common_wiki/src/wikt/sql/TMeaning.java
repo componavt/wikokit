@@ -190,7 +190,7 @@ public class TMeaning {
         
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         List<TMeaning> list_meaning = null;
 
         try {
