@@ -56,7 +56,7 @@ But... split `wikt_parsed_structure.sql` so, that:
 
 Read the note "[http://componavt.livejournal.com/3393.html Let's speed up SQLite]".
 
-Run SQLite, load and backup the SQLite database:
+Run [http://sqlite.org SQLite], load and backup the SQLite database:
 {{{
 sqlite3
 .read "C:/w/bin/ruwikt20100405_parsed_data.sql"
