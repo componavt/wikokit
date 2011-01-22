@@ -10,10 +10,13 @@ Todo:
 
 = DB layout changes =
 
-To add INDEX keys IN SQL:
-  # wiki_text_words.wiki_text_id: INDEX wiki_text_id
+== Word frequency and importance ==
 
-== Translation entry ==
+Start using the field `page.wiki_link_count` (now value is 0).
+
+Add the field `page.in_links` - number of in-bound links from other Wiktionary articles. Fill it by data from Mediawiki dabase, see [http://www.mediawiki.org/wiki/File:Mediawiki-database-schema.png]
+
+== Translation entry DB ==
 
 Goal: storing Translation data from "`*` Arabic: {{t|ar|حاسوب|m|sc=Arab|tr=ħasūb}}".
 
@@ -22,7 +25,7 @@ One record in `translation_entry` contains one translation (word or phrase). Thu
 Todo:
   # add fields gender, number, sc (script template), tr (transliteration), alt (alternate form of the word) to the table `translation_entry`
 
-== Todo == 
+== DB todo == 
 
 In future:
   # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria]
@@ -35,7 +38,8 @@ REDIRECT # (todo and done):
   # + lang_pos.redirect_type (e.g. Wordform, Misspelling)
   # + i18n: "See нелётный (Redirect)" vs. "См. нелётный (Перенаправление)"
 
-Done:
+Done (top - new, bottom - old):
+  # To add INDEX keys in SQL (`wiki_text_words.wiki_text_id: INDEX wiki_text_id`)
   # remove the field `meaning.definition`
   # field `lang.name` is NOT unique, only `.code` is unique
   # add default value (0) to the field `meaning.wiki_text_id`
