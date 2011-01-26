@@ -1,13 +1,17 @@
-wiwordik 0.0X 2011-0X-XX
+wiwordik 0.05.1053 2011-0X-XX
+    Version number has been changed. XX.X.YYYY where XX.X - version 
+      and YYYY - number of languages and codes recognized by the program 
+      and extracted from the Wiktionary (see about language codes 
+      http://en.wikipedia.org/wiki/ISO_639-3).
+  
   Added (from user's point of view):
-    Fixed bug: empty wiki links in translations (in Russian Wiktionary), i.e. "[[]]" are omitted now.
-    ...
-    ...
-    
+    Fixed bug: empty wiki links in translations (in Russian Wiktionary), 
+      i.e. "[[]]" are omitted now and do not stored to the database.
+   
   Added (from programmer's point of view)
-    Added translations of language codes into Russian. About 340 translations.
-    JUnit tests corrupted the parsed Wiktionary database, now they are corrrected.
- 
+    Added translations of language codes into Russian. About 600 translations.
+    JUnit tests corrupted the parsed Wiktionary database, now JUnit tests work 
+      properly.  
 
 wiwordik 0.04 2010-05-08
   Added (from user's point of view):

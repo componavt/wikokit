@@ -2875,9 +2875,10 @@ public class LanguageType {
     public static final LanguageType chg    = new LanguageType("chg", "Chagatai", "Chagatai");
 
     public static final LanguageType chm = new LanguageType("chm", "марий йылме", "Mari");
-    public static final LanguageType mhr = LanguageType.addNonUnique(chm, "mhr", "Eastern Mari");
-    public static final LanguageType mhr2 = LanguageType.addNonUniqueName(chm, "Meadow Mari");
-    public static final LanguageType mrj = LanguageType.addNonUnique(chm, "mrj", "Western Mari");
+    public static final LanguageType mhr = LanguageType.addNonUnique(chm, "mhr", "Meadow Mari");
+    public static final LanguageType mhr2 = LanguageType.addNonUniqueName(chm, "Eastern Mari");
+    public static final LanguageType mrj = LanguageType.addNonUnique(chm, "mrj", "Hill Mari");
+    public static final LanguageType mrj2 = LanguageType.addNonUniqueName(chm, "Western Mari");
 
     public static final LanguageType cjs = new LanguageType("cjs", "Shor", "Shor");
     public static final LanguageType ckt = new LanguageType("ckt", "Chukchi", "Chukchi");

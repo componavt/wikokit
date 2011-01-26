@@ -98,8 +98,8 @@ public class Connect {
     // English Wiktionary parsed database
     public final static String ENWIKT_PARSED_DB = "enwikt20101030_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
-    public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20101030.sqlite";
-    //public final static String ENWIKT_SQLITE = "enwikt20100824.sqlite";
+    //public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20101030.sqlite";
+    public final static String ENWIKT_SQLITE = "enwikt20101030.sqlite";
 
     
     // IDF (inverse document frequency) database
