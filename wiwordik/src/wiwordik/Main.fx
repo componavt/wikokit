@@ -37,24 +37,28 @@ def DEBUG : Boolean = false;
 // Wiktionary parsed database
 // ===========
 
+var wiwordik_version = "0.05";
 var wikt_parsed_conn : Connect = new Connect();
 var native_lang : LanguageType;
 
 function init() {
 
-    //native_lang = LanguageType.en;
-    native_lang = LanguageType.ru;
+    native_lang = LanguageType.en;
+    //native_lang = LanguageType.ru;
 
     // MySQL
-    if(LanguageType.ru == native_lang) {
+    /*if(LanguageType.ru == native_lang) {
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
     } else {
         wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
-    }
+    }*/
 
     // SQLite                                   //Connect.testSQLite();
-    //wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
-    //wikt_parsed_conn.OpenSQLite(Connect.ENWIKT_SQLITE, LanguageType.en);
+    if(LanguageType.ru == native_lang) {
+        wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
+    } else {
+        wikt_parsed_conn.OpenSQLite(Connect.ENWIKT_SQLITE, LanguageType.en);
+    }
 
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
     TPOS.createFastMaps(wikt_parsed_conn);    // once upon a time: use Wiktionary parsed db
@@ -245,7 +249,7 @@ var scene: Scene = Scene {
 
 // Application User Interface
 var stage: Stage = Stage {
-    title: "Wiwordik 0.04 ({wikt_parsed_conn.getDBName()})"
+    title: "Wiwordik {wiwordik_version}.{LanguageType.size()} ({wikt_parsed_conn.getDBName()})"
     //    resizable: false
     visible: true
     //    style: StageStyle.TRANSPARENT
