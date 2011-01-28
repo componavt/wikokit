@@ -94,3 +94,9 @@ Check that you have the latest versions of the libs:
 
 = Links =
   * [http://componavt.livejournal.com/630.html Java MySQL to SQLite migration]
+
+= Previous step =
+  * [SetupNetBeansForParsing Setup NetBeans environment for parsing]
+
+= Next step =
+  * [wiwordikSetupExe Compile SQLite file and wiwordik Java files into wiwordik-setup-X.XX.jar and .exe by IzPack]
