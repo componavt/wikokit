@@ -13,6 +13,7 @@ A step-by-step guide to launching your Wiktionary parser:
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
   * [SetupNetBeansForParsing Setup NetBeans environment for parsing]
   * [SQLite Convert the Wiktionary parsed database (MySQL) into SQLite file]
+  * [wiwordikSetupExe Compile SQLite file and wiwordik Java files into wiwordik-setup-X.XX.jar and .exe by IzPack]
   * ...
 
 = See also =
