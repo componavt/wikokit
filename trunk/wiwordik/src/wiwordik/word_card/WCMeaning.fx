@@ -34,6 +34,8 @@ public class WCMeaning {
     
     var definition_value : String;
 
+    var temp_height : Integer = 50;
+
     /** (2) Semantic relations: synonymy, antonymy, etc.
      * The map from semantic relation (e.g. synonymy) to array of WRelation
      * (one WRelation contains a list of synonyms for one meaning).
@@ -44,10 +46,13 @@ public class WCMeaning {
 
     // (3) Translation
     var translation : WCTranslation[];  //private WTranslation[] translation;
-    var translation_group : VBox = VBox { spacing: 1 };
+    var translation_group : VBox = VBox {
+        spacing: 1
+        //height: bind temp_height
+    };
     
     public var group: VBox = VBox {
-        spacing: 4
+        spacing: 7
         content: [
             Text {
                 content: bind definition_value
@@ -116,6 +121,9 @@ public class WCMeaning {
                 // + if there are any translation entries in the block
                 insert _translation into translation;                       // logic
                 insert _translation.group into translation_group.content;   // visual
+                //temp_height = 25;
+            } else {
+                //temp_height = 5;
             }
         }
     }

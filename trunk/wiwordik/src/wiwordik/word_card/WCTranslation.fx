@@ -14,28 +14,24 @@ import wikipedia.language.LanguageType;
 //import wikt.constant.Relation;
 
 import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-//import javafx.scene.Group;
 
 import javafx.scene.layout.VBox;
 //import javafx.scene.paint.Color;
 
-import javafx.ext.swing.SwingScrollPane;
 //import javafx.scene.control.ScrollView;
 
 //import javafx.scene.control.ListView;
 //import javafx.scene.layout.LayoutInfo;
 
-import javafx.ext.swing.SwingList;
-import javafx.ext.swing.SwingListItem;
-
 import java.lang.*;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.LayoutInfo;
+
 
 /** Translations consists of one meaning block translated to all languages.
  *
  * @see wikt.sql.TTranslation and wikt.word.WTranslation
  */
-
 public class WCTranslation {
 
     def DEBUG : Boolean = true;
@@ -46,52 +42,106 @@ public class WCTranslation {
      */
     var meaning_summary : String;
 
-    var swing_list_group : SwingListItem[];
-    var scroll_height : Integer;
-    var scroll_width : Integer;
+    /** Duplication of listview_trans.items[] ??? */
+    var trans_entry_items : TranslationEntryItem[]; //TTranslationEntry[];
+    var trans_entry_items_size : Integer;
 
-    def font_size : Integer = 14;
+    //var list_group : ListCell [];
+//    var scroll_height : Integer;
+//    var scroll_width : Integer;
+    //def font_size : Integer = 14;
+
+/*function getTransEntryCellFactory(format:String):ListCell {
+//function getTransEntryCellFactory() {
+
+        // System.out.println("WCTranslation.create() _lang={_lang.getLanguage().toString()}; sizeof trans_entries={sizeof trans_entries}");
+        for(e in trans_entries) {
+            //if(r.getRelationType() == _relation_type)
+
+            def l : LanguageType = e.getLang().getLanguage();
+            def language_name_value = "{l.getName()} ({l.getCode()})";
+
+            def s : String = "{language_name_value}: {e.getWikiText().getText()}";
+            //insert SwingListItem{text: s } into swing_list_group;
+            //insert ListCell{item: s } into list_group ;
+        }
+    //ListCell { }
+}*/
+
+    /** @param n = trans_entry_items_size */
+    function getTranslationBoxHeight(n:Integer) : Float {
+        if(0 == n)
+            return 0;
+
+        // assert: listview_trans.items.size == n > 0
+        if(listview_trans.items.size() < 1)
+            return 0; // this line is not reachable
+
+        def tei : TranslationEntryItem = listview_trans.items[0] as TranslationEntryItem;
+        def h : Float = tei.getHeight();
+
+        System.out.println("WCTranslation:create: h = {h}");
+        
+        if(n >= 0 and n <=9)
+            return n*h;
+
+        return 7*h;     // too much entries
+    }
+
+    def listview_trans: ListView = ListView {
+        layoutInfo: LayoutInfo { height: bind getTranslationBoxHeight(trans_entry_items_size) }
+
+    };
 
     public var group: VBox = VBox {
         spacing: 2
         content: [
+
             Text {
                 content: bind meaning_summary
                 //wrappingWidth: 380
                 //font: Font {  size: 14  }
                 //fill: Color.GRAY
             }
-            
-            SwingScrollPane{
-                height: bind scroll_height  // 165
-                width: bind scroll_width  // 165
-                scrollable: true
-                font: Font {  size: font_size }
-                
-                view:
-                    SwingList{items: bind swing_list_group
-                    //SwingList{items: [
-                    //    SwingListItem{text:"De: a;lksdjf"}, ]
-                    }
-            }
-
-            /*ScrollView {
-                height: bind scroll_height  // 165
-                width: bind scroll_width  // 165
-                //scrollable: true
-                //font: Font {  size: font_size }
-                fitToWidth: true
-
-                //view:
-                node:
-                    SwingList{items: bind swing_list_group
-                    //SwingList{items: [
-                    //    SwingListItem{text:"De: a;lksdjf"}, ]
-                    }
-            }*/
+            listview_trans
         ]
-    };
+    }; // VBox
 
+           
+           //     font: Font {  size: font_size }
+ /*ListView {
+    //items: [1.23, -3.33, -4.83, 5.32, -6.32]
+    items: bind trans_entries
+    //cellFactory: function() {getTransEntryCellFactory()}
+    //cellFactory: getTransEntryCellFactory("sss")
+    cellFactory: function() {
+        //var cell: ListCell = ListCell {
+
+        //var cell:ListCell; //[]; // = ListCell {}
+
+        // System.out.println("WCTranslation.create() _lang={_lang.getLanguage().toString()}; sizeof trans_entries={sizeof trans_entries}");
+        //for(e in trans_entries) {
+            def e: TTranslationEntry = trans_entries[trans_entries_counter ++];
+            //if(r.getRelationType() == _relation_type)
+
+            def l : LanguageType = e.getLang().getLanguage();
+            def language_name_value = "{l.getName()} ({l.getCode()})";
+
+            def s : String = "{language_name_value}: {e.getWikiText().getText()}";
+            //insert SwingListItem{text: s } into swing_list_group;
+            //insert ListCell{item: s } into list_group ;
+
+            //insert ListCell {node: Label { text: s }} into cell;
+        //}
+        return ListCell {node: Label { text: s }};
+*/
+/*        def cell:ListCell = ListCell {
+            //styleClass: bind if ((cell.item as Number) < 0) then "negative" else "list-cell"
+            //node: Label { text: bind if (cell.empty) then "" else "{cell.item}" }
+            //node: Label { text: bind if (cell.empty) then "" else "{cell.item}" }
+            
+            node: Label { text: "temp empty" }*/
+    
     /** Creates a translation part of word card, it corresponds to one meaning.
      *
      * @return true if there are any translations in this translation block.
@@ -102,23 +152,33 @@ public class WCTranslation {
                            ) : Boolean {
                            
         meaning_summary = _ttranslation.getMeaningSummary();
-        
-        def trans_entries : TTranslationEntry[] = TTranslationEntry.getByTranslation (conn, _ttranslation, );
 
+        def trans_entries : TTranslationEntry[] = TTranslationEntry.getByTranslation (conn, _ttranslation, );
         // System.out.println("WCTranslation.create() _lang={_lang.getLanguage().toString()}; sizeof trans_entries={sizeof trans_entries}");
 
+        trans_entry_items = [];
         for(e in trans_entries) {
             //if(r.getRelationType() == _relation_type)
 
             def l : LanguageType = e.getLang().getLanguage();
-            def language_name_value = "{l.getName()} ({l.getCode()})";
+            def lang_name_value: String = l.getName();
+            def lang_code_value: String = l.getCode();
+            def translation_text: String = e.getWikiText().getText();
 
-            def s : String = "{language_name_value}: {e.getWikiText().getText()}";
-            insert SwingListItem{text: s } into swing_list_group;
+            //def s : String = "{language_name_value}: {e.getWikiText().getText()}";
+            //insert ListCell{item: s } into list_group ;
+            
+            insert TranslationEntryItem { lang_name: lang_name_value
+                                          lang_code: lang_code_value
+                                          text: translation_text     }
+                   into trans_entry_items;
         }
-
+        insert trans_entry_items into listview_trans.items;
+        trans_entry_items_size = trans_entry_items.size();
+        System.out.println("WCTranslation:create: sizeof listview_trans.items = {sizeof listview_trans.items}");
+        
         def len : Integer = sizeof trans_entries;
-        if(1 == len) {
+/*        if(1 == len) {
             scroll_height = (font_size +7);
         } else if(len < 5) {
             scroll_height = (font_size +6)*len;
@@ -129,7 +189,7 @@ public class WCTranslation {
             scroll_height = (font_size +5)*6;
         }
         scroll_width = 300;
-        
+*/
         return len > 0;
     }
 }

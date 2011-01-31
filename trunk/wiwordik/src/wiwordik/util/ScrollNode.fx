@@ -14,7 +14,8 @@ package wiwordik.util;
 
 //import fxtests.ScrollNode;
 import java.lang.Object;
-import javafx.ext.swing.SwingSlider;
+//import javafx.scene.control.ScrollView;
+//import javafx.ext.swing.SwingSlider;
 import javafx.scene.CustomNode;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -23,13 +24,13 @@ import javafx.scene.paint.LinearGradient;
 import javafx.scene.paint.Stop;
 import javafx.scene.Scene;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
+//import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.text.TextOrigin;
+//import javafx.scene.text.TextOrigin;
 
 
 public class ScrollNode extends CustomNode {
-
+/*
     public-init var node: Node;
 
     public-init var nodeWidth: Number;
@@ -86,12 +87,12 @@ public class ScrollNode extends CustomNode {
 
                     content: node
                 }
-                /*Text {
-                    translateX: scrollHeight+10
-                    translateY: scrollHeight+10
-                    textOrigin: TextOrigin.TOP
-                    content: bind "node position: {node.translateX}, {node.translateY}"
-                }*/
+                //Text {
+                //    translateX: scrollHeight+10
+                //    translateY: scrollHeight+10
+                //    textOrigin: TextOrigin.TOP
+                //    content: bind "node position: {node.translateX}, {node.translateY}"
+                //}
 
             ]
         };
@@ -135,5 +136,5 @@ function run() {
 
             ]
         }
-    }
+    }*/
 }

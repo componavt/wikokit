@@ -14,7 +14,7 @@ import wiwordik.word_card.WC;
 
 import javafx.scene.layout.LayoutInfo;
 import javafx.scene.control.ListView;
-import javafx.ext.swing.SwingListItem;
+//import javafx.ext.swing.SwingListItem;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyEvent;
@@ -49,7 +49,7 @@ public class WordList {
     /** Foreign words extracted by several letters (prefix). */
     var index_foreign : IndexForeign[]; // //var foreign_word_to_index : Map<String, IndexForeign>;
 
-    var page_listItems: SwingListItem[] = SwingListItem{};
+    //var page_listItems: SwingListItem[] = SwingListItem{};
 
     var wikt_parsed_conn : Connect;
 

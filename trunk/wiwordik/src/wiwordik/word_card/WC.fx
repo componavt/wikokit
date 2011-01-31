@@ -12,10 +12,9 @@ import wikt.constant.*;
 import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 
-import wiwordik.util.ScrollNode;
-
 import java.lang.*;
 
+import javafx.scene.control.ScrollView;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
 import javafx.scene.Group;
@@ -26,7 +25,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.layout.Flow;
-import javafx.ext.swing.SwingScrollPane;
+import javafx.geometry.Insets;
+import javafx.scene.layout.HBox;
+import javafx.scene.control.ScrollBarPolicy;
 //import javax.swing.JFrame;
 
 
@@ -42,7 +43,7 @@ public class WC{ // extends JFrame {
     public var tpage : TPage;
 
     /** Languages of the word. @see wikt.word.WLanguage */
-    var cx_lang : WCLanguage[];
+    //var cx_lang : WCLanguage[];
     
     /** Todo: text of card should be available by Ctrl+C. */
     var card_text_value : String;
@@ -124,25 +125,35 @@ public class WC{ // extends JFrame {
 
     var width : Integer = 382;
     var height : Integer = 600;
+    var card_scene: Scene;
 
     public var card : Stage = Stage {
     title : bind header_page_title
-    scene: Scene {
+    scene: card_scene = Scene {
         width: width
         height: height
         content:
-            ScrollNode {
-                Y_speed: 55;
-                width: width
-                height: height
-                nodeWidth: width + 20
-                nodeHeight: height + 20
-                node:
-                    VBox {
-                        content: [headerText, lang_VBox]
-                        //content: [headerText, lang_VBox, langPOSCards]
-                        spacing: 10
-                    }
+            ScrollView {
+                width: bind card_scene.width
+                height: bind card_scene.height
+                //fitToWidth: true
+                //nodeWidth: width + 20
+                //nodeHeight: height + 20
+                //hbarPolicy: ScrollBarPolicy.NEVER
+
+                node: HBox {
+                    padding: Insets { left: 5 top: 1 bottom: 10}
+                    spacing: 20
+                    content: [
+
+                        VBox {
+                            //padding: Insets {left: 5 right: 5}
+                            content: [headerText, lang_VBox]
+                            //content: [headerText, lang_VBox, langPOSCards]
+                            spacing: 10
+                        }
+                    ]
+                }
             }
         }
     }
@@ -284,7 +295,7 @@ public class WC{ // extends JFrame {
 
     /** Creates list of sub-languages (parts of wiki pages),
      * builds visual blocks with these languages,
-     * fills ->cx_lang[].
+     * fills ->lang_VBox.content[]
      *
      * @params page_array list of titles of pages in ListView window (scroll).
     **/
@@ -318,7 +329,7 @@ public class WC{ // extends JFrame {
     
     /** Creates list of sub-languages (parts of wiki pages),
      * builds visual blocks with these languages,
-     * fills ->cx_lang[].
+     * fills ->lang_VBox.content[]
      *
      * @params page_array list of titles of pages in ListView window (scroll).
     **/
