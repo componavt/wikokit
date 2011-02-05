@@ -49,7 +49,7 @@ Done (top - new, bottom - old):
   # field `relation_type.name` should be unique
   # translate word from lang source to lang target
 
-= Pareser (wikt_parser) =
+= Parser (wikt_parser) =
 
 == Meaning ==
 
