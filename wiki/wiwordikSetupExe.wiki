@@ -1,7 +1,7 @@
 #summary How to compile wiwordik-setup-X.XX.jar and .exe
 #labels Phase-Implementation,wiwordik,installation,IzPack
 
-=Compilation by IzPack=
+= Variant 1. Compilation by IzPack=
 == Introduction ==
 
 [http://en.wikipedia.org/wiki/IzPack IzPack] is an open source software installer generator that targets the Java platform.
@@ -36,6 +36,16 @@ izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.04.jar --output=wiwordik-
 
 = Software requirements =
 Install [http://javafx.com/downloads JavaFX SDK].
+
+= Variant 2. JNLP =
+== Introduction ==
+{{{
+cd wiwordik/sqlite
+jar cf0M enwikt20101030.sqlite.jar enwikt20101030.sqlite
+pack200 
+}}}
+
+
 
 = Previous step =
   * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
