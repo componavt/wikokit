@@ -106,7 +106,7 @@ public class SPARQLExample {
             "         wikpa:lang_pos_lang_id ?langId; " +
             "         wikpa:lang_pos_id ?langPosId. " +
 
-            "   ?meaning wikpa:meaning_id ?langPosId; " +
+            "   ?meaning wikpa:meaning_lang_pos_id ?langPosId; " +
             "         wikpa:meaning_wiki_text_id ?wikiTextId. " +
 
             "   ?wiki_text wikpa:wiki_text_id ?wikiTextId; " +
