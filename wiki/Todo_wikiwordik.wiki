@@ -49,7 +49,11 @@ Done (top - new, bottom - old):
   # field `relation_type.name` should be unique
   # translate word from lang source to lang target
 
-= wikt_parser =
+= Pareser (wikt_parser) =
+
+== Meaning ==
+
+Errors in parsing definitions with example, e.g. parser founds 204 (instead of 21) meanings of the English word [http://en.wiktionary.org/wiki/catch#act_of_capturing catch].
 
 == Translation ==
 
