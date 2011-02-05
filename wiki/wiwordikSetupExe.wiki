@@ -42,7 +42,7 @@ Install [http://javafx.com/downloads JavaFX SDK].
 {{{
 cd wiwordik/sqlite
 jar cf0M enwikt20101030.sqlite.jar enwikt20101030.sqlite
-pack200 
+pack200 -J-Xms1712m -J-Xmx1712m -J-Xmn16m enwikt20101030.sqlite.jar.pack.gz enwikt20101030.sqlite.jar // failed
 }}}
 
 
