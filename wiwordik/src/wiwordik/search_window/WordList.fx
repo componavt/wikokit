@@ -19,6 +19,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.Scene;
 
 //import java.util.Map;
 //import java.util.LinkedHashMap;
@@ -26,6 +27,8 @@ import javafx.scene.input.KeyCode;
 /** List of words in the dictionary.
  */
 public class WordList {
+
+    public var height: Float; // reference to the parent Window
 
     var query_text_string : QueryTextString;
     var lang_choice : LangChoice;
@@ -97,12 +100,14 @@ public class WordList {
     /* List of words related to the user query string */
     public var word_ListView: ListView = ListView {
 
+        layoutInfo: LayoutInfo { height: bind height } // getTranslationBoxHeight(trans_entry_items_size) }
+        //layoutInfo: LayoutInfo { width: 222 }
+        //height: bind scene.height
+
         // items: bind page_array_string
 
         //items: bind for(_tpage in page_array) { _tpage.getPageTitle() }
         items: bind for(_w in word_list_lines) { _w }
-
-        layoutInfo: LayoutInfo { width: 222 }
 
         onKeyPressed: function (e: KeyEvent) {
 

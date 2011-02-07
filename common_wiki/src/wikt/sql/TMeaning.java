@@ -308,7 +308,7 @@ public class TMeaning {
     public static TMeaning getByID (Connect connect,int id) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TMeaning meaning = null;
         
         try {

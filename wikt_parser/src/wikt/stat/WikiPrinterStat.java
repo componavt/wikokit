@@ -130,7 +130,10 @@ public class WikiPrinterStat {
         //Collection<Relation> all_rel = Relation.getAllRelations();
         Relation[] all_rel = {  Relation.synonymy,  Relation.antonymy,
                                 Relation.hypernymy, Relation.hyponymy,
-                                Relation.holonymy,  Relation.meronymy};
+                                Relation.holonymy,  Relation.meronymy,
+                                Relation.troponymy, Relation.coordinate_term,
+                                Relation.otherwise_related
+        };
 
         System.out.print(" total"); // " Number of semantic relations"
         for(Relation r : all_rel)
@@ -165,6 +168,11 @@ public class WikiPrinterStat {
         System.out.println("\n|}");
     }
 
+    /** Maximum "number of relations" will be printed in the table:
+     * (2) Number of words per number of relations
+     * @see http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations#Number_of_words_per_number_of_relations
+     */
+    static final Integer max_relations_to_print = 50;
 
     /** Prints statistics-histogram about number of relations in Wiktionary.
      *
@@ -180,11 +188,13 @@ public class WikiPrinterStat {
         System.out.println("Number of words which have the following number of semantic relations. E.g.:");
         System.out.println("\n0 | number of words (one language, one part of speech) without any semantic relations");
         System.out.println("\n1 | number of words with one relation, e.g. one synonym or one antonym, etc.\n");
+        System.out.println("\nOnly the first " + max_relations_to_print + " rows are presented in the table.");
 
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         System.out.print("! Number of relations || Number of words");
-        
-        for(int i=0; i<rel_histogram.length; i++) {
+
+        int max = Math.min(rel_histogram.length, max_relations_to_print);
+        for(int i=0; i<max; i++) {
 
             int n_rel = rel_histogram[i];
 
@@ -209,14 +219,15 @@ public class WikiPrinterStat {
                         LanguageType native_lang,
                         Connect wikt_parsed_conn,
                         List<TLangPOS> words_rich_in_relations,
-                        int threshold_relations,
+                        int threshold_relations_foreign, int threshold_relations_native,
                         int threshold_type_relations) {
         
         // print header line
         System.out.println("\n=== List of words with many semantic relations ===\n");
 
         System.out.println("There are " + words_rich_in_relations.size() + 
-                " words which have >= " + threshold_relations + 
+                " words which have >= " + threshold_relations_native + " ("+ native_lang.getName() +"), " +
+                                "  >= " + threshold_relations_foreign + " (other languages) " +
                 " semantically related words or >= " + threshold_type_relations +
                 " types of semantic relations.");
 

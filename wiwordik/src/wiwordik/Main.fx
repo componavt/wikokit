@@ -1,6 +1,6 @@
 /* Main.fx - visualization of parsed Wiktionary database (wikt_parsed).
  *
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
@@ -26,6 +26,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.CheckBox;
+import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.stage.StageStyle;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 
 def DEBUG : Boolean = false;
 
@@ -45,14 +50,14 @@ function init() {
 
     native_lang = LanguageType.en;
     //native_lang = LanguageType.ru;
-
+/*
     // MySQL
-    /*if(LanguageType.ru == native_lang) {
+    if(LanguageType.ru == native_lang) {
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
     } else {
         wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
-    }*/
-
+    }
+*/
     // SQLite                                   //Connect.testSQLite();
     if(LanguageType.ru == native_lang) {
         wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
@@ -99,11 +104,13 @@ def word0: String = tip.getQuery(); //"*с?рё*";
 
 var lang_choice = LangChoice{};
 
-var word_list = WordList{};
+def word_list : WordList = WordList{
+    height: bind (stage.height - 80 - query_text_string.word_Text.height)
+    };
 
 var filter_mean_sem_transl = FilterMeanSemRelTrans{};
 
-def query_text_string = QueryTextString {
+def query_text_string : QueryTextString = QueryTextString {
      word0: word0;
      wikt_parsed_conn: wikt_parsed_conn
 }
@@ -197,20 +204,22 @@ var h_filter_MRT: HBox = HBox {
 };
 
 
-var wiki_page_Label: Label = Label {
+/*var wiki_page_Label: Label = Label {
             //x: 10  y: 30
             font: Font { size: 16 }
             text: "Wiktionary page"
-}
+}*/
 
 var outputPanel_VBox1: VBox = VBox {
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
-    content: [query_text_string.word_Text, word_list.word_ListView]
+    content: [query_text_string.word_Text,
+              word_list.word_ListView]
     spacing: 10
 };
 
 var result_VBox2: VBox = VBox {
+    padding: Insets { left: 0 top: 4 bottom: 1}
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
     content: [  // wiki_page_Label,
@@ -222,6 +231,9 @@ var result_VBox2: VBox = VBox {
 };
 
 var horizontal_Panel: HBox = HBox {
+    padding: Insets { left: 4 top: 4 bottom: 10}
+    width: bind scene.width;
+    height: bind scene.height;
     //translateX: bind (sceneWidth - zipSearchPanel.boundsInLocal.width)/2.0
     //translateY: bind (sceneHeight - 52)
     content: [outputPanel_VBox1, result_VBox2]
@@ -229,8 +241,7 @@ var horizontal_Panel: HBox = HBox {
 };
 
 var scene: Scene = Scene {
-    content: Group {
-        content: bind [
+    content: [
             horizontal_Panel // ,
             //word_ComboBox //,
             //word_Text
@@ -243,8 +254,8 @@ var scene: Scene = Scene {
         //    arcWidth: 20
         //    arcHeight: 20
         //}
-    }
-    fill: Color.TRANSPARENT
+    
+//    fill: Color.TRANSPARENT
 }
 
 // Application User Interface
@@ -252,12 +263,10 @@ var stage: Stage = Stage {
     title: "Wiwordik {wiwordik_version}.{LanguageType.size()} ({wikt_parsed_conn.getDBName()})"
     //    resizable: false
     visible: true
+    
     //    style: StageStyle.TRANSPARENT
     scene: bind scene
     width: 640
     height: 480
     // content: "Wiktionary browser"
 }
-
-
-

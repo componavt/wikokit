@@ -1,6 +1,6 @@
-/*
- * FileWriter.java
- * Copyright (c) 2005-2007 Andrew Krizhanovsky /aka at mail.iias.spb.su/
+/* FileWriter.java
+ *
+ * Copyright (c) 2005-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
@@ -164,8 +164,46 @@ public class FileWriter {
             }
         }
     }
-    
-    
+
+    /** @see http://www.java2s.com/Code/Java/File-Input-Output/RetreiveTextFileFromJar.htm */
+    public static boolean retrieveBinaryFileFromJar(String resource_name,
+            String target_dir,Object resource) throws Exception
+    {
+        //ClassLoader cl = this.getClass().getClassLoader();
+        //Icon saveIcon  = new ImageIcon(cl.getResource("images/save.gif"));
+
+        //System.out.println("\nDB path = /" + sqlite_filepath);
+        //URL url = cl.getResource("enwikt20101030.sqlite");// + sqlite_filepath);
+        //URL theDB = this.getClass().getResourceAsStream("/" + sqlite_filepath);
+
+        boolean found=false;
+        if(resource_name != null) {
+          ClassLoader cl = resource.getClass().getClassLoader();
+          InputStream is = cl.getResourceAsStream(resource_name);
+          if(is == null) throw new Exception ("Error in FileWriter.retrieveBinaryFileFromJarResource: "+resource_name+" was not found.");
+          BufferedReader br = new BufferedReader(new InputStreamReader(is));
+          //FileOutputStream fos = new FileOutputStream(target_dir+File.separator +
+            //      resource_name.substring(resource_name.lastIndexOf('/'), resource_name.length()));
+          FileOutputStream fos = new FileOutputStream(target_dir+File.separator + resource_name);
+          byte[] buffer = new byte[1024];
+                int bytesRead;
+
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    fos.write(buffer, 0, bytesRead);
+                }
+                fos.flush();
+                br.close();
+                is.close();
+          found=true;
+        } else {
+          found=false;
+        }
+        return found;
+  }
+
+
+
+
     
     
     /* OOOOOOOOOOO LLLLLLLLLLLLLL DDDDDDDD

@@ -79,8 +79,7 @@ public class WCTranslation {
 
         def tei : TranslationEntryItem = listview_trans.items[0] as TranslationEntryItem;
         def h : Float = tei.getHeight();
-
-        System.out.println("WCTranslation:create: h = {h}");
+        //System.out.println("WCTranslation:create: h = {h}");
         
         if(n >= 0 and n <=9)
             return n*h;
@@ -90,7 +89,6 @@ public class WCTranslation {
 
     def listview_trans: ListView = ListView {
         layoutInfo: LayoutInfo { height: bind getTranslationBoxHeight(trans_entry_items_size) }
-
     };
 
     public var group: VBox = VBox {
@@ -175,21 +173,9 @@ public class WCTranslation {
         }
         insert trans_entry_items into listview_trans.items;
         trans_entry_items_size = trans_entry_items.size();
-        System.out.println("WCTranslation:create: sizeof listview_trans.items = {sizeof listview_trans.items}");
+        //System.out.println("WCTranslation:create: sizeof listview_trans.items = {sizeof listview_trans.items}");
         
         def len : Integer = sizeof trans_entries;
-/*        if(1 == len) {
-            scroll_height = (font_size +7);
-        } else if(len < 5) {
-            scroll_height = (font_size +6)*len;
-        } else if(len < 7) {
-            scroll_height = (font_size +5)*len;
-        } else {
-            //scroll_height = Math.min(150, Math.max(font_size, (sizeof swing_list_group) * (font_size +5)))
-            scroll_height = (font_size +5)*6;
-        }
-        scroll_width = 300;
-*/
         return len > 0;
     }
 }

@@ -1,6 +1,6 @@
 /* RelationTableAll.java - relations' statistics in the database of the parsed Wiktionary.
  *
- * Copyright (c) 2005-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2005-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
@@ -30,7 +30,7 @@ public class RelationTableAll {
 
     /** Let's constrain the maximum number of semantic relation for one word
      * in one language */
-    private static final int max_relation = 100;
+    private static final int max_relation = 200;
     private static final int[] rel_histogram = new int[max_relation];
 
     /** Let's constrain the maximum number of types of semantic relation
@@ -82,7 +82,7 @@ public class RelationTableAll {
         
         try {
             s = wikt_parsed_conn.conn.createStatement ();
-            StringBuffer str_sql = new StringBuffer();
+            StringBuilder str_sql = new StringBuilder();
             str_sql.append("SELECT id,meaning_id,wiki_text_id,relation_type_id FROM relation");
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
@@ -194,9 +194,17 @@ public class RelationTableAll {
      * SELECT * FROM lang_pos;
      *
      * @param connect connection to the database of the parsed Wiktionary
-     * @param threshold_relations number (or more) of relations the word have
+     *
+     * @param threshold_relations_native number (or more) of relations
+     *                          the word (in native language) have
      *                          to have in order to be included into the
      *                          list RelationTableAll.words_rich_in_relations
+     *
+     * @param threshold_relations_foreign the same constraint for foreign words,
+     *                          it used since native words usually push out 
+     *                          foreign words from the list, 
+     * threshold_relations_foreign << threshold_relations_native, so
+     *
      *
      * @param threshold_types_relations number (or more) of types
      *                          of the semantic relations the word have
@@ -208,8 +216,9 @@ public class RelationTableAll {
      * [1] = number of words with one relation, etc.
      */
     public static void countRelationsHistogram (Connect wikt_parsed_conn,
-                                                    int threshold_relations,
-                                                    int threshold_type_relations) {
+                    LanguageType native_lang,
+                    int threshold_relations_foreign, int threshold_relations_native,
+                    int threshold_type_relations) {
         // lang_pos -> meaning -> relations -> count
 
         Statement   s = null;
@@ -232,7 +241,8 @@ public class RelationTableAll {
                 TLangPOS lang_pos_not_recursive = TLangPOS.getByID (wikt_parsed_conn, id);// fields are not filled recursively
                 if(null == lang_pos_not_recursive)
                     continue;
-                incLangEntry(lang_pos_not_recursive.getLang().getLanguage());
+                LanguageType lang = lang_pos_not_recursive.getLang().getLanguage();
+                incLangEntry(lang);
                 TPage tpage = lang_pos_not_recursive.getPage();
                 String page_title = tpage.getPageTitle();
 
@@ -257,7 +267,9 @@ public class RelationTableAll {
                     assert(lang_pos != null);
 
                     boolean b_added = false;
-                    if(n_relation >= threshold_relations) {
+                    if((native_lang == lang && n_relation >= threshold_relations_native) ||
+                       (native_lang != lang && n_relation >= threshold_relations_foreign))
+                    {
                         b_added = true;
                         words_rich_in_relations.add(lang_pos);// List of the words with the maximum number of semantic relations.          
                     }
@@ -321,7 +333,8 @@ public class RelationTableAll {
 
         // Connect to wikt_parsed database
         Connect wikt_parsed_conn = new Connect();
-        int threshold_relations, threshold_type_relations;
+        int threshold_relations_foreign, threshold_relations_native,
+            threshold_type_relations;
 /*
         // Russian
         LanguageType native_lang = LanguageType.ru;
@@ -332,7 +345,8 @@ public class RelationTableAll {
 */
         // English
         LanguageType native_lang = LanguageType.en;
-        threshold_relations = 10;
+        threshold_relations_foreign = 10;
+        threshold_relations_native  = 40; // for English words, more strict rules, too much rich words
         threshold_type_relations = 3;
         wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
 
@@ -348,8 +362,9 @@ public class RelationTableAll {
         Map<LanguageType, Map<Relation,Integer>> m = RelationTableAll.countRelationsPerLanguage(wikt_parsed_conn);
 
         // fills rel_histogram, rel_types_histogram
-        RelationTableAll.countRelationsHistogram(wikt_parsed_conn, 
-                                threshold_relations, threshold_type_relations);
+        RelationTableAll.countRelationsHistogram(wikt_parsed_conn, native_lang,
+                                threshold_relations_foreign, threshold_relations_native,
+                                threshold_type_relations);
 
         System.out.println("\nWords (pairs: language & part of speech) with semantic relations: " + lang_pos_with_relations);
         System.out.println("\nLanguages with semantic relations: " + m.size());
@@ -362,8 +377,9 @@ public class RelationTableAll {
         WikiPrinterStat.printRelationsTypeHistogram (rel_type_histogram, m_relation_type_number);
         
         WikiPrinterStat.printWordsWithManyRelations(native_lang, wikt_parsed_conn,
-                                words_rich_in_relations, threshold_relations,
-                                                         threshold_type_relations);
+                                words_rich_in_relations,
+                                threshold_relations_foreign, threshold_relations_native,
+                                threshold_type_relations);
 
         WikiPrinterStat.printFooter();
 

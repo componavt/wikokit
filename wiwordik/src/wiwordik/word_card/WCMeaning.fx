@@ -34,7 +34,7 @@ public class WCMeaning {
     
     var definition_value : String;
 
-    var temp_height : Integer = 50;
+    //var temp_height : Integer = 50;
 
     /** (2) Semantic relations: synonymy, antonymy, etc.
      * The map from semantic relation (e.g. synonymy) to array of WRelation
@@ -50,8 +50,9 @@ public class WCMeaning {
         spacing: 1
         //height: bind temp_height
     };
-    
-    public var group: VBox = VBox {
+
+    /** Meanings, Relations, Translations group */
+    public var group_mrt: VBox = VBox {
         spacing: 7
         content: [
             Text {
