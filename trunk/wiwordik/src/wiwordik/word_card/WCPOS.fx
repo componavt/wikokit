@@ -86,7 +86,7 @@ public class WCPOS {
                 _meaning.create(conn, m, sizeof mm, lang, ttranslations);
 
                 insert _meaning into meaning;                       // logic
-                insert _meaning.group into meaning_group.content;   // visual
+                insert _meaning.group_mrt into meaning_group.content;   // visual
             }
         }
     }

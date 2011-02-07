@@ -153,7 +153,7 @@ public class TLang {
             if(LanguageType.has(w))
                 tlang_list.add( TLang.get( LanguageType.get(w) ));
         }
-        if(tlang_list.size() == 0)
+        if(tlang_list.isEmpty())
             return NULL_TLANG_ARRAY;
             
         return( (TLang[])tlang_list.toArray(NULL_TLANG_ARRAY) );

@@ -50,6 +50,7 @@ public class PageTableAll {
         "save someone's bacon", // section with unknown language: Alternative phrases.
         "iman", // section with unknown language: See also.
         "ОЭЗ", // 'ru' language section has no # Definition
+        "волк каждый год линяет, а всё сер бывает", // bad wikification of Synonyms, it is not stripped
 
         // Russian Wiktionary
         "!", "процессуальное право", "материальное право", "вздуть", "голубой",

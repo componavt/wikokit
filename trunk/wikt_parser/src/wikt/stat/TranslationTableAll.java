@@ -69,7 +69,7 @@ public class TranslationTableAll {
 
         try {
             s = wikt_parsed_conn.conn.createStatement ();
-            StringBuffer str_sql = new StringBuffer();
+            StringBuilder str_sql = new StringBuilder();
                          // SELECT id,lang_pos_id,meaning_summary,meaning_id FROM translation
             str_sql.append("SELECT id,lang_pos_id,meaning_summary FROM translation");
             s.executeQuery (str_sql.toString());
@@ -135,10 +135,10 @@ public class TranslationTableAll {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
 
-        long  t_end;
-        float   t_work;
-        t_end  = System.currentTimeMillis();
-        t_work = (t_end - t_start)/1000f; // in sec
+        //long  t_end;
+        //float   t_work;
+        //t_end  = System.currentTimeMillis();
+        //t_work = (t_end - t_start)/1000f; // in sec
         System.out.println(//"\nTime sec:" + t_work +
             "\nTotal translation boxes (translated meanings of words): " + n_total +
             "\n\nUnknown<ref>'''Unknown''' - words which have translations but have unknown language code and POS</ref>: "
@@ -153,12 +153,12 @@ public class TranslationTableAll {
         Connect wikt_parsed_conn = new Connect();
 
         // Russian
-        LanguageType native_lang = LanguageType.ru;
-        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+        //LanguageType native_lang = LanguageType.ru;
+        //wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
         // English
-        //LanguageType native_lang = LanguageType.en;
-        //wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
+        LanguageType native_lang = LanguageType.en;
+        wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
 
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);

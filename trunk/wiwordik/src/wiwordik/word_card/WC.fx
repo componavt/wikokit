@@ -27,8 +27,6 @@ import javafx.stage.Stage;
 import javafx.scene.layout.Flow;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
-import javafx.scene.control.ScrollBarPolicy;
-//import javax.swing.JFrame;
 
 
 /** One word card describes one word (page, entry in Wiktionary).
