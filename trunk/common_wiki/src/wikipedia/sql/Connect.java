@@ -340,48 +340,24 @@ public class Connect {
             //conn = DriverManager.getConnection("jdbc:sqlite://"+db_host+"/"+db_name, user, pass);
 
             String dbfile_in_jar = "enwikt20101030.sqlite";
-            String target_dir = System.getProperty("user.home"); //String fs = System.getProperty("file.separator");
-            Object resource = this;
-            try {
-                boolean success = FileWriter.retrieveBinaryFileFromJar(dbfile_in_jar, target_dir, resource);
-            } catch (Exception ex) {
-                Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+
+            String target_dir = System.getProperty("user.home") + File.separator + ".wiwordik";
+            String result_filepath = target_dir+File.separator + dbfile_in_jar;
+            
+            if(!FileWriter.existsFile(result_filepath)) {
+                Object resource = this;
+                try {
+                    // creates ~/.wiwordik/
+                    boolean success = FileWriter.retrieveBinaryFileFromJar(dbfile_in_jar, target_dir, resource);
+                } catch (Exception ex) {
+                    Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
-
-            String result_filepath = target_dir+File.separator +
-                  dbfile_in_jar.substring(dbfile_in_jar.lastIndexOf('/'));
-
-//ClassLoader cl = this.getClass().getClassLoader();
-//Icon saveIcon  = new ImageIcon(cl.getResource("images/save.gif"));
-
-//System.out.println("\nDB path = /" + sqlite_filepath);
-//URL url = cl.getResource("enwikt20101030.sqlite");// + sqlite_filepath);
-//URL theDB = this.getClass().getResourceAsStream("/" + sqlite_filepath);
-//String path = url.getPath();
-
-//System.out.println("url.getPath = " + path);
-
-// "file:/D:/all/projects/java/synonyms/wikokit/wiwordik/dist/lib/enwikt20101030.sqlite.jar!/enwikt20101030.sqlite"
-//s = "jdbc:sqlite:/enwikt20101030.sqlite";
-//s = "jdbc:sqlite:" + url;
-//s = "jdbc:sqlite:/D:/all/projects/java/synonyms/wikokit/wiwordik/dist/lib/enwikt20101030.sqlite.jar!/enwikt20101030.sqlite";
-
+            
             s = "jdbc:sqlite:/" + result_filepath;
-            System.out.println("DriverManager.getConnection(" + s + ")");
-
-conn = DriverManager.getConnection(s);
-
-//String myDB = "jdbc:sqlite:jar:file:/enwikt20101030.sqlite";
-//             jdbc:mysql://localhost:3306/mysql
-// Exception: path to 'file:/D:/all/projects/java/synonyms/wikokit/wiwordik/dist/lib/enwikt20101030.sqlite.jar!/enwikt20101030.sqlite': 
-//                          'D:\all\projects\java\synonyms\wikokit\wiwordik\file:' does not exist
-        //g; //g.substring(1);
-// 1
-// myDB = jdbc:sqlite:ile:/D:/all/projects/java/synonyms/wikokit/wiwordik/dist/lib/enwikt20101030.sqlite.jar!/enwikt20101030.sqlite
-//System.out.println("myDB = " + myDB);
-//conn = DriverManager.getConnection(myDB);
-
-
+            //System.out.println("DriverManager.getConnection(" + s + ")");
+            conn = DriverManager.getConnection(s);
+            
             // ?autoReconnect=true&useUnbufferedInput=false
             //conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name+"?useUnicode=true&characterEncoding=UTF-8", user, pass);
             //conn = DriverManager.getConnection("jdbc:mysql://localhost/"+db_name, user, pass);

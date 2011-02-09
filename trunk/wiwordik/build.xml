@@ -68,14 +68,17 @@
 
     -->
 
-    <target name="package-for-store" depends="jar">
 
-        <!-- Change the value of this property to be the name of your JAR,
+    <!-- Change the value of this property to be the name of your JAR,
              minus the .jar extension. It should not have spaces.
              <property name="store.jar.name" value="MyJarName"/>
-        -->
-        <property name="store.jar.name" value="wiwordik-0.05"/>
+    -->
+    <property name="store.jar.name" value="wiwordik-0.05"/>
 
+    <target name="package-for-store" depends="jar">
+
+        <!-- delete dir="C:\Users\andrew\.wiwordik" / -->
+        <delete dir="${user.home}\.wiwordik" />
 
         <!-- don't edit below this line -->
 
@@ -106,5 +109,14 @@
 
     </target>
 
+
+    <!--target name="jarsigner" description="Signs JAR file" depends="package-for-store">
+        
+        <exec dir="." executable="jarsigner" failonerror="true">
+        <arg value="sign -keystore D:\all\docs\my_texts\social\root\jarsigner\myKeystore" />
+        <arg value="store/${store.jar.name}.jar " />
+        <arg value="andrew_k" />
+        </exec>
+    </target-->
 
 </project>
