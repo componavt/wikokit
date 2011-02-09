@@ -139,9 +139,19 @@ public class FileWriter {
         SetFilename(_filename);
         Open(b_append, enc);
     }
+
+    /** Checks file existance. */
+    public static boolean existsFile (String path) {
+
+        File _file = new File(path);
+        if (_file != null)
+            return _file.exists();
+        return false;
+    }
+
     
-    
-    /** Creates parent directory for the file with the full 'path'. */
+    /** Creates parent directory for the file with the full 'path',
+     * if the directory does not exist. */
     public static void createDir(String path) {
         
         File _file = new File(path);
@@ -157,35 +167,39 @@ public class FileWriter {
                 File parentDir = _file.getParentFile();
                 if (parentDir != null && !parentDir.exists()) {
                     boolean created = parentDir.mkdirs();
-                    if (!created) {
-                            System.out.println("Unable to create directory for file " + _file.getPath());
-                    }
-                 }
+                    if (!created)
+                        System.out.println("FileWriter::createDir Unable to create directory for file " + _file.getPath());
+                }
             }
         }
     }
 
-    /** @see http://www.java2s.com/Code/Java/File-Input-Output/RetreiveTextFileFromJar.htm */
+    /** Extracts file with name resource_name from the jar,
+     * copies it to the target directory target_dir.
+     * 
+     * @param target_dir target directory, if it is not exists, then mkdir, 
+     *                   e.g. creates `.wiwordik` folder for the
+     *                   target_dir=".../.wiwordik/enwikt20101030.sqlite"
+     *
+     * @see http://www.java2s.com/Code/Java/File-Input-Output/RetreiveTextFileFromJar.htm */
     public static boolean retrieveBinaryFileFromJar(String resource_name,
             String target_dir,Object resource) throws Exception
     {
-        //ClassLoader cl = this.getClass().getClassLoader();
-        //Icon saveIcon  = new ImageIcon(cl.getResource("images/save.gif"));
-
-        //System.out.println("\nDB path = /" + sqlite_filepath);
-        //URL url = cl.getResource("enwikt20101030.sqlite");// + sqlite_filepath);
-        //URL theDB = this.getClass().getResourceAsStream("/" + sqlite_filepath);
-
         boolean found=false;
         if(resource_name != null) {
-          ClassLoader cl = resource.getClass().getClassLoader();
-          InputStream is = cl.getResourceAsStream(resource_name);
-          if(is == null) throw new Exception ("Error in FileWriter.retrieveBinaryFileFromJarResource: "+resource_name+" was not found.");
-          BufferedReader br = new BufferedReader(new InputStreamReader(is));
-          //FileOutputStream fos = new FileOutputStream(target_dir+File.separator +
+
+            FileWriter.createDir(target_dir + File.separator + "test file");
+            
+            ClassLoader cl = resource.getClass().getClassLoader();
+            InputStream is = cl.getResourceAsStream(resource_name);
+            if(is == null) throw new Exception ("Error in FileWriter::retrieveBinaryFileFromJarResource "+resource_name+" was not found.");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            //FileOutputStream fos = new FileOutputStream(target_dir+File.separator +
             //      resource_name.substring(resource_name.lastIndexOf('/'), resource_name.length()));
-          FileOutputStream fos = new FileOutputStream(target_dir+File.separator + resource_name);
-          byte[] buffer = new byte[1024];
+
+            FileOutputStream fos = new FileOutputStream(target_dir+File.separator + resource_name);
+            byte[] buffer = new byte[1024];
                 int bytesRead;
 
                 while ((bytesRead = is.read(buffer)) != -1) {
@@ -194,9 +208,9 @@ public class FileWriter {
                 fos.flush();
                 br.close();
                 is.close();
-          found=true;
+            found=true;
         } else {
-          found=false;
+            found=false;
         }
         return found;
   }
