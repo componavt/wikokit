@@ -73,7 +73,9 @@
              minus the .jar extension. It should not have spaces.
              <property name="store.jar.name" value="MyJarName"/>
     -->
-    <property name="store.jar.name" value="wiwordik-0.05"/>
+    <property name="version" value="0.05"/>
+    <property name="sqlite.file" value="ruwikt20101101"/>
+    <property name="store.jar.name" value="wiwordik-${version}-${sqlite.file}"/>
 
     <target name="package-for-store" depends="jar">
 

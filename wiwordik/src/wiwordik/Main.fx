@@ -17,22 +17,14 @@ import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 
 import javafx.stage.Stage;
-import javafx.scene.text.Font;
 
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.CheckBox;
 import javafx.geometry.Insets;
-import javafx.scene.image.Image;
-import javafx.stage.StageStyle;
-import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 
-def DEBUG : Boolean = false;
+// def DEBUG : Boolean = false;
 
 // Todo. Errors in parser:
 // дуб (илл -> syn)
@@ -42,27 +34,46 @@ def DEBUG : Boolean = false;
 // Wiktionary parsed database
 // ===========
 
-var wiwordik_version = "0.05";
+def wiwordik_version : String = "0.05";
+
+//////////////////////////////
+// Parameters
+
+/** If true, then SQLite database extracted from the .jar and stored
+ * to the directory user.dir (Add .jar with SQLite database to the project).
+ * If false, then SQLite database from the project local folder ./sqlite/
+ */
+def IS_RELEASE : Boolean = true;
+
+/** true (SQLite), false (MySQL) */
+def IS_SQLITE : Boolean = true;
+
+//            eo Parameters //
+//////////////////////////////
+
+
 var wikt_parsed_conn : Connect = new Connect();
 var native_lang : LanguageType;
 
 function init() {
 
-    native_lang = LanguageType.en;
-    //native_lang = LanguageType.ru;
-/*
-    // MySQL
-    if(LanguageType.ru == native_lang) {
-        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+    //native_lang = LanguageType.en;
+    native_lang = LanguageType.ru;
+
+    if(IS_SQLITE) {
+        // SQLite                                   //Connect.testSQLite();
+        if(LanguageType.ru == native_lang) {
+            wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru, IS_RELEASE);
+        } else {
+            wikt_parsed_conn.OpenSQLite(Connect.ENWIKT_SQLITE, LanguageType.en, IS_RELEASE);
+        }
     } else {
-        wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
-    }
-*/
-    // SQLite                                   //Connect.testSQLite();
-    if(LanguageType.ru == native_lang) {
-        wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
-    } else {
-        wikt_parsed_conn.OpenSQLite(Connect.ENWIKT_SQLITE, LanguageType.en);
+        // MySQL
+        if(LanguageType.ru == native_lang) {
+            wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+        } else {
+            wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
+        }
     }
 
     TLang.createFastMaps(wikt_parsed_conn);   // once upon a time: use Wiktionary parsed db
