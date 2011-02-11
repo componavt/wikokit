@@ -70,5 +70,8 @@ Update the version number and the name of the SQLite file in the `build.xml`, e.
 
 Run ant target: package-for-store.
 
+== jarsigner ==
+Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
+
 = Previous step =
   * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
