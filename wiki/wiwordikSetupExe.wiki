@@ -16,6 +16,9 @@ Edit the following files in the folder `./wikokit/wiwordik/`:
 The SQLite database file should exist:
   * `./wikokit/wiwordik/ruwikt20YYMMDD.sqlite`
 
+== Software requirements ==
+Install [http://javafx.com/downloads JavaFX SDK].
+
 == Compilation ==
 
 Compile wiwordik files into one file (e.g. `wiwordik-setup-0.04.jar`):
@@ -34,11 +37,11 @@ cd wikokit/releases/
 izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.04.jar --output=wiwordik-setup-0.04.exe --launch-file=wiwordik.bat
 }}}
 
-= Software requirements =
-Install [http://javafx.com/downloads JavaFX SDK].
-
 = Variant 2. JNLP and Java Web Start =
 == Introduction ==
+
+Let's create .jar file from Wiktionary SQLite database, see [http://www.lkn.ei.tum.de/arbeiten/faq/man/JAVA-tutorial/jar/basics/build.html Creating a JAR File].
+
 {{{
 cd wiwordik/sqlite
 jar cf0M enwikt20101030.sqlite.jar enwikt20101030.sqlite
