@@ -56,9 +56,18 @@ Add result .jar file to the NetBeans project `wiwordik`.
 
 Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\Main.fx`:
 {{{
-def IS_RELEASE : Boolean = false;
+def IS_RELEASE : Boolean = true;
 def IS_SQLITE : Boolean = true;
 }}}
+
+== Ant (build.xml) ==
+
+Update the following line in the `build.xml`, e.g.:
+{{{
+<property name="store.jar.name" value="wiwordik-0.05-ruwikt20101101"/>
+}}}
+
+Run ant target: package-for-store.
 
 = Previous step =
   * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
