@@ -1,7 +1,7 @@
 #summary How to compile wiwordik-setup-X.XX.jar and .exe
 #labels Phase-Implementation,wiwordik,installation,IzPack
 
-= Variant 1. Compilation by IzPack=
+= Variant 1. Compilation by !IzPack=
 == Introduction ==
 
 [http://en.wikipedia.org/wiki/IzPack IzPack] is an open source software installer generator that targets the Java platform.
@@ -50,7 +50,7 @@ cd wiwordik/sqlite
 jar cf0M enwikt20101030.sqlite.jar enwikt20101030.sqlite
 }}}
 
-Add result .jar file to the NetBeans project `wiwordik`.
+Add result .jar file to the !NetBeans project `wiwordik`.
 
 == Java source code ==
 
@@ -65,8 +65,7 @@ def IS_SQLITE : Boolean = true;
 Update the following line in the `build.xml`, e.g.:
 {{{
 <property name="version" value="0.05"/>
-    <property name="sqlite.file" value="ruwikt20101101"/>
-    <property name="store.jar.name" value="wiwordik-${version}-${sqlite.file}"/>
+<property name="sqlite.file" value="ruwikt20101101"/>
 }}}
 
 Run ant target: package-for-store.
