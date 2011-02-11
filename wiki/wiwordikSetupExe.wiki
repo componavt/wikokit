@@ -62,7 +62,7 @@ def IS_SQLITE : Boolean = true;
 
 == Ant (build.xml) ==
 
-Update the following line in the `build.xml`, e.g.:
+Update the version number and the name of the SQLite file in the `build.xml`, e.g.:
 {{{
 <property name="version" value="0.05"/>
 <property name="sqlite.file" value="ruwikt20101101"/>
