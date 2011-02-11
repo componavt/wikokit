@@ -37,7 +37,7 @@ izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.04.jar --output=wiwordik-
 = Software requirements =
 Install [http://javafx.com/downloads JavaFX SDK].
 
-= Variant 2. JNLP =
+= Variant 2. JNLP and Java Web Start =
 == Introduction ==
 {{{
 cd wiwordik/sqlite
