@@ -64,7 +64,9 @@ def IS_SQLITE : Boolean = true;
 
 Update the following line in the `build.xml`, e.g.:
 {{{
-<property name="store.jar.name" value="wiwordik-0.05-ruwikt20101101"/>
+<property name="version" value="0.05"/>
+    <property name="sqlite.file" value="ruwikt20101101"/>
+    <property name="store.jar.name" value="wiwordik-${version}-${sqlite.file}"/>
 }}}
 
 Run ant target: package-for-store.
