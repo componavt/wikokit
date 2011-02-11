@@ -39,16 +39,26 @@ izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.04.jar --output=wiwordik-
 
 = Variant 2. JNLP and Java Web Start =
 == Introduction ==
+todo ...
+
+== SQLite Jar file ==
 
 Let's create .jar file from Wiktionary SQLite database, see [http://www.lkn.ei.tum.de/arbeiten/faq/man/JAVA-tutorial/jar/basics/build.html Creating a JAR File].
 
 {{{
 cd wiwordik/sqlite
 jar cf0M enwikt20101030.sqlite.jar enwikt20101030.sqlite
-pack200 -J-Xms1712m -J-Xmx1712m -J-Xmn16m enwikt20101030.sqlite.jar.pack.gz enwikt20101030.sqlite.jar // failed
 }}}
 
+Add result .jar file to the NetBeans project `wiwordik`.
 
+== Java source code ==
+
+Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\Main.fx`:
+{{{
+def IS_RELEASE : Boolean = false;
+def IS_SQLITE : Boolean = true;
+}}}
 
 = Previous step =
   * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
