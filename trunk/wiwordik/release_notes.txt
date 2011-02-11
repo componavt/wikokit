@@ -1,10 +1,11 @@
-wiwordik 0.05.1053 2011-0X-XX
+wiwordik 0.05.1053 2011-02-11
     Version number has been changed. XX.X.YYYY where XX.X - version 
       and YYYY - number of languages and codes recognized by the program 
       and extracted from the Wiktionary (see about language codes 
       http://en.wikipedia.org/wiki/ISO_639-3).
   
   Added (from user's point of view):
+    wiwordik (Russian Wiktionary) is accessible via Web Start now.
     Fixed bug: empty wiki links in translations (in Russian Wiktionary), 
       i.e. "[[]]" are omitted now and do not stored to the database.
    

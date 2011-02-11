@@ -91,7 +91,8 @@ public class Connect {
     public final static String RUWIKT_PARSED_DB = "ruwikt20101101_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
-    public final static String RUWIKT_SQLITE = "ruwikt20100817.sqlite";
+    //public final static String RUWIKT_SQLITE = "ruwikt20100817.sqlite";
+    public final static String RUWIKT_SQLITE = "ruwikt20101101.sqlite";
 
     // English Wiktionary database
     // use: connect_ruwikt.Open(Connect.WP_EN_HOST,Connect.WP_EN_DB,Connect.WP_EN_USER,Connect.WP_EN_PASS);
@@ -166,12 +167,12 @@ public class Connect {
      * @param _lang language of Wiktionary/Wikipedia edition, main or 
      *               native language, e.g. Russian in Russian Wiktionary.
      */
-    public void OpenSQLite(String _sqlite_filepath, LanguageType _lang) {
+    public void OpenSQLite(String _sqlite_filepath, LanguageType _lang, boolean brelease) {
 
         lang    = _lang;
         sqlite_filepath = _sqlite_filepath;
         is_sqlite = true;
-        OpenSQLite();
+        OpenSQLite(brelease, sqlite_filepath);
     }
 
     /** Opens MySQL connection. 
@@ -317,51 +318,63 @@ public class Connect {
         }
     }
 
-    private void OpenSQLite() {
+    /** 
+     * 
+     * @param brelease If true, then SQLite database will be extracted 
+     * from the jar-file and stored to the directory user.dir 
+     * (Add jar-file with SQLite database to the project);
+     * If false, then SQLite database has path ./sqlite/SQLiteFile
+     * 
+     * @param sqlite_filename file name of the SQLite database
+     * @return path to SQLite file in .jar or in local folder of the project
+     */
+    private String getFilepathToSQLiteDatabase(boolean brelease, String sqlite_filename) {
+
+        String result_filepath;
+
+            if( brelease ) {
+                String dbfile_in_jar = sqlite_filename;
+                String target_dir = System.getProperty("user.home") + File.separator + ".wiwordik";
+                result_filepath = target_dir+File.separator + dbfile_in_jar;
+
+                if(!FileWriter.existsFile(result_filepath)) {
+                    Object resource = this;
+                    boolean success = true;
+                    try {                    // creates ~/.wiwordik/
+                        success = FileWriter.retrieveBinaryFileFromJar(dbfile_in_jar, target_dir, resource);
+                    } catch (Exception ex) {
+                        Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    if(!success)
+                        System.err.println("Error in Connect::OpenSQLite() Couldn't retrieve SQLite database from .jar file " + dbfile_in_jar);
+                }
+            } else {
+                result_filepath = "sqlite"+File.separator + sqlite_filename;
+            }
+        return result_filepath;
+    }
+
+
+    private void OpenSQLite(boolean brelease, String sqlite_filename) {
         conn = null;
         String classname = "org.sqlite.JDBC";
 
         try {
-            // Class.forName(classname).newInstance();
             Class.forName(classname);
-            //String s = "jdbc:sqlite://"+db_host+"/"+db_name;
-            //String s = "jdbc:sqlite://c:/w/bin/sample_db.sql";
-            //String s = "jdbc:sqlite:/c:/w/bin/sample_db.sql";
-            //String s = "jdbc:sqlite:c:/w/bin/sample_db.sql";
-            //String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";
-
-            String s = "jdbc:sqlite:" + sqlite_filepath;
-
+            //String s = "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite";      // C:\w\bin\sample_db.sql
             //String s = "jdbc:sqlite:sample.db";
+            //String s = "jdbc:sqlite:" + sqlite_filepath;
 
-                     // jdbc:sqlite:sample.db
-                     // C:\w\bin\sample_db.sql
-//            conn = DriverManager.getConnection(s);
-            //conn = DriverManager.getConnection("jdbc:sqlite://"+db_host+"/"+db_name, user, pass);
+            String result_filepath = getFilepathToSQLiteDatabase(brelease, sqlite_filename);
 
-            String dbfile_in_jar = "enwikt20101030.sqlite";
-
-            String target_dir = System.getProperty("user.home") + File.separator + ".wiwordik";
-            String result_filepath = target_dir+File.separator + dbfile_in_jar;
-            
-            if(!FileWriter.existsFile(result_filepath)) {
-                Object resource = this;
-                try {
-                    // creates ~/.wiwordik/
-                    boolean success = FileWriter.retrieveBinaryFileFromJar(dbfile_in_jar, target_dir, resource);
-                } catch (Exception ex) {
-                    Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-            s = "jdbc:sqlite:/" + result_filepath;
-            //System.out.println("DriverManager.getConnection(" + s + ")");
+            String s = "jdbc:sqlite:" + result_filepath;   //s = "jdbc:sqlite:/" + result_filepath;
+            System.out.println("DriverManager.getConnection(" + s + ")");
             conn = DriverManager.getConnection(s);
-            
+
+            //conn = DriverManager.getConnection("jdbc:sqlite://"+db_host+"/"+db_name, user, pass);
             // ?autoReconnect=true&useUnbufferedInput=false
             //conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name+"?useUnicode=true&characterEncoding=UTF-8", user, pass);
             //conn = DriverManager.getConnection("jdbc:mysql://localhost/"+db_name, user, pass);
-            //conn = DriverManager.getConnection("jdbc:mysql://hdd80.net.com/"+db_name, user, pass);
             //System.out.println ("Database connection established");
         }
         catch (ClassNotFoundException e) {
@@ -377,7 +390,7 @@ public class Connect {
             System.err.println("Exception: " + ex.getMessage());
             System.err.println("SQL State: " + ex.getSQLState());
             System.err.println("Vendor Error: " + ex.getErrorCode());
-            System.err.printf("Input parameters: sqlite_filepath=%s\n", sqlite_filepath);
+            System.err.printf("Input parameters: SQLite filename=%s\n", sqlite_filename);
             System.err.println(
                 "Recommendation: .. todo .."
                     );
