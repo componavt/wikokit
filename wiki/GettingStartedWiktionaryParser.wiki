@@ -1,4 +1,4 @@
-#summary Getting started with Wiktionary parser.
+#summary Getting started with the Wiktionary parser.
 #labels Featured,Phase-Implementation,Phase-Deploy,Wiktionary,parser
 
 = Introduction =
