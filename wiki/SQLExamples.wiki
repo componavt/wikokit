@@ -1,5 +1,5 @@
 #summary How to extract some information from the database wikt_parsed of the parsed Wiktionary. SQL query examples.
-#labels SQL,wikt_parsed
+#labels SQL,parser,Featured
 
 = Introduction =
 
