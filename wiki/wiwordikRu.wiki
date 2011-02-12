@@ -1,7 +1,13 @@
 #summary Скачать графический интерфейс и базу данных Викисловаря.
-#labels Phase-Deploy,wiwordik,Russian
+#labels Phase-Deploy,wiwordik,Russian,Deprecated
 
 Read this page in English here: [wiwordik].
+
+= Внимание! =
+
+Установочный файл `wiwordik-setup-0.04.exe` устарел.
+
+Последняя версия программы доступна через Java Web Start, см. ссылка на главной странице проекта: http://code.google.com/p/wikokit/
 
 = Введение =
 
