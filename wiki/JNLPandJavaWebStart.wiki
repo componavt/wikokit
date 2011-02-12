@@ -37,5 +37,11 @@ Run ant target: package-for-store.
 == jarsigner ==
 Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
 
+= English Wiktionary =
+
+Now .jar file with the compressed SQLite database of the English Wiktionary can not be uploaded to the Google Code, since the file has size about 350 MBytes, but Google Code has a constraint - maximum file 200 MByte. You can vote to "Support huge downloads" http://code.google.com/p/support/issues/detail?id=3148&colspec=ID%20Type%20Status%20Milestone%20Priority%20Stars%20Owner%20Summary
+
+So, at this moment You can play via webstart only with the database of Russian Wiktionary (size of compressed SQLite is 75 MBytes only).
+
 = Previous step =
   * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
