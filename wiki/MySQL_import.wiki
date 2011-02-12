@@ -35,6 +35,8 @@ NameVirtualHost *:80
     ** select database name, e.g. `enwikt20100824`.
     ** select storage engine: `MyISAM`.
 
+Add the line: `$wgCapitalLinks=false;` at the end of file `LocalSettings.php`.
+
 = Xml2sql =
 Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL. 
 
