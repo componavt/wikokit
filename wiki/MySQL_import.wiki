@@ -40,7 +40,7 @@ Add the line: `$wgCapitalLinks=false;` at the end of file `LocalSettings.php`.
 = Xml2sql =
 Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL. 
 
-== Errors (Redirect, DiscussionThreading) ==
+== Errors (Redirect, !DiscussionThreading) ==
 
 === Intro ===
 
