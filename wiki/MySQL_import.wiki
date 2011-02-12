@@ -31,8 +31,9 @@ NameVirtualHost *:80
 }}}
   * Restart Apache.
   * Open in browser `localhost`.
-  * Database name, e.g. `enwikt20100824`.
-  * Storage Engine: `MyISAM`.
+  * Set up the wiki:
+    ** select database name, e.g. `enwikt20100824`.
+    ** select storage engine: `MyISAM`.
 
 = Xml2sql =
 Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL. 
