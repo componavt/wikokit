@@ -1,5 +1,5 @@
 #summary How to map Wiktionary parsed database (MySQL) to RDF database by D2RQ.
-#labels d2rq,Phase-Deploy,SPARQL,wikt_parsed,Jena
+#labels d2rq,Phase-Deploy,SPARQL,parser,Jena,Featured
 
 = Introduction =
 
