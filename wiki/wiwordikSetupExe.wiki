@@ -5,7 +5,7 @@
 
 This page is deprecated.
 
-Now the result file is presented to the user via Java Web Start, see JNLPandJavaWebStart.
+Now the result file is presented to the user via Java Web Start, see [JNLPandJavaWebStart].
 
 = Compilation by !IzPack=
 == Introduction ==
