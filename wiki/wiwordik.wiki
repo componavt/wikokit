@@ -7,7 +7,7 @@
 
 File wiwordik-setup-0.04.exe is deprecated.
 
-Now you should download latest program via Java Web Start from main page: http://code.google.com/p/wikokit/
+Now you should download the latest program via Java Web Start from the main page: http://code.google.com/p/wikokit/
 
 = Introduction =
 
