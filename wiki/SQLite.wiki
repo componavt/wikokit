@@ -89,9 +89,6 @@ Check that you have the latest versions of the libs:
   * [http://www.xerial.org/trac/Xerial/wiki/SQLiteJDBC SQLiteJDBC]
   * [http://dev.mysql.com/downloads/connector/j/5.1.html#downloads mysql-connector-java] (Connector/J 5.1.13 or later)
 
-= See also =
-  * [wiwordikSetupExe] - How to compile wiwordik-setup-X.XX.jar and .exe with the created SQLite data file
-
 = Links =
   * [http://componavt.livejournal.com/630.html Java MySQL to SQLite migration]
 
@@ -99,4 +96,4 @@ Check that you have the latest versions of the libs:
   * [SetupNetBeansForParsing Setup NetBeans environment for parsing]
 
 = Next step =
-  * [wiwordikSetupExe Compile SQLite file and wiwordik Java files into wiwordik-setup-X.XX.jar and .exe by IzPack]
+  * [JNLPandJavaWebStart] How to create wiwordik-XX.jar and wiwordik-XX.jnlp files.
