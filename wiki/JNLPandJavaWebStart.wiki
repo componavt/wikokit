@@ -1,0 +1,41 @@
+#summary How to create wiwordik-XX.jar and wiwordik-XX.jnlp files.
+#labels Phase-Implementation,wiwordik,JavaFX,webstart,jnlp
+
+= JNLP and Java Web Start =
+== Introduction ==
+todo ...
+
+== SQLite Jar file ==
+
+Let's create .jar file from Wiktionary SQLite database, see [http://www.lkn.ei.tum.de/arbeiten/faq/man/JAVA-tutorial/jar/basics/build.html Creating a JAR File].
+
+{{{
+cd wiwordik/sqlite
+jar cf0M enwikt20101030.sqlite.jar enwikt20101030.sqlite
+}}}
+
+Add result .jar file to the !NetBeans project `wiwordik`.
+
+== Java source code ==
+
+Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\Main.fx`:
+{{{
+def IS_RELEASE : Boolean = true;
+def IS_SQLITE : Boolean = true;
+}}}
+
+== Ant (build.xml) ==
+
+Update the version number and the name of the SQLite file in the `build.xml`, e.g.:
+{{{
+<property name="version" value="0.05"/>
+<property name="sqlite.file" value="ruwikt20101101"/>
+}}}
+
+Run ant target: package-for-store.
+
+== jarsigner ==
+Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
+
+= Previous step =
+  * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
