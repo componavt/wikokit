@@ -1,5 +1,5 @@
 #summary How to convert the Wiktionary parsed database (MySQL) into SQLite file.
-#labels Phase-Implementation,MySQL,SQL,SQLite,wikt_parser
+#labels Phase-Implementation,MySQL,SQL,SQLite,parser
 
 = Introduction =
 
