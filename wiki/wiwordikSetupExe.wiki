@@ -1,7 +1,13 @@
 #summary How to compile wiwordik-setup-X.XX.jar and .exe
-#labels Phase-Implementation,wiwordik,installation,IzPack
+#labels Phase-Implementation,wiwordik,IzPack,Deprecated
 
-= Variant 1. Compilation by !IzPack=
+= Warning! =
+
+This page is deprecated.
+
+Now the result file is presented to the user via Java Web Start, see JNLPandJavaWebStart.
+
+= Compilation by !IzPack=
 == Introduction ==
 
 [http://en.wikipedia.org/wiki/IzPack IzPack] is an open source software installer generator that targets the Java platform.
@@ -36,42 +42,6 @@ Convert into EXE file (e.g. `wiwordik-setup-0.04.exe`):
 cd wikokit/releases/
 izpack2exe --file=wiwordik.bat --file=wiwordik-setup-0.04.jar --output=wiwordik-setup-0.04.exe --launch-file=wiwordik.bat
 }}}
-
-= Variant 2. JNLP and Java Web Start =
-== Introduction ==
-todo ...
-
-== SQLite Jar file ==
-
-Let's create .jar file from Wiktionary SQLite database, see [http://www.lkn.ei.tum.de/arbeiten/faq/man/JAVA-tutorial/jar/basics/build.html Creating a JAR File].
-
-{{{
-cd wiwordik/sqlite
-jar cf0M enwikt20101030.sqlite.jar enwikt20101030.sqlite
-}}}
-
-Add result .jar file to the !NetBeans project `wiwordik`.
-
-== Java source code ==
-
-Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\Main.fx`:
-{{{
-def IS_RELEASE : Boolean = true;
-def IS_SQLITE : Boolean = true;
-}}}
-
-== Ant (build.xml) ==
-
-Update the version number and the name of the SQLite file in the `build.xml`, e.g.:
-{{{
-<property name="version" value="0.05"/>
-<property name="sqlite.file" value="ruwikt20101101"/>
-}}}
-
-Run ant target: package-for-store.
-
-== jarsigner ==
-Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
 
 = Previous step =
   * [SQLite] - How to create an SQLite data file in order to compile wiwordik-setup-X.XX.jar and .exe
