@@ -1,5 +1,5 @@
 #summary How to create empty SQL file for the Wiktionary parsed database.
-#labels Phase-Implementation,export,MySQL,SQL,wikt_parser
+#labels Phase-Implementation,export,MySQL,SQL,parser
 
 == Intro == 
 
