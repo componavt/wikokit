@@ -6,6 +6,7 @@ List of improvements and modifications to be done.
 Todo:
   * Debug checkbox = print ID of all elements from DB (see d2rq);
   * Resize wordcard, reduce height for small cards with one line of information;
+  * "Play" button (like Lingvo) to show wordcard for the selected word;
   * Word history list (drop down menu with history);
   * Click on word fills the input text window;
   * If word is changed then the selected word is selected in the middle of SwingList;
