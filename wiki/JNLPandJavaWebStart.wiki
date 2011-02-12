@@ -5,7 +5,7 @@
 == Introduction ==
 todo ...
 
-== SQLite Jar file ==
+== SQLite JAR file ==
 
 Let's create .jar file from Wiktionary SQLite database, see [http://www.lkn.ei.tum.de/arbeiten/faq/man/JAVA-tutorial/jar/basics/build.html Creating a JAR File].
 
