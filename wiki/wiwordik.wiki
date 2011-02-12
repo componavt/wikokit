@@ -1,7 +1,13 @@
 #summary Download GUI with the parsed Wiktionary database.
-#labels Featured,Phase-Deploy,wiwordik
+#labels Featured,Phase-Deploy,wiwordik,Deprecated
 
 Читайте эту страничку на русском здесь: [wiwordikRu] todo.
+
+= Warning! =
+
+File wiwordik-setup-0.04.exe is deprecated.
+
+Now you should download latest program via Java Web Start from main page: http://code.google.com/p/wikokit/
 
 = Introduction =
 
