@@ -53,7 +53,7 @@ The error message is:
 
 === Solution ===
 
-Strip of the tags (Redirect and DiscussionThreading) by using a perl script [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/xml2sql_helper/xml2sql_helper.pl `xml2sql_helper.pl`] with the following format:
+Strip of the tags (Redirect and !DiscussionThreading) by using a perl script [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/xml2sql_helper/xml2sql_helper.pl `xml2sql_helper.pl`] with the following format:
 {{{
 perl xml2sql_helper in_file out_file
 }}}
