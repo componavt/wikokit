@@ -22,6 +22,15 @@ Start using the field `page.wiki_link_count` (now value is 0).
 Add the field `page.in_links` - number of in-bound links from other Wiktionary articles. Fill it by data from Mediawiki dabase, see [http://www.mediawiki.org/wiki/File:Mediawiki-database-schema.png Mediawiki database schema].
   To find correlation between words' frequencies and number of Wiktionary in-bound links.
 
+== Quotations ==
+
+To add tables to store quotations.
+
+fields:
+  * Sentence text.
+  * 
+
+
 == Translation entry DB ==
 
 Goal: storing Translation data from "`*` Arabic: {{t|ar|حاسوب|m|sc=Arab|tr=ħasūb}}".
