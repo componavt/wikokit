@@ -26,6 +26,22 @@ Add the field `page.in_links` - number of in-bound links from other Wiktionary a
 
 To add tables to store quotations.
 
+Example from English Wiktionary:
+{{{
+ TEMPLATE REFERENCE:
+#* {{RQ:Twain Huckleberry}}
+#*: “Looky here — mind how you talk to me; I’m a-standing about all I can stand now — so don’t gimme no '''sass'''.”
+
+ SIMPLE TEXT (WITHOUT REFERENCE)
+#: ''The player made an impressive '''catch'''.''
+#: ''Nice '''catch'''!''
+
+ TEXT REFERENCE
+#* '''2010''' October 27, [[w:The Sydney Morning Herald|The Sydney Morning Herald]], ''Howard says leader[s]hip row 'done '''to death'''' '',
+#*: "I don't want to revisit his view and my view about whether I should have retired and who said what then," he told ABC Radio.
+#*:"That's been done '''to death'''."
+}}}
+
 fields:
   * Sentence text.
   * 
