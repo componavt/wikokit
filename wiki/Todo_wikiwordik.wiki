@@ -47,11 +47,11 @@ Example from Russian Wiktionary:
 {{пример|текст|автор|титул|дата|}}
 }}}
 
-fields:
+fields in *quotation* table:
   * id (quotation.id)
   * meaning_id
-  * Sentence text, (lang_pos language)
-  * Translation text, (native language)
+  * Sentence text (quot_text_id)
+  * Translation text, 
   * Year (integer (range: start-end?) or text?), 
   * Author (author_id), 
   * Source title - титул (title_id), 
@@ -59,8 +59,11 @@ fields:
   * Source? - источник
 
 +? tables:
-  * quot_text
-  * quot_translation
+  * quot_text (+ language from lang_pos from meaning_id)
+    * id
+    * lang_id
+    * text (UNIQUE)
+  * quot_translation (native language, known => skip)
   * quot_author
   * quot_title
   * quot_source = НКРЯ = Wiktionary:Quotations/Templates
