@@ -22,7 +22,7 @@ Start using the field `page.wiki_link_count` (now value is 0).
 Add the field `page.in_links` - number of in-bound links from other Wiktionary articles. Fill it by data from Mediawiki dabase, see [http://www.mediawiki.org/wiki/File:Mediawiki-database-schema.png Mediawiki database schema].
   To find correlation between words' frequencies and number of Wiktionary in-bound links.
 
-== Quotations ==
+== Quotations - quotation table ==
 
 To add tables to store quotations.
 
@@ -42,10 +42,28 @@ Example from English Wiktionary:
 #*:"That's been done '''to death'''."
 }}}
 
-fields:
-  * Sentence text.
-  * 
+Example from Russian Wiktionary:
+{{{
+{{пример|текст|автор|титул|дата|}}
+}}}
 
+fields:
+  * id (quotation.id)
+  * meaning_id
+  * Sentence text, (lang_pos language)
+  * Translation text, (native language)
+  * Year (integer (range: start-end?) or text?), 
+  * Author (author_id), 
+  * Source title - титул (title_id), 
+  * Publisher - издание
+  * Source? - источник
+
++? tables:
+  * quot_text
+  * quot_translation
+  * quot_author
+  * quot_title
+  * quot_source = НКРЯ = Wiktionary:Quotations/Templates
 
 == Translation entry DB ==
 
