@@ -38,13 +38,13 @@ fields in *quotation* table:
   * meaning_id
   * Sentence text (quot_text_id)
   * Translation text, 
-  * Year (integer (range: start-end?) or text?), 
-  * Author (author_id), 
+  * Year (year_id == quot_year.id), 
+  * Author (author_id == quot_author.id), 
   * Source title - титул (title_id), 
   * Publisher - издание
   * Source? - источник
 
-+? tables:
++ tables:
   * quot_text (+ language from lang_pos from meaning_id)
     * id
     * lang_id
@@ -53,6 +53,7 @@ fields in *quotation* table:
   * quot_transcription 
   * quot_author
   * quot_title
+  * quot_year (integer (range: start-end?) or text?, + c., a., p. - see [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations]) 
   * quot_source = НКРЯ = Wiktionary:Quotations/Templates
 
 = Links =
