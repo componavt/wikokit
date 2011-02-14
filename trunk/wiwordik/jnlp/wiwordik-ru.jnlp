@@ -12,7 +12,7 @@
 
         <shortcut online="false">
           <desktop/>
-          <menu submenu="wiwordik-ru"/>
+          <menu submenu="wiwordik"/>
         </shortcut>
 
     </information>
