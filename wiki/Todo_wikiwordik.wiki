@@ -22,52 +22,6 @@ Start using the field `page.wiki_link_count` (now value is 0).
 Add the field `page.in_links` - number of in-bound links from other Wiktionary articles. Fill it by data from Mediawiki dabase, see [http://www.mediawiki.org/wiki/File:Mediawiki-database-schema.png Mediawiki database schema].
   To find correlation between words' frequencies and number of Wiktionary in-bound links.
 
-== Quotations - quotation table ==
-
-To add tables to store quotations.
-
-Example from English Wiktionary:
-{{{
- TEMPLATE REFERENCE:
-#* {{RQ:Twain Huckleberry}}
-#*: “Looky here — mind how you talk to me; I’m a-standing about all I can stand now — so don’t gimme no '''sass'''.”
-
- SIMPLE TEXT (WITHOUT REFERENCE)
-#: ''The player made an impressive '''catch'''.''
-#: ''Nice '''catch'''!''
-
- TEXT REFERENCE
-#* '''2010''' October 27, [[w:The Sydney Morning Herald|The Sydney Morning Herald]], ''Howard says leader[s]hip row 'done '''to death'''' '',
-#*: "I don't want to revisit his view and my view about whether I should have retired and who said what then," he told ABC Radio.
-#*:"That's been done '''to death'''."
-}}}
-
-Example from Russian Wiktionary:
-{{{
-{{пример|текст|автор|титул|дата|}}
-}}}
-
-fields in *quotation* table:
-  * id (quotation.id)
-  * meaning_id
-  * Sentence text (quot_text_id)
-  * Translation text, 
-  * Year (integer (range: start-end?) or text?), 
-  * Author (author_id), 
-  * Source title - титул (title_id), 
-  * Publisher - издание
-  * Source? - источник
-
-+? tables:
-  * quot_text (+ language from lang_pos from meaning_id)
-    * id
-    * lang_id
-    * text (UNIQUE)
-  * quot_translation (native language, known => skip. It may contain transcription.)
-  * quot_author
-  * quot_title
-  * quot_source = НКРЯ = Wiktionary:Quotations/Templates
-
 == Translation entry DB ==
 
 Goal: storing Translation data from "`*` Arabic: {{t|ar|حاسوب|m|sc=Arab|tr=ħasūb}}".
@@ -113,3 +67,6 @@ Errors in parsing definitions with example, e.g. parser founds 204 (instead of 2
 }}}
 
 The phrase should be parsed as one translation: _девятиступенчатый_ (fr) = _à neuf étages_
+
+= See also =
+  * [MRDQuotation]
