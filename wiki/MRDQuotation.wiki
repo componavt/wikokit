@@ -29,6 +29,7 @@ Example from English Wiktionary:
 There is a special template 
 {{{
 {{пример|текст|автор|титул|дата|}}
+{{пример|текст=|перевод=|автор=|титул=|издание=|перев=|дата=|источник=}}
 }}}
 
 == Quotations - quotation table ==
