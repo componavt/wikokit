@@ -35,13 +35,14 @@ There is a special template
 
 fields in *quotation* table:
   * id (quotation.id)
-  * meaning_id
-  * Sentence text (quot_text_id)
-  * Translation text, 
+  * Link to the appropriated definition (meaning_id == meaning.id)
+  * Sentence text (quot_text_id == quot_text.id)
+  * Translation text (translation_id == quot_translation.id) 
+  * Transcription  (transcription_id == quot_transcription.id)
   * Year (year_id == quot_year.id), 
   * Author (author_id == quot_author.id), 
-  * Source title - титул (title_id), 
-  * Publisher - издание
+  * Source title - титул (title_id == quot_title.id), 
+  * Publisher - издание 
   * Source? - источник
 
 + tables:
