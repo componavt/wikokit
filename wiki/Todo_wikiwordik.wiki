@@ -63,7 +63,7 @@ fields in *quotation* table:
     * id
     * lang_id
     * text (UNIQUE)
-  * quot_translation (native language, known => skip)
+  * quot_translation (native language, known => skip. It may contain transcription.)
   * quot_author
   * quot_title
   * quot_source = НКРЯ = Wiktionary:Quotations/Templates
