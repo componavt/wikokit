@@ -17,8 +17,10 @@ MySQL Workbench tips:
   * V Omit Scheme Qualifier
   * V Generate INSERTS Statements for Tables
 
-Vim tips:
+Vim hacks:
+{{{
   * %s/`mydb`.//g 
+}}}
 
 = See also =
   * [File_wikt_parsed_empty_sql]
