@@ -1,0 +1,65 @@
+#summary Quotation table (and related tables) in machine-readable dictionary.
+#labels MRD,SQL,quotation
+
+= Introduction =
+
+Goal:
+  * To add tables (to MRD database) in order to store quotations from the Wiktionaries (English and Russian now).
+
+== Examples from English Wiktionary ==
+
+Example from English Wiktionary:
+{{{
+ TEMPLATE REFERENCE:
+#* {{RQ:Twain Huckleberry}}
+#*: “Looky here — mind how you talk to me; I’m a-standing about all I can stand now — so don’t gimme no '''sass'''.”
+
+ SIMPLE TEXT (WITHOUT REFERENCE)
+#: ''The player made an impressive '''catch'''.''
+#: ''Nice '''catch'''!''
+
+ TEXT REFERENCE
+#* '''2010''' October 27, [[w:The Sydney Morning Herald|The Sydney Morning Herald]], ''Howard says leader[s]hip row 'done '''to death'''' '',
+#*: "I don't want to revisit his view and my view about whether I should have retired and who said what then," he told ABC Radio.
+#*:"That's been done '''to death'''."
+}}}
+
+== Examples from Russian Wiktionary ==
+
+There is a special template 
+{{{
+{{пример|текст|автор|титул|дата|}}
+}}}
+
+== Quotations - quotation table ==
+
+fields in *quotation* table:
+  * id (quotation.id)
+  * meaning_id
+  * Sentence text (quot_text_id)
+  * Translation text, 
+  * Year (integer (range: start-end?) or text?), 
+  * Author (author_id), 
+  * Source title - титул (title_id), 
+  * Publisher - издание
+  * Source? - источник
+
++? tables:
+  * quot_text (+ language from lang_pos from meaning_id)
+    * id
+    * lang_id
+    * text (UNIQUE)
+  * quot_translation (native language, known => skip. It may contain transcription.)
+  * quot_transcription 
+  * quot_author
+  * quot_title
+  * quot_source = НКРЯ = Wiktionary:Quotations/Templates
+
+= Links =
+== Russian Wiktionary ==
+  * [http://ru.wiktionary.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D1%80 Шаблон:пример]
+  * [http://ru.wiktionary.org/wiki/%D0%92%D0%A1:%D0%A0%D0%9D%D0%9D Викисловарь:Рассчитывайте на непонятливого]
+
+== English Wiktionary ==
+  * [http://en.wiktionary.org/wiki/Wiktionary:Quotations Wiktionary:Quotations]
+  * [http://en.wiktionary.org/wiki/Help:Example_sentences Help:Example_sentences]
