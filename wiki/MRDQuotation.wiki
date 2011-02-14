@@ -53,7 +53,7 @@ fields in *quotation* table:
   * quot_transcription 
   * quot_author
   * quot_title
-  * quot_year (integer (range: start-end?) or text?, + c., a., p. - see [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations]) 
+  * quot_year (integer (range: start-end?) or text?, + [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations c., a., p.]) 
   * quot_source = НКРЯ = Wiktionary:Quotations/Templates
 
 = Links =
