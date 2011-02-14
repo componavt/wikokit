@@ -9,6 +9,8 @@ See the files in the folder wikokit/wikt_parser/doc/
 
 = Details =
 
+Download [http://wb.mysql.com/ MySQL Workbench].
+
 MySQL Workbench tips:
   * Export forward engineer
   * V Generate Drop Statements Before Each CREATE statement
