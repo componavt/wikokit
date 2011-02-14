@@ -36,13 +36,13 @@ There is a special template
 fields in *quotation* table:
   * id (quotation.id)
   * Link to the appropriated definition (meaning_id == meaning.id)
-  * Sentence text (quot_text_id == quot_text.id)
+  * Sentence text (quot_text_id == quot_text.id), see [http://en.wiktionary.org/wiki/Template:usex template:usex].
   * Translation text (translation_id == quot_translation.id) 
   * Transcription  (transcription_id == quot_transcription.id)
   * Year (year_id == quot_year.id), 
   * Author (author_id == quot_author.id), 
   * Source title - титул (title_id == quot_title.id), 
-  * Publisher - издание 
+  * Publisher - text after 'Source title' and before page numbers
   * Source? - источник
 
 + tables:
