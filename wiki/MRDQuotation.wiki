@@ -43,7 +43,7 @@ fields in *quotation* table:
   * Year (year_id == quot_year.id), 
   * Author (author_id == quot_author.id), 
   * Source title - титул (title_id == quot_title.id), 
-  * Publisher 
+  * Publisher (publisher_id == quot_publisher.id)
     * enwikt: text after 'Source title' and before page numbers
     * ruwikt: пример|..|издание=|
   * Source - источник (source_id == quot_source.id)
@@ -58,6 +58,7 @@ fields in *quotation* table:
   * quot_author
   * quot_title
   * quot_year (integer (range: start-end?) or text?, + [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations c., a., p.]) 
+  * quot_publisher (издание in ruwikt)
   * quot_source = НКРЯ = Wiktionary:Quotations/Templates
 
 = Parsing rules =
