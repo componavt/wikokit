@@ -51,7 +51,7 @@ fields in *quotation* table:
 + tables:
   * quot_text (+ language from lang_pos from meaning_id)
     * id
-    * lang_id
+    * lang_id - language of the quote
     * text (UNIQUE)
   * quot_translation (native language, known => skip. It may contain transcription.)
   * quot_transcription 
