@@ -66,6 +66,9 @@ fields in *quotation* table:
     * name (UNIQUE, Not NULL)
     * wikilink (UNIQUE, may be NULL) - a wikilink to Wikipedia (format: [[w:name|]]) for the author
 
+    Todo test: (before INSERT) SELECT FROM quot_author BY name OR wikilink;
+
+
   * quot_title
     * id
     * title (UNIQUE, Not NULL)
