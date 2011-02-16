@@ -87,7 +87,9 @@ fields in *quotation* table:
     * id
     * text (UNIQUE)
 
-* quot_source = НКРЯ = Wiktionary:Quotations/Templates
+  * quot_source = НКРЯ = Wiktionary:Quotations/Templates
+    * id
+    * text (UNIQUE) - quotation templates in enwikt, источник in ruwikt
 
 = Parsing rules =
 
