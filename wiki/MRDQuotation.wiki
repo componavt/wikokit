@@ -54,7 +54,13 @@ fields in *quotation* table:
     * lang_id - language of the quote
     * text (UNIQUE)
   * quot_translation (native language, known => skip. It may contain transcription.)
+    * id
+    * text (UNIQUE)
+
   * quot_transcription 
+    * id
+    * text
+
   * quot_author
   * quot_title
   * quot_year (integer (range: start-end?) or text?, + [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations c., a., p.]) 
