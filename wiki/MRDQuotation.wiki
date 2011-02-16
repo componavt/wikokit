@@ -79,7 +79,7 @@ fields in *quotation* table:
     * from (Not NULL) - start date of a writing book with the quote
     * to - finish date of a writing book with the quote
     * todo: comment (abbreviation [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations c., a., p.])
-    * UNIQUE INDEX: (start, end)
+    * UNIQUE INDEX: (from, to)
 
     Todo test: INSERTs twice (from, NULL), it should generate errors, so only unique (from, NULL) are allowed
  
