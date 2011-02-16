@@ -62,7 +62,15 @@ fields in *quotation* table:
     * text
 
   * quot_author
+    * id
+    * name (UNIQUE, Not NULL)
+    * wikilink (UNIQUE, may be NULL) - a wikilink to Wikipedia (format: [[w:name|]]) for the author
+
   * quot_title
+    * id
+    * title (UNIQUE, Not NULL)
+    * wikilink (UNIQUE, may be NULL) - a wikilink to Wikisource (format: [[s:title|]]) for the work
+
   * quot_year (integer (range: start-end?) or text?, + [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations c., a., p.]) 
   * quot_publisher (издание in ruwikt)
   * quot_source = НКРЯ = Wiktionary:Quotations/Templates
