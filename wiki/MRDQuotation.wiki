@@ -84,7 +84,10 @@ fields in *quotation* table:
     Todo test: INSERTs twice (from, NULL), it should generate errors, so only unique (from, NULL) are allowed
  
   * quot_publisher (издание in ruwikt)
-  * quot_source = НКРЯ = Wiktionary:Quotations/Templates
+    * id
+    * text (UNIQUE)
+
+* quot_source = НКРЯ = Wiktionary:Quotations/Templates
 
 = Parsing rules =
 
