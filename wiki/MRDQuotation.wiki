@@ -42,17 +42,14 @@ fields in *quotation* table:
 
 + tables:
   * *quot_translation* (native language, known => skip. It may contain transcription.)
-    * id
-    * quotation_id - (== quotation.id)
+    * quotation_id - (== quotation.id, PRIMARY)
     * text (not UNIQUE)
 
   * *quot_transcription* 
-    * id
     * quotation_id
     * text (not UNIQUE)
 
   * *quot_ref* - links to tables with reference information
-    * id
     * quotation_id
     * year_id - year (== quot_year.id), 
     * author_id - author (== quot_author.id), 
