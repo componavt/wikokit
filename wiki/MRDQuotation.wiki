@@ -40,25 +40,27 @@ fields in *quotation* table:
   * *lang_id* - language of the quote _text_ (duplication of lang_pos.lang_id)
   * *text* (not UNIQUE!) - quotation sentence text
 
-
-  * Translation text (translation_id == quot_translation.id) 
-  * Transcription  (transcription_id == quot_transcription.id)
-  * Year (year_id == quot_year.id), 
-  * Author (author_id == quot_author.id), 
-  * Source title - титул (title_id == quot_title.id), 
-  * Publisher (publisher_id == quot_publisher.id)
-    * enwikt: text after 'Source title' and before page numbers
-    * ruwikt: пример|..|издание=|
-  * Source - источник (source_id == quot_source.id)
-
 + tables:
-  * quot_translation (native language, known => skip. It may contain transcription.)
+  * *quot_translation* (native language, known => skip. It may contain transcription.)
     * id
-    * text (UNIQUE)
+    * quotation_id - (== quotation.id)
+    * text (not UNIQUE)
 
-  * quot_transcription 
+  * *quot_transcription* 
     * id
-    * text
+    * quotation_id
+    * text (not UNIQUE)
+
+  * *quot_ref* - links to tables with reference information
+    * id
+    * quotation_id
+    * year_id - year (== quot_year.id), 
+    * author_id - author (== quot_author.id), 
+    * title_id - source title (== quot_title.id), 
+    * publisher_id - publisher (== quot_publisher.id)
+      * enwikt: text after 'Source title' and before page numbers
+      * ruwikt: пример|..|издание=|
+    * source_id - source (== quot_source.id)
 
   * quot_author
     * id
