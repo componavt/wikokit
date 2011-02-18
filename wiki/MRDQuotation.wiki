@@ -35,9 +35,12 @@ There is a special template
 == Quotations - quotation table ==
 
 fields in *quotation* table:
-  * id (quotation.id)
-  * Link to the appropriated definition (meaning_id == meaning.id)
-  * Sentence text (quot_text_id == quot_text.id), see [http://en.wiktionary.org/wiki/Template:usex template:usex].
+  * *id* (quotation.id == quotation_id in other tables)
+  * *meaning_id* - link to the appropriated definition in the table meaning (== meaning.id)  
+  * *lang_id* - language of the quote _text_ (duplication of lang_pos.lang_id)
+  * *text* (not UNIQUE!) - quotation sentence text
+
+
   * Translation text (translation_id == quot_translation.id) 
   * Transcription  (transcription_id == quot_transcription.id)
   * Year (year_id == quot_year.id), 
@@ -49,10 +52,6 @@ fields in *quotation* table:
   * Source - источник (source_id == quot_source.id)
 
 + tables:
-  * quot_text (+ language from lang_pos from meaning_id)
-    * id
-    * lang_id - language of the quote
-    * text (UNIQUE)
   * quot_translation (native language, known => skip. It may contain transcription.)
     * id
     * text (UNIQUE)
@@ -103,3 +102,4 @@ todo
 == English Wiktionary ==
   * [http://en.wiktionary.org/wiki/Wiktionary:Quotations Wiktionary:Quotations]
   * [http://en.wiktionary.org/wiki/Help:Example_sentences Help:Example_sentences]
+  * [http://en.wiktionary.org/wiki/Template:usex Template:usex]
