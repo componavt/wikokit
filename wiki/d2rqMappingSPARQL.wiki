@@ -127,6 +127,35 @@ public class SPARQLExample {
 
 == Get list of synonyms ==
 
+SPARQL request:
+{{{
+SELECT ?langId ?pageId ?langPosId ?meaningId ?relationTypeId ?wikiTextIdRel ?relationWord
+WHERE {
+    ?lang wikpa:lang_code "sv";
+          wikpa:lang_id ?langId.
+
+    ?page wikpa:page_page_title "ordbok";
+          wikpa:page_id ?pageId.
+
+    ?lang_pos wikpa:lang_pos_page_id ?pageId;
+              wikpa:lang_pos_lang_id ?langId;
+              wikpa:lang_pos_id ?langPosId.
+
+    ?meaning wikpa:meaning_id ?meaningId;
+             wikpa:meaning_lang_pos_id ?langPosId.
+
+    ?relation_type wikpa:relation_type_name "synonyms";
+                   wikpa:relation_type_id ?relationTypeId.
+
+    ?relation wikpa:relation_meaning_id ?meaningId;
+              wikpa:relation_relation_type_id ?relationTypeId;
+              wikpa:relation_wiki_text_id ?wikiTextIdRel.
+
+    ?wiki_text wikpa:wiki_text_id ?wikiTextIdRel;
+              wikpa:wiki_text_text ?relationWord.
+}
+}}}
+
 Todo ...
 
 == Translate word from one language to another ==
