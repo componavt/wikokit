@@ -55,7 +55,7 @@ Open URL: http://localhost:2020/snorql/
 
 Paste SPARQL request:
 {{{
-SELECT ?langId ?pageId ?langPosId ?meaningId ?wikiTextId ?wikiText
+SELECT ?langId ?pageId ?langPosId ?meaningId ?wikiTextIdDef ?definition
 WHERE {
     ?lang wikpa:lang_code "en";
           wikpa:lang_id ?langId.
@@ -69,10 +69,10 @@ WHERE {
 
     ?meaning wikpa:meaning_id ?meaningId;
              wikpa:meaning_lang_pos_id ?langPosId;
-             wikpa:meaning_wiki_text_id ?wikiTextId.
+             wikpa:meaning_wiki_text_id ?wikiTextIdDef.
 
-    ?wiki_text wikpa:wiki_text_id ?wikiTextId;
-               wikpa:wiki_text_text ?wikiText.
+    ?wiki_text wikpa:wiki_text_id ?wikiTextIdDef;
+             wikpa:wiki_text_text ?definition.
 }
 }}}
 
@@ -132,6 +132,10 @@ Todo ...
 == Translate word from one language to another ==
 
 Todo ...
+
+= Problems and question =
+
+  * How to track and stop very long queries?
 
 = See also =
   * [SQLExamples]
