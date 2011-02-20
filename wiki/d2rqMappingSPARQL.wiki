@@ -169,11 +169,36 @@ There are three ways to find translation in the database of the parsed English W
   * non-English entries:
     * from the non-English word (entry title) to the definition in English of this entry;
 
-Let's find translation of the English (*en* code) phrase [http://en.wiktionary.org/wiki/rain_cats_and_dogs rain cats and dogs] into Swedish (*sv*), by the first way (_direct translation_).
+Let's find translation of the English (*en* code) phrase [http://en.wiktionary.org/wiki/rain_cats_and_dogs rain cats and dogs] into all languages by the first way (_direct translation_).
 
 SPARQL request:
 {{{
-todo
+SELECT ?langId ?pageId ?langPosId ?meaningId ?translationId ?translationEntryId ?wikiTextIdTrans ?translationWord
+WHERE {
+    ?lang wikpa:lang_code "en";
+          wikpa:lang_id ?langId.
+
+    ?page wikpa:page_page_title "rain cats and dogs";
+          wikpa:page_id ?pageId.
+
+    ?lang_pos wikpa:lang_pos_page_id ?pageId;
+              wikpa:lang_pos_lang_id ?langId;
+              wikpa:lang_pos_id ?langPosId.
+
+    ?meaning wikpa:meaning_id ?meaningId;
+             wikpa:meaning_lang_pos_id ?langPosId.
+
+    ?translation wikpa:translation_id ?translationId;
+                 wikpa:translation_lang_pos_id ?langPosId;
+                 wikpa:translation_meaning_id ?meaningId.
+
+    ?translation_entry wikpa:translation_entry_id ?translationEntryId;
+                       wikpa:translation_entry_translation_id ?translationId;
+                       wikpa:translation_entry_wiki_text_id ?wikiTextIdTrans.
+
+    ?wiki_text wikpa:wiki_text_id ?wikiTextIdTrans;
+              wikpa:wiki_text_text ?translationWord.
+}
 }}}
 
 = Problems and question =
