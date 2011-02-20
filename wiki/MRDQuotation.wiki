@@ -35,10 +35,11 @@ There is a special template
 == Quotations - quotation table ==
 
 fields in *quotation* table:
-  * *id* (quotation.id == quotation_id in other tables)
+  * *id* (quotation.id == quotation_id in other tables, PRIMARY key)
   * *meaning_id* - link to the appropriated definition in the table meaning (== meaning.id)  
   * *lang_id* - language of the quote _text_ (duplication of lang_pos.lang_id)
   * *text* (not UNIQUE!) - quotation sentence text
+  * *ref_id* (==quot_ref.id, may be NULL)
 
 + tables:
   * *quot_translation* (native language, known => skip. It may contain transcription.)
@@ -50,7 +51,7 @@ fields in *quotation* table:
     * text (not UNIQUE)
 
   * *quot_ref* - links to tables with reference information
-    * quotation_id
+    * id (PRIMARY key)
     * year_id - year (== quot_year.id), 
     * author_id - author (== quot_author.id), 
     * title_id - source title (== quot_title.id), 
@@ -81,9 +82,9 @@ fields in *quotation* table:
 
     Todo test: INSERTs twice (from, NULL), it should generate errors, so only unique (from, NULL) are allowed
  
-  * quot_publisher (издание in ruwikt)
+  * quot_publisher (_издание_ in ruwikt)
     * id
-    * text (UNIQUE)
+    * text (UNIQUE) - publisher’s name
 
   * quot_source = НКРЯ = Wiktionary:Quotations/Templates
     * id
