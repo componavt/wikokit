@@ -169,7 +169,7 @@ There are three ways to find translation in the database of the parsed English W
   * non-English entries:
     * from the non-English word (entry title) to the definition in English of this entry;
 
-Let's find translation of the English (*en* code) phrase [http://en.wiktionary.org/wiki/rain_cats_and_dogs rain cats and dogs] into Swedish (*sv*), by the first way.
+Let's find translation of the English (*en* code) phrase [http://en.wiktionary.org/wiki/rain_cats_and_dogs rain cats and dogs] into Swedish (*sv*), by the first way (_direct translation_).
 
 SPARQL request:
 {{{
