@@ -59,6 +59,7 @@ fields in *quotation* table:
       * enwikt: text after 'Source title' and before page numbers
       * ruwikt: пример|..|издание=|
     * source_id - source (== quot_source.id)
+Remark: + UNIQUE compound KEY (year_id, author_id, title_id, publisher_id, source_id), and any of the fields could be NULL.
 
   * quot_author
     * id
