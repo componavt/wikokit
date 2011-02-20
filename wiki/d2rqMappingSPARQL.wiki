@@ -127,6 +127,8 @@ public class SPARQLExample {
 
 == Get list of synonyms ==
 
+Let's get a synonym for the Swedish (*sv* code) word [http://en.wiktionary.org/wiki/ordbok#Synonyms ordbok].
+
 SPARQL request:
 {{{
 SELECT ?langId ?pageId ?langPosId ?meaningId ?relationTypeId ?wikiTextIdRel ?relationWord
