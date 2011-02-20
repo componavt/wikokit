@@ -19,7 +19,7 @@ MySQL Workbench tips:
 
 Vim hacks:
 {{{
-  * %s/`mydb`.//g 
+%s/`mydb`.//g 
 }}}
 
 = See also =
