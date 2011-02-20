@@ -162,8 +162,6 @@ Todo ...
 
 == Translate word from one language to another ==
 
-Let's find translation of the English (*en* code) phrase [http://en.wiktionary.org/wiki/rain_cats_and_dogs rain cats and dogs] into Swedish (*sv*).
-
 There are three ways to find translation in the database of the parsed English Wiktionary:
   * English entries:
     * _direct translation_ - from English word to words in other languages, which are listed in the section _Translation_ of the entry;
@@ -171,7 +169,9 @@ There are three ways to find translation in the database of the parsed English W
   * non-English entries:
     * from the non-English word (entry title) to the definition in English of this entry;
 
-SPARQL request for the first way:
+Let's find translation of the English (*en* code) phrase [http://en.wiktionary.org/wiki/rain_cats_and_dogs rain cats and dogs] into Swedish (*sv*), by the first way.
+
+SPARQL request:
 {{{
 todo
 }}}
