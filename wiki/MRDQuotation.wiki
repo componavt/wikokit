@@ -54,7 +54,8 @@ fields in *quotation* table:
     * id (PRIMARY key)
     * year_id - year (== quot_year.id), 
     * author_id - author (== quot_author.id), 
-    * title_id - source title (== quot_title.id), 
+    * title - source title
+    * title_wikilink - a wikilink to Wikisource (format: [[s:title|]]) for the work
     * publisher_id - publisher (== quot_publisher.id)
       * enwikt: text after 'Source title' and before page numbers
       * ruwikt: пример|..|издание=|
@@ -69,11 +70,6 @@ fields in *quotation* table:
 
     Todo test: (before INSERT) SELECT FROM quot_author BY name OR wikilink;
 
-
-  * *quot_title*
-    * id
-    * title (UNIQUE, Not NULL)
-    * wikilink (UNIQUE, may be NULL) - a wikilink to Wikisource (format: [[s:title|]]) for the work
 
   * *quot_year*
     * id
