@@ -34,7 +34,6 @@ Todo:
 == DB todo == 
 
 In future:
-  # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria]
   # + field `relation.page_id`. It will replace (partly) `wiki_text_id` for one-word-relation, e.g. [[aircraft]], but not "[[aeroplane]] (брит.)" for "airplane" entry
   # rename `lang_pos.etymology_n` to `lang_pos.etymology_id`, create table `etymology`
 
@@ -45,6 +44,7 @@ REDIRECT # (todo and done):
   # + i18n: "See нелётный (Redirect)" vs. "См. нелётный (Перенаправление)"
 
 Done (top - new, bottom - old):
+  # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria], done... see [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations Semantic_relations], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Translations Translations]
   # To add INDEX keys in SQL (`wiki_text_words.wiki_text_id: INDEX wiki_text_id`)
   # remove the field `meaning.definition`
   # field `lang.name` is NOT unique, only `.code` is unique
