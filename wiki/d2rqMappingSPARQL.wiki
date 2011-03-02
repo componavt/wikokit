@@ -236,6 +236,45 @@ WHERE {
 }
 }}}
 
+Let's find translation of the French (*fr* code) word 
+[http://en.wiktionary.org/wiki/livre livre] into English by the second way (_reverse translation_).
+
+As I understand, in really system searches data extracted from translation sections of Wiktionary pages [http://en.wiktionary.org/wiki/pound pound] and [http://en.wiktionary.org/wiki/book book].
+
+SPARQL request:
+{{{
+SELECT ?langIdDest ?englishWord ?langIdSource ?pageId ?langPosId ?meaningId ?translationId ?translationEntryId ?wikiTextIdTrans ?translationWord
+WHERE {
+    ?langDest wikpa:lang_code "en";
+          wikpa:lang_id ?langIdDest.
+
+    ?page wikpa:page_page_title ?englishWord;
+          wikpa:page_id ?pageId.
+
+    ?lang_pos wikpa:lang_pos_page_id ?pageId;
+              wikpa:lang_pos_lang_id ?langIdDest;
+              wikpa:lang_pos_id ?langPosId.
+
+    ?meaning wikpa:meaning_id ?meaningId;
+             wikpa:meaning_lang_pos_id ?langPosId.
+
+    ?translation wikpa:translation_id ?translationId;
+                 wikpa:translation_lang_pos_id ?langPosId;
+                 wikpa:translation_meaning_id ?meaningId.
+
+    ?langSource wikpa:lang_code "fr";
+          wikpa:lang_id ?langIdSource.
+
+    ?translation_entry wikpa:translation_entry_id ?translationEntryId;
+                       wikpa:translation_entry_translation_id ?translationId;
+                       wikpa:translation_entry_lang_id ?langIdSource;
+                       wikpa:translation_entry_wiki_text_id ?wikiTextIdTrans.
+
+    ?wiki_text wikpa:wiki_text_id ?wikiTextIdTrans;
+              wikpa:wiki_text_text "livre".
+}
+}}}
+
 = Problems and question =
 
   * How to track and stop very long queries?
