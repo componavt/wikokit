@@ -201,6 +201,41 @@ WHERE {
 }
 }}}
 
+Let's find translation of the English (*en* code) word [http://en.wiktionary.org/wiki/dog dog] into French by the first way (_direct translation_).
+
+{{{
+SELECT ?langIdDest ?langIdSource ?pageId ?langPosId ?meaningId ?translationId ?translationEntryId ?wikiTextIdTrans ?translationWord
+WHERE {
+    ?langDest wikpa:lang_code "en";
+          wikpa:lang_id ?langIdDest.
+
+    ?page wikpa:page_page_title "book";
+          wikpa:page_id ?pageId.
+
+    ?lang_pos wikpa:lang_pos_page_id ?pageId;
+              wikpa:lang_pos_lang_id ?langIdDest;
+              wikpa:lang_pos_id ?langPosId.
+
+    ?meaning wikpa:meaning_id ?meaningId;
+             wikpa:meaning_lang_pos_id ?langPosId.
+
+    ?translation wikpa:translation_id ?translationId;
+                 wikpa:translation_lang_pos_id ?langPosId;
+                 wikpa:translation_meaning_id ?meaningId.
+
+    ?langSource wikpa:lang_code "fr";
+          wikpa:lang_id ?langIdSource.
+
+    ?translation_entry wikpa:translation_entry_id ?translationEntryId;
+                       wikpa:translation_entry_translation_id ?translationId;
+                       wikpa:translation_entry_lang_id ?langIdSource;
+                       wikpa:translation_entry_wiki_text_id ?wikiTextIdTrans.
+
+    ?wiki_text wikpa:wiki_text_id ?wikiTextIdTrans;
+              wikpa:wiki_text_text ?translationWord.
+}
+}}}
+
 = Problems and question =
 
   * How to track and stop very long queries?
