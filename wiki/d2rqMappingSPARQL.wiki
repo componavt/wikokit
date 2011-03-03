@@ -236,7 +236,7 @@ WHERE {
 }
 }}}
 
-Let's find translation of the French (*fr* code) word 
+Let's find translations of the French (*fr* code) word 
 [http://en.wiktionary.org/wiki/livre livre] into English by the second way (_reverse translation_).
 
 As I understand, the system searches data extracted from translation sections of the following Wiktionary pages: [http://en.wiktionary.org/wiki/pound pound] and [http://en.wiktionary.org/wiki/book book].
