@@ -18,7 +18,7 @@ mysql> SOURCE c:\enwikt20101030_parsed.sql
 Create MySQL user and provide access to the parsed Wiktionary database:
 {{{
 mysql> CREATE USER rdfmapper;
-mysql> GRANT SELECT ON ruwikt20101101_parsed.* TO rdfmapper@'%';
+mysql> GRANT SELECT ON enwikt20101030_parsed.* TO rdfmapper@'%';
 mysql> FLUSH PRIVILEGES;
 }}}
 
