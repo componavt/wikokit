@@ -22,7 +22,7 @@ cd C:\w\d2r-server-0.7\
 generate-mapping -o mapping-wikt_parsed.n3 -u rdfmapper jdbc:mysql://localhost/ruwikt20101101_parsed
 }}}
 
-You can find an example of .n3 file in the Download section (`mapping-enwikt20101030_parsed_en.7z`).
+You can find an example of .n3 file in the section Downloads (`mapping-enwikt20101030_parsed_en.7z`).
 
 Change the following lines in the `.n3` mapping file:
   * delete lines with `index_ith.lat.foreign_has_definition` (_temporary_);
