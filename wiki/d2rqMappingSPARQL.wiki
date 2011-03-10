@@ -7,7 +7,7 @@
 
 = Setup =
 
-Download latest parsed Wiktionary database (e.g. file `enwikt20101030_parsed.7z` in the section Downloads).
+Download the latest parsed Wiktionary database (e.g. file `enwikt20101030_parsed.7z` in the section Downloads).
 Upload it to your local MySQL database:
 {{{
 mysql> CREATE DATABASE enwikt20101030_parsed;
