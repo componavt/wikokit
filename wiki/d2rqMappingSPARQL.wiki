@@ -7,6 +7,14 @@
 
 = Setup =
 
+Download latest parsed Wiktionary database (e.g. file `enwikt20101030_parsed.7z` in the section Downloads).
+Upload it to your local MySQL database:
+{{{
+mysql> CREATE DATABASE enwikt20101030_parsed;
+mysql> USE enwikt20101030_parsed;
+mysql> SOURCE c:\enwikt20101030_parsed.sql
+}}}
+
 Create MySQL user and provide access to the parsed Wiktionary database:
 {{{
 mysql> CREATE USER rdfmapper;
