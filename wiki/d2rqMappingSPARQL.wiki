@@ -55,6 +55,19 @@ Open web browser:
 http://localhost:2020
 }}}
 
+== Online SPARQL endpoint ==
+
+You can check your SPARQL requests in the following server: [http://cais.iias.spb.su:2020/snorql http://cais.iias.spb.su:2020/snorql]
+
+E.g. the following SPARQL request prints ID of English language in the database:
+{{{
+SELECT ?langIdDest WHERE {
+  ?langDest wikpa:lang_code "en";
+            wikpa:lang_id ?langIdDest.
+}
+}}}
+Run [http://cais.iias.spb.su:2020/snorql/?query=SELECT+%3FlangIdDest+WHERE+{%0D%0A++%3FlangDest+wikpa%3Alang_code+%22en%22%3B%0D%0A++++++++++++wikpa%3Alang_id+%3FlangIdDest.%0D%0A} this link].
+
 = SPARQL examples =
 
 == Get definition (meaning) by word and language ==
