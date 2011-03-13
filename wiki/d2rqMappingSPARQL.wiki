@@ -150,6 +150,12 @@ public class SPARQLExample {
 
 == Get list of synonyms ==
 
+There are two ways to find synonyms in the database of the parsed English Wiktionary:
+    * _direct way_ - from entry to words, which are listed in the section _Synonyms_;
+    * _reverse way_ - from the non-English word in the section _Translation_ to the English title (header) of the entry;
+
+=== 1. From entry to synonyms ===
+
 Let's get a synonym for the Swedish (*sv* code) word [http://en.wiktionary.org/wiki/ordbok#Synonyms ordbok].
 
 SPARQL request:
@@ -181,7 +187,43 @@ WHERE {
 }
 }}}
 
-Todo ...
+=== 2. From synonym to entry ===
+
+Let's get a list of entries which contain a word (e.g. English phrase [http://en.wiktionary.org/wiki/computer_language computer language]) in the section Synonyms.
+
+SPARQL request:
+{{{
+SELECT ?langId ?pageId ?langPosId ?meaningId ?relationTypeId ?wikiTextIdRel ?entry
+WHERE {
+    ?lang wikpa:lang_code "en";
+          wikpa:lang_id ?langId.
+
+    ?page wikpa:page_page_title ?entry;
+          wikpa:page_id ?pageId.
+
+    ?lang_pos wikpa:lang_pos_page_id ?pageId;
+              wikpa:lang_pos_lang_id ?langId;
+              wikpa:lang_pos_id ?langPosId.
+
+    ?meaning wikpa:meaning_id ?meaningId;
+             wikpa:meaning_lang_pos_id ?langPosId.
+
+    ?relation_type wikpa:relation_type_name "synonyms";
+                   wikpa:relation_type_id ?relationTypeId.
+
+    ?relation wikpa:relation_meaning_id ?meaningId;
+              wikpa:relation_relation_type_id ?relationTypeId;
+              wikpa:relation_wiki_text_id ?wikiTextIdRel.
+
+    ?wiki_text wikpa:wiki_text_id ?wikiTextIdRel;
+              wikpa:wiki_text_text "computer language".
+}
+}}}
+Result:
+{{{
+entry=language
+entry=programming language
+}}}
 
 == Translate word from one language to another ==
 
