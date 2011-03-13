@@ -187,7 +187,7 @@ WHERE {
 }
 }}}
 
-=== 2. From synonym to entry ===
+=== 2. From synonym to entries ===
 
 Let's get a list of entries which contain a word (e.g. English phrase [http://en.wiktionary.org/wiki/computer_language computer language]) in the section Synonyms.
 
