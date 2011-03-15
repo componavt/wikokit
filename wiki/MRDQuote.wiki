@@ -42,7 +42,7 @@ fields in *quote* table:
   * *ref_id* (==quot_ref.id, may be NULL)
 
 + tables:
-  * *quot_translation* (native language, known => skip. It may contain transcription.)
+  * *quot_translation* (quote in native language without translation, but the transcription can be presented)
     * quote_id (== quote.id, PRIMARY)
     * text (not UNIQUE)
 
