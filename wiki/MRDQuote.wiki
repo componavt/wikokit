@@ -43,7 +43,7 @@ fields in *quote* table:
 
 + tables:
   * *quot_translation* (native language, known => skip. It may contain transcription.)
-    * quote_id - (== quote.id, PRIMARY)
+    * quote_id (== quote.id, PRIMARY)
     * text (not UNIQUE)
 
   * *quot_transcription* 
