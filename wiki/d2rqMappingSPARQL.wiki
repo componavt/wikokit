@@ -68,6 +68,13 @@ SELECT ?langIdDest WHERE {
 }}}
 Run [http://cais.iias.spb.su:2020/snorql/?query=SELECT+%3FlangIdDest+WHERE+{%0D%0A++%3FlangDest+wikpa%3Alang_code+%22en%22%3B%0D%0A++++++++++++wikpa%3Alang_id+%3FlangIdDest.%0D%0A} this link].
 
+You can test SPARQL examples presented below.
+
+== WikPaSPARQL - Java project with SPARQL examples ===
+
+The small Java project was developed in Eclipse. This project contains SPARQL requests addressed to Wiktionary parsed database. 
+Download [http://code.google.com/p/wikokit/downloads/detail?name=WikPaSPARQL_20110315.7z&can=2&q= WikPaSPARQL_20110315.7z].
+
 = SPARQL examples =
 
 == Get definition (meaning) by word and language ==
