@@ -65,8 +65,11 @@ fields in *quote* table:
 
   * *quot_author*
     * id
-    * name (UNIQUE, Not NULL)
-    * wikilink (UNIQUE, may be NULL) - a wikilink to Wikipedia (format: [[w:name|]]) for the author
+    * name (Not NULL)
+    * wikilink (may be NULL) - a wikilink to author's name in Wikipedia (format: [[w:name|]])
+
+    Remark: _quot_author_ has:
+      * _UNIQUE compound KEY_ (name, wikilink), and _wikilink_ field could be NULL.
 
     Todo test: (before INSERT) SELECT FROM quot_author BY name OR wikilink;
 
