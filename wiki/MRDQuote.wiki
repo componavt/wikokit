@@ -77,9 +77,11 @@ fields in *quote* table:
   * *quot_year*
     * id
     * from (Not NULL) - start date of a writing book with the quote
-    * to - finish date of a writing book with the quote
+    * to (Not NULL) - finish date of a writing book with the quote
     * todo: comment (abbreviation [http://en.wiktionary.org/wiki/Wiktionary:Quotations#The_use_of_abbreviations c., a., p.])
     * UNIQUE INDEX: (from, to)
+    Remark: if quote contains only one date, then _to_ = _from_
+
     Todo test: INSERTs twice (from, NULL), it should generate errors, so only unique (from, NULL) are allowed
  
   * *quot_publisher* (_издание_ in ruwikt)
