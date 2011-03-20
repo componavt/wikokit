@@ -43,11 +43,11 @@ fields in *quote* table:
 
 + tables:
   * *quot_translation* (quote in native language without translation, but the transcription can be presented)
-    * quote_id (== quote.id, PRIMARY)
+    * quote_id (== quote.id, PRIMARY, reference to the table `quote`)
     * text (not UNIQUE)
 
   * *quot_transcription* 
-    * quote_id
+    * quote_id (reference to the table `quote`))
     * text (not UNIQUE)
 
   * *quot_ref* - links to tables with reference information
