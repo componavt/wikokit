@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import wikt.sql.quote.TQuote;
 
 /** An operations with the table 'meaning' in MySQL wiktionary_parsed database.
  *
@@ -52,6 +53,9 @@ public class TMeaning {
      * If wiki_text != null, then wiki_text_id is not used; lazy DB access.
      */
     private int wiki_text_id;
+
+    /** Quotations illustrate the meaning. */
+    private TQuote[] quotation;
 
     /** Semantic relations: synonymy, antonymy, etc.
      * The map from semantic relation (e.g. synonymy) to array of WRelation

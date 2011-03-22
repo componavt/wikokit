@@ -111,6 +111,9 @@ SELECT * FROM page WHERE page.page_title='Momotarō';
     
     public static String convertToSafeStringEncodeToDB(Connect connect, String s) {
         
+        if(null == s || s.length() == 0)
+            return "";
+
         String safe_title = StringUtil.spaceToUnderscore(
                             StringUtil.escapeChars(s));
         return connect.enc.EncodeToDB(safe_title);

@@ -183,7 +183,7 @@ public class StringUtil {
     
     /** Substitute source character s by destination d in the text. */
     public static String substChar(String text, char s, char d){
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         StringCharacterIterator iterator = new StringCharacterIterator(text);
         char character =  iterator.current();
         while (character != StringCharacterIterator.DONE ){

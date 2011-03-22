@@ -40,8 +40,6 @@ public class TWikiTextTest {
 
     @After
     public void tearDown() {
-        Connect conn = ruwikt_parsed_conn;
-
         ruwikt_parsed_conn.Close();
     }
     

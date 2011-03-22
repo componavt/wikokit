@@ -349,7 +349,7 @@ public class TLang {
                                 int n_foreign_POS,int n_translations) {
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try
         {
             s = connect.conn.createStatement ();
@@ -384,7 +384,7 @@ public class TLang {
     public static void update (Connect connect,LanguageType lang,
                                 int n_foreign_POS,int n_translations) {
         Statement   s = null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         
         try
         {
@@ -416,7 +416,7 @@ public class TLang {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TLang       tp = null;
 
         if(null == lt) return null;
@@ -464,7 +464,7 @@ public class TLang {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
 
         if(null == lt) return;
         String lang_code = lt.getCode();

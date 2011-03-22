@@ -12,7 +12,9 @@ import java.util.*;
 
 public class PageTableBaseTest extends TestCase {
 
-    public  Connect  connect, connect_ru, connect_simple, ruwikt_conn;
+    public  Connect  ruwikt_conn;
+    // connect, connect_simple, connect_ru,
+
     //public  SessionHolder    session;
     static String[] iwiki_example = {"ru:", "fa:وب جهان‌گستر","br:World Wide","lt:Žiniatinklis","lv:Globālais tīmeklis","th:เวิลด์ไวด์เว็บ","tr:Dünya Çapında Ağ"};
 
@@ -39,17 +41,17 @@ public class PageTableBaseTest extends TestCase {
      **/
 
     protected void setUp() throws Exception {
-        connect = new Connect();
-        connect.Open(Connect.WP_HOST, Connect.WP_DB, Connect.WP_USER, Connect.WP_PASS,LanguageType.en);
+        //connect = new Connect();
+        //connect.Open(Connect.WP_HOST, Connect.WP_DB, Connect.WP_USER, Connect.WP_PASS,LanguageType.en);
         
-        connect_ru = new Connect();
-        connect_ru.Open(Connect.WP_RU_HOST,Connect.WP_RU_DB,Connect.WP_RU_USER,Connect.WP_RU_PASS,LanguageType.ru); //Java:MySQL ISO8859_1:latin1
+        //connect_ru = new Connect();
+        //connect_ru.Open(Connect.WP_RU_HOST,Connect.WP_RU_DB,Connect.WP_RU_USER,Connect.WP_RU_PASS,LanguageType.ru); //Java:MySQL ISO8859_1:latin1
 
         ruwikt_conn = new Connect();
         ruwikt_conn.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
 
-        connect_simple = new Connect();
-        connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,Connect.WP_USER,Connect.WP_PASS,LanguageType.simple);
+        /*connect_simple = new Connect();
+        //connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,Connect.WP_USER,Connect.WP_PASS,LanguageType.simple);
         
         // simple WP
         cat1 = connect_simple.enc.EncodeFromJava("Folklore");
@@ -59,15 +61,15 @@ public class PageTableBaseTest extends TestCase {
         cat1_id = PageTableBase.getIDByTitleNamespace(connect_simple, cat1, PageNamespace.CATEGORY); // 41712
         art1_id = PageTableBase.getIDByTitleNamespace(connect_simple, art1, PageNamespace.MAIN);     // 50387
         art_redirect1_id = PageTableBase.getIDByTitleNamespace(connect_simple, art_redirect1, PageNamespace.MAIN);
-        
+        */
         //session = new SessionHolder();
         //session.initObjects();
     }
 
     protected void tearDown() throws Exception {
-        connect.Close();
-        connect_ru.Close();
-        connect_simple.Close();
+        //connect.Close();
+        //connect_ru.Close();
+        //connect_simple.Close();
         ruwikt_conn.Close();
     }
 
@@ -77,7 +79,7 @@ public class PageTableBaseTest extends TestCase {
         return suite;
     }
 
-
+/*
     public void testWildcardToDatabaseChars(){
         System.out.println("test_wildcardToDatabaseChars");
         String source, result, empty;
@@ -117,9 +119,9 @@ public class PageTableBaseTest extends TestCase {
         source  =               "я?";
         result  = PageTableBase.convertWildcardToDatabaseChars(connect, source);
         assertEquals(result,    "Ñ__");
-    }
+    }*/
 
-    //
+    /*
     public void testGetArticleText_simple() {
         System.out.println("getArticleText_simple");
         String s, title;
@@ -150,11 +152,9 @@ public class PageTableBaseTest extends TestCase {
         String str = s.substring(0, 10);
         String should_be = "[[Image:Mo";
         assertEquals(str, should_be);
-    }
+    }*/
     
-    /**
-     * Test of SelectCurText method, of class wikipedia.sql.PageTableBase.
-     */
+    /*
     public void testSelectCurText_en() {
         System.out.println("testSelectCurText_en");
         String s;
@@ -174,7 +174,7 @@ public class PageTableBaseTest extends TestCase {
         String s = "Фут";
         s = connect_ru.enc.EncodeFromJava(s);
         s = PageTableBase.getArticleText(connect_ru, s);
-        
+     */
         /*
             String id0 = PageTableBase.getArticleText(connect_ru,                  "Фут");
             String id1 = PageTableBase.getArticleText(connect_ru, Encodings.FromTo("Фут","UTF8","ISO8859_1"));
@@ -184,7 +184,7 @@ public class PageTableBaseTest extends TestCase {
             String id5 = PageTableBase.getArticleText(connect_ru, Encodings.FromTo("Фут","Cp1251","ISO8859_1"));
             String id6 = PageTableBase.getArticleText(connect_ru, Encodings.FromTo("Фут","ISO8859_1","Cp1251"));
         */
-        
+        /*
         assertTrue (0 < s.length());
         String str = s.substring(0, 9);
         
@@ -192,7 +192,7 @@ public class PageTableBaseTest extends TestCase {
         String should_be = e.EncodeFromJava("'''Фут'''");
         
         assertEquals(str, should_be);
-    }
+    }*/
 
     /**
      * Test of GetIDByTitleNamespace method, of class wikipedia.sql.PageTableBase.
@@ -254,17 +254,17 @@ public class PageTableBaseTest extends TestCase {
      * sql='SELECT page_id FROM page WHERE page_namespace=0 AND page_title='He:××××ª'' 
      * Illegal mix of collations
      **/
-    public void testGetIDByTitle_iwiki() {
+    /*public void testGetIDByTitle_iwiki() {
         System.out.println("testGetIDByTitle_iwiki");
         
         for(String title : iwiki_example) {
             int id_result = PageTableBase.getIDByTitleNamespace(connect_ru, title, PageNamespace.MAIN);
             assertEquals(0, id_result);
         }
-    }
+    }*/
     
     /** Checks treatment of titles with different symbols, e.g. apostrophe. */
-    public void testGetIDByTitle_simple() {
+    /*public void testGetIDByTitle_simple() {
         System.out.println("testGetIDByTitle_simple");
         int id; 
         
@@ -274,7 +274,7 @@ public class PageTableBaseTest extends TestCase {
         
         String text = PageTableBase.getArticleText(connect_simple, title);
         assertTrue(text.length() > 0);
-    }
+    }*/
     
     
     /**
@@ -284,7 +284,7 @@ public class PageTableBaseTest extends TestCase {
      * 2) gets title_result by id
      * 3) assert title_source == title_result
      */
-    public void testGetTitleByID() {
+    /*public void testGetTitleByID() {
         System.out.println("GetTitleByID");
         // SELECT cur_id, cur_namespace, cur_title FROM cur WHERE cur_id=10484;
         
@@ -309,14 +309,14 @@ public class PageTableBaseTest extends TestCase {
             t = connect_ru.enc.EncodeFromJava(t);
             int id = PageTableBase.getIDByTitleNamespace(connect_ru, t, PageNamespace.MAIN);
             
-            /*
-            int id1 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "UTF8",      "ISO8859_1"), PageNamespace.MAIN);
-            int id2 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "ISO8859_1", "UTF8"), PageNamespace.MAIN);
-            ++ int id3 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "Cp1251",    "UTF8"), PageNamespace.MAIN);
-            int id4 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "UTF8",      "Cp1251"), PageNamespace.MAIN);
-            int id5 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "Cp1251",    "ISO8859_1"), PageNamespace.MAIN);
-            int id6 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "ISO8859_1", "Cp1251"), PageNamespace.MAIN);
-            */
+            
+            //int id1 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "UTF8",      "ISO8859_1"), PageNamespace.MAIN);
+            //int id2 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "ISO8859_1", "UTF8"), PageNamespace.MAIN);
+            //++ int id3 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "Cp1251",    "UTF8"), PageNamespace.MAIN);
+            //int id4 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "UTF8",      "Cp1251"), PageNamespace.MAIN);
+            //int id5 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "Cp1251",    "ISO8859_1"), PageNamespace.MAIN);
+            //int id6 = PageTableBase.getIDByTitleNamespace(session.connect, Encodings.FromTo(t, "ISO8859_1", "Cp1251"), PageNamespace.MAIN);
+            
             
             if(0 == id) {
                 System.out.println("..pedia doesn't contain a page with title '" + t + "'");
@@ -325,25 +325,24 @@ public class PageTableBaseTest extends TestCase {
             
             String title_result = PageTableBase.getTitleByID(connect_ru, id);
             //t = session.enc.FromDBToUser(t);
-            /*
-            String s = title_result;
-            String s1 = Encodings.FromTo(s, "UTF8",     "ISO8859_1");
-            String s2 = Encodings.FromTo(s, "ISO8859_1","UTF8");
-            String s3 = Encodings.FromTo(s, "Cp1251",   "UTF8");
-            String s4 = Encodings.FromTo(s, "UTF8",     "Cp1251");
-            String s5 = Encodings.FromTo(s, "Cp1251",   "ISO8859_1");
-            String s6 = Encodings.FromTo(s, "ISO8859_1","Cp1251");
+            
+            //String s = title_result;
+            //String s1 = Encodings.FromTo(s, "UTF8",     "ISO8859_1");
+            //String s2 = Encodings.FromTo(s, "ISO8859_1","UTF8");
+            //String s3 = Encodings.FromTo(s, "Cp1251",   "UTF8");
+            //String s4 = Encodings.FromTo(s, "UTF8",     "Cp1251");
+            //String s5 = Encodings.FromTo(s, "Cp1251",   "ISO8859_1");
+            //String s6 = Encodings.FromTo(s, "ISO8859_1","Cp1251");
             
             //++                                          //"ISO8859_1","UTF8");
-            String s7 = session.enc.FromDBToUser(s);
-            String s8 = Encodings.FromTo(s, session.enc.GetDB(), session.enc.GetUser());
-            */
-            
+            //String s7 = session.enc.FromDBToUser(s);
+            //String s8 = Encodings.FromTo(s, session.enc.GetDB(), session.enc.GetUser());
             
             assertEquals(t, title_result);
         }
-    }
+    }*/
 
+    /*
     public void testGetArticleTitleNotRedirectByID_simple() {
         System.out.println("GetArticleTitleNotRedirectByID_simple");
         String result;
@@ -381,9 +380,9 @@ public class PageTableBaseTest extends TestCase {
         // 3. non-valid (null result): article page
         result = PageTableBase.getCategoryTitleByID(connect_simple, art1_id);
         assertEquals(null, result);
-    }
+    }*/
  
-    public void testGetNamespaceByID_en() {
+    /*public void testGetNamespaceByID_en() {
         System.out.println("GetNamespaceByID_en");
         
         String title = "20th century"; // "hydrocarbon" - the name of article and category at the same time in Russian Wikipedia
@@ -401,9 +400,9 @@ public class PageTableBaseTest extends TestCase {
         
         assertEquals(b_category, PageNamespace.CATEGORY);
         assertEquals(b_article, PageNamespace.MAIN);
-    }
+    }*/
     
-    
+    /*
     public void testGetNamespaceByID_ru() {
         System.out.println("GetNamespaceByID_ru");
         
@@ -422,6 +421,17 @@ public class PageTableBaseTest extends TestCase {
         
         assertEquals(b_category, PageNamespace.CATEGORY);
         assertEquals(b_article, PageNamespace.MAIN);
+    }*/
+
+
+    //
+    public void testConvertToSafeStringEncodeToDBWunderscore() {
+        System.out.println("convertToSafeStringEncodeToDBWunderscore");
+
+        String empty = "";
+        String result;
+
+        result = PageTableBase.convertToSafeStringEncodeToDB(ruwikt_conn, empty);
+        assertEquals(0, result.length());
     }
-    
 }

@@ -7,15 +7,10 @@
 package wikipedia.sql;
 
 import java.io.File;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import wikipedia.language.Encodings;
 import wikipedia.language.LanguageType;
-
-import java.sql.Connection; 
-import java.sql.DriverManager; 
-import java.sql.SQLException; 
 
 import java.sql.*;
 import wikipedia.util.FileWriter;
@@ -83,15 +78,13 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    //public final static String RUWIKT_DB   = "ruwikt20100817?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    public final static String RUWIKT_DB   = "ruwikt20101101?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_DB   = "ruwikt20110207?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     
     // Russian Wiktionary parsed database
     //public final static String RUWIKT_PARSED_DB = "ruwikt20100817_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    public final static String RUWIKT_PARSED_DB = "ruwikt20101101_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20110207_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
-    //public final static String RUWIKT_SQLITE = "ruwikt20100817.sqlite";
     public final static String RUWIKT_SQLITE = "ruwikt20101101.sqlite";
 
     // English Wiktionary database
@@ -277,48 +270,10 @@ public class Connect {
 
     public static void testSQLite() {
 
-        // register the driver
-        String sDriverName = "org.sqlite.JDBC";
-        try
-        {
-            Class.forName(sDriverName);
-        }
-        catch(Exception e)
-        {
-            System.err.println(e);
-        }
-
-        // now we set up a set of fairly basic string variables to use in the body of the code proper
-        String sTempDb = "hello.db";
-        String sJdbc = "jdbc:sqlite"; String sDbUrl = sJdbc + ":" + sTempDb;
-        // which will produce a legitimate Url for SqlLite JDBC :
-        // jdbc:sqlite:hello.db
-
-        int iTimeout = 30;
-        String sMakeTable = "CREATE TABLE dummy (id numeric, response text)";
-        String sMakeInsert = "INSERT INTO dummy VALUES(1,'Hello from the database')";
-        String sMakeSelect = "SELECT response from dummy";
-        try
-        { // create a database connection
-            Connection conn = DriverManager.getConnection(sDbUrl);
-            Statement stmt = conn.createStatement();
-            stmt.setQueryTimeout(iTimeout);
-            stmt.executeUpdate( sMakeTable );
-            stmt.executeUpdate( sMakeInsert ); ResultSet rs = stmt.executeQuery(sMakeSelect);
-            while(rs.next())
-            {
-                String sResult = rs.getString("response");
-                System.out.println(sResult);
-            }
-        }
-        catch(SQLException e)
-        {
-            // connection failed.
-            System.err.println(e);
-        }
+ 
     }
 
-    /** 
+    /** Gets filepath to the SQLite database.
      * 
      * @param brelease If true, then SQLite database will be extracted 
      * from the jar-file and stored to the directory user.dir 
