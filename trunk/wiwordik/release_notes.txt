@@ -1,3 +1,14 @@
+wiwordik 0.0X.10XX 2011-XX-XX
+  
+  Added (from user's point of view):
+    ...
+   
+  Added (from programmer's point of view)
+    MRD database: new size of lang.name=VARCHAR(64), old=256, max=29
+        new size of lang_pos.lemma=VARCHAR(32), old=255, max=0
+        index_native.page_id is PRIMARY now (copy of page.id)
+
+
 wiwordik 0.05.1053 2011-02-11
     Version number has been changed. XX.X.YYYY where XX.X - version 
       and YYYY - number of languages and codes recognized by the program 

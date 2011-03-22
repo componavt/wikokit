@@ -33,7 +33,7 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `pos_id` TINYINT UNSIGNED NOT NULL ,
   `lang_id` SMALLINT UNSIGNED NOT NULL ,
   `etymology_n` TINYINT UNSIGNED NOT NULL ,
-  `lemma` VARCHAR(255) BINARY NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
+  `lemma` VARCHAR(32) BINARY NOT NULL COMMENT 'The word\'s lemma (term), unique.\nIt\'s rare, but it can be different from page_title, see e.g. \"war\" section Old High German' ,
   `redirect_type` TINYINT UNSIGNED NULL COMMENT 'Type of soft redirect (Wordform, Misspelling)' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `unique_page_lang_pos` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
@@ -87,7 +87,7 @@ DROP TABLE IF EXISTS `lang` ;
 
 CREATE  TABLE IF NOT EXISTS `lang` (
   `id` SMALLINT NOT NULL AUTO_INCREMENT ,
-  `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
+  `name` VARCHAR(64) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   `code` VARCHAR(12) NOT NULL COMMENT 'Two (or more) letter language code, e.g. \'en\', \'ru\'.' ,
   `n_foreign_POS` INT(10) UNSIGNED NOT NULL COMMENT 'Number of foreign POS' ,
   `n_translations` INT(10) UNSIGNED NOT NULL COMMENT 'Number of translation pairs in this lang' ,
@@ -274,7 +274,8 @@ CREATE  TABLE IF NOT EXISTS `index_native` (
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'page.page_title of this Wiktionary article in native language' ,
   `has_relation` TINYINT(1)  NULL COMMENT 'true, if there is any semantic relation in this Wiktionary article' ,
   UNIQUE INDEX `page_id` (`page_id` ASC) ,
-  INDEX `idx_page_title` (`page_title`(7) ASC) )
+  INDEX `idx_page_title` (`page_title`(7) ASC) ,
+  PRIMARY KEY (`page_id`) )
 ENGINE = InnoDB
 COMMENT = 'words (with definitions) in native language';
 
@@ -293,6 +294,124 @@ CREATE  TABLE IF NOT EXISTS `native_red_link` (
   INDEX `idx_red_link` (`red_link`(7) ASC) )
 ENGINE = InnoDB
 COMMENT = 'words (without articles) in native language';
+
+
+-- -----------------------------------------------------
+-- Table `quote`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quote` ;
+
+CREATE  TABLE IF NOT EXISTS `quote` (
+  `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `meaning_id` INT(10) UNSIGNED NOT NULL COMMENT '==meaning.id' ,
+  `lang_id` SMALLINT UNSIGNED NOT NULL COMMENT '== lang_pos.lang_id (duplication), language of the quote text' ,
+  `text` VARCHAR(1023) BINARY NOT NULL COMMENT 'quotation sentence text (not UNIQUE!)' ,
+  `ref_id` INT(9) UNSIGNED NULL ,
+  PRIMARY KEY (`id`) ,
+  INDEX `meaning_id_INDEX` (`meaning_id` ASC) )
+ENGINE = InnoDB
+COMMENT = 'Stores quotations and examples.';
+
+
+-- -----------------------------------------------------
+-- Table `quot_translation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quot_translation` ;
+
+CREATE  TABLE IF NOT EXISTS `quot_translation` (
+  `quote_id` INT(10) UNSIGNED NOT NULL COMMENT '== quote.id' ,
+  `text` VARCHAR(1023) BINARY NOT NULL ,
+  PRIMARY KEY (`quote_id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `quot_author`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quot_author` ;
+
+CREATE  TABLE IF NOT EXISTS `quot_author` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(512) BINARY NOT NULL ,
+  `wikilink` VARCHAR(512) BINARY NOT NULL COMMENT 'a wikilink to Wikipedia (format: [[w:name|]]) for the author ' ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_wikilink` (`name` ASC, `wikilink` ASC) ,
+  INDEX `name` (`name` ASC) ,
+  INDEX `wikilink` (`wikilink` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `quot_year`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quot_year` ;
+
+CREATE  TABLE IF NOT EXISTS `quot_year` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `from` INT(5) UNSIGNED NOT NULL COMMENT 'start date of a writing book with the quote' ,
+  `to` INT(5) UNSIGNED NOT NULL COMMENT 'finish date of a writing book with the quote' ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `from_to_UNIQUE` (`from` ASC, `to` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `quot_publisher`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quot_publisher` ;
+
+CREATE  TABLE IF NOT EXISTS `quot_publisher` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `text` VARCHAR(512) BINARY NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `text_UNIQUE` (`text` ASC) )
+ENGINE = InnoDB
+COMMENT = 'in ruwikt: издание';
+
+
+-- -----------------------------------------------------
+-- Table `quot_source`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quot_source` ;
+
+CREATE  TABLE IF NOT EXISTS `quot_source` (
+  `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `text` VARCHAR(512) BINARY NOT NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `text_UNIQUE` (`text` ASC) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `quot_transcription`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quot_transcription` ;
+
+CREATE  TABLE IF NOT EXISTS `quot_transcription` (
+  `quote_id` INT(10) UNSIGNED NOT NULL ,
+  `text` VARCHAR(1023) BINARY NOT NULL ,
+  PRIMARY KEY (`quote_id`) )
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `quot_ref`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `quot_ref` ;
+
+CREATE  TABLE IF NOT EXISTS `quot_ref` (
+  `id` INT(9) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `year_id` INT(5) UNSIGNED NULL ,
+  `author_id` INT(5) UNSIGNED NULL ,
+  `title` VARCHAR(512) BINARY NOT NULL COMMENT 'source title' ,
+  `title_wikilink` VARCHAR(512) BINARY NOT NULL COMMENT 'a wikilink to Wikisource (format: [[s:title|]]) (todo)' ,
+  `publisher_id` INT(5) UNSIGNED NULL ,
+  `source_id` INT(5) UNSIGNED NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `year_auth_tit_pub_s_UNIQUE` (`year_id` ASC, `author_id` ASC, `title` ASC, `publisher_id` ASC, `source_id` ASC) ,
+  INDEX `title_INDEX` (`title` ASC) )
+ENGINE = InnoDB
+COMMENT = 'links to tables with reference information (year, etc.)';
 
 
 
