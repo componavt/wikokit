@@ -67,6 +67,25 @@ public class TQuote {
         return quot_ref;
     }
 
+    /** Gets translation of the quotation from database. */
+    public String getTranslation(Connect connect) {
+        TQuotTranslation t = TQuotTranslation.getByID(connect, id);
+        
+        if(null != t)
+            return t.getText();    
+        return "";
+    }
+
+    /** Gets translation of the quotation from database. */
+    public String getTransription(Connect connect) {
+        TQuotTranscription t = TQuotTranscription.getByID(connect, id);
+
+        if(null != t)
+            return t.getText();
+        return "";
+    }
+
+
     /** Inserts record into the table quote.<br><br>
      *
      * INSERT INTO quote (meaning_id,lang_id,text,ref_id) VALUES (1,286,"",NULL)
@@ -77,7 +96,7 @@ public class TQuote {
      * @param _quot_ref bibliography and reference data
      * @return inserted record, or null if insertion failed
      */
-    public static TQuote insert (Connect connect,TMeaning _meaning, TLang _lang, String _text,
+    public static TQuote insert (Connect connect, TMeaning _meaning, TLang _lang, String _text,
                   TQuotRef _quot_ref)
     {
         if(null == _text || _text.length() == 0) {
@@ -128,6 +147,153 @@ public class TQuote {
         return result;
     }
 
+    /** Inserts quote and reference (ref. without years) records into the tables:
+     * quote, quot_ref, quot_year, quot_author, quot_publisher, and quot_source.<br><br>
+     *
+     * @param _text quotation itself
+     * @param _meaning meaning of a word corresponding to the quote
+     * @param _lang language of the quote
+     * 
+     * @param _author author's name,
+     * @param _author_wikilink link to author's name in Wikipedia (format: [[w:name|]]),
+     * @param _title title of the work
+     * @param _title_wikilink link to a book in Wikipedia (format: [[w:title|]]),
+     *                        it could be empty ("")
+     * @param _publisher quote book publisher
+     * @param _source quote source
+     * @return inserted record, or null if insertion failed
+     */
+    public static TQuote insertWithReference (Connect connect,
+                                String _text, TMeaning _meaning, TLang _lang,
+                                
+                                // reference data:
+                                String _author,String _author_wikilink,
+                                String _title, String _title_wikilink,
+                                String _publisher, String _source)
+    {
+        TQuotRef quot_ref = TQuotRef.getOrInsert(connect, _author, _author_wikilink,
+                                    _title, _title_wikilink, _publisher, _source);
+
+        return TQuote.insert(connect, _meaning, _lang, _text, quot_ref);
+    }
+
+    /** Inserts quote and reference (ref. without years) records into the tables:
+     * quote, quot_ref, quot_year, quot_author, quot_publisher, and quot_source.<br><br>
+     *
+     * @param _text quotation itself
+     * @param _meaning meaning of a word corresponding to the quote
+     * @param _lang language of the quote
+     *
+     * @param _author author's name,
+     * @param _author_wikilink link to author's name in Wikipedia (format: [[w:name|]]),
+     * @param _title title of the work
+     * @param _title_wikilink link to a book in Wikipedia (format: [[w:title|]]),
+     *                        it could be empty ("")
+     * @param _publisher quote book publisher
+     * @param _source quote source
+     * * @param _from start date of a writing book with the quote
+     * @param _to finish date of a writing book with the quote
+     * @return inserted record, or null if insertion failed
+     */
+    public static TQuote insertWithYears (Connect connect,
+                                String _text, TMeaning _meaning, TLang _lang,
+
+                                // reference data:
+                                String _author,String _author_wikilink,
+                                String _title, String _title_wikilink,
+                                String _publisher, String _source,
+                                int _from, int _to)
+    {
+        TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+                                    _title, _title_wikilink, _publisher, _source,
+                                    _from, _to);
+
+        return TQuote.insert(connect, _meaning, _lang, _text, quot_ref);
+    }
+
+    /** Inserts quote (with translation, transcription) and reference
+     * (ref. without years) records into the tables: quote, quot_translation,
+     * quot_transcription, quot_ref, quot_year, quot_author, quot_publisher,
+     * and quot_source.<br><br>
+     *
+     * @param _text quotation itself
+     * @param _translation translation of quotation
+     * @param _transcription transcription of quotation
+     * @param _meaning meaning of a word corresponding to the quote
+     * @param _lang language of the quote
+     *
+     * @param _author author's name,
+     * @param _author_wikilink link to author's name in Wikipedia (format: [[w:name|]]),
+     * @param _title title of the work
+     * @param _title_wikilink link to a book in Wikipedia (format: [[w:title|]]),
+     *                        it could be empty ("")
+     * @param _publisher quote book publisher
+     * @param _source quote source
+     * @return inserted record, or null if insertion failed
+     */
+    public static TQuote insertWithTranslationTranscription (Connect connect,
+                                String _text, String _translation, String _transcription,
+                                TMeaning _meaning, TLang _lang,
+
+                                // reference data:
+                                String _author,String _author_wikilink,
+                                String _title, String _title_wikilink,
+                                String _publisher, String _source)
+    {
+        TQuotRef quot_ref = TQuotRef.getOrInsert(connect, _author, _author_wikilink,
+                                    _title, _title_wikilink, _publisher, _source);
+
+        TQuote q = TQuote.insert(connect, _meaning, _lang, _text, quot_ref);
+        int quote_id = q.getID();
+
+        TQuotTranslation.insert(connect, quote_id, _translation);
+        TQuotTranscription.insert(connect, quote_id, _transcription);
+        return q;
+    }
+
+    /** Inserts quote (with translation, transcription) and reference
+     * (with years) records into the tables: quote, quot_translation,
+     * quot_transcription, quot_ref, quot_year, quot_author, quot_publisher,
+     * and quot_source.<br><br>
+     *
+     * @param _text quotation itself
+     * @param _translation translation of quotation
+     * @param _transcription transcription of quotation
+     * @param _meaning meaning of a word corresponding to the quote
+     * @param _lang language of the quote
+     *
+     * @param _author author's name,
+     * @param _author_wikilink link to author's name in Wikipedia (format: [[w:name|]]),
+     * @param _title title of the work
+     * @param _title_wikilink link to a book in Wikipedia (format: [[w:title|]]),
+     *                        it could be empty ("")
+     * @param _publisher quote book publisher
+     * @param _source quote source
+     * @param _from start date of a writing book with the quote
+     * @param _to finish date of a writing book with the quote
+     * @return inserted record, or null if insertion failed
+     */
+    public static TQuote insertWithYearsTranslationTranscription (Connect connect,
+                                String _text, String _translation, String _transcription,
+                                TMeaning _meaning, TLang _lang,
+
+                                // reference data:
+                                String _author,String _author_wikilink,
+                                String _title, String _title_wikilink,
+                                String _publisher, String _source,
+                                int _from, int _to)
+    {
+        TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+                                    _title, _title_wikilink, _publisher, _source,
+                                    _from, _to);
+
+        TQuote q = TQuote.insert(connect, _meaning, _lang, _text, quot_ref);
+        int quote_id = q.getID();
+
+        TQuotTranslation.insert(connect, quote_id, _translation);
+        TQuotTranscription.insert(connect, quote_id, _transcription);
+        return q;
+    }
 
     /** Deletes row from the table 'quote' by a value of ID.<br><br>
      * DELETE FROM quote WHERE id=4;

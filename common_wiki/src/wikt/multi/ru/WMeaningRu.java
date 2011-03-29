@@ -153,12 +153,12 @@ public class WMeaningRu {
 
         // 3. parsing wiki-text
         //StringBuffer definition = WikiWord.parseDoubleBrackets(page_title, new StringBuffer(wiki_definition));
+
         // 4. extract wiki-links (internal links)
         //WikiWord[] ww = WikiWord.getWikiWords(page_title, new StringBuffer(wiki_definition));
 
         // 5. extract quotations
-        WQuote[] quote = null;
-        // todo ...
+        WQuote[] quote = WQuoteRu.getQuotes(page_title, line);        
 
         return new WMeaning(page_title, labels, wiki_definition, quote, false);
     }

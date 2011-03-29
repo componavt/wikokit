@@ -102,6 +102,69 @@ public class TQuotRef {
         return true;
     }
 
+    /** Gets record from the table quot_ref.<br><br>
+     *
+     * SELECT id FROM quot_ref WHERE year_id is NULL AND author_id=7 AND title="test" AND title_wikilink="" AND publisher_id is NULL AND source_id=4
+     *
+     * @param author_id ID of author's name or "NULL",
+     * @param _title title of the work
+     * @param _title_wikilink link to a book in Wikipedia (format: [[w:title|]]),
+     *                        it could be empty ("")
+     * @param publisher_id ID of publisher or "NULL"
+     * @param source_id ID of source or "NULL"
+     * @return inserted record, or null if insertion failed
+     */
+    private static TQuotRef get (Connect connect,
+                                TQuotYear y, TQuotAuthor a,
+                                String _title, String _title_wikilink,
+                                TQuotPublisher p, TQuotSource src)
+    {
+        String year_id = (null == y) ? " IS NULL" : "=" + y.getID();
+        String author_id = (null == a) ? " IS NULL" : "=" + a.getID();
+        String publisher_id = (null == p) ? " IS NULL" : "=" + p.getID();
+        String source_id = (null == src) ? " IS NULL" : "=" + src.getID();
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuilder str_sql = new StringBuilder();
+        TQuotRef result = null;
+
+        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title);
+        String safe_title_wikilink = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title_wikilink);
+
+        try
+        {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id FROM quot_ref WHERE year_id");
+            str_sql.append(year_id);
+            str_sql.append(" AND author_id");
+            str_sql.append(author_id);
+            str_sql.append(" AND title=\"");
+            str_sql.append(safe_title);
+            str_sql.append("\" AND title_wikilink=\"");
+            str_sql.append(safe_title_wikilink);
+            str_sql.append("\" AND publisher_id");
+            str_sql.append(publisher_id);
+            str_sql.append(" AND source_id");
+            str_sql.append(source_id);
+            rs = s.executeQuery (str_sql.toString());
+            if (rs.next ())
+            {
+                result = new TQuotRef(rs.getInt("id"), _title, _title_wikilink,
+                                      y, // TQuotYear _year
+                                      a, // TQuotAuthor _author,
+                                      p, // TQuotPublisher _publisher,
+                                      src); // TQuotSource _source
+            }
+        }catch(SQLException ex) {
+            System.err.println("SQLException (TQuotRef.get):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return result;
+    }
+
     /** Inserts (without years) records into the tables: quot_ref, quot_year, quot_author,
      * quot_publisher, and quot_source.<br><br>
      *
@@ -236,6 +299,68 @@ public class TQuotRef {
         return insertByID (connect, y, a,
                                 _title, _title_wikilink,
                                 p, src);
+    }
+
+    /** Gets ID of a record or inserts (without years) records (if they are absent)
+     * into the tables: quot_ref, quot_year, quot_author, quot_publisher,
+     * and quot_source.
+     *
+     * @param _author author's name,
+     * @param _author_wikilink link to author's name in Wikipedia (format: [[w:name|]]),
+     * @param _title title of the work
+     * @param _title_wikilink link to a book in Wikipedia (format: [[w:title|]]),
+     *                        it could be empty ("")
+     * @param _publisher quote book publisher
+     * @param _source quote source
+     * @return found or inserted record, or null.
+     */
+    public static TQuotRef getOrInsert (Connect connect,String _author,String _author_wikilink,
+                                String _title, String _title_wikilink,
+                                String _publisher, String _source)
+    {
+        if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
+            System.err.println("Error (TQuotRef.getOrInsert()):: all arguments are empty.");
+            return null;
+        }
+
+        TQuotAuthor a = TQuotAuthor.getOrInsert(connect, _author, _author_wikilink);
+        TQuotPublisher p = TQuotPublisher.getOrInsert(connect, _publisher);
+        TQuotSource src = TQuotSource.getOrInsert(connect, _source);
+        TQuotYear y = null;
+
+        TQuotRef quot_ref = TQuotRef.get(connect, y, a,
+                                _title, _title_wikilink,
+                                p, src);
+        if(null == quot_ref)
+            quot_ref = insertByID (connect, y, a,
+                                _title, _title_wikilink,
+                                p, src);
+        return quot_ref;
+    }
+
+    public static TQuotRef getOrInsertWithYears (Connect connect,String _author,String _author_wikilink,
+                                String _title, String _title_wikilink,
+                                String _publisher, String _source,
+                                int _from,int _to)
+    {
+        if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
+            System.err.println("Error (TQuotRef.getOrInsert()):: all arguments are empty.");
+            return null;
+        }
+
+        TQuotAuthor a = TQuotAuthor.getOrInsert(connect, _author, _author_wikilink);
+        TQuotPublisher p = TQuotPublisher.getOrInsert(connect, _publisher);
+        TQuotSource src = TQuotSource.getOrInsert(connect, _source);
+        TQuotYear y = TQuotYear.getOrInsert(connect, _from, _to);
+
+        TQuotRef quot_ref = TQuotRef.get(connect, y, a,
+                                _title, _title_wikilink,
+                                p, src);
+        if(null == quot_ref)
+            quot_ref = insertByID (connect, y, a,
+                                _title, _title_wikilink,
+                                p, src);
+        return quot_ref;
     }
 
     /** Deletes row from the table 'quot_ref' by a value of ID.<br><br>

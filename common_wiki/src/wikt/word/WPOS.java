@@ -112,12 +112,6 @@ public class WPOS {
         }
     }
 
-
-    /*Semantic relations: synonymy, antonymy, etc.
-     * The map from semantic relation (e.g. synonymy) to array of WRelation
-     * (one WRelation contains a list of synonyms for one meaning).
-
-    private Map<Relation, WRelation[]> relation*/
     
     /** Parses text, creates and fills array of meanings (WLanguage),
      * semantic relations, translations.

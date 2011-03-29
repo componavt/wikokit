@@ -265,6 +265,24 @@ public class WMeaningRuTest {
         assertTrue(def.equalsIgnoreCase( "{{хим-элем|5|B}}" ));
     }
 
+    @Test
+    public void testParse_empty_definition_and_empty_quoation_with_empty_translation() {
+        System.out.println("parse_empty_definition_and_empty_quoation_with_empty_translation");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title;
+        String line;
+
+        // # {{Нужен перевод}} {{пример||перевод=}}
+        line =  "# {{Нужен перевод}} {{пример||перевод=}}";
+
+        wikt_lang       = LanguageType.ru; // Russian Wiktionary
+        page_title      = "лубяной";
+        lang_section    = LanguageType.ru; // Russian word
+
+        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        assertNull(result);
+    }
 
     @Test
     public void testParseOneDefinition_ru_quote() {
