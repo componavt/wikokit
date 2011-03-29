@@ -157,14 +157,15 @@ public class WMeaningEn {
     public static WMeaning parseOneDefinition(LanguageType wikt_lang,
                     String page_title,
                     LanguageType lang_section,
-                    String line)
+                    String text)
     {
         // remove empty quotations: {{пример|}} and {{пример}}
  /*       line = line.replace("{{пример|}}", "");
         line = line.replace("{{пример}}", "");
         line = line.replace("{{пример перевод|}}", ""); // todo check - does exist this example
 */
-        line = Definition.getFirstLine(page_title, line);
+        String line;
+        line = Definition.getFirstLine(page_title, text);
         line = Definition.stripNumberSign(page_title, line).trim();
 
         if(0 == line.length())

@@ -127,7 +127,7 @@ public class TQuotRefTest {
         _title_wikilink = "";
         _publisher = "";
         _source = "";
-        _from = _to = 1931;
+        _from = _to = 91931;
 
         TQuotRef result = TQuotRef.insertWithYears(connect, _author, _author_wikilink,
                                         _title, _title_wikilink,
@@ -145,6 +145,72 @@ public class TQuotRefTest {
 
         y.delete(connect);
         result.delete(connect);
+    }
+
+    @Test
+    public void testInsert_ru_getOrInsert() {
+        System.out.println("insert_ru_getOrInsert");
+        Connect connect = ruwikt_parsed_conn;
+
+        String _author, _author_wikilink, _title, _title_wikilink, _publisher, _source;
+
+        _author = "test_Alexander Pushkin";
+        _author_wikilink = "";
+        _title = "test_Ruslan i Lyudmila";
+        _title_wikilink = "";
+        _publisher = "";
+        _source = "";
+
+        TQuotRef result1 = TQuotRef.getOrInsert(connect, _author, _author_wikilink,
+                                        _title, _title_wikilink,
+                                        _publisher, _source);
+        assertNotNull(result1);
+
+        TQuotRef result2 = TQuotRef.getOrInsert(connect, _author, _author_wikilink,
+                                        _title, _title_wikilink,
+                                        _publisher, _source);
+        assertEquals(result1.getID(), result2.getID());
+
+        TQuotAuthor a = result1.getAuthor();
+        a.delete(connect);
+        result1.delete(connect);
+    }
+
+    @Test
+    public void testInsert_ru_getOrInsert_with_years() {
+        System.out.println("insert_ru_getOrInsert");
+        Connect connect = ruwikt_parsed_conn;
+
+        String _author, _author_wikilink, _title, _title_wikilink, _publisher, _source;
+        int _from, _to;
+
+        _author = "test_Alexander Pushkin";
+        _author_wikilink = "";
+        _title = "test_Ruslan i Lyudmila";
+        _title_wikilink = "";
+        _publisher = "";
+        _source = "";
+        _from = _to = 91931;
+
+        TQuotRef result1 = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+                                        _title, _title_wikilink,
+                                        _publisher, _source,
+                                        _from, _to);
+        assertNotNull(result1);
+
+        TQuotRef result2 = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+                                        _title, _title_wikilink,
+                                        _publisher, _source,
+                                        _from, _to);
+        assertEquals(result1.getID(), result2.getID());
+
+        TQuotYear y = result1.getYear();
+        assertNotNull( y );
+        y.delete(connect);
+
+        TQuotAuthor a = result1.getAuthor();
+        a.delete(connect);
+        result1.delete(connect);
     }
 
 }
