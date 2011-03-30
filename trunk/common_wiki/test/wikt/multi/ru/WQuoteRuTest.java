@@ -404,13 +404,13 @@ public class WQuoteRuTest {
         int exp_year_from, exp_year_to;
 
         page_title = "замести";
-        text =  "# засыпать {{пример|Поле всё снегом занесло...|[[:w:Михайлов, Михаил Ларионович|М.&nbsp;Л.&nbsp;Михайлов]]|[[:s:Два Мороза (Михайлов)|Два&nbsp;Мороза]]|}}";
+        text =  "# засыпать {{пример|Поле всё снегом занесло...|[[:w:Михайлов, Михаил Ларионович|М.&nbsp;Л.&nbsp;Михайлов]]|[[s:Два Мороза (Михайлов)|Два&nbsp;Мороза]]|}}";
 
         exp_text = "Поле всё снегом занесло...";
         exp_author = "М. Л. Михайлов";
         exp_author_wikilink = "Михайлов, Михаил Ларионович";
         exp_title = "Два Мороза";
-        exp_title_wikilink = "";
+        exp_title_wikilink = "Два Мороза (Михайлов)";
         exp_year_from   = -1;
         exp_year_to     = -1;
         exp_source = "";

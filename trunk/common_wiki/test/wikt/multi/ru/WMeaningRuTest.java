@@ -303,10 +303,11 @@ public class WMeaningRuTest {
 
         assertTrue(null != result);
 
+ // Увязочные ... {{выдел|лубяных}} волокон), ... .|Татьяна Матвеева|Реставрация столярно-мебельных изделий|1988|источник=НКРЯ
         WQuote[] quote_result = result.getQuotes();
         assertTrue(null != quote_result);
         assertEquals(1, quote_result.length);
-        assertTrue(quote_result[0].getText().equalsIgnoreCase( "Увязочные ... лубяных волокон), ... ." ) );
+        assertTrue(quote_result[0].getText().equalsIgnoreCase( "Увязочные ... {{выдел|лубяных}} волокон), ... ." ) );
 
         // "# {{хим-элем|5|B}} {{пример}}"
 

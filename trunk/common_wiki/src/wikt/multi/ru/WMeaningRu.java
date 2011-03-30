@@ -122,6 +122,9 @@ public class WMeaningRu {
                     LanguageType lang_section,
                     String line)
     {
+        if(line.contains("{{Нужен перевод}}"))
+            return null;
+
         // remove empty quotations: {{пример|}} and {{пример}}
         line = line.replace("{{пример|}}", "");
         line = line.replace("{{пример}}", "");

@@ -147,7 +147,7 @@ public class TLangPOS {
         }
     }
     
-    /** Inserts record into the table 'page'.<br><br>
+    /** Inserts record into the table 'lang_pos'.<br><br>
      * INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (1,2,3,4,"apple");
      * @param TPage     ID of title of wiki page which will be added
      * @param lang      language of a word at a page

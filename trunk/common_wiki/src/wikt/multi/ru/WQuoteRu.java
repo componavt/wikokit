@@ -92,8 +92,40 @@ public class WQuoteRu {
         /** Author's name of the quotation. */
         public String  author;
 
-        /** Author's name in Wikipedia (format: [[w:name|]]). */
+        /** Author's name in Wikipedia (format: [[w:name|]] or [[:w:name|]]). */
         public String  author_wikilink;
+
+
+        /** Parses text (e.g. "[[:s:У окна (Андреев)|У окна]]") into
+         * title_wikilink "У окна (Андреев)" and title "У окна".
+         */
+        public void parseAuthorName(String text) {
+
+            // replace "&nbsp;" by " "
+            if(text.contains("&nbsp;"))
+                text = text.replace("&nbsp;", " ");
+
+            author = text; // first version
+            if(!(text.startsWith("[[:w:") ||
+                 text.startsWith("[[w:")) ||
+               !text.endsWith("]]") ||
+               !text.contains("|"))
+                return;
+
+            if(text.startsWith("[[:w:"))
+                text = text.substring(5, text.length() - 2); // "[[:w:" . text . "]]"
+            else
+                text = text.substring(4, text.length() - 2); // "[[w:" . text . "]]"
+
+            // split by |
+            // [[:w:The title|The title]]
+            int pos = text.indexOf("|");
+            if(-1 == pos)
+                return;
+
+            author_wikilink = text.substring(0, pos);
+            author = text.substring(pos + 1);
+        }
     }
 
     /** Inner title class. */
@@ -106,7 +138,7 @@ public class WQuoteRu {
         /** Title of the work. */
         private String  title;
 
-        /** Link to a book in Wikipedia (format: [[:s:У окна (Андреев)|У окна]]). */
+        /** Link to a book in Wikipedia (format: [[s:title|]] or [[:s:title|]]). */
         private String  title_wikilink;
 
 
@@ -120,12 +152,16 @@ public class WQuoteRu {
                 text = text.replace("&nbsp;", " ");
 
             title = text; // first version
-            if(!text.startsWith("[[:s:") ||
+            if(!(text.startsWith("[[:s:") ||
+                 text.startsWith("[[s:")) ||
                !text.endsWith("]]") ||
                !text.contains("|"))
                 return;
 
-            text = text.substring(5, -2); // "[[:s:" . text . "]]"
+            if(text.startsWith("[[:s:"))
+                text = text.substring(5, text.length() - 2); // "[[:s:" . text . "]]"
+            else
+                text = text.substring(4, text.length() - 2); // "[[s:" . text . "]]"
 
             // split by |
             // [[:s:The title|The title]]
@@ -133,8 +169,8 @@ public class WQuoteRu {
             if(-1 == pos)
                 return;
 
-            String title_wikilink = text.substring(0, pos);
-            String title = text.substring(pos + 1);
+            title_wikilink = text.substring(0, pos);
+            title = text.substring(pos + 1);
         }
     }
     
@@ -174,22 +210,16 @@ public class WQuoteRu {
         return -1 == text.substring(0, pos).indexOf("[[");
     }
 
-
     /** Intellectual splitting of parameters of the template {{пример|}}.
      * It splits: {{пример|текст|автор|титул|дата|}}, 
      * but it does not split:
      * 1) [[:s:The title|The title]]
-     * 2) 
+     * 2) [[some wikified word|it is fine]]
      *
-     * Extracts quote parameters from the template "{{пример|".
+     * As a result the functions extracts quote parameters from the template "{{пример|".
        |текст=|перевод=|автор=|титул=|издание=|перев=|дата=|источник=
-     
      */
     private static String[] splitParameters(String text) {
-
-        //String[] param_names = {
-        //    "|текст=", "|перевод=", "|автор=", "|титул=", "|издание=",
-        //    "|перев=", "|дата=", "|источник="};
 
         String[] pipe_chunks = text.split("\\|");
 
@@ -198,13 +228,7 @@ public class WQuoteRu {
 
         // merge adjacent chunks if chunk.prev.contains("[[") and chunk.next.has("]]")
 
-        // for(int i = 0, n = chunk_list.size(); i < n; i++) {
-        // }
-
         Iterator it_source = source_list.iterator();
-        //String prev_value = "";
-        //String next_value = "";
-        
         while(it_source.hasNext())
         {
                                                 // for (Iterator it = chunk_list.iterator(); it.hasNext();) {
@@ -239,8 +263,10 @@ public class WQuoteRu {
         String  text = "";
         String  translation = "";
         String  transcription = "";
-        String  author = "";
-        String  author_wikilink = "";
+
+        //String  author = "";
+        //String  author_wikilink = "";
+        AuthorAndWikilink author_and_wikilink = new AuthorAndWikilink();
 
         //String  title = "";
         //String  title_wikilink = "";
@@ -272,8 +298,7 @@ public class WQuoteRu {
                     case 1:
                         text = p; break;
                     case 2:
-                        author = p; break;
-                        // parseAuthorWikilink(value);
+                        author_and_wikilink.parseAuthorName(p); break;
                     case 3:
                         title_and_wikilink.parseTitle(p); break;
                     case 4:
@@ -294,7 +319,7 @@ public class WQuoteRu {
                 } else if(param_name.equalsIgnoreCase("перевод")) {
                     translation = value;
                 } else if(param_name.equalsIgnoreCase("автор")) {
-                    author = value;
+                    author_and_wikilink.parseAuthorName(value);
                 } else if(param_name.equalsIgnoreCase("титул")) {
                     title_and_wikilink.parseTitle(value);
                 } else if(param_name.equalsIgnoreCase("издание")) {
@@ -314,7 +339,7 @@ public class WQuoteRu {
         text = text.replace("{{выдел!", "{{выдел|");
 
         return new WQuote ( text, translation, transcription,
-                            author, author_wikilink,
+                            author_and_wikilink.author, author_and_wikilink.author_wikilink,
                             title_and_wikilink.title, title_and_wikilink.title_wikilink,
                             publisher, source,
                             years_range.year_from, years_range.year_to);
