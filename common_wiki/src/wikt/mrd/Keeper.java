@@ -15,6 +15,7 @@ import wikt.sql.index.*;
 import wikipedia.language.LanguageType;
 
 import java.util.Map;
+import wikt.sql.quote.TQuote;
 
 /** Manager stores parsed data to MRD Wiktionary database (wikt_parsed).
  */
@@ -80,6 +81,8 @@ public class Keeper {
                     TWikiText twiki_text= TWikiText.storeToDB(conn, definition);
                     
                     TMeaning tmeaning = TMeaning.insert(conn, lang_pos, i, twiki_text);
+
+                    TQuote.storeToDB(conn, tmeaning, tlang, w_meaning.getQuotes());
                     
                     TRelation.storeToDB(conn, tmeaning, i, m_relations);
 

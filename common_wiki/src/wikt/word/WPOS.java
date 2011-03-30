@@ -18,7 +18,6 @@ import wikt.multi.en.WEtymologyEn;
 import wikt.multi.en.WPOSEn;
 
 import java.util.Map;
-import java.util.Collection;
 
 
 /** Part of Speech may be a misnomer... It is the key descriptor for the 

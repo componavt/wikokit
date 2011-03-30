@@ -126,7 +126,6 @@ public class TQuoteTest {
         Connect connect = ruwikt_parsed_conn;
 
         String _author, _author_wikilink, _title, _title_wikilink, _publisher, _source;
-        int _from, _to;
 
         _author = "test_И. А. Крылов";
         _author_wikilink = "test_Крылов, Иван Андреевич";
@@ -134,7 +133,6 @@ public class TQuoteTest {
         _title_wikilink = "";
         _publisher = "";
         _source = "";
-        _from = _to = 91931;
 
         String _text = "test_The sentence with quotation.";
 

@@ -40,7 +40,7 @@ public class WMeaning {
     /** Wiki internal links, e.g. "bullet" from text "# {{idiom}} [[bullet]]s" */
     //private WikiWord[] wiki_words;
     
-    /** Example sentences. */
+    /** Example sentences and quotations. */
     private WQuote[] quote;
     
     private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];

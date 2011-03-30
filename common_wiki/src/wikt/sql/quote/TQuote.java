@@ -13,6 +13,7 @@ import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
 import wikt.sql.TLang;
 import wikt.sql.TMeaning;
+import wikt.word.WQuote;
 
 /** Operations with the table 'quotation' in MySQL Wiktionary parsed database. */
 public class TQuote {
@@ -83,6 +84,40 @@ public class TQuote {
         if(null != t)
             return t.getText();
         return "";
+    }
+
+
+    /** Stores quotes related to this meaning into tables:
+     * 'quote', 'quot_translation', 'quot_transcription' and 'quot_ref'.
+     * The insertion into 'quot_ref' results in updating records in tables:
+     * 'quot_year', 'quot_author', 'quot_publisher', and 'quot_source'.
+     *
+     * @param tmeaning      corresponding record in table 'meaning' to this relation
+     * @param lang          language of this meaning
+     * @param wquotes       examples and quotations for this meaning
+     */
+    public static void storeToDB (Connect connect,TMeaning _meaning, TLang _lang,
+                                  WQuote[] wquotes)
+    {
+        if(null == _meaning || wquotes.length == 0) return;
+
+        for(WQuote wq : wquotes)
+        {
+            TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, 
+                                        wq.getAuthor(), wq.getAuthorWikilink(),
+                                        wq.getTitle(),  wq.getTitleWikilink(),
+                                        wq.getPublisher(), wq.getSource(),
+                                        wq.getYearFrom(), wq.getYearTo());
+
+            TQuote q = TQuote.insert(connect, _meaning, _lang, wq.getText(), quot_ref);
+            if(null != q)
+            {
+                int quote_id = q.getID();
+
+                TQuotTranslation.  insert(connect, quote_id, wq.getTranslation());
+                TQuotTranscription.insert(connect, quote_id, wq.getTranscription());
+            }
+        }
     }
 
 
@@ -244,6 +279,8 @@ public class TQuote {
                                     _title, _title_wikilink, _publisher, _source);
 
         TQuote q = TQuote.insert(connect, _meaning, _lang, _text, quot_ref);
+        if(null == q)
+            return null;
         int quote_id = q.getID();
 
         TQuotTranslation.insert(connect, quote_id, _translation);
@@ -288,6 +325,8 @@ public class TQuote {
                                     _from, _to);
 
         TQuote q = TQuote.insert(connect, _meaning, _lang, _text, quot_ref);
+        if(null == q)
+            return null;
         int quote_id = q.getID();
 
         TQuotTranslation.insert(connect, quote_id, _translation);

@@ -144,7 +144,7 @@ public class TMeaning {
         ResultSet  rs = null;
         StringBuilder str_sql = new StringBuilder();
         TMeaning meaning = null;
-        int         wiki_text_id = 0;
+        int wiki_text_id = 0;
         try
         {
             s = connect.conn.createStatement ();
