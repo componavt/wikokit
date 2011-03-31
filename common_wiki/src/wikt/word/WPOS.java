@@ -95,9 +95,12 @@ public class WPOS {
         }
 
         if(null != relation) {
-            for(WRelation[] wr : relation.values())
-                for(WRelation r : wr)
-                    r.free();
+            for(WRelation[] wr : relation.values()) {
+                for(WRelation r : wr) {
+                    if(null != r)
+                        r.free();
+                }
+            }
             relation.clear();
             relation = null;
         }

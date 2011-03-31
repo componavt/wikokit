@@ -287,7 +287,7 @@ public class TQuotRef {
                                 int _from,int _to)
     {
         if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
-            System.err.println("Error (TQuotRef.insert()):: all arguments are empty.");
+            System.err.println("Error (TQuotRef.insertWithYears()):: all arguments are empty.");
             return null;
         }
 
@@ -319,7 +319,7 @@ public class TQuotRef {
                                 String _publisher, String _source)
     {
         if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
-            System.err.println("Error (TQuotRef.getOrInsert()):: all arguments are empty.");
+            // System.err.println("Error (TQuotRef.getOrInsert()):: all arguments are empty.");
             return null;
         }
 
@@ -344,7 +344,7 @@ public class TQuotRef {
                                 int _from,int _to)
     {
         if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
-            System.err.println("Error (TQuotRef.getOrInsert()):: all arguments are empty.");
+            // System.err.println("Error (TQuotRef.getOrInsertWithYears()):: all arguments are empty.");
             return null;
         }
 

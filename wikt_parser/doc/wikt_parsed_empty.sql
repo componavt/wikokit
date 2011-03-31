@@ -305,7 +305,7 @@ CREATE  TABLE IF NOT EXISTS `quote` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `meaning_id` INT(10) UNSIGNED NOT NULL COMMENT '==meaning.id' ,
   `lang_id` SMALLINT UNSIGNED NOT NULL COMMENT '== lang_pos.lang_id (duplication), language of the quote text' ,
-  `text` VARCHAR(1023) BINARY NOT NULL COMMENT 'quotation sentence text (not UNIQUE!)' ,
+  `text` VARCHAR(2048) BINARY NOT NULL COMMENT 'quotation sentence text (not UNIQUE!)' ,
   `ref_id` INT(9) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `meaning_id_INDEX` (`meaning_id` ASC) )

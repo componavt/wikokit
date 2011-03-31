@@ -74,6 +74,9 @@ public class TQuotYear {
      */
     public static TQuotYear insert (Connect connect,int _from,int _to) {
 
+        if(-1 == _from || -1 == _to) // it means that there is no info about years
+            return null;
+
         if(_from < 0 || _to < 0 || _from > _to) {
             System.err.println("Error (TQuotYear.insert()):: invalid years: from='"+_from+"', to='"+_to+"'.");
             return null;
@@ -165,6 +168,9 @@ public class TQuotYear {
      */
     public static TQuotYear getOrInsert (Connect connect,int _from,int _to) {
 
+        if(-1 == _from || -1 == _to) // it means that there is no info about years
+            return null;
+        
         if(_from < 0 || _to < 0 || _from > _to) {
             System.err.println("Error (TQuotYear.getOrInsert()):: invalid years: from='"+_from+"', to='"+_to+"'.");
             return null;
