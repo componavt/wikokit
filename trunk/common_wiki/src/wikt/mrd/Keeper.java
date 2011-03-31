@@ -1,6 +1,6 @@
 /* Keeper.java - manager stores parsed data to MRD Wiktionary database (wikt_parsed).
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
