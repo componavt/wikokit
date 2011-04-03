@@ -82,7 +82,7 @@ public class Keeper {
                     
                     TMeaning tmeaning = TMeaning.insert(conn, lang_pos, i, twiki_text);
 
-                    TQuote.storeToDB(conn, tmeaning, tlang, w_meaning.getQuotes());
+                    TQuote.storeToDB(conn, page_title, tmeaning, tlang, w_meaning.getQuotes());
                     
                     TRelation.storeToDB(conn, tmeaning, i, m_relations);
 

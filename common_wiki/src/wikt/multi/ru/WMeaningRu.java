@@ -112,7 +112,7 @@ public class WMeaningRu {
     /** Parses one definition line, i.e. extracts {{label}}, definition,
      * {{example|Quotation sentence.}}, creates and fills a meaning (WMeaning).
      * @param wikt_lang     language of Wiktionary
-     * @param page_title    word which are described in this article 'text'
+     * @param page_title    word which is described in this article 'text'
      * @param lang_section  language of this section of an article
      * @param line          definition line
      * @return WMeaning or null if the line is not started from "#" or = "# "
@@ -126,11 +126,15 @@ public class WMeaningRu {
             return null;
 
         // remove empty quotations: {{пример|}} and {{пример}}
-        line = line.replace("{{пример|}}", "");
-        line = line.replace("{{пример}}", "");
-        line = line.replace("{{пример перевод|}}", ""); // todo check - does exist this example
+        if(line.contains("{{пример|}}"))
+            line = line.replace("{{пример|}}", "");
+        if(line.contains("{{пример}}"))
+            line = line.replace("{{пример}}", "");
+        if(line.contains("{{пример перевод|}}"))
+            line = line.replace("{{пример перевод|}}", ""); // todo check - does exist this example
 
-        line = line.replace("[[]]", ""); // empty definition
+        if(line.contains("[[]]"))
+            line = line.replace("[[]]", ""); // empty definition
 
         line = Definition.stripNumberSign(page_title, line);
 

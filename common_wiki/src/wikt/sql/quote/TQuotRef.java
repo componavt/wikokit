@@ -270,6 +270,8 @@ public class TQuotRef {
      *
      * INSERT INTO quot_ref (year_id,author_id,title,title_wikilink,publisher_id,source_id) VALUES (9,1,"","",NULL,NULL);
      *
+     * @param page_title word which are described in this article
+     *
      * @param _author author's name,
      * @param _author_wikilink link to author's name in Wikipedia (format: [[w:name|]]),
      * @param _title title of the work
@@ -281,7 +283,8 @@ public class TQuotRef {
      * @param _to finish date of a writing book with the quote
      * @return inserted record, or null if insertion failed
      */
-    public static TQuotRef insertWithYears (Connect connect,String _author,String _author_wikilink,
+    public static TQuotRef insertWithYears (Connect connect,String page_title,
+                                String _author,String _author_wikilink,
                                 String _title, String _title_wikilink,
                                 String _publisher, String _source,
                                 int _from,int _to)
@@ -291,7 +294,7 @@ public class TQuotRef {
             return null;
         }
 
-        TQuotYear y = TQuotYear.getOrInsert(connect, _from, _to);
+        TQuotYear y = TQuotYear.getOrInsert(connect, _from, _to, page_title);
         TQuotAuthor a = TQuotAuthor.getOrInsert(connect, _author, _author_wikilink);
         TQuotPublisher p = TQuotPublisher.getOrInsert(connect, _publisher);
         TQuotSource src = TQuotSource.getOrInsert(connect, _source);
@@ -338,7 +341,8 @@ public class TQuotRef {
         return quot_ref;
     }
 
-    public static TQuotRef getOrInsertWithYears (Connect connect,String _author,String _author_wikilink,
+    public static TQuotRef getOrInsertWithYears (Connect connect,String page_title,
+                                String _author,String _author_wikilink,
                                 String _title, String _title_wikilink,
                                 String _publisher, String _source,
                                 int _from,int _to)
@@ -351,7 +355,7 @@ public class TQuotRef {
         TQuotAuthor a = TQuotAuthor.getOrInsert(connect, _author, _author_wikilink);
         TQuotPublisher p = TQuotPublisher.getOrInsert(connect, _publisher);
         TQuotSource src = TQuotSource.getOrInsert(connect, _source);
-        TQuotYear y = TQuotYear.getOrInsert(connect, _from, _to);
+        TQuotYear y = TQuotYear.getOrInsert(connect, _from, _to, page_title);
 
         TQuotRef quot_ref = TQuotRef.get(connect, y, a,
                                 _title, _title_wikilink,

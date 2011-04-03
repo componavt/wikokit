@@ -95,6 +95,7 @@ public class TQuoteTest {
 
         String _author, _author_wikilink, _title, _title_wikilink, _publisher, _source;
         int _from, _to;
+        String page_title = "the test entry";
 
         _author = "test_И. А. Крылов";
         _author_wikilink = "test_Крылов, Иван Андреевич";
@@ -104,7 +105,8 @@ public class TQuoteTest {
         _source = "";
         _from = _to = 91931;
 
-        TQuotRef quot_ref = TQuotRef.insertWithYears(connect, _author, _author_wikilink, _title, _title_wikilink,
+        TQuotRef quot_ref = TQuotRef.insertWithYears(connect, page_title,
+                                        _author, _author_wikilink, _title, _title_wikilink,
                                         _publisher, _source,
                                         _from, _to);
 
@@ -156,6 +158,7 @@ public class TQuoteTest {
 
         String _author, _author_wikilink, _title, _title_wikilink, _publisher, _source;
         int _from, _to;
+        String page_title = "the test entry";
 
         _author = "test_И. А. Крылов";
         _author_wikilink = "test_Крылов, Иван Андреевич";
@@ -167,7 +170,8 @@ public class TQuoteTest {
 
         String _text = "test_The sentence with quotation.";
 
-        TQuote result = TQuote.insertWithYears(connect, _text, _meaning, _lang,
+        TQuote result = TQuote.insertWithYears(connect, page_title,
+                _text, _meaning, _lang,
                 _author, _author_wikilink, _title, _title_wikilink, _publisher, _source,
                 _from, _to);
         assertNotNull(result);
@@ -238,6 +242,7 @@ public class TQuoteTest {
 
         String _author, _author_wikilink, _title, _title_wikilink, _publisher, _source;
         int _from, _to;
+        String page_title = "the test entry";
 
         _author = "test_The Author";
         _author_wikilink = "test_Authors name in Wikipedia";
@@ -251,7 +256,7 @@ public class TQuoteTest {
         String _translation = "test_The translation of the quotation.";
         String _transcription = "test_The TRANSCRIPTION of the quotation.";
 
-        TQuote result = TQuote.insertWithYearsTranslationTranscription(connect,
+        TQuote result = TQuote.insertWithYearsTranslationTranscription(connect, page_title,
                 _text, _translation, _transcription,
                 _meaning, _lang,
                 _author, _author_wikilink, _title, _title_wikilink, _publisher, _source,

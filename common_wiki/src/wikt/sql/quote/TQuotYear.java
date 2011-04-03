@@ -78,7 +78,7 @@ public class TQuotYear {
             return null;
 
         if(_from < 0 || _to < 0 || _from > _to) {
-            System.err.println("Error (TQuotYear.insert()):: invalid years: from='"+_from+"', to='"+_to+"'.");
+            System.out.println("Warning (TQuotYear.insert()):: invalid years: from='"+_from+"', to='"+_to+"'.");
             return null;
         }
 
@@ -117,20 +117,20 @@ public class TQuotYear {
      * @param _text name of the source
      * @return NULL if data is absent
      */
-    public static TQuotYear get (Connect connect,int _from) {
-        return get(connect, _from, _from);
+    public static TQuotYear get (Connect connect,int _from, String page_title) {
+        return get(connect, _from, _from, page_title);
     }
 
     /** Get's a record from the table 'quot_year' by a date of a book with a quote.<br><br>
      * SELECT id FROM quot_year WHERE `from`=1956 AND `to`=1988;
      *
-     * @param _text name of the source
+     * @param page_title word which are described in this article
      * @return NULL if data is absent
      */
-    public static TQuotYear get (Connect connect,int _from,int _to) {
+    public static TQuotYear get (Connect connect,int _from,int _to, String page_title) {
 
         if(_from < 0 || _to < 0 || _from > _to) {
-            System.err.println("Error (TQuotYear.get()):: invalid years: from='"+_from+"', to='"+_to+"'.");
+            System.out.println("Warning (TQuotYear.get()):: entry '" + page_title + "', invalid years: from='"+_from+"', to='"+_to+"'.");
             return null;
         }
 
@@ -152,7 +152,7 @@ public class TQuotYear {
                 result = new TQuotYear(_id, _from, _to);
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotYear.get()):: _from="+_from+"; _to="+_to+"; sql='" + ex.getMessage());
+            System.err.println("SQLException (TQuotYear.get()):: entry '" + page_title + "', years: _from="+_from+"; _to="+_to+"; sql='" + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -165,18 +165,19 @@ public class TQuotYear {
      *
      * @param _from start date of a writing book with the quote
      * @param _to finish date of a writing book with the quote
+     * @param page_title word which are described in this article
      */
-    public static TQuotYear getOrInsert (Connect connect,int _from,int _to) {
+    public static TQuotYear getOrInsert (Connect connect,int _from,int _to, String page_title) {
 
         if(-1 == _from || -1 == _to) // it means that there is no info about years
             return null;
         
         if(_from < 0 || _to < 0 || _from > _to) {
-            System.err.println("Error (TQuotYear.getOrInsert()):: invalid years: from='"+_from+"', to='"+_to+"'.");
+            System.out.println("Warning (TQuotYear.getOrInsert()):: invalid years: from='"+_from+"', to='"+_to+"', for the word '" + page_title + "'.");
             return null;
         }
         
-        TQuotYear y = TQuotYear.get(connect, _from, _to);
+        TQuotYear y = TQuotYear.get(connect, _from, _to, page_title);
         if(null == y)
             y = TQuotYear.insert(connect, _from, _to);
         return y;
