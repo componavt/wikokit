@@ -142,6 +142,24 @@ public class WQuoteRuTest {
         assertEquals(0, quote_result.length);
     }
 
+    // only source: {{пример|||||источник=НКРЯ}}
+    @Test
+    public void testGetQuotes_only_source() {
+        System.out.println("testGetQuotes_several");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_source;
+        int exp_year;
+
+        page_title = "army";
+        // 1. simple: 1 quote (источник=НКРЯ)
+        text =  "# some definition {{пример|||||источник=НКРЯ}}";
+
+        text = Definition.stripNumberSign(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(0, quote_result.length);
+    }
+
     // 1. example with one unknown parameter: "{{пример|xyz=}}"
     @Test
     public void testGetQuotes_with_one_unknown_parameter() {
@@ -258,6 +276,130 @@ public class WQuoteRuTest {
         assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
         assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
         assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
+    // extract year from day_month_year
+    //
+    // # отступиться {{пример|... {{выдел|отойти}} от шаблонов, становящихся ярлыками.|Н. С. Лейтес|О признаках детской одаренности|издание=Вопросы психологии|22 июля 2003|источник=НКРЯ}}
+    // years = 22 июля 2003
+    @Test
+    public void testGetQuotes_extract_year_from_day_month_year() {
+        System.out.println("testGetQuotes_extract_year_from_day_month_year");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_publisher, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "отойти";
+        // 1. simple: 1 quote (источник=НКРЯ)
+        text =  "# отступиться {{пример|... {{выдел|отойти}} от шаблонов, становящихся ярлыками.|Н. С. Лейтес|О признаках детской одаренности|издание=Вопросы психологии|22 июля 2003|источник=НКРЯ}}";
+
+        exp_text = "... {{выдел|отойти}} от шаблонов, становящихся ярлыками.";
+        exp_author = "Н. С. Лейтес";
+        exp_title = "О признаках детской одаренности";
+
+        // 22 июля 2003
+        exp_year_from   = 2003;
+        exp_year_to     = 2003;
+
+        exp_publisher = "Вопросы психологии";
+        exp_source = "НКРЯ";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getPublisher().equalsIgnoreCase( exp_publisher ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
+    // years = 2 июля 2003
+    @Test
+    public void testGetQuotes_extract_year_from_1day_month_year() {
+        System.out.println("testGetQuotes_extract_year_from_1day_month_year");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_publisher, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "отойти";
+        // 1. simple: 1 quote (источник=НКРЯ)
+        text =  "# отступиться {{пример|... {{выдел|отойти}} от шаблонов, становящихся ярлыками.|Н. С. Лейтес|О признаках детской одаренности|издание=Вопросы психологии|2 февраля 2003|источник=НКРЯ}}";
+
+        exp_text = "... {{выдел|отойти}} от шаблонов, становящихся ярлыками.";
+        exp_author = "Н. С. Лейтес";
+        exp_title = "О признаках детской одаренности";
+
+        // 22 июля 2003
+        exp_year_from   = 2003;
+        exp_year_to     = 2003;
+
+        exp_publisher = "Вопросы психологии";
+        exp_source = "НКРЯ";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getPublisher().equalsIgnoreCase( exp_publisher ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
+    // year = "12, 2000"
+    // # [[штрафной удар]] {{пример|«Локомотив» вновь впал в анабиоз...|Алексей Самура|Ничья вслепую. Герои и неудачники 21-го тура первенства страны по футболу|издание=Известия|12, 2000|источник=НКРЯ}}
+    @Test
+    public void testGetQuotes_extract_year_from_year_dot_month_dot_day() {
+        System.out.println("testGetQuotes_extract_year_from_year_dot_month_dot_day");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_publisher, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "пенальти";
+        // 1. simple: 1 quote (источник=НКРЯ)
+        text =  "# [[штрафной удар]] {{пример|«Локомотив» вновь впал в анабиоз...|Алексей Самура|Ничья вслепую. Герои и неудачники 21-го тура первенства страны по футболу|издание=Известия|12, 2000|источник=НКРЯ}}";
+
+        exp_text = "«Локомотив» вновь впал в анабиоз...";
+        exp_author = "Алексей Самура";
+        exp_title = "Ничья вслепую. Герои и неудачники 21-го тура первенства страны по футболу";
+
+        // 2002.08.26
+        exp_year_from   = 2000;
+        exp_year_to     = 2000;
+
+        exp_publisher = "Известия";
+        exp_source = "НКРЯ";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getPublisher().equalsIgnoreCase( exp_publisher ) );
         assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
 
         assertEquals(q.getYearFrom(), exp_year_from);
@@ -433,4 +575,157 @@ public class WQuoteRuTest {
         assertEquals(q.getYearFrom(), exp_year_from);
         assertEquals(q.getYearTo(), exp_year_to);
     }
+
+    // title with quote template: Шаблон:"
+    // # [[костяк]]; [[скелет]] [[животное|животного]] {{пример|Мне сказывали здесь, что про найденный недавно {{выдел|остов}} мамонта кто-то выдумал объявить чукчам, что им приведется везти его в Якутск, и они растаскали и истребили его так, что теперь и следов нет.|Гончаров|Фрегат {{"|Паллада}}|1855}}
+    @Test
+    public void testGetQuotes_title_with_quote_template() {
+        System.out.println("testGetQuotes_title_with_quote_template");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "замести";
+        text =  "# [[скелет]] [[животное|животного]] {{пример|...{{выдел|остов}} мамонта...|Гончаров|Фрегат {{\"|Паллада}}|1855}}";
+
+        exp_text = "...{{выдел|остов}} мамонта...";
+        exp_author = "Гончаров";
+        exp_author_wikilink = "";
+  // source title = Фрегат {{"|Паллада}}
+        exp_title = "Фрегат \"Паллада\"";
+        exp_title_wikilink = "";
+        exp_year_from   = 1855;
+        exp_year_to     = 1855;
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
+    // title with another quote template: Шаблон:кавычки with lang code
+    // # [[мать]] {{пример|{{кавычки|ru|Jam temp'esta}},{{-}}отвечала ему...|Л. Юзефович|Казароза|2002}}
+    @Test
+    public void testGetQuotes_title_with_second_quote_template() {
+        System.out.println("testGetQuotes_title_with_second_quote_template");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "matro";
+        text =  "# [[мать]] {{пример|{{кавычки|ru|Jam temp'esta}},{{-}}отвечала ему...|Л. Юзефович|Казароза|2002}}";
+
+        // {{кавычки|ru|Jam temp'esta}}
+        exp_text = "\"Jam temp'esta\",{{-}}отвечала ему...";
+        exp_author = "Л. Юзефович";
+        exp_author_wikilink = "";
+        exp_title = "Казароза";
+        exp_title_wikilink = "";
+        exp_year_from   = 2002;
+        exp_year_to     = 2002;
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
+    // title with another quote template: Шаблон:кавычки without lang code
+    // # [[мать]] {{пример|{{кавычки|Jam temp'esta}},{{-}}отвечала ему...|Л. Юзефович|Казароза|2002}}
+    @Test
+    public void testGetQuotes_title_with_second_quote_template_without_lang_code() {
+        System.out.println("testGetQuotes_title_with_second_quote_template_without_lang_code");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "matro";
+        text =  "# [[мать]] {{пример|{{кавычки|Jam temp'esta}},{{-}}отвечала ему...|Л. Юзефович|Казароза|2002}}";
+
+        // {{кавычки|ru|Jam temp'esta}}
+        exp_text = "\"Jam temp'esta\",{{-}}отвечала ему...";
+        exp_author = "Л. Юзефович";
+        exp_author_wikilink = "";
+        exp_title = "Казароза";
+        exp_title_wikilink = "";
+        exp_year_from   = 2002;
+        exp_year_to     = 2002;
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
+    // title with quote template at the end of the sentence: Шаблон:"
+    // # the definition {{пример|The sentence.|The Author|The title{{"||1855}}
+    @Test
+    public void testGetQuotes_title_with_quote_template_at_the_end_of_title() {
+        System.out.println("testGetQuotes_title_with_quote_template_at_the_end_of_title");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "замести";
+        text =  "# the definition {{пример|The sentence.|The Author|The title{{\"|}}|1855}}";
+
+        exp_text = "The sentence.";
+        exp_author = "The Author";
+        exp_author_wikilink = "";
+  // source title = Фрегат {{"|Паллада}}
+        exp_title = "The title\"\"";
+        exp_title_wikilink = "";
+        exp_year_from   = 1855;
+        exp_year_to     = 1855;
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
 }

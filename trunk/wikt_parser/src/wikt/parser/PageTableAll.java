@@ -93,7 +93,10 @@ public class PageTableAll {
         "unser", "um", "twin", "tuus", "tu", "top", "tomo", "toki", "title",
         "tire", "telo", "taŭro", "swift", "swim", "swallow", "svedese", "suno", "sun",
         "strawberry", "strand", "spät", "spring", "some", "-тә", "tyre",
-        "-iti-", "-лык", "-io-", "zwölf", "Википедия", "bread"
+        "-iti-", "-лык", "-io-", "zwölf", "Википедия", "bread",
+
+        "шумерский язык", "хам", "телескопирование", "общий род", "марашка", // long quotes
+        "град", "снѣгъ", "жестокий"
     };
     
     /** Selects all pages (not categories, not redirects), 

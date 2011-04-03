@@ -21,7 +21,7 @@ import wikt.constant.POS;
 
 public class WPOSRuTest {
 
-    Connect     connect_ruwikt; // , connect_enwikt, connect_simplewikt;
+    //Connect     connect_ruwikt; // , connect_enwikt, connect_simplewikt;
     
     public WPOSRuTest() {
     }
@@ -36,13 +36,13 @@ public class WPOSRuTest {
 
     @Before
     public void setUp() {
-        connect_ruwikt = new Connect();
-        connect_ruwikt.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
+        //connect_ruwikt = new Connect();
+        //connect_ruwikt.Open(Connect.RUWIKT_HOST,Connect.RUWIKT_DB,Connect.RUWIKT_USER,Connect.RUWIKT_PASS,LanguageType.ru);
     }
 
     @After
     public void tearDown() {
-        connect_ruwikt.Close();
+        //connect_ruwikt.Close();
     }
 
     /*  POS defined by the template {{заголовок|be|add=I}},
@@ -96,6 +96,81 @@ public class WPOSRuTest {
         lt.text = new StringBuffer(str);
         result = WPOSRu.splitToPOSSections("шах", lt);
         assertEquals(1, result.length);
+    }
+
+    /*  POS defined by the template {{заголовок|add=I}},
+     * where there are only two parameters
+     *
+     * = {{-ru-}} =
+     * {{заголовок|add=I}}
+     * {{заголовок|add=II}}
+     */
+    @Test
+    public void testSplitToPOSSections_add_parameter_without_lang_parameter() {
+        System.out.println("splitToPOSSections_add_parameter_without_lang_parameter");
+
+        String str, s1, s2;
+        POSText[] result;
+        LangText lt;
+        lt = new LangText(LanguageType.ru);
+
+        // two POS in {{-en-}} in Russian Wiktionary
+        s1 =    "Before \n" +
+                "{{заголовок|add=I}}\n" +
+                "=== Морфологические и синтаксические свойства ===\n" +
+                "{{гл ru 12aСВ}}\n" +
+                "\n";
+        s2 =    "{{заголовок|add=II}}\n" +
+                "===Морфологические и синтаксические свойства===\n" +
+                "{{гл ru 12aСВ}}\n" +
+                "\n";
+        str = s1 + s2;
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("вздуть", lt);
+        assertEquals(2, result.length);
+        assertEquals(POS.verb, result[0].getPOSType());
+        assertEquals(POS.verb, result[1].getPOSType());
+
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(s1));
+        assertTrue(result[1].getText().toString().equalsIgnoreCase(s2));
+    }
+
+    /*  POS defined by the template {{заголовок|add=(прилагательное)}},
+     * where there are only two parameters,
+     * and second parameter in brackets is POS
+     *
+     * = {{-ru-}} =
+     * {{заголовок|add=(прилагательное)}}
+     * {{заголовок|add=(cуществительное)}}
+     */
+    @Test
+    public void testSplitToPOSSections_name_in_brackets() {
+        System.out.println("splitToPOSSections_name_in_brackets");
+
+        String str, s1, s2;
+        POSText[] result;
+        LangText lt;
+        lt = new LangText(LanguageType.ru);
+
+        // two POS in {{-ru-}} in Russian Wiktionary
+        s1 =    "Before \n" +
+                "{{заголовок|add=(прилагательное)}}\n" +
+                "=== Морфологические и синтаксические свойства ===\n" +
+                "{{прил ru 1bX}}\n" +
+                "\n";
+        s2 =    "{{заголовок|add=(cуществительное)}}\n" +
+                "===Морфологические и синтаксические свойства===\n" +
+                "{{сущ ru m a (п 1b)}}\n" +
+                "\n";
+        str = s1 + s2;
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("голубой", lt);
+        assertEquals(2, result.length);
+        assertEquals(POS.adjective, result[0].getPOSType());
+        assertEquals(POS.noun, result[1].getPOSType());
+
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(s1));
+        assertTrue(result[1].getText().toString().equalsIgnoreCase(s2));
     }
 
     @Test

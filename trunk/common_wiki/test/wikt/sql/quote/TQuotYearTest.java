@@ -40,6 +40,7 @@ public class TQuotYearTest {
     public void testInsert_ru_one_year() {
         System.out.println("insert_ru");
         int from;
+        String page_title = "the testing test";
         TQuotYear result, get;
         Connect conn = ruwikt_parsed_conn;
 
@@ -54,12 +55,12 @@ public class TQuotYearTest {
         result = TQuotYear.insert(conn, from);
         assertNotNull(result);
 
-        get = TQuotYear.get(conn, from);
+        get = TQuotYear.get(conn, from, page_title);
         assertNotNull(get);
 
         // delete record
         result.delete(conn);
-        get = TQuotYear.get(conn, from);
+        get = TQuotYear.get(conn, from, page_title);
         assertNull(get);
     }
 
@@ -70,6 +71,7 @@ public class TQuotYearTest {
         int from, to;
         TQuotYear result, get;
         Connect conn = ruwikt_parsed_conn;
+        String page_title = "the testing test";
 
         // negative - failed
         from = 1881;
@@ -84,15 +86,15 @@ public class TQuotYearTest {
         result = TQuotYear.insert(conn, from, to);
         assertNotNull(result);
 
-        get = TQuotYear.get(conn, from); // (from, from) is absent
+        get = TQuotYear.get(conn, from, page_title); // (from, from) is absent
         assertNull(get);
 
-        get = TQuotYear.get(conn, from, to);
+        get = TQuotYear.get(conn, from, to, page_title);
         assertNotNull(get);
 
         // delete record
         result.delete(conn);
-        get = TQuotYear.get(conn, from);
+        get = TQuotYear.get(conn, from, page_title);
         assertNull(get);
     }
 

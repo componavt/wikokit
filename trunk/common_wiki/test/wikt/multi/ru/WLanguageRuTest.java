@@ -183,6 +183,26 @@ public class WLanguageRuTest {
         assertEquals(2, result.length);
     }
 
+    // = {{-ru-}} =
+    // {{заголовок|add=I}}  - no, this is not a laguage, but a POS delimiter
+    // {{заголовок|add=II}} - also language delimiter
+    @Test
+    public void testSplitToLanguageSections_with_special_header_without_language_code() {
+        System.out.println("splitToLanguageSections_with_special_header_without_language_code");
+        String source_text;
+        LangText[] result;
+
+        // only one Russian language with two POS
+        // = {{-ru-}} =
+        // {{заголовок|add=I}}
+        // {{заголовок|add=II}}
+        source_text = "= {{-ru-}} = skip me {{заголовок|add=I}} Russian 1 {{заголовок|add=II}} second";
+        result = WLanguageRu.splitToLanguageSections("vsduti", new StringBuffer(source_text));
+        assertEquals(1, result.length);
+    }
+
+
+
     // {{заголовок|ka|add=}} - yes, this is language delimiter
     // {{заголовок|be|add=I}}- no, this is not a laguage, but a POS delimiter
     // {{заголовок|de|add=|aare}} - also language delimiter

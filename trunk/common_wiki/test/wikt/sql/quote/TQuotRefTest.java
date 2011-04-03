@@ -120,6 +120,7 @@ public class TQuotRefTest {
         String _author, _author_wikilink, _title, _title_wikilink,
                _publisher, _source;
         int _from, _to;
+        String page_title = "the test entry";
 
         _author = "";
         _author_wikilink = "";
@@ -129,7 +130,8 @@ public class TQuotRefTest {
         _source = "";
         _from = _to = 91931;
 
-        TQuotRef result = TQuotRef.insertWithYears(connect, _author, _author_wikilink,
+        TQuotRef result = TQuotRef.insertWithYears(connect, page_title,
+                                        _author, _author_wikilink,
                                         _title, _title_wikilink,
                                         _publisher, _source,
                                         _from, _to);
@@ -183,6 +185,7 @@ public class TQuotRefTest {
 
         String _author, _author_wikilink, _title, _title_wikilink, _publisher, _source;
         int _from, _to;
+        String page_title = "the test entry";
 
         _author = "test_Alexander Pushkin";
         _author_wikilink = "";
@@ -192,13 +195,15 @@ public class TQuotRefTest {
         _source = "";
         _from = _to = 91931;
 
-        TQuotRef result1 = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+        TQuotRef result1 = TQuotRef.getOrInsertWithYears(connect, page_title,
+                                        _author, _author_wikilink,
                                         _title, _title_wikilink,
                                         _publisher, _source,
                                         _from, _to);
         assertNotNull(result1);
 
-        TQuotRef result2 = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+        TQuotRef result2 = TQuotRef.getOrInsertWithYears(connect, page_title,
+                                        _author, _author_wikilink,
                                         _title, _title_wikilink,
                                         _publisher, _source,
                                         _from, _to);

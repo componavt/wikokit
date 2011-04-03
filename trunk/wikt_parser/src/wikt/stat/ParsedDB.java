@@ -1,6 +1,6 @@
 /* ParsedDB.java - Statistics of the database of the parsed Wiktionary.
  *
- * Copyright (c) 2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2010-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
@@ -20,7 +20,7 @@ import wikt.sql.*;
  * @see todo
  */
 public class ParsedDB {
-    private static final boolean DEBUG = true;
+    //private static final boolean DEBUG = true;
 
     /** Prints a row in a wiki table with data:
      * (1) the name of the table, 'table_name';
@@ -40,10 +40,10 @@ public class ParsedDB {
         Connect wikt_parsed_conn = new Connect();
 
         // Russian
-//        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 
         // English
-        wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
+        //wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
         
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
@@ -53,6 +53,7 @@ public class ParsedDB {
         System.out.println("\n== Parameters of the created (parsed) Wiktionary database ==");
         
         WikiPrinterStat.printHeader (db_name);
+        String empty_line = "\n|-\n|| || ||";
 
         System.out.println("\n'''Table''' is a name of the table in the database.");
         System.out.println("\n'''Size''' is a number of records in the table.");
@@ -71,6 +72,18 @@ public class ParsedDB {
         printRowWithTableSize(wikt_parsed_conn, "wiki_text_words", "Number of wikified words (in meanings / definitions + in semantic relations + in translations).");
         printRowWithTableSize(wikt_parsed_conn, "meaning", "Number of meanings, one word can have several meanings / definitions.");
         printRowWithTableSize(wikt_parsed_conn, "inflection", "It is extracted from wikified word definitions, e.g. <nowiki>[[normal form|</nowiki>'''inflection'''<nowiki>]]</nowiki>");
+
+        System.out.print(empty_line);
+        printRowWithTableSize(wikt_parsed_conn, "quote", "Number of quotations and examples, one meaning can have several quotes.");
+        printRowWithTableSize(wikt_parsed_conn, "quot_translation", "Number of translations of quotes (quote in foreign languages can have translation).");
+        printRowWithTableSize(wikt_parsed_conn, "quot_transcription", "Number of transcriptions of quotes.");
+        printRowWithTableSize(wikt_parsed_conn, "quot_ref", "Number of unique quote references (author, title, year,...).");
+        printRowWithTableSize(wikt_parsed_conn, "quot_author", "Number of authors of quotes.");
+        printRowWithTableSize(wikt_parsed_conn, "quot_year", "Number of unique years (and range of years) of quotes.");
+        printRowWithTableSize(wikt_parsed_conn, "quot_publisher", "Number of publishers of quotes.");
+        printRowWithTableSize(wikt_parsed_conn, "quot_source", "Number of sources of quotes.");
+
+        System.out.print(empty_line);
         printRowWithTableSize(wikt_parsed_conn, "translation", "Number of translation section boxes (at best: one translation box corresponds to one meaning).");
         printRowWithTableSize(wikt_parsed_conn, "translation_entry", "Number of different translations (pairs of translations).");
 

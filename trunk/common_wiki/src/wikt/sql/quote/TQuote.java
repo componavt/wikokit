@@ -7,7 +7,6 @@
 package wikt.sql.quote;
 
 import java.sql.*;
-import wikipedia.language.LanguageType;
 
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
@@ -92,18 +91,20 @@ public class TQuote {
      * The insertion into 'quot_ref' results in updating records in tables:
      * 'quot_year', 'quot_author', 'quot_publisher', and 'quot_source'.
      *
+     * @param page_title word which are described in this article
      * @param tmeaning      corresponding record in table 'meaning' to this relation
      * @param lang          language of this meaning
      * @param wquotes       examples and quotations for this meaning
      */
-    public static void storeToDB (Connect connect,TMeaning _meaning, TLang _lang,
+    public static void storeToDB (Connect connect,String page_title,
+                                  TMeaning _meaning, TLang _lang,
                                   WQuote[] wquotes)
     {
         if(null == _meaning || wquotes.length == 0) return;
 
         for(WQuote wq : wquotes)
         {
-            TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, 
+            TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, page_title,
                                         wq.getAuthor(), wq.getAuthorWikilink(),
                                         wq.getTitle(),  wq.getTitleWikilink(),
                                         wq.getPublisher(), wq.getSource(),
@@ -215,6 +216,8 @@ public class TQuote {
     /** Inserts quote and reference (ref. without years) records into the tables:
      * quote, quot_ref, quot_year, quot_author, quot_publisher, and quot_source.<br><br>
      *
+     * @param page_title word which are described in this article
+     *
      * @param _text quotation itself
      * @param _meaning meaning of a word corresponding to the quote
      * @param _lang language of the quote
@@ -230,7 +233,7 @@ public class TQuote {
      * @param _to finish date of a writing book with the quote
      * @return inserted record, or null if insertion failed
      */
-    public static TQuote insertWithYears (Connect connect,
+    public static TQuote insertWithYears (Connect connect, String page_title,
                                 String _text, TMeaning _meaning, TLang _lang,
 
                                 // reference data:
@@ -239,7 +242,8 @@ public class TQuote {
                                 String _publisher, String _source,
                                 int _from, int _to)
     {
-        TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+        TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, page_title,
+                                    _author, _author_wikilink,
                                     _title, _title_wikilink, _publisher, _source,
                                     _from, _to);
 
@@ -293,6 +297,8 @@ public class TQuote {
      * quot_transcription, quot_ref, quot_year, quot_author, quot_publisher,
      * and quot_source.<br><br>
      *
+     * @param page_title word which are described in this article
+     *
      * @param _text quotation itself
      * @param _translation translation of quotation
      * @param _transcription transcription of quotation
@@ -310,7 +316,8 @@ public class TQuote {
      * @param _to finish date of a writing book with the quote
      * @return inserted record, or null if insertion failed
      */
-    public static TQuote insertWithYearsTranslationTranscription (Connect connect,
+    public static TQuote insertWithYearsTranslationTranscription (
+                                Connect connect, String page_title,
                                 String _text, String _translation, String _transcription,
                                 TMeaning _meaning, TLang _lang,
 
@@ -320,7 +327,8 @@ public class TQuote {
                                 String _publisher, String _source,
                                 int _from, int _to)
     {
-        TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, _author, _author_wikilink,
+        TQuotRef quot_ref = TQuotRef.getOrInsertWithYears(connect, page_title,
+                                    _author, _author_wikilink,
                                     _title, _title_wikilink, _publisher, _source,
                                     _from, _to);
 

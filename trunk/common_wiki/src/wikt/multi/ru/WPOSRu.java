@@ -68,7 +68,14 @@ public class WPOSRu {
             // "\\A==\\s*([^=]+)\\s*==\\s*\\Z");
 
 // "\\{\\{-([-_a-zA-Z]{2,9})-(?:\\}\\}|\\|.*?\\}\\})|\\Q{{заголовок|\\E([-_a-zA-Z]{2,9})(?:\\}\\}|\\|add=\\}\\})"
-    
+
+    /** start of the POS block,
+     * {{заголовок|add=I}}
+     * it can absent...
+     */
+    private final static Pattern ptrn_title_add_template_without_lang = Pattern.compile(
+            "(?m)^\\Q{{заголовок|add=\\E([^}]{1,4})\\s*"); // ?  1-4 = len(I,..,VIII,..)
+
     /** Gets first two letter after ==Морфологические и синтаксические свойства==
      * e.g. "{{" or "Су"ществительное, or "Гл"агол...
      */
@@ -199,6 +206,10 @@ public class WPOSRu {
             LangText    lt,
             String      add_lang_code)
     {
+        // template {{заголовок|add=II}} can be without language code
+        if(add_lang_code.startsWith("add="))
+            return true;
+
         if(null == add_lang_code
                 || add_lang_code.length() < 2
                 || !LanguageType.has(add_lang_code)) {
@@ -242,7 +253,18 @@ public class WPOSRu {
             String      page_title,
             LangText    lt)
     {
-        Matcher m = ptrn_title_add_template.matcher(lt.text.toString());
+        Matcher m;
+        String lt_text = lt.text.toString();
+        boolean lang_code_presented;
+
+        if(lt_text.contains("{{заголовок|add=")) {
+            m = ptrn_title_add_template_without_lang.matcher( lt_text );
+            lang_code_presented = false;
+        } else {
+            m = ptrn_title_add_template.matcher( lt_text );
+            lang_code_presented = true;
+        }
+
         boolean b_next = m.find();
 
         if(!b_next) // there is no POS delimiter "{{заголовок|...|add=I}}"
@@ -254,7 +276,7 @@ public class WPOSRu {
         int start, end; // "<start> {{заголовок|...|add=I}} ...
                         //    <end> {{заголовок|...|add=II}}" position of POS block in the lt.text
 
-        if(!isValidLanguageCode(page_title, lt, m.group(1)))
+        if(lang_code_presented && !isValidLanguageCode(page_title, lt, m.group(1)))
             return NULL_POS_TEXT_ARRAY;
 
         start = 0;
