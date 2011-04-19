@@ -172,7 +172,9 @@ public class TranslationTableAll {
         wikt_parsed_conn.Close();
 
         System.out.println();
-        WikiPrinterStat.printTranslationPerLanguage(native_lang, m);
+        int total_trans = WikiPrinterStat.printSomethingPerLanguage(native_lang, m);
+        System.out.println("Total translations: " + total_trans);
+
         System.out.println("\nThere are translations into " + m.size() + " languages.");
         WikiPrinterStat.printFooter();
     }

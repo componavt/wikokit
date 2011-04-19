@@ -8,6 +8,7 @@
 package wikt.sql.quote;
 
 import java.sql.*;
+import wikipedia.language.Encodings;
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
 
@@ -137,6 +138,40 @@ public class TQuotSource {
         if(null == s)
             s = TQuotSource.insert(connect, _source);
         return s;
+    }
+
+    /** Selects row from the table 'quot_source' by ID.<br><br>
+     *
+     * SELECT text FROM quot_source WHERE id=1
+     *
+     * @return null if data is absent
+     */
+    public static TQuotSource getByID (Connect connect,int id) {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuilder str_sql = new StringBuilder();
+        TQuotSource quot_source = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT text FROM quot_source WHERE id=");
+            str_sql.append(id);
+            rs = s.executeQuery (str_sql.toString());
+
+            if (rs.next ())
+            {
+                byte[] bb = rs.getBytes("text");
+                String _text = null == bb ? null : Encodings.bytesToUTF8(bb);
+
+                quot_source = new TQuotSource(id, _text);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TQuotSource.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return quot_source;
     }
 
     /** Deletes row from the table 'quot_source' by a value of ID.<br><br>

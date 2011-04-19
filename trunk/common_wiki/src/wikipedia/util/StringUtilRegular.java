@@ -1,6 +1,6 @@
 /* StringUtilRegular.java - realm of regular expressions.
  *
- * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2005-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU Public License.
  */
 
@@ -127,6 +127,22 @@ public class StringUtilRegular {
             return m.group(1);
         }
         return NULL_STRING;
+    }
+
+
+    /** Corresponds to different type of whitespaces,
+     * @see http://stackoverflow.com/questions/1822772/java-regular-expression-to-match-all-whitespace-characters
+     * @see http://en.wikipedia.org/wiki/Space_%28punctuation%29
+     */
+    private final static Pattern ptrn_whitespace  = Pattern.compile("\\p{Z}"); // "\\s");
+
+
+     /** Replaces special spaces by usual whitespace, e.g. in quote author names "Name Surname"
+     */
+    public static String replaceComplexSpacesByTrivialSpaces(String text) {
+
+        Matcher match = ptrn_whitespace.matcher(text);
+        return match.replaceAll(" ");
     }
 
     /** Gets first letters till first hyphen "-".
@@ -300,4 +316,6 @@ public class StringUtilRegular {
         
         return text.substring(start_pos, end_pos);
     }
+
+
 }

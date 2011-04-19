@@ -8,6 +8,7 @@
 package wikt.sql.quote;
 
 import java.sql.*;
+import wikipedia.language.Encodings;
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
 
@@ -135,6 +136,40 @@ public class TQuotPublisher {
         if(null == p)
             p = TQuotPublisher.insert(connect, _publisher);
         return p;
+    }
+
+    /** Selects row from the table 'quot_publisher' by ID.<br><br>
+     *
+     * SELECT text FROM quot_publisher WHERE id=1
+     *
+     * @return null if data is absent
+     */
+    public static TQuotPublisher getByID (Connect connect,int id) {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuilder str_sql = new StringBuilder();
+        TQuotPublisher quot_publisher = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT text FROM quot_publisher WHERE id=");
+            str_sql.append(id);
+            rs = s.executeQuery (str_sql.toString());
+
+            if (rs.next ())
+            {
+                byte[] bb = rs.getBytes("text");
+                String _text = null == bb ? null : Encodings.bytesToUTF8(bb);
+
+                quot_publisher = new TQuotPublisher(id, _text);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TQuotPublisher.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return quot_publisher;
     }
 
     /** Deletes row from the table 'quot_publisher' by a value of ID.<br><br>
