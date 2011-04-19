@@ -136,18 +136,16 @@ WHERE {
 
 == Get name of the author of quotes by word and language ==
 
-Let's find text of all quotations for the English word "airplane":
+Let's find author name for the quote of the Russian word "го":
 
-Open URL: http://localhost:2020/snorql/
-
-Paste SPARQL request:
+SPARQL request:
 {{{
-SELECT ?langId ?pageId ?meaningId ?quoteId ?quoteText ?quoteRefId
+SELECT ?langId ?pageId ?meaningId ?quoteId ?quoteText ?quoteRefId ?authorId ?authorName ?authorWikilink
 WHERE {
-    ?lang wikpa:lang_code "en";
+    ?lang wikpa:lang_code "ru";
           wikpa:lang_id ?langId.
 
-    ?page wikpa:page_page_title "airplane";
+    ?page wikpa:page_page_title "го";
           wikpa:page_id ?pageId.
 
     ?lang_pos wikpa:lang_pos_page_id ?pageId;
@@ -162,6 +160,14 @@ WHERE {
            wikpa:quote_lang_id ?langId;
            wikpa:quote_text ?quoteText;
            wikpa:quote_ref_id ?quoteRefId.
+
+    ?quot_ref wikpa:quot_ref_id ?quoteRefId;
+               wikpa:quot_ref_author_id ?authorId. 
+
+    ?quot_author wikpa:quot_author_id ?authorId;
+                 wikpa:quot_author_name ?authorName;
+                 wikpa:quot_author_wikilink ?authorWikilink.
+
 }
 }}}
 
