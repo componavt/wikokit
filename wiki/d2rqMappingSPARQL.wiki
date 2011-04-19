@@ -41,7 +41,8 @@ Change the following lines in the `.n3` mapping file:
   * add lines:
 {{{
 map:Configuration a d2rq:Configuration;
-    d2rq:resultSizeLimit 33.
+    d2rq:resultSizeLimit 33;
+    .
 }}}
 
 Run server:
