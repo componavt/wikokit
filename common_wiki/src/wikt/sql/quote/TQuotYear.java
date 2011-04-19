@@ -111,6 +111,40 @@ public class TQuotYear {
         return result;
     }
 
+    /** Selects row from the table 'quot_year' by ID.<br><br>
+     *
+     * SELECT `from`,`to` FROM quot_year WHERE id=1
+     *
+     * @return null if data is absent
+     */
+    public static TQuotYear getByID (Connect connect,int id) {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuilder str_sql = new StringBuilder();
+        TQuotYear quot_year = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT `from`,`to` FROM quot_year WHERE id=");
+            str_sql.append(id);
+            rs = s.executeQuery (str_sql.toString());
+            
+            if (rs.next ())
+            {
+                int _from = rs.getInt("from");
+                int _to   = rs.getInt("to");
+
+                quot_year = new TQuotYear(id, _from, _to);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TQuotYear.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return quot_year;
+    }
+
     /** Get's a record from the table 'quot_year' by a date of a book with a quote.<br><br>
      * SELECT id FROM quot_year WHERE `from`=1956 AND `to`=1956;
      *

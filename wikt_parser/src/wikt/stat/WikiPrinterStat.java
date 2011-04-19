@@ -259,23 +259,24 @@ public class WikiPrinterStat {
 
 
     
-    /** Prints statistics about translations in Wiktionary.
+    /** Prints statistics about (translations, or quotes, ...) per language
+     * in Wiktionary.
      *
      * @param m_lang_n map of maps with number of translations into
      * English, Russian etc. (lang -> count)
      */
-    public static void printTranslationPerLanguage (
+    public static int printSomethingPerLanguage (
                                     LanguageType native_lang,
                                     Map<LanguageType, Integer> m_lang_n) {
 
-        int total = 0; // total number of translations
+        int total = 0; // total number of translations. or quotations, or...
         
         // print header line
         // print header line
         System.out.println("{| class=\"sortable prettytable\"");
         System.out.print("! Language name || Language code || Number");
 
-        if(LanguageType.en != native_lang)
+        if(LanguageType.en != native_lang) // let's print translations of the language for non-English Wiktionaries
             System.out.print("|| in " + native_lang.getName());
         System.out.println();
 
@@ -303,7 +304,7 @@ public class WikiPrinterStat {
         }
         System.out.println("|}");
         
-        System.out.println(  "Total translations: " + total);
+        //System.out.println(  "Total translations: " + total);
+        return total;
     }
-    
 }

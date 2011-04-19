@@ -2759,6 +2759,7 @@ public class LanguageType {
     // Chinese ------------
     public static final LanguageType zh = new LanguageType("zh", "Chinese", "Chinese");
     public static final LanguageType zho = LanguageType.addNonUniqueCode(zh, "zho");
+    public static final LanguageType zhx_zho = LanguageType.addNonUniqueCode(zh, "zhx-zho");
 
     public static final LanguageType cmn = new LanguageType("cmn", "Mandarin", "Mandarin");
     public static final LanguageType cmn2 = LanguageType.addNonUniqueName(cmn, "Mandarin Chinese");

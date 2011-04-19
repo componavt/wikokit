@@ -210,6 +210,39 @@ public class WQuoteRuTest {
         assertEquals(q.getYearTo(), exp_year);
     }
 
+    // empty source: "|источник= "
+    // # муз. произведение на текст псалма [1] {{пример|текст= Альберт Пис… |перевод=|автор= Г. Риман|титул= Музыкальный словарь |издание=|перев=|дата=|источник= }}
+    @Test
+    public void testGetQuotes_one_quote_with_empty_source() {
+        System.out.println("testGetQuotes_several");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_source;
+        int exp_year;
+
+        page_title = "псалом";
+        text =  "# муз. произведение на текст псалма [1] {{пример|текст= Альберт Пис… |перевод=|автор= Г. Риман|титул= Музыкальный словарь |издание=|перев=|дата=|источник= }}";
+//{{пример|текст= Альберт Пис… |перевод=|автор= Г. Риман|титул= Музыкальный словарь |издание=|перев=|дата=|источник= }}"
+
+        exp_text = "Альберт Пис…";
+        exp_author = "Г. Риман";
+        exp_title = "Музыкальный словарь";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertEquals(0, q.getSource().length() );
+
+        assertEquals(q.getYearFrom(), -1);
+        assertEquals(q.getYearTo(), -1);
+    }
+
     // range of years: 1880—1881
     @Test
     public void testGetQuotes_range_of_years() {
@@ -556,6 +589,46 @@ public class WQuoteRuTest {
         exp_year_from   = -1;
         exp_year_to     = -1;
         exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getAuthorWikilink().equalsIgnoreCase( exp_author_wikilink ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getTitleWikilink().equalsIgnoreCase( exp_title_wikilink ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+
+    // # {{действие|полоть}} {{пример|Уход за высеянным зерном ячменя ограничивается обыкновенно уничтожением корки при образовании её после сильного дождя (производится это или бороной, или каким-либо другим подходящим для данного случая орудием, например, негладким катком) и {{выдел|полкой}} сорных трав.||[[:s:ЭСБЕ/Ячмень|Ячмень]]|источник=ЭСБЕ}}
+    @Test
+    public void testGetQuotes_with_title_wikilink_and_slash() {
+        System.out.println("testGetQuotes_with_title_wikilink_and_slash");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "полка";
+        text =  "# {{действие|полоть}} {{пример|Уход за высеянным зерном ... {{выдел|полкой}} сорных трав.||[[:s:ЭСБЕ/Ячмень|Ячмень]]|источник=ЭСБЕ}}";
+
+// Уход за высеянным зерном ... {{выдел|полкой}} сорных трав.||[[:s:ЭСБЕ/Ячмень|Ячмень]]|источник=ЭСБЕ
+        exp_text = "Уход за высеянным зерном ... {{выдел|полкой}} сорных трав.";
+        exp_author = "";
+        exp_author_wikilink = "";
+        exp_title = "Ячмень";
+        exp_title_wikilink = "ЭСБЕ/Ячмень";
+        exp_year_from   = -1;
+        exp_year_to     = -1;
+        exp_source = "ЭСБЕ";
 
         text = Definition.stripNumberSign(page_title, text);
         //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);

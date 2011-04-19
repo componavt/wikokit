@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import wikipedia.util.StringUtilRegular;
 import wikt.word.WQuote;
 
 /** Phrase or sentence that illustrates a meaning of a word in Russian Wiktionary.
@@ -136,6 +137,8 @@ public class WQuoteRu {
          * title_wikilink "У окна (Андреев)" and title "У окна".
          */
         public void parseAuthorName(String text) {
+
+            text = StringUtilRegular.replaceComplexSpacesByTrivialSpaces(text);
 
             // replace "&nbsp;" by " "
             if(text.contains("&nbsp;"))
@@ -428,7 +431,7 @@ for_label:
 
                 // split by "="
                 String param_name = p.substring(0, pos_equal);
-                String value = p.substring(pos_equal+1);
+                String value = p.substring(pos_equal+1).trim();
 
                 // {{пример|текст=|перевод=|автор=|титул=|издание=|перев=|дата=|источник=}}
                 if(param_name.equalsIgnoreCase("текст")) {

@@ -287,6 +287,43 @@ public class TQuotAuthor {
         return a;
     }
 
+    /** Selects row from the table 'quot_author' by ID.<br><br>
+     *
+     * SELECT name,wikilink FROM quot_author WHERE id=1
+     *
+     * @return null if data is absent
+     */
+    public static TQuotAuthor getByID (Connect connect,int id) {
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuilder str_sql = new StringBuilder();
+        TQuotAuthor quot_author = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT name,wikilink FROM quot_author WHERE id=");
+            str_sql.append(id);
+            rs = s.executeQuery (str_sql.toString());
+
+            if (rs.next ())
+            {
+                byte[] bb = rs.getBytes("name");
+                String _name = null == bb ? null : Encodings.bytesToUTF8(bb);
+                
+                bb = rs.getBytes("wikilink");
+                String _wikilink = null == bb ? null : Encodings.bytesToUTF8(bb);
+
+                quot_author = new TQuotAuthor(id, _name, _wikilink);
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TQuotAuthor.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return quot_author;
+    }
+
     /** Deletes row from the table 'quot_author' by a value of ID.<br><br>
      * DELETE FROM quot_author WHERE id=4;
      */
