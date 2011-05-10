@@ -40,6 +40,14 @@ See [http://wiki.plexinfo.net/index.php?title=How_to_sign_JAR_files How to sign 
 
 Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
 
+== JNLP file ==
+
+{{{
+cd wiwordik/jnlp
+edit wiwordik-ru_test.jnlp
+}}}
+
+
 = English Wiktionary =
 
 Now .jar file with the compressed SQLite database of the English Wiktionary can not be uploaded to the Google Code, since the file has size about 350 MBytes, but Google Code has a constraint - maximum file 200 MByte. You can vote to "Support huge downloads" http://code.google.com/p/support/issues/detail?id=3148&colspec=ID%20Type%20Status%20Milestone%20Priority%20Stars%20Owner%20Summary
