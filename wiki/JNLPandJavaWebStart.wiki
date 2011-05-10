@@ -40,11 +40,13 @@ See [http://wiki.plexinfo.net/index.php?title=How_to_sign_JAR_files How to sign 
 
 Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
 
+
 == JNLP file ==
 
 {{{
+cp ./wiwordik/store/wiwordik-0.06-ruwikt20110413.jar wikokit/wiwordik/jnlp/
 cd wiwordik/jnlp
-edit wiwordik-ru_test.jnlp
+javaws -import wiwordik-ru_test.jnlp # run in local sandbox
 }}}
 
 
