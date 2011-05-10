@@ -46,9 +46,9 @@ Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
 {{{
 cp ./wiwordik/store/wiwordik-0.06-ruwikt20110413.jar wikokit/wiwordik/jnlp/
 cd wiwordik/jnlp
-javaws -import wiwordik-ru_test.jnlp # run in local sandbox
+javaws -import wiwordik-ru_test.jnlp
+javaws -viewer # Run Offline: wiwordik-ru_test
 }}}
-
 
 = English Wiktionary =
 
