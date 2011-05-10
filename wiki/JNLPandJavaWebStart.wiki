@@ -35,6 +35,9 @@ Update the version number and the name of the SQLite file in the `build.xml`, e.
 Run ant target: package-for-store.
 
 == jarsigner ==
+
+See [http://wiki.plexinfo.net/index.php?title=How_to_sign_JAR_files How to sign JAR files].
+
 Run `wikokit\wiwordik\sqlite\run_jarsigner.bat` to sign .jar file.
 
 = English Wiktionary =
