@@ -18,7 +18,7 @@ Add result .jar file to the !NetBeans project `wiwordik`.
 
 == Java source code ==
 
-Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\Main.fx`:
+Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\WConstants.fx`:
 {{{
 def IS_RELEASE : Boolean = true;
 def IS_SQLITE : Boolean = true;
