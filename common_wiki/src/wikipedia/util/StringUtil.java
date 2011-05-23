@@ -470,4 +470,17 @@ public class StringUtil {
             s[i] = s[i].trim();
         return s;
     }
+
+    /** Replace special characters (e.g. &nbsp;, &#160; by spaces).
+     */
+    public static String replaceSpecialChars(String str)
+    {
+        if(str.contains("&nbsp;"))
+            str = str.replace("&nbsp;", " ");
+
+        if(str.contains("&#160;"))
+            str = str.replace("&#160;", " ");
+        return str;
+    }
+
 }

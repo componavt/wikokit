@@ -1,11 +1,15 @@
 /* WQuoteRu.java - corresponds to the phrase/sentence that illustrates a meaning
  *               of a word in Russian Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.multi.ru;
+
+import wikipedia.util.StringUtilRegular;
+import wikipedia.util.StringUtil;
+import wikt.word.WQuote;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,8 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import wikipedia.util.StringUtilRegular;
-import wikt.word.WQuote;
 
 /** Phrase or sentence that illustrates a meaning of a word in Russian Wiktionary.
  */
@@ -287,6 +289,50 @@ public class WQuoteRu {
         }
         return( (String[])result_list.toArray(NULL_STRING_ARRAY) );
     }
+
+    /** Removes highlighted marks from a sentence.
+     * 1) Sentence with '''words'''. -> Sentence with words.
+     * 2) Sentence with {{выдел|words}}. -> Sentence with words.
+     */
+    public static String removeHighlightedMarksFromSentence(String str)
+    {
+        if(str.contains("{{выдел|")) {
+            String s = str.replace("{{выдел|", "").replace("}}", "");
+
+            // because, there are "{{-}}" -> "{{-" in the text
+            return s.replace("{{-", " - ");
+
+        } else if(str.contains("'''")) {
+                return str.replace("'''", "");
+        }
+
+        return str;
+    }
+
+    /** Additional treatment of the sentence text:
+     * 1) &nbsp;, &#160; -> " "
+     * 2) {{-}} -> " - "
+     * 3) poetry: "//" -> "\n"
+     */
+    public static String transformSentenceText(boolean is_sqlite, String str)
+    {
+        str = StringUtil.replaceSpecialChars( str );
+
+        if(str.contains("{{-}}"))
+            str = str.replace("{{-}}", " - ");
+
+        if(str.contains(" // "))
+            str = str.replace(" // ", "\n");
+
+        if(str.contains("//"))
+            str = str.replace("//", "\n");
+
+        if(is_sqlite && str.contains("\\\""))   // \" -> " (SQLite feature)
+            str = str.replace("\\\"", "\"");
+
+        return str;
+    }
+
 
     /** Replaces quotation template:" by quotations,
      * e.g. 'Фрегат {{"|Паллада}}' ->

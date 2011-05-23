@@ -1,7 +1,7 @@
 /* POSTypeRu.java - Russian names of parts of speech.
  * 
  * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.multi.ru;
@@ -87,6 +87,8 @@ public class POSTypeRu extends POSType {
     
     // other headers in use
     public static final POSType particle1            = new POSTypeRu("part",     POS.particle); // частица, part ru, part-ru
-    public static final POSType particle3            = new POSTypeRu("Particle", POS.particle);  
-    
+    public static final POSType particle3            = new POSTypeRu("Particle", POS.particle);
+
+    // todo
+    // interj // междометие
 }

@@ -210,6 +210,44 @@ public class WQuoteRuTest {
         assertEquals(q.getYearTo(), exp_year);
     }
 
+
+    // 1 quote with translation
+    // [[верующий]] {{пример|текст=…У касцёл Святога Роха… ў {{выдел|вернікаў}}…|перевод=В костёл Святого Роха… у {{выдел|верующих}}…|автор=Лідзія Адамовіч|титул=Кветкі самотнай князёўны|источник=БП}}
+    @Test
+    public void testGetQuotes_quote_with_translation() {
+        System.out.println("testGetQuotes_several");
+        String text, page_title;
+        String exp_text, exp_translation, exp_author, exp_title, exp_source;
+        int exp_year;
+
+        page_title = "вернік";
+        text =  "# [[верующий]] {{пример|текст=…У касцёл Святога Роха… ў {{выдел|вернікаў}}…|перевод=В костёл Святого Роха… у {{выдел|верующих}}…|автор=Лідзія Адамовіч|титул=Кветкі самотнай князёўны|источник=БП}}";
+//{{пример|текст=…У касцёл Святога Роха… ў {{выдел|вернікаў}}…|перевод=В костёл Святого Роха… у {{выдел|верующих}}…|автор=Лідзія Адамовіч|титул=Кветкі самотнай князёўны|источник=БП}}
+
+        exp_text = "…У касцёл Святога Роха… ў {{выдел|вернікаў}}…";
+        exp_translation = "В костёл Святого Роха… у {{выдел|верующих}}…";
+
+        // автор=Лідзія Адамовіч|титул=Кветкі самотнай князёўны|источник=БП
+        exp_author = "Лідзія Адамовіч";
+        exp_title = "Кветкі самотнай князёўны";
+        exp_source = "БП";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getTranslation().equalsIgnoreCase( exp_translation ) );
+
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+    }
+
+
     // empty source: "|источник= "
     // # муз. произведение на текст псалма [1] {{пример|текст= Альберт Пис… |перевод=|автор= Г. Риман|титул= Музыкальный словарь |издание=|перев=|дата=|источник= }}
     @Test

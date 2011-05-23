@@ -202,7 +202,7 @@ public class TPOS {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try
         {
             s = connect.conn.createStatement ();
@@ -264,7 +264,7 @@ public class TPOS {
 
         Statement   s = null;
         ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
             s = connect.conn.createStatement ();
             str_sql.append("DELETE FROM part_of_speech WHERE name=\"");

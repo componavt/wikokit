@@ -1,12 +1,15 @@
 /* TQuotation.java - SQL operations with the table 'quotation' in Wiktionary parsed database.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.quote;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+import wikipedia.language.Encodings;
 
 import wikipedia.sql.Connect;
 import wikipedia.sql.PageTableBase;
@@ -31,6 +34,8 @@ public class TQuote {
 
     /** quotation reference information (year, author, etc.), field quote.ref_id in database. */
     private TQuotRef quot_ref;
+
+    private final static TQuote[] NULL_TQUOTE_ARRAY = new TQuote[0];
 
     public TQuote(int _id, TMeaning _meaning, TLang _lang, String _text,
                   TQuotRef _quot_ref)
@@ -184,7 +189,7 @@ public class TQuote {
     }
 
     /** Inserts quote and reference (ref. without years) records into the tables:
-     * quote, quot_ref, quot_year, quot_author, quot_publisher, and quot_source.<br><br>
+     * quote, quot_ref, quot_year, quot_author, quot_publisher, and quot_source.
      *
      * @param _text quotation itself
      * @param _meaning meaning of a word corresponding to the quote
@@ -214,7 +219,7 @@ public class TQuote {
     }
 
     /** Inserts quote and reference (ref. without years) records into the tables:
-     * quote, quot_ref, quot_year, quot_author, quot_publisher, and quot_source.<br><br>
+     * quote, quot_ref, quot_year, quot_author, quot_publisher, and quot_source.
      *
      * @param page_title word which are described in this article
      *
@@ -253,7 +258,7 @@ public class TQuote {
     /** Inserts quote (with translation, transcription) and reference
      * (ref. without years) records into the tables: quote, quot_translation,
      * quot_transcription, quot_ref, quot_year, quot_author, quot_publisher,
-     * and quot_source.<br><br>
+     * and quot_source.
      *
      * @param _text quotation itself
      * @param _translation translation of quotation
@@ -295,7 +300,7 @@ public class TQuote {
     /** Inserts quote (with translation, transcription) and reference
      * (with years) records into the tables: quote, quot_translation,
      * quot_transcription, quot_ref, quot_year, quot_author, quot_publisher,
-     * and quot_source.<br><br>
+     * and quot_source.
      *
      * @param page_title word which are described in this article
      *
@@ -340,6 +345,55 @@ public class TQuote {
         TQuotTranslation.insert(connect, quote_id, _translation);
         TQuotTranscription.insert(connect, quote_id, _transcription);
         return q;
+    }
+
+    /** Selects rows from the table 'quote' by the meaning_id.<br><br>.
+     *
+     * SELECT id,lang_id,text,ref_id FROM quote WHERE meaning_id=3
+     *
+     * @return empty array if data is absent
+     */
+    public static TQuote[] get (Connect connect,TMeaning meaning) {
+
+        if(null == meaning) {
+            System.err.println("Error (wikt_parsed TQuote.get()):: null argument: meaning.");
+            return NULL_TQUOTE_ARRAY;
+        }
+
+        Statement   s = null;
+        ResultSet   rs= null;
+        StringBuilder str_sql = new StringBuilder();
+        List<TQuote> list_quote = null;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql.append("SELECT id,lang_id,text,ref_id FROM quote WHERE meaning_id=");
+            str_sql.append(meaning.getID());
+            rs = s.executeQuery (str_sql.toString());
+            while (rs.next ())
+            {
+                int    _id = rs.getInt("id");
+                TLang _lang = TLang.getTLangFast(rs.getInt("lang_id"));
+                String _text = Encodings.bytesToUTF8(rs.getBytes("text"));
+                TQuotRef _quot_ref = TQuotRef.getByID(connect, rs.getInt("ref_id"));
+                
+                if(null != _lang && null != _quot_ref) {
+                    if(null == list_quote)
+                               list_quote = new ArrayList<TQuote>();
+
+                    list_quote.add(new TQuote(_id, meaning, _lang, _text, _quot_ref));
+                }
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (TQuote.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+
+        if(null == list_quote)
+            return NULL_TQUOTE_ARRAY;
+        return (TQuote[])list_quote.toArray(NULL_TQUOTE_ARRAY);
     }
 
     /** Deletes row from the table 'quote' by a value of ID.<br><br>

@@ -1,11 +1,15 @@
 /* WQuote.java - corresponds to the phrase/sentence that illustrates a meaning 
  *               of Wiktionary word.
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.word;
+
+import wikipedia.language.LanguageType;
+import wikt.multi.ru.WQuoteRu;
+import wikt.multi.en.WQuoteEn;
 
 /** Phrase or sentence that illustrates a meaning of Wiktionary word.
  */
@@ -146,6 +150,62 @@ public class WQuote {
         year_from = _year_from;
         year_to = _year_to;
     }
+
+    /** Removes highlighted marks from a sentence. 
+     * English Wiktionary: Sentence with '''words'''. -> Sentence with words.
+     * Russian Wiktionary:
+     * 1) Sentence with '''words'''. -> Sentence with words.
+     * 2) Sentence with {{выдел|words}}. -> Sentence with words.
+     */
+    public static String removeHighlightedMarksFromSentence(
+                                            LanguageType wikt_lang,
+                                            String text)
+    {
+        String result;
+
+        LanguageType l = wikt_lang;
+        if(l  == LanguageType.ru) {
+            result = WQuoteRu.removeHighlightedMarksFromSentence(text);
+        } else if(l == LanguageType.en) {
+
+            result = WQuoteEn.removeHighlightedMarksFromSentence(text);
+
+        } else {
+            throw new NullPointerException("Null LanguageType");
+        }
+        
+        return result;
+    }
+
+    /** Additional treatment of the sentence text:
+     * English Wiktionary: ?..
+     * ...
+     * Russian Wiktionary:
+     * 1) &nbsp;, &#160; -> " "
+     * 2) {{-}} -> " - "
+     */
+    public static String transformSentenceText(
+                                boolean is_sqlite,
+                                LanguageType wikt_lang,
+                                String text)
+    {
+        String result;
+
+        LanguageType l = wikt_lang;
+        if(l  == LanguageType.ru) {
+            result = WQuoteRu.transformSentenceText(is_sqlite, text);
+        } /*else if(l == LanguageType.en) {
+
+            // todo
+            //result = WQuoteEn.transformSentenceText(text);
+
+        }*/ else {
+            throw new NullPointerException("Null LanguageType");
+        }
+
+        return result;
+    }
+
 
     
 
