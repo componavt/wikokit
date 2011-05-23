@@ -84,7 +84,7 @@ public class Connect {
     public final static String RUWIKT_PARSED_DB = "ruwikt20110413_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
-    public final static String RUWIKT_SQLITE = "ruwikt20101101.sqlite";
+    public final static String RUWIKT_SQLITE = "ruwikt20110413.sqlite";
 
     // English Wiktionary database
     // use: connect_ruwikt.Open(Connect.WP_EN_HOST,Connect.WP_EN_DB,Connect.WP_EN_USER,Connect.WP_EN_PASS);

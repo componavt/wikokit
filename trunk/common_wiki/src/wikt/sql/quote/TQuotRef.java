@@ -61,6 +61,7 @@ public class TQuotRef {
     public String getTitle() {
         return title;
     }
+    
 
     /** Gets wikilink to Wikipedia (format: [[w:title|]]) for the book. */
     public String getWikilink() {
@@ -72,9 +73,31 @@ public class TQuotRef {
         return year;
     }
 
+    /** Gets date (Start-End) of quote from database. */
+    public String getYearsRange() {
+        if (null == year)
+            return "";
+
+        int _from = year.getFrom();
+        int _to = year.getTo();
+
+        if(-1 == _from && -1 == _to) // it means that there is no info about years
+            return "";
+
+        if(-1 == _to || _from == _to) // if YYYY-YYYY, then return "YYYY"
+            return "" + _from;
+
+        return "" + _from + "-" + _to;
+    }
+
     /** Gets author(s) of quote from database. */
     public TQuotAuthor getAuthor() {
         return author;
+    }
+
+    /** Gets name of author(s) of quote from database. */
+    public String getAuthorName() {
+        return (null != author) ? author.getName() : "";
     }
 
     /** Gets publisher of quote from database. */
@@ -82,9 +105,19 @@ public class TQuotRef {
         return publisher;
     }
 
+    /** Gets name of publisher of quote from database. */
+    public String getPublisherName() {
+        return (null != publisher) ? publisher.getText() : "";
+    }
+
     /** Gets source of quote from database. */
     public TQuotSource getSource() {
         return source;
+    }
+
+    /** Gets name of author(s) of quote from database. */
+    public String getSourceName() {
+        return (null != source) ? source.getText() : "";
     }
 
 

@@ -78,7 +78,10 @@ public class TQuoteTest {
         String _text = "test_The sentence with quotation.";
         TQuote result = TQuote.insert(connect, _meaning, _lang, _text, quot_ref);
         assertNotNull(result);
-
+        
+        //TQuote[] result_copy = TQuote.get(connect, _meaning);
+        //assertNotNull(result_copy);
+        //assertEquals(1, result_copy.length);
 
         // delete all temp records
         TQuotAuthor a = quot_ref.getAuthor();

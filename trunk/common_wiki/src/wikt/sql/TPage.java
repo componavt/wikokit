@@ -1,7 +1,7 @@
 /* TPage.java - SQL operations with the table 'page' in Wiktionary parsed database.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql;
@@ -368,7 +368,7 @@ public class TPage {
      * SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary FROM page WHERE page_title LIKE 'zzz%' AND is_in_wiktionary=1 LIMIT 1;
      *
      * @param  limit    constraint of the number of rows returned,
-     *                  if it's negative then a constraint is omitted
+     *                  if it has a negative value then the constraint is omitted
      * @param  prefix   the begining of the page_titles
      * @param  b_skip_redirects return articles without redirects if true
      * @param  b_meaning return articles with definitions
