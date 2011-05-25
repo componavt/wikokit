@@ -67,7 +67,7 @@ VACUUM;
 
 == SQLite file location ==
 
-Copy SQLite file `ruwikt20100405.sqlite` to the folder `./wikokit/wiwordik/`.
+Copy SQLite file `ruwikt20100405.sqlite` to the folder `./wikokit/wiwordik/sqlite/`.
 
 == Java ==
 
@@ -76,11 +76,15 @@ Check that the file `wiwordik\src\wiwordik\Main.fx` contains the line:
 wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
 }}}
 
+Check that the file `wiwordik\src\wiwordik\WConstants.fx` contains the line:
+{{{
+/** true (SQLite), false (MySQL) */
+public def IS_SQLITE : Boolean = true;
+}}}
+
 Check that the file `common_wiki\src\wikipedia\sql\Connect.java` contains the line:
 {{{
-private void OpenSQLite() {
-...
-String s = "jdbc:sqlite:C:/w/bin/ruwikt20100405.sqlite";
+public final static String RUWIKT_SQLITE = "ruwikt20110521.sqlite";
 }}}
 
 === Java libraries ==
