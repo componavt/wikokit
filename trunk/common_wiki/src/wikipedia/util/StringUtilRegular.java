@@ -115,6 +115,9 @@ public class StringUtilRegular {
             "(\\S\\S+)\\s");
     private final static Pattern ptrn_letters_till_hyphen = Pattern.compile(
             "\\s*([^-]+?)-");
+    /** Gets first letters till space, hyphen or pipe. */
+    private final static Pattern ptrn_letters_till_pipe = Pattern.compile(
+            "\\A(\\S\\S+?)\\|");
     private final static String NULL_STRING = new String();
     
     /** Gets first letters till space.
@@ -126,6 +129,55 @@ public class StringUtilRegular {
         if (m.find()){
             return m.group(1);
         }
+        return NULL_STRING;
+    }
+
+    /** Gets first letters till space " ", ... or pipe "|" (shortest string).
+     * E.g. "word1 " -> "word1", "\t word-long2\r\n" -> "word-long2"
+     * This functions is used by WPOSRu.guessPOS().
+     */
+    public static String getLettersTillSpaceHyphenOrPipe(String text) {
+        Matcher m;
+
+        String  s_space = text; // because max(length) = text.length()
+        boolean b_space = false;
+
+        String  s_hyphen = text;
+        boolean b_hyphen = false;
+
+        String  s_pipe = text;
+        boolean b_pipe = false;
+
+        m = ptrn_letters_till_space.matcher(text);
+        if (m.find()) {
+            b_space = true;
+            s_space = m.group(1);
+        }
+
+        m = ptrn_letters_till_hyphen.matcher(text);
+        if (m.find()) {
+            b_hyphen = true;
+            s_hyphen = m.group(1);
+        }
+
+        m = ptrn_letters_till_pipe.matcher(text);
+        if (m.find()) {
+            b_pipe = true;
+            s_pipe = m.group(1);
+        }
+
+        if(b_space && s_space.length() <= s_hyphen.length()
+                   && s_space.length() <= s_pipe.length())
+            return s_space;
+
+        if(b_hyphen && s_hyphen.length() <= s_space.length()
+                    && s_hyphen.length() <= s_pipe.length())
+            return s_hyphen;
+
+        if(b_pipe && s_pipe.length() <= s_hyphen.length()
+                  && s_pipe.length() <= s_space.length())
+            return s_pipe;
+        
         return NULL_STRING;
     }
 

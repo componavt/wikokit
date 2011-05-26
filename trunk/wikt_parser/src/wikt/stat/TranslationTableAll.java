@@ -1,7 +1,7 @@
 /* TranslationTableAll.java - translations' statistics in the database of the parsed Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.stat;

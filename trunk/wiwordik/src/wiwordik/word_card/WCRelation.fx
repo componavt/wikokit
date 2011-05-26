@@ -1,22 +1,17 @@
 /* WCRelation.fx - A part of word card corresponds to a semantic relations part
  * of a page (entry) in Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.word_card;
 
 import wikt.sql.*;
 import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
-import wikt.constant.POS;
 import wikt.constant.Relation;
 
 import javafx.scene.text.Text;
-import javafx.scene.text.Font;
-import javafx.scene.Group;
-
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
@@ -27,9 +22,7 @@ import java.lang.*;
  *
  * @see wikt.api.WTRelation and wikt.sql.TRelation
  */
-
 public class WCRelation {
-    def DEBUG : Boolean = false;
 
     /** Syn, Ant, etc. */
     var relation_type : String;
@@ -38,12 +31,17 @@ public class WCRelation {
     var relation_words : String;
 
     public var group: HBox = HBox {
-        spacing: 2
+        spacing: 0
         content: [
             Text {
                 content: bind relation_type
                 //wrappingWidth: 380
                 //font: Font {  size: 14  }
+                fill: Color.GRAY
+                underline: true
+            }
+            Text {
+                content: ": "
                 fill: Color.GRAY
             }
 
@@ -58,8 +56,7 @@ public class WCRelation {
     };
 
 
-    /** Creates a language part of card (parts of wiki pages),
-     * builds visual block with this language.
+    /** Creates a part of card (parts of wiki pages) with semantic relations.
      *
      * _max_meaning_number total number of different meanings for the current
      *                      POS-language sub-entry

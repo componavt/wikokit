@@ -1,21 +1,19 @@
 /* WCLangPOS.fx - A part of word card corresponds to a language-POS part
  * of a page (entry) in Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.word_card;
 
 import wikt.sql.*;
 import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
 import wikt.constant.POS;
+import wiwordik.WConstants;
 
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.Group;
-
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
@@ -26,7 +24,6 @@ import java.lang.*;
  * @see wikt.word.WPOS
  */
 public class WCPOS {
-    def DEBUG : Boolean = false;
     
     /** Part of speech. */
     var pos_type : POS;
@@ -43,6 +40,7 @@ public class WCPOS {
 
     public var group: VBox = VBox {
         spacing: 5
+        // width: WCConstants.wrapping_width - 35
         content: [
             Text {
                 content: bind POS_header_value
@@ -54,7 +52,7 @@ public class WCPOS {
     };
 
 
-    /** Creates a language part of card (parts of wiki pages),
+    /** Creates a POS part of card (parts of wiki pages),
      * builds visual block with this language.
     **/
     public function create(conn : Connect,
@@ -69,8 +67,8 @@ public class WCPOS {
             var _pos : POS = _lang_pos.getPOS().getPOS();
 
             POS_header_value = "{_pos.toString()}";
-            if (DEBUG)
-                POS_header_value = "{_pos.toString()}; lang_pos.id = {_lang_pos.getID()}";
+            if (WConstants.DEBUG)
+                POS_header_value = POS_header_value.concat("; lang_pos.id = {_lang_pos.getID()}");
             
             // get all translation blocks (for every meaning)
             //def _lang_pos : TLangPOS = _tmeaning.getLangPOS(conn);

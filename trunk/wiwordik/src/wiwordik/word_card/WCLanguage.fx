@@ -20,6 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.TextOrigin;
 
 import java.lang.*;
+import javafx.scene.Scene;
+import wiwordik.WConstants;
 
 /** Language part of a Wiktionary page. It contains POS's sub-parts.
  *
@@ -41,6 +43,10 @@ public class WCLanguage {
 
     var pos_group : VBox = VBox {
             spacing: 20
+
+            //opacity:  0.5
+            //width: bind card_scene.width - 30
+            width: WConstants.wrapping_width - 30
         };
 
     public var group: VBox = VBox {
@@ -63,11 +69,12 @@ public class WCLanguage {
      * consists of several POS blocks.
     **/
     public function create(conn : Connect,
+                           card_scene: Scene,
                             //_tpage : TPage,
                             _lang : LanguageType,
                             lang_pos_array : TLangPOS[]
                            ) {
-        
+
         language_name_value = "{_lang.getName()} ({_lang.getCode()})";
         // System.out.println("WCLanguage.create(). language_name_value = {language_name_value}");
 

@@ -2,7 +2,7 @@
  * semantic relations, translations.
  *
  * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 package wiwordik.search_window;
 

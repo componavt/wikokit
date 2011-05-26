@@ -1,8 +1,8 @@
 /* WCMeaning.fx - A part of word card corresponds to a Definition (meaning) part
  * of a page (entry) in Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.word_card;
@@ -10,16 +10,13 @@ package wiwordik.word_card;
 
 import wikt.sql.*;
 import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
-import wikt.constant.POS;
 import wikt.constant.Relation;
+import wiwordik.WConstants;
 
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.Group;
 
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 
 import java.lang.*;
 
@@ -28,13 +25,15 @@ import java.lang.*;
  *
  * @see wikt.api.WTMeaning and 
  */
-
 public class WCMeaning {
-    def DEBUG : Boolean = false;
     
     var definition_value : String;
 
     //var temp_height : Integer = 50;
+
+    var quote : WCQuote[];
+
+    var quote_group : VBox = VBox { spacing: 10 };
 
     /** (2) Semantic relations: synonymy, antonymy, etc.
      * The map from semantic relation (e.g. synonymy) to array of WRelation
@@ -53,23 +52,28 @@ public class WCMeaning {
 
     /** Meanings, Relations, Translations group */
     public var group_mrt: VBox = VBox {
-        spacing: 7
+        spacing: 8
+
         content: [
             Text {
                 content: bind definition_value
-                wrappingWidth: 380
+                wrappingWidth: WConstants.wrapping_width - 35
+                //wrappingWidth: bind group_mrt.parent.boundsInLocal.width - 30
+                //wrappingWidth: bind group_mrt.parent.boundsInParent.width - 30
+                //wrappingWidth: 380`
                 font: Font {  size: 14  }
-                // fill: Color.PLUM
+                //fill: Color.PLUM
             }
-
-            relation_group, translation_group]
+            quote_group,
+            relation_group,
+            translation_group]
     };
 
 
-    /** Creates a language part of card (parts of wiki pages),
+    /** Creates a Meaning part of card (parts of wiki pages),
      * builds visual block with this language.
      *
-     * _max_meaning_number total number of different meanings for the current
+     * @param _max_meaning_number total number of different meanings for the current
      *                      POS-language sub-entry
     **/
     public function create(conn : Connect,
@@ -83,11 +87,10 @@ public class WCMeaning {
         def meaning_n : Integer = _tmeaning.getMeaningNumber();
 
         var s_debug : String;
-        if(DEBUG)
+        if(WConstants.DEBUG)
             s_debug = "; meaning.id={_tmeaning.getID()}; meaning _n/max={meaning_n+1}/{_max_meaning_number}";
 
-
-        // 1. Definition
+        // 1.a Definition
         // numbering logic: if only one definition then without number 1.
         var s_number;
         if(_max_meaning_number > 1)
@@ -97,6 +100,13 @@ public class WCMeaning {
         if(null != twiki_text)
             definition_value = "{s_number}{twiki_text.getText()}{s_debug}";
 
+        // 1.b Quote
+        def _quote : WCQuote = new WCQuote();
+        if(_quote.create(conn, _tmeaning)) {
+            // + line if there are any synonyms, antonyms, etc.
+            insert _quote into quote;                       // logic
+            insert _quote.group into quote_group.content;   // visual
+        }
 
         // 2. Semantic relations.
         def relation_types : Relation[] = Relation.getAllRelationsOrderedArray();

@@ -1,7 +1,18 @@
 wiwordik 0.0X.10XX 2011-XX-XX
   
   Added (from user's point of view):
-    ...
+    Todo ...
+   
+  Added (from programmer's point of view)
+    Todo ...
+
+
+wiwordik 0.06.1053 2011-05-22
+  
+  Added (from user's point of view):
+    Quotes with references from Russian Wiktionary.
+    + link (wordcard header), if there is corresponding Wiktionary article.
+    Debug checkbox, which shows (in new opened word cards) ID of records from the database of the machine-readable dictionary.   
    
   Added (from programmer's point of view)
     MRD database: new size of lang.name=VARCHAR(64), old=256, max=29

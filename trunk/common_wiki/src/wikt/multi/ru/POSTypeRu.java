@@ -1,6 +1,6 @@
 /* POSTypeRu.java - Russian names of parts of speech.
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
@@ -16,6 +16,8 @@ import java.util.HashMap;
  * 
  * See http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%A7%D0%B0%D1%81%D1%82%D0%B8_%D1%80%D0%B5%D1%87%D0%B8
  *     http://ru.wiktionary.org/wiki/Викисловарь:Части речи
+ *
+ *     Категория:Шаблоны словоизменений
  */
 public class POSTypeRu extends POSType {
 
@@ -70,25 +72,49 @@ public class POSTypeRu extends POSType {
     //
     // {{Гл1a
     public static final POSType verb        = new POSTypeRu("гл",       POS.verb);  // "глагол",
-    public static final POSType verb_old_ru = new POSTypeRu("Глагол",   POS.verb);
+    public static final POSType verb_old_ru = new POSTypeRu("глагол",   POS.verb);
     
     // {{adv-ru|
     // Наречие, неизменяемое.
     public static final POSType adverb_template     = new POSTypeRu("adv",      POS.adverb); // "наречие", adv ru, adv-ru
-    public static final POSType adverb_word         = new POSTypeRu("Наречие",  POS.adverb); // "наречие", 
-    
+    public static final POSType adverb_word         = new POSTypeRu("наречие",  POS.adverb); // "наречие",
     
     // {{прил en|round|слоги=round}}
-    public static final POSType adjective           = new POSTypeRu("прил",     POS.adjective); // "прилагательное",
-    public static final POSType adjective_old_en    = new POSTypeRu("Adjective",POS.adjective);
+    public static final POSType adjective           = new POSTypeRu("прил",     POS.adjective); // "прилагательное"
+    public static final POSType adjective_old_en    = new POSTypeRu("adjective",POS.adjective);
 
-    // todo + preposition Предлог
-    // public static final POSType preposition     = new POSTypeEn("Preposition",  POS.preposition);
+    // {{мест ru 6*b
+    public static final POSType pronoun             = new POSTypeRu("мест",     POS.pronoun);
+    public static final POSType pronoun_addon       = new POSTypeRu("мс",       POS.pronoun);
+
+    public static final POSType conjunction         = new POSTypeRu("conj",     POS.conjunction); // союз
+    public static final POSType interjection        = new POSTypeRu("interj",   POS.interjection); // междометие
+    public static final POSType preposition         = new POSTypeRu("prep",     POS.preposition); // Предлог
+
+
+    // Additional commonly used grammatical headers are:
+    // proper_noun ?
+    // article ?
+    public static final POSType prefix              = new POSTypeRu("prefix",     POS.prefix); // приставка
+    public static final POSType suffix              = new POSTypeRu("suffix",     POS.suffix); // суффикс
+    // phrase - ok
+    // idiom - in phrase
+    // prepositional_phrase - may be in phrase
+
+    // debated POS level 3 headers
+    public static final POSType numeral             = new POSTypeRu("числ",     POS.numeral); // числительное
+
+    // other descriptors that identify the usage of the entry, but which are not (strictly speaking) parts of speech:
+    // acronym ?
+    public static final POSType abbreviation        = new POSTypeRu("abbrev",   POS.abbreviation); // Аббревиатура
+    // ! "init" in ruwikt (Первая часть сложных слов) <> "initialism" in enwikt
     
-    // other headers in use
-    public static final POSType particle1            = new POSTypeRu("part",     POS.particle); // частица, part ru, part-ru
-    public static final POSType particle3            = new POSTypeRu("Particle", POS.particle);
 
-    // todo
-    // interj // междометие
+    // other headers in use
+    public static final POSType particle1           = new POSTypeRu("part",     POS.particle); // частица, part ru, part-ru
+    public static final POSType particle3           = new POSTypeRu("particle", POS.particle);
+
+    // only in Russian Wiktionary (yet)
+    public static final POSType verb_interjection   = new POSTypeRu("interj1", POS.verb_interjection);// interj1 - глагольно-междометное слово - verb-interjection word
+
 }

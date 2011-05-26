@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package wikt.multi.ru;
 
@@ -16,7 +12,6 @@ import wikt.util.POSText;
 import wikt.util.LangText;
 import wikipedia.language.LanguageType;
 
-import wikipedia.sql.Connect;
 import wikt.constant.POS;
 
 public class WPOSRuTest {
@@ -353,12 +348,9 @@ public class WPOSRuTest {
         assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
     }
 
-    /**
-     * Test of splitToPOSSections method, of class WPOSRu.
-     */
     @Test
-    public void testSplitToPOSSections() {
-        System.out.println("splitToPOSSections");
+    public void testSplitToPOSSections_english_words() {
+        System.out.println("splitToPOSSections_english_words");
         
         String str, s1, s2;
         POSText[] result;
@@ -409,12 +401,230 @@ public class WPOSRuTest {
         
         assertTrue(result[0].getText().toString().equalsIgnoreCase(s2));
         
-        
         // + english words...
         // todo ...
         
-        // + real words from database
     }
+
+    /////////////////////////
+    // tests of different POS 
+    
+    @Test
+    public void testSplitToPOSSections_ru_POS_pronoun() {
+        System.out.println("splitToPOSSections_ru_POS_pronoun");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // Russian words in Russian Wiktionary
+        // I.a pronoun: мест
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{мест ru 6*b\n}} text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.pronoun, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+        
+        // I.b pronoun: Мс (+ check uppercase, i.e. Мс == мс)
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{Мс-п6b\n}} text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.pronoun, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    @Test
+    public void testSplitToPOSSections_ru_POS_numeral() {
+        System.out.println("splitToPOSSections_ru_POS_numeral");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // a) numeral: числ-2
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{числ-2\n}} text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.numeral, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+
+        // b) numeral: числ
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{числ ru 3\n}} text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.numeral, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    @Test
+    public void testSplitToPOSSections_ru_POS_conjunction() {
+        System.out.println("splitToPOSSections_ru_POS_conjunction");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+        
+        // conj conjunction
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{conj ru|противительный|слоги=но}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.conjunction, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // interj // междометие
+    // interj1 - глагольно-междометное слово - verb-interjection word
+    @Test
+    public void testSplitToPOSSections_ru_POS_interjection() {
+        System.out.println("splitToPOSSections_ru_POS_interjection");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // interj
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{interj ru \n}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.interjection, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+
+        // interj1 - глагольно-междометное слово - verb-interjection word
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n\n{{interj1 ru|слоги={{по-слогам|юрк}}}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.verb_interjection, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // {{prep-ru|внутрь}}
+    // {{prep ru|за}} text.
+    @Test
+    public void testSplitToPOSSections_ru_POS_preposition() {
+        System.out.println("splitToPOSSections_ru_POS_preposition");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // {{prep-ru|внутрь}}
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{prep-ru|внутрь}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.preposition, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+
+        // {{prep ru|за}} text.
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n\n{{prep ru|за}} text.\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.preposition, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // {{prefix ru|без}}
+    // and {{suffix ru|ка|оконч=ть}}
+    @Test
+    public void testSplitToPOSSections_ru_POS_prefix_suffix() {
+        System.out.println("splitToPOSSections_ru_POS_prefix_suffix");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // {{prep-ru|внутрь}}
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{prefix ru|без}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.prefix, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+
+        // {{заголовок|add=(ь)}}
+        // {{suffix ru|ен|оконч=ь}}
+        lt = new LangText(LanguageType.ru);
+        
+        //str = "\n{{заголовок|add=(ь)}}\n{{suffix ru|ен|оконч=ь}}\n text1";
+        str = "\n ===Морфологические и синтаксические свойства===\n{{suffix ru|ен|оконч=ь}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.suffix, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // phrase
+    @Test
+    public void testSplitToPOSSections_ru_POS_phrase() {
+        System.out.println("splitToPOSSections_ru_POS_phrase");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // {{prep-ru|внутрь}}
+        lt = new LangText(LanguageType.ru);
+        str = "\n=== Тип и синтаксические свойства сочетания ===\n{{phrase|\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.phrase, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+
+        // === Тип и синтаксические свойства сочетания ===
+        // {{phrase
+        // |тип=
+        lt = new LangText(LanguageType.ru);
+        str = "\n=== Тип и синтаксические свойства сочетания ===\n{{phrase\n|тип=\n}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.phrase, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // abbrev - abbreviation
+    @Test
+    public void testSplitToPOSSections_ru_POS_abbreviation() {
+        System.out.println("splitToPOSSections_ru_POS_abbreviation");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // {{abbrev|lang=en|роль=наречия}}
+        lt = new LangText(LanguageType.ru);
+        str = "\n=== Морфологические и синтаксические свойства ===\n\n{{abbrev|lang=en|роль=наречия}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.abbreviation, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+
+    // eo tests of different POS
+    ////////////////////////////
+
     
     /** additional_second_level_blocks
      * <references />

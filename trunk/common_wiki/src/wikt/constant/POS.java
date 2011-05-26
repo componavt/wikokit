@@ -1,7 +1,7 @@
 /* POS.java - list of parts of speech used in all wiktionaries.
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.constant;
@@ -105,5 +105,8 @@ public class POS {
     // other headers in use
     public static final POS particle        = new POS("particle");
     public static final POS participle      = new POS("participle");
+
+    // only in Russian Wiktionary (yet)
+    public static final POS verb_interjection = new POS("verb-interjection");// interj1 - глагольно-междометное слово - verb-interjection word
     
 }

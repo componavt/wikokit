@@ -1,22 +1,19 @@
 /* LangChoice.fx - Selection of source and target (destination) languages.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.search_window;
 
 import wikt.sql.*;
-import wikt.constant.*;
-
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextBox;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.control.Tooltip;
 
 
 /** GUI element LangChoice contains checkboxes and text field with
@@ -73,6 +70,12 @@ public class LangChoice {
     
     var lang_source_CheckBox: CheckBox = CheckBox {
         text: "Source language"
+
+        tooltip: Tooltip {
+            text: "Words filtering\n"
+                    "by language code\n"
+                    "(e.g. de, fr)"
+        }
 
         onMouseReleased: function(e:MouseEvent) {
                 

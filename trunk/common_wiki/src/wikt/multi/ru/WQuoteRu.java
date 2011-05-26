@@ -503,6 +503,11 @@ for_label:
 
         // last. return format back
         text = text.replace("{{выдел!", "{{выдел|");
+        if(translation.length() > 0)
+            translation = translation.replace("{{выдел!", "{{выдел|");
+
+        if(transcription.length() > 0)
+            transcription = transcription.replace("{{выдел!", "{{выдел|");
 
         return new WQuote ( text, translation, transcription,
                             author_and_wikilink.author, author_and_wikilink.author_wikilink,
