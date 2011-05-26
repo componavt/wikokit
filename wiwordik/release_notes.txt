@@ -6,6 +6,9 @@ wiwordik 0.0X.10XX 2011-XX-XX
   Added (from programmer's point of view)
     Todo ...
 
+wiwordik 0.07.1053 2011-05-26
+  Added (from user's point of view):
+    Translations of quotes (Russian Wiktionary).
 
 wiwordik 0.06.1053 2011-05-22
   
