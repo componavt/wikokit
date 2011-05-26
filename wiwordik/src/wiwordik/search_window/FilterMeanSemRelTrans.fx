@@ -1,14 +1,15 @@
 /* FilterMeanSemRelTrans.fx - Words filter by a presence of meaning,
  * semantic relations, translations.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.search_window;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Tooltip;
 
 /** Words filter by a presence of meaning, semantic relations, translations,
  * etc. (CheckBoxes).
@@ -73,6 +74,10 @@ public class FilterMeanSemRelTrans {
     public var meaning_CheckBox: CheckBox = CheckBox {
         text: "Meaning"
 
+        tooltip: Tooltip {
+            text: "List of words only with meanings (senses)"
+        }
+
         onMouseReleased: function(e:MouseEvent) {
 
             if (meaning_CheckBox_value != meaning_CheckBox.selected) {
@@ -85,6 +90,12 @@ public class FilterMeanSemRelTrans {
 
     public var sem_rel_CheckBox: CheckBox = CheckBox {
         text: "Semantic Relation"
+
+        tooltip: Tooltip {
+            text: "List of words only with\n"
+                    "Semantic relations\n"
+                    "(synonyms, hypernyms, etc.)"
+        }
 
         onMouseReleased: function(e:MouseEvent) {
 

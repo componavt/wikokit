@@ -1,7 +1,7 @@
 /* Connect.java - connection to a database functions, the list of databases.
  *
- * Copyright (c) 2005-2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2005-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikipedia.sql;
@@ -78,13 +78,13 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    public final static String RUWIKT_DB   = "ruwikt20110413?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_DB   = "ruwikt20110521?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     
     // Russian Wiktionary parsed database
-    public final static String RUWIKT_PARSED_DB = "ruwikt20110413_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20110521_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
-    public final static String RUWIKT_SQLITE = "ruwikt20110413.sqlite";
+    public final static String RUWIKT_SQLITE = "ruwikt20110521.sqlite";
 
     // English Wiktionary database
     // use: connect_ruwikt.Open(Connect.WP_EN_HOST,Connect.WP_EN_DB,Connect.WP_EN_USER,Connect.WP_EN_PASS);

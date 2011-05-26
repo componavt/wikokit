@@ -1,7 +1,7 @@
 /* LanguageTypeRu.java - name of languages in Russian.
  *
  * Copyright (c) 2010-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikipedia.language.local;

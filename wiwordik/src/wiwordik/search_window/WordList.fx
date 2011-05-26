@@ -1,7 +1,7 @@
 /* WordList.fx - main list of words in the dictionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.search_window;
@@ -198,6 +198,8 @@ public class WordList {
         var wc = WC {}
         var l = word_ListView;
         //println("(WordList.openWordCard()): index_foreign.length={index_foreign.size()}, l.selectedIndex={l.selectedIndex} ");
+
+        // native_lang : LanguageType
 
         if(not isActiveIndexForeign()){
             // get data for "page_array[l.selectedIndex]"

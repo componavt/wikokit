@@ -2,16 +2,11 @@ wiwordik 0.XX 2011-0?-??
    See wiwordik/release_notes.txt
 
 wikokit 0.12.6 2011-0?-??
+  common_wiki 286 tests passed, 16 tests failed
   common_wiki 276 tests passed, 25 tests failed (wo wikt_parsed)
-
+  
   common_wiki 280 tests passed, 16 tests failed
   common_wiki 261 tests passed, 27 tests failed (wo wikt_parsed)
-  common_wiki 238 tests passed, 27 tests failed
-  common_wiki 237 tests passed, 28 tests failed
-  common_wiki 233 tests passed, 29 tests failed
-
-  common_wiki 225 tests passed, 34 tests failed (wo wikt_parsed)
-  common_wiki 219 tests passed, 35 tests failed (wo wikt_parsed)
 
   Project synarcher was renamed to wikokit.
   New home: code.google.com

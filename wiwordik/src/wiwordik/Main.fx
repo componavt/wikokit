@@ -1,7 +1,7 @@
 /* Main.fx - visualization of parsed Wiktionary database (wikt_parsed).
  *
  * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik;
@@ -24,52 +24,27 @@ import javafx.scene.layout.VBox;
 import javafx.scene.control.CheckBox;
 import javafx.geometry.Insets;
 
-// def DEBUG : Boolean = false;
-
 // Todo. Errors in parser:
 // дуб (илл -> syn)
 // тупица, река, самолёт (-) i.e. page.is_in_wiktionary = false
 
-// ===========
-// Wiktionary parsed database
-// ===========
-
-def wiwordik_version : String = "0.05";
-
-//////////////////////////////
-// Parameters
-
-/** If true, then SQLite database extracted from the .jar and stored
- * to the directory user.dir (Add .jar with SQLite database to the project).
- * If false, then SQLite database from the project local folder ./sqlite/
- */
-def IS_RELEASE : Boolean = true;
-
-/** true (SQLite), false (MySQL) */
-def IS_SQLITE : Boolean = true;
-
-//            eo Parameters //
-//////////////////////////////
-
-
 var wikt_parsed_conn : Connect = new Connect();
-var native_lang : LanguageType;
 
 function init() {
 
     //native_lang = LanguageType.en;
-    native_lang = LanguageType.ru;
+//    native_lang = LanguageType.ru;
 
-    if(IS_SQLITE) {
+    if(WConstants.IS_SQLITE) {
         // SQLite                                   //Connect.testSQLite();
-        if(LanguageType.ru == native_lang) {
-            wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru, IS_RELEASE);
+        if(LanguageType.ru == WConstants.native_lang) {
+            wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru, WConstants.IS_RELEASE);
         } else {
-            wikt_parsed_conn.OpenSQLite(Connect.ENWIKT_SQLITE, LanguageType.en, IS_RELEASE);
+            wikt_parsed_conn.OpenSQLite(Connect.ENWIKT_SQLITE, LanguageType.en, WConstants.IS_RELEASE);
         }
     } else {
         // MySQL
-        if(LanguageType.ru == native_lang) {
+        if(LanguageType.ru == WConstants.native_lang) {
             wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
         } else {
             wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
@@ -114,6 +89,7 @@ def tip : TipsTeapot = TipsTeapot.generateRandomTip();
 def word0: String = tip.getQuery(); //"*с?рё*";
 
 var lang_choice = LangChoice{};
+var debug_panel = DebugPanel{};
 
 def word_list : WordList = WordList{
     height: bind (stage.height - 80 - query_text_string.word_Text.height)
@@ -134,7 +110,7 @@ lang_choice.initialize(word_list, query_text_string, tip.getSourceLangCodes());
 
 word_list.initialize(   wikt_parsed_conn,
                         query_text_string, lang_choice, filter_mean_sem_transl,
-                        native_lang,
+                        WConstants.native_lang,
                         //word0,
                         n_words_list);
 
@@ -236,7 +212,8 @@ var result_VBox2: VBox = VBox {
     content: [  // wiki_page_Label,
                 lang_choice.lang_source_HBox,
                 h_filter_MRT,
-                lang_choice.lang_dest_HBox
+                lang_choice.lang_dest_HBox,
+                debug_panel.debug_HBox
              ] //, wc.card]
     spacing: 10
 };
@@ -271,7 +248,7 @@ var scene: Scene = Scene {
 
 // Application User Interface
 var stage: Stage = Stage {
-    title: "Wiwordik {wiwordik_version}.{LanguageType.size()} ({wikt_parsed_conn.getDBName()})"
+    title: "Wiwordik {WConstants.wiwordik_version}.{LanguageType.size()} ({wikt_parsed_conn.getDBName()})"
     //    resizable: false
     visible: true
     

@@ -1,8 +1,8 @@
 /* WCTranslation.fx - A part of word card corresponds to a translation part
  * of a page (entry) in Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.word_card;
@@ -10,31 +10,19 @@ package wiwordik.word_card;
 import wikt.sql.*;
 import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
-//import wikt.constant.POS;
-//import wikt.constant.Relation;
-
-import javafx.scene.text.Text;
-
-import javafx.scene.layout.VBox;
-//import javafx.scene.paint.Color;
-
-//import javafx.scene.control.ScrollView;
-
-//import javafx.scene.control.ListView;
-//import javafx.scene.layout.LayoutInfo;
 
 import java.lang.*;
+
+import javafx.scene.text.Text;
+import javafx.scene.layout.VBox;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.LayoutInfo;
-
 
 /** Translations consists of one meaning block translated to all languages.
  *
  * @see wikt.sql.TTranslation and wikt.word.WTranslation
  */
 public class WCTranslation {
-
-    def DEBUG : Boolean = true;
 
     /** Translation section (box) title, i.e. additional comment,
      * e.g. "fruit" or "apple tree" for "apple".

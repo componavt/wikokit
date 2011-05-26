@@ -1,7 +1,7 @@
 /* PageTableAll.java - parses all pages in the Wiktionary table 'page' (source database).
  *
- * Copyright (c) 2005-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2005-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.parser;

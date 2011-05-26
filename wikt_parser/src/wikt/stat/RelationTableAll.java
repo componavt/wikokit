@@ -21,6 +21,7 @@ import java.util.HashMap;
 
 import java.util.List;
 import java.util.ArrayList;
+import wikt.constant.POS;
 
 
 /** Relations' statistics in the database of the parsed Wiktionary.
@@ -225,8 +226,9 @@ public class RelationTableAll {
         ResultSet   rs= null;
         long    t_start;
 
+        int n_unknown_pos__in_rich_words = 0; // number of words (with many relations) with unknown POS
         int n_total = Statistics.Count(wikt_parsed_conn, "lang_pos");
-        lang_pos_with_relations = 0;
+
         t_start = System.currentTimeMillis();
 
         try {
@@ -265,6 +267,9 @@ public class RelationTableAll {
                         }
                     }
                     assert(lang_pos != null);
+
+                    if(POS.unknown == lang_pos.getPOS().getPOS())
+                        n_unknown_pos__in_rich_words ++;
 
                     boolean b_added = false;
                     if((native_lang == lang && n_relation >= threshold_relations_native) ||
@@ -325,6 +330,8 @@ public class RelationTableAll {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+
+        System.out.println("\nNumber of words (with many relations) with unknown POS: " + n_unknown_pos__in_rich_words);
     }
 
 

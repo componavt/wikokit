@@ -353,6 +353,33 @@ public class WQuoteRuTest {
         assertEquals(q.getYearTo(), exp_year_to);
     }
 
+
+    // range of years with dash template {{-}}: 1998{{-}}2001
+    @Test
+    public void testGetQuotes_dash_template_in_range_of_years() {
+        System.out.println("testGetQuotes_dash template_in_range_of_years");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "как скажете";
+        text =  "# как пожелаете; в соответствии с вашими пожеланиями {{пример|{{-}}{{выдел|Как скажете}}, {{-}}не стал спорить мужичок. … {{-}}Ладно, {{выдел|как скажете}}.|Дмитрий Браславский|Паутина Лайгаша|1998{{-}}2001}}";
+//{{пример|{{-}}{{выдел|Как скажете}}, {{-}}не стал спорить мужичок. … {{-}}Ладно, {{выдел|как скажете}}.|Дмитрий Браславский|Паутина Лайгаша|1998{{-}}2001}}
+
+        exp_year_from   = 1998;
+        exp_year_to     = 2001;
+
+        text = Definition.stripNumberSign(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertEquals(exp_year_from, q.getYearFrom());
+        assertEquals(exp_year_to, q.getYearTo());
+    }
+
+
     // extract year from day_month_year
     //
     // # отступиться {{пример|... {{выдел|отойти}} от шаблонов, становящихся ярлыками.|Н. С. Лейтес|О признаках детской одаренности|издание=Вопросы психологии|22 июля 2003|источник=НКРЯ}}

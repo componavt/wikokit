@@ -1,7 +1,7 @@
 /* WPOSRu.java - corresponds to a POS level of Russian Wiktionary word.
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.multi.ru;
@@ -377,12 +377,13 @@ public class WPOSRu {
             if(two_letters.equalsIgnoreCase("{{")) {
                 // if \1=="{{" then get first letters till space
                 // substring started after the symbol "{{"
-                String pos_name = StringUtilRegular.getLettersTillSpace(text.substring(m.end()));
+                //String pos_name = StringUtilRegular.getLettersTillSpace(text.substring(m.end())).toLowerCase();
+                String pos_name = StringUtilRegular.getLettersTillSpaceHyphenOrPipe(text.substring(m.end())).toLowerCase();
                 if(POSTypeRu.has(pos_name)) {
                     p_type = POSTypeRu.get(pos_name);
-                } else {
-                    // old template of POS with hyphen, e.g. "{{adv-ru|}} instead of {{adv ru|}}
-                    pos_name = StringUtilRegular.getLettersTillHyphen(text.substring(m.end()));
+                } /*else {
+                    // old template of POS with hyphen, e.g. "{{adv-ru|}} instead of {{adv ru|}}, or Мс-п6b
+                    pos_name = StringUtilRegular.getLettersTillHyphen(text.substring(m.end())).toLowerCase();
                     if(POSTypeRu.has(pos_name)) {
                         p_type = POSTypeRu.get(pos_name);
                     }
@@ -390,11 +391,30 @@ public class WPOSRu {
             } else {
                 // else get two_letters + the first Word
                 // todo 
-                // ....
+                // ....*/
             }
+        } else {
+            if(isPhrasePOS(text))
+                p_type = POS.phrase;
         }
         
         return new POSText(p_type, new StringBuffer(text));
+    }
+
+    /** Checks whether the text describes a phrase. It is true if the text 
+     * contains something like:
+     * <PRE>
+     * === Тип и синтаксические свойства сочетания ===
+     * {{phrase|
+     * |тип=фразема
+     * }}
+     * </PRE>
+     * @param text
+     * @return
+     */
+    private static boolean isPhrasePOS (StringBuffer text)
+    {
+        return text.toString().contains("{{phrase");
     }
     
     
@@ -440,6 +460,7 @@ public class WPOSRu {
         }
         
         // compare pos_title with POSType
+        pos_title = pos_title.toLowerCase();
         if( POSTypeRu.has(pos_title)) {
             return POSTypeRu.get(pos_title);
         }

@@ -1,7 +1,7 @@
 /* WC.fx - Word card corresponds to a page (entry) in Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.word_card;
@@ -17,25 +17,23 @@ import java.lang.*;
 import javafx.scene.control.ScrollView;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.scene.layout.Flow;
 import javafx.geometry.Insets;
 import javafx.scene.layout.HBox;
 
+import wiwordik.WConstants;
+import javafx.scene.control.Hyperlink;
+import java.net.*;
 
 /** One word card describes one word (page, entry in Wiktionary).
  *
  * Word's definition, semantic relations, quotations, translations.
  */
 public class WC{ // extends JFrame {
-//public class WC {
-    def DEBUG : Boolean = true;
     
     /** Current TPage corresponds to selected word. */
     public var tpage : TPage;
@@ -55,25 +53,51 @@ public class WC{ // extends JFrame {
 */
     var header_page_title: String;
 
+    var height : Integer = 600;
+    
     var headerText: Text = Text {
 
             content: "headerText (page.is_in_wiktionary)" // bind definition_text_value // "line 1\n\nline2\n \nline3"
-            wrappingWidth: 380
+            // wrappingWidth: WCConstants.wrapping_width - 30
+            //wrappingWidth: bind card_scene.width - 30
             
             font: Font {
                 name: "sansserif"
                 size: 14
                 oblique: true
             }
+            fill: Color.YELLOWGREEN
         }
 
+    var link_to_wikt: Hyperlink = Hyperlink{
+        //text: "http://{WCConstants.native_lang}.wiktionary.org/wiki/"
+        //text: wiwordik.Main.native_lang.toString()
+        font: Font {
+                name: "sansserif"
+                size: 12
+                oblique: true
+            }
+        
+        action: function():Void{
+            try {
+                // java.awt.Desktop.getDesktop().browse(new URI(link_to_wikt.text));
+                def desktopClass = Class.forName("java.awt.Desktop");
+                def desktop = desktopClass.getMethod("getDesktop").invoke(null);
+                def browseMethod = desktopClass.getMethod("browse", [URI.class] as java.lang.Class[]);
+                browseMethod.invoke(desktop, new URI(link_to_wikt.text));
+                // AppletStageExtension.showDocument(link_to_wikt.text);
+            } catch (e) {
+                System.out.println("Error: the following link could not be open: {link_to_wikt.text}");
+            }
+        }
+    }
 
     // temp (all POS as one text) ---------------------------
     var langPOSCards: Text = Text {
 
                 //content: "langPOSCards todo"
                 content: bind card_text_value // "line 1\n\nline2\n \nline3"
-                wrappingWidth: 380
+                wrappingWidth: WConstants.wrapping_width
 
                 font: Font {
                     name: "sansserif"
@@ -85,6 +109,9 @@ public class WC{ // extends JFrame {
 
     
     var lang_VBox : VBox = VBox {
+            //opacity:  0.5
+            width: bind card_scene.width - 30
+            //width: wrapping_width +2 - 30
             spacing: 20
         };
     
@@ -121,17 +148,15 @@ public class WC{ // extends JFrame {
       }
     }*/
 
-    var width : Integer = 382;
-    var height : Integer = 600;
     var card_scene: Scene;
 
     public var card : Stage = Stage {
     title : bind header_page_title
     scene: card_scene = Scene {
-        width: width
+        width: WConstants.wrapping_width + 2
         height: height
         content:
-            ScrollView {
+        ScrollView {
                 width: bind card_scene.width
                 height: bind card_scene.height
                 //fitToWidth: true
@@ -145,8 +170,17 @@ public class WC{ // extends JFrame {
                     content: [
 
                         VBox {
+                            // x: bind scene.width-scene.width*0.9
+                            
                             //padding: Insets {left: 5 right: 5}
-                            content: [headerText, lang_VBox]
+                            content: [
+
+                                HBox {
+                                    spacing: 12
+                                    content: [ headerText, link_to_wikt]
+                                }
+
+                                lang_VBox]
                             //content: [headerText, lang_VBox, langPOSCards]
                             spacing: 10
                         }
@@ -155,6 +189,7 @@ public class WC{ // extends JFrame {
             }
         }
     }
+
 
 
     /** Prints meanings for each language.
@@ -179,8 +214,10 @@ public class WC{ // extends JFrame {
             var lang : LanguageType = lang_pos.getLang().getLanguage();
             var pos : POS = lang_pos.getPOS().getPOS();
 
-            var s : String = "{lang.getName()} ({lang.getCode()}):{pos.toString()}\n";
-            if (DEBUG) s = "{lang.getName()} ({lang.getCode()}):{pos.toString()}; lang_pos.id = {lang_pos.getID()}\n";
+            var s : String = "{lang.getName()} ({lang.getCode()}):{pos.toString()}";
+            if (WConstants.DEBUG)
+                s = "{s}; lang_pos.id = {lang_pos.getID()}";
+            s = "{s}\n";
 
             def definitions : String[] = WTMeaning.getDefinitionsByLangPOS(conn, lang_pos);
 
@@ -216,6 +253,21 @@ public class WC{ // extends JFrame {
         return res;
     }
 
+    /** Gets link to entry, if there is a corresponding Wiktionary article.*/
+    public function getLinktoWiktionaryEntry (_tpage : TPage):String {
+
+        var s : String = "";
+        if(_tpage.isInWiktionary()) {
+
+            // replace all spaces by underscores "_"
+            var s_underscored = _tpage.getPageTitle().replaceAll(" ", "_");
+
+            s = "http://{WConstants.native_lang}.wiktionary.org/wiki/{s_underscored}";
+            //System.out.println("page_title={page_title}, but link_to_wikt.text={link_to_wikt.text}");
+        }
+        return s;
+    }
+
     /** Prints page_title as a header of word card.
      *  Prints sign "+" or "-" if there is a separate page for this word in WT.
     */
@@ -236,6 +288,8 @@ public class WC{ // extends JFrame {
                 s += "\n \nСм. {_tpage.getRedirect()} (Redirect)";
 
             headerText.content = s;
+
+            link_to_wikt.text = getLinktoWiktionaryEntry(_tpage);
         }
     }
     
@@ -247,8 +301,9 @@ public class WC{ // extends JFrame {
                                         _tpage : TPage) {
                                         //word : String, index:Integer) {
         if(null != _tpage) {
-            
-            printHeaderText (_tpage);
+
+            //System.out.println("Ops 1. getDataForSelectedWordByTPage");
+            // printHeaderText (_tpage); it will be printed in createCXLangList
 
             if(_tpage.isRedirect()) {
                 headerText.content = "\n \nСм. {_tpage.getRedirect()} (Redirect)";
@@ -300,7 +355,8 @@ public class WC{ // extends JFrame {
     public function createCXLangList( conn : Connect,
                                         _tpage : TPage) {
         if(null != _tpage) {
-            
+
+            //System.out.println("Ops 2. createCXLangList");
             printHeaderText (_tpage);
 
             // Prints meanings for each language
@@ -313,7 +369,7 @@ public class WC{ // extends JFrame {
             for (tl in tlanguages) {
 
                 def l : WCLanguage = new WCLanguage();
-                l.create(conn, tl.getLanguage(), lang_pos_array);
+                l.create(conn, card_scene, tl.getLanguage(), lang_pos_array);
 
                 // Wiktionary (native) language should be before foreign languages
                 if(tl.getLanguage() == conn.getNativeLanguage()) {
