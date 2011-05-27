@@ -1,7 +1,7 @@
 /* LanguageTypeLocal.java - names of languages in some language.
  *
- * Copyright (c) 2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2010-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikipedia.language;
