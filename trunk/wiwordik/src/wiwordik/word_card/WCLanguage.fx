@@ -13,11 +13,7 @@ import wikipedia.language.LanguageType;
 
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
-import javafx.scene.Group;
-
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.TextOrigin;
 
 import java.lang.*;
 import javafx.scene.Scene;
@@ -75,7 +71,7 @@ public class WCLanguage {
                             lang_pos_array : TLangPOS[]
                            ) {
 
-        language_name_value = "{_lang.getName()} ({_lang.getCode()})";
+        language_name_value = "{_lang.getName(WConstants.native_lang)} ({_lang.getCode()})";
         // System.out.println("WCLanguage.create(). language_name_value = {language_name_value}");
 
         for (_lang_pos in lang_pos_array) {

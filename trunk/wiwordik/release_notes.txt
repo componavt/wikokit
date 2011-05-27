@@ -1,8 +1,9 @@
 wiwordik 0.0X.10XX 2011-XX-XX
   
   Added (from user's point of view):
-    Todo ...
-   
+    Name of part of speech (POS) is translated (in interface) into native language, i.e. names of POS are in Russian in the program which provides interfaces to data extracted from the Russian Wiktionary.
+    Language names translated to Russian (in interface).
+
   Added (from programmer's point of view)
     Todo ...
 

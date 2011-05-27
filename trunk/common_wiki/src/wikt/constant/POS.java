@@ -6,6 +6,9 @@
 
 package wikt.constant;
 
+import wikipedia.language.LanguageType;
+import wikt.multi.ru.name.POSRu;
+
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
@@ -20,7 +23,28 @@ public class POS {
     private final String name;
     
     @Override
-    public String  toString() { return name; }
+    public String toString() { return name; }
+
+    /** Gets name of POS in the language l.
+     * If there is no translation then returns POS name in English */
+    public String toString(LanguageType l) {
+
+        String s = "";
+
+        if(l  == LanguageType.ru) {
+            s = POSRu.getName(this);
+
+        } else if(l == LanguageType.en) {
+            s = name;
+        } else {
+            throw new NullPointerException("Null LanguageType");
+        }
+
+        if(0 == s.length()) // English name is better than nothing
+            s = name;
+
+        return s;
+    }
     
     /* Set helps to check the presence of elements */
     private static Map<String, POS> name2type = new HashMap<String, POS>();
@@ -108,6 +132,5 @@ public class POS {
 
     // only in Russian Wiktionary (yet)
     public static final POS verb_interjection = new POS("verb-interjection");// interj1 - глагольно-междометное слово - verb-interjection word
-    
     public static final POS parenthesis = new POS("parenthesis");// вводное слово
 }
