@@ -173,8 +173,6 @@ public class WPOSRuTest {
         System.out.println("testGuessPOS_till_hyphen_not_space");
 
         String str, page_title;
-        POS result;
-        StringBuffer s;
         LangText lt;
         POSText pt;
 
@@ -537,6 +535,35 @@ public class WPOSRuTest {
         result = WPOSRu.splitToPOSSections("test_word1", lt);
         assertEquals(1, result.length);
         assertEquals(POS.preposition, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // {{article en|the}}
+    // and {{art XX|}}
+    @Test
+    public void testSplitToPOSSections_ru_POS_article() {
+        System.out.println("splitToPOSSections_ru_POS_article");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // {{art XX|}}
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{art de|}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.article, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+
+        // {{article en|the}}
+        lt = new LangText(LanguageType.ru);
+        str = "\n ===Морфологические и синтаксические свойства===\n{{article en|the}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.article, result[0].getPOSType());
         assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
     }
 

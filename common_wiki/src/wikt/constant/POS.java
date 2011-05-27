@@ -69,7 +69,7 @@ public class POS {
     /** The POS is unknown :( */
     public static final POS unknown         = new POS("unknown");
     
-     // The classical parts of speech are:
+    // The classical parts of speech are:
     public static final POS noun            = new POS("noun");
     public static final POS verb            = new POS("verb");
     public static final POS adverb          = new POS("adverb");
@@ -109,4 +109,5 @@ public class POS {
     // only in Russian Wiktionary (yet)
     public static final POS verb_interjection = new POS("verb-interjection");// interj1 - глагольно-междометное слово - verb-interjection word
     
+    public static final POS parenthesis = new POS("parenthesis");// вводное слово
 }
