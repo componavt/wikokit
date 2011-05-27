@@ -27,7 +27,7 @@ public class POSTypeRu extends POSType {
     private final String name_in_text;
     
     /** POS name in Russian, e.g. "Акроним" for "acronym" */
-    //private final String name; // todo ... HashMap type -> Russian POS name
+    //private final String native_name; // todo ... HashMap type -> Russian POS name
     
     /** POS */
     private final POS type; 
@@ -94,7 +94,10 @@ public class POSTypeRu extends POSType {
 
     // Additional commonly used grammatical headers are:
     // proper_noun ?
-    // article ?
+
+    public static final POSType article             = new POSTypeRu("art",      POS.article); // артикль
+    public static final POSType article2            = new POSTypeRu("article",  POS.article);
+
     public static final POSType prefix              = new POSTypeRu("prefix",     POS.prefix); // приставка
     public static final POSType suffix              = new POSTypeRu("suffix",     POS.suffix); // суффикс
     // phrase - ok
