@@ -10,6 +10,7 @@
 
 package wikipedia.language;
 
+import wikt.multi.ru.name.LanguageTypeRu;
 import wikipedia.language.local.*;
 
 import java.util.Map;
