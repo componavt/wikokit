@@ -648,6 +648,24 @@ public class WPOSRuTest {
         assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
     }
 
+    // intro - parenthesis
+    @Test
+    public void testSplitToPOSSections_ru_POS_intro_parenthesis() {
+        System.out.println("splitToPOSSections_ru_POS_intro_parenthesis");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        lt = new LangText(LanguageType.ru);
+        str = "\n=== Морфологические и синтаксические свойства ===\n\n{{intro ru|{{по-слогам|на|при|ме́р}}}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.parenthesis, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
 
     // eo tests of different POS
     ////////////////////////////

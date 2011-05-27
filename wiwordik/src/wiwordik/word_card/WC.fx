@@ -353,7 +353,7 @@ public class WC{ // extends JFrame {
      * @params page_array list of titles of pages in ListView window (scroll).
     **/
     public function createCXLangList( conn : Connect,
-                                        _tpage : TPage) {
+                                      _tpage : TPage) {
         if(null != _tpage) {
 
             //System.out.println("Ops 2. createCXLangList");

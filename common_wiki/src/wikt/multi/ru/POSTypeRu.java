@@ -33,25 +33,25 @@ public class POSTypeRu extends POSType {
     private final POS type; 
     
     //private static Map<String, String>  text2name = new HashMap<String, String>();
-    private static Map<String, POS> name2type = new HashMap<String, POS>();
+    private static Map<String, POS> name_in_text2type = new HashMap<String, POS>();
     
     /** Initialization for POSTypeEn, POSTypeRu, etc. */
     private POSTypeRu(String name_in_text, POS type) {
         this.name_in_text   = name_in_text;
         this.type           = type;         // english.english;
-        name2type.put(name_in_text, type); // english.english);
+        name_in_text2type.put(name_in_text, type); // english.english);
     }
     
     public String getName() { return type.toString(); }
     
     /** Checks weather exists the part of speech by its abbreviation 'code'. */
     public static boolean has(String code) {
-        return name2type.containsKey(code);
+        return name_in_text2type.containsKey(code);
     }
     
     /** Gets part of speech by its abbreviation */
     public static POS get(String code) {
-        return name2type.get(code);
+        return name_in_text2type.get(code);
     }
     
     
@@ -63,9 +63,10 @@ public class POSTypeRu extends POSType {
     // {{СущМужНеодуш1c(1)
     // {{СущЖенНеодуш8a
     // Существительное, ...
-    public static final POSType noun    = new POSTypeRu("сущ",      POS.noun);  // "существительное",
+    // public static final POSLocal noun = new POSRu(, POS.noun);
+    public static final POSType noun    = new POSTypeRu("сущ",      POS.noun);
     public static final POSType noun_old= new POSTypeRu("падежи",   POS.noun);  // "существительное",
-    
+
     // ===Морфологические и синтаксические свойства===
     // {{парадигма-рус
     // |шаблон=Гл11b/c
@@ -119,5 +120,5 @@ public class POSTypeRu extends POSType {
 
     // only in Russian Wiktionary (yet)
     public static final POSType verb_interjection   = new POSTypeRu("interj1", POS.verb_interjection);// interj1 - глагольно-междометное слово - verb-interjection word
-
+    public static final POSType parenthesis   = new POSTypeRu("intro", POS.parenthesis);
 }

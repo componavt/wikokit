@@ -11,7 +11,6 @@
 package wikipedia.language;
 
 import wikt.multi.ru.name.LanguageTypeRu;
-import wikipedia.language.local.*;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -123,6 +122,24 @@ public class LanguageType {
     /** Gets language name. */
     public String getName() {
         return name;
+    }
+
+    /** Gets name of the language translated to the language l.
+     * If there is no translation then returns language name in English */
+    public String getName(LanguageType l) {
+
+        String s = "";
+
+        if(l  == LanguageType.ru) {
+            s = LanguageTypeRu.get(this);
+
+        } else if(l == LanguageType.en) {
+            s = name;
+        } else {
+            throw new NullPointerException("Null LanguageType");
+        }
+
+        return s;
     }
     
     /** Checks weather exists the language code 'code'. */

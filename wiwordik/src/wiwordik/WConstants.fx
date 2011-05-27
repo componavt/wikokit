@@ -38,7 +38,7 @@ public def wiwordik_version : String = "0.07";
 public def IS_RELEASE : Boolean = true;
 
 /** true (SQLite), false (MySQL) */
-public def IS_SQLITE : Boolean = true;
+public def IS_SQLITE : Boolean = false;
 
 //            eo Parameters //
 //////////////////////////////

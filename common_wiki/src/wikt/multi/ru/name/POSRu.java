@@ -100,16 +100,39 @@ public class POSRu extends POSLocal {
     public static final POSLocal adverb = new POSRu("Наречие", "нар.", POS.adverb);
     public static final POSLocal adjective = new POSRu("Прилагательное", "прил.", POS.adjective);
     public static final POSLocal pronoun = new POSRu("Местоимение", "мест.", POS.pronoun);
-
-    /*
-    public static final POSLocal  = new POSRu("", ".", POS.);
-    public static final POS conjunction     = new POS("conjunction");
-
-    public static final POSLocal  = new POSRu("", ".", POS.);
-    public static final POS interjection    = new POS("interjection");
-
-    public static final POSLocal  = new POSRu("", ".", POS.);
-    public static final POS preposition     = new POS("preposition");
-*/
     
+    public static final POSLocal conjunction = new POSRu("Союз", "союз", POS.conjunction);
+    public static final POSLocal interjection = new POSRu("Междометие", "межд.", POS.interjection);
+    public static final POSLocal preposition = new POSRu("Предлог", "предл.", POS.preposition);
+
+    // Additional commonly used grammatical headers are:
+    public static final POSLocal proper_noun = new POSRu("Имя собственное", "имя собств.", POS.proper_noun);
+    public static final POSLocal article = new POSRu("Артикль", "артикль", POS.article);
+    public static final POSLocal prefix = new POSRu("Приставка", "прист.", POS.prefix);
+    public static final POSLocal suffix = new POSRu("Суффикс", "суфф.", POS.suffix);
+
+    public static final POSLocal phrase = new POSRu("Фраза", "фраза", POS.phrase);
+    public static final POSLocal idiom = new POSRu("Идиома", "идиом.", POS.idiom);
+    public static final POSLocal prepositional_phrase = new POSRu("Предложная группа", "предл. гр.", POS.prepositional_phrase);
+
+    // debated POS level 3 headers
+    public static final POSLocal numeral = new POSRu("Числительное", "числ.", POS.numeral);
+    
+    // other descriptors that identify the usage of the entry, but which are not (strictly speaking) parts of speech:
+    public static final POSLocal acronym = new POSRu("Акроним", "акроним", POS.acronym);
+
+    public static final POSLocal abbreviation = new POSRu("Аббревиатура", "сокр.", POS.abbreviation);
+    public static final POSLocal initialism = new POSRu("Буквенная аббревиатура", "букв. аббрев.", POS.initialism);
+
+    public static final POSLocal symbol = new POSRu("Символ", "симв.", POS.symbol);
+    public static final POSLocal letter = new POSRu("Буква", "буква", POS.letter);
+
+    // other headers in use
+    public static final POSLocal particle = new POSRu("Частица", "частица", POS.particle);
+    public static final POSLocal participle = new POSRu("причастие", "прич.", POS.participle);
+
+    // only in Russian Wiktionary (yet)
+    public static final POSLocal verb_interjection = new POSRu("Глагольно-междометное слово", "глагольно-междом.", POS.verb_interjection);
+    public static final POSLocal parenthesis = new POSRu("Вводное слово", "вводн. сл.", POS.parenthesis);
+
 }
