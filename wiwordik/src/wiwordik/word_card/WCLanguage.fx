@@ -1,8 +1,8 @@
 /* WCLanguage.fx - A part of word card corresponds to a language part
  * of a page (entry) in Wiktionary. It contains POS's sub-parts.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wiwordik.word_card;

@@ -133,4 +133,6 @@ public class POS {
     // only in Russian Wiktionary (yet)
     public static final POS verb_interjection = new POS("verb-interjection");// interj1 - глагольно-междометное слово - verb-interjection word
     public static final POS parenthesis = new POS("parenthesis");// вводное слово
+    public static final POS prefix_of_compound = new POS("prefix of compound words");// первая часть сложных слов
+    
 }
