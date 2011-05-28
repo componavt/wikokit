@@ -379,8 +379,8 @@ public class WPOSRu {
                 // substring started after the symbol "{{"
                 //String pos_name = StringUtilRegular.getLettersTillSpace(text.substring(m.end())).toLowerCase();
                 String pos_name = StringUtilRegular.getLettersTillSpaceHyphenOrPipe(text.substring(m.end())).toLowerCase();
-                if(POSTypeRu.has(pos_name)) {
-                    p_type = POSTypeRu.get(pos_name);
+                if(POSTemplatesRu.has(pos_name)) {
+                    p_type = POSTemplatesRu.get(pos_name);
                 } /*else {
                     // old template of POS with hyphen, e.g. "{{adv-ru|}} instead of {{adv ru|}}, or Мс-п6b
                     pos_name = StringUtilRegular.getLettersTillHyphen(text.substring(m.end())).toLowerCase();
@@ -461,14 +461,14 @@ public class WPOSRu {
         
         // compare pos_title with POSType
         pos_title = pos_title.toLowerCase();
-        if( POSTypeRu.has(pos_title)) {
-            return POSTypeRu.get(pos_title);
+        if( POSTemplatesRu.has(pos_title)) {
+            return POSTemplatesRu.get(pos_title);
         }
         
         // get first word without number, e.g. ==Verb I== -> "Verb"
         String pos_name = StringUtilRegular.getLettersTillSpace(pos_title);
-        if( POSTypeRu.has(pos_name)) {
-            return POSTypeRu.get(pos_name);
+        if( POSTemplatesRu.has(pos_name)) {
+            return POSTemplatesRu.get(pos_name);
         }
         
         if(page_title.equalsIgnoreCase(pos_name)) { // It's POS because, e.g. "round I" == "round" + "I", but it's unknown POS
