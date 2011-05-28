@@ -134,5 +134,5 @@ public class POSRu extends POSLocal {
     // only in Russian Wiktionary (yet)
     public static final POSLocal verb_interjection = new POSRu("Глагольно-междометное слово", "глагольно-междом.", POS.verb_interjection);
     public static final POSLocal parenthesis = new POSRu("Вводное слово", "вводн. сл.", POS.parenthesis);
-
+    public static final POSLocal prefix_of_compound = new POSRu("Первая часть сложных слов", "первая часть сложн. сл.", POS.prefix_of_compound);
 }
