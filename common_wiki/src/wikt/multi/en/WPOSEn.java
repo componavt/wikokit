@@ -94,10 +94,10 @@ public class WPOSEn {
 
             String pos_header = m.group(1);
 
-            if(m.groupCount() > 0 && POSTemplatesEn.has(pos_header)) {
+            if(m.groupCount() > 0 && POSTemplateEn.has(pos_header)) {
 
                 pos_section_alone.add( new POSText(
-                        POSTemplatesEn.get(pos_header),
+                        POSTemplateEn.get(pos_header),
                         new StringBuffer(          // text after === POS ===
                                 lt.text.toString().substring(m.end()))) );
 
@@ -150,24 +150,24 @@ public class WPOSEn {
         String  pos_header, pos_header_old = "";
         pos_header = m.group(1);
         
-        while(b_next && !POSTemplatesEn.has(pos_header))
+        while(b_next && !POSTemplateEn.has(pos_header))
         {
             b_next = m.find();
             pos_header = m.group(1);
         }
         pos_header_old = pos_header;
-        assert(POSTemplatesEn.has(pos_header));
+        assert(POSTemplateEn.has(pos_header));
         assert(b_next);
         int end_old = m.end();
         
     search_POS:
         while(b_next) {
             pos_header = "";
-            while(b_next && !POSTemplatesEn.has(pos_header))
+            while(b_next && !POSTemplateEn.has(pos_header))
             {
                 b_next = m.find();
                 if (!b_next) {
-                    POS p = POSTemplatesEn.get(pos_header_old);
+                    POS p = POSTemplateEn.get(pos_header_old);
                     POSText pt = new POSText(p, lt.text.substring(end_old));
                     pos_sections.add(pt);
                     
@@ -176,7 +176,7 @@ public class WPOSEn {
                 pos_header = m.group(1);
             }
 
-            POS p = POSTemplatesEn.get(pos_header_old);
+            POS p = POSTemplateEn.get(pos_header_old);
             pos_header_old = pos_header;
 
             POSText pt = new POSText(p, lt.text.substring(end_old, m.start()));
@@ -242,7 +242,7 @@ public class WPOSEn {
         
         while(m.find()) {
             
-            if(m.groupCount() > 0 && POSTemplatesEn.has(m.group(1)))
+            if(m.groupCount() > 0 && POSTemplateEn.has(m.group(1)))
                 n_pos ++;
         }
 
@@ -262,8 +262,8 @@ public class WPOSEn {
 
             String pos_header = m.group(1);
 
-            if(m.groupCount() > 0 && POSTemplatesEn.has(pos_header))
-                return POSTemplatesEn.get(pos_header);
+            if(m.groupCount() > 0 && POSTemplateEn.has(pos_header))
+                return POSTemplateEn.get(pos_header);
         }
 
         return p_type;

@@ -129,7 +129,13 @@ public class POSRu extends POSLocal {
 
     // other headers in use
     public static final POSLocal particle = new POSRu("Частица", "частица", POS.particle);
-    public static final POSLocal participle = new POSRu("причастие", "прич.", POS.participle);
+    public static final POSLocal participle = new POSRu("Причастие", "прич.", POS.participle);
+    public static final POSLocal determiner = new POSRu("Детерминатив", "детерминатив", POS.determiner);
+
+
+    public static final POSLocal predicative = new POSRu("Именная часть составного сказуемого", "предикатив", POS.predicative);
+
+    
 
     // only in Russian Wiktionary (yet)
     public static final POSLocal verb_interjection = new POSRu("Глагольно-междометное слово", "глагольно-междом.", POS.verb_interjection);

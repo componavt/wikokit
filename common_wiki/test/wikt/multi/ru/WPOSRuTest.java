@@ -648,6 +648,25 @@ public class WPOSRuTest {
         assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
     }
 
+    // predicative - Именная часть составного сказуемого, предикатив
+    @Test
+    public void testSplitToPOSSections_ru_POS_predicative() {
+        System.out.println("splitToPOSSections_ru_POS_predicative");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        // {{predic ru|{{по-слогам|пол|ны́м-пол|но́}}}}
+        lt = new LangText(LanguageType.ru);
+        str = "\n=== Морфологические и синтаксические свойства ===\n\n{{predic ru|{{по-слогам|пол|ны́м-пол|но́}}}}\n text1";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("test_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.predicative, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
     // intro - parenthesis
     @Test
     public void testSplitToPOSSections_ru_POS_intro_parenthesis() {
