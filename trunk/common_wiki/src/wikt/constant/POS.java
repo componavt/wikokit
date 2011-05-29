@@ -129,6 +129,11 @@ public class POS {
     // other headers in use
     public static final POS particle        = new POS("particle");
     public static final POS participle      = new POS("participle");
+    public static final POS determiner      = new POS("determiner");
+
+
+    public static final POS predicative     = new POS("predicative");
+    
 
     // only in Russian Wiktionary (yet)
     public static final POS verb_interjection = new POS("verb-interjection");// interj1 - глагольно-междометное слово - verb-interjection word
