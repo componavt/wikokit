@@ -210,6 +210,40 @@ public class WQuoteRuTest {
         assertEquals(q.getYearTo(), exp_year);
     }
 
+    // |Паустовский|Рассказы о Бабеле||источник=Lib}}
+    // # {{рег.}} {{жарг.}} процент [[наводчик]]а {{пример|В одну из таких ночей — «{{выдел|карбач}}», |Паустовский|Рассказы о Бабеле||источник=Lib}}
+    @Test
+    public void testGetQuotes_empty_year() {
+        System.out.println("testGetQuotes_empty_year");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_source;
+        int exp_year;
+
+        page_title = "карбач_test";
+        text =  "# {{рег.}} {{жарг.}} процент [[наводчик]]а {{пример|В одну из таких ночей — «{{выдел|карбач}}»|Паустовский|Рассказы о Бабеле||источник=Lib}}";
+//|Паустовский|Рассказы о Бабеле||источник=Lib}}
+
+        exp_text = "В одну из таких ночей — «{{выдел|карбач}}»";
+        exp_author = "Паустовский";
+        exp_title = "Рассказы о Бабеле";
+        exp_year = -1;
+        exp_source = "Lib";
+
+        text = Definition.stripNumberSign(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(q.getYearFrom(), exp_year);
+        assertEquals(q.getYearTo(), exp_year);
+    }
+    
 
     // 1 quote with translation
     // [[верующий]] {{пример|текст=…У касцёл Святога Роха… ў {{выдел|вернікаў}}…|перевод=В костёл Святого Роха… у {{выдел|верующих}}…|автор=Лідзія Адамовіч|титул=Кветкі самотнай князёўны|источник=БП}}
@@ -317,6 +351,73 @@ public class WQuoteRuTest {
         assertEquals(q.getYearTo(), exp_year_to);
     }
 
+    // 1830-е (decade; ten years)
+    @Test
+    public void testGetQuotes_ten_years() {
+        System.out.println("testGetQuotes_ten_years");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "пестик_test";
+        text =  "# [[плод]] {{пример|какие-то {{выдел|пестики}}.|Одоевский|[[:s:Два дерева (Одоевский)|Два дерева]]|1830-е}}";
+// |Одоевский|[[:s:Два дерева (Одоевский)|Два дерева]]|1830-е}}
+        exp_text = "какие-то {{выдел|пестики}}.";
+        exp_author = "Одоевский";
+        exp_title = "Два дерева";
+        exp_year_from   = 1830;
+        exp_year_to     = 1830;
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(exp_year_from, q.getYearFrom());
+        assertEquals(exp_year_to, q.getYearTo());
+    }
+
+    // question_in_years e.g. 1862—1875?
+    @Test
+    public void testGetQuotes_question_in_years() {
+        System.out.println("testGetQuotes_question_in_years");
+        String text, page_title;
+        String exp_text, exp_author, exp_title, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "пестик_test";
+        text =  "# [[плод]] {{пример|text|Одоевский|Два дерева|1862—1875?}}";
+        exp_text = "text";
+        exp_author = "Одоевский";
+        exp_title = "Два дерева";
+        exp_year_from   = 1862;
+        exp_year_to     = 1875;
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(exp_year_from, q.getYearFrom());
+        assertEquals(exp_year_to, q.getYearTo());
+    }
+
     // error in range of years: 1880-
     @Test
     public void testGetQuotes_error_in_range_of_years() {
@@ -359,11 +460,10 @@ public class WQuoteRuTest {
     public void testGetQuotes_dash_template_in_range_of_years() {
         System.out.println("testGetQuotes_dash template_in_range_of_years");
         String text, page_title;
-        String exp_text, exp_author, exp_title, exp_source;
         int exp_year_from, exp_year_to;
 
         page_title = "как скажете";
-        text =  "# как пожелаете; в соответствии с вашими пожеланиями {{пример|{{-}}{{выдел|Как скажете}}, {{-}}не стал спорить мужичок. … {{-}}Ладно, {{выдел|как скажете}}.|Дмитрий Браславский|Паутина Лайгаша|1998{{-}}2001}}";
+        text = "# как пожелаете; в соответствии с вашими пожеланиями {{пример|{{-}}{{выдел|Как скажете}}, {{-}}не стал спорить мужичок. … {{-}}Ладно, {{выдел|как скажете}}.|Дмитрий Браславский|Паутина Лайгаша|1998{{-}}2001}}";
 //{{пример|{{-}}{{выдел|Как скажете}}, {{-}}не стал спорить мужичок. … {{-}}Ладно, {{выдел|как скажете}}.|Дмитрий Браславский|Паутина Лайгаша|1998{{-}}2001}}
 
         exp_year_from   = 1998;
@@ -551,7 +651,7 @@ public class WQuoteRuTest {
         page_title = "великолепие";
         text =  "# [[роскошь]], богатое убранство {{пример|Внутреннее {{выдел|великолепие}} дворца...|И. А. Крылов|Каиб|Восточная повесть|1792|источник=НКРЯ}} {{пример|...и поражает {{выдел|великолепием}} туалетов.|Салтыков-Щедрин|За рубежом|1880—1881}}";
 
-        // error: Каиб|Восточная повесть => 1792 is uknown unnamed field
+        // error: two titles: Каиб|Восточная повесть => 1792 is uknown unnamed field
         // {{пример|Внутреннее {{выдел|великолепие}} дворца...|И. А. Крылов|Каиб|Восточная повесть|1792|источник=НКРЯ}}
         exp_text = "Внутреннее {{выдел|великолепие}} дворца...";
         exp_author = "И. А. Крылов";

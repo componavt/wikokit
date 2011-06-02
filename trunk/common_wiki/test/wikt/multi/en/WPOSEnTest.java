@@ -164,6 +164,82 @@ public class WPOSEnTest {
         assertTrue(result[3].getText().toString().equalsIgnoreCase(s4));
     }
 
+    @Test
+    public void testSplitToPOSSections_phrase() {
+        System.out.println("splitToPOSSections_phrase");
+        String s1, s2, s3, s4, s1_result, s2_result;
+
+        String source_text, result1, result2;
+        LangText source_lt;
+        LangText[] etymology_sections;
+        POSText[] result;
+        String page_title;
+
+        //==Swedish==
+        //===Phrase===
+        s1 = "===Phrase===\n";
+        s2 = "'''[[var]] [[är]] [[toaletten]]?'''\n";
+        s3 = "# [[where is the toilet]]?";
+        source_text = s1 + s2 + s3;
+
+        s1_result = s2 + s3;
+
+        source_lt = new LangText(LanguageType.sw);
+        source_lt.text = new StringBuffer(source_text);
+
+        page_title = "pos_en_word1";
+        etymology_sections = WEtymologyEn.splitToEtymologySections(page_title, source_lt);
+        result = WPOSEn.splitToPOSSections(page_title, etymology_sections);
+
+        assertEquals(1, result.length);
+        assertEquals(POS.phrase, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(s1_result));
+    }
+
+    // Adjective
+    //
+    // Other headers in use (http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained/POS_headers#Other_headers_in_use)
+    // Adjectival noun 	な-Adjectives 	Japanese "quasi-adjective", probably should be Adjective.
+    // Quasi-adjective 	な-Adjectives 	Japanese, probably should be Adjective.
+    @Test
+    public void testSplitToPOSSections_adjective() {
+        System.out.println("splitToPOSSections_adjective");
+        String s1, s2, s3, s4, s5, s6, s1_result, s2_result, s3_result;
+
+        String source_text, result1, result2;
+        LangText source_lt;
+        LangText[] etymology_sections;
+        POSText[] result;
+        String page_title;
+
+        s1 = "===Adjective===\n";
+        s2 = "{{infl|lv|adjective}}\n";
+        s3 = "===Adjectival noun===\n";
+        s4 = "some text\n";
+        s5 = "===Quasi-adjective===\n";
+        s6 = "some text2";
+        source_text = s1 + s2 + s3 + s4 + s5 + s6;
+
+        s1_result = s2;
+        s2_result = s4;
+        s3_result = s6;
+
+        source_lt = new LangText(LanguageType.sw);
+        source_lt.text = new StringBuffer(source_text);
+
+        page_title = "pos_en_word1";
+        etymology_sections = WEtymologyEn.splitToEtymologySections(page_title, source_lt);
+        result = WPOSEn.splitToPOSSections(page_title, etymology_sections);
+
+        assertEquals(3, result.length);
+        assertEquals(POS.adjective, result[0].getPOSType());
+        assertEquals(POS.adjective, result[1].getPOSType());
+        assertEquals(POS.adjective, result[2].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(s1_result));
+        assertTrue(result[1].getText().toString().equalsIgnoreCase(s2_result));
+        assertTrue(result[2].getText().toString().equalsIgnoreCase(s3_result));
+    }
+
     // POS of foreign words in English Wiktionary.
     @Test
     public void testSplitToPOSSections_foreign() {

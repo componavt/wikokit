@@ -131,14 +131,18 @@ public class POSRu extends POSLocal {
     public static final POSLocal particle = new POSRu("Частица", "частица", POS.particle);
     public static final POSLocal participle = new POSRu("Причастие", "прич.", POS.participle);
     public static final POSLocal determiner = new POSRu("Детерминатив", "детерминатив", POS.determiner);
-
-
+    public static final POSLocal infix = new POSRu("Инфикс", "инфикс", POS.infix);
+    public static final POSLocal interfix = new POSRu("Интерфикс", "интерфикс", POS.interfix);
+    public static final POSLocal affix = new POSRu("Аффикс", "аффикс", POS.affix);
+    public static final POSLocal circumfix = new POSRu("Циркумфикс", "циркумфикс", POS.circumfix);
+    public static final POSLocal counter = new POSRu("Счётное", "счётное", POS.counter);
     public static final POSLocal predicative = new POSRu("Именная часть составного сказуемого", "предикатив", POS.predicative);
 
     
 
     // only in Russian Wiktionary (yet)
+    public static final POSLocal adjectival_participle = new POSRu("Причастие", "прич.", POS.adjectival_participle);
     public static final POSLocal verb_interjection = new POSRu("Глагольно-междометное слово", "глагольно-междом.", POS.verb_interjection);
-    public static final POSLocal parenthesis = new POSRu("Вводное слово", "вводн. сл.", POS.parenthesis);
+    public static final POSLocal parenthesis = new POSRu("Вводное слово", "вводн.", POS.parenthesis);
     public static final POSLocal prefix_of_compound = new POSRu("Первая часть сложных слов", "первая часть сложн. сл.", POS.prefix_of_compound);
 }

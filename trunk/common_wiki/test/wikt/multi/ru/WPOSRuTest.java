@@ -406,7 +406,71 @@ public class WPOSRuTest {
 
     /////////////////////////
     // tests of different POS 
-    
+
+    // noun
+    // Фам - Surname (noun)
+    @Test
+    public void testSplitToPOSSections_POS_noun() {
+        System.out.println("SplitToPOSSections_POS_noun");
+
+        String str, s1, s2, page_title;
+        POSText[] result;
+        LangText lt;
+
+        // СущМужНеодуш - noun
+        page_title = "полвека_test";
+        lt = new LangText(LanguageType.en);
+        str =   "===Морфологические и синтаксические свойства===\n" +
+                "{{СущМужНеодуш-пол\n" +
+                "|основа=ве́ка\n" +
+                "}}\n";
+        lt.text = new StringBuffer(str);
+
+        result = WPOSRu.splitToPOSSections(page_title, lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.noun, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+
+        // Фам - Surname (noun)
+        page_title = "Новак_test";
+        lt = new LangText(LanguageType.en);
+        str =   "===Морфологические и синтаксические свойства===\n" +
+                "{{Фам \n" +
+                "|основа=Новак\n" +
+                "|слоги={{по-слогам|Но|вак}}\n" +
+                "}}\n";
+        lt.text = new StringBuffer(str);
+        
+        result = WPOSRu.splitToPOSSections(page_title, lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.noun, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // adjective
+    @Test
+    public void testSplitToPOSSections_POS_adjective() {
+        System.out.println("SplitToPOSSections_POS_adjective");
+
+        String str, s1, s2, page_title;
+        POSText[] result;
+        StringBuffer s;
+        LangText lt;
+
+        // прил-сравн - adjective_comparative_degree
+        page_title = "round";
+        lt = new LangText(LanguageType.en);
+        str =   "== round I ==\n" +
+                "===Морфологические и синтаксические свойства===\n" +
+                "{{прил-сравн ru|{{по-слогам|похле́ще}}}}";
+        lt.text = new StringBuffer(str);
+        
+        result = WPOSRu.splitToPOSSections(page_title, lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.adjective, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
     @Test
     public void testSplitToPOSSections_ru_POS_pronoun() {
         System.out.println("splitToPOSSections_ru_POS_pronoun");
@@ -608,7 +672,6 @@ public class WPOSRuTest {
         POSText[] result;
         LangText lt;
 
-        // {{prep-ru|внутрь}}
         lt = new LangText(LanguageType.ru);
         str = "\n=== Тип и синтаксические свойства сочетания ===\n{{phrase|\n text1";
         lt.text = new StringBuffer(str);
@@ -682,6 +745,27 @@ public class WPOSRuTest {
         result = WPOSRu.splitToPOSSections("test_word1", lt);
         assertEquals(1, result.length);
         assertEquals(POS.parenthesis, result[0].getPOSType());
+        assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
+    }
+
+    // adjectival_participle - Причастие
+    @Test
+    public void testSplitToPOSSections_POS_adjectival_participle() {
+        System.out.println("splitToPOSSections_POS_adjectival_participle");
+
+        String str;
+        POSText[] result;
+        LangText lt;
+
+        lt = new LangText(LanguageType.ru);
+        str = "\n=== Морфологические и синтаксические свойства ===\n" + 
+                "{{прич ru 1a-т\n"+
+                "|основа=мя́\n"+
+                "}}";
+        lt.text = new StringBuffer(str);
+        result = WPOSRu.splitToPOSSections("мятый_word1", lt);
+        assertEquals(1, result.length);
+        assertEquals(POS.adjectival_participle, result[0].getPOSType());
         assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
     }
 

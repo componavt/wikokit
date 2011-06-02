@@ -34,10 +34,10 @@ public class WQuoteRu {
             year_to = -1;
         }
 
-        /** Start date of a writing book with the quote. */
+        /** Start date of a writing book with the quote, if there is no information about date then -1. */
         public int year_from;
 
-        /** Finish date of a writing book with the quote. */
+        /** Finish date of a writing book with the quote, if there is no information about date then -1. */
         public int year_to;
 
         /** Converts string to integer, if there is any problem then return -1.
@@ -45,13 +45,16 @@ public class WQuoteRu {
         private static int stringToInt(String page_title, String text)
         {
             int i = -1;
-            try {
-              i = Integer.parseInt(text);
-            }
-            catch (NumberFormatException nfe)
-            {
-              System.out.println("Error in WQuoteRu:YearsRange:stringToInt: entry '"+ page_title +
-                                 "' unknown year format, " + nfe.getMessage());
+            if(null != text && text.length() > 0) {
+
+                try {
+                  i = Integer.parseInt(text);
+                }
+                catch (NumberFormatException nfe)
+                {
+                  System.out.println("Error in WQuoteRu:YearsRange:stringToInt: entry '"+ page_title +
+                                     "' unknown year format, " + nfe.getMessage());
+                }
             }
             return i;
         }
@@ -71,6 +74,18 @@ public class WQuoteRu {
          * If text was not parsed successfully, then year_from=year_to=-1.
          */
         public void parseYearsRange(String page_title, String text) {
+
+            
+            if(text.contains("{{-}}"))  // range of years with dash template {{-}}: 1998{{-}}2001
+                text = text.replace("{{-}}", "-");
+
+            
+            if(text.contains("-е"))     // decade; tens of years, e.g. 1830-е
+                text = text.replace("-е", "");
+
+            // question_in_years e.g. 1862—1875?
+            if(text.endsWith("?"))
+                text = text.substring(0, text.length() - 1);
 
             // range of years: 1880—1881, 1842–1862
             int pos = text.indexOf("—");

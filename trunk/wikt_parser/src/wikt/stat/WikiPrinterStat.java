@@ -270,9 +270,10 @@ public class WikiPrinterStat {
                                     Map<LanguageType, Integer> m_lang_n) {
 
         int total = 0; // total number of translations. or quotations, or...
-        
+
         // print header line
-        // print header line
+        System.out.println("\n=== Quote languages ===\n\n");
+
         System.out.println("{| class=\"sortable prettytable\"");
         System.out.print("! Language name || Language code || Number");
 
