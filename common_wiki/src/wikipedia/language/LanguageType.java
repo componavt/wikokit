@@ -2831,7 +2831,7 @@ public class LanguageType {
     public static final LanguageType czo = new LanguageType("czo", "Min Zhong", "Min Zhong");
     public static final LanguageType czo2 = LanguageType.addNonUniqueName(czo, "Central Min");
 
-    public static final LanguageType yue = new LanguageType("yue", "Cantonese", "Cantonese");
+    public static final LanguageType yue = new LanguageType("yue", "Cantonese", "Cantonese");// yuh? in ruwikt
     public static final LanguageType zh_yue = LanguageType.addNonUnique(yue, "zh-yue", "Yüeh");
     public static final LanguageType yue2 = LanguageType.addNonUniqueName(yue, "Yue");
     // ------------ eo Chinese

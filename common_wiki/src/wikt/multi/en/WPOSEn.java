@@ -56,7 +56,7 @@ public class WPOSEn {
      */
     private final static Pattern ptrn_3_or_4_level = Pattern.compile(  // Vim: ^==\s*\([^=]\+\)\s*==\s*\Z
             // RE: ^====?\s*([\w {}]+)\s*====?\s*           //"(?m)^\\s*==");
-            "(?m)^====?\\s*([\\w {}]+)\\s*====?\\s*");
+            "(?m)^====?\\s*([-\\w {}]+)\\s*====?\\s*");
 
     /** Gets true, if str is known header, e.g. "References",
      * but it's not a part of speech name, e.g. "Verb".
@@ -92,7 +92,7 @@ public class WPOSEn {
         
         while(m.find()) {
 
-            String pos_header = m.group(1);
+            String pos_header = m.group(1).toLowerCase();
 
             if(m.groupCount() > 0 && POSTemplateEn.has(pos_header)) {
 
@@ -148,12 +148,12 @@ public class WPOSEn {
 
         // First POS header
         String  pos_header, pos_header_old = "";
-        pos_header = m.group(1);
+        pos_header = m.group(1).toLowerCase();
         
         while(b_next && !POSTemplateEn.has(pos_header))
         {
             b_next = m.find();
-            pos_header = m.group(1);
+            pos_header = m.group(1).toLowerCase();
         }
         pos_header_old = pos_header;
         assert(POSTemplateEn.has(pos_header));
@@ -173,7 +173,7 @@ public class WPOSEn {
                     
                     break search_POS;
                 }
-                pos_header = m.group(1);
+                pos_header = m.group(1).toLowerCase();
             }
 
             POS p = POSTemplateEn.get(pos_header_old);
@@ -223,7 +223,7 @@ public class WPOSEn {
             //    pos_sections.addAll( Arrays.asList(pt) );
         }
 
-        if(pos_sections.size() == 0)
+        if(pos_sections.isEmpty())
             return NULL_POS_TEXT_ARRAY;
         
         return (POSText[])pos_sections.toArray(NULL_POS_TEXT_ARRAY);
@@ -241,8 +241,8 @@ public class WPOSEn {
         int n_pos = 0;
         
         while(m.find()) {
-            
-            if(m.groupCount() > 0 && POSTemplateEn.has(m.group(1)))
+            String POS_candidate = m.group(1).toLowerCase();
+            if(m.groupCount() > 0 && POSTemplateEn.has(POS_candidate))
                 n_pos ++;
         }
 

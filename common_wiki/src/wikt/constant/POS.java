@@ -130,12 +130,58 @@ public class POS {
     public static final POS particle        = new POS("particle");
     public static final POS participle      = new POS("participle");
     public static final POS determiner      = new POS("determiner");
+    public static final POS infix           = new POS("infix");
+    public static final POS interfix        = new POS("interfix");
+    public static final POS affix           = new POS("affix");
+    public static final POS circumfix       = new POS("circumfix");
+    public static final POS counter         = new POS("counter");
+    
+    public static final POS kanji           = new POS("kanji");
+    public static final POS kanji_reading   = new POS("kanji reading");
+    public static final POS hanja_reading   = new POS("hanja reading");
+    public static final POS hiragana_letter = new POS("hiragana letter");
+    public static final POS katakana_letter = new POS("katakana letter");
+    
+    public static final POS pinyin = new POS("pinyin");
+    public static final POS han_character = new POS("han character");
+    public static final POS hanzi = new POS("hanzi");
+    public static final POS hanja = new POS("hanja");
+
+    public static final POS proverb = new POS("proverb");
+    public static final POS expression = new POS("expression");
+    public static final POS possessive_adjective = new POS("possessive_adjective");
+    public static final POS postposition = new POS("postposition");
+    public static final POS gerund = new POS("gerund");
+    public static final POS pronominal_adverb = new POS("pronominal_adverb");
+    public static final POS adnominal = new POS("adnominal");
+    public static final POS root = new POS("root");
+    public static final POS pinyin_syllable = new POS("pinyin syllable");
+    public static final POS syllable = new POS("syllable");
+    public static final POS hiragana_character = new POS("hiragana character");
+    public static final POS katakana_character = new POS("katakana character");
+    public static final POS jyutping_syllable = new POS("jyutping syllable");
+    public static final POS gismu = new POS("gismu");
+    public static final POS lujvo = new POS("lujvo");
+    public static final POS brivla = new POS("brivla");
+    public static final POS classifier = new POS("classifier");
+    public static final POS predicative = new POS("predicative");
+    public static final POS measure_word = new POS("measure word");
+    public static final POS correlative = new POS("correlative");
+    public static final POS preverb = new POS("preverb");
+    public static final POS prenoun = new POS("prenoun");
+    public static final POS noun_stem = new POS("noun stem");
+    public static final POS noun_class = new POS("noun class");
+    public static final POS combined_kana_character = new POS("combined-kana character");
 
 
-    public static final POS predicative     = new POS("predicative");
+    // public static final POS  = new POS("");
+
+
+
     
 
     // only in Russian Wiktionary (yet)
+    public static final POS adjectival_participle = new POS("adjectival participle");// adjectival_participle - причастие
     public static final POS verb_interjection = new POS("verb-interjection");// interj1 - глагольно-междометное слово - verb-interjection word
     public static final POS parenthesis = new POS("parenthesis");// вводное слово
     public static final POS prefix_of_compound = new POS("prefix of compound words");// первая часть сложных слов
