@@ -302,7 +302,7 @@ public class WQuoteRu {
                 result_list.add( prev + "|" + value );
             }
         }
-        return( (String[])result_list.toArray(NULL_STRING_ARRAY) );
+        return (String[])result_list.toArray(NULL_STRING_ARRAY);
     }
 
     /** Removes highlighted marks from a sentence.

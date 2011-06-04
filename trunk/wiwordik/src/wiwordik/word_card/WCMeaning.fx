@@ -87,7 +87,7 @@ public class WCMeaning {
         def meaning_n : Integer = _tmeaning.getMeaningNumber();
 
         var s_debug : String;
-        if(WConstants.DEBUG)
+        if(WConstants.DEBUGUI)
             s_debug = "; meaning.id={_tmeaning.getID()}; meaning _n/max={meaning_n+1}/{_max_meaning_number}";
 
         // 1.a Definition

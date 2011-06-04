@@ -215,7 +215,7 @@ public class WC{ // extends JFrame {
             var pos : POS = lang_pos.getPOS().getPOS();
 
             var s : String = "{lang.getName()} ({lang.getCode()}):{pos.toString()}";
-            if (WConstants.DEBUG)
+            if (WConstants.DEBUGUI)
                 s = "{s}; lang_pos.id = {lang_pos.getID()}";
             s = "{s}\n";
 

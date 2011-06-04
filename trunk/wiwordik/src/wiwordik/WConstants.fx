@@ -15,7 +15,7 @@ public def wrapping_width = 380;
 //var native_lang : LanguageType;
 public def native_lang = LanguageType.ru;
 
-public var DEBUG : Boolean = false;
+public var DEBUGUI : Boolean = false;
 
 //public class WConstants {
 //   public var wrapping_width : Integer = 380;

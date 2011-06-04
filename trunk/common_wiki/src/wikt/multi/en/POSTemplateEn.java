@@ -11,6 +11,9 @@ import wikt.constant.POS;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import wikipedia.util.StringUtil;
 
 /** English names of parts of speech.
  * 
@@ -31,6 +34,11 @@ public class POSTemplateEn extends POSType {
     private final POS type; 
     
     private static Map<String, POS> name2type = new HashMap<String, POS>();
+
+    /** E.g. verb -> "verb", "verb form", "verb prefix". It is used in POS statistics. */
+    private static Map<POS, Set<String>> type2name_in_text = new HashMap<POS, Set<String>>();
+
+    private final static String[] NULL_STRING_ARRAY = new String[0];
     
     /** Initialization for POSTypeEn, POSTypeRu, etc. */
     private POSTemplateEn(String name_in_text, POS type) {
@@ -39,6 +47,15 @@ public class POSTemplateEn extends POSType {
         this.name_in_text   = name_in_text;
         this.type           = type;         // english.english;
         name2type.put(name_in_text, type); // english.english);
+
+        {   // store (POS, +=name_in_text) -> type2name_in_text
+            Set<String> templates = type2name_in_text.get(type);
+            if(null == templates)
+                templates = new HashSet();
+
+            templates.add(name_in_text);
+            type2name_in_text.put(type, templates);
+        }
     }
     
     public String getName() { return type.toString(); }
@@ -52,8 +69,18 @@ public class POSTemplateEn extends POSType {
     public static POS get(String code) {
         return name2type.get(code);
     }
+
+    /** Gets (token separated) abbreviations or templates used in order
+     * to recognize the "pos" part of speech.
+     */
+    public static String getTemplates(String token, POS pos) {
+
+        Set<String> templates = type2name_in_text.get(pos);
+        return StringUtil.join(", ", (String[])templates.toArray(NULL_STRING_ARRAY));
+    }
+
     
-    // The classical parts of speech are:
+    // The classical parts of speech are: 
     public static final POSType noun = new POSTemplateEn("noun", POS.noun);
 
     public static final POSType verb = new POSTemplateEn("verb", POS.verb);

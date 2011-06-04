@@ -1,8 +1,8 @@
 /* TLangPOS.java - SQL operations with the table 'lang_pos' in Wiktionary
  * parsed database.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql;
@@ -18,10 +18,8 @@ import wikt.constant.Relation;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Map;
-//import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
-//import wikipedia.language.LanguageType;
 
 
 /** An operations with the table 'lang_pos' in MySQL wiktionary_parsed database.

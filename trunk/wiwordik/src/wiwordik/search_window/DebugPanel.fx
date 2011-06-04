@@ -30,8 +30,8 @@ public class DebugPanel {
 
         onMouseReleased: function(e:MouseEvent) {
 
-                if (WConstants.DEBUG != debug_CheckBox.selected) {
-                    WConstants.DEBUG  = debug_CheckBox.selected;
+                if (WConstants.DEBUGUI != debug_CheckBox.selected) {
+                    WConstants.DEBUGUI  = debug_CheckBox.selected;
 
                     // println("CheckBox: WConstants.DEBUG={WConstants.DEBUG}");
                 }

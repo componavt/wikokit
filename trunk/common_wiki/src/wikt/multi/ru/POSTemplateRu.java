@@ -11,6 +11,9 @@ import wikt.constant.POS;
 
 import java.util.Map;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+import wikipedia.util.StringUtil;
 
 /** Names of POS templates in Russian Wiktionary.
  * 
@@ -34,12 +37,26 @@ public class POSTemplateRu extends POSType {
     
     //private static Map<String, String>  text2name = new HashMap<String, String>();
     private static Map<String, POS> name_in_text2type = new HashMap<String, POS>();
-    
+
+    /** E.g. noun -> "сущ", "падежи", "фам". It is used in POS statistics. */
+    private static Map<POS, Set<String>> type2name_in_text = new HashMap<POS, Set<String>>();
+
+    private final static String[] NULL_STRING_ARRAY = new String[0];
+
     /** Initialization for POSTypeEn, POSTypeRu, etc. */
     private POSTemplateRu(String name_in_text, POS type) {
         this.name_in_text   = name_in_text;
         this.type           = type;         // english.english;
         name_in_text2type.put(name_in_text, type); // english.english);
+
+        {   // store (POS, +=name_in_text) -> type2name_in_text
+            Set<String> templates = type2name_in_text.get(type);
+            if(null == templates)
+                templates = new HashSet();
+
+            templates.add(name_in_text);
+            type2name_in_text.put(type, templates);
+        }
     }
     
     public String getName() { return type.toString(); }
@@ -49,9 +66,22 @@ public class POSTemplateRu extends POSType {
         return name_in_text2type.containsKey(code);
     }
     
-    /** Gets part of speech by its abbreviation */
+    /** Gets part of speech by its abbreviation or template */
     public static POS get(String code) {
         return name_in_text2type.get(code);
+    }
+
+    /** Gets (token separated) abbreviations or templates used (by parser) 
+     * in order to recognize the "pos" part of speech.
+     */
+    public static String getTemplates(String token, POS pos) {
+
+        Set<String> templates = type2name_in_text.get(pos);
+
+        if(null == templates)
+            return "";
+
+        return StringUtil.join(", ", (String[])templates.toArray(NULL_STRING_ARRAY));
     }
     
     
@@ -120,13 +150,13 @@ public class POSTemplateRu extends POSType {
     public static final POSType abbreviation        = new POSTemplateRu("abbrev",   POS.abbreviation);// Аббревиатура
 
     // other headers in use
-    public static final POSType particle1           = new POSTemplateRu("part",     POS.particle);// частица, part ru, part-ru
-    public static final POSType particle3           = new POSTemplateRu("particle", POS.particle);
-    public static final POSType predicative         = new POSTemplateRu("predic", POS.predicative);// Именная часть составного сказуемого, предикатив
+    public static final POSType particle1 = new POSTemplateRu("part",     POS.particle);// частица, part ru, part-ru
+    public static final POSType particle3 = new POSTemplateRu("particle", POS.particle);
+    public static final POSType participle = new POSTemplateRu("прич", POS.participle);// Причастие
+    public static final POSType predicative = new POSTemplateRu("predic", POS.predicative);// Именная часть составного сказуемого, предикатив
 
 
     // only in Russian Wiktionary (yet)
-    public static final POSType adjectival_participle = new POSTemplateRu("прич", POS.adjectival_participle);// Причастие
     public static final POSType verb_interjection = new POSTemplateRu("interj1", POS.verb_interjection);// interj1 - глагольно-междометное слово - verb-interjection word
     public static final POSType parenthesis = new POSTemplateRu("intro", POS.parenthesis);// Вводное слово
     public static final POSType prefix_of_compound = new POSTemplateRu("init", POS.prefix_of_compound);// первая часть сложных слов

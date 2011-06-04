@@ -1,7 +1,8 @@
-/* WTMeaning.java - high-level functions for manipulations of definitions in Wiktionary.
+/* WTMeaning.java - high-level functions for manipulating definitions (senses)
+ * in Wiktionary.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.api;
@@ -81,6 +82,27 @@ public class WTMeaning {
 
         definitions = null;
         return NULL_STRING_ARRAY;
+    }
+
+    /** Counts number of meanings (definitions, senses) for the given LangPOS. 
+     * If there are no meanings, then return 0.
+     */
+    public static int countMeanings(Connect connect,
+                                          TLangPOS lang_pos)
+    {
+        if(null == lang_pos)
+            return 0;
+
+        int meanings_counter = 0;
+
+        TMeaning[] mm = TMeaning.get(connect, lang_pos);
+        for(TMeaning m : mm) {
+            TWikiText twiki_text = m.getWikiText();
+            if(null != twiki_text)
+                meanings_counter ++;
+        }
+
+        return meanings_counter;
     }
 
 

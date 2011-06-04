@@ -8,11 +8,13 @@ package wikt.constant;
 
 import wikipedia.language.LanguageType;
 import wikt.multi.ru.name.POSRu;
+import wikt.multi.ru.POSTemplateRu;
 
 import java.util.Set;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
+import wikt.multi.en.POSTemplateEn;
 
 /** Strictly defined names of parts of speech
  * used in all wiktionaries.
@@ -45,6 +47,43 @@ public class POS {
 
         return s;
     }
+
+    /** Gets short name of POS in the language l. */
+    public String getShortName (LanguageType l) {
+
+        String s = "";
+
+        if(l  == LanguageType.ru) {
+            s = POSRu.getShortName(this);
+
+        } else if(l == LanguageType.en) {
+            // skip?
+        } else {
+            throw new NullPointerException("Null LanguageType");
+        }
+       
+        return s;
+    }
+
+    /** Gets (token separated) abbreviations or templates used (by parser) in order
+     * to recognize this part of speech. */
+    public String getTemplates(String token, LanguageType l) {
+
+        String s = "";
+
+        if(l  == LanguageType.ru) {
+            s = POSTemplateRu.getTemplates(token, this);
+
+        } else if(l == LanguageType.en) {
+            s = POSTemplateEn.getTemplates(token, this);
+
+        } else {
+            throw new NullPointerException("Null LanguageType");
+        }
+
+        return s;
+    }
+
     
     /* Set helps to check the presence of elements */
     private static Map<String, POS> name2type = new HashMap<String, POS>();

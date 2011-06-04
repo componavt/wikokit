@@ -1,13 +1,12 @@
 /* WTRelation.java - high-level functions for manipulations with semantic
  *                   relations in Wiktionary.
  *
- * Copyright (c) 2009-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.api;
 
-//import wikipedia.language.LanguageType;
 import wikipedia.sql.Connect;
 import wikt.sql.*;
 import wikt.constant.Relation;
@@ -27,7 +26,7 @@ public class WTRelation {
      * One element in result String[] corresponds to one list of semantic
      * relations of one meanings. With empty "" elements for absent relations.
      *
-     * @return null length array, if there is at all relations of this kind
+     * @return zero length array, if there is no at all relations of this kind
      */
     public static String[] getForEachMeaningByPageLang(Connect connect,
                                                 TLangPOS lang_pos, //LanguageType lang,
