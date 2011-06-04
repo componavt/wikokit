@@ -42,11 +42,12 @@ public class POSRu extends POSLocal {
                     " name='"+ name + "'. Check the maps name2pos and pos2name.");
 
         if(null != pos_prev)
-            System.out.println("Error in POSRu.POSRu(): duplication of language! The language code="+pos+
+            System.out.println("Error in POSRu.POSRu(): duplication of POS! POS="+pos+
                     " name='"+ name + "'. Check the maps name2pos and pos2name.");
 
         name2pos.put(name, pos);
         pos2name.put(pos, name);
+        pos2name_short.put(pos, short_name);
     }
 
     /** Checks weather exists POS by its name in Russian language. */
@@ -141,7 +142,6 @@ public class POSRu extends POSLocal {
     
 
     // only in Russian Wiktionary (yet)
-    public static final POSLocal adjectival_participle = new POSRu("Причастие", "прич.", POS.adjectival_participle);
     public static final POSLocal verb_interjection = new POSRu("Глагольно-междометное слово", "глагольно-междом.", POS.verb_interjection);
     public static final POSLocal parenthesis = new POSRu("Вводное слово", "вводн.", POS.parenthesis);
     public static final POSLocal prefix_of_compound = new POSRu("Первая часть сложных слов", "первая часть сложн. сл.", POS.prefix_of_compound);

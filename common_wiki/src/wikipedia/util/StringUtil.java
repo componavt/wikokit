@@ -25,11 +25,11 @@ public class StringUtil {
     private final static List<String>   NULL_STRING_LIST  = new ArrayList<String>(0);
     private final static StringBuffer   NULL_STRINGBUFFER = new StringBuffer("");
     
-    public static String join( String token, String[] strings )
+    public static String join(String token, String[] strings )
     {
         if (null == strings || 0==strings.length)
             return NULL_STRING;
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         
         for( int x = 0; x < ( strings.length - 1 ); x++ )
         {

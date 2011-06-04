@@ -165,7 +165,7 @@ public class RelationTableAll {
         return m_lang_rel_n;
     }
 
-     /** Initialize (set to zero) number of entries for each language. */
+    /** Initialize (set to zero) number of entries for each language. */
     public static void initLangEntries () {
 
         Set<LanguageType> languages = TLang.getAllLanguages().keySet();

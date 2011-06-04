@@ -1,8 +1,8 @@
 /* WikiPrinterStat.java - Printer (in wiki format) of statistics
  *                  of the newly created (parsed) database of the Wiktionary.
  *
- * Copyright (c) 2009-2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.stat;

@@ -67,7 +67,7 @@ public class WCPOS {
             var _pos : POS = _lang_pos.getPOS().getPOS();
 
             POS_header_value = "{_pos.toString(WConstants.native_lang)}";
-            if (WConstants.DEBUG)
+            if (WConstants.DEBUGUI)
                 POS_header_value = POS_header_value.concat("; lang_pos.id = {_lang_pos.getID()}");
             
             // get all translation blocks (for every meaning)

@@ -188,7 +188,7 @@ public class WCQuoteOneSentence {
             publisher= publisher.concat(", ");
 
 
-        if(WConstants.DEBUG) {
+        if(WConstants.DEBUGUI) {
             source = "{source}; quot_ref.id={quot_ref.getID()}";
 
             sentence_text = "{sentence_text}; quote.id={_quote.getID()}";
