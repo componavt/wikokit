@@ -160,7 +160,7 @@ public class SPARQLExample {
 
 There are two ways to find synonyms in the database of the parsed English Wiktionary:
     * _direct way_ - from entry to words, which are listed in the section _Synonyms_;
-    * _reverse way_ - from the non-English word in the section _Translation_ to the English title (header) of the entry;
+    * _reverse way_ - from synonyms to entries, i.e. a list of entries which contain this word as a synonym in the section _Synonyms_;
 
 === 1. From entry to synonyms ===
 
