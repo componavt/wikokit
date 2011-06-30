@@ -765,7 +765,8 @@ public class WPOSRuTest {
         lt.text = new StringBuffer(str);
         result = WPOSRu.splitToPOSSections("мятый_word1", lt);
         assertEquals(1, result.length);
-        assertEquals(POS.adjectival_participle, result[0].getPOSType());
+        //assertEquals(POS.adjectival_participle, result[0].getPOSType());
+        assertEquals(POS.participle, result[0].getPOSType());
         assertTrue(result[0].getText().toString().equalsIgnoreCase(str));
     }
 
