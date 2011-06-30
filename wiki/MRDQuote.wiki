@@ -34,8 +34,6 @@ There is a special template
 
 == Quotations - quote table ==
 
-= Machine-readable database schema =
-
 See the structure (tables and relations) of the Wiktionary parsed database here: [File_wikt_parsed_empty_sql  How to create, edit and load empty Wiktionary parsed database into MySQL]
 
 Set of tables related to quotations (fragment of the Wiktionary parsed database) at Figure:
