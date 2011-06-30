@@ -30,7 +30,7 @@ NameVirtualHost *:80
 </VirtualHost>
 }}}
   * Restart Apache.
-  * Open in browser `localhost`.
+  * Open in browser [http://localhost/mw-config/index.php http://localhost/mw-config/index.php].
   * Set up the wiki:
     ** select database name, e.g. `enwikt20100824`.
     ** select storage engine: `MyISAM`.
