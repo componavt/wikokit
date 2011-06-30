@@ -27,6 +27,9 @@ import javafx.geometry.Insets;
 // Todo. Errors in parser:
 // дуб (илл -> syn)
 // тупица, река, самолёт (-) i.e. page.is_in_wiktionary = false
+//
+// todo: list of languages - combobox with ListView:
+// http://jojorabbitjavafxblog.wordpress.com/2011/06/23/javafx-2-0-custom-combobox/
 
 var wikt_parsed_conn : Connect = new Connect();
 
