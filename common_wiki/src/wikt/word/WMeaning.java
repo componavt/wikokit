@@ -42,7 +42,8 @@ public class WMeaning {
     
     /** Example sentences and quotations. */
     private WQuote[] quote;
-    
+
+    private final static WQuote[] NULL_WQUOTE_ARRAY = new WQuote[0];
     private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];
     private final static WMeaning   NULL_WMEANING       = new WMeaning();
 
@@ -70,7 +71,7 @@ public class WMeaning {
      * @param page_title
      * @param _labels
      * @param _definition wikified text of the definition
-     * @param _quote
+     * @param _quote could be null
      * @param _template_not_def true if there is template (e.g. {{form of|}} or
      * {{plural of|}}) instead of definiton text (in enwikt)
      */
@@ -78,8 +79,14 @@ public class WMeaning {
                     String _definition, WQuote[] _quote, boolean _template_not_def) {
         labels = _labels;
         definition = WikiText.createOnePhrase(page_title, _definition);
-        quote = _quote;
+        
         template_not_def = _template_not_def;
+
+        if(null == _quote)
+            quote = NULL_WQUOTE_ARRAY;
+        else
+            quote = _quote;
+
     }
 
     
