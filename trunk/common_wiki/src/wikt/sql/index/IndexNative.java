@@ -102,6 +102,11 @@ public class IndexNative {
         ResultSet  rs = null;
         StringBuilder str_sql = new StringBuilder();
         IndexNative index_native = null;
+
+        if(null == page) {
+            System.err.println("Error (IndexNative.insert()):: null argument: page="+page);
+            return null;
+        }
         
         try
         {
