@@ -68,6 +68,21 @@ public class TWikiTextWords {
         return null;
     }
 
+    /** Clears (deletes) object fields. */
+    public void freeUp() {
+        if(null != wiki_text) {
+//            wiki_text.freeUp();
+            wiki_text = null;
+        }
+
+        if(null != page) {
+            page = null;
+//            page.freeUp();
+        }
+        
+        page_inflection = null;
+    }
+
     
     /** If this word is absent in the table 'wiki_text_words' then
      * inserts records into tables:
