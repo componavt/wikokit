@@ -97,7 +97,13 @@ public class TLang {
             System.err.println("Error (wikt_parsed TLang.getIDFast()):: argument LanguageType is null");
             return -1;
         }
-        return lang2id.get(lt);
+        
+        Integer result = lang2id.get(lt);
+        if(null == result) {
+            System.out.println("Warning (wikt_parsed TLang.getIDFast()):: map lang2id don't have this id. Are you adding new lang codes in time of parsing?");
+            return -1;
+        }
+        return result;
     }
 
     /** Gets language by ID from the table 'lang'.<br><br>

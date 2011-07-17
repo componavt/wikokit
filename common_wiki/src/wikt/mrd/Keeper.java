@@ -100,6 +100,7 @@ public class Keeper {
                         TMeaning tmeaning = TMeaning.insert(conn, lang_pos, i, null);
                         TTranslation.storeToDB(conn, native_lang, page_title,
                                             lang_pos, tmeaning, translations[i]);
+                        tmeaning = null;    // free memory
                     }
                 }
 
