@@ -2,6 +2,7 @@ wiwordik 0.XX 2011-0?-??
    See wiwordik/release_notes.txt
 
 wikokit 0.12.6 2011-0?-??
+  common_wiki 299 tests passed, 23 tests failed (part of wikt_parsed db)
   common_wiki 306 tests passed, 16 tests failed
   common_wiki 303 tests passed, 16 tests failed
   common_wiki 286 tests passed, 16 tests failed

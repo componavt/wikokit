@@ -1,8 +1,8 @@
 /* TTranslation - SQL operations with the table 'translation' in Wiktionary
  * parsed database.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql;
@@ -316,41 +316,45 @@ public class TTranslation {
         if(null == meaning_summary)
                    meaning_summary = "";
 
-        Statement   s = null;
-        ResultSet  rs = null;
         StringBuilder str_sql = new StringBuilder();
         TTranslation trans = null;
         try
         {
-            s = connect.conn.createStatement ();
-            if(null != meaning)
-                str_sql.append("INSERT INTO translation (lang_pos_id,meaning_summary,meaning_id) VALUES (");
-            else
-                str_sql.append("INSERT INTO translation (lang_pos_id,meaning_summary) VALUES (");
-                
-            str_sql.append(lang_pos.getID());
-            str_sql.append(",\"");
-            str_sql.append(PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, meaning_summary));
-            str_sql.append("\"");
+            Statement s = connect.conn.createStatement ();
+            try {
+                if(null != meaning)
+                    str_sql.append("INSERT INTO translation (lang_pos_id,meaning_summary,meaning_id) VALUES (");
+                else
+                    str_sql.append("INSERT INTO translation (lang_pos_id,meaning_summary) VALUES (");
 
-            if(null != meaning)
-                str_sql.append("," + meaning.getID());
-            
-            str_sql.append(")");
-            if(s.executeUpdate (str_sql.toString()) > 0) {
-                rs = connect.conn.prepareStatement( "SELECT LAST_INSERT_ID() AS id" ).executeQuery();
+                str_sql.append(lang_pos.getID());
+                str_sql.append(",\"");
+                str_sql.append(PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, meaning_summary));
+                str_sql.append("\"");
 
-                if (rs.next ()) {
-                    trans = new TTranslation(rs.getInt("id"), lang_pos, meaning_summary, meaning);
-                    //System.out.println("TTranslation.insert()):: summary='" + meaning_summary +
-                    //        "'; id=" + rs.getInt("id") + "; lang='" + lang_pos.getLang().getLanguage().getName()+ "'");
+                if(null != meaning) {
+                    str_sql.append("," );
+                    str_sql.append(    meaning.getID());
                 }
+
+                str_sql.append(")");
+                if(s.executeUpdate (str_sql.toString()) > 0) {
+                    ResultSet rs = connect.conn.prepareStatement( "SELECT LAST_INSERT_ID() AS id" ).executeQuery();
+                    try {
+                        if (rs.next ()) {
+                            trans = new TTranslation(rs.getInt("id"), lang_pos, meaning_summary, meaning);
+                            //System.out.println("TTranslation.insert()):: summary='" + meaning_summary +
+                            //        "'; id=" + rs.getInt("id") + "; lang='" + lang_pos.getLang().getLanguage().getName()+ "'");
+                        }
+                    } finally {
+                        rs.close();
+                    }
+                }
+            } finally {
+                s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TTranslation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return trans;
     }
@@ -360,31 +364,35 @@ public class TTranslation {
      * @return empty array if data is absent
      */
     public static TTranslation getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         TTranslation trans = null;
         
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));
-                String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=");
+                str_sql.append(id);
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));
+                        String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
 
-                int meaning_id = rs.getInt("meaning_id");
-                TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
-                if(null != lang_pos)
-                    trans = new TTranslation(id, lang_pos, meaning_summary, meaning);
+                        int meaning_id = rs.getInt("meaning_id");
+                        TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
+                        if(null != lang_pos)
+                            trans = new TTranslation(id, lang_pos, meaning_summary, meaning);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return trans;
     }
@@ -400,34 +408,37 @@ public class TTranslation {
             return null;
         }
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         List<TTranslation> list_trans = null;
 
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,meaning_summary,meaning_id FROM translation WHERE lang_pos_id=");
-            str_sql.append(lang_pos.getID());
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
-            {
-                int id = rs.getInt("id");
-                String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,meaning_summary,meaning_id FROM translation WHERE lang_pos_id=");
+                str_sql.append(lang_pos.getID());
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next ())
+                    {
+                        int id = rs.getInt("id");
+                        String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
 
-                int meaning_id = rs.getInt("meaning_id");
-                TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
+                        int meaning_id = rs.getInt("meaning_id");
+                        TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
 
-                if(null == list_trans)
-                    list_trans = new ArrayList<TTranslation>();
-                list_trans.add(new TTranslation(id, lang_pos, meaning_summary, meaning));
-                
+                        if(null == list_trans)
+                            list_trans = new ArrayList<TTranslation>();
+                        list_trans.add(new TTranslation(id, lang_pos, meaning_summary, meaning));
+
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TTranslation.getByLangPOS()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         if(null == list_trans)
             return NULL_TTRANSLATION_ARRAY;
@@ -446,32 +457,33 @@ public class TTranslation {
             System.err.println("Error (wikt_parsed TTranslation.getByMeaning()):: null argument meaning");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         TTranslation ttrans = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,meaning_summary FROM translation WHERE meaning_id=");
-            str_sql.append(meaning.getID());
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
-            {
-                int id = rs.getInt("id");
-                String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,meaning_summary FROM translation WHERE meaning_id=");
+                str_sql.append(meaning.getID());
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next ())
+                    {
+                        int id = rs.getInt("id");
+                        String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
 
-                //int meaning_id = rs.getInt("meaning_id");
-                //TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
+                        //int meaning_id = rs.getInt("meaning_id");
+                        //TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
 
-                ttrans = new TTranslation(id, meaning.getLangPOS(connect), meaning_summary, meaning);
+                        ttrans = new TTranslation(id, meaning.getLangPOS(connect), meaning_summary, meaning);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TTranslation.getByMeaning()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return ttrans;
     }
@@ -503,22 +515,20 @@ public class TTranslation {
             System.err.println("Error (wikt_parsed TTranslation.delete()):: null argument 'translation'");
             return;
         }
-        
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM translation WHERE id=");
-            str_sql.append(trans.getID());
-            s.execute (str_sql.toString());
-            //System.out.println("TTranslation.delete()):: summary='" + trans.getMeaningSummary() +
-            //        "'; id=" + trans.getID());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM translation WHERE id=");
+                str_sql.append(trans.getID());
+                s.execute (str_sql.toString());
+                //System.out.println("TTranslation.delete()):: summary='" + trans.getMeaningSummary() +
+                //        "'; id=" + trans.getID());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TTranslation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 

@@ -166,51 +166,55 @@ public class TPage {
      */
     public static TPage insert (Connect connect,String page_title,int word_count,int wiki_link_count,
             boolean is_in_wiktionary,String redirect_target) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         TPage page = null;
         boolean is_redirect = null != redirect_target && redirect_target.length() > 0;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary");
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("INSERT INTO page (page_title,word_count,wiki_link_count,is_in_wiktionary");
 
-            if(is_redirect)
-                str_sql.append(",is_redirect,redirect_target");
+                if(is_redirect)
+                    str_sql.append(",is_redirect,redirect_target");
 
-            str_sql.append(") VALUES (\"");
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
-            str_sql.append(safe_title);
-            str_sql.append("\",");
-            str_sql.append(word_count);
-            str_sql.append(",");
-            str_sql.append(wiki_link_count);
-            str_sql.append(",");
-            str_sql.append(is_in_wiktionary);
+                str_sql.append(") VALUES (\"");
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
+                str_sql.append(safe_title);
+                str_sql.append("\",");
+                str_sql.append(word_count);
+                str_sql.append(",");
+                str_sql.append(wiki_link_count);
+                str_sql.append(",");
+                str_sql.append(is_in_wiktionary);
 
-            if(is_redirect) {// ,TRUE,"test_neletnwi"
-                str_sql.append(",TRUE,\"");
-                str_sql.append(PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect,
-                               redirect_target));
-                str_sql.append("\"");
-            }
-
-            str_sql.append(")");
-            if(s.executeUpdate (str_sql.toString()) > 0) {
-                rs = connect.conn.prepareStatement( "SELECT LAST_INSERT_ID() AS id" ).executeQuery();
-                if (rs.next ()) {
-                    page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count,
-                                     is_in_wiktionary, redirect_target);
-                    //System.out.println("TPage insert()):: id=" + rs.getInt("id") +
-                    //    "; page_title='" + page_title + "'");
+                if(is_redirect) {// ,TRUE,"test_neletnwi"
+                    str_sql.append(",TRUE,\"");
+                    str_sql.append(PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect,
+                                   redirect_target));
+                    str_sql.append("\"");
                 }
+
+                str_sql.append(")");
+                if(s.executeUpdate (str_sql.toString()) > 0) {
+                    ResultSet rs = connect.conn.prepareStatement( "SELECT LAST_INSERT_ID() AS id" ).executeQuery();
+                    try {
+                        if (rs.next ()) {
+                            page = new TPage(rs.getInt("id"), page_title, word_count, wiki_link_count,
+                                             is_in_wiktionary, redirect_target);
+                            //System.out.println("TPage insert()):: id=" + rs.getInt("id") +
+                            //    "; page_title='" + page_title + "'");
+                        }
+                    } finally {
+                        rs.close();
+                    }
+                }
+            } finally {
+                s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPage.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return page;
     }
@@ -225,27 +229,26 @@ public class TPage {
     public static void setIsInWiktionary (Connect connect,String page_title,
                                             boolean is_in_wiktionary)
     {
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         try
         {
-            s = connect.conn.createStatement ();
-            if(is_in_wiktionary)
-                str_sql.append("UPDATE page SET is_in_wiktionary=1");
-            else
-                str_sql.append("UPDATE page SET is_in_wiktionary=0");
+            Statement s = connect.conn.createStatement ();
+            try {
+                if(is_in_wiktionary)
+                    str_sql.append("UPDATE page SET is_in_wiktionary=1");
+                else
+                    str_sql.append("UPDATE page SET is_in_wiktionary=0");
 
-            str_sql.append(" WHERE page_title=\"");
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-            s.executeUpdate (str_sql.toString());
+                str_sql.append(" WHERE page_title=\"");
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
+                str_sql.append(safe_title);
+                str_sql.append("\"");
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.setIsInWiktionary()):: page_title='"+page_title+"'; sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 
@@ -274,43 +277,46 @@ public class TPage {
     private static TPage get (Connect connect,String page_title,
                               boolean b_page_title_safe_convertion) {
                               
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        TPage       tp = null;
+        TPage tp = null;
 
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title=\"");
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title=\"");
 
-            if( b_page_title_safe_convertion ) {
-                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
-                str_sql.append(safe_title);
-            } else {
-                str_sql.append(page_title);
-            }
-            str_sql.append("\"");
+                if( b_page_title_safe_convertion ) {
+                    String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
+                    str_sql.append(safe_title);
+                } else {
+                    str_sql.append(page_title);
+                }
+                str_sql.append("\"");
 
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int id              = rs.getInt("id");
-                int word_count      = rs.getInt("word_count");
-                int wiki_link_count = rs.getInt("wiki_link_count");
-                //boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
-                boolean is_in_wiktionary = 0 != rs.getInt("is_in_wiktionary");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int id              = rs.getInt("id");
+                        int word_count      = rs.getInt("word_count");
+                        int wiki_link_count = rs.getInt("wiki_link_count");
+                        //boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+                        boolean is_in_wiktionary = 0 != rs.getInt("is_in_wiktionary");
 
-                boolean is_redirect = 0 != rs.getInt("is_redirect");
-                String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
+                        boolean is_redirect = 0 != rs.getInt("is_redirect");
+                        String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
 
-                tp = new TPage(id, page_title, word_count, wiki_link_count,
-                               is_in_wiktionary, redirect_target);
+                        tp = new TPage(id, page_title, word_count, wiki_link_count,
+                                       is_in_wiktionary, redirect_target);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPage.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -324,33 +330,35 @@ public class TPage {
       */
     public static TPage getByID (Connect connect,int id) {
         
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        TPage       tp = null;
-        
+        TPage tp = null;
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
-                int word_count      = rs.getInt("word_count");
-                int wiki_link_count = rs.getInt("wiki_link_count");
-                boolean is_in_wiktionary = 0 != rs.getInt("is_in_wiktionary");
-                boolean is_redirect = 0 != rs.getInt("is_redirect");
-                String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE id=");
+                str_sql.append(id);
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
+                        int word_count      = rs.getInt("word_count");
+                        int wiki_link_count = rs.getInt("wiki_link_count");
+                        boolean is_in_wiktionary = 0 != rs.getInt("is_in_wiktionary");
+                        boolean is_redirect = 0 != rs.getInt("is_redirect");
+                        String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
 
-                tp = new TPage(id, page_title, word_count, wiki_link_count,
-                               is_in_wiktionary, redirect_target);
+                        tp = new TPage(id, page_title, word_count, wiki_link_count,
+                                       is_in_wiktionary, redirect_target);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPage.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -402,9 +410,6 @@ public class TPage {
 
         // todo: as func parameters ...
 
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         List<TPage> tp_list = null;
         
@@ -425,81 +430,84 @@ public class TPage {
             limit_with_reserve += 55555;
 
         try {
-            s = connect.conn.createStatement ();
+            Statement s = connect.conn.createStatement ();
+            try {
+                String safe_prefix = PageTableBase.convertToSafeWithWildCard(connect, prefix);
+                str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
+                str_sql.append(safe_prefix);
+                    //str_sql.append("%\"");
+                str_sql.append("\"");
 
-            String safe_prefix = PageTableBase.convertToSafeWithWildCard(connect, prefix);
-            str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
-            str_sql.append(safe_prefix);
-                //str_sql.append("%\"");
-            str_sql.append("\"");
+                if(b_skip_redirects)
+                    str_sql.append(" AND is_redirect is NULL");
 
-            if(b_skip_redirects)
-                str_sql.append(" AND is_redirect is NULL");
+                // temp: skip empty articles
+                //str_sql.append(" AND is_in_wiktionary=1");
 
-            // temp: skip empty articles
-            //str_sql.append(" AND is_in_wiktionary=1");
-
-            if(limit > 0) {
-                str_sql.append(" LIMIT ");
-                str_sql.append(limit_with_reserve);
-            }
-            //System.out.print("safe_prefix=" + safe_prefix);
-            
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next () && 
-                    (limit < 0 || null == tp_list || tp_list.size() < limit))
-            {
-                int id              = rs.getInt("id");
-                int word_count      = rs.getInt("word_count");
-                int wiki_link_count = rs.getInt("wiki_link_count");
-                boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
-                String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
-                
-                boolean is_redirect = 0 != rs.getInt("is_redirect");
-                String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
-
-                if (b_skip_redirects)
-                    assert(null == redirect_target);
-
-                
-                TPage tp = new TPage(id, page_title, word_count, wiki_link_count,
-                           is_in_wiktionary, redirect_target);
-
-                tp.lang_pos = TLangPOS.getRecursive(connect, tp);
-
-                boolean b_add = true;
-                if(b_meaning)
-                    b_add = b_add && tp.hasDefinition();
-
-                if(b_sem_rel)
-                    b_add = b_add && tp.hasSemanticRelation();
-
-                if(source_lang.length > 0)
-                    b_add = b_add && tp.hasLanguage(source_lang);
-
-                if(trans_lang.length > 0)
-                    b_add = b_add && tp.hasTranslation(trans_lang);
-
-                if(b_add) {
-                    if(null == tp_list)
-                        tp_list = new ArrayList<TPage>();
-
-                    tp_list.add(tp);
+                if(limit > 0) {
+                    str_sql.append(" LIMIT ");
+                    str_sql.append(limit_with_reserve);
                 }
+                //System.out.print("safe_prefix=" + safe_prefix);
 
-                // System.out.println(" title=" + page_title);
-                //        "; redirect_target=" + redirect_target +
-                //        "; id=" + id +
-                //        "; is_redirect=" + is_redirect +
-                //        " (TPage.getByPrefix)");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next () &&
+                            (limit < 0 || null == tp_list || tp_list.size() < limit))
+                    {
+                        int id              = rs.getInt("id");
+                        int word_count      = rs.getInt("word_count");
+                        int wiki_link_count = rs.getInt("wiki_link_count");
+                        boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
+                        String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
+
+                        boolean is_redirect = 0 != rs.getInt("is_redirect");
+                        String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
+
+                        if (b_skip_redirects)
+                            assert(null == redirect_target);
+
+
+                        TPage tp = new TPage(id, page_title, word_count, wiki_link_count,
+                                   is_in_wiktionary, redirect_target);
+
+                        tp.lang_pos = TLangPOS.getRecursive(connect, tp);
+
+                        boolean b_add = true;
+                        if(b_meaning)
+                            b_add = b_add && tp.hasDefinition();
+
+                        if(b_sem_rel)
+                            b_add = b_add && tp.hasSemanticRelation();
+
+                        if(source_lang.length > 0)
+                            b_add = b_add && tp.hasLanguage(source_lang);
+
+                        if(trans_lang.length > 0)
+                            b_add = b_add && tp.hasTranslation(trans_lang);
+
+                        if(b_add) {
+                            if(null == tp_list)
+                                tp_list = new ArrayList<TPage>();
+
+                            tp_list.add(tp);
+                        }
+
+                        // System.out.println(" title=" + page_title);
+                        //        "; redirect_target=" + redirect_target +
+                        //        "; id=" + id +
+                        //        "; is_redirect=" + is_redirect +
+                        //        " (TPage.getByPrefix)");
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPage.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-
         if(null == tp_list)
             return NULL_TPAGE_ARRAY;
 
@@ -514,25 +522,22 @@ public class TPage {
      */
     public static void delete (Connect connect,String page_title) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
+            Statement s = connect.conn.createStatement ();
+            try {
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
 
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
-
-            str_sql.append("DELETE FROM page WHERE page_title=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-            s.execute (str_sql.toString());
-            //System.out.println("TPage delete()):: page_title='" + page_title + "'");
-            
+                str_sql.append("DELETE FROM page WHERE page_title=\"");
+                str_sql.append(safe_title);
+                str_sql.append("\"");
+                s.execute (str_sql.toString());
+                //System.out.println("TPage delete()):: page_title='" + page_title + "'");
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPage.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 
@@ -613,5 +618,4 @@ public class TPage {
 
         return false;
     }
-
 }

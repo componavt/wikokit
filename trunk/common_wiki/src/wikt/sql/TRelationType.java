@@ -1,8 +1,8 @@
 /* TRelationType.java - SQL operations with the table 'relation_type'
  * in Wiktionary parsed database.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql;
@@ -198,26 +198,25 @@ public class TRelationType {
     public static void insert (Connect connect,Relation r) {
 
         if(null == r) return;
-
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        
+        StringBuilder str_sql = new StringBuilder();
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO relation_type (name) VALUES (\"");
-            //String safe_title = StringUtil.spaceToUnderscore(
-            //                    StringUtil.escapeChars(name));
-            //str_sql.append(safe_title);
-            str_sql.append(r.toString());
-            str_sql.append("\")");
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("INSERT INTO relation_type (name) VALUES (\"");
+                //String safe_title = StringUtil.spaceToUnderscore(
+                //                    StringUtil.escapeChars(name));
+                //str_sql.append(safe_title);
+                str_sql.append(r.toString());
+                str_sql.append("\")");
 
-            s.executeUpdate (str_sql.toString());
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TRelationType.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 
@@ -230,25 +229,28 @@ public class TRelationType {
 
         if(null == r) return null;
 
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TRelationType rel_type = null;
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM relation_type WHERE name=\"");
-            str_sql.append(r.toString());
-            str_sql.append("\"");
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-                rel_type = new TRelationType(rs.getInt("id"), r);
-            else
-                System.err.println("Warning: (wikt_parsed TRelationType.java get()):: POS (" + r.toString() + ") is absent in the table 'relation_type'.");
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id FROM relation_type WHERE name=\"");
+                str_sql.append(r.toString());
+                str_sql.append("\"");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        rel_type = new TRelationType(rs.getInt("id"), r);
+                    else
+                        System.err.println("Warning: (wikt_parsed TRelationType.java get()):: POS (" + r.toString() + ") is absent in the table 'relation_type'.");
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelationType.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TRelationType.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return rel_type;
     }
@@ -261,20 +263,19 @@ public class TRelationType {
 
         if(null == r) return;
 
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM relation_type WHERE name=\"");
-            str_sql.append(r.toString());
-            str_sql.append("\"");
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM relation_type WHERE name=\"");
+                str_sql.append(r.toString());
+                str_sql.append("\"");
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelationType.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TRelationType.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

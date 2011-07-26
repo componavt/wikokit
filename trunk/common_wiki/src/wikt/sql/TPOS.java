@@ -1,8 +1,8 @@
 /* TPOS.java - SQL operations with the table 'part_of_speech'
  * in Wiktionary parsed database.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql;
@@ -200,25 +200,24 @@ public class TPOS {
 
         if(null == p) return;
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO part_of_speech (name) VALUES (\"");
-            //String safe_title = StringUtil.spaceToUnderscore(
-            //                    StringUtil.escapeChars(name));
-            //str_sql.append(safe_title);
-            str_sql.append(p.toString());
-            str_sql.append("\")");
-            
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("INSERT INTO part_of_speech (name) VALUES (\"");
+                //String safe_title = StringUtil.spaceToUnderscore(
+                //                    StringUtil.escapeChars(name));
+                //str_sql.append(safe_title);
+                str_sql.append(p.toString());
+                str_sql.append("\")");
+
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPOS.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
     
@@ -231,25 +230,28 @@ public class TPOS {
 
         if(null == p) return null;
         
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TPOS        tp = null;
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM part_of_speech WHERE name=\"");
-            str_sql.append(p.toString());
-            str_sql.append("\"");
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-                tp = new TPOS(rs.getInt("id"), p);
-            else
-                System.err.println("Warning: (wikt_parsed TPOS.java get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id FROM part_of_speech WHERE name=\"");
+                str_sql.append(p.toString());
+                str_sql.append("\"");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        tp = new TPOS(rs.getInt("id"), p);
+                    else
+                        System.err.println("Warning: (TPOS.get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPOS.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPOS.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -262,20 +264,19 @@ public class TPOS {
 
         if(null == p) return;
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM part_of_speech WHERE name=\"");
-            str_sql.append(p.toString());
-            str_sql.append("\"");
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM part_of_speech WHERE name=\"");
+                str_sql.append(p.toString());
+                str_sql.append("\"");
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPOS.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 }

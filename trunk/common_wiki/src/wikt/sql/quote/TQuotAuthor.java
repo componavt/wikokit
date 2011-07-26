@@ -2,7 +2,7 @@
  * SQL operations with the table 'quot_author' in Wiktionary parsed database.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.quote;
@@ -91,38 +91,38 @@ public class TQuotAuthor {
             System.err.println("Error (TQuotAuthor.insertNameAndWikilink()):: null argument: author's name.");
             return null;
         }
-
         if(null == _wikilink)
             _wikilink = "";
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        TQuotAuthor result = null;
-        String safe_name = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _name);
+        String safe_name     = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _name);
         String safe_wikilink = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _wikilink);
+        str_sql.append("INSERT INTO quot_author (name,wikilink) VALUES (\"");
+        str_sql.append(safe_name);
+        str_sql.append("\", \"");
+
+        str_sql.append(safe_wikilink);
+        str_sql.append("\")");
+
+        TQuotAuthor result = null;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO quot_author (name,wikilink) VALUES (\"");
-            str_sql.append(safe_name);
-            str_sql.append("\", \"");
-
-            str_sql.append(safe_wikilink);
-            str_sql.append("\")");
-
-            s.executeUpdate (str_sql.toString());
-
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                result = new TQuotAuthor(rs.getInt("id"), _name, _wikilink);
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+                s = connect.conn.createStatement ();
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        result = new TQuotAuthor(rs.getInt("id"), _name, _wikilink);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
 
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotAuthor.insertName):: _name='"+_name+"'; _wikilink='"+_wikilink+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -139,34 +139,33 @@ public class TQuotAuthor {
             System.err.println("Error (TQuotAuthor[] TQuotAuthor.get()):: null argument: author's name.");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         String safe_name = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _name);
+        str_sql.append("SELECT id,wikilink FROM quot_author WHERE name=\"");
+        str_sql.append(safe_name);
+        str_sql.append("\" LIMIT 1");
+
         TQuotAuthor result = null;
-        
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,wikilink FROM quot_author WHERE name=\"");
-            str_sql.append(safe_name);
-            str_sql.append("\" LIMIT 1");
-            
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int    _id = rs.getInt("id");
-
-                byte[] bb = rs.getBytes("wikilink");
-                String _wikilink = null == bb ? "" : Encodings.bytesToUTF8(bb);
-
-                result = new TQuotAuthor(_id, _name, _wikilink);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int    _id = rs.getInt("id");
+                        byte[] bb = rs.getBytes("wikilink");
+                        String _wikilink = null == bb ? "" : Encodings.bytesToUTF8(bb);
+                        result = new TQuotAuthor(_id, _name, _wikilink);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -183,39 +182,36 @@ public class TQuotAuthor {
             System.err.println("Error (TQuotAuthor[] TQuotAuthor.get()):: null argument: author's name.");
             return null;
         }
-        
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         String safe_name = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _name);
+        str_sql.append("SELECT id,wikilink FROM quot_author WHERE name=\"");
+        str_sql.append(safe_name);
+        str_sql.append("\";");
+
         List<TQuotAuthor> list_authors = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,wikilink FROM quot_author WHERE name=\"");
-            str_sql.append(safe_name);
-            str_sql.append("\";");
-            
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
-            {
-                if(null == list_authors)
-                           list_authors = new ArrayList<TQuotAuthor>();
-
-                int    _id = rs.getInt("id");
-
-                byte[] bb = rs.getBytes("wikilink");
-                String _wikilink = null == bb ? "" : Encodings.bytesToUTF8(bb);
-
-                list_authors.add(new TQuotAuthor(_id, _name, _wikilink));
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next ())
+                    {
+                        if(null == list_authors)
+                                   list_authors = new ArrayList<TQuotAuthor>();
+                        int    _id = rs.getInt("id");
+                        byte[] bb = rs.getBytes("wikilink");
+                        String _wikilink = null == bb ? "" : Encodings.bytesToUTF8(bb);
+                        list_authors.add(new TQuotAuthor(_id, _name, _wikilink));
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-
         if(null == list_authors)
             return NULL_TQUOTAUTHOR_ARRAY;
         return (TQuotAuthor[])list_authors.toArray(NULL_TQUOTAUTHOR_ARRAY);
@@ -235,36 +231,33 @@ public class TQuotAuthor {
             System.err.println("Error (TQuotAuthor TQuotAuthor.get()):: null argument: author's name.");
             return null;
         }
-
         if(null == _wikilink)
             _wikilink = "";
-         
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        String safe_name = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _name);
+        String safe_name     = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _name);
         String safe_wikilink = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _wikilink);
-        TQuotAuthor result = null;
+        str_sql.append("SELECT id FROM quot_author WHERE name=\"");
+        str_sql.append(safe_name);
+        str_sql.append("\" AND wikilink=\"");
+        str_sql.append(safe_wikilink);
+        str_sql.append("\" LIMIT 1");
 
+        TQuotAuthor result = null;
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM quot_author WHERE name=\"");
-            str_sql.append(safe_name);
-            str_sql.append("\" AND wikilink=\"");
-            str_sql.append(safe_wikilink);
-            str_sql.append("\" LIMIT 1");
-            
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int    _id = rs.getInt("id");
-                result = new TQuotAuthor(_id, _name, _wikilink);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        result = new TQuotAuthor(rs.getInt("id"), _name, _wikilink);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -294,32 +287,35 @@ public class TQuotAuthor {
      * @return null if data is absent
      */
     public static TQuotAuthor getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT name,wikilink FROM quot_author WHERE id=");
+        str_sql.append(id);
+
         TQuotAuthor quot_author = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT name,wikilink FROM quot_author WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        byte[] bb = rs.getBytes("name");
+                        String _name = null == bb ? null : Encodings.bytesToUTF8(bb);
 
-            if (rs.next ())
-            {
-                byte[] bb = rs.getBytes("name");
-                String _name = null == bb ? null : Encodings.bytesToUTF8(bb);
-                
-                bb = rs.getBytes("wikilink");
-                String _wikilink = null == bb ? null : Encodings.bytesToUTF8(bb);
+                        bb = rs.getBytes("wikilink");
+                        String _wikilink = null == bb ? null : Encodings.bytesToUTF8(bb);
 
-                quot_author = new TQuotAuthor(id, _name, _wikilink);
+                        quot_author = new TQuotAuthor(id, _name, _wikilink);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotAuthor.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return quot_author;
     }
@@ -329,19 +325,18 @@ public class TQuotAuthor {
      */
     public void delete (Connect connect) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("DELETE FROM quot_author WHERE id=");
+        str_sql.append( id );
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM quot_author WHERE id=");
-            str_sql.append( id );
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotAuthor.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
     

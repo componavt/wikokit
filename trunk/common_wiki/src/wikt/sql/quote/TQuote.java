@@ -154,36 +154,42 @@ public class TQuote {
         }
         String quot_ref_id = (null == _quot_ref) ? "NULL" : "" + _quot_ref.getID();
         
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        TQuote result = null;
         String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
+        str_sql.append("INSERT INTO quote (meaning_id,lang_id,text,ref_id) VALUES (");
+        str_sql.append(_meaning.getID());
+        str_sql.append(",");
+        str_sql.append(_lang.getID());
+        str_sql.append(",\"");
+        str_sql.append(safe_text);
+        str_sql.append("\",");
+        str_sql.append(quot_ref_id);
+        str_sql.append(")");
+        TQuote result = null;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO quote (meaning_id,lang_id,text,ref_id) VALUES (");
-            str_sql.append(_meaning.getID());
-            str_sql.append(",");
-            str_sql.append(_lang.getID());
-            str_sql.append(",\"");
-            str_sql.append(safe_text);
-            str_sql.append("\",");
-            str_sql.append(quot_ref_id);
-            str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
 
             s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                result = new TQuote(rs.getInt("id"),
-                                      _meaning, _lang, _text, _quot_ref);
-
+            try {
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        result = new TQuote(rs.getInt("id"),
+                                              _meaning, _lang, _text, _quot_ref);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotRef.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -359,38 +365,38 @@ public class TQuote {
             System.err.println("Error (wikt_parsed TQuote.get()):: null argument: meaning.");
             return NULL_TQUOTE_ARRAY;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT id,lang_id,text,ref_id FROM quote WHERE meaning_id=");
+        str_sql.append(meaning.getID());
         List<TQuote> list_quote = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,lang_id,text,ref_id FROM quote WHERE meaning_id=");
-            str_sql.append(meaning.getID());
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
-            {
-                int    _id = rs.getInt("id");
-                TLang _lang = TLang.getTLangFast(rs.getInt("lang_id"));
-                String _text = Encodings.bytesToUTF8(rs.getBytes("text"));
-                TQuotRef _quot_ref = TQuotRef.getByID(connect, rs.getInt("ref_id"));
-                
-                if(null != _lang && null != _quot_ref) {
-                    if(null == list_quote)
-                               list_quote = new ArrayList<TQuote>();
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next ())
+                    {
+                        int    _id = rs.getInt("id");
+                        TLang _lang = TLang.getTLangFast(rs.getInt("lang_id"));
+                        String _text = Encodings.bytesToUTF8(rs.getBytes("text"));
+                        TQuotRef _quot_ref = TQuotRef.getByID(connect, rs.getInt("ref_id"));
 
-                    list_quote.add(new TQuote(_id, meaning, _lang, _text, _quot_ref));
+                        if(null != _lang && null != _quot_ref) {
+                            if(null == list_quote)
+                                       list_quote = new ArrayList<TQuote>();
+
+                            list_quote.add(new TQuote(_id, meaning, _lang, _text, _quot_ref));
+                        }
+                    }
+                } finally {
+                    rs.close();
                 }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuote.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-
         if(null == list_quote)
             return NULL_TQUOTE_ARRAY;
         return (TQuote[])list_quote.toArray(NULL_TQUOTE_ARRAY);
@@ -401,19 +407,18 @@ public class TQuote {
      */
     public void delete (Connect connect) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("DELETE FROM quote WHERE id=");
+        str_sql.append( id );
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM quote WHERE id=");
-            str_sql.append( id );
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuote.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 }

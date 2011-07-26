@@ -2,7 +2,7 @@
  * SQL operations with the table 'quot_year' in Wiktionary parsed database.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.quote;
@@ -81,32 +81,36 @@ public class TQuotYear {
             System.out.println("Warning (TQuotYear.insert()):: invalid years: from='"+_from+"', to='"+_to+"'.");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("INSERT INTO quot_year (`from`,`to`) VALUES (");
+        str_sql.append(_from);
+        str_sql.append(",");
+        str_sql.append(_to);
+        str_sql.append(")");
         TQuotYear result = null;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO quot_year (`from`,`to`) VALUES (");
-            str_sql.append(_from);
-            str_sql.append(",");
-            str_sql.append(_to);
-            str_sql.append(")");
-
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
 
             s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                result = new TQuotYear(rs.getInt("id"), _from, _to);
-
+            try {
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        result = new TQuotYear(rs.getInt("id"), _from, _to);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotYear.insert):: _from="+_from+"; _to="+_to+"; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -118,29 +122,30 @@ public class TQuotYear {
      * @return null if data is absent
      */
     public static TQuotYear getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT `from`,`to` FROM quot_year WHERE id=");
+        str_sql.append(id);
         TQuotYear quot_year = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT `from`,`to` FROM quot_year WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            
-            if (rs.next ())
-            {
-                int _from = rs.getInt("from");
-                int _to   = rs.getInt("to");
-
-                quot_year = new TQuotYear(id, _from, _to);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int _from = rs.getInt("from");
+                        int _to   = rs.getInt("to");
+                        quot_year = new TQuotYear(id, _from, _to);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotYear.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return quot_year;
     }
@@ -167,29 +172,30 @@ public class TQuotYear {
             System.out.println("Warning (TQuotYear.get()):: entry '" + page_title + "', invalid years: from='"+_from+"', to='"+_to+"'.");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT id FROM quot_year WHERE `from`=");
+        str_sql.append(_from);
+        str_sql.append(" AND `to`=");
+        str_sql.append(_to);
         TQuotYear result = null;
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM quot_year WHERE `from`=");
-            str_sql.append(_from);
-            str_sql.append(" AND `to`=");
-            str_sql.append(_to);
-
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int    _id = rs.getInt("id");
-                result = new TQuotYear(_id, _from, _to);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int    _id = rs.getInt("id");
+                        result = new TQuotYear(_id, _from, _to);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotYear.get()):: entry '" + page_title + "', years: _from="+_from+"; _to="+_to+"; sql='" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -222,19 +228,18 @@ public class TQuotYear {
      */
     public void delete (Connect connect) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("DELETE FROM quot_year WHERE id=");
+        str_sql.append( id );
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM quot_year WHERE id=");
-            str_sql.append( id );
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotYear.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 

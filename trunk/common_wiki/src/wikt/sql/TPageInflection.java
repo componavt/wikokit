@@ -2,7 +2,7 @@
  * parsed database.
  *
  * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql;
@@ -68,36 +68,38 @@ public class TPageInflection {
     public static TPageInflection insert (Connect connect,TPage page,TInflection inflection,int term_freq) {
 
         if(null == page || null == inflection) {
-            System.err.println("Error (wikt_parsed TPageInflection.insert()):: null arguments: page="+page+"; inflection="+inflection);
+            System.err.println("Error (TPageInflection.insert()):: null arguments: page="+page+"; inflection="+inflection);
             return null;
         }
 
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TPageInflection page_infl = null;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO page_inflection (page_id,inflection_id,term_freq) VALUES (");
-            str_sql.append(page.getID());
-            str_sql.append(",");
-            str_sql.append(inflection.getID());
-            str_sql.append(",");
-            str_sql.append(term_freq);
-            str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("INSERT INTO page_inflection (page_id,inflection_id,term_freq) VALUES (");
+                str_sql.append(page.getID());
+                str_sql.append(",");
+                str_sql.append(inflection.getID());
+                str_sql.append(",");
+                str_sql.append(term_freq);
+                str_sql.append(")");
+                s.executeUpdate (str_sql.toString());
 
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                page_infl = new TPageInflection(rs.getInt("id"), page, inflection, term_freq);
-
+                s = connect.conn.createStatement ();
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        page_infl = new TPageInflection(rs.getInt("id"), page, inflection, term_freq);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TPageInflection.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return page_infl;
     }
@@ -115,30 +117,33 @@ public class TPageInflection {
             return null;
         }
         
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        StringBuilder str_sql = new StringBuilder();
         TPageInflection page_infl = null;
         
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,term_freq FROM page_inflection WHERE page_id=");
-            // SELECT id,term_freq FROM page_inflection WHERE page_id=30 AND inflection_id=8;
-            str_sql.append(page.getID());
-            str_sql.append(" AND inflection_id=");
-            str_sql.append(infl.getID());
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int id          = rs.getInt("id");
-                int term_freq   = rs.getInt("term_freq");
-                page_infl = new TPageInflection(id, page, infl, term_freq);
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,term_freq FROM page_inflection WHERE page_id=");
+                // SELECT id,term_freq FROM page_inflection WHERE page_id=30 AND inflection_id=8;
+                str_sql.append(page.getID());
+                str_sql.append(" AND inflection_id=");
+                str_sql.append(infl.getID());
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int id          = rs.getInt("id");
+                        int term_freq   = rs.getInt("term_freq");
+                        page_infl = new TPageInflection(id, page, infl, term_freq);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPageInflection.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPageInflection.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return page_infl;
     }
@@ -148,30 +153,34 @@ public class TPageInflection {
      * @return null if data is absent
      */
     public static TPageInflection getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        
+        StringBuilder str_sql = new StringBuilder();
         TPageInflection page_infl = null;
 
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT page_id,inflection_id,term_freq FROM page_inflection WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                TPage       page = TPage.      getByID(connect, rs.getInt("page_id"));
-                TInflection infl = TInflection.getByID(connect, rs.getInt("inflection_id"));
-                int term_freq    =                              rs.getInt("term_freq");
-                if(null != page && null != infl) {
-                    page_infl = new TPageInflection(id, page, infl, term_freq);
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT page_id,inflection_id,term_freq FROM page_inflection WHERE id=");
+                str_sql.append(id);
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        TPage       page = TPage.      getByID(connect, rs.getInt("page_id"));
+                        TInflection infl = TInflection.getByID(connect, rs.getInt("inflection_id"));
+                        int term_freq    =                              rs.getInt("term_freq");
+                        if(null != page && null != infl) {
+                            page_infl = new TPageInflection(id, page, infl, term_freq);
+                        }
+                    }
+                } finally {
+                    rs.close();
                 }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPageInflection.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPageInflection.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return page_infl;
     }
@@ -186,20 +195,19 @@ public class TPageInflection {
             System.err.println("Error (wikt_parsed TPageInflection.delete()):: null argument 'page inflection'");
             return;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuffer str_sql = new StringBuffer();
+        
+        StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM page_inflection WHERE id=");
-            str_sql.append(page_infl.getID());
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM page_inflection WHERE id=");
+                str_sql.append(page_infl.getID());
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPageInflection.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TPageInflection.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

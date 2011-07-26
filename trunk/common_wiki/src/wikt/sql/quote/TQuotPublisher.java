@@ -2,7 +2,7 @@
  * SQL operations with the table 'quot_ref' in Wiktionary parsed database.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.quote;
@@ -53,71 +53,71 @@ public class TQuotPublisher {
             System.err.println("Error (TQuotPublisher.insert()):: null argument: .");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuilder str_sql = new StringBuilder();
-        TQuotPublisher result = null;
         String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
+        StringBuilder str_sql = new StringBuilder();
+        str_sql.append("INSERT INTO quot_publisher (text) VALUES (\"");
+        str_sql.append(safe_text);
+        str_sql.append("\")");
+        TQuotPublisher result = null;
         try
         {
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO quot_publisher (text) VALUES (\"");
-            str_sql.append(safe_text);
-            str_sql.append("\")");
-
-            s.executeUpdate (str_sql.toString());
-
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                result = new TQuotPublisher(rs.getInt("id"), _text);
-
+            try {
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        result = new TQuotPublisher(rs.getInt("id"), _text);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotPublisher.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
 
-    /** Get's a record from the table 'quot_publisher' by the source's name.<br><br>
+    /** Get's a record from the table 'quot_publisher' by the publisher's name.<br><br>
      * SELECT id FROM quot_publisher WHERE text="Cignet Classic";
      *
-     * @param _text name of the source
+     * @param _text name of the publisher
      * @return NULL if data is absent
      */
     public static TQuotPublisher get (Connect connect, String _text) {
 
         if(null == _text || 0 == _text.length()) {
-            System.err.println("Error (TQuotPublisher.get()):: null argument: name of a source.");
+            System.err.println("Error (TQuotPublisher.get()):: null argument: publisher's name.");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuilder str_sql = new StringBuilder();
         String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
+        StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT id FROM quot_publisher WHERE text=\"");
+        str_sql.append(safe_text);
+        str_sql.append("\"");
         TQuotPublisher result = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM quot_publisher WHERE text=\"");
-            str_sql.append(safe_text);
-            str_sql.append("\"");
-
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int    _id = rs.getInt("id");
-                result = new TQuotPublisher(_id, _text);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        result = new TQuotPublisher(rs.getInt("id"), _text);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotPublisher.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -145,29 +145,30 @@ public class TQuotPublisher {
      * @return null if data is absent
      */
     public static TQuotPublisher getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT text FROM quot_publisher WHERE id=");
+        str_sql.append(id);
         TQuotPublisher quot_publisher = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT text FROM quot_publisher WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-
-            if (rs.next ())
-            {
-                byte[] bb = rs.getBytes("text");
-                String _text = null == bb ? null : Encodings.bytesToUTF8(bb);
-
-                quot_publisher = new TQuotPublisher(id, _text);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        byte[] bb = rs.getBytes("text");
+                        String _text = null == bb ? null : Encodings.bytesToUTF8(bb);
+                        quot_publisher = new TQuotPublisher(id, _text);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotPublisher.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return quot_publisher;
     }
@@ -177,19 +178,18 @@ public class TQuotPublisher {
      */
     public void delete (Connect connect) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("DELETE FROM quot_publisher WHERE id=");
+        str_sql.append( id );
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM quot_publisher WHERE id=");
-            str_sql.append( id );
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotPublisher.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 }

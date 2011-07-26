@@ -10,10 +10,6 @@ import static org.junit.Assert.*;
 import wikipedia.language.LanguageType;
 import wikipedia.sql.Connect;
 
-/**
- *
- * @author andrew
- */
 public class TQuotAuthorTest {
 
     public Connect   ruwikt_parsed_conn;

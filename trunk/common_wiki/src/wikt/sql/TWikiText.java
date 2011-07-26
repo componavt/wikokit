@@ -1,8 +1,8 @@
 /* TWikiText.java - SQL operations with the table 'wiki_text' in Wiktionary
  * parsed database.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql;
@@ -97,29 +97,31 @@ public class TWikiText {
         if(text.length() == 0)
             return null;
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         TWikiText wiki_text = null;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO wiki_text (text) VALUES (\"");
-            String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
-            str_sql.append(safe_text);
-            str_sql.append("\")");
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("INSERT INTO wiki_text (text) VALUES (\"");
+                String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
+                str_sql.append(safe_text);
+                str_sql.append("\")");
+                s.executeUpdate (str_sql.toString());
 
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                wiki_text = new TWikiText(rs.getInt("id"), text);
-
+                s = connect.conn.createStatement ();
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        wiki_text = new TWikiText(rs.getInt("id"), text);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TWikiText.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return wiki_text;
     }
@@ -131,28 +133,31 @@ public class TWikiText {
      */
     public static TWikiText get (Connect connect,String text) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         TWikiText   wiki_text = null;
         
         try {
-            s = connect.conn.createStatement ();
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
-            str_sql.append("SELECT id FROM wiki_text WHERE text=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int id = rs.getInt("id");
-                wiki_text = new TWikiText(id, text);
+            Statement s = connect.conn.createStatement ();
+            try {
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
+                str_sql.append("SELECT id FROM wiki_text WHERE text=\"");
+                str_sql.append(safe_title);
+                str_sql.append("\"");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int id = rs.getInt("id");
+                        wiki_text = new TWikiText(id, text);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TWikiText.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return wiki_text;
     }
@@ -162,26 +167,30 @@ public class TWikiText {
      * @return null if data is absent
      */
     public static TWikiText getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         TWikiText wiki_text = null;
 
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT text FROM wiki_text WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                String text = Encodings.bytesToUTF8(rs.getBytes("text"));
-                wiki_text = new TWikiText(id, text);
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT text FROM wiki_text WHERE id=");
+                str_sql.append(id);
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        String text = Encodings.bytesToUTF8(rs.getBytes("text"));
+                        wiki_text = new TWikiText(id, text);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TWikiText.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return wiki_text;
     }
@@ -217,19 +226,19 @@ public class TWikiText {
             System.err.println("Error (wikt_parsed TWikiText.delete()):: null argument wiki_text.");
             return;
         }
-        Statement   s = null;
-        ResultSet   rs= null;
+           
         StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM wiki_text WHERE id=");
-            str_sql.append(wiki_text.getID());
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM wiki_text WHERE id=");
+                str_sql.append(wiki_text.getID());
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TWikiText.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 
@@ -243,21 +252,21 @@ public class TWikiText {
             System.err.println("Error (wikt_parsed TWikiText.delete()):: empty string wiki_text.");
             return;
         }
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM wiki_text WHERE text=\"");
-            str_sql.append( PageTableBase.convertToSafeStringEncodeToDBWunderscore(
-                            connect, wiki_text));
-            str_sql.append('"');
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM wiki_text WHERE text=\"");
+                str_sql.append( PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+                                connect, wiki_text));
+                str_sql.append('"');
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TWikiText.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

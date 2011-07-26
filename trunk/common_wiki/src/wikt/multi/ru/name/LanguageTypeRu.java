@@ -232,6 +232,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal dyu = new LanguageTypeRu("Дьюла", LanguageType.dyu);
     public static final LanguageTypeLocal dz = new LanguageTypeRu("Дзонг-кэ", LanguageType.dz);
 
+    public static final LanguageTypeLocal ecr = new LanguageTypeRu("Этеокритский", LanguageType.ecr);
     public static final LanguageTypeLocal egy = new LanguageTypeRu("Египетский", LanguageType.egy);
     public static final LanguageTypeLocal el = new LanguageTypeRu("Греческий", LanguageType.el);
     // el public static final LanguageTypeLocal el_dhi = new LanguageTypeRu("Греческий демот.", LanguageType.el_dhi);
@@ -495,6 +496,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal oc = new LanguageTypeRu("Окситанский", LanguageType.oc);
     public static final LanguageTypeLocal oj = new LanguageTypeRu("Оджибва", LanguageType.oj);
     public static final LanguageTypeLocal om = new LanguageTypeRu("Оромо", LanguageType.om);
+    public static final LanguageTypeLocal omn = new LanguageTypeRu("Минойский", LanguageType.omn);
     public static final LanguageTypeLocal ood = new LanguageTypeRu("Оодхам", LanguageType.ood);
     public static final LanguageTypeLocal or = new LanguageTypeRu("Ория", LanguageType.or);
     public static final LanguageTypeLocal orv = new LanguageTypeRu("Древнерусский", LanguageType.orv);
@@ -687,6 +689,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal wo = new LanguageTypeRu("Волоф", LanguageType.wo);
     public static final LanguageTypeLocal wuu = new LanguageTypeRu("У (китайский диалект)", LanguageType.wuu);
     public static final LanguageTypeLocal wya = new LanguageTypeRu("Гуронский", LanguageType.wya);
+    public static final LanguageTypeLocal wym = new LanguageTypeRu("Вилямовский", LanguageType.wym);
 
     public static final LanguageTypeLocal xal = new LanguageTypeRu("Калмыцкий", LanguageType.xal);
     public static final LanguageTypeLocal xas = new LanguageTypeRu("Камасинский", LanguageType.xas);

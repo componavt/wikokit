@@ -2,7 +2,7 @@
  * SQL operations with the table 'quot_ref' in Wiktionary parsed database.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.quote;
@@ -158,96 +158,99 @@ public class TQuotRef {
         String publisher_id = (null == p) ? " IS NULL" : "=" + p.getID();
         String source_id = (null == src) ? " IS NULL" : "=" + src.getID();
 
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuilder str_sql = new StringBuilder();
-        TQuotRef result = null;
-
         String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title);
         String safe_title_wikilink = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title_wikilink);
 
+        StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT id FROM quot_ref WHERE year_id");
+        str_sql.append(year_id);
+        str_sql.append(" AND author_id");
+        str_sql.append(author_id);
+        str_sql.append(" AND title=\"");
+        str_sql.append(safe_title);
+        str_sql.append("\" AND title_wikilink=\"");
+        str_sql.append(safe_title_wikilink);
+        str_sql.append("\" AND publisher_id");
+        str_sql.append(publisher_id);
+        str_sql.append(" AND source_id");
+        str_sql.append(source_id);
+        TQuotRef result = null;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM quot_ref WHERE year_id");
-            str_sql.append(year_id);
-            str_sql.append(" AND author_id");
-            str_sql.append(author_id);
-            str_sql.append(" AND title=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\" AND title_wikilink=\"");
-            str_sql.append(safe_title_wikilink);
-            str_sql.append("\" AND publisher_id");
-            str_sql.append(publisher_id);
-            str_sql.append(" AND source_id");
-            str_sql.append(source_id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                result = new TQuotRef(rs.getInt("id"), _title, _title_wikilink,
-                                      y, // TQuotYear _year
-                                      a, // TQuotAuthor _author,
-                                      p, // TQuotPublisher _publisher,
-                                      src); // TQuotSource _source
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        result = new TQuotRef(rs.getInt("id"), _title, _title_wikilink,
+                                              y, // TQuotYear _year
+                                              a, // TQuotAuthor _author,
+                                              p, // TQuotPublisher _publisher,
+                                              src); // TQuotSource _source
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotRef.get):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
 
     /** Selects row from the table 'quot_ref' by ID.<br><br>
-     *
      * SELECT year_id,author_id,title,title_wikilink,publisher_id,source_id FROM quot_ref WHERE id=1;
      *
      * @return null if data is absent
      */
     public static TQuotRef getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT year_id,author_id,title,title_wikilink,publisher_id,source_id FROM quot_ref WHERE id=");
+        str_sql.append(id);
         TQuotRef quot_ref = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT year_id,author_id,title,title_wikilink,publisher_id,source_id FROM quot_ref WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            int i;
-            if (rs.next ())
-            {
-                i = rs.getInt("year_id");
-                TQuotYear _year = (0 == i) ? null : TQuotYear.getByID(connect, i);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int i = rs.getInt("year_id");
+                        TQuotYear _year = (0 == i) ? null : TQuotYear.getByID(connect, i);
 
-                i = rs.getInt("author_id");
-                TQuotAuthor _author = (0 == i) ? null : TQuotAuthor.getByID(connect, i);
+                        i = rs.getInt("author_id");
+                        TQuotAuthor _author = (0 == i) ? null : TQuotAuthor.getByID(connect, i);
 
-                byte[] bb = rs.getBytes("title");
-                String _title = null == bb ? null : Encodings.bytesToUTF8(bb);
+                        byte[] bb = rs.getBytes("title");
+                        String _title = null == bb ? null : Encodings.bytesToUTF8(bb);
 
-                bb = rs.getBytes("title_wikilink");
-                String _title_wikilink = null == bb ? null : Encodings.bytesToUTF8(bb);
+                        bb = rs.getBytes("title_wikilink");
+                        String _title_wikilink = null == bb ? null : Encodings.bytesToUTF8(bb);
 
-                i = rs.getInt("publisher_id");
-                TQuotPublisher _publisher = (0 == i) ? null : TQuotPublisher.getByID(connect, i);
+                        i = rs.getInt("publisher_id");
+                        TQuotPublisher _publisher = (0 == i) ? null : TQuotPublisher.getByID(connect, i);
 
-                i = rs.getInt("source_id");
-                TQuotSource _source = (0 == i) ? null : TQuotSource.getByID(connect, i);
+                        i = rs.getInt("source_id");
+                        TQuotSource _source = (0 == i) ? null : TQuotSource.getByID(connect, i);
 
-                quot_ref = new TQuotRef(id, _title, _title_wikilink,
-                                      _year,        // TQuotYear
-                                      _author,      // TQuotAuthor
-                                      _publisher,   // TQuotPublisher
-                                      _source);     // TQuotSource
+                        quot_ref = new TQuotRef(id, _title, _title_wikilink,
+                                              _year,        // TQuotYear
+                                              _author,      // TQuotAuthor
+                                              _publisher,   // TQuotPublisher
+                                              _source);     // TQuotSource
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotRef.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return quot_ref;
     }
@@ -275,46 +278,50 @@ public class TQuotRef {
         String publisher_id = (null == p) ? "NULL" : "" + p.getID();
         String source_id = (null == src) ? "NULL" : "" + src.getID();
         
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuilder str_sql = new StringBuilder();
-        TQuotRef result = null;
-
         String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title);
         String safe_title_wikilink = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title_wikilink);
-
+        StringBuilder str_sql = new StringBuilder();
+        str_sql.append("INSERT INTO quot_ref (year_id,author_id,title,title_wikilink,publisher_id,source_id) VALUES (");
+        str_sql.append(year_id);
+        str_sql.append(",");
+        str_sql.append(author_id);
+        str_sql.append(",\"");
+        str_sql.append(safe_title);
+        str_sql.append("\",\"");
+        str_sql.append(safe_title_wikilink);
+        str_sql.append("\",");
+        str_sql.append(publisher_id);
+        str_sql.append(",");
+        str_sql.append(source_id);
+        str_sql.append(")");
+        TQuotRef result = null;
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO quot_ref (year_id,author_id,title,title_wikilink,publisher_id,source_id) VALUES (");
-            str_sql.append(year_id);
-            str_sql.append(",");
-            str_sql.append(author_id);
-            str_sql.append(",\"");
-            str_sql.append(safe_title);
-            str_sql.append("\",\"");
-            str_sql.append(safe_title_wikilink);
-            str_sql.append("\",");
-            str_sql.append(publisher_id);
-            str_sql.append(",");
-            str_sql.append(source_id);
-            str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
 
             s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                result = new TQuotRef(rs.getInt("id"), _title, _title_wikilink,
-                                      y, // TQuotYear _year
-                                      a, // TQuotAuthor _author,
-                                      p, // TQuotPublisher _publisher,
-                                      src); // TQuotSource _source
-
+            try {
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        result = new TQuotRef(rs.getInt("id"), _title, _title_wikilink,
+                                              y, // TQuotYear _year
+                                              a, // TQuotAuthor _author,
+                                              p, // TQuotPublisher _publisher,
+                                              src); // TQuotSource _source
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotRef.insert):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -459,19 +466,18 @@ public class TQuotRef {
      */
     public void delete (Connect connect) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("DELETE FROM quot_ref WHERE id=");
+        str_sql.append( id );
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM quot_ref WHERE id=");
-            str_sql.append( id );
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotRef.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 
