@@ -140,43 +140,49 @@ public class TMeaning {
             return null;
         }
 
-        Statement   s = null;
-        ResultSet  rs = null;
         StringBuilder str_sql = new StringBuilder();
         TMeaning meaning = null;
         int wiki_text_id = 0;
         try
         {
-            s = connect.conn.createStatement ();
-            if(null != wiki_text)
-                str_sql.append("INSERT INTO meaning (lang_pos_id,meaning_n,wiki_text_id) VALUES (");
-            else
-                str_sql.append("INSERT INTO meaning (lang_pos_id,meaning_n) VALUES (");
-            str_sql.append(lang_pos.getID());
-            str_sql.append(",");
-            str_sql.append(meaning_n);
-            if(null != wiki_text)
-            {
+            Statement s = connect.conn.createStatement ();
+            try {
+                if(null != wiki_text)
+                    str_sql.append("INSERT INTO meaning (lang_pos_id,meaning_n,wiki_text_id) VALUES (");
+                else
+                    str_sql.append("INSERT INTO meaning (lang_pos_id,meaning_n) VALUES (");
+                str_sql.append(lang_pos.getID());
                 str_sql.append(",");
-                str_sql.append(wiki_text.getID());
-                wiki_text_id = wiki_text.getID();
+                str_sql.append(meaning_n);
+                if(null != wiki_text)
+                {
+                    str_sql.append(",");
+                    str_sql.append(wiki_text.getID());
+                    wiki_text_id = wiki_text.getID();
+                }
+                str_sql.append(")");
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
             }
-            str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
 
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ()) {
-                meaning = new TMeaning(rs.getInt("id"), lang_pos, lang_pos.getID(),
-                                        meaning_n, wiki_text, wiki_text_id);
-                //System.out.println("TMeaning.insert()):: wiki_text='" + wiki_text.getText() + "'; meaning_n=" + meaning_n);
+            try {
+                s = connect.conn.createStatement ();
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ()) {
+                        meaning = new TMeaning(rs.getInt("id"), lang_pos, lang_pos.getID(),
+                                                meaning_n, wiki_text, wiki_text_id);
+                        //System.out.println("TMeaning.insert()):: wiki_text='" + wiki_text.getText() + "'; meaning_n=" + meaning_n);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
-
         }catch(SQLException ex) {
             System.err.println("SQLException (wikt_parsed TMeaning.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return meaning;
     }
@@ -191,36 +197,36 @@ public class TMeaning {
             System.err.println("Error (wikt_parsed TMeaning.get()):: null argument lang_pos");
             return null;
         }
-        
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         List<TMeaning> list_meaning = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,meaning_n,wiki_text_id FROM meaning WHERE lang_pos_id=");
-            str_sql.append(lang_pos.getID());
-            //str_sql.append(" ORDER BY id");
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
-            {
-                int       id            = rs.getInt("id");
-                int       meaning_n     = rs.getInt("meaning_n");
-                int       wiki_text_id  = rs.getInt("wiki_text_id");
-                TWikiText wiki_text     = wiki_text_id < 1 ? null : TWikiText.getByID(connect, wiki_text_id);
-                if(null == list_meaning)
-                           list_meaning = new ArrayList<TMeaning>();
-                list_meaning.add(new TMeaning(id, lang_pos, lang_pos.getID(),
-                                              meaning_n, wiki_text, wiki_text_id));
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,meaning_n,wiki_text_id FROM meaning WHERE lang_pos_id=");
+                str_sql.append(lang_pos.getID());
+                //str_sql.append(" ORDER BY id");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next ())
+                    {
+                        int       id            = rs.getInt("id");
+                        int       meaning_n     = rs.getInt("meaning_n");
+                        int       wiki_text_id  = rs.getInt("wiki_text_id");
+                        TWikiText wiki_text     = wiki_text_id < 1 ? null : TWikiText.getByID(connect, wiki_text_id);
+                        if(null == list_meaning)
+                                   list_meaning = new ArrayList<TMeaning>();
+                        list_meaning.add(new TMeaning(id, lang_pos, lang_pos.getID(),
+                                                      meaning_n, wiki_text, wiki_text_id));
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TMeaning.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TMeaning.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-
         if(null == list_meaning)
             return NULL_TMEANING_ARRAY;
         return ((TMeaning[])list_meaning.toArray(NULL_TMEANING_ARRAY));
@@ -310,31 +316,35 @@ public class TMeaning {
      * @return empty array if data is absent
      */
     public static TMeaning getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         TMeaning meaning = null;
         
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT lang_pos_id,meaning_n,wiki_text_id FROM meaning WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));
-                int meaning_n     =                             rs.getInt("meaning_n");
-                int wiki_text_id  =                             rs.getInt("wiki_text_id");
-                TWikiText wiki_text = wiki_text_id < 1 ? null : TWikiText.getByID(connect, wiki_text_id);
-                if(null != lang_pos) {
-                    meaning = new TMeaning(id, lang_pos, lang_pos.getID(), meaning_n, wiki_text, wiki_text_id);
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT lang_pos_id,meaning_n,wiki_text_id FROM meaning WHERE id=");
+                str_sql.append(id);
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));
+                        int meaning_n     =                             rs.getInt("meaning_n");
+                        int wiki_text_id  =                             rs.getInt("wiki_text_id");
+                        TWikiText wiki_text = wiki_text_id < 1 ? null : TWikiText.getByID(connect, wiki_text_id);
+                        if(null != lang_pos) {
+                            meaning = new TMeaning(id, lang_pos, lang_pos.getID(), meaning_n, wiki_text, wiki_text_id);
+                        }
+                    }
+                } finally {
+                    rs.close();
                 }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TMeaning.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return meaning;
     }
@@ -349,23 +359,20 @@ public class TMeaning {
             System.err.println("Error (wikt_parsed TMeaning.delete()):: null argument meaning");
             return;
         }
-        Statement   s = null;
-        ResultSet  rs = null;
         StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM meaning WHERE id=");
-            str_sql.append(meaning.getID());
-            s.execute (str_sql.toString());
-
-            //System.out.println("TMeaning.delete()):: wiki_text='" + meaning.getWikiText().getText() +
-            //        "'; meaning_n=" + meaning.getMeaningNumber());
-
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM meaning WHERE id=");
+                str_sql.append(meaning.getID());
+                s.execute (str_sql.toString());
+                //System.out.println("TMeaning.delete()):: wiki_text='" + meaning.getWikiText().getText() +
+                //        "'; meaning_n=" + meaning.getMeaningNumber());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TMeaning.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TMeaning.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

@@ -161,9 +161,7 @@ public class TLangPOS {
             System.err.println("Error (wikt_parsed TLangPOS.insert()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         TLangPOS lang_pos = null;
 
@@ -173,45 +171,52 @@ public class TLangPOS {
                     "; the language header is repeated twice or more!'");
             return lang_pos;
         }
-
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (");
-            str_sql.append(page.getID());
-            str_sql.append(",");
-            str_sql.append(lang.getID());
-            str_sql.append(",");
-            str_sql.append(pos.getID());
-            str_sql.append(",");
-            str_sql.append(etymology_n);
-            if(null != lemma && lemma.length() > 0)
-            {
-                str_sql.append(",\"");
-                String safe_lemma = PageTableBase.convertToSafeStringEncodeToDB(connect, lemma);
-                str_sql.append(safe_lemma);
-                str_sql.append("\")");
-            } else
-                str_sql.append(",\"\")");
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("INSERT INTO lang_pos (page_id,lang_id,pos_id,etymology_n,lemma) VALUES (");
+                str_sql.append(page.getID());
+                str_sql.append(",");
+                str_sql.append(lang.getID());
+                str_sql.append(",");
+                str_sql.append(pos.getID());
+                str_sql.append(",");
+                str_sql.append(etymology_n);
+                if(null != lemma && lemma.length() > 0)
+                {
+                    str_sql.append(",\"");
+                    String safe_lemma = PageTableBase.convertToSafeStringEncodeToDB(connect, lemma);
+                    str_sql.append(safe_lemma);
+                    str_sql.append("\")");
+                } else
+                    str_sql.append(",\"\")");
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
 
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                lang_pos = new TLangPOS(rs.getInt("id"), page, lang, pos, etymology_n, lemma);
-            
+            try {
+                s = connect.conn.createStatement ();
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        lang_pos = new TLangPOS(rs.getInt("id"), page, lang, pos, etymology_n, lemma);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             String page_title = page.getPageTitle();
-            System.err.println("SQLException (wikt_parsed TLangPOS.java insert()):: page_title="+page_title+
+            System.err.println("SQLException (TLangPOS.insert()):: page_title="+page_title+
                     "; sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return lang_pos;
     }
 
-    /** Selects rows from the table 'lang_pos' by the page_id 
+    /** Selects rows from the table 'lang_pos' by the page_id.<br><br>
      *
      * SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=562 ORDER BY id;
      *
@@ -230,39 +235,39 @@ public class TLangPOS {
             System.err.println("Error (wikt_parsed TLangPOS.get()):: null argument: page.");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         List<TLangPOS> list_lp = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=");
-            str_sql.append(page.getID());
-            str_sql.append(" ORDER BY id");
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
-            {
-                int     id      =                       rs.getInt("id");
-                TLang   lang    = TLang.getTLangFast(   rs.getInt("lang_id"));
-                TPOS    pos     = TPOS. getTPOSFast (   rs.getInt("pos_id"));
-                int etymology_n =                       rs.getInt("etymology_n");
-                String lemma    = Encodings.bytesToUTF8(rs.getBytes("lemma"));
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE page_id=");
+                str_sql.append(page.getID());
+                str_sql.append(" ORDER BY id");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next ())
+                    {
+                        int     id      =                       rs.getInt("id");
+                        TLang   lang    = TLang.getTLangFast(   rs.getInt("lang_id"));
+                        TPOS    pos     = TPOS. getTPOSFast (   rs.getInt("pos_id"));
+                        int etymology_n =                       rs.getInt("etymology_n");
+                        String lemma    = Encodings.bytesToUTF8(rs.getBytes("lemma"));
 
-                if(null != lang && null != pos) {
-                    if(null == list_lp)
-                               list_lp = new ArrayList<TLangPOS>();
-                    list_lp.add(new TLangPOS(id, page, lang, pos, etymology_n, lemma));
+                        if(null != lang && null != pos) {
+                            if(null == list_lp)
+                                       list_lp = new ArrayList<TLangPOS>();
+                            list_lp.add(new TLangPOS(id, page, lang, pos, etymology_n, lemma));
+                        }
+                    }
+                } finally {
+                    rs.close();
                 }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLangPOS.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TLangPOS.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-        
         if(null == list_lp)
             return NULL_TLANGPOS_ARRAY;
         return ((TLangPOS[])list_lp.toArray(NULL_TLANGPOS_ARRAY));
@@ -282,43 +287,42 @@ public class TLangPOS {
             System.err.println("Error (TLangPOS.getUniqueByPagePOSLangEtymology()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         TLangPOS lang_pos = null;
-
         try {
-            s = connect.conn.createStatement ();
-            
-            str_sql.append("SELECT id,lemma FROM lang_pos WHERE page_id=");
-            str_sql.append(page.getID());
-            // 3902
-            str_sql.append(" AND pos_id=");
-            str_sql.append(pos.getID());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,lemma FROM lang_pos WHERE page_id=");
+                str_sql.append(page.getID());
+                // 3902
+                str_sql.append(" AND pos_id=");
+                str_sql.append(pos.getID());
 
-            str_sql.append(" AND lang_id=");
-            str_sql.append(lang.getID());
+                str_sql.append(" AND lang_id=");
+                str_sql.append(lang.getID());
 
-            str_sql.append(" AND etymology_n=");
-            str_sql.append(etymology_n);
+                str_sql.append(" AND etymology_n=");
+                str_sql.append(etymology_n);
 
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int     id      =                       rs.getInt("id");
-                String lemma    = Encodings.bytesToUTF8(rs.getBytes("lemma"));
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        int     id      =                       rs.getInt("id");
+                        String lemma    = Encodings.bytesToUTF8(rs.getBytes("lemma"));
 
-                lang_pos = new TLangPOS(id, page, lang, pos, etymology_n, lemma);
+                        lang_pos = new TLangPOS(id, page, lang, pos, etymology_n, lemma);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TLangPOS.getUniqueByPagePOSLangEtymology()):: page_title="+page.getPageTitle()+
                     "; sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-
         return lang_pos;
     }
     
@@ -347,38 +351,38 @@ public class TLangPOS {
     public static TLang[] getLanguages (Connect connect,TPage page) {
         
         if(null == page) {
-            System.err.println("Error (wikt_parsed TLangPOS.get()):: null argument: page.");
+            System.err.println("Error (TLangPOS.get()):: null argument: page.");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         List<TLang> list_lang = null;
-
         try {
-            s = connect.conn.createStatement ();
-                         // SELECt lang_id FROM lang_pos WHERE page_id=674672 GROUP by lang_id
-            str_sql.append("SELECt lang_id FROM lang_pos WHERE page_id=");
-            str_sql.append(page.getID());
-            str_sql.append(" GROUP by lang_id");
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next ())
-            {
-                TLang  l = TLang.getTLangFast(   rs.getInt("lang_id"));
-                if(null != l) {
-                    if(null == list_lang)
-                               list_lang = new ArrayList<TLang>();
-                    list_lang.add(l);
+            Statement s = connect.conn.createStatement ();
+            try {
+                             // SELECt lang_id FROM lang_pos WHERE page_id=674672 GROUP by lang_id
+                str_sql.append("SELECt lang_id FROM lang_pos WHERE page_id=");
+                str_sql.append(page.getID());
+                str_sql.append(" GROUP by lang_id");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next ())
+                    {
+                        TLang  l = TLang.getTLangFast(   rs.getInt("lang_id"));
+                        if(null != l) {
+                            if(null == list_lang)
+                                       list_lang = new ArrayList<TLang>();
+                            list_lang.add(l);
+                        }
+                    }
+                } finally {
+                    rs.close();
                 }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLangPOS.getLanguages()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TLangPOS.getLanguages()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-
         if(null == list_lang)
             return NULL_TLANG_ARRAY;
         return ((TLang[])list_lang.toArray(NULL_TLANG_ARRAY));
@@ -390,33 +394,37 @@ public class TLangPOS {
      * @return null if data is absent
      */
     public static TLangPOS getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         TLangPOS lang_pos = null;
         
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                TPage   page    = TPage.getByID     (connect, rs.getInt("page_id"));
-                TLang   lang    = TLang.getTLangFast(         rs.getInt("lang_id"));
-                TPOS    pos     = TPOS. getTPOSFast (         rs.getInt("pos_id"));
-                int etymology_n =                             rs.getInt("etymology_n");
-                String lemma    = Encodings.bytesToUTF8(      rs.getBytes("lemma"));
-                
-                if(null != lang && null != pos) {
-                    lang_pos = new TLangPOS(id, page, lang, pos, etymology_n, lemma);
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT page_id,lang_id,pos_id,etymology_n,lemma FROM lang_pos WHERE id=");
+                str_sql.append(id);
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        TPage   page    = TPage.getByID     (connect, rs.getInt("page_id"));
+                        TLang   lang    = TLang.getTLangFast(         rs.getInt("lang_id"));
+                        TPOS    pos     = TPOS. getTPOSFast (         rs.getInt("pos_id"));
+                        int etymology_n =                             rs.getInt("etymology_n");
+                        String lemma    = Encodings.bytesToUTF8(      rs.getBytes("lemma"));
+
+                        if(null != lang && null != pos) {
+                            lang_pos = new TLangPOS(id, page, lang, pos, etymology_n, lemma);
+                        }
+                    }
+                } finally {
+                    rs.close();
                 }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLangPOS.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TLangPOS.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return lang_pos;
     }
@@ -428,23 +436,21 @@ public class TLangPOS {
     public static void delete (Connect connect,TPage page) {
 
         if(null == page) {
-            System.err.println("Error (wikt_parsed TLangPOS.delete()):: null argument page.");
+            System.err.println("Error (TLangPOS.delete()):: null argument page.");
             return;
         }
-        
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM lang_pos WHERE page_id=");
-            str_sql.append(page.getID());
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM lang_pos WHERE page_id=");
+                str_sql.append(page.getID());
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLangPOS.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TLangPOS.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
     

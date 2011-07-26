@@ -353,23 +353,29 @@ public class LanguageType {
     public static final LanguageType mul = new LanguageType("mul", "Translingual", "Translingual");
     public static final LanguageType INT = LanguageType.addNonUniqueCode(mul, "INT");// Russian Wiktionary
 
+    public static final LanguageType aus_bun = new LanguageType("aus-bun", "Bunurong", "Bunurong");
+
     public static final LanguageType aus_dar = new LanguageType("aus-dar", "Darkinjung", "Darkinjung");
     public static final LanguageType aus_gab = new LanguageType("aus-gab", "Gabi", "Gabi");
 
     public static final LanguageType aus_gun = new LanguageType("aus-gun", "Gunai", "Gunai");
     public static final LanguageType aus_gun2 = LanguageType.addNonUniqueName(aus_gun, "Gaanay");
     public static final LanguageType aus_gun3 = LanguageType.addNonUniqueName(aus_gun, "Ganai");
-    public static final LanguageType aus_gun4 = LanguageType.addNonUniqueName(aus_gun, "Gunai");
-    public static final LanguageType aus_gun5 = LanguageType.addNonUniqueName(aus_gun, "Gunnai'");
-    public static final LanguageType aus_gun6 = LanguageType.addNonUniqueName(aus_gun, "Kurnai");
-    public static final LanguageType aus_gun7 = LanguageType.addNonUniqueName(aus_gun, "Kurnay");
+    public static final LanguageType aus_gun4 = LanguageType.addNonUniqueName(aus_gun, "Gunnai'");
+    public static final LanguageType aus_gun5 = LanguageType.addNonUniqueName(aus_gun, "Kurnai");
+    public static final LanguageType aus_gun6 = LanguageType.addNonUniqueName(aus_gun, "Kurnay");
+    
+    public static final LanguageType aus_wem = new LanguageType("aus-wem", "Wemba-Wemba", "Wemba-Wemba");
+    public static final LanguageType aus_wem2 = LanguageType.addNonUniqueName(aus_wem, "Wamba Wamba");
+    public static final LanguageType aus_wem3 = LanguageType.addNonUniqueName(aus_wem, "Wamba-Wamba");
+    public static final LanguageType aus_wem4 = LanguageType.addNonUniqueName(aus_wem, "Wemba Wemba");
 
     public static final LanguageType aus_wwg = new LanguageType("aus-wwg", "Woiwurrung", "Woiwurrung");
     public static final LanguageType aus_wwg2 = LanguageType.addNonUniqueName(aus_wwg, "Woiworung");
     public static final LanguageType aus_wwg3 = LanguageType.addNonUniqueName(aus_wwg, "Woiwurrong");
     public static final LanguageType aus_wwg4 = LanguageType.addNonUniqueName(aus_wwg, "Wuywurung");
 
-    public static final LanguageType crp_gep = new LanguageType("crp-rsn", "Greenlandic Eskimo Pidgin", "Greenlandic Eskimo Pidgin");
+    public static final LanguageType crp_gep = new LanguageType("crp-gep", "Greenlandic Eskimo Pidgin", "Greenlandic Eskimo Pidgin");
     public static final LanguageType crp_rsn = new LanguageType("crp-rsn", "Moja på tvoja", "Russenorsk");
     public static final LanguageType crp_tpr = new LanguageType("crp-tpr", "Taimyr Pidgin Russian", "Taimyr Pidgin Russian");
 
@@ -1341,6 +1347,44 @@ public class LanguageType {
     public static final LanguageType hio = new LanguageType("hio", "Tsoa", "Tsoa");
     public static final LanguageType tyu = LanguageType.addNonUnique(hio, "tyu", "Kua");
 
+
+
+    // Hmong (Miao) ------------
+    public static final LanguageType hmn = new LanguageType("hmn", "Hmong", "Hmong");
+    public static final LanguageType hma = LanguageType.addNonUnique(hmn, "hma", "Southern Mashan Hmong");
+    public static final LanguageType hmc = LanguageType.addNonUnique(hmn, "mww", "Central Huishui Hmong");
+    public static final LanguageType hme = LanguageType.addNonUnique(hmn, "hme", "Eastern Huishui Hmong");
+    public static final LanguageType hmf = LanguageType.addNonUnique(hmn, "hmf", "Hmong Don");
+    public static final LanguageType hmg = LanguageType.addNonUnique(hmn, "hmg", "Southwestern Guiyang Hmong");
+    public static final LanguageType hmh = LanguageType.addNonUnique(hmn, "hmh", "Southwestern Huishui Hmong");
+    public static final LanguageType hmi = LanguageType.addNonUnique(hmn, "hmi", "Northern Huishui Hmong");
+    public static final LanguageType hml = LanguageType.addNonUnique(hmn, "hml", "Luopohe Hmong");
+    public static final LanguageType hmm = LanguageType.addNonUnique(hmn, "hmm", "Central Mashan Hmong");
+    public static final LanguageType hmp = LanguageType.addNonUnique(hmn, "hmp", "Northern Mashan Hmong");
+    public static final LanguageType hmv = LanguageType.addNonUnique(hmn, "hmv", "Hmong Dô");
+    public static final LanguageType hmw = LanguageType.addNonUnique(hmn, "hmw", "Western Mashan Hmong");
+    public static final LanguageType hmy = LanguageType.addNonUnique(hmn, "hmy", "Southern Guiyang Hmong");
+    public static final LanguageType hmz = LanguageType.addNonUnique(hmn, "hmz", "Hmong Shua");
+    public static final LanguageType hnj = LanguageType.addNonUnique(hmn, "hnj", "Hmong Njua");
+    public static final LanguageType huj = LanguageType.addNonUnique(hmn, "huj", "Northern Guiyang Hmong");
+    public static final LanguageType mww = LanguageType.addNonUnique(hmn, "mww", "Hmong Daw");
+    // Miao
+    public static final LanguageType cqd = LanguageType.addNonUnique(hmn, "cqd", "Chuanqiandian Cluster Miao");
+    public static final LanguageType hea = LanguageType.addNonUnique(hmn, "hea", "Northern Qiandong Miao");
+    public static final LanguageType hmq = LanguageType.addNonUnique(hmn, "hmq", "Eastern Qiandong Miao");
+    public static final LanguageType hms = LanguageType.addNonUnique(hmn, "hms", "Southern Qiandong Miao");
+    public static final LanguageType hrm = LanguageType.addNonUnique(hmn, "hrm", "Horned Miao");
+    public static final LanguageType mmr = LanguageType.addNonUnique(hmn, "mmr", "Western Xiangxi Miao");
+    public static final LanguageType muq = LanguageType.addNonUnique(hmn, "muq", "Eastern Xiangxi Miao");
+    public static final LanguageType sfm = LanguageType.addNonUnique(hmn, "sfm", "Small Flowery Miao");
+    // hmj – Hmong Chonganjiang (China)    
+    // hmd – Large Flowery Miao, A-hmaos
+    // -----
+    // cov Cao Miao
+    // ------------ eo Hmong (Miao)
+
+    
+
     public static final LanguageType ho = new LanguageType("ho", "Hiri Motu", "Hiri Motu");
     public static final LanguageType hmo = LanguageType.addNonUniqueCode(ho, "hmo");
     
@@ -2144,6 +2188,9 @@ public class LanguageType {
 
 
 
+    public static final LanguageType omn = new LanguageType("omn", "Minoan", "Minoan");
+    public static final LanguageType ecr = new LanguageType("ecr", "Eteocretan", "Eteocretan");
+
     public static final LanguageType or = new LanguageType("or", "Oriya", "Oriya");
     public static final LanguageType ori = LanguageType.addNonUniqueCode(or, "ori");
 
@@ -2699,6 +2746,9 @@ public class LanguageType {
 
 
 
+    public static final LanguageType wew = new LanguageType("wew", "Weyewa", "Weyewa");
+    public static final LanguageType wew2 = LanguageType.addNonUniqueName(wew, "Wejewa");
+
     public static final LanguageType wim = new LanguageType("wim", "Wik-Mungknh", "Wik-Mungknh");
     public static final LanguageType wim2 = LanguageType.addNonUniqueName(wim, "Wik-Mungkan");
 
@@ -3044,6 +3094,7 @@ public class LanguageType {
     public static final LanguageType brx = new LanguageType("brx", "Bodo", "Bodo");
     public static final LanguageType bsb = new LanguageType("bsb", "Brunei Bisaya", "Brunei Bisaya");
     public static final LanguageType bvb = new LanguageType("bvb", "Bube", "Bube");
+    public static final LanguageType bzd = new LanguageType("bzd", "Talamanca", "Bribri");
 
     public static final LanguageType cab = new LanguageType("cab", "Garifuna", "Garifuna");
     public static final LanguageType cad = new LanguageType("cad", "Caddo", "Caddo");
@@ -3136,7 +3187,6 @@ public class LanguageType {
     public static final LanguageType hay = new LanguageType("hay", "OluHaya", "Haya");
     public static final LanguageType heh = new LanguageType("heh", "Hehe", "Hehe");
     public static final LanguageType hit = new LanguageType("hit", "Hittite", "Hittite");
-    public static final LanguageType hmn = new LanguageType("hmn", "Hmong", "Hmong");
     public static final LanguageType hop = new LanguageType("hop", "Hopi", "Hopi");
     public static final LanguageType hsn = new LanguageType("hsn", "Xiang", "Xiang");
     public static final LanguageType huh = new LanguageType("huh", "Huilliche", "Huilliche");
@@ -3243,6 +3293,7 @@ public class LanguageType {
     public static final LanguageType mgv = new LanguageType("mgv", "Matengo", "Matengo");
     public static final LanguageType mgw = new LanguageType("mgw", "Matumbi", "Matumbi");
     public static final LanguageType mgy = new LanguageType("mgy", "Mbunga", "Mbunga");
+    public static final LanguageType mhk = new LanguageType("mhk", "Mungaka", "Mungaka");
     public static final LanguageType mjg = new LanguageType("mjg", "moŋɡuer", "Monguor");
     public static final LanguageType mic = new LanguageType("mic", "Mi'kmaq", "Mi'kmaq");
     public static final LanguageType min = new LanguageType("min", "Minangkabau", "Minangkabau");
@@ -3443,6 +3494,7 @@ public class LanguageType {
     public static final LanguageType wrp = new LanguageType("wrp", "Waropen", "Waropen");
     public static final LanguageType wun = new LanguageType("wun", "Bungu", "Bungu");
     public static final LanguageType wya = new LanguageType("wya", "Wyandot", "Wyandot");
+    public static final LanguageType wym = new LanguageType("wym", "Vilamovian", "Vilamovian");
     public static final LanguageType wyy = new LanguageType("wyy", "Western Fijian", "Western Fijian");
 
     public static final LanguageType xas = new LanguageType("xas", "Kamassian", "Kamassian");

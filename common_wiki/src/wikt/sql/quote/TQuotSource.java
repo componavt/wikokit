@@ -2,7 +2,7 @@
  * SQL operations with the table 'quot_source' in Wiktionary parsed database.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.quote;
@@ -55,31 +55,35 @@ public class TQuotSource {
             System.err.println("Error (TQuotSource.insert()):: null argument: .");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        TQuotSource result = null;
         String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
+        str_sql.append("INSERT INTO quot_source (text) VALUES (\"");
+        str_sql.append(safe_text);
+        str_sql.append("\")");
+        TQuotSource result = null;
         try
         {
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
+
             s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO quot_source (text) VALUES (\"");
-            str_sql.append(safe_text);
-            str_sql.append("\")");
-
-            s.executeUpdate (str_sql.toString());
-
-            s = connect.conn.createStatement ();
-            rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
-            if (rs.next ())
-                result = new TQuotSource(rs.getInt("id"), _text);
-
+            try {
+                ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
+                try {
+                    if (rs.next ())
+                        result = new TQuotSource(rs.getInt("id"), _text);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotSource.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -96,30 +100,27 @@ public class TQuotSource {
             System.err.println("Error (TQuotSource.get()):: null argument: name of a source.");
             return null;
         }
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
+        str_sql.append("SELECT id FROM quot_source WHERE text=\"");
+        str_sql.append(safe_text);
+        str_sql.append("\"");
         TQuotSource result = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT id FROM quot_source WHERE text=\"");
-            str_sql.append(safe_text);
-            str_sql.append("\"");
-
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                int    _id = rs.getInt("id");
-                result = new TQuotSource(_id, _text);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        result = new TQuotSource(rs.getInt("id"), _text);
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotSource.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -141,35 +142,36 @@ public class TQuotSource {
     }
 
     /** Selects row from the table 'quot_source' by ID.<br><br>
-     *
      * SELECT text FROM quot_source WHERE id=1
      *
      * @return null if data is absent
      */
     public static TQuotSource getByID (Connect connect,int id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT text FROM quot_source WHERE id=");
+        str_sql.append(id);
         TQuotSource quot_source = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT text FROM quot_source WHERE id=");
-            str_sql.append(id);
-            rs = s.executeQuery (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        byte[] bb = rs.getBytes("text");
+                        String _text = null == bb ? null : Encodings.bytesToUTF8(bb);
 
-            if (rs.next ())
-            {
-                byte[] bb = rs.getBytes("text");
-                String _text = null == bb ? null : Encodings.bytesToUTF8(bb);
-
-                quot_source = new TQuotSource(id, _text);
+                        quot_source = new TQuotSource(id, _text);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotSource.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return quot_source;
     }
@@ -179,19 +181,18 @@ public class TQuotSource {
      */
     public void delete (Connect connect) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("DELETE FROM quot_source WHERE id=");
+        str_sql.append( id );
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM quot_source WHERE id=");
-            str_sql.append( id );
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotSource.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 

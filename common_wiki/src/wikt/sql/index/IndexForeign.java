@@ -1,8 +1,8 @@
 /* IndexForeign.java - SQL operations with the tables 'index_XX' in Wiktionary
  * parsed database, where XX is a language code.
  *
- * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.index;
@@ -95,55 +95,47 @@ public class IndexForeign {
                                 LanguageType native_lang,
                                 LanguageType foreign_lang
                                ) {
-
         if(foreign_lang == native_lang)
             return;
-
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         boolean b_native_word = null != native_page_title && native_page_title.length() > 0;
 
-        try
-        {
-            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
-            String safe_title;
-            
-            s = connect.conn.createStatement ();
-            
-            if(b_native_word)
-                str_sql.append("INSERT INTO "+table_name+" (foreign_word,foreign_has_definition,native_page_title) VALUES (\"");
-            else
-                str_sql.append("INSERT INTO "+table_name+" (foreign_word,foreign_has_definition) VALUES (\"");
-                
-            safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
-                                    connect, foreign_word);
-            str_sql.append(safe_title);
-            str_sql.append("\",");
-            str_sql.append(foreign_has_definition);
-            
-            if(b_native_word) {
-                str_sql.append(",\"");
-                safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
-                                    connect, native_page_title);
-                str_sql.append(safe_title);
-                str_sql.append("\"");
-            }
+        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
 
-            //System.out.println(" foreign_word=" + foreign_word +
-            //            "; foreign_has_definition=" + foreign_has_definition +
-            //            "; native_page_title=" + native_page_title +
-            //            "\n where SQL=" + str_sql +
-            //            " (IndexForeign.insert)");
-            
-            str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
-            
+        if(b_native_word)
+            str_sql.append("INSERT INTO "+table_name+" (foreign_word,foreign_has_definition,native_page_title) VALUES (\"");
+        else
+            str_sql.append("INSERT INTO "+table_name+" (foreign_word,foreign_has_definition) VALUES (\"");
+
+        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+                                connect, foreign_word);
+        str_sql.append(safe_title);
+        str_sql.append("\",");
+        str_sql.append(foreign_has_definition);
+
+        if(b_native_word) {
+            str_sql.append(",\"");
+            safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+                                connect, native_page_title);
+            str_sql.append(safe_title);
+            str_sql.append("\"");
+        }
+        //System.out.println(" foreign_word=" + foreign_word +
+        //            "; foreign_has_definition=" + foreign_has_definition +
+        //            "; native_page_title=" + native_page_title +
+        //            "\n where SQL=" + str_sql +
+        //            " (IndexForeign.insert)");
+        str_sql.append(")");
+        try {
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (IndexForeign.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 
@@ -211,44 +203,42 @@ public class IndexForeign {
     public static int count (Connect conn, String foreign_word,
                      String native_page_title, LanguageType foreign_lang)
     {
-        Statement   s = null;
-        ResultSet   rs= null;
+        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(conn, foreign_word);
+
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("select COUNT(*) AS size from ").append(table_name).append(" WHERE foreign_word=\"");
+        str_sql.append(safe_title);
+        str_sql.append("\"");
+
+        if(null == native_page_title) {
+            // select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title is NULL;
+            str_sql.append(" AND native_page_title is NULL");
+        } else {
+            // select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title="вода13";
+            safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(conn, native_page_title);
+
+            str_sql.append(" AND native_page_title=\"");
+            str_sql.append(safe_title);
+            str_sql.append("\"");
+        }
 
         int size = 0;
         try {
-            s = conn.conn.createStatement ();
-
-            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
-
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(conn, foreign_word);
-
-            str_sql.append("select COUNT(*) AS size from "+table_name+" WHERE foreign_word=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-
-            if(null == native_page_title) {
-                // select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title is NULL;
-                str_sql.append(" AND native_page_title is NULL");
-            } else {
-                // select COUNT(*) AS size from index_uk WHERE foreign_word="water13" AND native_page_title="вода13";
-                safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(conn, native_page_title);
-
-                str_sql.append(" AND native_page_title=\"");
-                str_sql.append(safe_title);
-                str_sql.append("\"");
-            }
-
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                size = rs.getInt("size");
+            Statement s = conn.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        size = rs.getInt("size");
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexForeign.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return size;
     }
@@ -288,36 +278,33 @@ public class IndexForeign {
     private static int countNativePageTitleIsNull (Connect conn, LanguageType foreign_lang,
                                         boolean is_null)
     {
-        Statement   s = null;
-        ResultSet   rs= null;
+        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT COUNT(*) AS size from ").append(table_name).append(" WHERE native_page_title is ");
+        if(is_null) {
+            // SELECT COUNT(*) FROM index_en WHERE native_page_title is NULL;
+            str_sql.append("NULL");
+        } else {
+            // SELECT COUNT(*) FROM index_en WHERE native_page_title is not NULL;
+            str_sql.append("not NULL");
+        }
 
         int size = 0;
         try {
-            s = conn.conn.createStatement ();
-
-            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
-
-            str_sql.append("SELECT COUNT(*) AS size from "+table_name+" WHERE native_page_title is ");
-
-            if(is_null) {
-                // SELECT COUNT(*) FROM index_en WHERE native_page_title is NULL;
-                str_sql.append("NULL");
-            } else {
-                // SELECT COUNT(*) FROM index_en WHERE native_page_title is not NULL;
-                str_sql.append("not NULL");
-            }
-
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                size = rs.getInt("size");
+            Statement s = conn.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        size = rs.getInt("size");
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexForeign.countNativePageTitleIsNull()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return size;
     }
@@ -340,81 +327,73 @@ public class IndexForeign {
                                         LanguageType native_lang,
                                         LanguageType foreign_lang
                                         ) {
-
-        if(foreign_lang == native_lang)
+        if(foreign_lang == native_lang || 0==limit)
             return NULL_INDEXFOREIGN_ARRAY;
-            
-        Statement   s = null;
-        ResultSet   rs= null;
+        
+        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT foreign_word,foreign_has_definition,native_page_title FROM ");
+        str_sql.append(table_name);
+        str_sql.append(" WHERE foreign_word LIKE \"");
+        String safe_prefix = PageTableBase.convertToSafeWithWildCard(connect,
+                                                          prefix_foreign_word);
+        str_sql.append(safe_prefix);
+            //str_sql.append("%\"");
+        str_sql.append("\"");
 
+        if(limit > 0) {
+            str_sql.append(" LIMIT ");
+            str_sql.append(limit);
+        }
+        //System.out.print("safe_prefix=" + safe_prefix);
         List<IndexForeign> if_list = null;
-
-        if(0==limit)
-            return NULL_INDEXFOREIGN_ARRAY;
-
         try {
-            s = connect.conn.createStatement ();
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    while (rs.next () &&
+                            (limit < 0 || null == if_list || if_list.size() < limit))
+                    {
+                        String foreign_word = Encodings.bytesToUTF8(rs.getBytes("foreign_word"));
+                        boolean foreign_has_definition = rs.getBoolean("foreign_has_definition");
+                        byte[] bt_native_page_title = rs.getBytes("native_page_title");
 
-            String safe_prefix = PageTableBase.convertToSafeWithWildCard(connect,
-                                                            prefix_foreign_word);
-            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+                        TPage foreign_page = null;
+                        if(foreign_has_definition)
+                            foreign_page = TPage.get(connect, foreign_word);
 
-            str_sql.append("SELECT foreign_word,foreign_has_definition,native_page_title FROM "+
-                    table_name + " WHERE foreign_word LIKE \"");
-            str_sql.append(safe_prefix);
-                //str_sql.append("%\"");
-            str_sql.append("\"");
+                        TPage native_page = null;
+                        if(null != bt_native_page_title) {
+                            String native_page_title = Encodings.bytesToUTF8(bt_native_page_title);
 
-            if(limit > 0) {
-                str_sql.append(" LIMIT ");
-                str_sql.append(limit);
-            }
-            //System.out.print("safe_prefix=" + safe_prefix);
-            
-            rs = s.executeQuery (str_sql.toString());
-            while (rs.next () &&
-                    (limit < 0 || null == if_list || if_list.size() < limit))
-            {
-                String foreign_word = Encodings.bytesToUTF8(rs.getBytes("foreign_word"));
-                boolean foreign_has_definition = rs.getBoolean("foreign_has_definition");
-                byte[] bt_native_page_title = rs.getBytes("native_page_title");
-                
-                TPage foreign_page = null;
-                if(foreign_has_definition)
-                    foreign_page = TPage.get(connect, foreign_word);
+                            if(native_page_title.length() > 0)
+                                native_page = TPage.get(connect, native_page_title);
+                        }
 
-                TPage native_page = null;
-                if(null != bt_native_page_title) {
-                    String native_page_title = Encodings.bytesToUTF8(bt_native_page_title);
+                        IndexForeign _if = new IndexForeign(
+                                foreign_page, foreign_word, native_page);
 
-                    if(native_page_title.length() > 0)
-                        native_page = TPage.get(connect, native_page_title);
+                        if(null == if_list)
+                            if_list = new ArrayList<IndexForeign>();
+                        if_list.add(_if);
+                        //System.out.println(" foreign_word=" + foreign_word +
+                        //        "; foreign_has_definition=" + foreign_has_definition +
+                                // "; native_page_title=" + native_page_title +
+                        //        " (IndexForeign.getByPrefixForeign)");
+                    }
+                } finally {
+                    rs.close();
                 }
-
-                IndexForeign _if = new IndexForeign(
-                        foreign_page, foreign_word, native_page);
-                        
-                if(null == if_list)
-                    if_list = new ArrayList<IndexForeign>();
-
-                if_list.add(_if);
-
-                //System.out.println(" foreign_word=" + foreign_word +
-                //        "; foreign_has_definition=" + foreign_has_definition +
-                        // "; native_page_title=" + native_page_title +
-                //        " (IndexForeign.getByPrefixForeign)");
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexForeign.getByPrefixForeign()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-        
         if(null == if_list)
             return NULL_INDEXFOREIGN_ARRAY;
-
         return ((IndexForeign[])if_list.toArray(NULL_INDEXFOREIGN_ARRAY));
     }
 
@@ -435,42 +414,37 @@ public class IndexForeign {
                                 String foreign_word, String native_page_title,
                                 LanguageType native_lang, LanguageType foreign_lang
                                ) {
-
         if(foreign_lang == native_lang)
             return;
         
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuilder str_sql = new StringBuilder();
         boolean b_native_word = null != native_page_title && native_page_title.length() > 0;
+
+        StringBuilder str_sql = new StringBuilder();
+        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+        str_sql.append("DELETE FROM ").append(table_name).append(" WHERE foreign_word=\"");
+
+        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+                                connect, foreign_word);
+        str_sql.append(safe_title).append("\"");
+
+        str_sql.append(" AND native_page_title=");
+        if(b_native_word) {
+            safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+                                connect, native_page_title);
+            str_sql.append("\"").append(safe_title).append("\"");
+        } else
+            str_sql.append("NULL");
 
         try
         {
-            String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
-            String safe_title;
-
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM "+table_name+" WHERE foreign_word=\"");
-
-            safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
-                                    connect, foreign_word);
-            str_sql.append(safe_title + "\"");
-            
-            str_sql.append(" AND native_page_title=");
-            if(b_native_word) {
-                safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
-                                    connect, native_page_title);
-                str_sql.append("\"" + safe_title + "\"");
-            } else
-                str_sql.append("NULL");
-            
-            s.executeUpdate (str_sql.toString());
-
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (IndexForeign.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
     

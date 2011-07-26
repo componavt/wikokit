@@ -2,7 +2,7 @@
  * parsed database.
  *
  * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.index;
@@ -10,7 +10,6 @@ package wikt.sql.index;
 import wikt.sql.*;
 import wikipedia.sql.PageTableBase;
 import wikipedia.sql.Connect;
-//import wikipedia.language.LanguageType;
 
 import java.sql.*;
 
@@ -65,25 +64,24 @@ public class IndexNative {
      */
     public static int countNumberPOSWithDefinition (Connect conn)
     {
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-
+        str_sql.append("SELECT COUNT(*) AS size from index_native");
         int size = 0;
         try {
-            s = conn.conn.createStatement ();
-            str_sql.append("SELECT COUNT(*) AS size from index_native");
-            
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                size = rs.getInt("size");
+            Statement s = conn.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                        size = rs.getInt("size");
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexNative.countNumberPOSWithDefinition()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return size;
     }
@@ -98,42 +96,35 @@ public class IndexNative {
     public static IndexNative insert ( Connect connect, //String page_title,
                                         TPage   page,
                                         boolean has_relation) {
-        Statement   s = null;
-        ResultSet  rs = null;
-        StringBuilder str_sql = new StringBuilder();
-        IndexNative index_native = null;
-
         if(null == page) {
             System.err.println("Error (IndexNative.insert()):: null argument: page="+page);
             return null;
         }
-        
+        StringBuilder str_sql = new StringBuilder();
+        str_sql.append("INSERT INTO index_native (page_id,page_title,has_relation) VALUES (");
+        str_sql.append(page.getID());
+        str_sql.append(",\"");
+        String page_title = page.getPageTitle();
+        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+                                connect, page_title);
+        str_sql.append(safe_title);
+        str_sql.append("\",");
+        str_sql.append(has_relation);
+        str_sql.append(")");
         try
         {
-            String page_title = page.getPageTitle();
-            
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO index_native (page_id,page_title,has_relation) VALUES (");
-            
-            str_sql.append(page.getID());
-            str_sql.append(",\"");
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
-                                    connect, page_title);
-            str_sql.append(safe_title);
-            str_sql.append("\",");
-            str_sql.append(has_relation);
-            str_sql.append(")");
-            s.executeUpdate (str_sql.toString());
-            
-            index_native = new IndexNative(page, has_relation);
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
-            String page_title = page.getPageTitle();
             System.err.println("SQLException (IndexNative.insert()):: page_title="+page_title+
                     "; sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
+        IndexNative index_native = null;
+        index_native = new IndexNative(page, has_relation);
         return index_native;
     }
     
@@ -146,36 +137,35 @@ public class IndexNative {
      */
     public static IndexNative get (Connect connect,String page_title) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
-        StringBuilder str_sql = new StringBuilder();
-        
-        TPage       tp = TPage.get(connect, page_title);
+        TPage      tp = TPage.get(connect, page_title);
         if(null == tp)
             return null;
 
+        StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT page_id,has_relation FROM index_native WHERE page_title=\"");
+        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
+        str_sql.append(safe_title);
+        str_sql.append("\"");
+
         IndexNative _in = null;
         try {
-            s = connect.conn.createStatement ();
-
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
-
-            str_sql.append("SELECT page_id,has_relation FROM index_native WHERE page_title=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                boolean has_relation = 0 != rs.getInt("has_relation");
-
-                _in = new IndexNative(tp, has_relation);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        boolean has_relation = 0 != rs.getInt("has_relation");
+                        _in = new IndexNative(tp, has_relation);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexNative.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return _in;
     }
@@ -189,27 +179,21 @@ public class IndexNative {
      */
     public static void delete (Connect connect,TPage page) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        try {
-            s = connect.conn.createStatement ();
-
-            String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
+        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
                                     connect, page.getPageTitle());
-
-            str_sql.append("DELETE FROM index_native WHERE page_title=\"");
-            str_sql.append(safe_title);
-            str_sql.append("\"");
-
-            s.execute (str_sql.toString());
-
+        str_sql.append("DELETE FROM index_native WHERE page_title=\"");
+        str_sql.append(safe_title);
+        str_sql.append("\"");
+        try {
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexNative.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
-
 }

@@ -2,7 +2,7 @@
  * in Wiktionary parsed database.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.sql.quote;
@@ -49,31 +49,25 @@ public class TQuotTranslation {
 
         if(null == text || text.length() == 0)
             return null;
-
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
-        TQuotTranslation result = null;
+        str_sql.append("INSERT INTO quot_translation (quote_id, text) VALUES (");
+        str_sql.append(quote_id);
+        str_sql.append(",\"");
+        String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
+        str_sql.append(safe_text);
+        str_sql.append("\")");
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO quot_translation (quote_id, text) VALUES (");
-            str_sql.append(quote_id);
-            str_sql.append(",\"");
-            String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
-            str_sql.append(safe_text);
-            str_sql.append("\")");
-            s.executeUpdate (str_sql.toString());
-
-            result = new TQuotTranslation(quote_id, text);
-
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (TQuotTranslation.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
-        return result;
+        return new TQuotTranslation(quote_id, text);
     }
 
     /** Selects row from the table 'quot_translation' by ID.<br><br>
@@ -81,26 +75,29 @@ public class TQuotTranslation {
      * @return null if data is absent
      */
     public static TQuotTranslation getByID (Connect connect,int quote_id) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("SELECT text FROM quot_translation WHERE quote_id=");
+        str_sql.append(quote_id);
         TQuotTranslation result = null;
-
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("SELECT text FROM quot_translation WHERE quote_id=");
-            str_sql.append(quote_id);
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                String text = Encodings.bytesToUTF8(rs.getBytes("text"));
-                result = new TQuotTranslation(quote_id, text);
+            Statement s = connect.conn.createStatement ();
+            try {
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        String text = Encodings.bytesToUTF8(rs.getBytes("text"));
+                        result = new TQuotTranslation(quote_id, text);
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotTranslation.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         return result;
     }
@@ -110,19 +107,18 @@ public class TQuotTranslation {
      */
     public void delete (Connect connect) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
+        str_sql.append("DELETE FROM quot_translation WHERE quote_id=");
+        str_sql.append( quote_id );
         try {
-            s = connect.conn.createStatement ();
-            str_sql.append("DELETE FROM quot_translation WHERE quote_id=");
-            str_sql.append( quote_id );
-            s.execute (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotTranslation.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 }

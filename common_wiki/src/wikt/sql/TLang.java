@@ -353,31 +353,31 @@ public class TLang {
      */
     public static void insert (Connect connect,String code,String name,
                                 int n_foreign_POS,int n_translations) {
-        Statement   s = null;
-        ResultSet   rs= null;
+        
         StringBuilder str_sql = new StringBuilder();
         try
         {
-            s = connect.conn.createStatement ();
-            str_sql.append("INSERT INTO lang (code,name,n_foreign_POS,n_translations) VALUES (\"");
-            str_sql.append(code);
-            str_sql.append("\",\"");
-            String safe_title = StringUtil.spaceToUnderscore(
-                                StringUtil.escapeChars(name));
-            str_sql.append(safe_title);
-            str_sql.append("\",");
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("INSERT INTO lang (code,name,n_foreign_POS,n_translations) VALUES (\"");
+                str_sql.append(code);
+                str_sql.append("\",\"");
+                String safe_title = StringUtil.spaceToUnderscore(
+                                    StringUtil.escapeChars(name));
+                str_sql.append(safe_title);
+                str_sql.append("\",");
 
-            str_sql.append(n_foreign_POS);
-            str_sql.append(",");
-            str_sql.append(n_translations);
-            str_sql.append(")");
-            
-            s.executeUpdate (str_sql.toString());
+                str_sql.append(n_foreign_POS);
+                str_sql.append(",");
+                str_sql.append(n_translations);
+                str_sql.append(")");
+
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLang.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TLang.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -389,25 +389,26 @@ public class TLang {
      */
     public static void update (Connect connect,LanguageType lang,
                                 int n_foreign_POS,int n_translations) {
-        Statement   s = null;
-        StringBuilder str_sql = new StringBuilder();
         
+        StringBuilder str_sql = new StringBuilder();
         try
         {
-            s = connect.conn.createStatement ();
-            // UPDATE lang SET n_foreign_POS=11, n_translations=13 WHERE code="en"
-            str_sql.append("UPDATE lang SET n_foreign_POS=");
-            str_sql.append(n_foreign_POS);
-            str_sql.append(", n_translations=");
-            str_sql.append(n_translations);
-            str_sql.append(" WHERE code=\"");
-            str_sql.append(lang.getCode());
-            str_sql.append("\"");
-            s.executeUpdate (str_sql.toString());
+            Statement s = connect.conn.createStatement ();
+            try {
+                // UPDATE lang SET n_foreign_POS=11, n_translations=13 WHERE code="en"
+                str_sql.append("UPDATE lang SET n_foreign_POS=");
+                str_sql.append(n_foreign_POS);
+                str_sql.append(", n_translations=");
+                str_sql.append(n_translations);
+                str_sql.append(" WHERE code=\"");
+                str_sql.append(lang.getCode());
+                str_sql.append("\"");
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
         }catch(SQLException ex) {
             System.err.println("SQLException (TLang.update()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
 
@@ -420,42 +421,43 @@ public class TLang {
      */
     public static TLang get (Connect connect,LanguageType lt) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
         TLang       tp = null;
 
         if(null == lt) return null;
         String lang_code = lt.getCode();
-        
         try {
-            s = connect.conn.createStatement ();
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT id,name,n_foreign_POS,n_translations FROM lang WHERE code=\"");
+                str_sql.append(lang_code);
+                str_sql.append("\"");
 
-            str_sql.append("SELECT id,name,n_foreign_POS,n_translations FROM lang WHERE code=\"");
-            str_sql.append(lang_code);
-            str_sql.append("\"");
-            
-            rs = s.executeQuery (str_sql.toString());
-            if (rs.next ())
-            {
-                //String name = StringUtil.underscoreToSpace(rs.getString("name"));
-                
-                tp = new TLang( rs.getInt("id"), lt,
-                                rs.getInt("n_foreign_POS"),
-                                rs.getInt("n_translations"));
-                
-                /*if(!lt.getName().equalsIgnoreCase(name)) { // cause: field lang.name is NOT unique, only .code is unique
-                    System.err.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name +
-                            " (language code = " + lt.getCode() + ")");
-                }*/
-            } else {
-                    System.err.println("Error: (wikt_parsed TLang.java get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
+                ResultSet rs = s.executeQuery (str_sql.toString());
+                try {
+                    if (rs.next ())
+                    {
+                        //String name = StringUtil.underscoreToSpace(rs.getString("name"));
+
+                        tp = new TLang( rs.getInt("id"), lt,
+                                        rs.getInt("n_foreign_POS"),
+                                        rs.getInt("n_translations"));
+
+                        /*if(!lt.getName().equalsIgnoreCase(name)) { // cause: field lang.name is NOT unique, only .code is unique
+                            System.err.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name +
+                                    " (language code = " + lt.getCode() + ")");
+                        }*/
+                    } else {
+                            System.err.println("Error: (wikt_parsed TLang.java get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
+                    }
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLang.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TLang.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -468,27 +470,23 @@ public class TLang {
      */
     public static void delete (Connect connect,LanguageType lt) {
 
-        Statement   s = null;
-        ResultSet   rs= null;
         StringBuilder str_sql = new StringBuilder();
 
         if(null == lt) return;
         String lang_code = lt.getCode();
 
         try {
-            s = connect.conn.createStatement ();
-
-            str_sql.append("DELETE FROM lang WHERE code=\"");
-            str_sql.append(lang_code);
-            str_sql.append("\"");
-            
-            s.execute (str_sql.toString());
-
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DELETE FROM lang WHERE code=\"");
+                str_sql.append(lang_code);
+                str_sql.append("\"");
+                s.execute (str_sql.toString());
+            } finally {
+                s.close();
+            }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLang.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        } finally {
-            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
-            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+            System.err.println("SQLException (TLang.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }    
 }
