@@ -1,8 +1,8 @@
 /* WMeaning.java - corresponds to a Meaning (definition + quotations)
  * level of Wiktionary word.
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.word;
