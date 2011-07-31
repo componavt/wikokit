@@ -704,6 +704,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal xlc = new LanguageTypeRu("Ликийский", LanguageType.xlc);
     public static final LanguageTypeLocal xld = new LanguageTypeRu("Лидийский", LanguageType.xld);
     public static final LanguageTypeLocal xlu = new LanguageTypeRu("Лувийский", LanguageType.xlu);
+    public static final LanguageTypeLocal xls = new LanguageTypeRu("Лузитанский", LanguageType.xls);
     public static final LanguageTypeLocal xmf = new LanguageTypeRu("Мегрельский", LanguageType.xmf);
     public static final LanguageTypeLocal xmk = new LanguageTypeRu("Древнемакедонский", LanguageType.xmk);
     public static final LanguageTypeLocal xno = new LanguageTypeRu("Англо-нормандский", LanguageType.xno);

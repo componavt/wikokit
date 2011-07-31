@@ -1,7 +1,7 @@
 /* WLanguage.java - corresponds to a language level of Wiktionary word.
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.word;
@@ -15,7 +15,7 @@ import wikt.multi.ru.WLanguageRu;
 import wikt.multi.en.WLanguageEn;
 
 /** Language lets you know the language of the word in question. It is almost 
- * always in a level two heading. ==English== {{-ru-}}
+ * always in a level two heading. E.g. ==English== or {{-ru-}}
  *
  * Exception: ==Translingual==
  * 

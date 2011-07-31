@@ -174,7 +174,10 @@ public class WMeaningEn {
         boolean form_of = false;
         if(line.startsWith("{{form of|") ||
            line.startsWith("{{plural of|") ||
-           line.startsWith("{{es-verb form of|"))
+           line.startsWith("{{es-verb form of|") ||
+           line.startsWith("{{inflection of|") ||
+           line.startsWith("{{conjugation of|")
+          )
         {
             form_of = true;
             return new WMeaning("", NULL_CONTEXTLABEL_ARRAY, "", null, form_of);

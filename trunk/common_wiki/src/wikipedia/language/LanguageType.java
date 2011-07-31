@@ -2167,9 +2167,11 @@ public class LanguageType {
 
     public static final LanguageType abe = new LanguageType("abe", "Abenaki", "Abenaki");
     public static final LanguageType abe2 = LanguageType.addNonUniqueName(abe, "Western Abenaki");
-    public static final LanguageType aaq = LanguageType.addNonUnique(abe, "aaq", "Eastern Abenaki");
-    public static final LanguageType aaq2 = LanguageType.addNonUniqueName(abe, "Penobscot");
-    public static final LanguageType aaq3 = LanguageType.addNonUniqueName(abe, "Abenaki-Penobscot");
+
+    public static final LanguageType aaq = LanguageType.addNonUnique(abe, "aaq", "Eastern Abnaki");
+    public static final LanguageType aaq2 = LanguageType.addNonUniqueName(abe, "Eastern Abenaki");
+    public static final LanguageType aaq3 = LanguageType.addNonUniqueName(abe, "Penobscot");
+    public static final LanguageType aaq4 = LanguageType.addNonUniqueName(abe, "Abenaki-Penobscot");
     // ------------ eo Ojibwe
 
 
@@ -3510,6 +3512,8 @@ public class LanguageType {
     public static final LanguageType xhu = new LanguageType("xhu", "Hurrian", "Hurrian");
     public static final LanguageType xlc = new LanguageType("xlc", "Lycian", "Lycian");
     public static final LanguageType xld = new LanguageType("xld", "Lydian", "Lydian");
+    public static final LanguageType xls = new LanguageType("xls", "Lusitanian", "Lusitanian");
+
     public static final LanguageType xmk = new LanguageType("xmk", "Ancient Macedonian", "Ancient Macedonian");
     public static final LanguageType xog = new LanguageType("xog", "Soga", "Soga");
     public static final LanguageType xpg = new LanguageType("xpg", "Phrygian", "Phrygian");
@@ -3538,6 +3542,7 @@ public class LanguageType {
     public static final LanguageType yrk = new LanguageType("yrk", "Nenets", "Nenets");
     public static final LanguageType yua = new LanguageType("yua", "Yucatec Maya", "Yucatec Maya");
     public static final LanguageType yur = new LanguageType("yur", "Yurok", "Yurok");
+    public static final LanguageType yut = new LanguageType("yut", "Yopno", "Yopno");
 
     public static final LanguageType zai = new LanguageType("zai", "Isthmus Zapotec", "Isthmus Zapotec");
     public static final LanguageType zaj = new LanguageType("zaj", "Zaramo", "Zaramo");
