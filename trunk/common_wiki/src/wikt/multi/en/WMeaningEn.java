@@ -172,11 +172,55 @@ public class WMeaningEn {
             return null;
 
         boolean form_of = false;
-        if(line.startsWith("{{form of|") ||
-           line.startsWith("{{plural of|") ||
-           line.startsWith("{{es-verb form of|") ||
-           line.startsWith("{{inflection of|") ||
-           line.startsWith("{{conjugation of|")
+        if(line.startsWith("{{alternative spelling of|")
+           || line.startsWith("{{conjugation of|")
+
+           || line.startsWith("{{feminine of|")
+           || line.startsWith("{{feminine past participle of|")
+           || line.startsWith("{{feminine plural of|")
+           || line.startsWith("{{feminine plural past participle of|")
+
+           || line.startsWith("{{form of|")
+           || line.startsWith("{{es-verb form of|")
+
+           || line.startsWith("{{inflection of|")
+           
+           || line.startsWith("{{past participle of|")
+           || line.startsWith("{{plural of|")
+           || line.startsWith("{{plural past participle of|")
+           || line.startsWith("{{present participle of|")
+
+           || line.startsWith("{{pt-verb form of|")
+           
+           || line.startsWith("{{superlative of|")
+           || line.startsWith("{{sv-adj-form-abs-def+pl|")
+           || line.startsWith("{{sv-noun-form-def|")
+           || line.startsWith("{{sv-noun-form-indef-pl|")
+           
+           || line.startsWith("{{third-person singular of|")
+           || line.startsWith("{{uds.}} {{es-verb form of|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
+           //|| line.startsWith("{{|")
           )
         {
             form_of = true;
