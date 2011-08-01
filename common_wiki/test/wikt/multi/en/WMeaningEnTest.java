@@ -218,7 +218,6 @@ public class WMeaningEnTest {
     }
 
     // {{form of|
-    // {{plural of|
     // {{es-verb form of|
     @Test
     public void testParseOneDefinition_en_form_of_template() {
@@ -239,19 +238,49 @@ public class WMeaningEnTest {
         assertNotNull(wm);
         assertTrue(wm.hasTemplateNotDefinition());
 
-        // 2 plural of
+        // 2 es-verb form of
+        source = "# {{es-verb form of|mood=ger|ending=er|verb=hacer}}";
+        wm = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.hasTemplateNotDefinition());
+    }
+
+    // {{plural of|
+    // {{feminine plural of|
+    @Test
+    public void testParseOneDefinition_en_plural_of_template() {
+        System.out.println("parseOneDefinition_en_plural_of_template");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
+        wikt_lang       = LanguageType.en; // English Wiktionary
+        page_title      = "buenas";
+        lang_section    = LanguageType.es; // Spanish word
+
+        // 1 plural of
         source = "# {{plural of| }}";
         wm = WMeaningEn.parseOneDefinition(
                 wikt_lang, page_title, lang_section, source);
         assertNotNull(wm);
         assertTrue(wm.hasTemplateNotDefinition());
 
+        // 2 feminine plural of
+        source = "# {{feminine plural of|[[bueno]]|lang=es}}";
+        wm = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.hasTemplateNotDefinition());
+/*
         // 3 es-verb form of
         source = "# {{es-verb form of|mood=ger|ending=er|verb=hacer}}";
         wm = WMeaningEn.parseOneDefinition(
                 wikt_lang, page_title, lang_section, source);
         assertNotNull(wm);
         assertTrue(wm.hasTemplateNotDefinition());
+ */
     }
 
     // @see http://en.wiktionary.org/wiki/Template:inflection_of
@@ -282,14 +311,33 @@ public class WMeaningEnTest {
                 wikt_lang, page_title, lang_section, source);
         assertNotNull(wm);
         assertTrue(wm.hasTemplateNotDefinition());
+    }
 
-        /*// 3 es-verb form of
-        source = "# {{es-verb form of|mood=ger|ending=er|verb=hacer}}";
+    // @see http://en.wiktionary.org/wiki/Template:alternative_spelling_of
+    // {{alternative spelling of|}}
+    @Test
+    public void testParseOneDefinition_en_alternative_spelling_of_template() {
+        System.out.println("parseOneDefinition_en_form_of_template");
+        LanguageType wikt_lang;
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
+        wikt_lang       = LanguageType.en; // English Wiktionary
+        page_title      = "ружье";
+        lang_section    = LanguageType.ru; // (second) Russian word
+
+        source = "# {{alternative spelling of|[[second-guess]]}}";
         wm = WMeaningEn.parseOneDefinition(
                 wikt_lang, page_title, lang_section, source);
         assertNotNull(wm);
         assertTrue(wm.hasTemplateNotDefinition());
-         */
+
+        source = "# {{alternative spelling of|ружьё|lang=ru}}";
+        wm = WMeaningEn.parseOneDefinition(
+                wikt_lang, page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.hasTemplateNotDefinition());
     }
     
 
