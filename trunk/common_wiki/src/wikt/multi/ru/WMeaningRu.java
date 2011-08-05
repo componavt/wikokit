@@ -40,12 +40,13 @@ public class WMeaningRu {
      * @param pt            POSText defines POS stored in pt.text
      * @return
      */
-    public static WMeaning[] parse (
-                    LanguageType wikt_lang,
+    public static WMeaning[] parse (            
                     String page_title,
                     LanguageType lang_section,
                     POSText pt)
     {
+        LanguageType wikt_lang = LanguageType.ru;
+        
         // === Level III. Meaning ===
         if(null == pt.getText()) {
             return NULL_WMEANING_ARRAY;
@@ -111,13 +112,12 @@ public class WMeaningRu {
     
     /** Parses one definition line, i.e. extracts {{label}}, definition,
      * {{example|Quotation sentence.}}, creates and fills a meaning (WMeaning).
-     * @param wikt_lang     language of Wiktionary
      * @param page_title    word which is described in this article 'text'
      * @param lang_section  language of this section of an article
      * @param line          definition line
      * @return WMeaning or null if the line is not started from "#" or = "# "
      */
-    public static WMeaning parseOneDefinition(LanguageType wikt_lang,
+    public static WMeaning parseOneDefinition(
                     String page_title,
                     LanguageType lang_section,
                     String line)

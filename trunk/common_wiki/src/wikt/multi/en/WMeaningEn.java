@@ -1,8 +1,8 @@
 /* WMeaningEn.java - corresponds to a Meaning (definition + quotations)
  * level of a word in English Wiktionary.
  *
- * Copyright (c) 2010 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Copyright (c) 2010-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikt.multi.en;
@@ -19,6 +19,9 @@ import java.util.regex.Matcher;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /** Meaning consists of <PRE>
  * # Definition (preceded by "#", which causes automatic numbering).
@@ -57,7 +60,6 @@ public class WMeaningEn {
      * @return
      */
     public static WMeaning[] parse (
-                    LanguageType wikt_lang,
                     String page_title,
                     LanguageType lang_section,
                     POSText pt)
@@ -120,6 +122,7 @@ public class WMeaningEn {
         String[] meaning_with_quat =
             ptrn_meaning_with_quot.split(defs_text);
 
+        LanguageType wikt_lang = LanguageType.en;
         List<WMeaning> wm_list = null;
         for(int i=1; i<meaning_with_quat.length; i++) { // [0] == "";
             String mean_lines = meaning_with_quat[i];
@@ -143,18 +146,185 @@ public class WMeaningEn {
     }
 
 
+    private static final String[] STR_FORM_OF = new String[] {
+       "alternative form of",
+       "alternative name of",
+       "alternative plural of",
+
+       "comparative of",
+       "conjugation of",       
+
+       "feminine of",
+       "feminine past participle of",
+       "feminine plural past participle of",
+
+        "form of",
+
+       "genitive of",
+       "gerund of",
+
+       "inflection of",
+
+       "alternative spelling of",
+       "misspelling of",
+       "nonstandard spelling of",
+       "obsolete spelling of",
+            
+       "plural of",
+       "feminine plural of",
+       "masculine plural of",
+
+       "past participle of",
+       "plural past participle of",
+       "present participle of",
+
+       "superlative of",
+
+       "third-person singular of",            
+    };
+    private final static Set<String> FORM_OF = new HashSet<String>(Arrays.asList(STR_FORM_OF));
+    
+    /** Checks: whether the definition "text" is one of "form of" templates,
+     * e.g.<br><br>
+     * "{{comparative of|}}
+     
+     * @param line  one line definition (without \n newline symbols)
+     * @return      true, if the "line" is a "form of" template
+     *
+     * @see http://en.wiktionary.org/wiki/Category:Form_of_templates
+     */
+    public static boolean isFormOfTemplate(String line)
+    {
+        // + counter - number of omitted words with templates like "form of"
+
+        // 1. simple case: the whole definition is a template:
+        // e.g.: {{comparative of|bla-bla-bla}}
+        int pipe_pos;
+        if(line.startsWith("{{") && line.endsWith("}}") &&
+                -1 != (pipe_pos = line.indexOf("|", 3)) && pipe_pos > 3)
+        {
+            String template_name = line.substring(2, pipe_pos);
+            //System.out.println("template_name is '" + template_name + '\'');
+            
+            if(FORM_OF.contains(template_name.trim()))
+                return true;
+            
+            if(   template_name.contains("form of")
+               || template_name.contains("adj-form")
+               || template_name.contains("noun-form")
+               || template_name.contains("participle of")
+               || template_name.contains("verb form")
+               || template_name.contains("verb-form")     
+              )
+                return true;
+            
+            //System.out.println("STR_FORM_OF.len="+STR_FORM_OF.length);
+            //System.out.println("set FORM_OF.len="+FORM_OF.size());
+        }
+        return false;
+    }
+    //"adj-form"
+    // sv-adj-form-abs-def-m
+    // sv-adj-form-abs-def+pl
+    // sv-adj-form-abs-indef-n
+
+    // "form of"
+    // eo-form of
+    // fi-form of
+
+    // "verb form"
+    // ca-verb form of
+    // de-verb form of
+    // es-verb form of
+    // fi-verb form of
+
+    // "verb-form"
+    // nl-verb-form
+    // pt-verb form of
+    // sv-verb-form-pre
+    // sv-verb-form-sup-pass
+    // sv-verb-form-inf-pass
+
+    // "noun-form"
+    // nl-noun-form
+    // sv-noun-form-def
+    // sv-noun-form-indef-pl
+    // sv-noun-form-def-gen
+    // sv-noun-form-def-pl
+    
+    // participle of
+    // fi-participle of
+
+
+
+    /** Checks: whether the definition ("# $line") contains one of "form of"
+     * (i.e. templates or explicit description of the word form), e.g.<br><br>
+     * "Plural form of xilologico" or
+     * "{{comparative of|" or<br><br>
+     * "# {{plural past participle of|}}"
+     *
+     * @param line          one line definition (without \n newline symbols)
+     * @see http://en.wiktionary.org/wiki/Category:Form_of_templates
+     */
+    public static boolean containsFormOfTemplate(String line)
+    {
+        if(!line.startsWith("{{") || !line.endsWith("}}"))
+            return false;
+        
+        // 1. simple case: the whole definition is a template:
+        // e.g.: {{comparative of|bla-bla-bla}}
+        if (isFormOfTemplate(line))
+            return true;
+        
+        // 2. complex case: there are several templates, where one is a "form of" template, e.g.:
+        // "{{obsolete}} {{past participle of|sit}} An alternate form of sat.";
+        // "{{transitive}} {{obsolete spelling of|[[abraid]]}}"
+        
+        // 2.a let's skip "{{first template}} {{":
+        
+        int second_template_pos;                        // 5 = min len of "{{bla-bla-bla}}" before {{..}}
+        if(-1 != (second_template_pos = line.indexOf("{{", 5)))
+            if (isFormOfTemplate(line.substring(second_template_pos)))
+                return true;
+        
+        return false;
+    }
+
+    /** Checks: whether the definition ("# $line") contains one of "form of"
+     * (i.e. templates or explicit description of the word form), e.g.<br><br>
+     * "Plural form of xilologico" or
+     * "{{comparative of|" or<br><br>
+     * "# {{plural past participle of|}}"
+     *
+     * @param line          one line definition (without \n newline symbols)
+     */
+    public static boolean containsFormOf(String line)
+    {
+        // + counter - number of omitted words, i.e. number of word forms (non lemma)
+
+        if (containsFormOfTemplate(line))
+            return true;
+
+        if(        line.startsWith("Plural form of")
+                || line.startsWith("Feminine plural form of")
+           )
+            return true;
+
+        return false;
+    }
+
     /** Parses (usually) two lines: definition line and quotation line,
      * i.e. extracts {{label}}, # definition, 
      * and #: Quotation sentence. with #:: Translation sentence.
      * , creates and fills a meaning (WMeaning).
      * 
      * @param wikt_lang     language of Wiktionary
-     * @param page_title    word which are described in this article 'text'
+     * @param page_title    word which are described in the definition 'text'
      * @param lang_section  language of this section of an article
      * @param text          text with one definition 
      * @return WMeaning or null if the line is not started from "#" or = "# "
      */
-    public static WMeaning parseOneDefinition(LanguageType wikt_lang,
+    public static WMeaning parseOneDefinition(
                     String page_title,
                     LanguageType lang_section,
                     String text)
@@ -162,7 +332,7 @@ public class WMeaningEn {
         // remove empty quotations: {{пример|}} and {{пример}}
  /*       line = line.replace("{{пример|}}", "");
         line = line.replace("{{пример}}", "");
-        line = line.replace("{{пример перевод|}}", ""); // todo check - does exist this example
+        line = line.replace("{{пример перевод|}}", ""); // todo check - does exist this example in enwikt
 */
         String line;
         line = Definition.getFirstLine(page_title, text);
@@ -172,56 +342,7 @@ public class WMeaningEn {
             return null;
 
         boolean form_of = false;
-        if(line.startsWith("{{alternative spelling of|")
-           || line.startsWith("{{conjugation of|")
-
-           || line.startsWith("{{feminine of|")
-           || line.startsWith("{{feminine past participle of|")
-           || line.startsWith("{{feminine plural of|")
-           || line.startsWith("{{feminine plural past participle of|")
-
-           || line.startsWith("{{form of|")
-           || line.startsWith("{{es-verb form of|")
-
-           || line.startsWith("{{inflection of|")
-           
-           || line.startsWith("{{past participle of|")
-           || line.startsWith("{{plural of|")
-           || line.startsWith("{{plural past participle of|")
-           || line.startsWith("{{present participle of|")
-
-           || line.startsWith("{{pt-verb form of|")
-           
-           || line.startsWith("{{superlative of|")
-           || line.startsWith("{{sv-adj-form-abs-def+pl|")
-           || line.startsWith("{{sv-noun-form-def|")
-           || line.startsWith("{{sv-noun-form-indef-pl|")
-           
-           || line.startsWith("{{third-person singular of|")
-           || line.startsWith("{{uds.}} {{es-verb form of|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-           //|| line.startsWith("{{|")
-          )
+        if( containsFormOf(line))
         {
             form_of = true;
             return new WMeaning("", NULL_CONTEXTLABEL_ARRAY, "", null, form_of);

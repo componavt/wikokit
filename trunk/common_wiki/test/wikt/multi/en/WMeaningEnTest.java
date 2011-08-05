@@ -48,11 +48,9 @@ public class WMeaningEnTest {
     @Test
     public void testParseOneDefinition_en() {
         System.out.println("parseOneDefinition_en");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "luck";
         lang_section    = LanguageType.en; // English word
 
@@ -85,7 +83,7 @@ public class WMeaningEnTest {
 
         // 1
         WMeaning result1 = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, _def1_source);
+                page_title, lang_section, _def1_source);
 
         assertTrue(null != result1);
         assertTrue(result1.getDefinition().equalsIgnoreCase(_def1_result));
@@ -100,7 +98,7 @@ public class WMeaningEnTest {
 
         // 2
         WMeaning result2 = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, _def2_source);
+                page_title, lang_section, _def2_source);
 
         assertTrue(null != result2);
         assertTrue(result2.getDefinition().equalsIgnoreCase(_def2_result));
@@ -218,32 +216,100 @@ public class WMeaningEnTest {
     }
 
     // {{form of|
-    // {{es-verb form of|
+    // {{eo-form of|
+    // {{fi-form of|
     @Test
-    public void testParseOneDefinition_en_form_of_template() {
-        System.out.println("parseOneDefinition_en_form_of_template");
-        LanguageType wikt_lang;
+    public void testParseOneDefinition_en_language_code_plus_form_of_templates() {
+        System.out.println("language_code_plus_form_of_templates");
         LanguageType lang_section;
         String page_title, source;
         WMeaning wm;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "raggiamo";
         lang_section    = LanguageType.en; // English word
 
-        // 1 form of
+        // form of
         source = "# {{form of|[[first-person|First-person]] [[plural]] [[present tense]]|[[raggiare#Italian|raggiare]]|lang=Italian}}";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
+        assertTrue(wm.isFormOfInflection());
 
-        // 2 es-verb form of
+        // eo-form of
+        source = "# {{eo-form of|bol|us}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+        
+        // fi-form of
+        source = "# {{fi-form of|kävellä|type=verb|pr=impersonal|mood=conditional|tense=present}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+    }
+
+    // {{es-verb form of|
+    // {{ca-verb form of|
+    // {{ru-verb form of|
+    // {{fi-verb form of|
+    @Test
+    public void testParseOneDefinition_en_language_code_plus_verb_form_of_templates() {
+        System.out.println("language_code_plus_verb_form_of_templates");
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
+        page_title      = "raggiamo";
+        lang_section    = LanguageType.en; // English word
+
+        // es-verb form of
         source = "# {{es-verb form of|mood=ger|ending=er|verb=hacer}}";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
+        assertTrue(wm.isFormOfInflection());
+
+        // {{ca-verb form of|
+        source = "# {{ca-verb form of|t=pres|m=ptc|acceptar}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+
+        // {{fi-verb form of|
+        source = "# {{fi-verb form of|pn=pass|tm=pres|nähdä}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+    }
+
+    // genitive of
+    @Test
+    public void testParseOneDefinition_en_genitive_of_template() {
+        System.out.println("parseOneDefinition_en_genitive_of_template");
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
+        page_title      = "buenas";
+        lang_section    = LanguageType.es; // Spanish word
+
+        // 1 genitive of
+        source = "# {{genitive of|[[word]]}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+
+        // 2 
+        source = "# {{genitive of|word|wörd}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
     }
 
     // {{plural of|
@@ -251,93 +317,226 @@ public class WMeaningEnTest {
     @Test
     public void testParseOneDefinition_en_plural_of_template() {
         System.out.println("parseOneDefinition_en_plural_of_template");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title, source;
         WMeaning wm;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "buenas";
         lang_section    = LanguageType.es; // Spanish word
 
         // 1 plural of
         source = "# {{plural of| }}";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
+        assertTrue(wm.isFormOfInflection());
 
         // 2 feminine plural of
         source = "# {{feminine plural of|[[bueno]]|lang=es}}";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
-/*
-        // 3 es-verb form of
-        source = "# {{es-verb form of|mood=ger|ending=er|verb=hacer}}";
-        wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
-        assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
- */
+        assertTrue(wm.isFormOfInflection());
     }
 
-    // @see http://en.wiktionary.org/wiki/Template:inflection_of
-    // {{inflection of|
-    // {{conjugation of|
+    // {{past participle of|
+    // {{plural past participle of|
+    // {{feminine plural past participle of|
     @Test
-    public void testParseOneDefinition_en_inflection_of_template() {
-        System.out.println("parseOneDefinition_en_form_of_template");
-        LanguageType wikt_lang;
+    public void testParseOneDefinition_en_past_participle_of_template() {
+        System.out.println("parseOneDefinition_en_past_participle_of_template");
         LanguageType lang_section;
         String page_title, source;
         WMeaning wm;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
+        page_title      = "buenas";
+        lang_section    = LanguageType.es; // Spanish word
+
+        // 1 past participle of, ok - it has definition in really
+        source = "# {{obsolete}} {{past participle of|sit}} An alternate form of sat.";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertFalse(wm.isFormOfInflection());
+
+        // 2 plural past participle of
+        source = "# {{plural past participle of|}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+        
+        // 3. participle of
+        source = "# {{fi-participle of|tense=past|valvoa}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+    }
+    
+    // "Plural form of xilologico"
+    @Test
+    public void testParseOneDefinition_en_form_of_inflections_without_template() {
+        System.out.println("form_of_inflections_without_template");
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
+        page_title      = "buenas";
+        lang_section    = LanguageType.es; // Spanish word
+
+        // "Plural form of" without template
+        source = "# Plural form of xilologico";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+        
+        // "Plural form of" without template
+        source = "# Feminine plural form of uxoricida";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+    }
+    
+
+    // adjective
+    // {{sv-adj-form-abs-def-m|
+    // {{sv-adj-form-abs-def+pl|
+    // {{sv-adj-form-abs-indef-n|
+    @Test
+    public void testParseOneDefinition_en_adj_form_template() {
+        System.out.println("parseOneDefinition_en_adj_form_template");
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
+        page_title      = "buenas";
+        lang_section    = LanguageType.es; // Spanish word
+
+        source = "# {{sv-adj-form-abs-def-m|}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+
+        source = "# {{sv-adj-form-abs-def+pl|}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+
+        source = "# {{sv-adj-form-abs-indef-n|}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+    }
+
+    // noun form
+    // {{sv-noun-form-def-pl|stup}}
+    @Test
+    public void testParseOneDefinition_en_noun_form_template() {
+        System.out.println("parseOneDefinition_en_noun_form_template");
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
+        page_title      = "buenas";
+        lang_section    = LanguageType.es; // Spanish word
+
+        source = "# {{sv-noun-form-def-pl|stup}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+    }
+
+    // @see http://en.wiktionary.org/wiki/Template:inflection_of
+    // {{inflection of|
+    // {{inflection of |
+    // {{conjugation of|
+    @Test
+    public void testParseOneDefinition_en_inflection_of_template() {
+        System.out.println("parseOneDefinition_en_form_of_template");
+        LanguageType lang_section;
+        String page_title, source;
+        WMeaning wm;
+
         page_title      = "anulare";
         lang_section    = LanguageType.la; // Latin word
 
         // 1 inflection of
         source = "# {{inflection of|anularis|ānulāris|nom|n|s|lang=la}}";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
+        assertTrue(wm.isFormOfInflection());
+        
+        // 1b inflection of with space
+        source = "# {{inflection of |О±ОєПЃО№ОІО®П‚||nom|n|p|lang=el}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
 
         // 2 conjugation of
         source = "# {{conjugation of|amo|amō|pres|act|inf|lang=la}} ";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
+        assertTrue(wm.isFormOfInflection());
     }
 
     // @see http://en.wiktionary.org/wiki/Template:alternative_spelling_of
     // {{alternative spelling of|}}
+    // misspelling of
+    // obsolete spelling of
+    // nonstandard spelling of
     @Test
-    public void testParseOneDefinition_en_alternative_spelling_of_template() {
-        System.out.println("parseOneDefinition_en_form_of_template");
-        LanguageType wikt_lang;
+    public void testParseOneDefinition_en_spellings_of_template() {
+        System.out.println("parseOneDefinition_en_spellings_of_template");
         LanguageType lang_section;
         String page_title, source;
         WMeaning wm;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "ружье";
         lang_section    = LanguageType.ru; // (second) Russian word
 
+        // 1. alternative spelling of
         source = "# {{alternative spelling of|[[second-guess]]}}";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
+        assertTrue(wm.isFormOfInflection());
 
         source = "# {{alternative spelling of|ружьё|lang=ru}}";
         wm = WMeaningEn.parseOneDefinition(
-                wikt_lang, page_title, lang_section, source);
+                page_title, lang_section, source);
         assertNotNull(wm);
-        assertTrue(wm.hasTemplateNotDefinition());
+        assertTrue(wm.isFormOfInflection());
+
+        // 2. misspelling of
+        source = "# {{misspelling of|referrer}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+
+        // 3. obsolete spelling of
+        source = "# {{transitive}} {{obsolete spelling of|[[abraid]]}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
+        
+        // 4. nonstandard spelling of
+        source = "# {{nonstandard spelling of|lang=cmn|sc=Latn|yЕЌu}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
     }
     
 
@@ -347,12 +546,9 @@ public class WMeaningEnTest {
     @Test
     public void testParseOneDefinition_en_labels_and_WikiWord() {
         System.out.println("parseOneDefinition_en_labels_and_WikiWord");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
-        String line;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "beneficiary";
         lang_section    = LanguageType.en; // English word
 
@@ -374,7 +570,7 @@ public class WMeaningEnTest {
 
         //WMeaning expResult = new WMeaning(page_title, _labels, _def_result, _quote);
 
-        WMeaning result = WMeaningEn.parseOneDefinition(wikt_lang, page_title, lang_section, _def_source);
+        WMeaning result = WMeaningEn.parseOneDefinition(page_title, lang_section, _def_source);
 
         assertTrue(null != result);
         assertTrue(result.getDefinition().equalsIgnoreCase(_def_result));
@@ -392,13 +588,11 @@ public class WMeaningEnTest {
     public void testParse_3_meaning_parse_labels() {
         System.out.println("parse_3_meaning_parse_labels");
         
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "picture";
         lang_section    = LanguageType.en; // English word
         
@@ -418,7 +612,7 @@ public class WMeaningEnTest {
                 "#: Casablanca ''is my all-time favorite '''picture'''.''\n" +
                 "\n";
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningEn.parse(page_title, lang_section, pt);
         assertNotNull(result);
         assertEquals(3, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
@@ -439,14 +633,11 @@ public class WMeaningEnTest {
     @Test
     public void testParse_2_meaning_with_translation() {
         System.out.println("parse_2_meaning_with_translation");
-
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "test_word";
         lang_section    = LanguageType.en; // English word
 
@@ -466,7 +657,7 @@ public class WMeaningEnTest {
                 "\n";
 
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningEn.parse(page_title, lang_section, pt);
         assertNotNull(result);
         assertEquals(2, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
@@ -493,13 +684,11 @@ public class WMeaningEnTest {
     public void testParse_1_meaning() {
         System.out.println("parse_1_meaning");
 
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.en; // English Wiktionary
         page_title      = "airplane";
         lang_section    = LanguageType.en; // English word
 
@@ -519,7 +708,7 @@ public class WMeaningEnTest {
         _definition1 = "{{US}} A powered heavier-than air aircraft with fixed wings.";
 
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningEn.parse(page_title, lang_section, pt);
         assertNotNull(result);
         assertEquals(1, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
@@ -533,7 +722,7 @@ public class WMeaningEnTest {
                 "\n";
 
         pt = new POSText(POS.noun, str);
-        result = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+        result = WMeaningEn.parse(page_title, lang_section, pt);
         assertNotNull(result);
         assertEquals(1, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));

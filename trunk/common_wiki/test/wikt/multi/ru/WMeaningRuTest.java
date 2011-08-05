@@ -47,12 +47,10 @@ public class WMeaningRuTest {
     @Test
     public void testParseOneDefinition_ru() {
         System.out.println("parseOneDefinition_ru");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "самолёт";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -74,7 +72,7 @@ public class WMeaningRuTest {
 
         line =  "# летательный [[аппарат]] тяжелее [[воздух]]а с жёстким [[крыло]]м и собственным [[мотор]]ом {{пример|Самолёт-истребитель.}} {{пример|Военный cамолёт.}} {{пример|Эскадрилья самолётов.}}";
         
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         assertTrue(null != result);
         assertTrue(result.getDefinition().equalsIgnoreCase(_definition));
@@ -92,12 +90,10 @@ public class WMeaningRuTest {
     public void testParseOneDefinition_ru_meaning_emtpy() {
         System.out.println("parse_OneDefinition_ru_meaning_emtpy");
         System.out.println("parseOneDefinition_ru");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "самолёт";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -109,7 +105,7 @@ public class WMeaningRuTest {
         // empty definition:
         line =  "# ";
 
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertTrue(null == result);
 
         
@@ -117,32 +113,30 @@ public class WMeaningRuTest {
         // empty definition with empty example:
         line =  "# {{пример|}}";
 
-        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertTrue(null == result);
 
         // test 3
         // empty definition with very empty example:
         line =  "# {{пример}}";
 
-        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertTrue(null == result);
     }
 
     @Test
     public void testParseOneDefinition_morpheme_template() {
         System.out.println("parseOneDefinition_morpheme_template_ru");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "-ейш-";
         lang_section    = LanguageType.ru; // Russian word
 
         // test 1
         line =  "# {{морфема|удар=|часть=основе прилагательного в [[положительная степень|положительной степени]]|образует=его [[превосходная степень|превосходную степень]]|знач=наивысшей степени качества}} {{пример|[[храбрый]] → [[храбрейший|храбр{{выдел|ейш}}ий]]}} {{пример|[[важный]] → [[важнейший|важн{{выдел|ейш}}ий]]}} ‖ иногда суффикс присоединяется вместе с приставкой [[наи-]] {{пример|[[красивый]] → [[наикрасивейший|{{выдел|наи}}красив{{выдел|ейш}}ий]]}}";
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         // skip now, todo (parse) in future
         assertTrue(null == result);
@@ -150,7 +144,7 @@ public class WMeaningRuTest {
         // test 2
         lang_section    = LanguageType.tt; // Tatar word
         line = "# {{морфема tt|часть=существительному, прилагательному, числительному|ряд=зад|образует=существительные|знач=«абстракции, множества, группы объектов»}}";
-        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertTrue(null == result);
     }
 
@@ -158,18 +152,16 @@ public class WMeaningRuTest {
     @Test
     public void testParse_skip_temporary_empty_label_pometa_question() {
         System.out.println("parseOneDefinition__skip_temporary_empty_label_pometa_question");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "наробляти";
         lang_section    = LanguageType.uk; // Ukrainian word
 
         // test 1
         line = "# {{помета?|uk}}  {{пример|}}";
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertTrue(null == result);
 
         // test 2
@@ -179,14 +171,13 @@ public class WMeaningRuTest {
         line = "#{{помета?|sq}} [[шелковица]], [[тутовое дерево]] {{пример|}}";
         //String _line = "[[шелковица]], [[тутовое дерево]]";
         String _line = "шелковица, тутовое дерево";
-        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertTrue(result.getDefinition().equalsIgnoreCase(_line));
     }
 
     @Test
     public void testParseOneDefinition_ru_labels() {
         System.out.println("parseOneDefinition_ru_labels");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
@@ -194,7 +185,6 @@ public class WMeaningRuTest {
         // 1. simple: 1 label
         // # {{сельск.}} имеющий [[волокно]], пригодное для выработки пряжи {{пример|Увязочные и прошивочные материалы в виде кручёных шнуров, изготовленных из льнопеньковой пряжи, отбойки (кручёный шпагат), шпагатов увязочных (из {{выдел|лубяных}} волокон), ниток льняных и хлопчатобумажных применяют при выполнении работ по переплетению пружин, прошивке заготовок, стёжке бортов, зашиванию покровных и облицовочных тканей.|Татьяна Матвеева|Реставрация столярно-мебельных изделий|1988|источник=НКРЯ}}
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "лубяной";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -207,7 +197,7 @@ public class WMeaningRuTest {
 
         line =  "# {{сельск.}} имеющий [[волокно]], пригодное для выработки пряжи {{пример|Увязочные и прошивочные материалы в виде кручёных шнуров, изготовленных из льнопеньковой пряжи, отбойки (кручёный шпагат), шпагатов увязочных (из {{выдел|лубяных}} волокон), ниток льняных и хлопчатобумажных применяют при выполнении работ по переплетению пружин, прошивке заготовок, стёжке бортов, зашиванию покровных и облицовочных тканей.|Татьяна Матвеева|Реставрация столярно-мебельных изделий|1988|источник=НКРЯ}}";
 
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         assertTrue(null != result);
         assertTrue(result.getDefinition().equalsIgnoreCase(_definition));
@@ -220,11 +210,10 @@ public class WMeaningRuTest {
 
         // 2. complex: 4 label
         line =  "# {{п.}}, {{прост.}}, {{вульг.}}, {{помета|что}} извлекать хитростью, насильно {{пример|Сосать деньги.}}";
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "сосать";
         lang_section    = LanguageType.ru; // Russian word
 
-        result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         assertTrue(null != result);
         _definition = "извлекать хитростью, насильно";
@@ -242,7 +231,6 @@ public class WMeaningRuTest {
     @Test
     public void testParseOneDefinition_ru_empty_quote() {
         System.out.println("parseOneDefinition_ru_empty_quote");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
@@ -250,11 +238,10 @@ public class WMeaningRuTest {
         // 1. simple: 1 empty quote
         line =  "# {{хим-элем|5|B}} {{пример}}";
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "бор";
         lang_section    = LanguageType.ru; // Russian word
 
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         assertTrue(null != result);
         String def = result.getDefinition();
@@ -268,7 +255,6 @@ public class WMeaningRuTest {
     @Test
     public void testParse_empty_definition_and_empty_quoation_with_empty_translation() {
         System.out.println("parse_empty_definition_and_empty_quoation_with_empty_translation");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
@@ -276,18 +262,16 @@ public class WMeaningRuTest {
         // # {{Нужен перевод}} {{пример||перевод=}}
         line =  "# {{Нужен перевод}} {{пример||перевод=}}";
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "лубяной";
         lang_section    = LanguageType.ru; // Russian word
 
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertNull(result);
     }
 
     @Test
     public void testParseOneDefinition_ru_quote() {
         System.out.println("parseOneDefinition_ru_quote");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line;
@@ -295,11 +279,10 @@ public class WMeaningRuTest {
         // 1. simple: 1 quote (источник=НКРЯ)
         line =  "# {{сельск.}} имеющий [[волокно]], пригодное для выработки пряжи {{пример|Увязочные ... {{выдел|лубяных}} волокон), ... .|Татьяна Матвеева|Реставрация столярно-мебельных изделий|1988|источник=НКРЯ}}";
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "лубяной";
         lang_section    = LanguageType.ru; // Russian word
 
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         assertTrue(null != result);
 
@@ -320,7 +303,6 @@ public class WMeaningRuTest {
     @Test
     public void testParseOneDefinition_quote_translation_out_of_date() {
         System.out.println("parseOneDefinition_quote_translation_out_of_date");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         String line, definition;
@@ -329,11 +311,10 @@ public class WMeaningRuTest {
         line =  "# (''замечание'') [[это]] {{пример перевод|cum {{выдел|his}} legatus|с {{выдел|этими}} легионами.}}";
         definition = "(''замечание'') это";
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "hic";
         lang_section    = LanguageType.la; // Russian word
 
-        WMeaning result = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         assertTrue(null != result);
 
@@ -343,13 +324,11 @@ public class WMeaningRuTest {
     @Test
     public void testParse_2_meaning_parse_labels() {
         System.out.println("parse_2_meaning_parse_labels");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "алкоголь";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -367,7 +346,7 @@ public class WMeaningRuTest {
                 "# {{хим.}} {{=|спирт}}, бесцветная летучая жидкость, получаемая при ферментации сахара {{пример|}}" +
                 "# {{хим-элем|5|B}} {{пример}}";
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertEquals(3, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
         assertTrue(result[1].getDefinition().equalsIgnoreCase(_definition2));
@@ -388,13 +367,11 @@ public class WMeaningRuTest {
     public void testParse_AlmostEmptyDefinition_complex() {
         System.out.println("parse_AlmostEmptyDefinition_complex");
 
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
         
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "some hieroglyph";
         lang_section    = LanguageType.ja; // Russian word
 
@@ -406,7 +383,7 @@ public class WMeaningRuTest {
                 "\n";
 
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertEquals(0, result.length);
     }
 
@@ -417,13 +394,11 @@ public class WMeaningRuTest {
     @Test
     public void testParse_1_meaning_without_Number_sign() {
         System.out.println("parse_1_meaning_without_Number_sign");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "pomme";
         lang_section    = LanguageType.fr; // French word
         
@@ -437,7 +412,7 @@ public class WMeaningRuTest {
                 "\n" + 
                 "====Синонимы====";
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertTrue(null != result);
         assertEquals(1, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
@@ -459,13 +434,11 @@ public class WMeaningRuTest {
     @Test
     public void testParse_1_meaning_without_Number_sign_with_Redirect() {
         System.out.println("parse_1_meaning_without_Number_sign_with_Redirect");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "сервер";
         lang_section    = LanguageType.os; // Ossetic word
         
@@ -479,7 +452,7 @@ public class WMeaningRuTest {
                 "\n" + 
                 "====Синонимы====";
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertTrue(null != result);
         assertEquals(1, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
@@ -502,13 +475,11 @@ public class WMeaningRuTest {
     @Test
     public void testParse_text_without_meaning() {
         System.out.println("parse_text_without_meaning");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "mzda";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -520,7 +491,7 @@ public class WMeaningRuTest {
                 "\n" +
                 "====Антонимы====";
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertTrue(null != result);
         assertEquals(0, result.length);
     }
@@ -528,13 +499,11 @@ public class WMeaningRuTest {
     @Test
     public void testParse_1_meaning() {
         System.out.println("parse_1_meaning");
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
         POSText pt;
         String str;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "самолёт";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -550,7 +519,7 @@ public class WMeaningRuTest {
                 "# летательный [[аппарат]] тяжелее [[воздух]]а с жёстким [[крыло]]м и собственным [[мотор]]ом {{пример|Самолёт-истребитель.}} {{пример|Военный cамолёт.}} {{пример|Эскадрилья самолётов.}}\n" +
                 "\n";
         pt = new POSText(POS.noun, str);
-        WMeaning[] result = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertEquals(1, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition));
 
