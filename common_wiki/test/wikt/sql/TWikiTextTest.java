@@ -50,18 +50,15 @@ public class TWikiTextTest {
         String text = "test_TWikiText_storeToDB_ru";
         Connect conn = ruwikt_parsed_conn;
 
-        // wiki_text
-        LanguageType wikt_lang;
         LanguageType lang_section;
         String page_title;
 
-        wikt_lang       = LanguageType.ru; // Russian Wiktionary
         page_title      = "airplane";
         lang_section    = LanguageType.en; // English word
 
         String _definition = "A programmable_test calculation_tests_test";
         String line =  "# A [[programmable_test]] [[calculation_test]]s_test";
-        WMeaning wmeaning = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+        WMeaning wmeaning = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
         assertNotNull(wmeaning);
         assertTrue(wmeaning.getDefinition().equalsIgnoreCase(_definition));
         

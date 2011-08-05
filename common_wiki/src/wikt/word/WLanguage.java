@@ -199,7 +199,7 @@ public class WLanguage {
                 WMeaning[] wm = wpos[j].getAllMeanings();
 
                 for(WMeaning m : wm) {
-                    if(!m.hasTemplateNotDefinition())
+                    if(!m.isFormOfInflection())
                         return false;
                     
                     at_least_one_template = true;

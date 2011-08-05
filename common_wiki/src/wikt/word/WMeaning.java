@@ -29,10 +29,11 @@ public class WMeaning {
 
     private WikiText definition;
 
-    /** True, if there is template {{form of|}}, or {{plural of|}}, 
-     * instead of usual text in the definition. (enwikt)
+    /** True, if the definition defines inflection of the word with the help of
+     * (1) template {{form of|}}, or {{plural of|}}, 
+     * (2) strictly defined phrase (e.g. "Plural form of")
      */
-    private boolean  template_not_def;
+    private boolean  form_of_inflection;
 
     /** Word definition, e.g. "bullets" from text "# {{idiom}} [[bullet]]s" */
     //private StringBuffer    definition;
@@ -51,7 +52,7 @@ public class WMeaning {
         labels = null;
         definition = null;
         quote = null;
-        template_not_def = false;
+        form_of_inflection = false;
     }
 
         /** Frees memory recursively. */
@@ -80,7 +81,7 @@ public class WMeaning {
         labels = _labels;
         definition = WikiText.createOnePhrase(page_title, _definition);
         
-        template_not_def = _template_not_def;
+        form_of_inflection = _template_not_def;
 
         if(null == _quote)
             quote = NULL_WQUOTE_ARRAY;
@@ -90,10 +91,12 @@ public class WMeaning {
     }
 
     
-    /** True if there is template (e.g. {{form of|}} or {{plural of|}})
-     * instead of definiton text (in enwikt). */
-    public boolean hasTemplateNotDefinition() {
-        return template_not_def;
+    /** True if the definition defines inflection of the word with the help of
+     * (1) the template (e.g. {{form of|}} or {{plural of|}}), or
+     * (2) strictly defined phrase (e.g. "Plural form of")
+     * instead of the usual definiton text (in enwikt). */
+    public boolean isFormOfInflection() {
+        return form_of_inflection;
     }
 
     /** Gets array of context labels in the definition. */
@@ -145,10 +148,10 @@ public class WMeaning {
             /*   if(0==wm.length) {
                     return NULL_WMEANING_ARRAY;
             }*/
-          wm = WMeaningRu.parse(wikt_lang, page_title, lang_section, pt);
+          wm = WMeaningRu.parse(page_title, lang_section, pt);
 
         } else if(l == LanguageType.en) {
-            wm = WMeaningEn.parse(wikt_lang, page_title, lang_section, pt);
+            wm = WMeaningEn.parse(page_title, lang_section, pt);
 
         //} //else if(code.equalsIgnoreCase( "simple" )) {
           //  return WordSimple;
@@ -182,10 +185,10 @@ public class WMeaning {
         LanguageType l = wikt_lang;
 
         if(l == LanguageType.ru) {
-            wm = WMeaningRu.parseOneDefinition(wikt_lang, page_title, lang_section, def_text);
+            wm = WMeaningRu.parseOneDefinition(page_title, lang_section, def_text);
 
         } else if(l == LanguageType.en) {
-            wm = WMeaningEn.parseOneDefinition(wikt_lang, page_title, lang_section, def_text);
+            wm = WMeaningEn.parseOneDefinition(page_title, lang_section, def_text);
 
           //  return WordEn;
         //} //else if(code.equalsIgnoreCase( "simple" )) {
