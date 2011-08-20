@@ -41,6 +41,7 @@ Vim regular expressions in order to change data of INSERT commands into SQLite f
 %s/UNLOCK TABLES;\n//g          // UNLOCK TABLES;
 %s/LOCK TABLES \".\+\n//g       // LOCK TABLES "page" WRITE;
 %s/\\'/''/g                     // replace \' by ''
+%s/\([,(]\)'\\''\([,)]\)/\1"'"\2/g // replace '\'' by "'"
 }}}
 
 == Data and tables merging ==
