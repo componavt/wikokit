@@ -97,7 +97,7 @@ public class Connect {
     public final static String ENWIKT_PARSED_DB = "enwikt20110618_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     //public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20101030.sqlite";
-    public final static String ENWIKT_SQLITE = "enwikt20101030.sqlite";
+    public final static String ENWIKT_SQLITE = "enwikt20110618.sqlite";
 
     
     // IDF (inverse document frequency) database

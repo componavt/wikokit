@@ -120,7 +120,7 @@ public class WikiPrinterStat {
 
         System.out.println("Number of words which have the following number of types of semantic relations. E.g.:");
 
-        System.out.println("\n1 | number of words (one language, one part of speech) which have only Synonymy, or Antonyme, etc.");
+        System.out.println("\n1 | number of words (one language, one part of speech) which have only Synonyms, or only Antonyms, etc.");
         System.out.println("\n2 | number of words with two types of relation, e.g. Synonymy and Antonymy, or Synonymy and Hypernymy, etc.\n");
 
 
@@ -272,7 +272,7 @@ public class WikiPrinterStat {
         int total = 0; // total number of translations. or quotations, or...
 
         // print header line
-        System.out.println("\n=== Quote languages ===\n\n");
+        //System.out.println("\n=== Quote languages ===\n\n");
 
         System.out.println("{| class=\"sortable prettytable\"");
         System.out.print("! Language name || Language code || Number");
