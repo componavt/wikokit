@@ -537,6 +537,13 @@ public class WMeaningEnTest {
                 page_title, lang_section, source);
         assertNotNull(wm);
         assertTrue(wm.isFormOfInflection());
+        
+        // alternative capitalization of
+        source = "# {{alternative capitalization of|Х¦ХЎХїХ«ХЇ|lang=hy}}";
+        wm = WMeaningEn.parseOneDefinition(
+                page_title, lang_section, source);
+        assertNotNull(wm);
+        assertTrue(wm.isFormOfInflection());
     }
     
 

@@ -128,6 +128,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal arq = new LanguageTypeRu("Алжирский диалект арабского", LanguageType.arq);
     public static final LanguageTypeLocal art_oou = new LanguageTypeRu("Ооу", LanguageType.art_oou);
     public static final LanguageTypeLocal arw = new LanguageTypeRu("Аравакский", LanguageType.arw);
+    public static final LanguageTypeLocal arz = new LanguageTypeRu("Египетский арабский", LanguageType.arz);
     public static final LanguageTypeLocal ase = new LanguageTypeRu("Амслен", LanguageType.ase);
     public static final LanguageTypeLocal asm = new LanguageTypeRu("Ассамский", LanguageType.asm);
     public static final LanguageTypeLocal ast = new LanguageTypeRu("Астурийский", LanguageType.ast);
@@ -707,6 +708,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal xls = new LanguageTypeRu("Лузитанский", LanguageType.xls);
     public static final LanguageTypeLocal xmf = new LanguageTypeRu("Мегрельский", LanguageType.xmf);
     public static final LanguageTypeLocal xmk = new LanguageTypeRu("Древнемакедонский", LanguageType.xmk);
+    public static final LanguageTypeLocal hnd = new LanguageTypeRu("Хиндко", LanguageType.hnd);
     public static final LanguageTypeLocal xno = new LanguageTypeRu("Англо-нормандский", LanguageType.xno);
     public static final LanguageTypeLocal xpg = new LanguageTypeRu("Фригийский", LanguageType.xpg);
     public static final LanguageTypeLocal xpm = new LanguageTypeRu("Пумпокольский", LanguageType.xpm);
@@ -740,6 +742,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal zh_tw = new LanguageTypeRu("Китайский (традиц.)", LanguageType.zh_tw);
     public static final LanguageTypeLocal zko = new LanguageTypeRu("Коттский", LanguageType.zko);
     public static final LanguageTypeLocal zkt = new LanguageTypeRu("Киданьский", LanguageType.zkt);
+    public static final LanguageTypeLocal zkz = new LanguageTypeRu("Хазарский", LanguageType.zkz);
     public static final LanguageTypeLocal zun = new LanguageTypeRu("Зуни", LanguageType.zun);
     public static final LanguageTypeLocal zza = new LanguageTypeRu("Зазаки", LanguageType.zza);
 }

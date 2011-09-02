@@ -13,7 +13,8 @@ import wikipedia.language.LanguageType;
 public def wrapping_width = 380;
 
 //var native_lang : LanguageType;
-public def native_lang = LanguageType.ru;
+//public def native_lang = LanguageType.ru;
+public def native_lang = LanguageType.en;
 
 public var DEBUGUI : Boolean = false;
 
@@ -26,7 +27,7 @@ public var DEBUGUI : Boolean = false;
 // Wiktionary parsed database
 // ===========
 
-public def wiwordik_version : String = "0.07";
+public def wiwordik_version : String = "0.08";
 
 //////////////////////////////
 // Parameters

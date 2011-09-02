@@ -165,6 +165,7 @@ public class WMeaningEn {
 
        "inflection of",
 
+       "alternative capitalization of",
        "alternative spelling of",
        "misspelling of",
        "nonstandard spelling of",
