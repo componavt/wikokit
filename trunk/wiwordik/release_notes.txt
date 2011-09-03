@@ -1,12 +1,17 @@
 wiwordik 0.0X.10XX 2011-XX-XX
   
   Added (from user's point of view):
-    Name of part of speech (POS) is translated (in interface) into native language, i.e. names of POS are in Russian in the program which provides interfaces to data extracted from the Russian Wiktionary.
-    Language names translated to Russian (in interface).
-    A lot of POS headers added to the parser, see table in http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained/POS_headers#Other_headers_in_use
+    Todo ...
 
   Added (from programmer's point of view)
     Todo ...
+
+wiwordik 0.08.1094 2011-09-02
+  
+  Added (from user's point of view):
+    Name of part of speech (POS) is translated (in interface) into native language, i.e. names of POS are in Russian in the program which provides interfaces to data extracted from the Russian Wiktionary.
+    Language names translated to Russian (in interface).
+    A lot of POS headers added to the parser, see table in http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained/POS_headers#Other_headers_in_use
 
 wiwordik 0.07.1053 2011-05-26
   Added (from user's point of view):
