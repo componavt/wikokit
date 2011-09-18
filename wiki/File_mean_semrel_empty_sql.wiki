@@ -3,7 +3,7 @@
 
 = Requirements =
 
-You have to have parsed Wiktionary database (wikt_parsed) loaded into MySQL.
+You have to have parsed Wiktionary database (_wikt_parsed_) loaded into MySQL. The wikt_parsed database will be used as a source of data to create _mean_semrel_ database, which is described below.
 
 = MySQL =
 
@@ -21,3 +21,11 @@ If MySQL whines and prints error message that access is denied then you can try 
 {{{
 mysql$ GRANT SELECT ON enwikt20110618_parsed.* TO javawiki@'localhost';
 }}}
+
+= Database schema =
+
+The structure (tables and relations) of the _mean_semrel_ database.
+
+http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/mean_semrel.png
+
+Remark: It will be automatically added tables *mean_semrel_XX* for each language code XX, if there are Wiktionary entries with _Semantic relations_ for that languages. 
