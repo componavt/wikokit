@@ -1,0 +1,23 @@
+#summary (./wikt_parser/doc/parsed/mean_semrel/) How to create, edit and load empty Wiktionary parsed database with meaning and semantic relations into MySQL.
+#labels Phase-Implementation,MySQL,MRD,parsing
+
+= Requirements =
+
+You have to have parsed Wiktionary database (wikt_parsed) loaded into MySQL.
+
+= MySQL =
+
+{{{
+mysql$ CREATE DATABASE enwikt20110618_mean_semrel;
+mysql$ USE enwikt20110618_mean_semrel
+mysql$ SOURCE D:\all\projects\java\synonyms\wikokit\wikt_parser\doc\parsed\mean_semrel\mean_semrel_empty.sql
+
+mysql$ GRANT SELECT ON enwikt20110618_parsed.* TO javawiki@'%';
+mysql$ GRANT ALL ON enwikt20110618_mean_semrel.* TO javawiki@'%';
+mysql$ FLUSH PRIVILEGES;
+}}}
+
+If MySQL whines and prints error message that access is denied then you can try use "localhost" instead of "%":
+{{{
+mysql$ GRANT SELECT ON enwikt20110618_parsed.* TO javawiki@'localhost';
+}}}
