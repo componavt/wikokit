@@ -28,4 +28,4 @@ The structure (tables and relations) of the _mean_semrel_ database.
 
 http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/mean_semrel.png
 
-Remark: It will be automatically added tables *mean_semrel_XX* for each language code XX, if there are Wiktionary entries with _Semantic relations_ for that languages. 
+Remark: It will be automatically added tables *mean_semrel_XX* (the same as _mean_semrel_en_) for each language code XX, if there are Wiktionary entries with _Semantic relations_ for that languages. 
