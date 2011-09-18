@@ -4,7 +4,7 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wiktparsed.parser;
+package wiktparsed.parser.mean_semrel;
 
 import wikt.parser.*;
 import wikipedia.sql.Connect;
