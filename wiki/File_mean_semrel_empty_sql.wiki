@@ -92,3 +92,6 @@ OK. Run it:
 $cd /enwikt20100824/wikt_parser
 $run_wikt_parser.bat en 0
 }}}
+
+= See also =
+  * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
