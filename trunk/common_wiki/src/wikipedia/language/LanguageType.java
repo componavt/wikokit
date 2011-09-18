@@ -3021,8 +3021,8 @@ public class LanguageType {
     public static final LanguageType solresol = new LanguageType("solresol", "Solresol", "Solresol");
     public static final LanguageType sol = LanguageType.addNonUniqueCode(solresol, "sol");
     
-    public static final LanguageType tly    = new LanguageType("tly", "Talysh", "Tokelau");
-    public static final LanguageType ttt    = new LanguageType("ttt", "Tat", "Tat");    
+    public static final LanguageType tly = new LanguageType("tly", "Talysh", "Tokelau");
+    public static final LanguageType ttt = new LanguageType("ttt", "Tat", "Tat");    
 
     public static final LanguageType xrn = new LanguageType("xrn", "Arin", "Arin");
 
