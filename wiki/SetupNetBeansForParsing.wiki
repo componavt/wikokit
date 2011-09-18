@@ -1,11 +1,6 @@
 #summary Setup NetBeans environment for parsing, run parser.
 #labels Phase-Implementation,MySQL,MRD,parsing
 
-= Introduction =
-
-Add your content here.
-
-
 = Connect.java =
 
 Open file `wikipedia.sql.Connect.java`.
