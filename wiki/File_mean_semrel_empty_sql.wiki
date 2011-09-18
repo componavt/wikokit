@@ -1,11 +1,13 @@
-#summary (./wikt_parser/doc/parsed/mean_semrel/) How to create, edit and load empty Wiktionary parsed database with meaning and semantic relations into MySQL.
+#summary (./wikt_parser/doc/parsed/mean_semrel/) How to create, edit and load empty wikt_sem_rel Wiktionary parsed database with meaning and semantic relations into MySQL.
 #labels Phase-Implementation,MySQL,MRD,parsing
 
-= Requirements =
+= Load empty wikt_sem_rel into MySQL =
+
+== Requirements ==
 
 You have to have parsed Wiktionary database (_wikt_parsed_) loaded into MySQL. The wikt_parsed database will be used as a source of data to create _mean_semrel_ database, which is described below.
 
-= MySQL =
+== MySQL ==
 
 {{{
 mysql$ CREATE DATABASE enwikt20110618_mean_semrel;
@@ -22,10 +24,71 @@ If MySQL whines and prints error message that access is denied then you can try 
 mysql$ GRANT SELECT ON enwikt20110618_parsed.* TO javawiki@'localhost';
 }}}
 
-= Database schema =
+== Database schema ==
 
 The structure (tables and relations) of the _mean_semrel_ database.
 
 http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/mean_semrel.png
 
 Remark: It will be automatically added tables *mean_semrel_XX* (the same as _mean_semrel_en_) for each language code XX, if there are Wiktionary entries with _Semantic relations_ for that languages. 
+
+= Setun NetBeans for parsing =
+
+Setup NetBeans environment for parsing, run parser.
+
+== Connect.java ==
+
+Open file `wikipedia.sql.Connect.java`.
+
+Add lines:
+{{{
+// English Wiktionary parsed database
+public final static String ENWIKT_PARSED_DB = "enwikt20110618_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+
+// Meaning + semantic relations database based on English Wiktionary parsed database
+public final static String ENWIKT_MEAN_SEMREL = "enwikt20110618_mean_semrel?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+}}}
+
+= wikt_parser =
+
+  * Set *wikt_parser* as a main project in NetBeans.
+  * Compile it.
+  * Open project properties / Run. Set:
+    * Main class: `*wiktparsed.parser.mean_semrel.Main*`
+    * Arguments: `en 0`
+    * VM options: `-Xms1212m -Xmx1212m -Xmn16m -XX:+DisableExplicitGC -verbose:gc`
+  * Run main project (test that parser works without error).
+
+= Run parser =
+
+todo 
+
+update text...
+
+Create directory for the parser, copy project files, run .bat file:
+{{{
+$mkdir /enwikt20100824/wikt_parser
+
+wikt_parser/run_wikt_parser.bat
+wikt_parser/dist/wikt_parser.jar
+wikt_parser/dist/lib/common_wiki.jar
+wikt_parser/dist/lib/mysql-connector-java-5.1.13-bin.jar
+
+mysql$ DROP DATABASE enwikt20100824_parsed;
+mysql$ CREATE DATABASE enwikt20100824_parsed;
+mysql$ USE enwikt20100824_parsed
+mysql$ SOURCE D:\all\projects\java\synonyms\wikokit\wikt_parser\doc\wikt_parsed_empty.sql
+}}}
+
+Read twice very attentively parameters of your MySQL config file (tune your server to make it as fast as possible):
+{{{
+NET STOP MySQL
+gvim "C:\w\MySQL\MySQL Server 5.1\my.ini"
+NET START MySQL
+}}}
+
+OK. Run it:
+{{{
+$cd /enwikt20100824/wikt_parser
+$run_wikt_parser.bat en 0
+}}}
