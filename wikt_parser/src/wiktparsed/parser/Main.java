@@ -1,22 +1,26 @@
-/* Main.java - main file for Wiktionary parsing.
+/* Main.java - main file for Wiktionary (Meaning + Semantic relations) parsing.
  * 
- * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.parser;
+package wiktparsed.parser;
 
+import wikt.parser.*;
 import wikipedia.sql.Connect;
 import wikipedia.language.LanguageType;
 
 
-/** Wiktionary parser creates MySQL database (like WordNet) 
- * from Wiktionary MySQL dump file.
+/** Parser (second generation parser)
+ * 1. takes Wiktionary parsed database (wikt_parsed)
+ * 2. extracts meaning with related semantic relations
+ * 3. saves to the simplified Wiktionary parsed database (Second generation database).
  * 
  * The wikt_parsed database should be created in advance, 
  * see http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql
+ * (See comments in WiktParser.java)
  * 
- * The database filled by data from Wiktionary should be created before.
+ * The Wiktionary parsed database (filled by data from the Wiktionary) should be created before.
  */
 public class Main {
     
@@ -58,17 +62,6 @@ public class Main {
         int n_start_from = Integer.parseInt(args[1]);
         System.out.println("OK. n_start_from=" + n_start_from);
 
-        /*
-        // simple
-        wiki_lang = LanguageType.simple;
-        wikt_conn.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS);
-        wikt_parsed_conn.Open(IDF_SIMPLE_HOST, IDF_SIMPLE_DB, IDF_SIMPLE_USER, IDF_SIMPLE_PASS);
-                                    // Category:Main page       - failed - too much articles
-                                            // "Literature"     812 docs - OK
-                                            // "Folklore"       29 docs
-                                            // "American_poets" 9 docs  - OK
-        */
-        
         // Russian
         if(LanguageType.ru == wiki_lang) {
             wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
@@ -84,12 +77,7 @@ public class Main {
             }
         }        
         
-        String category_name = "Викисловарь:Избранные статьи";
-            // "Викисловарь:Избранные статьи";
-            // "Слово дня";
-            // "Статья недели", "Слово дня"
-            // "Кандидаты в избранные статьи", "Статьи со ссылками на Википедию"
-            // "Статьи с звучащими примерами произношения", "Статьи с иллюстрациями", 
+        //String category_name = "Викисловарь:Избранные статьи";
         
         WiktParser w = new WiktParser();
 //        w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
