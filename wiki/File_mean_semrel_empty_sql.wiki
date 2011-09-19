@@ -38,7 +38,7 @@ Remark: It will be automatically added tables *mean_semrel_XX* (the same as _mea
 
 === Tables lang and lang ===
 
-There are tables (see figure below):
+There are almost the same tables (see figure below), which contains list of languages and language codes:
   * _wikt_parsed.lang_ corresponds to Java class _wikt.sql.TLang_
   * _wikt_mean_semrel.lang_ - class _wiktparsed.mean_semrel.parser.sql.MSRLang_
 
