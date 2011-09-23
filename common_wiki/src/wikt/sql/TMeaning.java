@@ -113,9 +113,16 @@ public class TMeaning {
         return lang_pos;
     }
 
-    /** Gets text (without wikification) */
+    /** Gets text object describing this meaning (without wikification) */
     public TWikiText getWikiText() {
         return wiki_text;
+    }
+    
+    /** Gets text describing this meaning (without wikification) or empty String "". */
+    public String getWikiTextString() {
+        if(null == wiki_text)
+            return "";
+        return wiki_text.getText();
     }
 
     /** Gets relation map */
