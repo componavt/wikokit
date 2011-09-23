@@ -44,7 +44,7 @@ There are almost the same tables (see figure below), which contains list of lang
 
 http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/mean_semrel/lang_wikt_parsed__wikt_mean_semrel.png
 
-= Setun !NetBeans for parsing =
+= Setup !NetBeans for parsing =
 
 Setup !NetBeans environment for parsing, run parser.
 
