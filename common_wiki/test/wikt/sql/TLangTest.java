@@ -124,7 +124,7 @@ public class TLangTest {
         assertEquals(333, n_translations);
 
         // restore old values
-        TLang.update(ruwikt_parsed_conn, LanguageType.os, n_foreign_POS, n_translations);
+        TLang.update(ruwikt_parsed_conn, LanguageType.os, n_foreign_POS_old, n_translations_old);
     }
     
     /* This test should go after testInsert(), else you will got a mess in the table 'lang'. */
