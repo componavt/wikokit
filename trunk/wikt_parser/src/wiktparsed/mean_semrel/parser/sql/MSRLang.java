@@ -72,13 +72,13 @@ public class MSRLang {
      * in this language. <br><br>
      * SELECT COUNT(*) FROM mean_semrel_en;
      */
-    public int getNumberPOS() {
+    public int getNumberMeanings() {
         return n_meaning;
     }
 
     /** Gets number of semantic relations in this language.
      */
-    public int getNumberTranslations() {
+    public int getNumberSemanticRelations() {
         return n_sem_rel;
     }
 
