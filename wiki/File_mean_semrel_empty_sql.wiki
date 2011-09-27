@@ -101,16 +101,24 @@ $cd /enwikt20110618_mean_semrel/parser
 $run_mean_semrel_parser.bat en 0 "&/" 10
 }}}
 
-= Convert the wikt_mean_semrel database (MySQL) into SQLite file =
-
-== Conversion ==
-
 === mysqldump ===
 
 The result database is ready. Let's dump it into file (just in case):
 
-    * mysqldump --opt -u root -p --compatible=ansi --default-character-set=binary enwikt20110618_mean_semrel > enwikt20110618_mean_semrel.sql 
+    * mysqldump --opt -u root -p --compatible=ansi --default-character-set=binary enwikt20110618_mean_semrel > enwikt20110618_mean_semrel.sql
 
+=== Usefull SQL commands ===
+
+Check the result database by SQL commands:
+{{{
+mysql$ SHOW TABLES;
+mysql$ SELECT * FROM lang ORDER BY n_meaning;
+mysql$ SELECT * FROM mean_semrel_en LIMIT 33;
+}}}
+
+= Convert the wikt_mean_semrel database (MySQL) into SQLite file =
+
+== Conversion ==
 
 === Tables' structure preparations ===
 
