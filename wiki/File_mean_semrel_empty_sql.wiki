@@ -67,29 +67,25 @@ public final static String ENWIKT_MEAN_SEMREL = "enwikt20110618_mean_semrel?useU
   * Compile it.
   * Open project properties / Run. Set:
     * Main class: *wiktparsed.mean_semrel.parser.Main*
-    * Arguments: `en 0`
+    * Arguments: `en 0 "\&/" 10`
     * VM options: `-Xms1212m -Xmx1212m -Xmn16m -XX:+DisableExplicitGC -verbose:gc`
-  * Run main project (test that parser works without error).
+  * Run main project.
 
 = Run parser =
 
-todo 
-
-update text...
-
 Create directory for the parser, copy project files, run .bat file:
 {{{
-$mkdir /enwikt20100824/wikt_parser
+$mkdir /enwikt20110618_mean_semrel/mean_semrel_parser
 
-wikt_parser/run_wikt_parser.bat
-wikt_parser/dist/wikt_parser.jar
-wikt_parser/dist/lib/common_wiki.jar
-wikt_parser/dist/lib/mysql-connector-java-5.1.13-bin.jar
+parser/run_mean_semrel_parser.bat
+parser/dist/wikt_parser.jar
+parser/dist/lib/common_wiki.jar
+parser/dist/lib/mysql-connector-java-5.1.17-bin.jar
 
-mysql$ DROP DATABASE enwikt20100824_parsed;
-mysql$ CREATE DATABASE enwikt20100824_parsed;
-mysql$ USE enwikt20100824_parsed
-mysql$ SOURCE D:\all\projects\java\synonyms\wikokit\wikt_parser\doc\wikt_parsed_empty.sql
+mysql$ DROP DATABASE enwikt20110618_mean_semrel;
+mysql$ CREATE DATABASE enwikt20110618_mean_semrel;
+mysql$ USE enwikt20110618_mean_semrel
+mysql$ SOURCE D:\all\projects\java\synonyms\wikokit\wikt_parser\doc\parsed\mean_semrel\mean_semrel_empty.sql
 }}}
 
 Read twice very attentively parameters of your MySQL config file (tune your server to make it as fast as possible):
@@ -101,8 +97,8 @@ NET START MySQL
 
 OK. Run it:
 {{{
-$cd /enwikt20100824/wikt_parser
-$run_wikt_parser.bat en 0
+$cd /enwikt20110618_mean_semrel/parser
+$run_mean_semrel_parser.bat en 0 "&/" 10
 }}}
 
 = See also =
