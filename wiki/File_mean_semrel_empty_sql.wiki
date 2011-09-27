@@ -101,5 +101,37 @@ $cd /enwikt20110618_mean_semrel/parser
 $run_mean_semrel_parser.bat en 0 "&/" 10
 }}}
 
+= Convert the Wiktionary parsed database (MySQL) into SQLite file =
+
+= Conversion =
+
+== mysqldump ==
+
+The result database is ready. Let's dump it into file (just in case):
+
+    * mysqldump --opt -u root -p --compatible=ansi --default-character-set=binary enwikt20110618_mean_semrel > enwikt20110618_mean_semrel.sql 
+
+
+== Tables' structure preparations ==
+
+Prepare only once the SQLite file with table structures of the the Wiktionary parsed database (automatic mode):
+  * `cd ./wiwordik/mysql2sqlite`
+  * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary ruwikt20100405_parsed > wikt_parsed_structure_source.sql`
+  * `mysql2sqlite.bat`
+
+The result file with SQLite tables' structure is `wikt_parsed_structure.sql`.
+
+Or in manual mode (Vim regular expressions):
+{{{
+%s/COMMENT.*/,/g    // remove COMMENT
+%s/unsigned\s*//g   // remove "unsigned"
+%s/\n\?.*\PRIMARY KEY.*//g      // remove lines with text "PRIMARY KEY"
+%s/AUTO_INCREMENT/PRIMARY KEY/g // replace AUTO_INCREMENT by PRIMARY KEY
+%s/CHARACTER SET latin1 COLLATE latin1_bin\s*//g    // remove "CHAR... "
+}}}
+
+Update this file if the stucture of the Wiktionary parsed database is changed, if new language codes were added.
+
+
 = See also =
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
