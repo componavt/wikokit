@@ -118,11 +118,11 @@ mysql$ SELECT * FROM lang ORDER BY n_meaning;
 mysql$ SELECT * FROM mean_semrel_en LIMIT 33;
 }}}
 
-= Convert the wikt_mean_semrel database (MySQL) into SQLite file =
+= Conversion into SQLite file =
 
-== Conversion ==
+Let's convert the wikt_mean_semrel  (MySQL) database into SQLite file =
 
-=== Tables' structure preparations ===
+== Tables' structure preparations ==
 
 Prepare only once the SQLite file with table structures of the the Wiktionary parsed database (automatic mode):
   * `cd ./wiwordik/mysql2sqlite/mean_semrel`
@@ -142,7 +142,7 @@ Or in manual mode (Vim regular expressions):
 
 Update this file if the stucture of the wikt_mean_semrel Wiktionary parsed database is changed, if new language codes were added.
 
-=== Data conversion ====
+== Data conversion ==
 Dump data of the the Wiktionary parsed database:
   * `mysqldump -u root -p --quick --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20100405_parsed > ruwikt20100405_parsed_data.sql`
 
@@ -155,7 +155,7 @@ Vim regular expressions in order to change data of INSERT commands into SQLite f
 %s/\([,(]\)'\\''\([,)]\)/\1"'"\2/g // replace '\'' by "'"
 }}}
 
-=== Data and tables merging ===
+== Data and tables merging ==
 
 Merge two files (with tables structure and data) into one:
   * `ruwikt20100405_parsed_data.sql += wikt_parsed_structure.sql`
@@ -164,7 +164,7 @@ But... split `wikt_parsed_structure.sql` so, that:
   * `CREATE TABLE...` at the top of the file
   * `CREATE INDEX...` at the end of the file
 
-=== SQLite shell ===
+== SQLite shell ==
 
 Read the note "[http://componavt.livejournal.com/3393.html Let's speed up SQLite]".
 
