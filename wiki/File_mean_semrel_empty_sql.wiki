@@ -63,7 +63,7 @@ public final static String ENWIKT_PARSED_DB = "enwikt20110618_parsed?useUnicode=
 public final static String ENWIKT_MEAN_SEMREL = "enwikt20110618_mean_semrel?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 }}}
 
-= wikt_parser =
+== wikt_parser ==
 
   * Set *wikt_parser* as a main project in NetBeans.
   * Compile it.
