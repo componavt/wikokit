@@ -1,6 +1,8 @@
 #summary (./wikt_parser/doc/parsed/mean_semrel/) How to create, edit and load empty wikt_sem_rel Wiktionary parsed database with meaning and semantic relations into MySQL.
 #labels Phase-Implementation,MySQL,MRD,parsing
 
+<wiki:toc max_depth="1" />
+
 = wikt_mean_semrel database =
 
 The database with meaning and semantic relations based on the Wiktionary parsed database (filled by data from the Wiktionary).
