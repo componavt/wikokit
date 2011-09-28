@@ -144,7 +144,7 @@ Update this file if the stucture of the wikt_mean_semrel Wiktionary parsed datab
 
 == Data conversion ==
 Dump data of the the Wiktionary parsed database:
-  * `mysqldump -u root -p --quick --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary ruwikt20100405_parsed > ruwikt20100405_parsed_data.sql`
+  * `mysqldump -u root -p --quick --no-create-info --skip-extended-insert --compatible=ansi --default-character-set=binary enwikt20110618_mean_semrel > enwikt20110618_mean_semrel_data.sql`
 
 Vim regular expressions in order to change data of INSERT commands into SQLite format:
 {{{                             
@@ -158,7 +158,7 @@ Vim regular expressions in order to change data of INSERT commands into SQLite f
 == Data and tables merging ==
 
 Merge two files (with tables structure and data) into one:
-  * `ruwikt20100405_parsed_data.sql += wikt_parsed_structure.sql`
+  * `enwikt20110618_mean_semrel_data.sql += mean_semrel_structure.sql`
 
 But... split `wikt_parsed_structure.sql` so, that:
   * `CREATE TABLE...` at the top of the file
