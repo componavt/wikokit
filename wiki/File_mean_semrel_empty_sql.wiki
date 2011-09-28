@@ -127,7 +127,7 @@ Prepare only once the SQLite file with table structures of the the Wiktionary pa
   * `mysqldump -u root -p --no-data --compatible=ansi --default-character-set=binary enwikt20110618_mean_semrel > mean_semrel_structure_source.sql`
   * `mysql2sqlite_mean_semrel.bat`
 
-The result file with SQLite tables' structure is `mean_semrel_structure_source.sql`.
+The result file with SQLite tables' structure is `mean_semrel_structure.sql`.
 
 Or in manual mode (Vim regular expressions):
 {{{
