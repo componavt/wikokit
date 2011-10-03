@@ -116,6 +116,7 @@ Check the result database by SQL commands:
 mysql$ SHOW TABLES;
 mysql$ SELECT * FROM lang ORDER BY n_meaning;
 mysql$ SELECT * FROM mean_semrel_en LIMIT 33;
+mysql$ SELECT * FROM mean_semrel_ne ORDER BY n_sem_rel DESC LIMIT 7; % top words with maximum semantic relations
 }}}
 
 = Conversion into SQLite file =
