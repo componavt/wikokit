@@ -183,7 +183,7 @@ VACUUM;
 }}}
 
 
-== Preparing the SQLite database for Android ==
+= Preparing the SQLite database for Android =
 
 See [http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ article].
 
