@@ -176,10 +176,10 @@ Read the note "[http://componavt.livejournal.com/3393.html Let's speed up SQLite
 Run [http://sqlite.org SQLite], load and backup the SQLite database:
 {{{
 sqlite3
-.read "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sql"
-PRAGMA integrity_check;
-VACUUM;
-.backup "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sqlite"
+sqlite$ .read "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sql"
+sqlite$ PRAGMA integrity_check;
+sqlite$ VACUUM;
+sqlite$ .backup "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sqlite"
 }}}
 
 
@@ -188,8 +188,8 @@ VACUUM;
 See [http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ article].
 
 {{{
-mysql$ CREATE TABLE "android_metadata" ("locale" TEXT DEFAULT 'en_US')
-mysql$ INSERT INTO "android_metadata" VALUES ('en_US')
+sqlite$ CREATE TABLE "android_metadata" ("locale" TEXT DEFAULT 'en_US')
+sqlite$ INSERT INTO "android_metadata" VALUES ('en_US')
 }}}
 
 = See also =
