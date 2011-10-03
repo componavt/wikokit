@@ -104,7 +104,7 @@ NET START MySQL
 OK. Run it:
 {{{
 $cd /enwikt20110618_mean_semrel/parser
-$run_mean_semrel_parser.bat en 0 "&/" 10
+$run_mean_semrel_parser.bat en 0 "&/" 100
 }}}
 
 === mysqldump ===
