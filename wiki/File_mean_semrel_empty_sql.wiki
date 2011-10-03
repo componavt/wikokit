@@ -183,5 +183,14 @@ VACUUM;
 }}}
 
 
+== Preparing the SQLite database for Android ==
+
+See [http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ article].
+
+{{{
+mysql$ CREATE TABLE "android_metadata" ("locale" TEXT DEFAULT 'en_US')
+mysql$ INSERT INTO "android_metadata" VALUES ('en_US')
+}}}
+
 = See also =
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
