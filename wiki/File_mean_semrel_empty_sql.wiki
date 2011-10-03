@@ -69,7 +69,11 @@ public final static String ENWIKT_MEAN_SEMREL = "enwikt20110618_mean_semrel?useU
   * Compile it.
   * Open project properties / Run. Set:
     * Main class: *wiktparsed.mean_semrel.parser.Main*
-    * Arguments: `en 0 "\&/" 10`
+    * Arguments: `en 0 "&/" 100`
+      * language_code - language code of MySQL Wiktionary database to be parsed
+      * n_start_from - number of records in database to start from
+      * delimiter - symbol between words in the table fields "synonyms", "antonyms", etc.
+      * min_meaning - minimum number of records in mean_semrel_XX, the lesser tables (mean_semrel_XX) and records (lang.XX) will be deleted
     * VM options: `-Xms1212m -Xmx1212m -Xmn16m -XX:+DisableExplicitGC -verbose:gc`
   * Run main project.
 
