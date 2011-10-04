@@ -1,5 +1,5 @@
 #summary (./wikt_parser/doc/parsed/mean_semrel/) How to create, edit and load empty wikt_sem_rel Wiktionary parsed database with meaning and semantic relations into MySQL.
-#labels Phase-Implementation,MySQL,MRD,parsing
+#labels Phase-Implementation,MySQL,MRD,parsing,sqlite
 
 <wiki:toc max_depth="3" />
 
@@ -200,7 +200,7 @@ cp enwikt20110618_mean_semrel.sqlite wikokit\magnetowordik\assets\enwikt_mean_se
 *Good news.* You can split file :)
 
   # Split database file ``enwikt_mean_semrel_sqlite`` into small chunks (1048576 bytes) using [http://www.spadixbd.com/freetools/jsplit.htm some splitter]. 
-  # Add suffix ".mp3" (extra extension) to chunk files using [http://www.bulkrenameutility.co.uk/Download.php Bulk Rename Utility]. Then (read [here[http://stackoverflow.com/questions/2860157/load-files-bigger-than-1m-from-assets-folder]) you can keep your assets uncompressed, then your Android system do not need to uncompress the entire thing to memory (during installation).
+  # Add suffix ".mp3" (extra extension) to chunk files using [http://www.bulkrenameutility.co.uk/Download.php Bulk Rename Utility]. Then (read [http://stackoverflow.com/questions/2860157/load-files-bigger-than-1m-from-assets-folder here]) you can keep your assets uncompressed, then your Android system do not need to uncompress the entire thing to memory (during installation).
   # Copy files ``enwikt.1.mp3``, ``enwikt.2.mp3``... to the folder ``wikokit\magnetowordik\assets\``.
 
 
