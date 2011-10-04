@@ -182,7 +182,6 @@ sqlite$ VACUUM;
 sqlite$ .backup "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sqlite"
 }}}
 
-
 = Preparing the SQLite database for Android =
 
 See article [http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-android-applications/ Using your own SQLite database in Android applications].
@@ -193,6 +192,17 @@ sqlite$ INSERT INTO "android_metadata" VALUES ('en_US')
 sqlite$ .backup "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sqlite"
 cp enwikt20110618_mean_semrel.sqlite wikokit\magnetowordik\assets\enwikt_mean_semrel.sqlite 
 }}}
+
+== Split file ==
+
+*Bad news.* There are constraints at the file size in the Android folder _assets_. See [http://stackoverflow.com/questions/2860157/load-files-bigger-than-1m-from-assets-folder Load files bigger than 1M from assets folder].
+
+*Good news.* You can split file :)
+
+  # Split database file ``enwikt_mean_semrel_sqlite`` into small chunks (1048576 bytes) using [http://www.spadixbd.com/freetools/jsplit.htm some splitter]. 
+  # Add suffix ".mp3" (extra extension) to chunk files using [http://www.bulkrenameutility.co.uk/Download.php Bulk Rename Utility]. Then (read [here[http://stackoverflow.com/questions/2860157/load-files-bigger-than-1m-from-assets-folder]) you can keep your assets uncompressed, then your Android system do not need to uncompress the entire thing to memory (during installation).
+  # Copy files ``enwikt.1.mp3``, ``enwikt.2.mp3``... to the folder ``wikokit\magnetowordik\assets\``.
+
 
 = See also =
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
