@@ -199,9 +199,9 @@ cp enwikt20110618_mean_semrel.sqlite wikokit\magnetowordik\assets\enwikt_mean_se
 
 *Good news.* You can split file :)
 
-  # Split database file ``enwikt_mean_semrel_sqlite`` into small chunks (1048576 bytes) using [http://www.spadixbd.com/freetools/jsplit.htm some splitter]. 
-  # Add suffix ``.mp3`` (extra extension) to chunk files using [http://www.bulkrenameutility.co.uk/Download.php Bulk Rename Utility]. This ``.mp3`` suffix (read [http://stackoverflow.com/questions/2860157/load-files-bigger-than-1m-from-assets-folder here]) allows to keep your assets uncompressed (during installation), so Android system do not need to uncompress the entire thing to memory .
-  # Copy files ``enwikt.1.mp3``, ``enwikt.2.mp3``... to the folder ``wikokit\magnetowordik\assets\``.
+  # Split database file `enwikt_mean_semrel_sqlite` into small chunks (1048576 bytes) using [http://www.spadixbd.com/freetools/jsplit.htm some splitter]. 
+  # Add suffix `.mp3` (extra extension) to chunk files using [http://www.bulkrenameutility.co.uk/Download.php Bulk Rename Utility]. This `.mp3` suffix (read [http://stackoverflow.com/questions/2860157/load-files-bigger-than-1m-from-assets-folder here]) allows to keep your assets uncompressed (during installation), so Android system do not need to uncompress the entire thing to memory .
+  # Copy files `enwikt.1.mp3`, `enwikt.2.mp3`... to the folder `wikokit\magnetowordik\assets\`.
 
 
 = See also =
