@@ -374,6 +374,52 @@ public class WRelationEn {
 
         return st;
     }
+    
+    /** Replace template:l by usual [[wiki link]].
+     *
+     * @param onym_list list of synonyms as a text string
+     * @return the same text but without template:l.
+     *
+     * @see http://en.wiktionary.org/wiki/Template:l
+     */
+    private static String replaceTemplateL(
+                    String onym_list)
+    {
+        if(onym_list.length() == 0)
+            return onym_list;
+        
+        int start, end, prev_end, pipe2, pipe3;
+        StringBuilder s = new StringBuilder();
+        
+        start = onym_list.indexOf("{{l|");
+        end = 0;
+        while( -1 != start)
+        {
+            //              "|something" - optional
+            // {{l|de|synonym|something}} -> [[synonym]]
+            // |                       |
+            // start                   end
+            //       pipe2   pipe3       prev_end + 2
+            
+            prev_end = end;
+            end = onym_list.indexOf("}}", start);
+            
+            pipe2 = onym_list.indexOf("|", start + 4);
+            pipe3 = onym_list.indexOf("|", pipe2 + 1);
+            if(-1 == pipe3 || pipe3 > end) // {{l|de|synonym}} - simple case
+                pipe3 = end;
+            
+            if( prev_end + 2 < start ) // it is false in the first time, i.e. if there is only one synonym, not a list
+                s.append( onym_list.substring(prev_end + 2, start) );
+            s.append("[[");
+            s.append( onym_list.substring(pipe2 + 1, pipe3) );
+            s.append("]]");
+            
+            start = onym_list.indexOf("{{l|", end);
+        }
+        
+        return s.toString();
+    }
 
     /** Parses one line of a semantic relations,
      * extracts a list of words (wikified words), creates and fills WRelation.
@@ -412,6 +458,10 @@ public class WRelationEn {
         Matcher m = ptrn_eol_dot.matcher(onym_list);
         if(m.find())
             onym_list = m.replaceFirst("");
+
+        // {{l|de|synonym|something}} -> [[synonym]]
+        if(onym_list.contains("{{l|"))
+            onym_list = replaceTemplateL(onym_list);
         
         // 4. split by semicolon and comma
         WikiText[] wt = WikiText.create(page_title, onym_list);

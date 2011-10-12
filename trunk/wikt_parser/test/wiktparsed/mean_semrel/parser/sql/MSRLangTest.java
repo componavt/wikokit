@@ -43,6 +43,9 @@ public class MSRLangTest {
 
         // SQLite                   //Connect.testSQLite();
         //ruwikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
+        
+        // once upon a time: create mean_semrel (based on Wiktionary parsed db)
+        MSRLang.recreateTable(mean_semrel_conn);
     }
     
     @After
@@ -56,9 +59,6 @@ public class MSRLangTest {
     @Test
     public void testGetID() {
         System.out.println("getID");
-        
-        // once upon a time: create mean_semrel (based on Wiktionary parsed db)
-        //MSRLang.recreateTable(mean_semrel_conn);
         
         // once upon a time: use Wiktionary parsed db
         MSRLang.createFastMaps(mean_semrel_conn);

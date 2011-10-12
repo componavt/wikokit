@@ -254,40 +254,72 @@ public class MSRLang {
         }
     }
 
-    /** Calculates (1) number of meanings with semantic relations
-     * in the table mean_semrel_XX, stores statistics into fields:
+    /** Calculates (1) number of meanings with semantic relations, 
+     * (2) total number of semantic relations in the table mean_semrel_XX, 
+     * stores statistics into fields:
      * (1) lang.n_meaning, (2) lang.n_sem_rel for each language. <br><br>
+     * 
+     * (1) SELECT COUNT(*) FROM mean_semrel_os;
      *
      * REM: this func should be called after the a creation of Wiktionary
-     * wikt_mean_semrel database, and the tables should be filled with data.
-     *
-     * @param native_lang       native language in the Wiktionary,
-     *                          e.g. Russian language in Russian Wiktionary
+     * wikt_mean_semrel database, and the tables mean_semrel_XXs should be 
+     * filled with data.
      */
-    public static void calcMeanSemrelStatistics(Connect connect,
-                            LanguageType native_lang) {
+    public static void calcMeanSemrelStatistics(Connect connect) {
 
         System.out.println("Fill table `lang` by statistics from mean_semrel_XX tables...");
-        
-        System.exit(0);
-        // todo...
-
-        /*
-        // foreign languages statistics
         for(LanguageType lt : lang2id.keySet()) {
-            if(native_lang != lt) {
+            String table_name = "mean_semrel_" + lt.getCode();
+            
+            // SELECT COUNT(*) FROM mean_semrel_os; - number of meanings with semantic relations
+            int n_meaning = Statistics.Count(connect, table_name);
+        
+            // SELECT SUM(n_sem_rel) FROM mean_semrel_os;
+            // total number of semantic relations for this language
+            int n_sem_rel = Statistics.Sum(connect, table_name, "n_sem_rel"); 
+                    
+            update(connect, lt, n_meaning, n_sem_rel);
+        }
+    }
+    
+    /** Deletes 
+     * (1) records XX in the table lang, 
+     * (2) tables mean_semrel_XX, if XX language is absent in Wiktionary,
+     * i.e. if number of records in the table mean_semrel_XX < threshold, 
+     * that is lang.XX.n_meaning < threshold (= min_meaning). <br><br>
+     * 
+     * (1) SELECT COUNT(*) FROM mean_semrel_os;
+     * 
+     * @param min_meaning threshold - minimum number of records in mean_semrel_XX, 
+     *                  the lesser tables (mean_semrel_XX) and records (lang.XX) will be deleted
+     *
+     * REM: this func should be called after the a creation of Wiktionary
+     * wikt_mean_semrel database, and the tables mean_semrel_XXs should be 
+     * filled with data.
+     */
+    public static void deleteEmptyRecordsAndTables(Connect connect, int min_meaning) {
 
-                int n_meaning = .countNumberOfMeaningsWithSemanticRelations(connect, lt);
-                int n_sem_rel = .countSemanticRelations(connect, lt);
-
-                update(connect, lt, n_meaning, n_sem_rel);
+        System.out.println("Deleting (1) records XX in the table lang, (2) tables mean_semrel_XX, " + 
+                "if number of records in the table mean_semrel_XX < " + min_meaning + 
+                ". Deleted languages: language (code) number of meanings");
+        
+        //MSRLang.createFastMaps(connect);
+        MSRLang[] ar_lang = MSRLang.getAllLang(connect);
+        for(MSRLang m_lang : ar_lang) {
+            
+            if (m_lang.n_meaning < min_meaning) {
+                LanguageType lt = m_lang.lang;
+                System.out.println(lt.getName() + 
+                        " (" + lt.getCode() + ") " + m_lang.n_meaning); 
+                
+                // delete record XX in the table lang
+                MSRLang.delete(connect, lt);
+                
+                // delete table mean_semrel_XX
+                String table_name = "mean_semrel_" + lt.getCode();
+                UtilSQL.dropTable(connect, table_name);
             }
         }
-
-        int n_native_POS = IndexNative.countNumberPOSWithDefinition(connect);
-        update(connect, native_lang, n_native_POS, 0);
-         * 
-         */
     }
 
     
@@ -361,7 +393,7 @@ public class MSRLang {
 
     /** Selects row from the table 'lang' by a language code.
      *
-     *  SELECT id,name,n_meaning,n_sem_rel FROM lang WHERE code="ru";
+     *  SELECT _id,name,n_meaning,n_sem_rel FROM lang WHERE code="ru";
      *
      * @param  lt.lang_code  language code
      * @return null if the language code is absent in the table 'lang'
@@ -376,7 +408,7 @@ public class MSRLang {
         try {
             Statement s = connect.conn.createStatement ();
             try {
-                str_sql.append("SELECT id,name,n_meaning,n_sem_rel FROM lang WHERE code=\"");
+                str_sql.append("SELECT _id,name,n_meaning,n_sem_rel FROM lang WHERE code=\"");
                 str_sql.append(lang_code);
                 str_sql.append("\"");
 
@@ -386,7 +418,7 @@ public class MSRLang {
                     {
                         //String name = StringUtil.underscoreToSpace(rs.getString("name"));
 
-                        tp = new MSRLang( rs.getInt("id"), lt,
+                        tp = new MSRLang( rs.getInt("_id"), lt,
                                         rs.getInt("n_meaning"),
                                         rs.getInt("n_sem_rel"));
 
@@ -395,7 +427,7 @@ public class MSRLang {
                                     " (language code = " + lt.getCode() + ")");
                         }*/
                     } else {
-                            System.err.println("Error: (wikt_mean_semrel MSRLang.java get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
+                            System.err.println("Error: (wikt_mean_semrel.MSRLang.get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
                     }
                 } finally {
                     rs.close();

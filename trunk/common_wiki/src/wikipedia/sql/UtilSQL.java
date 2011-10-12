@@ -30,5 +30,26 @@ public class UtilSQL {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
     }
+    
+    
+    public static void dropTable (Connect connect, String table_name)
+    {
+        if(null == connect)
+            return;
+        
+        StringBuffer str_sql = new StringBuffer();
+        try {
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("DROP TABLE IF EXISTS `"+ table_name + "`");
+                s.execute(str_sql.toString());
+            } finally {
+                s.close();
+            }
+        } catch(SQLException ex) {
+            System.err.println("SQLException (MSRMeanSemrelXX.dropTable()): sql='" + str_sql + "' " + ex.getMessage());
+        }
+    }
+    
 
 }

@@ -1,6 +1,6 @@
 
 package wikt.word;
-
+/*
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -34,4 +34,4 @@ public class WLanguageTest {
 
 
 
-}
+}*/

@@ -21,7 +21,8 @@ public class WRelationEnTest {
     public static String test_hrunk, word_text, flower_text,
             empty_relation, 
             empty_relation2,
-            bark, man, man2, women, nationality, airplane;
+            bark, man, man2, women, nationality, airplane, 
+            Suomija_template_l, poljento_template_l;
     // todo parse: man
     public WRelationEnTest() {
     }
@@ -170,6 +171,23 @@ public class WRelationEnTest {
                 "\n" +
                 "====Translations====\n" +
                 "\n";
+        
+        Suomija_template_l = "{{lt-proper noun|f}}\n" +
+                "\n" +
+                "# [[Finland]]\n" +
+                "\n" +
+                "====Synonyms====\n" +
+                "* {{l|lt|Suomijos Respublika}}\n" +
+                "\n";
+        
+        poljento_template_l = "{{fi-noun}}\n" +
+                "\n" +
+                "# [[rhythm]]\n" +
+                "\n" +
+                "====Synonyms====\n" +
+                "* {{l|la|gustus|gustūs}}, {{l|fi|tahti}}\n" +
+                "\n" +
+                "[[io:poljento]]\n";
     }
     
     @After
@@ -390,15 +408,6 @@ public class WRelationEnTest {
         assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("aeroplane"));
     }
 
-    /*
-     * empty_relation2 = // human
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n" +
-                "\n";*/
-
     /** The relation section may absent..., e.g.:
      *
      * {{wikipedia}}
@@ -420,6 +429,73 @@ public class WRelationEnTest {
 
         assertEquals(0, result.size());
     }
+    
+    // Template:l should be parsed, and synonyms should be extracted from this template.
+    // @see http://en.wiktionary.org/wiki/Template:l
+    @Test
+    public void testParse_template_l_with_one_synonym() {
+        System.out.println("parse__template_l_with_one_synonym");
+        WRelation[] r;
+        String str;
+
+        LanguageType wikt_lang = LanguageType.en; // English Wiktionary
+        String page_title = "Suomija";
+        POSText pt = new POSText(POS.proper_noun, Suomija_template_l);
+
+        Map<Relation, WRelation[]> result = WRelationEn.parse(wikt_lang, page_title, pt);
+
+        assertTrue(result.size() > 0);
+        assertTrue(result.containsKey(Relation.synonymy));
+
+        // ====Synonyms====
+        // * {{l|lt|Suomijos Respublika}}
+        
+        r = result.get(Relation.synonymy);
+        assertEquals(1, r.length);
+
+        str = r[0].getMeaningSummary();
+        assertNull(str);
+        
+        WikiText[] synonym_row_0 = r[0].get();
+        assertEquals(1, synonym_row_0.length);
+        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("Suomijos Respublika"));
+        assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("Suomijos Respublika"));
+    }
+    
+    @Test
+    public void testParse_template_l_with_two_synonyms() {
+        System.out.println("parse__template_l_with_two_synonyms");
+        WRelation[] r;
+        String str;
+
+        LanguageType wikt_lang = LanguageType.en; // English Wiktionary
+        String page_title = "poljento";
+        POSText pt = new POSText(POS.noun, poljento_template_l);
+
+        Map<Relation, WRelation[]> result = WRelationEn.parse(wikt_lang, page_title, pt);
+
+        assertTrue(result.size() > 0);
+        assertTrue(result.containsKey(Relation.synonymy));
+
+        // ====Synonyms====
+        // * {{l|la|gustus|gustūs}}, {{l|fi|tahti}}
+        
+        r = result.get(Relation.synonymy);
+        assertEquals(1, r.length);
+
+        str = r[0].getMeaningSummary();
+        assertNull(str);
+        
+        WikiText[] synonym_row = r[0].get();
+        assertEquals(2, synonym_row.length);
+        assertTrue(synonym_row[0].getVisibleText().equalsIgnoreCase("gustus"));
+        assertTrue(synonym_row[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("gustus"));
+        
+        assertTrue(synonym_row[1].getVisibleText().equalsIgnoreCase("tahti"));
+        assertTrue(synonym_row[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("tahti"));
+    }
+    
+    
     
     /** Let's skip now the link to Wikisaurus, e.g.:
      *  ====Synonyms====

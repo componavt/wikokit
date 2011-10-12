@@ -351,7 +351,7 @@ public class LanguageType {
     
     // English Wiktionary specific codes
     public static final LanguageType mul = new LanguageType("mul", "Translingual", "Translingual");
-    public static final LanguageType INT = LanguageType.addNonUniqueCode(mul, "INT");// Russian Wiktionary
+    public static final LanguageType INT = LanguageType.addNonUniqueCode(mul, "INT");// Russian Wiktionary, yes! outdated :)
 
     public static final LanguageType aus_bun = new LanguageType("aus-bun", "Bunurong", "Bunurong");
 
