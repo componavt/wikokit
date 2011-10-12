@@ -63,12 +63,16 @@ public class PageWithSemrel {
          */
         private void add(TRelation tr, String delimiter)
         {
-            String add_word = tr.getWikiText().getText();
-            String delimiter_word = delimiter + add_word;
+            String           word = tr.getWikiText().getText();
+            String delimiter_word = delimiter + word;
             
             Relation r = tr.getRelationType();
+            
+            if(!m_relations.containsKey(r))
+                return; // e.g. skip "See also"
+            
             if( 0 == m_relations.get(r).length()) {
-                m_relations.get(r).append(add_word);
+                m_relations.get(r).append(          word);
             } else {
                 m_relations.get(r).append(delimiter_word);
             }
@@ -93,17 +97,18 @@ public class PageWithSemrel {
      *
      * @param native_lang   native language in the Wiktionary,
      *                       e.g. Russian language in Russian Wiktionary,
-     * @param n_start_from number of first Wiktionary entry to be parsed <br><br>
-     * @delimiter symbol between words in the table fields "synonyms", "antonyms", etc.
-     * 
-     * SELECT page_title FROM page WHERE page_namespace=0 AND page_is_redirect=0;
+     * @param n_start_from number of first Wiktionary entry to be parsed
+     * @param delimiter symbol between words in the table fields "synonyms", "antonyms", etc.
+     * @param min_meaning threshold - minimum number of records in mean_semrel_XX, 
+     *                  the lesser tables (mean_semrel_XX) and records (lang.XX) will be deleted
      */
     public static void parse(
-            LanguageType native_lang,
+            // LanguageType native_lang,
             Connect wikt_parsed_conn,
             Connect mean_semrel_conn,
             int n_start_from,
-            String delimiter)
+            String delimiter,
+            int min_meaning)
     {
         long    t_start;
         float   t_work;
@@ -113,15 +118,15 @@ public class PageWithSemrel {
         t_start = System.currentTimeMillis();
         
         if(0 == n_start_from) // create wikt_mean_semrel 
-            SemrelParser.clearDatabase(wikt_parsed_conn, mean_semrel_conn, native_lang);
+            SemrelParser.clearDatabase(wikt_parsed_conn, mean_semrel_conn);
         else
-            SemrelParser.initWithoutClearDatabase(wikt_parsed_conn, mean_semrel_conn, native_lang);
+            SemrelParser.initWithoutClearDatabase(wikt_parsed_conn, mean_semrel_conn);
         
         try {
             Statement s = wikt_parsed_conn.conn.createStatement ();
             try {
                 if(DEBUG) { 
-                    s.executeQuery ("SELECT id FROM lang_pos LIMIT 3000");
+                    s.executeQuery ("SELECT id FROM lang_pos LIMIT 100000");
                 } else {
                     s.executeQuery ("SELECT id FROM lang_pos");
                 }
@@ -135,13 +140,13 @@ public class PageWithSemrel {
                         //    break;
                         n_cur ++;
                         if(n_start_from >= 0 && n_start_from > n_cur)
-                            continue;
+                            continue; // skip first [0, n_start_from] records
                         
                         int id = rs.getInt("id");
                         TLangPOS lang_pos_not_recursive = TLangPOS.getByID (wikt_parsed_conn, id);// fields are not filled recursively
                         if(null == lang_pos_not_recursive)
                             continue;
-                        LanguageType lang = lang_pos_not_recursive.getLang().getLanguage();
+                        LanguageType xx_lang = lang_pos_not_recursive.getLang().getLanguage();
 
                         TPage tpage = lang_pos_not_recursive.getPage();
                         String page_title = tpage.getPageTitle();
@@ -160,6 +165,8 @@ public class PageWithSemrel {
                                 continue;
 
                             TRelation[] rels = TRelation.get(wikt_parsed_conn, m);
+                            if(0 == rels.length)
+                                continue;
 
                             semrel.init();
                             for(TRelation r : rels)
@@ -170,7 +177,7 @@ public class PageWithSemrel {
                             
                             // save to database relations and meaning text
                             MSRMeanSemrelXX.insert (
-                                        native_lang, mean_semrel_conn,
+                                        xx_lang, mean_semrel_conn,
                                         page_title, meaning_text,
                                         semrel.getMapRelationToText(), rels.length);
                         }
@@ -203,10 +210,13 @@ public class PageWithSemrel {
             System.err.println("SQLException (PageWithSemrel.parse()): " + ex.getMessage());
         }
 
-        // post-processing
-        System.exit(0);
-        // todo: ...
-//???     TLang.calcIndexStatistics(wikt_parsed_conn, native_lang);
+        // post-processing 1
+        MSRLang.calcMeanSemrelStatistics(mean_semrel_conn);
+       
+        // post-processing 2
+        // delete mean_semrel_XX, if it is empty table, i.e count(*) < 10
+        MSRLang.deleteEmptyRecordsAndTables(mean_semrel_conn, min_meaning);
+        UtilSQL.dropTable(mean_semrel_conn, "mean_semrel_letter_ru");
         
         long  t_end;
         t_end  = System.currentTimeMillis();

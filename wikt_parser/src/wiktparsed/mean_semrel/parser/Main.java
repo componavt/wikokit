@@ -40,18 +40,20 @@ public class Main {
         // Connect to mean_semrel database
         Connect mean_semrel_conn = new Connect();
 
-        if(args.length != 2) {
+        if(args.length != 4) {
             System.out.println("Wiktionary parser.\n" +
             "Usage:\n  run_wikt_mean_semrel_parser.bat language_code n_start_from\n" +
                     "Arguments:\n" +
                     "  language_code - language code of MySQL Wiktionary database to be parsed\n" +
                     "  n_start_from - number of records in database to start from\n" +
-                    "Examples: run_wikt_mean_semrel_parser.bat en 0\n"
+                    "  delimiter - symbol between words in the table fields \"synonyms\", \"antonyms\", etc.\n" +
+                    "  min_meaning - threshold, i.e. minimum number of records in mean_semrel_XX,\n" +
+                    "    the lesser tables (mean_semrel_XX) and records (lang.XX) will be deleted,\n" +
+                    "Examples: run_wikt_mean_semrel_parser.bat en 0 \"|\" 10\n"
                     );
             return;
         }
-
-        String delimiter = "|"; // symbol between words in the table fields "synonyms", "antonyms", etc.
+        
         String s = args[0];
         if(!LanguageType.has(s)) {
             System.out.println("Error. Unknown language code '" + s + "'. Stop.");
@@ -62,6 +64,14 @@ public class Main {
 
         int n_start_from = Integer.parseInt(args[1]);
         System.out.println("OK. n_start_from=" + n_start_from);
+        
+        String delimiter = args[2];// e.g. "|" - symbol between words in the table fields "synonyms", "antonyms", etc.
+        System.out.println("OK. delimiter is '" + delimiter + "'");
+        
+        // threshold, e.g. 10 - minimum number of records in mean_semrel_XX, 
+        // the lesser tables (mean_semrel_XX) and records (lang.XX) will be deleted
+        int min_meaning = Integer.parseInt(args[3]);
+        System.out.println("OK. min_meaning=" + min_meaning);
 
         // Russian
         if(LanguageType.ru == wiki_lang) {
@@ -84,7 +94,9 @@ public class Main {
         SemrelParser p = new SemrelParser();
 //       p.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
         
-        PageWithSemrel.parse(wiki_lang, wikt_parsed_conn, mean_semrel_conn, n_start_from, delimiter);
+        PageWithSemrel.parse(//wiki_lang, 
+                    wikt_parsed_conn, mean_semrel_conn, n_start_from, 
+                    delimiter, min_meaning);
         
         wikt_parsed_conn.Close();
         mean_semrel_conn.Close();
