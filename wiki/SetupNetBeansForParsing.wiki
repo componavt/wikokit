@@ -69,7 +69,7 @@ Sort lines in VIM:
 gvim$:sort u
 }}}
 
-Analyze request and try to find the most common and useless repetitive requests, then change Java source code.
+Analyze requests and try to find the most common and useless repetitive requests, then change Java source code in order to avoid such requests.
 
 = Previous step =
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
