@@ -1,6 +1,8 @@
 #summary How to extract some information from the database wikt_parsed of the parsed Wiktionary. SQL query examples.
 #labels SQL,parser,Featured
 
+<wiki:toc max_depth="3" />
+
 = Introduction =
 
 Download the parsed Wiktionary database from this site, e.g. `enwikt20XXXX_parsed.zip`. Unzip and upload to your local MySQL database.
@@ -71,6 +73,19 @@ mysql> SELECT * FROM wiki_text WHERE id=1589097;
 
 || id      || text                                           ||
 || 1589097 || Passing or disappearing with time; transitory. ||
+
+== Translate word from one language to another ==
+
+We consider two ways to get translations by using English Wiktionary:
+    * _direct translation_ - from English word to words in other languages, which are listed in the section _Translation_ of the entry;
+    * _reverse translation_ - from the non-English word in the section _Translation_ to the English title (header) of the entry;
+
+=== From English ===
+
+
+=== To English ===
+
+Todo.
 
 = See also =
   * [GettingStartedWiktionaryParser]
