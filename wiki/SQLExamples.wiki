@@ -113,6 +113,67 @@ mysql> SELECT * FROM lang_pos WHERE page_id=245963 AND lang_id=285;
 || id     || page_id || pos_id || lang_id ||
 || 138883 || 245963 ||     38 ||     285 || 
 
+4. Table `lang_pos` -> `meaning`
+
+Let's get ID of meaning (definition) by identifier from the table `lang_pos` (lang_pos_id).
+
+{{{
+mysql> SELECT * FROM meaning WHERE lang_pos_id=138883;
+}}}
+
+|| id     || lang_pos_id || meaning_n || wiki_text_id ||
+|| 169914 ||      138883 ||         0 ||       244073 ||
+|| 169915 ||      138883 ||         1 ||       244098 ||
+|| 169916 ||      138883 ||         2 ||       244101 ||
+
+So, there are three meaning for this word. Let's find translation for the first meaning with meaning_id = 169914.
+
+5. Table `meaning` -> `translation`
+
+{{{
+mysql> SELECT * FROM translation WHERE meaning_id=169914;
+}}}
+
+|| id    || lang_pos_id || meaning_summary              || meaning_id ||
+|| 13063 ||      138883 || short account of an incident ||     169914 ||
+
+OK. translation_id = 13063
+
+6. Language code of the target language (Portuguese) is "pt". We need to find lang_id.
+
+{{{
+mysql> SELECT * FROM lang WHERE code="pt";
+}}}
+
+|| *id* || *name*     || *code*|| *n_foreign_POS* || *n_translations* ||
+|| 756  || Portuguese || pt    || 8311            || 0                ||
+
+lang_id = 756
+
+7. Table `translation_entry` -> `wiki_text`
+
+The list of records in the table `translation_entry` which corresponds to this (first) meaning:
+
+{{{
+mysql> SELECT * FROM translation_entry WHERE translation_id=13063 AND lang_id=756;
+}}}
+
+|| id     || translation_id || lang_id || wiki_text_id ||
+|| 134181 ||          13063 ||     756 ||       244093 ||
+
+`wiki_text_id=244093` will helps to find the translation word itself.
+
+8. Result translation.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=244093;
+}}}
+
+|| id     || text    ||
+|| 244093 || anedota ||
+
+Good job.
+
 === 2) Translate to English ===
 
 Todo.
