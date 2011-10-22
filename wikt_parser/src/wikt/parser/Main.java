@@ -52,6 +52,9 @@ public class Main {
             System.out.println("Error. Unknown language code '" + s + "'. Stop.");
             return;
         }
+        
+        System.out.println("Wiktionary parser will create wikt_parsed database.\n");
+        
         LanguageType wiki_lang = LanguageType.get(s);
         System.out.println("OK. language code is '" + s + "'");
 

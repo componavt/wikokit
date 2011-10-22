@@ -412,7 +412,12 @@ public class WRelationEn {
             if( prev_end + 2 < start ) // it is false in the first time, i.e. if there is only one synonym, not a list
                 s.append( onym_list.substring(prev_end + 2, start) );
             s.append("[[");
-            s.append( onym_list.substring(pipe2 + 1, pipe3) );
+            if(pipe2 + 1 < 0 || pipe3 > onym_list.length() || pipe2 + 1 > pipe3) {
+                System.out.println("\n\nError in WRelationEn.replaceTemplateL(): onym_list=" + onym_list);
+                return onym_list;
+            } else {
+                s.append( onym_list.substring(pipe2 + 1, pipe3) );
+            }
             s.append("]]");
             
             start = onym_list.indexOf("{{l|", end);

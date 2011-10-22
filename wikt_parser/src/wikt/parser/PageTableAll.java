@@ -16,8 +16,9 @@ import java.sql.*;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG = true;
-    private static final boolean ONLY_DEBUG_PAGES = false;
+    private static final boolean DEBUG_PAGES = false;
+    
+    //private static final boolean PRINT_PROGRESS = true;
     
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
@@ -151,7 +152,7 @@ public class PageTableAll {
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), enc.GetUser()); // ISO8859_1 UTF8
                 //title = Encodings.bytesTo(rs.getBytes("page_title"), "ISO8859_1"); // 
 
-                if(ONLY_DEBUG_PAGES && DEBUG) {
+                if(DEBUG_PAGES) {
                     // test problem pages:
                     if (n_cur < debug_pages.length + 1)
                         page_title = wikt_conn.enc.EncodeFromJava(debug_pages[n_cur-1]);
@@ -160,7 +161,7 @@ public class PageTableAll {
                         break;  //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
                 }
 
-                if(DEBUG && 0 == n_cur % 1000) {   // % 100 1000
+                if(0 == n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
                     long    t_cur, t_remain;

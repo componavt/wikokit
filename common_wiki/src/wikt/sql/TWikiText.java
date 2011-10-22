@@ -134,7 +134,7 @@ public class TWikiText {
     public static TWikiText get (Connect connect,String text) {
 
         StringBuilder str_sql = new StringBuilder();
-        TWikiText   wiki_text = null;
+        TWikiText wiki_text = null;
         
         try {
             Statement s = connect.conn.createStatement ();

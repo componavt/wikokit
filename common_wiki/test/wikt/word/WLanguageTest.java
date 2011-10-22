@@ -1,6 +1,6 @@
 
 package wikt.word;
-/*
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -31,7 +31,12 @@ public class WLanguageTest {
     }
 
     // @see WMeaningEnTest with section "Form of templates"
+    
+    @Test
+    public void testParse_something() {
+        System.out.println("todo or not todo");
+    }
 
 
 
-}*/
+}
