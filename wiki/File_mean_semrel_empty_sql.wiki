@@ -71,7 +71,7 @@ public final static String ENWIKT_MEAN_SEMREL = "enwikt20110618_mean_semrel?useU
   * Compile it.
   * Open project properties / Run. Set:
     * Main class: *wiktparsed.mean_semrel.parser.Main*
-    * Arguments: `en 0 "&/" 100`
+    * Arguments: `en 0 "&/" 1000`
       * language_code - language code of MySQL Wiktionary database to be parsed
       * n_start_from - number of records in database to start from
       * delimiter - symbol between words in the table fields "synonyms", "antonyms", etc.
