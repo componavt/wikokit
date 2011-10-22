@@ -54,6 +54,23 @@ $cd /enwikt20100824/wikt_parser
 $run_wikt_parser.bat en 0
 }}}
 
+= Analyze MySQL slow requests log file =
+
+Dump result Wiktionary parsed database, then:
+{{{
+NET STOP mysql     % stop MySQL server
+cd "D:\w\MySQL\MySQL Server 5.1\log\mysqld.slow.log" 
+rename mysqld.slow.log mysqld.slow.log_enwikt20111008.log
+gvim mysqld.slow.log_enwikt20111008.log
+}}}
+
+Sort lines in VIM:
+{{{
+gvim$:sort u
+}}}
+
+Analyze request and try to find the most common and useless repetitive requests, then change Java source code.
+
 = Previous step =
   * [File_wikt_parsed_empty_sql Load empty Wiktionary parsed database into MySQL]
 
