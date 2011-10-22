@@ -105,6 +105,10 @@ public class StringUtil {
               result.append('\'');
             //result.append("\\'");
           }
+          else if (character == '\\') {
+              result.append('\\');
+              result.append('\\');
+          }
           else {
             //the char is not a special one
             //add it to the result as is

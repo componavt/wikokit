@@ -59,6 +59,8 @@ public class Main {
             System.out.println("Error. Unknown language code '" + s + "'. Stop.");
             return;
         }
+        System.out.println("The wikt_mean_semrel database will be created from wikt_parsed database.\n");
+        
         LanguageType wiki_lang = LanguageType.get(s);
         System.out.println("OK. language code is '" + s + "'");
 

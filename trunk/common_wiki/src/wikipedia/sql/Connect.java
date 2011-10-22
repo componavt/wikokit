@@ -91,16 +91,16 @@ public class Connect {
     public final static String ENWIKT_HOST  = "localhost";
     public final static String ENWIKT_USER  = "javawiki";
     public final static String ENWIKT_PASS  = "";
-    public final static String ENWIKT_DB = "enwikt20110618?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_DB = "enwikt20111008?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // English Wiktionary parsed database
-    public final static String ENWIKT_PARSED_DB = "enwikt20110618_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_PARSED_DB = "enwikt20111008_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     //public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20101030.sqlite";
     public final static String ENWIKT_SQLITE = "enwikt20110618.sqlite";
     
     // Meaning + semantic relations database based on English Wiktionary parsed database
-    public final static String ENWIKT_MEAN_SEMREL = "enwikt20110618_mean_semrel?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_MEAN_SEMREL = "enwikt20111008_mean_semrel?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     
     // IDF (inverse document frequency) database

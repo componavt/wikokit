@@ -299,7 +299,7 @@ public class MSRLang {
      */
     public static void deleteEmptyRecordsAndTables(Connect connect, int min_meaning) {
 
-        System.out.println("Deleting (1) records XX in the table lang, (2) tables mean_semrel_XX, " + 
+        System.out.println("\nDeleting (1) records XX in the table lang, (2) tables mean_semrel_XX, " + 
                 "if number of records in the table mean_semrel_XX < " + min_meaning + 
                 ". Deleted languages: language (code) number of meanings");
         

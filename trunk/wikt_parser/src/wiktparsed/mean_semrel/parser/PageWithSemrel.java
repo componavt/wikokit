@@ -21,7 +21,7 @@ import wikt.constant.Relation;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageWithSemrel {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     
     
     /** Inner class which contains list of synonyms, antonyms, ... joined by 
@@ -126,7 +126,7 @@ public class PageWithSemrel {
             Statement s = wikt_parsed_conn.conn.createStatement ();
             try {
                 if(DEBUG) { 
-                    s.executeQuery ("SELECT id FROM lang_pos LIMIT 100000");
+                    s.executeQuery ("SELECT id FROM lang_pos LIMIT 1000000");
                 } else {
                     s.executeQuery ("SELECT id FROM lang_pos");
                 }
@@ -182,7 +182,7 @@ public class PageWithSemrel {
                                         semrel.getMapRelationToText(), rels.length);
                         }
                         
-                        if(DEBUG && 0 == n_cur % 1000) {   // % 100 1000
+                        if(0 == n_cur % 10000) {   // % 100 1000
                             //if(n_cur<10900)
                             //    continue;
                             long    t_cur, t_remain;
