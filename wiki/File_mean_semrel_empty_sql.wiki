@@ -5,7 +5,7 @@
 
 = wikt_mean_semrel database =
 
-The database with meaning and semantic relations based on the Wiktionary parsed database (filled by data from the Wiktionary).
+The database with meaning and semantic relations based on the Wiktionary parsed database (filled by data from the Wiktionary), see GettingStartedWiktionaryParser.
 
 Now this database is used in the Android word game [https://market.android.com/details?id=wordik.magneto magnetowordik].
 
