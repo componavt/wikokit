@@ -176,7 +176,80 @@ Good job.
 
 === 2) Translate to English ===
 
-Todo.
+Let's go back and will find reverse translation: from *anedota* in Portuguese to English. It should be *[http://en.wiktionary.org/wiki/anecdote anecdote]*.
+
+1. We know (see steps above) the IDs of English and Portuguese languages (but be carefull, since language ID is not constant, it could be different in different databases):
+
+* English lang_id = 285
+* Portuguese lang_id = 756
+
+2. wiki_text -> wiki_text_id
+
+We know the word in the Translation section in the Wiktionary entry to be found: *anedota*.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE text="anedota";
+}}}
+
+|| id     || text    ||
+|| 244093 || anedota ||
+
+3. Table `wiki_text_id` -> `translation_entry` -> `translation_id`
+
+Portuguese lang_id = 756
+
+{{{
+mysql> SELECT * FROM translation_entry WHERE wiki_text_id=13063 AND lang_id=756;
+}}}
+
+|| id     || translation_id || lang_id || wiki_text_id ||
+|| 134181 ||          13063 ||     756 ||       244093 ||
+
+translation_id = 13063;
+
+4.  Table `translation_id` -> `meaning` -> `meaning_id`
+
+{{{
+mysql> SELECT * FROM translation WHERE id=13063;
+}}}
+
+|| id    || lang_pos_id || meaning_summary              || meaning_id ||
+|| 13063 ||      138883 || short account of an incident ||     169914 ||
+
+meaning_id = 169914;
+
+5. Table `meaning_id` -> `lang_pos` -> `lang_pos_id`
+
+{{{
+mysql> SELECT * FROM meaning WHERE id = 169914;
+}}}
+
+|| id     || lang_pos_id || meaning_n || wiki_text_id ||
+|| 169914 ||      138883 ||         0 ||       244073 ||
+
+lang_pos_id = 138883;
+
+6. Table `lang` and `lang_pos_id` -> `page_id`.
+
+English lang_id = 285
+
+{{{
+mysql> SELECT * FROM lang_pos WHERE lang_id=285 AND id=138883;
+}}}
+
+|| id     || page_id || pos_id || lang_id ||
+|| 138883 || 245963 ||     38 ||     285 || 
+
+page_id = 245963;
+
+7. Table `page`. Gets word (headword, i.e. Wiktionary entry) by ID.
+
+{{{
+mysql> SELECT page_title FROM page WHERE id=245963;
+}}}
+
+|| *page_title* || 
+|| anecdote ||
 
 = See also =
   * [GettingStartedWiktionaryParser]
