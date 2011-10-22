@@ -80,7 +80,7 @@ We consider two ways to get translations by using English Wiktionary:
     * _direct translation_ - from English word to words in other languages, which are listed in the section _Translation_ of the entry;
     * _reverse translation_ - from the non-English word in the section _Translation_ to the English title (header) of the entry;
 
-=== From English ===
+=== 1) Translate from English ===
 
 Let's find translation of the English (*en* code) word [http://en.wiktionary.org/wiki/anecdote anecdote] into Portuguese language by the first way (_direct translation_).
 
@@ -113,7 +113,7 @@ mysql> SELECT * FROM lang_pos WHERE page_id=245963 AND lang_id=285;
 || id     || page_id || pos_id || lang_id ||
 || 138883 || 245963 ||     38 ||     285 || 
 
-=== To English ===
+=== 2) Translate to English ===
 
 Todo.
 
