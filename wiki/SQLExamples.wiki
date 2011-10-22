@@ -82,7 +82,7 @@ We consider two ways to get translations by using English Wiktionary:
 
 === From English ===
 
-Let's find translation of the English (*en* code) word [http://en.wiktionary.org/wiki/simony simony] into Polish language by the first way (_direct translation_).
+Let's find translation of the English (*en* code) word [http://en.wiktionary.org/wiki/anecdote anecdote] into Portuguese language by the first way (_direct translation_).
 
 1. The code of English language is *en*. Let's select identifier (`lang_id`) from the table `lang`.
 
@@ -96,24 +96,22 @@ mysql> SELECT * FROM lang WHERE code="en";
 2. Table `page`.
 
 {{{
-mysql> SELECT id FROM page WHERE page_title="simony";
+mysql> SELECT id FROM page WHERE page_title="anecdote";
 }}}
 
 || *id* || 
-|| 164804 ||
+|| 245963 ||
 
 3. Table `lang` and `page` -> `lang_pos`.
 
 We have found ID of records in the tables `lang` and `page`, so we can find ID of records in the table `lang_pos`.
 
 {{{
-mysql> SELECT * FROM lang_pos WHERE page_id=164804 AND lang_id=285;
+mysql> SELECT * FROM lang_pos WHERE page_id=245963 AND lang_id=285;
 }}}
 
 || id     || page_id || pos_id || lang_id ||
-|| 774078 || 164804  ||     38 ||     285 || 
-
-
+|| 138883 || 245963 ||     38 ||     285 || 
 
 === To English ===
 
