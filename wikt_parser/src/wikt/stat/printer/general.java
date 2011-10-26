@@ -5,7 +5,7 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.stat;
+package wikt.stat.printer;
 
 //import wikipedia.sql.Connect;
 import wikt.constant.Relation;
@@ -24,7 +24,7 @@ import java.util.List;
  * @see http://ru.wiktionary.org/wiki/User:AKA MBG/Статистика:Семантические_отношения
  * @see todo
  */
-public class WikiPrinterStat {
+public class general {
 
     public static void printHeader (String db_name) {
 
@@ -172,15 +172,16 @@ public class WikiPrinterStat {
      * (2) Number of words per number of relations
      * @see http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations#Number_of_words_per_number_of_relations
      */
-    static final Integer max_relations_to_print = 50;
+    //static final Integer max_relations_to_print = 50;
 
     /** Prints statistics-histogram about number of relations in Wiktionary.
      *
+     * @param max_values_to_print upper constraint max: rel_histogram[0..max-1] will be printed
      * @param histogram with number of semantic relations, i.e.
      * [0] = number of words (one language, one part of speech) without any semantic relations,
      * [1] = number of words with one relation, etc.
      */
-    public static void printRelationsHistogram (int[] rel_histogram) {
+    public static void printRelationHistogram (int[] rel_histogram, int max_values_to_print) {
 
         // print header line
         System.out.println("\n=== Number of words per number of relations ===\n");
@@ -188,12 +189,12 @@ public class WikiPrinterStat {
         System.out.println("Number of words which have the following number of semantic relations. E.g.:");
         System.out.println("\n0 | number of words (one language, one part of speech) without any semantic relations");
         System.out.println("\n1 | number of words with one relation, e.g. one synonym or one antonym, etc.\n");
-        System.out.println("\nOnly the first " + max_relations_to_print + " rows are presented in the table.");
+        System.out.println("\nOnly the first " + max_values_to_print + " rows are presented in the table.");
 
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         System.out.print("! Number of relations || Number of words");
 
-        int max = Math.min(rel_histogram.length, max_relations_to_print);
+        int max = Math.min(rel_histogram.length, max_values_to_print);
         for(int i=0; i<max; i++) {
 
             int n_rel = rel_histogram[i];

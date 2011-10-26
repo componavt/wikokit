@@ -150,13 +150,13 @@ public class LanguageType {
     
     public String toString() { return code; }
 
-    /** Gets language code in English (ASCII). */
-    public String toStringASCII() {
+    /** Gets language code in English (ASCII), hyphen "-" replaced by underscore "_". */
+    public String toTablePrefix() {
         
         if(code.equalsIgnoreCase("Буква"))
             return "letter_ru";
             
-        return code;
+        return code.replace('-', '_');
     }
     
     /** Returns true if the language has this 'code'. */

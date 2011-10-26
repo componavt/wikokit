@@ -7,6 +7,7 @@
 
 package wikt.stat;
 
+import wikt.stat.printer.general;
 import wikipedia.language.LanguageType;
 import wikipedia.sql.Connect;
 import wikipedia.sql.Statistics;
@@ -26,8 +27,13 @@ import wikt.api.WTMeaning;
  * @see for inspiration: http://wordnet.princeton.edu/wordnet/man/wnstats.7WN.html
  */
 public class POSAndPolysemyTableAll {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
+    
+    /** Let's constrain the maximum number of meanings/definitions for one word */
+    private static final int max_meanings = 100;
+    private static final int[] mean_histogram = new int[max_meanings];
+    
 
     /** Inner POSStat class for each POS. */
     public static class POSStat {
@@ -147,9 +153,11 @@ public class POSAndPolysemyTableAll {
         ResultSet   rs= null;
         long    t_start;
 
+        // mean_histogram [0]
+        // int n_empty_meaning = 0;// total number of unique noun, verb, etc.  without definitions
+        
         int n_unknown_pos__in_rich_words = 0; // number of words (with relations) with unknown POS
         int n_langpos_with_empty_meaning = 0;// total number of unique noun, verb, etc. with empty definitions
-        int n_empty_meaning = 0;// total number of unique noun, verb, etc.  without definitions
         int n_nonempty_meaning = 0;// total number of words (unique noun, verb, etc.) with nonempty definitions
         int n_total = Statistics.Count(wikt_parsed_conn, "lang_pos");
         t_start = System.currentTimeMillis();
@@ -176,10 +184,11 @@ public class POSAndPolysemyTableAll {
                 String page_title = tpage.getPageTitle();
 
                 int n_meaning = WTMeaning.countMeanings(wikt_parsed_conn, lang_pos_not_recursive);
-                if(0 == n_meaning) {
-                    n_empty_meaning ++;
+                
+                if(n_meaning < max_meanings)
+                    mean_histogram [n_meaning] ++;
+                if(0 == n_meaning)
                     continue;
-                }
                 n_nonempty_meaning ++;
 
                 POS p = lang_pos_not_recursive.getPOS().getPOS();
@@ -246,7 +255,7 @@ public class POSAndPolysemyTableAll {
         System.out.println("\nNumber of words (with meanings) with unknown POS: " + n_unknown_pos__in_rich_words);
 
         System.out.println("\nThe total of all unique noun, verb, etc. (+ with empty definitions): " + n_langpos_with_empty_meaning);
-        System.out.println("\nNumber of empty definitions: " + n_empty_meaning);
+        System.out.println("\nNumber of empty definitions: " + mean_histogram [0]);
         System.out.println("\nNumber of words (unique noun, verb, etc.) with nonempty definitions: " + n_nonempty_meaning);
 
         System.out.println("\nNumber of records in the table lang_pos: " + n_total);
@@ -260,7 +269,7 @@ public class POSAndPolysemyTableAll {
         Connect wikt_parsed_conn = new Connect();
         LanguageType native_lang;
         
-        boolean b_english = true;
+        boolean b_english = false;
 
         // English
         if(b_english) {
@@ -277,7 +286,7 @@ public class POSAndPolysemyTableAll {
         //initLangEntries();
         
         String db_name = wikt_parsed_conn.getDBName();
-        WikiPrinterStat.printHeader (db_name);
+        general.printHeader (db_name);
 
         System.out.println("Number of entries for each part of speech (POS).");
         System.out.println("See about Part of Speech (POS) headers:");
@@ -350,7 +359,7 @@ public class POSAndPolysemyTableAll {
             POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.eo), print_templates_and_short_names);
         }
             
-        WikiPrinterStat.printFooter();
+        general.printFooter();
 
         wikt_parsed_conn.Close();
     }
