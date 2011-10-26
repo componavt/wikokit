@@ -20,7 +20,7 @@ public class StringUtil {
     
     private StringUtil() {}
     
-    private final static String         NULL_STRING       = new String("");
+    private final static String         NULL_STRING       = "";
     private final static String[]       NULL_STRING_ARRAY = new String[0];
     private final static List<String>   NULL_STRING_LIST  = new ArrayList<String>(0);
     private final static StringBuffer   NULL_STRINGBUFFER = new StringBuffer("");
@@ -185,33 +185,14 @@ public class StringUtil {
     }
     
     
-    /** Substitute source character s by destination d in the text. */
-    public static String substChar(String text, char s, char d){
-        StringBuilder result = new StringBuilder();
-        StringCharacterIterator iterator = new StringCharacterIterator(text);
-        char character =  iterator.current();
-        while (character != StringCharacterIterator.DONE ){
-          if (character == s) {
-            result.append(d);
-          }
-          else {
-            //the char is not a special one
-            //add it to the result as is
-            result.append(character);
-          }
-          character = iterator.next();
-        }
-        return result.toString();
-    }
-    
-    /** Substitutes spaces by undescore characters */
+    /** Substitutes spaces by underscore character */
     public static String spaceToUnderscore(String text) {
-        return substChar(text, ' ', '_');
+        return text.replace(' ', '_');
     }
     
-    /** Substitutes undescore by space characters */
+    /** Substitutes all underscores by space character */
     public static String underscoreToSpace(String text) {
-        return substChar(text, '_', ' ');
+        return text.replace('_', ' ');
     }
     
     /** Gets list of unique strings (case insensitive). */

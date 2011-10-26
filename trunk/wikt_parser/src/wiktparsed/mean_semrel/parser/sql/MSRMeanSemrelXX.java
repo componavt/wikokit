@@ -128,7 +128,7 @@ public class MSRMeanSemrelXX {
                 for(LanguageType lang_code : code2lang.values()) {
 
                     //String table_name = "index_" + lang_code.toStringASCII();
-                    String table_name = "`mean_semrel_" + lang_code.toStringASCII() + "`";
+                    String table_name = "`mean_semrel_" + lang_code.toTablePrefix() + "`";
 
                     str_sql.setLength(0);
                     str_sql.append("DROP TABLE IF EXISTS "+ table_name);
@@ -192,7 +192,7 @@ public class MSRMeanSemrelXX {
         {
             Statement s = connect.conn.createStatement ();
             try {
-                String table_name = "mean_semrel_" + xx_lang.getCode();
+                String table_name = "mean_semrel_" + xx_lang.toTablePrefix();
                 
                 // INSERT INTO mean_semrel_XX (page_title,meaning,n_sem_rel,success,failure,synonyms,etc.) VALUES ("test_page_msr","meaning_test_msr",1,0,0,"synonyms_test_msr",etc.);
                 str_sql.append("INSERT INTO ").append(table_name);
@@ -262,7 +262,7 @@ public class MSRMeanSemrelXX {
         for(String r : table_fields_relations)
             str_sql.append(",").append(r);   // SELECT ...,synonyms...
         
-        String table_name = "mean_semrel_" + xx_lang.getCode();
+        String table_name = "mean_semrel_" + xx_lang.toTablePrefix();
         str_sql.append(" FROM ").append(table_name);
         str_sql.append(" WHERE page_title=\"");
         str_sql.append(PageTableBase.
@@ -324,7 +324,7 @@ public class MSRMeanSemrelXX {
      */
     public void delete (Connect connect, LanguageType xx_lang) {
 
-        String table_name = "mean_semrel_" + xx_lang.getCode();
+        String table_name = "mean_semrel_" + xx_lang.toTablePrefix();
         
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("DELETE FROM ").append(table_name);

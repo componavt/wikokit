@@ -101,7 +101,7 @@ public class IndexForeign {
         StringBuilder str_sql = new StringBuilder();
         boolean b_native_word = null != native_page_title && native_page_title.length() > 0;
 
-        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+        String table_name = "`index_" + foreign_lang.toTablePrefix() + "`";
 
         if(b_native_word)
             str_sql.append("INSERT INTO "+table_name+" (foreign_word,foreign_has_definition,native_page_title) VALUES (\"");
@@ -203,7 +203,7 @@ public class IndexForeign {
     public static int count (Connect conn, String foreign_word,
                      String native_page_title, LanguageType foreign_lang)
     {
-        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+        String table_name = "`index_" + foreign_lang.toTablePrefix() + "`";
         String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(conn, foreign_word);
 
         StringBuilder str_sql = new StringBuilder();
@@ -278,7 +278,7 @@ public class IndexForeign {
     private static int countNativePageTitleIsNull (Connect conn, LanguageType foreign_lang,
                                         boolean is_null)
     {
-        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+        String table_name = "`index_" + foreign_lang.toTablePrefix() + "`";
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("SELECT COUNT(*) AS size from ").append(table_name).append(" WHERE native_page_title is ");
         if(is_null) {
@@ -330,7 +330,7 @@ public class IndexForeign {
         if(foreign_lang == native_lang || 0==limit)
             return NULL_INDEXFOREIGN_ARRAY;
         
-        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+        String table_name = "`index_" + foreign_lang.toTablePrefix() + "`";
 
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("SELECT foreign_word,foreign_has_definition,native_page_title FROM ");
@@ -420,7 +420,7 @@ public class IndexForeign {
         boolean b_native_word = null != native_page_title && native_page_title.length() > 0;
 
         StringBuilder str_sql = new StringBuilder();
-        String table_name = "`index_" + foreign_lang.toStringASCII() + "`";
+        String table_name = "`index_" + foreign_lang.toTablePrefix() + "`";
         str_sql.append("DELETE FROM ").append(table_name).append(" WHERE foreign_word=\"");
 
         String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
@@ -476,13 +476,13 @@ public class IndexForeign {
             s = connect.conn.createStatement ();
 
             Map<String, LanguageType> code2lang = LanguageType.getAllLanguages();
-            String s_native_lang = native_lang.toStringASCII();
+            String s_native_lang = native_lang.toTablePrefix();
             for(LanguageType lang_code : code2lang.values()) {
-                if(lang_code.toStringASCII().equalsIgnoreCase(s_native_lang))
+                if(lang_code.toTablePrefix().equalsIgnoreCase(s_native_lang))
                     continue;
 
                 //String table_name = "index_" + lang_code.toStringASCII();
-                String table_name = "`index_" + lang_code.toStringASCII() + "`";
+                String table_name = "`index_" + lang_code.toTablePrefix() + "`";
                 
                 str_sql.setLength(0);
                 str_sql.append("DROP TABLE IF EXISTS "+ table_name);

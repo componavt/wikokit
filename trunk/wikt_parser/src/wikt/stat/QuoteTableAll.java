@@ -6,6 +6,7 @@
 
 package wikt.stat;
 
+import wikt.stat.printer.general;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 
 import wikipedia.language.LanguageType;
@@ -463,7 +464,7 @@ public class QuoteTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of quotes in the Wiktionary parsed database ==");
-        WikiPrinterStat.printHeader (db_name);
+        general.printHeader (db_name);
 
         Map<LanguageType, Integer> m = QuoteTableAll.countQuotes(wikt_parsed_conn);
         wikt_parsed_conn.Close();
@@ -473,7 +474,7 @@ public class QuoteTableAll {
 
         System.out.println();
         //int total_quotes =
-        WikiPrinterStat.printSomethingPerLanguage(native_lang, m);
+        general.printSomethingPerLanguage(native_lang, m);
         //System.out.println("Total quotes: " + total_quotes);
 
         /** Number of quotes for each source: <source name, example_words and counter). */
@@ -482,7 +483,7 @@ public class QuoteTableAll {
         QuoteTableAll.printQuoteAuthor(m_author_n, cluster_to_authors); // l_author_n);
 
         //System.out.println("\nThere are quotes in " + m.size() + " languages.");
-        WikiPrinterStat.printFooter();
+        general.printFooter();
     }
 
 }
