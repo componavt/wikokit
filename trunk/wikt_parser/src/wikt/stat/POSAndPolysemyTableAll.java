@@ -7,7 +7,8 @@
 
 package wikt.stat;
 
-import wikt.stat.printer.general;
+import wikt.stat.printer.POSAndPolysemyPrinter;
+import wikt.stat.printer.CommonPrinter;
 import wikipedia.language.LanguageType;
 import wikipedia.sql.Connect;
 import wikipedia.sql.Statistics;
@@ -27,13 +28,15 @@ import wikt.api.WTMeaning;
  * @see for inspiration: http://wordnet.princeton.edu/wordnet/man/wnstats.7WN.html
  */
 public class POSAndPolysemyTableAll {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     
     /** Let's constrain the maximum number of meanings/definitions for one word */
     private static final int max_meanings = 100;
     private static final int[] mean_histogram = new int[max_meanings];
     
+    // histogram for each language
+    private static final Map<LanguageType, Integer[]> m_lang_histogram = new HashMap<LanguageType, Integer[]>();
 
     /** Inner POSStat class for each POS. */
     public static class POSStat {
@@ -43,8 +46,9 @@ public class POSAndPolysemyTableAll {
             monosemous = 0;
             polysemous_words = 0;
             polysemous_senses = 0;
-            max_senses = 0;
-            page_title = "";
+            
+            max_senses1 = 0;    max_senses2 = 0;    max_senses3 = 0;
+            page_title1 = "";   page_title2 = "";   page_title3 = "";
         }
 
         /** Total number of LangPOS for this POS (?sum of all languages). */
@@ -62,11 +66,15 @@ public class POSAndPolysemyTableAll {
         /** Number of polysemous senses (i.e += number of meanings of LangPOS) for this POS. */
         private int polysemous_senses;
 
-        /** Value of maximum number of senses for this POS. */
-        private int max_senses;
-
-        /** Word with maximum number of senses with this POS. */
-        private String page_title;
+        /** Value of maximum number of senses for this POS (for page_title1,2,3). */
+        private int max_senses1;
+        private int max_senses2;
+        private int max_senses3;
+        
+        /** Word (3 words) with maximum number of senses with this POS. */
+        private String page_title1;
+        private String page_title2;
+        private String page_title3;
 
         public int getNumberOfUniquesStrings() {
             return uniques_strings;
@@ -96,12 +104,24 @@ public class POSAndPolysemyTableAll {
 
         /** Maximum number of senses (meanings, definitions) for this POS. */
         public int getMaxSenses() {
-            return max_senses;
+            return max_senses1;
         }
 
         /** Word with maximum number of senses (meanings, definitions) for this POS. */
-        public String getMaxSensesPageTitle() {
-            return page_title;
+        public String getWikifiedWordWithMaxSenses() {
+            
+            String result = "";
+            
+            if(page_title1.length() > 0)
+                result += "[[" + page_title1 + "]], ";
+            
+            if(page_title2.length() > 0)
+                result += "[[" + page_title2 + "]], ";
+            
+            if(page_title3.length() > 0)
+                result += "[[" + page_title3 + "]]";
+            
+            return result;
         }
         
         /** Increment statistics data.
@@ -118,9 +138,15 @@ public class POSAndPolysemyTableAll {
                 polysemous_senses += n_meaning;
             }
 
-            if(n_meaning > max_senses) {
-                max_senses = n_meaning;
-                page_title = current_page_title;
+            if(n_meaning > max_senses1) {
+                max_senses1 = n_meaning;
+                page_title1 = current_page_title;
+            } else if(n_meaning > max_senses2) {
+                max_senses2 = n_meaning;
+                page_title2 = current_page_title;
+            } else if(n_meaning > max_senses3) {
+                max_senses3 = n_meaning;
+                page_title3 = current_page_title;
             }
         }
     }
@@ -185,8 +211,21 @@ public class POSAndPolysemyTableAll {
 
                 int n_meaning = WTMeaning.countMeanings(wikt_parsed_conn, lang_pos_not_recursive);
                 
-                if(n_meaning < max_meanings)
+                if(n_meaning < max_meanings) {
                     mean_histogram [n_meaning] ++;
+                    
+                    Integer[] h;
+                    if(m_lang_histogram.containsKey(lang) ) {
+                        h = m_lang_histogram.get(lang);
+                    } else {
+                        h = new Integer[max_meanings]; 
+                        for(int i=0;i<max_meanings;i++)
+                            h[i] = 0;
+                    }
+                    h[n_meaning] ++;
+                    m_lang_histogram.put(lang, h);
+                }
+                
                 if(0 == n_meaning)
                     continue;
                 n_nonempty_meaning ++;
@@ -230,7 +269,7 @@ public class POSAndPolysemyTableAll {
                 }*/
                 
                 if(0 == n_cur % 1000) {   // % 100
-                    if(DEBUG && n_cur > 999)
+                    if(DEBUG && n_cur > 1999)
                         break;
 
                     long    t_cur, t_remain;
@@ -286,7 +325,7 @@ public class POSAndPolysemyTableAll {
         //initLangEntries();
         
         String db_name = wikt_parsed_conn.getDBName();
-        general.printHeader (db_name);
+        CommonPrinter.printHeader (db_name);
 
         System.out.println("Number of entries for each part of speech (POS).");
         System.out.println("See about Part of Speech (POS) headers:");
@@ -294,14 +333,20 @@ public class POSAndPolysemyTableAll {
         System.out.println("* [http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%A7%D0%B0%D1%81%D1%82%D0%B8_%D1%80%D0%B5%D1%87%D0%B8 Приложение:Части речи]");
         System.out.println("* [http://ru.wiktionary.org/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B_%D1%81%D0%BB%D0%BE%D0%B2%D0%BE%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9 Категория:Шаблоны словоизменений]");
 
-        System.out.println("\n== Total (all entries) ==");
+        System.out.println("\n= Meanings =");
         Map<LanguageType, Map<POS,POSStat>> m_lang_pos =
                 POSAndPolysemyTableAll.countPOS(wikt_parsed_conn, native_lang);
-
+        
+        int max_meanings_to_print = 70;
+        POSAndPolysemyPrinter.printHistogramPerlanguage(mean_histogram, max_meanings_to_print,
+                                                        m_lang_histogram);
+        
+        System.out.println("\n= Part of speech =");
+        
+        System.out.println("\n== Total (all entries) ==");
         boolean print_templates_and_short_names = true;
         POSAndPolysemyPrinter.printPOS(native_lang, m_pos_sum_all_lang, print_templates_and_short_names);
 
-        
         print_templates_and_short_names = false;
         
         // English order
@@ -355,11 +400,17 @@ public class POSAndPolysemyTableAll {
             System.out.println("\n== Tatar entries ==");
             POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.tt), print_templates_and_short_names);
 
+            System.out.println("\n== Belarusian entries ==");
+            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.be), print_templates_and_short_names);
+            
             System.out.println("\n== Esperanto entries ==");
             POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.eo), print_templates_and_short_names);
-        }
             
-        general.printFooter();
+            System.out.println("\n== Bashkir entries ==");
+            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.ba), print_templates_and_short_names);
+        }
+        
+        CommonPrinter.printFooter();
 
         wikt_parsed_conn.Close();
     }

@@ -24,7 +24,7 @@ import java.util.List;
  * @see http://ru.wiktionary.org/wiki/User:AKA MBG/Статистика:Семантические_отношения
  * @see todo
  */
-public class general {
+public class CommonPrinter {
 
     public static void printHeader (String db_name) {
 
@@ -176,7 +176,7 @@ public class general {
 
     /** Prints statistics-histogram about number of relations in Wiktionary.
      *
-     * @param max_values_to_print upper constraint max: rel_histogram[0..max-1] will be printed
+     * @param max_values_to_print values rel_histogram[0..max_values_to_print-1] will be printed
      * @param histogram with number of semantic relations, i.e.
      * [0] = number of words (one language, one part of speech) without any semantic relations,
      * [1] = number of words with one relation, etc.

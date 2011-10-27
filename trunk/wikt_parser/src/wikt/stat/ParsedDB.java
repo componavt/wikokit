@@ -6,7 +6,7 @@
 
 package wikt.stat;
 
-import wikt.stat.printer.general;
+import wikt.stat.printer.CommonPrinter;
 import wikipedia.language.LanguageType;
 
 import wikipedia.sql.*;
@@ -53,7 +53,7 @@ public class ParsedDB {
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Parameters of the created (parsed) Wiktionary database ==");
         
-        general.printHeader (db_name);
+        CommonPrinter.printHeader (db_name);
         String empty_line = "\n|-\n|| || ||";
 
         System.out.println("\n'''Table''' is a name of the table in the database.");
@@ -93,7 +93,7 @@ public class ParsedDB {
 
         System.out.println("\n|}");        
 
-        general.printFooter();
+        CommonPrinter.printFooter();
 
         wikt_parsed_conn.Close();
     }

@@ -6,7 +6,7 @@
 
 package wikt.stat;
 
-import wikt.stat.printer.general;
+import wikt.stat.printer.CommonPrinter;
 import wikt.constant.Relation;
 import wikipedia.language.LanguageType;
 import wikt.api.WTRelation;
@@ -367,7 +367,7 @@ public class RelationTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of semantic relations in the Wiktionary parsed database ==");
-        general.printHeader (db_name);
+        CommonPrinter.printHeader (db_name);
 
         Map<LanguageType, Map<Relation,Integer>> m = RelationTableAll.countRelationsPerLanguage(wikt_parsed_conn);
 
@@ -381,23 +381,23 @@ public class RelationTableAll {
         System.out.println();
 
         //WTStatisticsGoogleWiki.printRelationsPerLanguage(m);
-        general.printRelationsPerLanguage(native_lang, m, m_lang_entries_number);
+        CommonPrinter.printRelationsPerLanguage(native_lang, m, m_lang_entries_number);
         
         /** Maximum "number of relations" will be printed in the table:
          * (2) Number of words per number of relations
          * @see http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations#Number_of_words_per_number_of_relations
          */
         int max_relations_to_print = 50;
-        general.printRelationHistogram(rel_histogram, max_relations_to_print);
+        CommonPrinter.printRelationHistogram(rel_histogram, max_relations_to_print);
 
-        general.printRelationsTypeHistogram (rel_type_histogram, m_relation_type_number);
+        CommonPrinter.printRelationsTypeHistogram (rel_type_histogram, m_relation_type_number);
         
-        general.printWordsWithManyRelations(native_lang, wikt_parsed_conn,
+        CommonPrinter.printWordsWithManyRelations(native_lang, wikt_parsed_conn,
                                 words_rich_in_relations,
                                 threshold_relations_foreign, threshold_relations_native,
                                 threshold_type_relations);
 
-        general.printFooter();
+        CommonPrinter.printFooter();
 
         wikt_parsed_conn.Close();
     }
