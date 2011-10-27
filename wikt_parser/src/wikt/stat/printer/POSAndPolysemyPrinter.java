@@ -6,7 +6,7 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.stat;
+package wikt.stat.printer;
 
 import wikt.constant.POS;
 import wikt.stat.POSAndPolysemyTableAll.POSStat;
@@ -37,6 +37,9 @@ public class POSAndPolysemyPrinter {
                         Map<POS,POSStat> m_lang_pos,
                         boolean print_templates_and_short_names)
     {
+        if(null == m_lang_pos)
+            return;
+                
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         System.out.print("! Unique Strings || Total Word-Sense Pairs || POS");
         
@@ -66,7 +69,7 @@ public class POSAndPolysemyPrinter {
                                  " || " + pos.getTemplates(", ", native_lang));
 
             System.out.print(" || " + pos_stat.getMaxSenses() +
-                             " || [[" + pos_stat.getMaxSensesPageTitle() + "]]");
+                             " || " + pos_stat.getWikifiedWordWithMaxSenses());
         }
         System.out.println("\n|}");
     }
@@ -108,9 +111,17 @@ public class POSAndPolysemyPrinter {
                         Map<POS,POSStat> m_lang_pos,
                         boolean print_templates_and_short_names)
     {
+        if(null == m_lang_pos)
+            return;
+        
         // !print header line before this function
         System.out.println("\n=== Number of words and senses ===");
-        System.out.println("\nRows in the table: " + m_lang_pos.size() + "\n");
+        
+        int lang_pos_size = 0;
+        if(null != m_lang_pos)
+            lang_pos_size = m_lang_pos.size();
+        
+        System.out.println("\nRows in the table: " + lang_pos_size + "\n");
         printPOSWordsAndSensesTable(native_lang,
                                     m_lang_pos,
                                     print_templates_and_short_names);
@@ -120,5 +131,79 @@ public class POSAndPolysemyPrinter {
 
         printPOSPolysemyTable ( native_lang,
                                 m_lang_pos);
+    }
+    
+    /** Maximum "number of relations" will be printed in the table:
+     * (2) Number of words per number of relations
+     * @see http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations#Number_of_words_per_number_of_relations
+     */
+    //static final Integer max_relations_to_print = 50;
+
+    /** Prints statistics-histogram about number of meanings in Wiktionary.
+     *
+     * @param max_values_to_print values histogram[0..max_values_to_print-1] will be printed
+     * @param total_histogram with total number of meanings for all languages
+     * @param m_lang_histogram number of meanings for each 
+     */
+    public static void printHistogramPerlanguage (int[] total_histogram, int max_values_to_print,
+            Map<LanguageType, Integer[]> m_lang_histogram) {
+
+        // maximum number of meanings [0..max] to be printed in the table
+        // max := first non-zero value in total_histogram[] from the end of array
+        int max = Math.min(total_histogram.length, max_values_to_print);
+        for(int i=max-1; i>=0; i--) {
+            if(0 != total_histogram[i]) {
+                max = i;
+                break;
+            }
+        }
+        if (0 == max)
+            return;
+        
+        // print header line
+        System.out.println("\n=== Number of words having different number of meanings / definitions ===\n");
+
+        System.out.println("Table description:");
+        System.out.println("* column 0 - number of words with empty definitions (total and for each language), etc.");
+        System.out.println("* column 1 - number of monosemous words (total and for each language)");
+        System.out.println("* column 2 - number of words with two meanings, etc.");
+        System.out.println("* last column (\"Total\") - total number of words for this language.");
+        
+        System.out.println("\nOnly the first " + max + " meanings (columns) are presented in the table.");
+
+        System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
+        
+        System.out.print("! colspan=\"2\"| Number of meanings: ");
+        for(int i=0; i<=max; i++)
+            System.out.print("||" + i);
+        System.out.print("||Total");
+
+        
+        // System.out.print("\n|-");
+        // System.out.print("\n! Language name || Language code || colspan=\""+(max+2)+"\"| &nbsp;");
+        System.out.print("\n|-");
+        System.out.print("\n! Total (all languages) || code");
+        int cur_total = 0;
+        for(int i=0; i<=max; i++) { 
+            System.out.print("||" + total_histogram[i]);
+            cur_total += total_histogram[i];
+        }
+        System.out.print("||" + cur_total);
+        
+        
+        for(LanguageType lang : m_lang_histogram.keySet()) {
+            System.out.println("\n|-\n! " + lang.getName() + " || " + lang.getCode());
+            
+            cur_total = 0;
+            Integer[] h = m_lang_histogram.get(lang);
+            for(int i=0; i<=max; i++) { 
+                System.out.print("||" + h[i]);
+                cur_total += h[i];
+            }
+            System.out.print("||" + cur_total);
+        }
+        System.out.println("\n|}");
+
+                
     }
 }

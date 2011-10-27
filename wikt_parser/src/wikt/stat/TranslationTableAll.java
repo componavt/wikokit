@@ -6,7 +6,7 @@
 
 package wikt.stat;
 
-import wikt.stat.printer.general;
+import wikt.stat.printer.CommonPrinter;
 import wikipedia.language.LanguageType;
 import wikipedia.language.Encodings;
 
@@ -167,17 +167,17 @@ public class TranslationTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of translations in the Wiktionary parsed database ==");
-        general.printHeader (db_name);
+        CommonPrinter.printHeader (db_name);
 
         Map<LanguageType, Integer> m = TranslationTableAll.countTranslationPerLanguage(wikt_parsed_conn);
         wikt_parsed_conn.Close();
 
         System.out.println();
-        int total_trans = general.printSomethingPerLanguage(native_lang, m);
+        int total_trans = CommonPrinter.printSomethingPerLanguage(native_lang, m);
         System.out.println("Total translations: " + total_trans);
 
         System.out.println("\nThere are translations into " + m.size() + " languages.");
-        general.printFooter();
+        CommonPrinter.printFooter();
     }
 
 }
