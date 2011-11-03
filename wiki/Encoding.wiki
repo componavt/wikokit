@@ -53,6 +53,10 @@ public static String bytesTo(byte[] bytes, String encode) {
 
 I hope it will help to find the solution using your programming language.
 
+= Mac and Sequel =
+
+_From the letter of one of user, who successfully solved encoding problems.
+
 = Notes =
 == SQLite database ==
 
