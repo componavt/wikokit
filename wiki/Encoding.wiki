@@ -38,7 +38,7 @@ mysql> SHOW VARIABLES LIKE 'character_set%';
 
 = Application level =
 
-As I understand, all information (in Wikipedia and Wiktionary databases) is stored in binary format.
+As I understand, all information (in Wikipedia and Wiktionary databases) is stored in the binary format.
 MySQL thinks (see table above) that the data are stored in the `latin1` format. 
 
 So in Java code I am using the following function to decode text from
