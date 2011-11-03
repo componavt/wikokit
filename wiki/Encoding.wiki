@@ -76,7 +76,7 @@ _From the letter of the user, who successfully solved encoding problems._
 It was used the Mac MySQL frontend Sequel (similar to
 MySQLWorkbench, at least for the basic features).
 
-The following variables were used (actually, _client and _database were "binary" also, but somehow they changed to utf8):
+The following variables were used (actually, _character_set_client_ and _character_set_database_ were "binary" also, but somehow they changed to utf8):
 
 character_set_client     utf8
 character_set_connection    binary
