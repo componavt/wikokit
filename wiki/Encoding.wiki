@@ -1,4 +1,5 @@
 #summary How to correctly setup database encoding, about character encoding.
+#labels SQL,Phase-Implementation,Featured
 
 = Introduction =
 
