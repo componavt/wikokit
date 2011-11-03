@@ -51,7 +51,7 @@ public static String bytesTo(byte[] bytes, String encode) {
    }
 }}}
 
-I hope it will help to find solution in your programming language.
+I hope it will help to find the solution using your programming language.
 
 = Notes =
 == SQLite database ==
