@@ -78,10 +78,10 @@ MySQLWorkbench, at least for the basic features).
 
 The following variables were used (actually, _character_set_client_ and _character_set_database_ were "binary" also, but somehow they changed to utf8):
 
-character_set_client     utf8
-character_set_connection    binary
-character_set_database    utf8
-character_set_filesystem   binary
+  * character_set_client     utf8
+  # character_set_connection    binary
+  # character_set_database    utf8
+  * character_set_filesystem   binary
 character_set_results    latin1
 character_set_server     binary
 character_set_system    utf8
