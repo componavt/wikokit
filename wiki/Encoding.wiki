@@ -103,4 +103,4 @@ SQLite format on your computer in the folder:
 C:\Documents and Settings\YOUR USER NAME\.wiwordik\
 
 = Links =
-* Markus Bertheau. [http://www.bluetwanger.de/blog/2006/11/20/mysql-and-utf-8-no-more-question-marks/ MySQL and UTF-8 — no more question marks!]
+  * Markus Bertheau. [http://www.bluetwanger.de/blog/2006/11/20/mysql-and-utf-8-no-more-question-marks/ MySQL and UTF-8 — no more question marks!]
