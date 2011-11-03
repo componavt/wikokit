@@ -91,7 +91,7 @@ According to this [http://www.bluetwanger.de/blog/2006/11/20/mysql-and-utf-8-no-
 Since a non-default encoding was chosen (during the creation of a database in order to load the Wiktionary parsed database dump file in), the above setting of `character_set_server` should be irrelevant.
 
 It was created a database with encoding "cp1252 West European (latin1)".
-Then dump file with encoding "Western (ISO Latin 1)" was imported to the MySQL database.
+Then the dump file with encoding "Western (ISO Latin 1)" was imported to the MySQL database.
 
 = Notes =
 == SQLite database ==
