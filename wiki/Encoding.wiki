@@ -18,9 +18,9 @@ mysql$ SOURCE path_to_file.sql
 See, e.g.: [http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql File_wikt_parsed_empty_sql]
 
 My connection parameters (from Java source code):
-
+{{{
 "enwikt20111008_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-
+}}}
 
 There are the following parameters of the parsed Wiktionary database in MySQL:
 {{{
