@@ -6,6 +6,22 @@ If you have some issues with the character encoding in your application (e.g. yo
 
 = Database encoding =
 
+The first task is to correctly upload the dump into MySQL. (The zero task is to download parsed Wiktionary database from this site.)
+
+I prefer several commands in windows command-line cmd.exe:
+{{{
+mysql$ CREATE DATABASE enwikt20100824_parsed;
+mysql$ USE enwikt20100824_parsed
+mysql$ SOURCE path_to_file.sql
+}}
+
+See, e.g.: http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql
+
+My connection parameters (from Java source code):
+
+"enwikt20111008_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+
+
 There are the following parameters of the parsed Wiktionary database in MySQL:
 {{{
 mysql> SHOW VARIABLES LIKE 'character_set%';
@@ -55,7 +71,27 @@ I hope it will help to find the solution using your programming language.
 
 = Mac and Sequel =
 
-_From the letter of one of user, who successfully solved encoding problems.
+_From the letter of the user, who successfully solved encoding problems._
+
+It was used the Mac MySQL frontend Sequel (similar to
+MySQLWorkbench, at least for the basic features).
+
+The following variables were used (actually, _client and _database were "binary" also, but somehow they changed to utf8):
+
+character_set_client     utf8
+character_set_connection    binary
+character_set_database    utf8
+character_set_filesystem   binary
+character_set_results    latin1
+character_set_server     binary
+character_set_system    utf8
+
+According to: [http://www.bluetwanger.de/blog/2006/11/20/mysql-and-utf-8-no-more-question-marks/ article] the variable "character_set_server" only determines the *default* encoding of new databases. 
+
+Since a non-default encoding was chosen (during the creation of a database in order to load the Wiktionary parsed database dump file in), the above setting of `character_set_server` should be irrelevant.
+
+It was created a database with encoding "cp1252 West European (latin1)".
+Then dump file with encoding "Western (ISO Latin 1)" was imported to the MySQL database.
 
 = Notes =
 == SQLite database ==
