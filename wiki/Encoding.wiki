@@ -13,7 +13,7 @@ I prefer several commands in windows command-line cmd.exe:
 mysql$ CREATE DATABASE enwikt20100824_parsed;
 mysql$ USE enwikt20100824_parsed
 mysql$ SOURCE path_to_file.sql
-}}
+}}}
 
 See, e.g.: [http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql File_wikt_parsed_empty_sql]
 
