@@ -32,7 +32,9 @@ public class POSAndPolysemyTableAll {
 
     
     /** Let's constrain the maximum number of meanings/definitions for one word */
-    private static final int max_meanings = 100;
+    private static final int max_meanings = 110;
+    private static final int max_meanings_to_print = 10; // 70 10
+
     private static final int[] mean_histogram = new int[max_meanings];
     
     // histogram for each language
@@ -113,13 +115,18 @@ public class POSAndPolysemyTableAll {
             String result = "";
             
             if(page_title1.length() > 0)
-                result += "[[" + page_title1 + "]], ";
+                result += "[[" + page_title1 + "]] "+max_senses1+", ";
             
             if(page_title2.length() > 0)
-                result += "[[" + page_title2 + "]], ";
+                result += "[[" + page_title2 + "]] "+max_senses2+", ";
             
             if(page_title3.length() > 0)
-                result += "[[" + page_title3 + "]]";
+                result += "[[" + page_title3 + "]] "+max_senses3+", ";
+            
+            // chop last comma ", "
+            int len = result.length();
+            if(len > 2)
+                result = result.substring(0, len-2);
             
             return result;
         }
@@ -308,7 +315,7 @@ public class POSAndPolysemyTableAll {
         Connect wikt_parsed_conn = new Connect();
         LanguageType native_lang;
         
-        boolean b_english = false;
+        boolean b_english = true;
 
         // English
         if(b_english) {
@@ -327,8 +334,13 @@ public class POSAndPolysemyTableAll {
         String db_name = wikt_parsed_conn.getDBName();
         CommonPrinter.printHeader (db_name);
 
-        System.out.println("Number of entries for each part of speech (POS).");
-        System.out.println("See about Part of Speech (POS) headers:");
+        System.out.println("This page outlines:");
+        System.out.println("* Number of meanings.");
+        System.out.println("* Number of empty definitions for each language.");
+        System.out.println("* Number of entries for each part of speech (POS).");
+        
+        System.out.println("\nNumber of entries for each part of speech (POS). Number of meanings.");
+        System.out.println("\nSee about Part of Speech (POS) headers:");
         System.out.println("* [http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained/POS_headers#Standard_non-POS_level_3_headers Wiktionary:Entry layout explained/POS headers]");
         System.out.println("* [http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%A7%D0%B0%D1%81%D1%82%D0%B8_%D1%80%D0%B5%D1%87%D0%B8 Приложение:Части речи]");
         System.out.println("* [http://ru.wiktionary.org/wiki/%D0%9A%D0%B0%D1%82%D0%B5%D0%B3%D0%BE%D1%80%D0%B8%D1%8F:%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD%D1%8B_%D1%81%D0%BB%D0%BE%D0%B2%D0%BE%D0%B8%D0%B7%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B9 Категория:Шаблоны словоизменений]");
@@ -337,7 +349,8 @@ public class POSAndPolysemyTableAll {
         Map<LanguageType, Map<POS,POSStat>> m_lang_pos =
                 POSAndPolysemyTableAll.countPOS(wikt_parsed_conn, native_lang);
         
-        int max_meanings_to_print = 70;
+        // todo print number of rows (i.e. number of languages (words) with definitions)
+        // ...
         POSAndPolysemyPrinter.printHistogramPerlanguage(mean_histogram, max_meanings_to_print,
                                                         m_lang_histogram);
         
@@ -377,6 +390,22 @@ public class POSAndPolysemyTableAll {
 
             System.out.println("\n== Esperanto entries ==");
             POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.eo), print_templates_and_short_names);
+        
+            System.out.println("\n== Latin entries ==");
+            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.la), print_templates_and_short_names);
+            
+            System.out.println("\n== Italian entries ==");
+            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.it), print_templates_and_short_names);
+            
+            System.out.println("\n== Swedish entries ==");
+            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.sv), print_templates_and_short_names);
+            
+            System.out.println("\n== Spanish entries ==");
+            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.es), print_templates_and_short_names);
+            
+            System.out.println("\n== Mandarin entries ==");
+            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.cmn), print_templates_and_short_names);
+            
         } else {
             // Russian order
             System.out.println("\n== Russian entries ==");

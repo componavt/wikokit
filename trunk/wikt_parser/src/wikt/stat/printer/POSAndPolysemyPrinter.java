@@ -164,7 +164,7 @@ public class POSAndPolysemyPrinter {
         System.out.println("\n=== Number of words having different number of meanings / definitions ===\n");
 
         System.out.println("Table description:");
-        System.out.println("* column 0 - number of words with empty definitions (total and for each language), etc.");
+        System.out.println("* column 0 - number of words with empty definitions (total and for each language)");
         System.out.println("* column 1 - number of monosemous words (total and for each language)");
         System.out.println("* column 2 - number of words with two meanings, etc.");
         System.out.println("* last column (\"Total\") - total number of words for this language.");
@@ -173,7 +173,7 @@ public class POSAndPolysemyPrinter {
 
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         
-        System.out.print("! colspan=\"2\"| Number of meanings: ");
+        System.out.print("! || Number of meanings: ");
         for(int i=0; i<=max; i++)
             System.out.print("||" + i);
         System.out.print("||Total");
@@ -182,7 +182,7 @@ public class POSAndPolysemyPrinter {
         // System.out.print("\n|-");
         // System.out.print("\n! Language name || Language code || colspan=\""+(max+2)+"\"| &nbsp;");
         System.out.print("\n|-");
-        System.out.print("\n! Total (all languages) || code");
+        System.out.print("\n! code || Total (all languages) :");
         int cur_total = 0;
         for(int i=0; i<=max; i++) { 
             System.out.print("||" + total_histogram[i]);
@@ -192,7 +192,7 @@ public class POSAndPolysemyPrinter {
         
         
         for(LanguageType lang : m_lang_histogram.keySet()) {
-            System.out.println("\n|-\n! " + lang.getName() + " || " + lang.getCode());
+            System.out.println("\n|-\n! " + lang.getCode() + " || " + lang.getName());
             
             cur_total = 0;
             Integer[] h = m_lang_histogram.get(lang);
@@ -202,6 +202,10 @@ public class POSAndPolysemyPrinter {
             }
             System.out.print("||" + cur_total);
         }
+        
+        // Total (all languages)
+        
+        
         System.out.println("\n|}");
 
                 

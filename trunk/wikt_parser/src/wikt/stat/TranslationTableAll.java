@@ -21,7 +21,7 @@ import java.util.HashMap;
 /** Translations' statistics in the database of the parsed Wiktionary.
  */
 public class TranslationTableAll {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     // Native language is a language of Wiktionary edition, e.g. Russian in Russian Wiktionary.
 
@@ -84,7 +84,8 @@ public class TranslationTableAll {
                 String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
 
                 TLang tlang = lang_pos.getLang();
-                if(null != tlang && native_lang != tlang.getLanguage()) {
+                LanguageType lt = tlang.getLanguage();  // see: Wiktionary:About Translingual
+                if(null != tlang && native_lang != lt && LanguageType.mul != lt) {
                     System.err.print("Error (TranslationTableAll.countTranslationPerLanguage()): There is a translation box from a foreign language, code=" + tlang.getLanguage().getCode());
                     TPage p = lang_pos.getPage();
                     if(null != p)

@@ -39,7 +39,7 @@ public class POS {
         } else if(l == LanguageType.en) {
             s = name;
         } else {
-            throw new NullPointerException("Null LanguageType");
+            throw new NullPointerException("POS.toString(): Null LanguageType");
         }
 
         if(0 == s.length()) // English name is better than nothing

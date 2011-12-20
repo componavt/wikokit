@@ -120,7 +120,7 @@ public class StringUtilTest extends TestCase {
     public void testSubstChar(){
         System.out.println("substChar");
         String s = "Too much   spaces are here.!@#(*$&";
-        String s_underscored = StringUtil.substChar(s, ' ', '_');
+        String s_underscored = s.replace(' ', '_');
         assertEquals(s_underscored, "Too_much___spaces_are_here.!@#(*$&");
     }
         
