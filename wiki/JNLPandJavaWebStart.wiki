@@ -20,10 +20,10 @@ Add result .jar file to the !NetBeans project `wiwordik`.
 
 == Java source code ==
 
-Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\WConstants.fx`:
+Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\WConstants.java`:
 {{{
-def IS_RELEASE : Boolean = true;
-def IS_SQLITE : Boolean = true;
+public static Boolean IS_RELEASE = true;
+public static Boolean IS_SQLITE = true;
 }}}
 
 == Ant (build.xml) ==
