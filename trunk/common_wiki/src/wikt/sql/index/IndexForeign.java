@@ -17,6 +17,7 @@ import java.sql.*;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
+import wikt.sql.TLangPOS;
 
 
 /** The table 'index_XX' - wordlist of words in language with code XX
@@ -313,11 +314,13 @@ public class IndexForeign {
      *
      * SELECT foreign_word,native_page_title FROM index_en WHERE foreign_word LIKE 'water1%';
      * 
-     * @param  foreign_word title of Wiktionary article
+     * @param  prefix_foreign_word the begining of the page_titles
      * @param  limit    constraint of the number of rows returned,
      *                  if it's negative then a constraint is omitted
      * @param native_lang       native language in the Wiktionary,
      *                          e.g. Russian language in Russian Wiktionary
+     * @param b_meaning return articles with definitions (constraint)
+     * @param  b_sem_rel return articles with semantic relations
      * 
      * @return array of words started from the prefix (empty array if they are absent)
      */
@@ -325,7 +328,9 @@ public class IndexForeign {
                                         Connect connect,
                                         String prefix_foreign_word, int limit,
                                         LanguageType native_lang,
-                                        LanguageType foreign_lang
+                                        LanguageType foreign_lang,
+                                        boolean b_meaning,
+                                        boolean b_sem_rel
                                         ) {
         if(foreign_lang == native_lang || 0==limit)
             return NULL_INDEXFOREIGN_ARRAY;
@@ -342,9 +347,15 @@ public class IndexForeign {
             //str_sql.append("%\"");
         str_sql.append("\"");
 
-        if(limit > 0) {
+        int limit_with_reserve = limit;
+        if(limit_with_reserve > 0) {
+            if(b_meaning)
+                limit_with_reserve += 142; // since some words without meaning will be skipped
+            if(b_sem_rel)
+                limit_with_reserve += 1312; // since some words without relations will be skipped
+            
             str_sql.append(" LIMIT ");
-            str_sql.append(limit);
+            str_sql.append(limit_with_reserve);
         }
         //System.out.print("safe_prefix=" + safe_prefix);
         List<IndexForeign> if_list = null;
@@ -354,34 +365,51 @@ public class IndexForeign {
                 ResultSet rs = s.executeQuery (str_sql.toString());
                 try {
                     while (rs.next () &&
-                            (limit < 0 || null == if_list || if_list.size() < limit))
+                            (limit_with_reserve < 0 || null == if_list || if_list.size() < limit_with_reserve))
                     {
                         String foreign_word = Encodings.bytesToUTF8(rs.getBytes("foreign_word"));
                         boolean foreign_has_definition = rs.getBoolean("foreign_has_definition");
                         byte[] bt_native_page_title = rs.getBytes("native_page_title");
 
-                        TPage foreign_page = null;
-                        if(foreign_has_definition)
-                            foreign_page = TPage.get(connect, foreign_word);
+                        boolean b_add = true;
+                        if(b_meaning)               // filter: words only with definitions
+                            b_add = b_add && foreign_has_definition;
+                        if (b_add) {
+                            
+                            TPage foreign_page = null;
+                            if(foreign_has_definition)
+                                foreign_page = TPage.get(connect, foreign_word);
+                            
+                            if(b_sem_rel) {
+                                if(!foreign_has_definition || null == foreign_page) {
+                                    b_add = false;
+                                } else {
+                                    foreign_page.setLangPOS( TLangPOS.getRecursive(connect, foreign_page) );    // fills property: .foreign_page.hasSemanticRelation()
+                                }
+                                b_add = b_add && foreign_has_definition && foreign_page.hasSemanticRelation();
+                            }
+                            if (b_add) {
 
-                        TPage native_page = null;
-                        if(null != bt_native_page_title) {
-                            String native_page_title = Encodings.bytesToUTF8(bt_native_page_title);
+                                TPage native_page = null;
+                                String native_page_title = "";
+                                if(null != bt_native_page_title) {
+                                    native_page_title = Encodings.bytesToUTF8(bt_native_page_title);
 
-                            if(native_page_title.length() > 0)
-                                native_page = TPage.get(connect, native_page_title);
+                                    if(native_page_title.length() > 0)
+                                        native_page = TPage.get(connect, native_page_title);
+                                }
+
+                                IndexForeign _if = new IndexForeign(
+                                        foreign_page, foreign_word, native_page);
+
+                                if(null == if_list)
+                                    if_list = new ArrayList<IndexForeign>();
+                                if_list.add(_if);
+                                //System.out.println("IndexForeign:getByPrefixForeign foreign_word=" + foreign_word +
+                                //        "; foreign_has_definition=" + foreign_has_definition +
+                                //        "; native_page_title=" + native_page_title);
+                            }
                         }
-
-                        IndexForeign _if = new IndexForeign(
-                                foreign_page, foreign_word, native_page);
-
-                        if(null == if_list)
-                            if_list = new ArrayList<IndexForeign>();
-                        if_list.add(_if);
-                        //System.out.println(" foreign_word=" + foreign_word +
-                        //        "; foreign_has_definition=" + foreign_has_definition +
-                                // "; native_page_title=" + native_page_title +
-                        //        " (IndexForeign.getByPrefixForeign)");
                     }
                 } finally {
                     rs.close();

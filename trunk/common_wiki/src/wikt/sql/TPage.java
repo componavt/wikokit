@@ -124,6 +124,13 @@ public class TPage {
     public String getRedirect() {
         return redirect_target;
     }
+    
+    /** Sets array: language and part of speech.
+     */
+    public void setLangPOS(TLangPOS[] _lang_pos) {
+        lang_pos = _lang_pos;
+    }
+    
 
     /** Gets ID of a record or inserts record (if it is absent)
      * into the table 'page'.<br><br>
@@ -380,6 +387,7 @@ public class TPage {
      * @param  prefix   the begining of the page_titles
      * @param  b_skip_redirects return articles without redirects if true
      * @param  b_meaning return articles with definitions
+     * @param  b_sem_rel return articles with semantic relations
      * @param  str_source_lang pages filtering for words with these language
      *                          codes, e.g. "ru en fr"
      * @return null if page_title is absent
