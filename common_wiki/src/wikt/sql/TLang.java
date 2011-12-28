@@ -140,6 +140,15 @@ public class TLang {
     public static Map<LanguageType, Integer> getAllLanguages() {
         return lang2id;
     }
+    
+    /** Gets the map from language ID (ID in the table 'lang') to language.
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static Map<Integer, TLang> getAllTLang() {
+        return id2lang;
+    }
 
     
     /** Parses and extracts language codes from the string 'lang_codes'. 

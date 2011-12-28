@@ -209,5 +209,4 @@ public class WLanguage {
         return at_least_one_template;
     }
 
-
 }
