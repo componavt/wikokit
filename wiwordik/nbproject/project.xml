@@ -32,5 +32,10 @@
                 <id>jar</id>
             </reference>
         </references>
+        <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
+            <word>language</word>
+            <word>translation</word>
+            <word>Whether</word>
+        </spellchecker-wordlist>
     </configuration>
 </project>
