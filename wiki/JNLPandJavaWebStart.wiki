@@ -18,6 +18,8 @@ or
 
 Add result .jar file to the !NetBeans project `wiwordik`.
 
+Also add `sqlite-jdbc-X.X.X.jar` to the !NetBeans project `wiwordik`.
+
 == Java source code ==
 
 Turn on two variables in the file `wikokit\wiwordik\src\wiwordik\WConstants.java`:
