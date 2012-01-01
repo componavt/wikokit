@@ -91,10 +91,14 @@ public class IndexForeignTest {
         IndexForeign.insert(conn, foreign_word, foreign_has_definition,
                             native_page_title, native_lang, foreign_lang);
         
+        boolean b_meaning = false;
+        boolean b_sem_rel = false;
+        
         prefix_foreign_word = "water1";
         index_foreign = IndexForeign.getByPrefixForeign(conn, 
                                     prefix_foreign_word, n_limit,
-                                    native_lang, foreign_lang);
+                                    native_lang, foreign_lang,
+                                    b_meaning, b_sem_rel);
         
         assertEquals(0, index_foreign.length);
 
@@ -106,7 +110,8 @@ public class IndexForeignTest {
                             
         index_foreign = IndexForeign.getByPrefixForeign(conn,
                                         prefix_foreign_word, n_limit,
-                                        native_lang, foreign_lang);
+                                        native_lang, foreign_lang,
+                                        b_meaning, b_sem_rel);
         assertEquals(1, index_foreign.length);
         native_page = index_foreign[0].getNativePage();
         assertNotNull(native_page_title);
@@ -138,7 +143,8 @@ public class IndexForeignTest {
                             
         index_foreign = IndexForeign.getByPrefixForeign(conn,
                                         prefix_foreign_word, n_limit,
-                                        native_lang, foreign_lang);
+                                        native_lang, foreign_lang,
+                                        b_meaning, b_sem_rel);
         assertEquals(1, index_foreign.length);
         native_page = index_foreign[0].getNativePage();
         assertNotNull(native_page_title);

@@ -71,4 +71,55 @@
     nbproject/build-impl.xml file. 
 
     -->
+
+    <property name="version" value="0.09"/>
+    <!-- property name="sqlite.file" value="enwikt20111008"/ -->
+    <property name="sqlite.file" value="ruwikt20110521"/>
+    <property name="store.jar.name" value="wiwordik-${version}-${sqlite.file}"/>
+
+    <target name="package-for-store" depends="jar">
+
+        <!-- delete dir="C:\Users\andrew\.wiwordik" / -->
+        <delete dir="${user.home}\.wiwordik" />
+
+        <!-- don't edit below this line -->
+
+        <property name="store.dir" value="store"/>
+        <property name="store.jar" value="${store.dir}/${store.jar.name}.jar"/>
+
+        <echo message="Packaging ${application.title} into a single JAR at ${store.jar}"/>
+
+        <delete dir="${store.dir}"/>
+        <mkdir dir="${store.dir}"/>
+
+        <jar destfile="${store.dir}/temp_final.jar" filesetmanifest="skip">
+            <zipgroupfileset dir="dist" includes="*.jar"/>
+            <zipgroupfileset dir="dist/lib" includes="*.jar"/>
+            <zipgroupfileset dir="store" includes="*.jar"/>
+
+            <manifest>
+                <attribute name="Main-Class" value="${main.class}"/>
+            </manifest>
+        </jar>
+
+        <zip destfile="${store.jar}">
+            <zipfileset src="${store.dir}/temp_final.jar"
+            excludes="META-INF/*.SF, META-INF/*.DSA, META-INF/*.RSA"/>
+        </zip>
+
+        <delete file="${store.dir}/temp_final.jar"/>
+
+    </target>
+
+
+    <!--target name="jarsigner" description="Signs JAR file" depends="package-for-store">
+        
+        <exec dir="." executable="jarsigner" failonerror="true">
+        <arg value="sign -keystore D:\all\docs\my_texts\social\root\jarsigner\myKeystore" />
+        <arg value="store/${store.jar.name}.jar " />
+        <arg value="andrew_k" />
+        </exec>
+    </target-->
+
+
 </project>
