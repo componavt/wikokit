@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- jnlp spec="1.0+" codebase="http://sourceforge.net/projects/synarcher/files/wiwordik/" href="wiwordik-en.jnlp" -->
+<!-- jnlp spec="1.0+" codebase="http://wikokit.googlecode.com/files/" href="wiwordik-ru.jnlp" -->
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="wiwordik-ru_test.jnlp">
+    <information>
+        <title>wiwordik-ru_test</title>
+        <vendor>Andrew Krizhanovsky</vendor>
+        <homepage href="http://wikokit.googlecode.com/"/>
+        <description>Visualization of the parsed Russian Wiktionary database</description>
+        <icon kind="splash" href="http://dl.javafx.com/1.3/splash.png"/>
+        <offline-allowed/>
+
+        <icon href="http://wikokit.googlecode.com/files/koala.jpg"/>
+
+        <shortcut online="false">
+          <desktop/>
+          <menu submenu="wiwordik"/>
+        </shortcut>
+
+    </information>
+
+
+    <security>
+        <all-permissions/>
+    </security>
+
+    <resources os="Windows" arch="x86">
+        <jfx:javafx-runtime version="2.0+" 
+            href="http://javadl.sun.com/webapps/download/GetFile/
+                    javafx-latest/windows-i586/javafx2.jnlp"/>        
+
+        <!--jfx:javafx-runtime version="2.0+" href="http://download.oracle.com/otn-pub/java/javafx/javafx-windows-i586__Vlatest.exe "/>
+    </resources>
+    <resources os="Windows" arch="x64">
+        <jfx:javafx-runtime version="2.0+" href="http://download.oracle.com/otn-pub/java/javafx/javafx-windows-x64__Vlatest.exe "/-->
+    </resources>
+
+    <resources>
+        <jar href="lib/common_wiki.jar" size="704978" download="eager" />
+        <jar href="lib/ruwikt20110521.sqlite.jar" size="251080852" download="eager" />
+        <jar href="lib/sqlite-jdbc-3.7.2.jar" download="eager" />
+        <!--jar href="http://dl.javafx.com/javafx-rt-windows-i586__V_b36.jar" part="javafx-rt" download="eager" main="false"/-->
+        
+        <property name="jnlp.packEnabled" value="true"/>
+        <property name="jnlp.versionEnabled" value="true"/>
+        <jar href="wiwordik-0.09-ruwikt20110521.jar" main="true"/>
+        <!-- jar href="wiwordik-ru.jar" main="true" size="78754115"/ -->
+
+    </resources>
+
+    <!-- applet-desc --> 
+    <application-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="wiwordik" />
+    <jfx:javafx-desc  width="800" height="600" main-class="wiwordik.Main"  name="wiwordik" />
+    <update check="background"/>
+
+    <!--application-desc main-class="com.sun.javafx.runtime.main.Main" progress-class="com.javafx.progressbar.ProgressManager">
+        <argument>MainJavaFXScript=wiwordik.Main</argument>
+    </application-desc>
+    <update check="always"/-->
+</jnlp>
