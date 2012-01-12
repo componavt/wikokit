@@ -73,8 +73,8 @@
     -->
 
     <property name="version" value="0.09"/>
-    <!-- property name="sqlite.file" value="enwikt20111008"/ -->
-    <property name="sqlite.file" value="ruwikt20110521"/>
+    <property name="sqlite.file" value="enwikt20111008"/>
+    <!-- property name="sqlite.file" value="ruwikt20110521"/ -->
     <property name="store.jar.name" value="wiwordik-${version}-${sqlite.file}"/>
 
     <target name="package-for-store" depends="jar">
