@@ -192,8 +192,13 @@ See article [http://www.reigndesign.com/blog/using-your-own-sqlite-database-in-a
 sqlite$ .read "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sql"
 sqlite$ CREATE TABLE "android_metadata" ("locale" TEXT DEFAULT 'en_US')
 sqlite$ INSERT INTO "android_metadata" VALUES ('en_US')
-sqlite$ .backup "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel.sqlite"
-cp enwikt20110618_mean_semrel.sqlite wikokit\magnetowordik\assets\enwikt_mean_semrel.sqlite.mp3
+sqlite$ .backup "C:/w/bin/mean_semrel/enwikt20110618_mean_semrel_a.sqlite"
+}}}
+
+== Outdated? ==
+
+{{{
+cp enwikt20110618_mean_semrel_a.sqlite wikokit\magnetowordik\assets\enwikt_mean_semrel.sqlite.mp3
 }}}
 
 The SQLite database was renamed to .mp3 file in order to avoid the file from being compressed by aapt. See [http://ponystyle.com/blog/2010/03/26/dealing-with-asset-compression-in-android-apps/ Dealing with Asset Compression in Android Apps] and [http://stackoverflow.com/questions/4709649/android-and-fairly-large-sqlite-datafiles Android and fairly large SQLite datafiles].
