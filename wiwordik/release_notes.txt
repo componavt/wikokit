@@ -1,10 +1,23 @@
-wiwordik 0.0X.10XX 2011-XX-XX
+wiwordik 0.0X.10XX 2012-XX-XX
   
   Added (from user's point of view):
     Todo ...
 
   Added (from programmer's point of view)
     Todo ...
+
+
+wiwordik 0.09.1094 2012-01-12
+  
+  Added (from user's point of view):
+    Dropdown menu with list of languages. List of 742 languages splitted to 3 groups (with tens of thousands words, with  thousands of words and all other languages) sorted lexicographically.
+    New version of English Wiktionary data, as of August 10, 2011.
+    New version of Russian Wiktionary data, as of May 21, 2011.
+
+  Added (from programmer's point of view)
+    JavaFX 1.3 replaced by JavaFX 2.0. We did it :)
+    The Machine-readable English Wiktionary database was reduced from 425 to 309 MB (now entries which contain only reference to main wordforms are omitted and they are not included to the database, e.g. entry http://en.wiktionary.org/wiki/bombs)
+
 
 wiwordik 0.08.1094 2011-09-02
   
@@ -37,6 +50,8 @@ wiwordik 0.05.1053 2011-02-11
       and YYYY - number of languages and codes recognized by the program 
       and extracted from the Wiktionary (see about language codes 
       http://en.wikipedia.org/wiki/ISO_639-3).
+      So "0.05.1053" means: program version 0.05, the parser recognizes 
+      1053 language codes.
   
   Added (from user's point of view):
     wiwordik (Russian Wiktionary) is accessible via Web Start now.
