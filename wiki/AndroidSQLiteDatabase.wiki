@@ -1,0 +1,19 @@
+#summary How to create and use SQLite database in Android.
+
+== Archiving ==
+
+Compress SQLite database file by [http://en.wikipedia.org/wiki/7Zip 7Zip] using parameters: 
+{{{ 
+Compression method: LZMA
+Dictionary: 8 MB
+}}}
+
+{{{
+Source: ruwikt20110521_android.sqlite
+Result: ruwikt20110521_android_sqlite.zip
+}}}
+
+You can download `ruwikt20XXXXXX_android_sqlite.zip` file (see section "Downloads"). It contains machine-readable wiktionary + 1 small table for Android applications (see "Preparing the SQLite database for Android" at [File_mean_semrel_empty_sql]).
+
+== Previous step ==
+  * [File_mean_semrel_empty_sql Preparing the SQLite database for Android]
