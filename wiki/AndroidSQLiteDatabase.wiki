@@ -13,7 +13,7 @@ Source: ruwikt20110521_android.sqlite
 Result: ruwikt20110521_android_sqlite.zip
 }}}
 
-You can download `ruwikt20XXXXXX_android_sqlite.zip` file (see section "Downloads"). It contains machine-readable wiktionary + 1 small table for Android applications (see "Preparing the SQLite database for Android" at [File_mean_semrel_empty_sql]).
+You can download `ruwikt20XXXXXX_android_sqlite.zip` file (see section "Downloads"). It contains machine-readable wiktionary + 1 small table for Android applications (see [File_mean_semrel_empty_sql], section "Preparing the SQLite database for Android").
 
 == Previous step ==
-  * [File_mean_semrel_empty_sql Preparing the SQLite database for Android]
+  * [File_mean_semrel_empty_sql File_mean_semrel_empty_sql] see section "Preparing the SQLite database for Android"
