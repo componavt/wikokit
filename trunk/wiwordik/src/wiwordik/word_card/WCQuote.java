@@ -1,4 +1,4 @@
-/* WCQuote.fx - A part of word card corresponds to quotations part
+/* WCQuote.java - A part of word card corresponds to quotations part
  * of a page (entry) in Wiktionary.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
@@ -21,32 +21,33 @@ import java.lang.*;
  */
  public class WCQuote {
 
-    public var group: VBox = VBox {
-        spacing: 5
-    };
+     public VBox group = new VBox();
 
     /** Creates a part of card (parts of wiki pages) with list of quotes
      * related to one meaning (sense).
      *
      * @return true if there are any quotes for this meaning.
     **/
-    public function create (conn : Connect,
-                            _tmeaning : TMeaning
-                           ) : Boolean {
-
+    public boolean create ( Connect conn,
+                            TMeaning _tmeaning
+                          )
+    {
+        group.setSpacing(5);
+                
         // def rels : TRelation[] = TRelation.get(conn, _tmeaning);
-        def quotes : TQuote[] = TQuote.get(conn, _tmeaning);
-        if (quotes.size() == 0)
+        TQuote[] quotes = TQuote.get(conn, _tmeaning);
+        if (quotes.length == 0)
             return false;
 
-        var list : String;
-        for(q in quotes) {
+        String list;
+        for(TQuote q : quotes) {
             // list = "{list}{q.getText()} || ";
             
-            def _1quote : WCQuoteOneSentence = new WCQuoteOneSentence();
+            WCQuoteOneSentence _1quote = new WCQuoteOneSentence();
             _1quote.create(conn, q);
-            //insert _quote into quote;                // logic
-            insert _1quote.group into group.content;   // visual
+            
+            // only visual part, skip logic
+            group.getChildren().addAll(_1quote.group);
         }
 
         return true;
