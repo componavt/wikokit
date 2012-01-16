@@ -1,0 +1,21 @@
+magnetowordik 1.02 2011-??-??
+
+  Added (from user's point of view):
+    Now there are 25 languages in the database of this game. These are the languages which have more than 1000 of synonyms + antonyms + hyperonyms + etc. in the English Wiktionary.
+
+    Added button with the text "www". It is a hyperlink to the corresponding article in the Wiktionary.
+
+    It was found by one player, that if you rotate screen, then
+    the game will be restarted. Undocumented feature.
+ 
+
+
+magnetowordik 1.01 2011-10-12
+  
+  Added (from user's point of view):
+
+    Added the beautiful icon of magnet. Thanks to commons.wikimedia.org!
+    Added line which separates the game (centre of the screen) and results at the bottom of the screen.
+
+  Added (from programmer's point of view)
+    Nop
