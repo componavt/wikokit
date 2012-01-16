@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="page_title">*</string>
+    <string name="app_name">Magnetowordik</string>
+    <string name="word_top">Word 1</string>
+    <string name="word_www"></string>
+    <string name="word_def">word_def</string>
+    <string name="word_left">Word 2</string>
+    <string name="word_right">Word 3</string>
+    <string name="word">word</string>
+    <string name="mark">mark</string>
+</resources>
