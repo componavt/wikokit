@@ -6,8 +6,7 @@
 
 package wikokit.kiwidict; 
 
-import wikipedia.language.LanguageType;
-
+import wikokit.kiwidict.db.DataBaseHelper;
 
 public class KWConstants {
 
@@ -34,16 +33,22 @@ public class KWConstants {
     // Wiktionary parsed database
     // ===========
 
-    /** Database name and files name. */
-    //String str_url = "http://wikokit.googlecode.com/files/wiwordik-ru.jnlp";
-    public static String DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
-    //ruwikt20110521_android_sqlite.zip
+    /** Database name, folder and files names. */
     public static String DB_DIR = "kiwidict";
     
-    //public static String DB_NAME = "enwikt"; //"enwikt_mean_semrel_sqlite";
-    public static String DB_NAME = "ruwikt20110521_android_sqlite.zip"; // Russian Wiktionary
     
-    public static int MAX_NUMBER_DB_PARTS = 341; // Russian Wiktionary
+    // Russian Wiktionary
+    //public static String DB_URL = "http://wikokit.googlecode.com/files/WikPaSPARQL_20110618.7z";			// temp
+    public static String DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
+    public static String DB_ZIPFILE = "ruwikt20110521_android_sqlite.zip";
+    public static int    DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
+    public static String DB_FILE = "ruwikt20110521_android.sqlite";
+    public static int    DB_FILE_SIZE_MB = 239; 
+    // public static int MAX_NUMBER_DB_PARTS = 341; // Russian Wiktionary
+    
+    // English
+    //public static String DB_NAME = "enwikt"; //"enwikt_mean_semrel_sqlite";
+    
     
     
     
@@ -68,4 +73,7 @@ public class KWConstants {
 
     //            eo Parameters //
     //////////////////////////////
+    
+    // some variables to be shared between activities
+    //public static DataBaseHelper db_helper;
 }
