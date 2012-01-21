@@ -20,20 +20,19 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
 	//The Android's default system path of your application database.
-    private static String DB_PATH = "/data/data/wikokit.kiwidict/databases/";
+    //private static String DB_PATH = "/data/data/wikokit.kiwidict/databases/";
 
     
     private SQLiteDatabase db;
     private Context context;
 
-    /**
-     * Constructor
+    /** Constructor
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
     public DataBaseHelper(Context context) {
-
-    	super(context, KWConstants.DB_NAME, null, 1);
+                                                  // DATABASE_VERSION
+    	super(context, KWConstants.DB_ZIPFILE, null, 1);
         this.context = context;
     }
     
@@ -42,68 +41,53 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
     
     public void openDatabase() {
-    	createDataBase();
-        /*try {
-        	createDataBase();
-        } catch (IOException ioe) {
-        	throw new Error("Unable to create database");
-        }*/
+    	// createDatabase();
 
 	 	try {	// Open the database
-	        String my_path = DB_PATH + KWConstants.DB_NAME;
-	        db = SQLiteDatabase.openDatabase(my_path, null, SQLiteDatabase.OPEN_READONLY);
+	 		String path = FileUtil.getFilePathAtExternalStorage(KWConstants.DB_DIR, KWConstants.DB_FILE);
+	        db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
 		} catch(SQLException sqle) {
 			throw sqle;
 		}
 	}
     
     
-   /**
-     * Creates an empty database on the system and rewrites it with your own database.
-     * */
-    public void createDataBase(){ // throws IOException{
-
-    	boolean db_exist = checkDataBase();
-/*
-    	if(db_exist){ 
-    		//do nothing - database already exist
-    	}else{
-*/
-    		//By calling this method and empty database will be created into the default system path
-            //of your application so we are gonna be able to overwrite that database with our database.
-        	this.getReadableDatabase();
-
-        	FileUtil.createDirIfNotExists(KWConstants.DB_DIR);
-        	
-        	//try {
-        		String file_path = "ruwikt20110521_android_sqlite.zip"; 
-        		Downloader.download(KWConstants.DB_URL, file_path);
-        		
-        		// todo: unzip file_path
-        		
-                //File out_db_path = context.getDir("data", 0); // output folder with result database
-                //File out_db_file = new File(out_db_path, "enwikt_mean_semrel_sqlite");
-                
-//                File out_db_file = new File(DB_PATH, KWConstants.DB_NAME);
-//                JoinerFiles.joinDatabaseChunks(context, out_db_file);
-        		
-    			//copyDataBase();
-    		/*} catch (IOException e) {
-        		throw new Error("Error copying database");
-        	}*/
+   /** Downloads, unzips and checks that the database is available. */
+    /*public boolean createDatabase(){
+    	
+    	this.getReadableDatabase();
+    	
+    	// 1. check unzipped file, if it exists - ok.
+    	// 2. else check zipped file, if it exists - unzip it.
+    	// 3. else download and unzip database to SD card
+    	
+    	if( FileUtil.isFileExist(KWConstants.DB_DIR, KWConstants.DB_FILE) ) {	// 1.
+    		return isDatabaseAvailable();	// do nothing - database already exist
     	}
-//    }
+    	
+    	if( FileUtil.isFileExist(KWConstants.DB_DIR, KWConstants.DB_ZIPFILE) ) {// 2.
+    		Zipper.unpackZipToExternalStorage(KWConstants.DB_DIR, KWConstants.DB_ZIPFILE);
+    		return isDatabaseAvailable();
+    	}
+
+    	// 3. else download and unzip database to SD card
+    	FileUtil.createDirIfNotExists(KWConstants.DB_DIR);
+    	Downloader.downloadToExternalStorage(KWConstants.DB_URL, KWConstants.DB_DIR, KWConstants.DB_ZIPFILE);
+    	Zipper.unpackZipToExternalStorage(KWConstants.DB_DIR, KWConstants.DB_ZIPFILE);
+    	return isDatabaseAvailable();
+    }*/
 
     /**
-     * Check if the database already exist to avoid re-copying the file each time you open the application.
+     * Check if the database already exist to avoid re-downloading and unzipping 
+     * the file each time you open the application.
      * @return true if it exists, false if it doesn't
      */
-    private boolean checkDataBase(){
+    public boolean isDatabaseAvailable() {
 
     	SQLiteDatabase check_db = null;
 
     	try{
-    		String path = DB_PATH + KWConstants.DB_NAME;
+    		String path = FileUtil.getFilePathAtExternalStorage(KWConstants.DB_DIR, KWConstants.DB_FILE);
     		check_db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
 
     	}catch(SQLiteException e){
@@ -123,13 +107,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * system folder, from where it can be accessed and handled.
      * This is done by transfering bytestream.
      * */
-    private void copyDataBase() throws IOException{
+    /*private void copyDataBase() throws IOException{
 
     	//Open your local db as the input stream
-    	InputStream my_input = context.getAssets().open( KWConstants.DB_NAME );
+    	InputStream my_input = context.getAssets().open( KWConstants.DB_ZIPFILE );
 
     	// Path to the just created empty db
-    	String out_filename = DB_PATH + KWConstants.DB_NAME;
+    	String out_filename = DB_PATH + KWConstants.DB_ZIPFILE;
+    	//String path = FileUtil.getFilePathAtExternalStorage(KWConstants.DB_DIR, KWConstants.DB_FILE);
 
     	//Open the empty db as the output stream
     	OutputStream my_output = new FileOutputStream(out_filename);
@@ -145,8 +130,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     	my_output.flush();
     	my_output.close();
     	my_input.close();
-
-    }
+    }*/
 
     @Override
 	public synchronized void close() {

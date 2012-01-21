@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Kiwidict</string>
+    <string name="Dictionary_database_installation">Dictionary database installation</string>
+    <string name="WiFi_recommendation">It is highly recommended to use available free wireless network (Wi-Fi) to avoid paying carrier data fees and download the dictionary file through it.</string>
+    <string name="SD_free_memory">The memory card has ??? MB of free space.</string>
+    <string name="memory_requirement">\??? MB memory requirement.</string>
+    <string name="Install">Download and install</string>
+
+</resources>

@@ -28,7 +28,7 @@ public class JoinerFiles {
 	 * 
 	 * @see 
 	 */
-	static public void joinDatabaseChunks(Context context, File out_db_file) throws IOException
+/*	static public void joinDatabaseChunks(Context context, File out_db_file) throws IOException
 	{
 	    AssetManager am = context.getAssets();
 	    OutputStream os = new FileOutputStream(out_db_file);
@@ -39,7 +39,7 @@ public class JoinerFiles {
 	    Arrays.sort(in_files);
 	    for(i=1;i< KWConstants.MAX_NUMBER_DB_PARTS ;i++)
 	    {
-	    	String fn = String.format("%s.%d", KWConstants.DB_NAME, i);
+	    	String fn = String.format("%s.%d", KWConstants.DB_ZIPFILE, i);
 	    	//Log.d("debug", "fn=" + fn);
 	    	
 	        if(Arrays.binarySearch(in_files, fn) < 0)
@@ -51,5 +51,5 @@ public class JoinerFiles {
 	        is.close();
 	    }
 	    os.close();
-	}
+	}*/
 }
