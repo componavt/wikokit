@@ -2,9 +2,9 @@
 
 == Archiving ==
 
-Compress SQLite database file by [http://en.wikipedia.org/wiki/7Zip 7Zip] using parameters: 
+Compress SQLite database file by [http://en.wikipedia.org/wiki/7Zip 7Zip] or WinZip using parameters: 
 {{{ 
-Compression method: LZMA
+Compression method: classic ZIP method
 Dictionary: 8 MB
 }}}
 
