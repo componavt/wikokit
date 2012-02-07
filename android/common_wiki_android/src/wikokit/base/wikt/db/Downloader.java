@@ -4,7 +4,7 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikokit.kiwidict.db;
+package wikokit.base.wikt.db;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -49,7 +49,7 @@ public class Downloader {
 	 * @dir file path at SD card, e.g. "kiwidict" folder
 	 * @filename file will be saved to
 	 */
-	/*public static void downloadToExternalStorage(String str_url, String dir, String filename) {
+	public static void downloadToExternalStorage(String str_url, String dir, String filename) {
 
 		StringBuilder absolute_file_path = new StringBuilder();
 		absolute_file_path.append( Environment.getExternalStorageDirectory().getAbsolutePath() );
@@ -59,14 +59,14 @@ public class Downloader {
 		absolute_file_path.append( filename );
 
 		download(str_url, absolute_file_path.toString());
-	}*/
+	}
 
 	
 	/** Downloads file from the str_url location to the destination file_path.
 	 * str_url = "http://localhost/tempos/ruwikt20110521_android_sqlite_LZMA_dict8MB_word64.zip"
 	 * file_path = "/mnt/sdcard/kiwidict/file.zip"
 	 */
-	/*public static void download(String str_url, String file_path) {
+	public static void download(String str_url, String file_path) {
 		
 		try {
 	        URL url = new URL(str_url);
@@ -109,5 +109,5 @@ public class Downloader {
 		} catch (IOException e) {
 	        e.printStackTrace();
 	    }
-	}*/	
+	}
 }
