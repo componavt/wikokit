@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.File;
 
+import wikokit.base.wikt.db.FileUtil;
 import wikokit.kiwidict.KWConstants;
 import wikokit.kiwidict.db.JoinerFiles;
 

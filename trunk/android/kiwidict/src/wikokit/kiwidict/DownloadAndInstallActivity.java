@@ -2,6 +2,8 @@ package wikokit.kiwidict;
 
 import java.io.File;
 
+import wikokit.base.wikt.db.Downloader;
+import wikokit.base.wikt.db.FileUtil;
 import wikokit.kiwidict.db.*;
 
 import android.app.Activity;
