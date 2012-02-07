@@ -7,9 +7,11 @@
 
 package wiwordik.word_card;
 
-import wikt.sql.*;
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
+import wikokit.base.wikt.sql.TTranslationEntry;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TTranslation;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
 
 import java.lang.*;
 import java.util.ArrayList;

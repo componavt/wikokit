@@ -8,14 +8,14 @@ package wiktparsed.mean_semrel.parser;
 
 import wiktparsed.mean_semrel.parser.sql.*;
 
-import wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.language.LanguageType;
 
-import wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.Connect;
 
 //import wikt.sql.TLang;
-import wikt.sql.TLang;
-import wikt.sql.TPOS;
-import wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TRelationType;
 
 
 /** Top level functions for Wiktionary parsing.

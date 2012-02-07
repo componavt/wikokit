@@ -7,9 +7,9 @@
  
 package wiwordik.word_card;
 
-import wikt.sql.*;
-import wikipedia.sql.Connect;
-import wikt.sql.quote.TQuote;
+import wikokit.base.wikt.sql.TMeaning;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikt.sql.quote.TQuote;
 
 import javafx.scene.layout.VBox;
 import java.lang.*;

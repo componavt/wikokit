@@ -15,10 +15,10 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.Connect;
 
 import javafx.scene.input.KeyEvent;
-import wikt.sql.TPage;
+import wikokit.base.wikt.sql.TPage;
 import wiwordik.word_card.WC;
 //import javafx.scene.control.TextBox;
 

@@ -6,13 +6,19 @@
 
 package wikt.stat;
 
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TMeaning;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.TPage;
+import wikokit.base.wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.sql.Connect;
 import wikt.stat.printer.CommonPrinter;
-import wikt.constant.Relation;
-import wikipedia.language.LanguageType;
-import wikt.api.WTRelation;
+import wikokit.base.wikt.constant.Relation;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.api.WTRelation;
 
-import wikipedia.sql.*;
-import wikt.sql.*;
 
 import java.sql.*;
 
@@ -22,7 +28,7 @@ import java.util.HashMap;
 
 import java.util.List;
 import java.util.ArrayList;
-import wikt.constant.POS;
+import wikokit.base.wikt.constant.POS;
 
 
 /** Relations' statistics in the database of the parsed Wiktionary.

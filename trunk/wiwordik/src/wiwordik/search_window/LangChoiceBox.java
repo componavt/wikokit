@@ -11,8 +11,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Separator;
 import javafx.scene.control.Tooltip;
-import wikipedia.language.LanguageType;
-import wikt.sql.TLang;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.sql.TLang;
 
 /** GUI element contains ChoiceBox with dropdown
  * list of source languages (codes, number of POS, number of translations).

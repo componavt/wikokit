@@ -7,16 +7,21 @@
 package wiktparsed.mean_semrel.parser;
 
 //import wikt.parser.*;
-import wikipedia.language.LanguageType;
-import wikipedia.sql.*;
-import wikt.sql.*;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TMeaning;
+import wikokit.base.wikt.sql.TRelation;
+import wikokit.base.wikt.sql.TPage;
+import wikokit.base.wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.sql.UtilSQL;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
 import wiktparsed.mean_semrel.parser.sql.*;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import wikt.api.WTMeaning;
-import wikt.constant.Relation;
+import wikokit.base.wikt.api.WTMeaning;
+import wikokit.base.wikt.constant.Relation;
 
 /** Worker with all pages in the WP table 'page'.
  */

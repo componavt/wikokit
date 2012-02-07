@@ -1,7 +1,5 @@
 package wikokit.kiwidict;
 
-import java.sql.DriverManager;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,9 +9,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-import wikt.sql.*;
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
+//import wikipedia.language.LanguageType;
 //import wikokit.kiwidict.GameLogic;
 import wikokit.kiwidict.db.DataBaseHelper;
 import wikokit.kiwidict.db.FileUtil;

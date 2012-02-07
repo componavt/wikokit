@@ -7,10 +7,11 @@
  
 package wiwordik.word_card;
 
-import wikt.sql.quote.*;
-import wikt.word.WQuote;
+import wikokit.base.wikt.sql.quote.TQuote;
+import wikokit.base.wikt.sql.quote.TQuotRef;
+import wikokit.base.wikt.word.WQuote;
 import wiwordik.WConstants;
-import wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.Connect;
 
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;

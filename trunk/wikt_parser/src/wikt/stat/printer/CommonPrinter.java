@@ -8,12 +8,12 @@
 package wikt.stat.printer;
 
 //import wikipedia.sql.Connect;
-import wikt.constant.Relation;
-import wikipedia.language.LanguageType;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.constant.Relation;
+import wikokit.base.wikipedia.language.LanguageType;
 
-import wikipedia.sql.Connect;
-import wikt.sql.*;
-import wikt.api.WTRelation;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikt.api.WTRelation;
 
 import java.util.Map;
 import java.util.List;

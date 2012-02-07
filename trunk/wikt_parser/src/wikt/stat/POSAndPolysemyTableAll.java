@@ -7,19 +7,22 @@
 
 package wikt.stat;
 
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TPage;
 import wikt.stat.printer.POSAndPolysemyPrinter;
 import wikt.stat.printer.CommonPrinter;
-import wikipedia.language.LanguageType;
-import wikipedia.sql.Connect;
-import wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.Statistics;
 
-import wikt.sql.*;
-import wikt.constant.POS;
+import wikokit.base.wikt.constant.POS;
 
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
-import wikt.api.WTMeaning;
+import wikokit.base.wikt.api.WTMeaning;
 
 
 /** Parts of speech statistics and data about

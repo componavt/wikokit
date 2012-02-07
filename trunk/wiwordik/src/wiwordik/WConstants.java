@@ -6,7 +6,7 @@
 
 package wiwordik; 
 
-import wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.language.LanguageType;
 
 
 public class WConstants {
@@ -43,8 +43,8 @@ public class WConstants {
     // Release / publish parameters
 
     //var native_lang : LanguageType;
-    //public static LanguageType native_lang = LanguageType.ru;
-    public static LanguageType native_lang = LanguageType.en;
+    public static LanguageType native_lang = LanguageType.ru;
+    //public static LanguageType native_lang = LanguageType.en;
     
     /** If true, then SQLite database extracted from the .jar and stored
      * to the directory user.dir (Add .jar with SQLite database to the project).
