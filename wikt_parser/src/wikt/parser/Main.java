@@ -6,8 +6,8 @@
 
 package wikt.parser;
 
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
 
 
 /** Wiktionary parser creates MySQL database (like WordNet) 

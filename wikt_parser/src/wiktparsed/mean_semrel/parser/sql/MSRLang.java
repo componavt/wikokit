@@ -8,12 +8,12 @@
 
 package wiktparsed.mean_semrel.parser.sql;
 
-import wikipedia.language.LanguageType;
-import wikipedia.util.StringUtil;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.util.StringUtil;
 
-import wikipedia.sql.Connect;
-import wikipedia.sql.UtilSQL;
-import wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.UtilSQL;
+import wikokit.base.wikipedia.sql.Statistics;
 
 import java.sql.*;
 
@@ -208,7 +208,7 @@ public class MSRLang {
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "lang");
         fillDB(connect, id2lang_local);
         {
-            int db_current_size = wikipedia.sql.Statistics.Count(connect, "lang");
+            int db_current_size = wikokit.base.wikipedia.sql.Statistics.Count(connect, "lang");
             assert(db_current_size == LanguageType.size()); // 356 languages
         }   
     }

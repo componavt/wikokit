@@ -8,12 +8,12 @@
 
 package wikt.stat.printer;
 
-import wikt.constant.POS;
+import wikokit.base.wikt.constant.POS;
 import wikt.stat.POSAndPolysemyTableAll.POSStat;
 
 import java.util.Map;
-import wikipedia.language.LanguageType;
-import wikipedia.util.PrintfFormat;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.util.PrintfFormat;
 
 /** Statistics of parts of speech and polysemy of the parsed Wiktionary.
  *

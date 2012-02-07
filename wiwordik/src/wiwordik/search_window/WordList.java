@@ -6,14 +6,15 @@
 
 package wiwordik.search_window;
 
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TPage;
 import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
-import wikt.sql.*;
-import wikt.sql.index.IndexForeign;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.sql.index.IndexForeign;
 //import wiwordik.word_card.WC;
 
 import javafx.scene.control.ListView;

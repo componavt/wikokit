@@ -6,15 +6,22 @@
 
 package wikt.stat;
 
+import wikokit.base.wikt.sql.quote.TQuotRef;
+import wikokit.base.wikt.sql.quote.TQuotSource;
+import wikokit.base.wikt.sql.quote.TQuotAuthor;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TMeaning;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TPage;
+import wikokit.base.wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.sql.Connect;
 import wikt.stat.printer.CommonPrinter;
 import uk.ac.shef.wit.simmetrics.similaritymetrics.*;
 
-import wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.language.LanguageType;
 //import wikipedia.language.Encodings;
 
-import wikipedia.sql.*;
-import wikt.sql.*;
-import wikt.sql.quote.*;
 
 import java.sql.*;
 import java.util.ArrayList;

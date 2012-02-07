@@ -7,9 +7,12 @@
 
 package wiwordik.word_card;
 
-import wikt.sql.*;
-import wikipedia.sql.Connect;
-import wikt.constant.POS;
+import wikokit.base.wikt.sql.TMeaning;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TTranslation;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikt.constant.POS;
 import wiwordik.WConstants;
 
 import javafx.scene.text.Text;

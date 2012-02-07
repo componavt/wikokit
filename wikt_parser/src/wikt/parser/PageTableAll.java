@@ -6,10 +6,11 @@
 
 package wikt.parser;
 
-import wikipedia.language.LanguageType;
-import wikipedia.language.Encodings;
-import wikipedia.sql.*;
-import wikt.sql.TLang;
+import wikokit.base.wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.language.Encodings;
+import wikokit.base.wikt.sql.TLang;
 
 import java.sql.*;
 

@@ -9,17 +9,17 @@
  */
 package wiktparsed.mean_semrel.parser.sql;
 
-import wikt.constant.Relation;
-import wikipedia.language.LanguageType;
-import wikipedia.sql.Connect;
-import wikipedia.sql.PageTableBase;
+import wikokit.base.wikt.constant.Relation;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.PageTableBase;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import wikipedia.language.Encodings;
+import wikokit.base.wikipedia.language.Encodings;
 
 /** Table wikt_mean_semrel.mean_semrel_XX contains connected:
  * (1) entry / headword in the language XX

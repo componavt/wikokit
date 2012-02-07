@@ -34,16 +34,16 @@ public class KWConstants {
     // ===========
 
     /** Database name, folder and files names. */
-    public static String DB_DIR = "kiwidict";
+    public final static String DB_DIR = "kiwidict";
     
     
     // Russian Wiktionary
     //public static String DB_URL = "http://wikokit.googlecode.com/files/WikPaSPARQL_20110618.7z";			// temp
-    public static String DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
-    public static String DB_ZIPFILE = "ruwikt20110521_android_sqlite.zip";
-    public static int    DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
-    public static String DB_FILE = "ruwikt20110521_android.sqlite";
-    public static int    DB_FILE_SIZE_MB = 239; 
+    public final static String DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
+    public final static String DB_ZIPFILE = "ruwikt20110521_android_sqlite.zip";
+    public final static int    DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
+    public final static String DB_FILE = "ruwikt20110521_android.sqlite";
+    public final static int    DB_FILE_SIZE_MB = 239; 
     // public static int MAX_NUMBER_DB_PARTS = 341; // Russian Wiktionary
     
     // English

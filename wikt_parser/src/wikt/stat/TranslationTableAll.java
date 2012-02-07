@@ -6,12 +6,18 @@
 
 package wikt.stat;
 
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TPage;
+import wikokit.base.wikt.sql.TTranslation;
+import wikokit.base.wikt.sql.TTranslationEntry;
+import wikokit.base.wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.sql.Connect;
 import wikt.stat.printer.CommonPrinter;
-import wikipedia.language.LanguageType;
-import wikipedia.language.Encodings;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.language.Encodings;
 
-import wikipedia.sql.*;
-import wikt.sql.*;
 
 import java.sql.*;
 

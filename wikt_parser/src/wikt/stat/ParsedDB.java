@@ -6,11 +6,14 @@
 
 package wikt.stat;
 
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TRelationType;
+import wikokit.base.wikipedia.sql.Statistics;
+import wikokit.base.wikipedia.sql.Connect;
 import wikt.stat.printer.CommonPrinter;
-import wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.language.LanguageType;
 
-import wikipedia.sql.*;
-import wikt.sql.*;
 
 /** Base parameters (number of records) of the database of the parsed Wiktionary.
  *

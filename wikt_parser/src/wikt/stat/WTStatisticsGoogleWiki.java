@@ -8,8 +8,8 @@
 package wikt.stat;
 
 //import wikipedia.sql.Connect;
-import wikt.constant.Relation;
-import wikipedia.language.LanguageType;
+import wikokit.base.wikt.constant.Relation;
+import wikokit.base.wikipedia.language.LanguageType;
 
 import java.util.Map;
 

@@ -6,12 +6,16 @@
 
 package wiwordik.word_card;
 
+import wikokit.base.wikt.constant.Relation;
+import wikokit.base.wikt.constant.POS;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TPage;
+import wikokit.base.wikt.api.WTRelation;
+import wikokit.base.wikt.api.WTMeaning;
 import java.awt.Dimension;
-import wikt.api.*;
-import wikt.sql.*;
-import wikt.constant.*;
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
 
 import java.lang.*;
 

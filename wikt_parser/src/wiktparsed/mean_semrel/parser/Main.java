@@ -7,8 +7,8 @@
 package wiktparsed.mean_semrel.parser;
 
 //import wikt.parser.*;
-import wikipedia.sql.Connect;
-import wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
 
 
 /** Parser (second generation parser)

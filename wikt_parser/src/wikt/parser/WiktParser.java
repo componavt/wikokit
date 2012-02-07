@@ -6,23 +6,23 @@
 
 package wikt.parser;
 
+import wikokit.base.wikt.word.WordBase;
 import java.util.*;
 //import java.io.*;
 
-import wikt.word.*;
 
-import wikipedia.language.LanguageType;
-import wikipedia.category.CategoryHyponyms;
-import wikt.mrd.Keeper;
-import wikt.sql.index.IndexForeign;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.category.CategoryHyponyms;
+import wikokit.base.wikt.mrd.Keeper;
+import wikokit.base.wikt.sql.index.IndexForeign;
 
-import wikipedia.sql.PageTableBase;
-import wikipedia.sql.Connect;
-import wikipedia.sql.UtilSQL;
+import wikokit.base.wikipedia.sql.PageTableBase;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.UtilSQL;
 
-import wikt.sql.TLang;
-import wikt.sql.TPOS;
-import wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TRelationType;
 
 /** Top level functions for Wiktionary parsing.
  */

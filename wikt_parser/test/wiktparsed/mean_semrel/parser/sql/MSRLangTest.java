@@ -11,8 +11,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import wikipedia.language.LanguageType;
-import wikipedia.sql.Connect;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 
 
 public class MSRLangTest {

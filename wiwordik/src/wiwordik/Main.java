@@ -16,11 +16,11 @@ import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import wikipedia.language.LanguageType;
-import wikipedia.sql.Connect;
-import wikt.sql.TLang;
-import wikt.sql.TPOS;
-import wikt.sql.TRelationType;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TPOS;
+import wikokit.base.wikt.sql.TRelationType;
 import wiwordik.search_window.*;
 import wiwordik.util.TipsTeapot;
 

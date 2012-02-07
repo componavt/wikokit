@@ -14,8 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
-import wikipedia.language.LanguageType;
-import wikt.sql.TLang;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.sql.TLang;
 
 /** GUI element LangChoice contains checkboxes and text field with
  * language codes. Source and target languages.

@@ -31,6 +31,14 @@
                 <clean-target>clean</clean-target>
                 <id>jar</id>
             </reference>
+            <reference>
+                <foreign-project>common_wiki_jdbc</foreign-project>
+                <artifact-type>jar</artifact-type>
+                <script>build.xml</script>
+                <target>jar</target>
+                <clean-target>clean</clean-target>
+                <id>jar</id>
+            </reference>
         </references>
         <spellchecker-wordlist xmlns="http://www.netbeans.org/ns/spellchecker-wordlist/1">
             <word>language</word>
