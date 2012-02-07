@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 //import wikipedia.language.LanguageType;
 //import wikokit.kiwidict.GameLogic;
+import wikokit.base.wikt.db.FileUtil;
 import wikokit.kiwidict.db.DataBaseHelper;
-import wikokit.kiwidict.db.FileUtil;
 //import wikokit.kiwidict.db.MSRLang;
 
 

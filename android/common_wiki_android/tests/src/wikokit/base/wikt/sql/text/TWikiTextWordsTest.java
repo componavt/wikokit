@@ -16,6 +16,7 @@ public class TWikiTextWordsTest extends TestCase {
     SQLiteDatabase db;
     TWikiText wiki_text;
     String page_title; // , inflected_form, str_wiki_text;
+    TPage page;
     
     protected void setUp() throws Exception {
         super.setUp();
@@ -33,6 +34,8 @@ public class TWikiTextWordsTest extends TestCase {
         db = ruwikt_conn.getDB();
         
         page_title = "весной";
+        page = TPage.get(db, page_title);
+        assertNotNull(page);
         
         // get wiki_text
         // select * from wiki_text where text LIKE "%aha%" LIMIT 33;
@@ -47,15 +50,44 @@ public class TWikiTextWordsTest extends TestCase {
     }
 
     public void testGetByWikiText() {
-        fail("Not yet implemented");
+        page_title = "pin one's hopes";
+        page = TPage.get(db, page_title);
+        assertNotNull(page);
+        
+        TWikiTextWords[] words = TWikiTextWords.getByPage(db, page);
+        assertNotNull(words);
+        assertTrue(words.length > 0);
+
+        TWikiText wiki_text = words[0].getWikiText();
+        assertNotNull(wiki_text);
+        
+        TWikiTextWords[] ww = TWikiTextWords.getByWikiText(db, wiki_text);
+        assertNotNull(ww);
+        assertEquals(ww.length, 1);
+        
+        // [[pin one's hopes|pin one's hopes (on)]]
+        // [[page_title|wiki_text]]
     }
 
     public void testGetByWikiTextAndPageAndInflection() {
         fail("Not yet implemented");
     }
 
+    // 
+    public void testGetByPage() {
+        TWikiTextWords[] words = TWikiTextWords.getByPage(db, page);
+        assertNotNull(words);
+        assertTrue(words.length > 0);
+    }
+    
     public void testGetByID() {
-        fail("Not yet implemented");
+        TWikiTextWords[] words = TWikiTextWords.getByPage(db, page);
+        assertNotNull(words);
+        assertTrue(words.length > 0);
+        
+        // get by id
+        TWikiTextWords word2 = TWikiTextWords.getByID(db, words[0].getID());
+        assertNotNull(word2);
     }
 
     public void testGetOneByWikiText() {
@@ -64,19 +96,38 @@ public class TWikiTextWordsTest extends TestCase {
 
     public void testGetPageForOneWordWikiText() {
         
-        TWikiTextWords word = TWikiTextWords.getByPage(db, page)
-        assertNotNull(word);
-
         //[[word in normal form|inflected_form]]
-
         TPage one_wiki_word = TWikiTextWords.getPageForOneWordWikiText(db, wiki_text);
         assertNotNull(one_wiki_word);
-
         assertEquals(page_title, one_wiki_word.getPageTitle());
     }
 
     public void testGetOneWordWikiTextByPage() {
-        fail("Not yet implemented");
+        
+        TWikiTextWords[] words = TWikiTextWords.getByPage(db, page);
+        assertNotNull(words);
+        assertTrue(words.length > 0);
+
+        /*
+        //[[page_title|inflected_form]]
+        // SELECT page_title,text FROM wiki_text,wiki_text_words,page WHERE text LIKE "%bro%" AND wiki_text.id=wiki_text_id AND page_id=page.id  LIMIT 33;
+        // +-----------------------------------+-----------------------------------+
+        | page_title                        | text                              |
+        +-----------------------------------+-----------------------------------+
+        | pin one's hopes                   | pin one's hopes (on)              |*/
+
+        page_title = "pin one's hopes";
+        page = TPage.get(db, page_title);
+        assertNotNull(page);
+        
+        String str_wiki_text = "pin one's hopes (on)";
+        wiki_text = TWikiText.get(db, str_wiki_text);
+        assertNotNull(wiki_text);
+        
+        TWikiText[] array_wiki_texts = TWikiTextWords.getOneWordWikiTextByPage (db, page);
+        assertNotNull(array_wiki_texts);
+        assertEquals(1, array_wiki_texts.length);
+        assertEquals(str_wiki_text, array_wiki_texts[0].getText());
     }
 
 }

@@ -334,7 +334,7 @@ public class TMeaning {
         }
         TMeaning meaning = null;
         
-     // SELECT lang_pos_id,meaning_n,wiki_text_id FROM meaning WHERE id=1;
+        // SELECT lang_pos_id,meaning_n,wiki_text_id FROM meaning WHERE id=1;
         Cursor c = db.query("meaning", 
                 new String[] { "lang_pos_id", "meaning_n", "wiki_text_id"}, 
                 "id=" + _id, 
