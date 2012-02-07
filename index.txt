@@ -1,0 +1,98 @@
+== Wiwordik - Machine-readable Wiktionary ==
+
+Dictionary.
+A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
+
+=== Download ===
+
+Download [http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html#javasejdk Java 7 JRE] and [http://www.java.com/ru/javafx/ JavaFX] and try it right now with webstart:
+
+(Please, don't "Save file", you should click and select "Open with" Java Web Start application.)
+  * [http://wikokit.googlecode.com/files/wiwordik-ru.jnlp Visual interface to Russian Wiktionary] (94 MB).
+  * [http://wikokit.googlecode.com/files/wiwordik-en.jnlp Visual interface to English Wiktionary] (305 MB, slow loading only first time - 45 min, Java Web Start will install the application locally).
+
+If you want to install from the command line, then:
+{{{
+javaws -import http://wikokit.googlecode.com/files/wiwordik-ru.jnlp
+javaws -viewer
+}}}
+
+or English Wiktionary:
+{{{
+javaws -import http://wikokit.googlecode.com/files/wiwordik-en.jnlp
+javaws -viewer
+}}}
+
+=== Description ===
+
+Wiwordik dictionary:
+
+Contains:
+  # word's language and part of speech
+  # meanings / definitions
+  # semantic relations
+  # translations
+
+Supports (see [http://wikokit.googlecode.com/svn/trunk/wiwordik/release_notes.txt release_notes.txt]):
+  * words filtering by language code (e.g. de, fr)
+  * wildcard characters: the asterisk sign ({{{*}}}) matches zero or more characters, and question mark (?) a single character
+  * list of words only with meanings and / or semantic relations (use checkboxes)
+
+After installation you can find the parsed Wiktionary database in SQLite format on your computer in the folder: `C:\Documents and Settings\YOUR USER NAME\.wiwordik\`
+
+=== See also ===
+  * [https://market.android.com/details?id=wordik.magneto magnetowordik] Android word game based on data extracted from the English Wiktionary.
+
+=== Statistics ===
+
+The machine-readable dictionary database statistics:
+  * English Wiktionary: [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Parameters_of_the_database_created_by_the_Wiktionary_parser total], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations semantic relations], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Translations translations], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:POS part of speech]
+  * Russian Wiktionary: [http://ru.wiktionary.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:AKA_MBG/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0:%D0%A0%D0%B0%D0%B7%D0%BC%D0%B5%D1%80%D1%8B_%D0%B1%D0%B0%D0%B7%D1%8B_%D0%B4%D0%B0%D0%BD%D0%BD%D1%8B%D1%85,_%D1%81%D0%BE%D0%B7%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9_%D0%BF%D0%B0%D1%80%D1%81%D0%B5%D1%80%D0%BE%D0%BC_%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8F total], [http://ru.wiktionary.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:AKA_MBG/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0:%D0%A1%D0%B5%D0%BC%D0%B0%D0%BD%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B5_%D0%BE%D1%82%D0%BD%D0%BE%D1%88%D0%B5%D0%BD%D0%B8%D1%8F semantic relations], [http://ru.wiktionary.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:AKA_MBG/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0:%D0%9F%D0%B5%D1%80%D0%B5%D0%B2%D0%BE%D0%B4%D1%8B translations], [http://ru.wiktionary.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:AKA_MBG/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0:POS part of speech], quote ([http://ru.wiktionary.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:AKA_MBG/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0:%D0%A6%D0%B8%D1%82%D0%B0%D1%82%D1%8B languages & sources], [http://ru.wiktionary.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:AKA_MBG/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0:%D0%A6%D0%B8%D1%82%D0%B0%D1%82%D1%8B_%28%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D1%8B%29 authors with clusters], [http://ru.wiktionary.org/wiki/%D0%A3%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA:AKA_MBG/%D0%A1%D1%82%D0%B0%D1%82%D0%B8%D1%81%D1%82%D0%B8%D0%BA%D0%B0:%D0%A6%D0%B8%D1%82%D0%B0%D1%82%D1%8B_%28%D0%B0%D0%B2%D1%82%D0%BE%D1%80%D1%8B,_%D0%B1%D0%B5%D0%B7_%D0%BA%D0%BB%D0%B0%D1%81%D1%82%D0%B5%D1%80%D0%BE%D0%B2%29 other authors])
+
+== Project structure ==
+
+Wiki tool kit (wikokit) contains several projects related to wiki
+
+./common_wiki - common (low-level) functions to handle data of Wikipedia and Wiktionary in MySQL database,
+
+./common_wiki_jdbc - functions to handle data of Wiktionary in MySQL and SQLite databases (JDBC, Java SE) (depends on common_wiki.jar).
+
+./android/common_wiki_alink - Eclipse copy (source link) of ./common_wiki (!NetBeans)
+
+./android/common_wiki_android - functions for access to Wiktionary in Android SQLite version of database (depends on common_wiki.jar).
+
+./hits_wiki - API for access to Wikipedia in MySQL database, algorithms to search synonyms in Wikipedia (depends on jcfd.jar, common_wiki.jar).
+
+./TGWikiBrowser - visual browser to search for synonyms in local or remote Wikipedia (depends on hits_wiki.jar and common_wiki.jar)
+
+./wikidf - Wiki Index Database (list of lemmas and links to wiki pages, which contain these lemmas).
+
+./[GettingStartedWiktionaryParser wikt_parser] - Wiktionary parser creates a MySQL database (like [http://en.wikipedia.org/wiki/WordNet WordNet]) from an Wiktionary MySQL dump file. The project goal is to convert Wiktionary articles to machine readable format. (It depends on common_wiki.)
+
+./[wiwordik] - Visualization of parsed Wiktionary database. wiki + word = wiwordik.
+
+The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are used in wikokit.
+
+== Further reading ==
+=== In English ===
+  * F. Lin, A. Krizhanovsky. [http://arxiv.org/abs/1109.0732 Multilingual ontology matching based on Wiktionary data accessible via SPARQL endpoint] // In: Proceedings of the 13th Russian Conference on Digital Libraries RCDL’2011. October 19-22, Voronezh, Russia. – pp. 19-26. [http://ceur-ws.org/Vol-803/paper1.pdf link2]
+  * A. A. Krizhanovsky. [http://arxiv.org/abs/1011.1368 Transformation of Wiktionary entry structure into tables and relations in a relational database schema.] Preprint. 2010.
+  * A. A. Krizhanovsky. [http://arxiv.org/abs/1006.5040 The comparison of Wiktionary thesauri transformed into the machine-readable format.] Preprint. 2010.
+  * A. A. Krizhanovsky, F. Lin. [http://arxiv.org/abs/0907.2209 Related terms search based on WordNet / Wiktionary and its application in Ontology Matching] // In: Proceedings of the 11th Russian Conference on Digital Libraries RCDL’2009. September 17-21, Petrozavodsk, Russia. – pp. 363-369.
+
+=== In Russian ===
+  * Крижановский А. [http://scipeople.com/publication/106012/ Количественный анализ лексики английского языка в викисловарях и Wordnet] // Труды СПИИРАН. 2011. Вып. 19. С. 87–101. ([http://cdn.scipeople.com/materials/97/quant_English_2011.pdf PDF]).
+  * Крижановский А. [http://scipeople.com/publication/102432/ Оценка использования корпусов и электронных библиотек в Русском Викисловаре] // Труды международной конференции «Корпусная лингвистика–2011». – СПб.: С.-Петербургский гос. университет, Филологический факультет, 2011, 348 с. – C. 217—222. ISBN 978-5-8465-0005-5 ([http://scipeople.com/uploads/materials/97/wikt_ruscorpora_14_full.pdf PDF], [http://scipeople.com/uploads/materials/97/slides_corpora_in_russian_wiktionary2011.pdf слайды]).
+  * Крижановский А. [http://scipeople.com/publication/100231/ Преобразование структуры словарной статьи Викисловаря в таблицы и отношения реляционной базы данных.] Препринт. 2010.
+  * Крижановский А. [http://scipeople.com/publication/99331/ Сравнение тезаурусов Русского и Английского Викисловарей, преобразованных в машинно-читаемый формат.] Препринт. 2010.
+  * Крижановский А. Построение машинно-читаемого словаря на основе Русского Викисловаря. [http://scipeople.ru/uploads/materials/97/14_nlpseminar_aot_ruwikt_ru.pdf Презентация]. [http://mathlingvo.ru/nlpseminar/archive/s_31 Видео] // Семинар: Natural Language Processing, 20 марта 2010, Санкт-Петербург.
+  * Крижановский А. [http://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%92%D0%B8%D0%BA%D0%B8-%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F_2009/%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0/%D0%94%D0%BE%D0%BA%D0%BB%D0%B0%D0%B4%D1%8B/%D0%9C%D0%B0%D1%88%D0%B8%D0%BD%D0%BD%D0%B0%D1%8F_%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0_%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8F Машинная обработка Русского Викисловаря] // Вики-конференция 2009. 24—25 октября, Санкт-Петербург.
+
+== License ==
+
+This program is multi-licensed and may be used under the terms of any of the following licenses:
+  * EPL, Eclipse Public License, V1.0 or later, http://www.eclipse.org/legal
+  * LGPL, GNU Lesser General Public License, V2.1 or later, http://www.gnu.org/licenses/lgpl.html
+  * GPL, GNU General Public License, V2 or later, http://www.gnu.org/licenses/gpl.html
+  * AL, Apache License, V2.0 or later, http://www.apache.org/licenses
+  * BSD, New BSD License, http://www.opensource.org/licenses/bsd-license
