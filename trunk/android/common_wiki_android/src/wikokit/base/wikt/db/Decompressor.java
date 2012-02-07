@@ -1,4 +1,4 @@
-package wikokit.kiwidict.db;
+package wikokit.base.wikt.db;
 
 import android.util.Log; 
 import java.io.File; 

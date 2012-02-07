@@ -4,15 +4,37 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikokit.kiwidict.db;
+package wikokit.base.wikt.db;
 
 import java.io.File;
+
 import android.os.StatFs;
 import android.os.Environment;
 import android.util.Log;
 
 public class FileUtil {
-
+	
+	/** Checks whether there is enough memory at SD card for the file 
+	 * with the size "file_size_mb"? 
+	 * @return true if it is enough
+	 */
+	public static boolean hasEnoughMemory(int file_size_mb) {
+		
+		String s = "";
+		if(FileUtil.isMemoryCardAvailable()) {
+			
+			long mbytes = FileUtil.getSDFreeMemoryInMBytes();
+			if(mbytes >  file_size_mb) {
+				return true;
+			} else {
+				System.out.println(" It is not enough memory :(");
+			}
+		} else {
+			System.out.println("Memory card is not available.");
+		} 
+		return false;
+	}
+	
 	/** Creates directory at SD card. 
 	 * E.g. /mnt/sdcard/kiwidict if path="kiwidict"
 	 */
