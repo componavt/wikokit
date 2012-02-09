@@ -106,7 +106,27 @@ public class POSAndPolysemyPrinter {
         System.out.println("\n|}");
     }
 
+     /**
+      * @param m_lang_unknown_pos number of unknown POS for each language
+      */
     public static void printPOS (
+                        LanguageType native_lang,
+                        LanguageType current_lang,
+                        Map<LanguageType, Map<POS,POSStat>> map_lang_pos_all,
+                        Map<LanguageType, Integer> m_lang_unknown_pos,
+                        boolean print_templates_and_short_names)
+    {
+        Map<POS,POSStat> m_lang_pos = map_lang_pos_all.get(current_lang);
+        if(null == m_lang_pos)
+            return;
+        
+        if(null != m_lang_unknown_pos)
+            System.out.println("\nNumber of words with unknown POS: " + m_lang_unknown_pos.get(current_lang));
+        
+        printPOSSensesAndPolysemy(native_lang, m_lang_pos, print_templates_and_short_names);
+    }
+    
+    public static void printPOSSensesAndPolysemy (
                         LanguageType native_lang,
                         Map<POS,POSStat> m_lang_pos,
                         boolean print_templates_and_short_names)
@@ -143,7 +163,8 @@ public class POSAndPolysemyPrinter {
      *
      * @param max_values_to_print values histogram[0..max_values_to_print-1] will be printed
      * @param total_histogram with total number of meanings for all languages
-     * @param m_lang_histogram number of meanings for each 
+     * @param m_lang_histogram number of meanings for each language
+     * @param m_lang_unknown_pos number of unknown parts of speech for each language 
      */
     public static void printHistogramPerlanguage (int[] total_histogram, int max_values_to_print,
             Map<LanguageType, Integer[]> m_lang_histogram) {

@@ -1,7 +1,7 @@
 /* POSAndPolysemyTableAll.java - Parts of speech statistics and data about
  * polysemy in the database of the parsed Wiktionary.
  *
- * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2011-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
@@ -42,6 +42,9 @@ public class POSAndPolysemyTableAll {
     
     // histogram for each language
     private static final Map<LanguageType, Integer[]> m_lang_histogram = new HashMap<LanguageType, Integer[]>();
+    
+    // Number of unknown parts of speech for each language
+    private static final Map<LanguageType, Integer> m_lang_unknown_pos = new HashMap<LanguageType, Integer>();
 
     /** Inner POSStat class for each POS. */
     public static class POSStat {
@@ -220,6 +223,9 @@ public class POSAndPolysemyTableAll {
                 String page_title = tpage.getPageTitle();
 
                 int n_meaning = WTMeaning.countMeanings(wikt_parsed_conn, lang_pos_not_recursive);
+                if(DEBUG && lang == LanguageType.ru) {
+                    System.out.print("\n" + tpage.getPageTitle() + ", meanings:" + n_meaning);
+                }
                 
                 if(n_meaning < max_meanings) {
                     mean_histogram [n_meaning] ++;
@@ -236,36 +242,48 @@ public class POSAndPolysemyTableAll {
                     m_lang_histogram.put(lang, h);
                 }
                 
-                if(0 == n_meaning)
-                    continue;
-                n_nonempty_meaning ++;
+                if(n_meaning > 0)
+                    n_nonempty_meaning ++;
 
                 POS p = lang_pos_not_recursive.getPOS().getPOS();
                 if(POS.unknown == p) {
                     n_unknown_pos__in_rich_words ++;
-                } else {
-
-                    {   // all languages statistics
-                        POSStat ps = m_pos_sum_all_lang.get(p);
-                        if(null == ps)
-                            ps = new POSStat();
-                                                  ps.addPOS(n_meaning, page_title);
-                        m_pos_sum_all_lang.put(p, ps);
+                    
+                    if(DEBUG && lang == LanguageType.ru)
+                        System.out.print(", pos:" + p.toString());
+                    
+                    if( m_lang_unknown_pos.containsKey(lang) ) {
+                        m_lang_unknown_pos.put(lang, 1 + m_lang_unknown_pos.get(lang));
+                    } else {
+                        m_lang_unknown_pos.put(lang, 1);
                     }
-
-                    {   // POS statistics of this language
-                        POSStat ps2 = null;
-                        Map<POS,POSStat> m_pos_stat = m_lang_pos_pos_stat.get(lang);
-                        if(null == m_pos_stat) {
-                            m_pos_stat = new HashMap<POS,POSStat>();
-                        } else {
-                            ps2 = m_pos_stat.get(p);
+                    
+                } else {
+                    
+                    if(n_meaning > 0)
+                    {
+                        {   // all languages statistics
+                            POSStat ps = m_pos_sum_all_lang.get(p);
+                            if(null == ps)
+                                ps = new POSStat();
+                                                    ps.addPOS(n_meaning, page_title);
+                            m_pos_sum_all_lang.put(p, ps);
                         }
-                        if(null == ps2)
-                            ps2 = new POSStat();
-                                                                        ps2.addPOS(n_meaning, page_title);
-                                                      m_pos_stat.put(p, ps2);
-                        m_lang_pos_pos_stat.put(lang, m_pos_stat);
+
+                        {   // POS statistics of this language
+                            POSStat ps2 = null;
+                            Map<POS,POSStat> m_pos_stat = m_lang_pos_pos_stat.get(lang);
+                            if(null == m_pos_stat) {
+                                m_pos_stat = new HashMap<POS,POSStat>();
+                            } else {
+                                ps2 = m_pos_stat.get(p);
+                            }
+                            if(null == ps2)
+                                ps2 = new POSStat();
+                                                                            ps2.addPOS(n_meaning, page_title);
+                                                        m_pos_stat.put(p, ps2);
+                            m_lang_pos_pos_stat.put(lang, m_pos_stat);
+                        }
                     }
                 }
 
@@ -361,85 +379,85 @@ public class POSAndPolysemyTableAll {
         
         System.out.println("\n== Total (all entries) ==");
         boolean print_templates_and_short_names = true;
-        POSAndPolysemyPrinter.printPOS(native_lang, m_pos_sum_all_lang, print_templates_and_short_names);
+        POSAndPolysemyPrinter.printPOSSensesAndPolysemy(native_lang, m_pos_sum_all_lang, print_templates_and_short_names);
 
         print_templates_and_short_names = false;
         
         // English order
         if(b_english) {
             System.out.println("\n== English entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.en), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.en, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
             System.out.println("\n== Russian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.ru), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.ru, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Finnish entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.fi), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.fi, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Ukrainian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.uk), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.uk, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== French entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.fr), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.fr, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== German entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.de), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.de, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Serbian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.sr), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.sr, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Tatar entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.tt), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.tt, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Esperanto entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.eo), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.eo, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
         
             System.out.println("\n== Latin entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.la), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.la, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
             System.out.println("\n== Italian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.it), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.it, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
             System.out.println("\n== Swedish entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.sv), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.sv, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
             System.out.println("\n== Spanish entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.es), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.es, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
             System.out.println("\n== Mandarin entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.cmn), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.cmn, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
         } else {
             // Russian order
             System.out.println("\n== Russian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.ru), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.ru, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Ukrainian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.uk), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.uk, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== English entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.en), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.en, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== French entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.fr), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.fr, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== German entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.de), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.de, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Serbian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.sr), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.sr, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Tatar entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.tt), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.tt, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
 
             System.out.println("\n== Belarusian entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.be), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.be, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
             System.out.println("\n== Esperanto entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.eo), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.eo, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
             
             System.out.println("\n== Bashkir entries ==");
-            POSAndPolysemyPrinter.printPOS(native_lang, m_lang_pos.get(LanguageType.ba), print_templates_and_short_names);
+            POSAndPolysemyPrinter.printPOS(native_lang, LanguageType.ba, m_lang_pos, m_lang_unknown_pos, print_templates_and_short_names);
         }
         
         CommonPrinter.printFooter();
