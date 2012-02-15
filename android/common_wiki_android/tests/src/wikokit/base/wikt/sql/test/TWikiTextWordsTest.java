@@ -2,6 +2,7 @@ package wikokit.base.wikt.sql.test;
 
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TPage;
+import wikokit.base.wikt.sql.TPageInflection;
 import wikokit.base.wikt.sql.TWikiText;
 import wikokit.base.wikt.sql.TWikiTextWords;
 
@@ -15,7 +16,7 @@ public class TWikiTextWordsTest extends TestCase {
     Connect ruwikt_conn;
     SQLiteDatabase db;
     TWikiText wiki_text;
-    String page_title; // , inflected_form, str_wiki_text;
+    String page_title, str_wiki_text; // , inflected_form, str_wiki_text;
     TPage page;
     
     protected void setUp() throws Exception {
@@ -32,16 +33,16 @@ public class TWikiTextWordsTest extends TestCase {
                 );
         ruwikt_conn.openDatabase();
         db = ruwikt_conn.getDB();
+                
+        // get wiki_text
+        // select * from wiki_text where text LIKE "%aha%" LIMIT 33;
+        str_wiki_text = "baharda";
+        wiki_text = TWikiText.get(db, str_wiki_text);
+        assertNotNull(wiki_text);
         
         page_title = "весной";
         page = TPage.get(db, page_title);
         assertNotNull(page);
-        
-        // get wiki_text
-        // select * from wiki_text where text LIKE "%aha%" LIMIT 33;
-        String str_wiki_text = "baharda";
-        wiki_text = TWikiText.get(db, str_wiki_text);
-        assertNotNull(wiki_text);
     }
 
     protected void tearDown() throws Exception {
@@ -50,8 +51,8 @@ public class TWikiTextWordsTest extends TestCase {
     }
 
     public void testGetByWikiText() {
-        page_title = "pin one's hopes";
-        page = TPage.get(db, page_title);
+        String page_title = "pin one's hopes";
+        TPage page = TPage.get(db, page_title);
         assertNotNull(page);
         
         TWikiTextWords[] words = TWikiTextWords.getByPage(db, page);
@@ -61,7 +62,7 @@ public class TWikiTextWordsTest extends TestCase {
         TWikiText wiki_text = words[0].getWikiText();
         assertNotNull(wiki_text);
         
-        TWikiTextWords[] ww = TWikiTextWords.getByWikiText(db, wiki_text);
+        TWikiTextWords[] ww = TWikiTextWords.getByWikiText(db, wiki_text); 
         assertNotNull(ww);
         assertEquals(ww.length, 1);
         
@@ -70,7 +71,14 @@ public class TWikiTextWordsTest extends TestCase {
     }
 
     public void testGetByWikiTextAndPageAndInflection() {
-        fail("Not yet implemented");
+        TPageInflection page_inflection = null;
+        
+        String page_title = "baharda";
+        TPage page = TPage.get(db, page_title);
+        assertNotNull(page);
+        
+        TWikiTextWords w = TWikiTextWords.getByWikiTextAndPageAndInflection(db, wiki_text, page, page_inflection);
+        assertNotNull(w);
     }
 
     // 
@@ -91,7 +99,11 @@ public class TWikiTextWordsTest extends TestCase {
     }
 
     public void testGetOneByWikiText() {
-        fail("Not yet implemented");
+        TWikiTextWords words = TWikiTextWords.getOneByWikiText(db, wiki_text);
+        assertNotNull(words);
+        TPage one_wiki_word = words.getPage();
+        assertNotNull(one_wiki_word);
+        assertEquals(str_wiki_text, one_wiki_word.getPageTitle());
     }
 
     public void testGetPageForOneWordWikiText() {
@@ -99,11 +111,10 @@ public class TWikiTextWordsTest extends TestCase {
         //[[word in normal form|inflected_form]]
         TPage one_wiki_word = TWikiTextWords.getPageForOneWordWikiText(db, wiki_text);
         assertNotNull(one_wiki_word);
-        assertEquals(page_title, one_wiki_word.getPageTitle());
+        assertEquals(str_wiki_text, one_wiki_word.getPageTitle());
     }
 
     public void testGetOneWordWikiTextByPage() {
-        
         TWikiTextWords[] words = TWikiTextWords.getByPage(db, page);
         assertNotNull(words);
         assertTrue(words.length > 0);

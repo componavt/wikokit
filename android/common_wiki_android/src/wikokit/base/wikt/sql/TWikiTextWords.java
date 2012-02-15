@@ -316,39 +316,37 @@ public class TWikiTextWords {
      * @return null if text is absent
      */
     public static TWikiTextWords getByWikiTextAndPageAndInflection (SQLiteDatabase db,
-            TWikiText wiki_text,TPage page,TPageInflection page_inflection) {
+            TWikiText _wiki_text,TPage _page,TPageInflection _page_inflection) {
 
-        if(null == wiki_text || null == page)
+        if(null == _wiki_text || null == _page)
             return null;
         
         TWikiTextWords word = null;
+        
+        String s = "";
+        if(null != _page_inflection) {
+            s = " AND page_inflection_id=" + _page_inflection.getID();
+        } else
+            s = " AND page_inflection_id IS NULL";
 
-        /*StringBuilder str_sql = new StringBuilder();
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT id FROM wiki_text_words WHERE wiki_text_id=");
-                str_sql.append(wiki_text.getID());
-                str_sql.append(" AND page_id=");
-                str_sql.append(page.getID());
-                if(null != page_inflection) {
-                    str_sql.append(" AND page_inflection_id=");
-                    str_sql.append(page_inflection.getID());
-                } else
-                    str_sql.append(" AND page_inflection_id IS NULL");
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                        word = new TWikiTextWords(rs.getInt("id"), wiki_text, page, page_inflection);
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByWikiText()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }*/
+     // SELECT id FROM wiki_text_words WHERE wiki_text_id=9 AND page_id=9 AND page_inflection_id=9;
+     // SELECT id FROM wiki_text_words WHERE wiki_text_id=9 AND page_id=9 AND page_inflection_id IS NULL;
+        Cursor c = db.query("wiki_text_words",
+                new String[] { "id"}, 
+                "wiki_text_id=" + _wiki_text.getID() + 
+                " AND page_id=" + _page.getID() + 
+                s, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_id = c.getColumnIndexOrThrow("id");
+            int  _id = c.getInt(i_id);
+            
+            word = new TWikiTextWords(_id, _wiki_text, _page, _page_inflection);
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
         return word;
     }
 
@@ -392,35 +390,6 @@ public class TWikiTextWords {
         if (c != null && !c.isClosed()) {
             c.close();
         }
-        
-        /*StringBuilder str_sql = new StringBuilder();
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT wiki_text_id,page_id,page_inflection_id FROM wiki_text_words WHERE id=");
-                str_sql.append(id);
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if(rs.next ())
-                    {
-                        TWikiText wiki_text = TWikiText.getByID(connect, rs.getInt("wiki_text_id"));
-                        TPage     page      = TPage.    getByID(connect, rs.getInt("page_id"));
-
-                        int pi = rs.getInt("page_inflection_id");
-                        TPageInflection page_infl = 0 == pi ? null : TPageInflection.getByID(connect, pi);
-
-                        if(null != wiki_text && null != page)
-                            word = new TWikiTextWords(id, wiki_text, page, page_infl);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }*/
         return word;
     }
 
@@ -430,44 +399,38 @@ public class TWikiTextWords {
      *
      * @return null if data is absent
      */
-    public static TWikiTextWords getOneByWikiText (SQLiteDatabase db,TWikiText wiki_text) {
+    public static TWikiTextWords getOneByWikiText (SQLiteDatabase db,TWikiText _wiki_text) {
         
-        if(null == wiki_text) {
+        if(null == _wiki_text) {
             System.err.println("Error (TWikiTextWords.getOneByWikiText()):: null argument wiki_text.");
             return null;
         }
         
         TWikiTextWords word = null;
+     // SELECT id,page_id,page_inflection_id FROM wiki_text_words WHERE wiki_text_id=1 LIMIT 1
+        Cursor c = db.query("wiki_text_words", 
+                new String[] { "id", "page_id", "page_inflection_id" }, 
+                "wiki_text_id=" + _wiki_text.getID(), 
+                null, null, null, null,
+                "1"); // limit 1
         
-        /*StringBuilder str_sql = new StringBuilder();
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT id,page_id,page_inflection_id FROM wiki_text_words WHERE wiki_text_id=");
-                str_sql.append(wiki_text.getID());
-                str_sql.append(" LIMIT 1");
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if(rs.next ())
-                    {
-                        int     id =                        rs.getInt("id");
-                        TPage page = TPage.getByID(connect, rs.getInt("page_id"));
+        if (c.moveToFirst()) {
+            int i_id = c.getColumnIndexOrThrow("id");
+            int i_page_id = c.getColumnIndexOrThrow("page_id");
+            int i_page_inflection_id = c.getColumnIndexOrThrow("page_inflection_id");
 
-                        int pi = rs.getInt("page_inflection_id");
-                        TPageInflection page_infl = 0 == pi ? null : TPageInflection.getByID(connect, pi);
+            int _id = c.getInt(i_id);
+            int page_id = c.getInt(i_page_id);
+            TPage _page = TPage.getByID(db, page_id);
 
-                        if(null != wiki_text && null != page)
-                            word = new TWikiTextWords(id, wiki_text, page, page_infl);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }*/
+            int pi = c.getInt(i_page_inflection_id);
+            TPageInflection page_infl = 0 == pi ? null : TPageInflection.getByID(db, pi);
+
+            if(null != _page)
+                word = new TWikiTextWords(_id, _wiki_text, _page, page_infl);
+        }
+        if (c != null && !c.isClosed())
+            c.close();
         return word;
     }
 

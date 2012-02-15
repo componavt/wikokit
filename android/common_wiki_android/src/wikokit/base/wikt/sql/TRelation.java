@@ -22,6 +22,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /** An operations with the table 'relation' in MySQL wiktionary_parsed database.
@@ -214,49 +215,47 @@ public class TRelation {
      * SELECT id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE meaning_id=11;
      * @return empty array if data is absent
      */
-    public static TRelation[] get (SQLiteDatabase db,TMeaning meaning) {
+    public static TRelation[] get (SQLiteDatabase db,TMeaning _meaning) {
 
-        if(null == meaning) {
+        if(null == _meaning) {
             System.err.println("Error (TRelation.get()):: null argument: meaning.");
             return NULL_TRELATION_ARRAY;
         }
-        
         List<TRelation> list_rel = null;
         
-        /*StringBuilder str_sql = new StringBuilder();
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE meaning_id=");
-                str_sql.append(meaning.getID());
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    while (rs.next ())
-                    {
-                        int          id =                               rs.getInt("id");
-                        TWikiText    wt = TWikiText.getByID(connect,    rs.getInt("wiki_text_id"));
-                        TRelationType r = TRelationType.getRelationFast(rs.getInt("relation_type_id"));
+        // SELECT id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE meaning_id=1
+        Cursor c = db.query("relation", 
+                new String[] { "id", "wiki_text_id", "relation_type_id", "meaning_summary"}, 
+                "meaning_id=" + _meaning.getID(),
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            do {
+                int i_id = c.getColumnIndexOrThrow("id");
+                int i_wiki_text_id = c.getColumnIndexOrThrow("wiki_text_id");
+                int i_relation_type_id = c.getColumnIndexOrThrow("relation_type_id");
+                int i_meaning_summary = c.getColumnIndexOrThrow("meaning_summary");
+                
+                int  _id            = c.getInt(i_id);
+                int  wiki_text_id   = c.getInt(i_wiki_text_id);
+                TWikiText wt = wiki_text_id < 1 ? null : TWikiText.getByID(db, wiki_text_id);
+                
+                int  rtid = c.getInt(i_relation_type_id);
+                TRelationType r = TRelationType.getRelationFast(rtid);
+                
+                if(null != wt && null != r) {
+                    if(null == list_rel)
+                               list_rel = new ArrayList<TRelation>();
 
-                        if(null != wt && null != r) {
-                            if(null == list_rel)
-                                       list_rel = new ArrayList<TRelation>();
+                    String sum = c.getString(i_meaning_summary);
 
-                            byte[] bb = rs.getBytes("meaning_summary");
-                            String sum = null == bb ? null : Encodings.bytesToUTF8(bb);
-
-                            list_rel.add(new TRelation(id, meaning, wt, r, sum));
-                        }
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelation.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }*/
-
+                    list_rel.add(new TRelation(_id, _meaning, wt, r, sum));
+                }  
+            } while (c.moveToNext());
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
         if(null == list_rel)
             return NULL_TRELATION_ARRAY;
         return (TRelation[])list_rel.toArray(NULL_TRELATION_ARRAY);
@@ -267,34 +266,23 @@ public class TRelation {
      * SELECT COUNT(*) as a FROM relation WHERE meaning_id=11;
      * @return empty array if data is absent
      */
-    public static int count (SQLiteDatabase db,TMeaning meaning) {
+    public static int count (SQLiteDatabase db,TMeaning _meaning) {
 
-        if(null == meaning) {
+        if(null == _meaning) {
             System.err.println("Error (wikt_parsed TRelation.count()):: null argument: meaning.");
             return 0;
         }
-        
         int n = 0;
         
-        /*StringBuilder str_sql = new StringBuilder();
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT COUNT(*) AS n FROM relation WHERE meaning_id=");
-                str_sql.append(meaning.getID());
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                        n = rs.getInt("n");
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TRelation.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }*/
+        final String sql = "SELECT COUNT(*) FROM relation WHERE meaning_id=?";
+        
+        Cursor c = db.rawQuery(sql, new String[] { "" + _meaning.getID() });
+        if (c.moveToFirst())            
+            n = c.getInt(0);
+
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
         return n;
     }
 
@@ -302,40 +290,38 @@ public class TRelation {
      * SELECT meaning_id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE id=1;
      * @return null if data is absent
      */
-    public static TRelation getByID (SQLiteDatabase db,int id) {
+    public static TRelation getByID (SQLiteDatabase db,int _id) {
+        
+        if(_id < 0) {
+            System.err.println("Error (TRelation.getByID()):: ID is negative.");
+            return null;
+        }
+        // SELECT meaning_id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE id=1
+        Cursor c = db.query("relation", 
+                new String[] { "meaning_id", "wiki_text_id", "relation_type_id", "meaning_summary"}, 
+                "id=" + _id,
+                null, null, null, null);
         
         TRelation relation = null;
+        if (c.moveToFirst()) {
+                int i_meaning_id = c.getColumnIndexOrThrow("meaning_id");
+                int i_wiki_text_id = c.getColumnIndexOrThrow("wiki_text_id");
+                int i_relation_type_id = c.getColumnIndexOrThrow("relation_type_id");
+                int i_meaning_summary = c.getColumnIndexOrThrow("meaning_summary");
+                
+                TMeaning  m  = TMeaning. getByID( db, c.getInt(i_meaning_id));
+                TWikiText wt = TWikiText.getByID( db, c.getInt(i_wiki_text_id));
+                TRelationType r = TRelationType.getRelationFast(
+                                                      c.getInt(i_relation_type_id));
+                if(null != m && null != wt && null != r) {
+                    String sum = c.getString(i_meaning_summary); // could be null
 
-        /*StringBuilder str_sql = new StringBuilder();
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT meaning_id,wiki_text_id,relation_type_id,meaning_summary FROM relation WHERE id=");
-                str_sql.append(id);
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        TMeaning      m = TMeaning. getByID( connect,   rs.getInt("meaning_id"));
-                        TWikiText    wt = TWikiText.getByID( connect,   rs.getInt("wiki_text_id"));
-                        TRelationType r = TRelationType.getRelationFast(rs.getInt("relation_type_id"));
-                        if(null != m && null != wt && null != r) {
-
-                            byte[] bb = rs.getBytes("meaning_summary");
-                            String sum = null == bb ? null : Encodings.bytesToUTF8(bb);
-
-                            relation = new TRelation(id, m, wt, r, sum);
-                        }
-                    }
-                } finally {
-                    rs.close();
+                    relation = new TRelation(_id, m, wt, r, sum);
                 }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelation.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }*/
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
         return relation;
     }
 
@@ -370,8 +356,10 @@ public class TRelation {
      *      car -> vehicle (hyperohym)
      * or empty map, if relations are absent
      */
-    public static Map<String,List<String>> getAllWordPairs (SQLiteDatabase db) {
+    public static Map<String, List<String>> getAllWordPairs (SQLiteDatabase db) {
 
+        assert(false);
+        
         // for each relation: get page<->wiki_text<->wiki_word + todo: type of relation
 
         long    t_start;
@@ -487,7 +475,7 @@ public class TRelation {
      * @return word defined by a semantic relation (e.g. "automobile" for "car"), or null if search failed
      */
     public static TPage getWikifiedPage (SQLiteDatabase db,TRelation trelation) {
-/*        
+        
         if(null == trelation)
             return null;
         
@@ -498,7 +486,7 @@ public class TRelation {
         TWikiTextWords t_word = TWikiTextWords.getOneByWikiText(db, twt);
         if(null != t_word)
             return t_word.getPage();
-*/            
+            
         return null;
     }
 
@@ -533,6 +521,10 @@ public class TRelation {
      */
     public static Relation getRelationType (SQLiteDatabase db,String word1,String word2) {
         Relation r;
+        
+        if(null == word1 || null == word2 
+          || word1.length() == 0 || word2.length() == 0)
+            return null;
 
         r = TRelation.getRelationBetweenPageTitleAndWord(db, word1, word2);
         if(null != r)
