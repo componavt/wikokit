@@ -405,7 +405,7 @@ public class TTranslation {
 
         if(null == lang_pos) {
             System.err.println("Error (wikt_parsed TTranslation.getByLangPOS()):: null arguments lang_pos");
-            return null;
+            return NULL_TTRANSLATION_ARRAY;
         }
 
         StringBuilder str_sql = new StringBuilder();

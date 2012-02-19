@@ -1,7 +1,7 @@
 /* TWikiTextWords.java - SQL operations with the table 'wiki_text' in Wiktionary
  * parsed database.
  *
- * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2009-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 

@@ -56,7 +56,7 @@ public class POSAndPolysemyPrinter {
 
             POSStat pos_stat = m_lang_pos.get(pos);// Map<POS,POSStat> m_lang_pos
 
-            System.out.print("\n|-\n! " + 
+            System.out.print("\n|-\n| " + 
                     pos_stat.getNumberOfUniquesStrings() + " || " +
                     pos_stat.getNumberOfWordSensePairs() + " || " +
                     pos.toString());
@@ -92,7 +92,7 @@ public class POSAndPolysemyPrinter {
 
             POSStat pos_stat = m_lang_pos.get(pos);// Map<POS,POSStat> m_lang_pos
 
-            System.out.print("\n|-\n! " + pos.toString());
+            System.out.print("\n|-\n| " + pos.toString());
 
             if(LanguageType.en != native_lang)
                 System.out.print(" || " + pos.toString(native_lang));

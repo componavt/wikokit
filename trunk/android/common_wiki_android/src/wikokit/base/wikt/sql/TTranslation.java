@@ -1,25 +1,24 @@
-/* TTranslation - SQL operations with the table 'translation' in Wiktionary
- * parsed database.
+/* TTranslation - SQL operations with the table 'translation' in SQLite Android
+ * Wiktionary parsed database.
  *
- * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2009-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.sql;
+package wikokit.base.wikt.sql;
 
-import wikt.util.WikiText;
-import wikt.word.WTranslation;
-import wikt.word.WTranslationEntry;
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.util.WikiText;
+import wikokit.base.wikt.word.WTranslation;
+import wikokit.base.wikt.word.WTranslationEntry;
 
-import wikipedia.language.LanguageType;
-import wikipedia.language.Encodings;
-import wikipedia.sql.PageTableBase;
-import wikipedia.sql.Connect;
-import wikt.sql.index.IndexForeign;
+//import wikokit.base.wikt.sql.index.IndexForeign;
 
-import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 /** SQL operations with the table 'translation' in Wiktionary parsed database.
  *
@@ -103,7 +102,7 @@ public class TTranslation {
      * @param page_title    title (in native language) of the article
      * @param tmeaning      corresponding record in table 'meaning' to this translation
      */
-    public static void storeToDB (Connect conn,
+    /*public static void storeToDB (Connect conn,
                                 LanguageType native_lang, String page_title,
                                 TLangPOS lang_pos,
                                 TMeaning tmeaning, WTranslation wtrans) {
@@ -136,7 +135,7 @@ public class TTranslation {
                 }
             }
         }
-    }
+    }*/
     
     /** Gets translations (on the page defined by entry article 'source_page')
      * into given language target_lang,
@@ -146,7 +145,7 @@ public class TTranslation {
      * @param target_lang target language
      * @return empty array if data is absent
      */
-    public static TPage[] fromPageToTranslations (Connect connect,TLang source_tlang,
+    public static TPage[] fromPageToTranslations (SQLiteDatabase db,TLang source_tlang,
                                                   TPage source_page,TLang target_tlang) {
         // Data flow in database tables:
         // page -> lang_pos -> meaning (?)
@@ -156,17 +155,17 @@ public class TTranslation {
         List<TPage> list_page = null;
         LanguageType source_lang = source_tlang.getLanguage();
 
-        TLangPOS[] lang_pos_all = TLangPOS.get(connect, source_page);
+        TLangPOS[] lang_pos_all = TLangPOS.get(db, source_page);
         for(TLangPOS lang_pos : lang_pos_all) {
             if(source_lang == lang_pos.getLang().getLanguage()) {
 
-                TTranslation[] trans_all = TTranslation.getByLangPOS(connect, lang_pos);
+                TTranslation[] trans_all = TTranslation.getByLangPOS(db, lang_pos);
                 for(TTranslation trans : trans_all) {
-                    TTranslationEntry[] trans_entries = TTranslationEntry.getByLanguageAndTranslation(connect, trans, target_tlang);
+                    TTranslationEntry[] trans_entries = TTranslationEntry.getByLanguageAndTranslation(db, trans, target_tlang);
 
                     for(TTranslationEntry trans_entry : trans_entries) {
 
-                        TPage p = TWikiTextWords.getPageForOneWordWikiText(connect, trans_entry.getWikiText());
+                        TPage p = TWikiTextWords.getPageForOneWordWikiText(db, trans_entry.getWikiText());
                         if(null != p) {
                             if(null == list_page)
                                list_page = new ArrayList<TPage>();
@@ -210,13 +209,13 @@ public class TTranslation {
      * @param target_tlang      language of translations
      * @return empty array if data is absent
      */
-    public static TPage[] fromTranslationsToPage (Connect connect,
+    public static TPage[] fromTranslationsToPage (SQLiteDatabase db,
                                                 TLang source_tlang,     // language of sought pages (language of page)
                                                 TPage translation_page, // on target language
                                                 TLang target_tlang) {   // language of translations
         
         if(null == source_tlang || null == translation_page || null == target_tlang) {
-            System.err.println("Error (wikt_parsed TTranslation.fromTranslationsToPage()):: null arguments, source_tlang="+
+            System.err.println("Error (TTranslation.fromTranslationsToPage()):: null arguments, source_tlang="+
                     source_tlang+", translation_page="+translation_page+", target_tlang="+target_tlang);
             return NULL_TPAGE_ARRAY;
         }
@@ -228,10 +227,10 @@ public class TTranslation {
         List<String> slist_page = null; // just for unique TPage, local var
         List<TPage>   list_page = null;
         LanguageType source_lang = source_tlang.getLanguage();
-        TWikiText[] one_word_wiki_text = TWikiTextWords.getOneWordWikiTextByPage(connect, translation_page);
+        TWikiText[] one_word_wiki_text = TWikiTextWords.getOneWordWikiTextByPage(db, translation_page);
         
         for(TWikiText w : one_word_wiki_text) {
-            TTranslationEntry[] trans_entries = TTranslationEntry.getByWikiTextAndLanguage(connect, w, target_tlang);
+            TTranslationEntry[] trans_entries = TTranslationEntry.getByWikiTextAndLanguage(db, w, target_tlang);
 
             for(TTranslationEntry e : trans_entries) {
                 TTranslation trans = e.getTranslation();
@@ -240,7 +239,7 @@ public class TTranslation {
                     if(source_lang == trans.getLangPOS().getLang().getLanguage()) {
                         TPage p = trans.getLangPOS().getPage();
                         if(null == p) {
-                            System.err.println("Error (wikt_parsed TTranslation.fromTranslationsToPage()):: There is no page with translation (translation_page)="+translation_page.getPageTitle());
+                            System.err.println("Error (TTranslation.fromTranslationsToPage()):: There is no page with translation (translation_page)="+translation_page.getPageTitle());
                             return NULL_TPAGE_ARRAY;
                         }
                         if(null == list_page) {
@@ -273,12 +272,12 @@ public class TTranslation {
      * @param target_tlang      language of translations
      * @return empty array if data is absent
      */
-    public static String[] fromTranslationsToPage (Connect connect,
+    public static String[] fromTranslationsToPage (SQLiteDatabase db,
                                                 LanguageType source_lang,   // language of sought pages (language of page)
                                                 String translation_page,    // on target language
                                                 LanguageType target_lang) { // language of translations
 
-        TPage page = TPage.get(connect, translation_page);
+        TPage page = TPage.get(db, translation_page);
         if(null == page) {
             System.err.println("Error (TTranslation.fromTranslationsToPage()):: null argument page");
             return NULL_STRING_ARRAY;
@@ -286,7 +285,7 @@ public class TTranslation {
         
         TLang source_tlang = TLang.get(source_lang);
         TLang target_tlang = TLang.get(target_lang);
-        TPage[] source_pages = TTranslation.fromTranslationsToPage(connect, source_tlang, page, target_tlang);
+        TPage[] source_pages = TTranslation.fromTranslationsToPage(db, source_tlang, page, target_tlang);
         if(0 == source_pages.length)
             return NULL_STRING_ARRAY;
 
@@ -305,11 +304,11 @@ public class TTranslation {
      * @param meaning_summary
      * @return inserted record, or null if insertion failed
      */
-    public static TTranslation insert (Connect connect,TLangPOS lang_pos,
+    /*public static TTranslation insert (Connect connect,TLangPOS lang_pos,
             String meaning_summary,TMeaning meaning) {
 
         if(null == lang_pos) {
-            System.err.println("Error (wikt_parsed TTranslation.insert()):: null argument lang_pos");
+            System.err.println("Error (TTranslation.insert()):: null argument lang_pos");
             return null;
         }
 
@@ -357,42 +356,42 @@ public class TTranslation {
             System.err.println("SQLException (TTranslation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return trans;
-    }
+    }*/
 
     /** Selects rows from the table 'translation' by ID.<br><br>
      * SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=1;
      * @return empty array if data is absent
      */
-    public static TTranslation getByID (Connect connect,int id) {
+    public static TTranslation getByID (SQLiteDatabase db,int _id) {
         
-        StringBuilder str_sql = new StringBuilder();
+        if(_id < 0) {
+            System.err.println("Error (TTranslation.getByID()):: ID is negative.");
+            return null;
+        }
         TTranslation trans = null;
         
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=");
-                str_sql.append(id);
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        TLangPOS lang_pos = TLangPOS.getByID(connect,   rs.getInt("lang_pos_id"));
-                        String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
-
-                        int meaning_id = rs.getInt("meaning_id");
-                        TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
-                        if(null != lang_pos)
-                            trans = new TTranslation(id, lang_pos, meaning_summary, meaning);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+     // SELECT lang_pos_id,meaning_summary,meaning_id FROM translation WHERE id=
+        Cursor c = db.query("translation", 
+                new String[] { "lang_pos_id", "meaning_summary", "meaning_id"}, 
+                "id=" + _id, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_lang_pos_id = c.getColumnIndexOrThrow("lang_pos_id");
+            int  lang_pos_id    = c.getInt(i_lang_pos_id);
+            TLangPOS _lang_pos = TLangPOS.getByID(db, lang_pos_id);
+            
+            int i_meaning_summary = c.getColumnIndexOrThrow("meaning_summary");
+            String sum = c.getString(i_meaning_summary);
+            
+            int i_meaning_id = c.getColumnIndexOrThrow("meaning_id");
+            int meaning_id = c.getInt(i_meaning_id);
+            TMeaning  m  = meaning_id < 1 ? null : TMeaning.getByID(db, meaning_id);
+            if(null != _lang_pos)
+                trans = new TTranslation(_id, _lang_pos, sum, m);
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         return trans;
     }
@@ -401,44 +400,40 @@ public class TTranslation {
      * SELECT id,meaning_summary,meaning_id FROM translation WHERE lang_pos_id=1;
      * @return empty array if data is absent
      */
-    public static TTranslation[] getByLangPOS (Connect connect,TLangPOS lang_pos) {
+    public static TTranslation[] getByLangPOS (SQLiteDatabase db,TLangPOS _lang_pos) {
 
-        if(null == lang_pos) {
-            System.err.println("Error (wikt_parsed TTranslation.getByLangPOS()):: null arguments lang_pos");
-            return null;
+        if(null == _lang_pos) {
+            System.err.println("Error (TTranslation.getByLangPOS()):: null arguments lang_pos");
+            return NULL_TTRANSLATION_ARRAY;
         }
-
-        StringBuilder str_sql = new StringBuilder();
         List<TTranslation> list_trans = null;
 
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT id,meaning_summary,meaning_id FROM translation WHERE lang_pos_id=");
-                str_sql.append(lang_pos.getID());
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    while (rs.next ())
-                    {
-                        int id = rs.getInt("id");
-                        String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
-
-                        int meaning_id = rs.getInt("meaning_id");
-                        TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
-
-                        if(null == list_trans)
-                            list_trans = new ArrayList<TTranslation>();
-                        list_trans.add(new TTranslation(id, lang_pos, meaning_summary, meaning));
-
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TTranslation.getByLangPOS()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        // SELECT id,meaning_summary,meaning_id FROM translation WHERE lang_pos_id=1;
+        Cursor c = db.query("translation", 
+                new String[] { "id", "meaning_summary", "meaning_id"}, 
+                "lang_pos_id=" + _lang_pos.getID(), 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            do {
+                int i_id = c.getColumnIndexOrThrow("id");
+                int  _id = c.getInt(i_id);
+                
+                int i_meaning_summary = c.getColumnIndexOrThrow("meaning_summary");
+                String sum = c.getString(i_meaning_summary);
+                
+                int i_meaning_id = c.getColumnIndexOrThrow("meaning_id");
+                int meaning_id = c.getInt(i_meaning_id);
+                TMeaning m  = meaning_id < 1 ? null : TMeaning.getByID(db, meaning_id);
+                
+                if(null == list_trans)
+                    list_trans = new ArrayList<TTranslation>();
+                list_trans.add(new TTranslation(_id, _lang_pos, sum, m));
+                    
+            } while (c.moveToNext());
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         if(null == list_trans)
             return NULL_TTRANSLATION_ARRAY;
@@ -451,39 +446,31 @@ public class TTranslation {
      *
      * @return null if data is absent
      */
-    public static TTranslation getByMeaning(Connect connect,TMeaning meaning) {
+    public static TTranslation getByMeaning(SQLiteDatabase db,TMeaning _meaning) {
 
-        if(null == meaning) {
-            System.err.println("Error (wikt_parsed TTranslation.getByMeaning()):: null argument meaning");
+        if(null == _meaning) {
+            System.err.println("Error (TTranslation.getByMeaning()):: null argument meaning");
             return null;
         }
-        StringBuilder str_sql = new StringBuilder();
         TTranslation ttrans = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                str_sql.append("SELECT id,meaning_summary FROM translation WHERE meaning_id=");
-                str_sql.append(meaning.getID());
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    while (rs.next ())
-                    {
-                        int id = rs.getInt("id");
-                        String meaning_summary = Encodings.bytesToUTF8(rs.getBytes("meaning_summary"));
+        
+        // SELECT id,meaning_summary FROM translation WHERE meaning_id=1
+        Cursor c = db.query("translation", 
+                new String[] { "id", "meaning_summary"}, 
+                "meaning_id=" + _meaning.getID(), 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_id = c.getColumnIndexOrThrow("id");
+            int _id  = c.getInt(i_id);
+            
+            int i_meaning_summary = c.getColumnIndexOrThrow("meaning_summary");
+            String sum = c.getString(i_meaning_summary);
 
-                        //int meaning_id = rs.getInt("meaning_id");
-                        //TMeaning meaning = meaning_id < 1 ? null : TMeaning.getByID(connect, meaning_id);
-
-                        ttrans = new TTranslation(id, meaning.getLangPOS(connect), meaning_summary, meaning);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TTranslation.getByMeaning()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            ttrans = new TTranslation(_id, _meaning.getLangPOS(db), sum, _meaning);
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         return ttrans;
     }
@@ -491,10 +478,10 @@ public class TTranslation {
     /** Deletes row from the table 'translation' and deletes related rows
      * from the table 'translation_entry'.
      */
-    public static void deleteWithEntries (Connect connect,TTranslation trans) {
+    /*public static void deleteWithEntries (Connect connect,TTranslation trans) {
 
         if(null == trans) {
-            System.err.println("Error (wikt_parsed TTranslation.deleteWithEntries()):: null argument 'translation'");
+            System.err.println("Error (TTranslation.deleteWithEntries()):: null argument 'translation'");
             return;
         }
         
@@ -503,16 +490,16 @@ public class TTranslation {
         for(TTranslationEntry e : ee)
             TTranslationEntry.delete(connect, e);
         TTranslation.delete(connect, trans);
-    }
+    }*/
 
     /** Deletes row from the table 'translation' by a value of ID.<br>
      *  DELETE FROM translation WHERE id=1;
      * @param  id  unique ID in the table `translation`
      */
-    public static void delete (Connect connect,TTranslation trans) {
+    /*public static void delete (Connect connect,TTranslation trans) {
 
         if(null == trans) {
-            System.err.println("Error (wikt_parsed TTranslation.delete()):: null argument 'translation'");
+            System.err.println("Error (TTranslation.delete()):: null argument 'translation'");
             return;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -528,14 +515,14 @@ public class TTranslation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (TTranslation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-    }
+    }*/
 
     /** Fills (recursively) all fields translation_entry. */
-    public void getRecursive (Connect connect) {
+    public void getRecursive (SQLiteDatabase db) {
         
-        entry = TTranslationEntry.getByTranslation(connect, this);
+        entry = TTranslationEntry.getByTranslation(db, this);
     }
 
 }

@@ -5,13 +5,10 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.sql.index;
+package wikokit.base.wikt.sql.index;
 
 import wikt.sql.*;
-import wikipedia.sql.PageTableBase;
-import wikipedia.sql.Connect;
 
-import java.sql.*;
 
 /** The table 'index_native' - wordlist of words in main (native) language
  * with non empty definitions (table in Wiktionary parsed database).
