@@ -12,10 +12,8 @@ import wikokit.base.wikipedia.sql.PageTableBase;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TLangPOS;
 
-import wikipedia.language.LanguageType;
-import wikipedia.language.Encodings;
+import wikokit.base.wikipedia.language.LanguageType;
 
-import java.sql.*;
 import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;

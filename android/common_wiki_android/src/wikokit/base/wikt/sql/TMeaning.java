@@ -63,15 +63,15 @@ public class TMeaning {
      * The map from semantic relation (e.g. synonymy) to array of WRelation
      * (one WRelation contains a list of synonyms for one meaning).
      */
-//    private Map<Relation, TRelation[]> relation;
+    private Map<Relation, TRelation[]> relation;
 
     /** Translation */
-//    private TTranslation translation;
+    private TTranslation translation;
 
 
-//    private final static Map<Relation, TRelation[]> NULL_MAP_RELATION_TRELATION_ARRAY = new HashMap<Relation, TRelation[]>();
+    private final static Map<Relation, TRelation[]> NULL_MAP_RELATION_TRELATION_ARRAY = new HashMap<Relation, TRelation[]>();
     private final static TMeaning[] NULL_TMEANING_ARRAY = new TMeaning[0];
-    //private final static TRelation[] NULL_TRELATION_ARRAY = new TRelation[0];
+    private final static TRelation[] NULL_TRELATION_ARRAY = new TRelation[0];
 
     /** Constructor.
      * @param _id
@@ -91,8 +91,7 @@ public class TMeaning {
         meaning_n   = _meaning_n;
         wiki_text   = _wiki_text;
         wiki_text_id= _wiki_text_id;
-
- //       relation    = NULL_MAP_RELATION_TRELATION_ARRAY;
+        relation    = NULL_MAP_RELATION_TRELATION_ARRAY;
     }
 
     /** Gets unique ID from database */
@@ -128,14 +127,9 @@ public class TMeaning {
     }
 
     /** Gets relation map */
-/*    public Map<Relation, TRelation[]> getRelation() {
+    public Map<Relation, TRelation[]> getRelation() {
         return relation;
     }
-
-
-  
-    
-*/
     
     /** Inserts record into the table 'meaning'.<br><br>
      * INSERT INTO meaning (lang_pos_id,meaning_n,wiki_text_id) VALUES (1,2,3);
@@ -248,7 +242,7 @@ public class TMeaning {
      * @param r_type    the relation type we are interested in, e.g. synonymy
      * @return an empty array if relations are absent
      */
-/*    private void addOneKindOfRelation (Relation r_type, TRelation[] rels) {
+    private void addOneKindOfRelation (Relation r_type, TRelation[] rels) {
 
         // 1. counts number of relations of this type
         int c = 0;
@@ -272,12 +266,12 @@ public class TMeaning {
             relation = new HashMap<Relation, TRelation[]>();
         relation.put(r_type, result);
         //System.out.println("r_type="+r_type.toString()+"; +1 where TRelation[] result.size="+result.length);
-    }*/
+    }
 
     /** Fills the relations field. */
     public void fillRelation (SQLiteDatabase db) {
-/*
-        TRelation[] rels = TRelation.get(connect, this);
+
+        TRelation[] rels = TRelation.get(db, this);
 
         // let's convert the flat array: TRelation[] rels
         // into the map: Map<Relation, TRelation[]> relation;
@@ -287,8 +281,7 @@ public class TMeaning {
         addOneKindOfRelation (Relation.hypernymy, rels);
         addOneKindOfRelation (Relation.hyponymy, rels);
         addOneKindOfRelation (Relation.holonymy, rels);
-        addOneKindOfRelation (Relation.meronymy, rels);
-*/        
+        addOneKindOfRelation (Relation.meronymy, rels);        
     }
     
     /** Fills the translation field.
@@ -297,14 +290,13 @@ public class TMeaning {
      * fills (recursively) all fields translation_entry.
      */
     public void fillTranslation (SQLiteDatabase db) {
-/*
-        translation = TTranslation.getByMeaning(connect, this);
+
+        translation = TTranslation.getByMeaning(db, this);
 
         if(null == translation)
             return;
 
-        translation.getRecursive(connect);
-*/        
+        translation.getRecursive(db);        
     }
 
     /** Selects rows from the table 'meaning' by the lang_pos_id.
@@ -396,7 +388,7 @@ public class TMeaning {
      */
     public boolean hasTranslation(TLang trans_lang[]) {
 
- /*       if(null == translation)
+        if(null == translation)
             return false;
         
         TTranslationEntry[] trans_entries = translation.getTranslationEntry();
@@ -406,8 +398,7 @@ public class TMeaning {
                 if(lang == entry.getLang())
                     return true;
             }
-        }
-   */     
+        }     
         return false;
     }
 }

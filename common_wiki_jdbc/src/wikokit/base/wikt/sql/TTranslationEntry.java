@@ -139,7 +139,7 @@ public class TTranslationEntry {
                         if(null != trans && null != lang && null != wiki_text)
                             trans_entry = new TTranslationEntry(id, trans, lang, wiki_text);
                         else
-                            System.err.println("Error (wikt_parsed TTranslationEntry.insert()):: null arguments: trans = "+trans+
+                            System.err.println("Error (wikt_parsed TTranslationEntry.getByID()):: null value: trans = "+trans+
                             "; lang="+ lang +"; wiki_text=" + wiki_text);
                     }
                 } finally {

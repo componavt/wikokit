@@ -8,19 +8,10 @@
 package wikokit.base.wikt.sql;
 
 import wikokit.base.wikt.constant.Relation;
-import wikokit.base.wikt.word.WRelation;
-import wikokit.base.wikt.util.WikiText;
-
-//import wikipedia.sql.Connect;
-//import wikipedia.sql.Statistics;
-//import wikipedia.sql.PageTableBase;
-//import wikipedia.language.Encodings;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.HashMap;
-import java.util.Collection;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;

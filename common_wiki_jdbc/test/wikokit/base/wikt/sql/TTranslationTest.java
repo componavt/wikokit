@@ -37,7 +37,7 @@ public class TTranslationTest {
 
     LanguageType native_lang;
     TPage page;
-    String  page_title;
+    String page_title;
     TPOS pos;
     TLangPOS lang_pos;
     TMeaning meaning;
