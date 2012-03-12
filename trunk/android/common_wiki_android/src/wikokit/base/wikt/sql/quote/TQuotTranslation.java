@@ -1,17 +1,15 @@
 /* TQuotTranslation.java - SQL operations with the table 'quot_translation'
- * in Wiktionary parsed database.
+ * in SQLite Android Wiktionary parsed database.
  *
- * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2011-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.sql.quote;
+package wikokit.base.wikt.sql.quote;
 
-import java.sql.*;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
-import wikipedia.sql.PageTableBase;
-import wikipedia.language.Encodings;
-import wikipedia.sql.Connect;
 
 /** Operations with the table 'quot_translation' in MySQL Wiktionary parsed database. */
 public class TQuotTranslation {
@@ -45,7 +43,7 @@ public class TQuotTranslation {
      * @param text      quote translation
      * @return inserted record, or null if insertion failed
      */
-    public static TQuotTranslation insert (Connect connect,int quote_id, String text) {
+    /*public static TQuotTranslation insert (Connect connect,int quote_id, String text) {
 
         if(null == text || text.length() == 0)
             return null;
@@ -68,36 +66,34 @@ public class TQuotTranslation {
             System.err.println("SQLException (TQuotTranslation.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return new TQuotTranslation(quote_id, text);
-    }
+    }*/
 
     /** Selects row from the table 'quot_translation' by ID.<br><br>
      * SELECT text FROM quot_translation WHERE quote_id=1;
      * @return null if data is absent
      */
-    public static TQuotTranslation getByID (Connect connect,int quote_id) {
+    public static TQuotTranslation getByID (SQLiteDatabase db,int _quote_id) {
         
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT text FROM quot_translation WHERE quote_id=");
-        str_sql.append(quote_id);
         TQuotTranslation result = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        String text = Encodings.bytesToUTF8(rs.getBytes("text"));
-                        result = new TQuotTranslation(quote_id, text);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotTranslation.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        
+        if(_quote_id < 0) {
+            System.err.println("Error (TQuotTranslation.getByID()):: ID is negative.");
+            return null;
+        }
+        
+        // SELECT text FROM quot_translation WHERE quote_id=1;
+        Cursor c = db.query("quot_translation", 
+                new String[] { "text" }, 
+                "quote_id=" + _quote_id, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_text = c.getColumnIndexOrThrow("text");
+            String _text = c.getString(i_text);
+            result = new TQuotTranslation(_quote_id, _text);
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         return result;
     }
@@ -105,7 +101,7 @@ public class TQuotTranslation {
     /** Deletes row from the table 'quot_translation' by a value of ID.<br><br>
      * DELETE FROM quot_translation WHERE quote_id=4;
      */
-    public void delete (Connect connect) {
+    /*public void delete (Connect connect) {
 
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("DELETE FROM quot_translation WHERE quote_id=");
@@ -120,5 +116,5 @@ public class TQuotTranslation {
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotTranslation.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-    }
+    }*/
 }

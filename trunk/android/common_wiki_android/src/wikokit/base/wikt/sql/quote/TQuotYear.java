@@ -1,14 +1,16 @@
 /* TQuotYear.java - year of quotation,
- * SQL operations with the table 'quot_year' in Wiktionary parsed database.
+ * SQL operations with the table 'quot_year' in SQLite Android 
+ * Wiktionary parsed database.
  *
- * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2011-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.sql.quote;
+package wikokit.base.wikt.sql.quote;
 
-import java.sql.*;
-import wikipedia.sql.Connect;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
 
 /** Year of quotation and
  * operations with the table 'quot_year' in MySQL Wiktionary parsed database. */
@@ -61,9 +63,9 @@ public class TQuotYear {
      * @param _to finish date of a writing book with the quote
      * @return inserted record, or null if the insertion failed
      */
-    public static TQuotYear insert (Connect connect,int _from) {
+    /*public static TQuotYear insert (Connect connect,int _from) {
         return insert(connect, _from, _from);
-    }
+    }*/
 
     /** Inserts record into the table 'quot_year'.<br><br>
      * INSERT INTO quot_year (`from`,`to`) VALUES (1956,1988);
@@ -72,7 +74,7 @@ public class TQuotYear {
      * @param _to finish date of a writing book with the quote
      * @return inserted record, or null if the insertion failed
      */
-    public static TQuotYear insert (Connect connect,int _from,int _to) {
+    /*public static TQuotYear insert (Connect connect,int _from,int _to) {
 
         if(-1 == _from || -1 == _to) // it means that there is no info about years
             return null;
@@ -113,7 +115,7 @@ public class TQuotYear {
             System.err.println("SQLException (TQuotYear.insert):: _from="+_from+"; _to="+_to+"; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
-    }
+    }*/
 
     /** Selects row from the table 'quot_year' by ID.<br><br>
      *
@@ -121,31 +123,29 @@ public class TQuotYear {
      *
      * @return null if data is absent
      */
-    public static TQuotYear getByID (Connect connect,int id) {
+    public static TQuotYear getByID (SQLiteDatabase db,int _id) {
         
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT `from`,`to` FROM quot_year WHERE id=");
-        str_sql.append(id);
         TQuotYear quot_year = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        int _from = rs.getInt("from");
-                        int _to   = rs.getInt("to");
-                        quot_year = new TQuotYear(id, _from, _to);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotYear.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        
+        if(_id <= 0)
+            return null;
+        
+        // SELECT `from`,`to` FROM quot_year WHERE id=1
+        Cursor c = db.query("quot_year", 
+                new String[] { "`from`", "`to`" }, // attention: + apostrophes for SQL keywords
+                "id=" + _id, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_from = c.getColumnIndexOrThrow("from");
+            int i_to   = c.getColumnIndexOrThrow("to");
+            int _from = c.getInt(i_from);
+            int _to   = c.getInt(i_to);
+            
+            quot_year = new TQuotYear(_id, _from, _to);
+        }
+        if (c != null && !c.isClosed()) {
+           c.close();
         }
         return quot_year;
     }
@@ -156,8 +156,8 @@ public class TQuotYear {
      * @param _text name of the source
      * @return NULL if data is absent
      */
-    public static TQuotYear get (Connect connect,int _from, String page_title) {
-        return get(connect, _from, _from, page_title);
+    public static TQuotYear get (SQLiteDatabase db,int _from, String page_title) {
+        return get(db, _from, _from, page_title);
     }
 
     /** Get's a record from the table 'quot_year' by a date of a book with a quote.<br><br>
@@ -166,36 +166,29 @@ public class TQuotYear {
      * @param page_title word which are described in this article
      * @return NULL if data is absent
      */
-    public static TQuotYear get (Connect connect,int _from,int _to, String page_title) {
+    public static TQuotYear get (SQLiteDatabase db,int _from,int _to, String page_title) {
 
+        TQuotYear result = null;
+        
         if(_from < 0 || _to < 0 || _from > _to) {
             System.out.println("Warning (TQuotYear.get()):: entry '" + page_title + "', invalid years: from='"+_from+"', to='"+_to+"'.");
             return null;
         }
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT id FROM quot_year WHERE `from`=");
-        str_sql.append(_from);
-        str_sql.append(" AND `to`=");
-        str_sql.append(_to);
-        TQuotYear result = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        int    _id = rs.getInt("id");
-                        result = new TQuotYear(_id, _from, _to);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotYear.get()):: entry '" + page_title + "', years: _from="+_from+"; _to="+_to+"; sql='" + ex.getMessage());
+        
+        // SELECT id FROM quot_year WHERE `from`=1970 AND `to`=1977;
+        Cursor c = db.query("quot_year", 
+                new String[] { "id" }, 
+                "`from`=" + _from+ " AND `to`=" + _to, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_id = c.getColumnIndexOrThrow("id");            
+            int _id = c.getInt(i_id);
+            
+            result = new TQuotYear(_id, _from, _to);
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         return result;
     }
@@ -207,7 +200,7 @@ public class TQuotYear {
      * @param _to finish date of a writing book with the quote
      * @param page_title word which are described in this article
      */
-    public static TQuotYear getOrInsert (Connect connect,int _from,int _to, String page_title) {
+    /*public static TQuotYear getOrInsert (Connect connect,int _from,int _to, String page_title) {
 
         if(-1 == _from || -1 == _to) // it means that there is no info about years
             return null;
@@ -221,12 +214,12 @@ public class TQuotYear {
         if(null == y)
             y = TQuotYear.insert(connect, _from, _to);
         return y;
-    }
+    }*/
 
     /** Deletes row from the table 'quot_year' by a value of ID.<br><br>
      * DELETE FROM quot_year WHERE id=4;
      */
-    public void delete (Connect connect) {
+    /*public void delete (Connect connect) {
 
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("DELETE FROM quot_year WHERE id=");
@@ -241,7 +234,5 @@ public class TQuotYear {
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotYear.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-    }
-
-
+    }*/
 }

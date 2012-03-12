@@ -7,7 +7,9 @@
 
 package wikokit.base.wikt.sql.index;
 
-import wikt.sql.*;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import wikokit.base.wikt.sql.*;
 
 
 /** The table 'index_native' - wordlist of words in main (native) language
@@ -54,32 +56,25 @@ public class IndexNative {
         return has_relation;
     }
 
-    /** Counts number of parts of speech in the table 'index_native'
+    /** Counts number of parts of speech (or lang_pos?) in the table 'index_native'
      * (words in native language) with non-empty definitions. <br><br>
      *
      * SELECT COUNT(*) AS size from index_native;
      */
-    public static int countNumberPOSWithDefinition (Connect conn)
+    public static int countNumberPOSWithDefinition (SQLiteDatabase db)
     {
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT COUNT(*) AS size from index_native");
         int size = 0;
-        try {
-            Statement s = conn.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                        size = rs.getInt("size");
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (IndexNative.countNumberPOSWithDefinition()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        
+        final String sql = "SELECT COUNT(*) FROM index_native";
+        
+        Cursor c = db.rawQuery(sql, null); // new String[] { "" + _meaning.getID() });
+        if (c.moveToFirst())            
+            size = c.getInt(0);
+
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
+        
         return size;
     }
 
@@ -90,7 +85,7 @@ public class IndexNative {
      * @param page          Wiktionary page with title in native language
      * @param has_relation  true, if there is any semantic relation in this Wiktionary article
      */
-    public static IndexNative insert ( Connect connect, //String page_title,
+    /*public static IndexNative insert ( Connect connect, //String page_title,
                                         TPage   page,
                                         boolean has_relation) {
         if(null == page) {
@@ -123,7 +118,7 @@ public class IndexNative {
         IndexNative index_native = null;
         index_native = new IndexNative(page, has_relation);
         return index_native;
-    }
+    }*/
     
     /** Selects row from the table 'index_native' by the page_title.<br><br>
      *
@@ -132,38 +127,30 @@ public class IndexNative {
      * @param  page_title  title of Wiktionary article
      * @return null if page_title is absent
      */
-    public static IndexNative get (Connect connect,String page_title) {
+    public static IndexNative get (SQLiteDatabase db,String page_title) {
 
-        TPage      tp = TPage.get(connect, page_title);
+        TPage      tp = TPage.get(db, page_title);
         if(null == tp)
             return null;
 
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT page_id,has_relation FROM index_native WHERE page_title=\"");
-        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, page_title);
-        str_sql.append(safe_title);
-        str_sql.append("\"");
-
         IndexNative _in = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        boolean has_relation = 0 != rs.getInt("has_relation");
-                        _in = new IndexNative(tp, has_relation);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (IndexNative.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        
+        // old: SELECT page_id,has_relation FROM index_native WHERE page_title="car"
+        // new: SELECT         has_relation FROM index_native WHERE page_title="car"
+        Cursor c = db.query("index_native", 
+                new String[] { "has_relation"}, 
+                "page_title=\"" + page_title + "\"", 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_has_relation = c.getColumnIndexOrThrow("has_relation");
+            boolean has_relation = 0 != c.getInt(i_has_relation);
+            _in = new IndexNative(tp, has_relation);
         }
+        if (c != null && !c.isClosed()) {
+            c.close();
+        }
+        
         return _in;
     }
 
@@ -174,7 +161,7 @@ public class IndexNative {
      *
      * @param  page Wiktionary article
      */
-    public static void delete (Connect connect,TPage page) {
+    /*public static void delete (Connect connect,TPage page) {
 
         StringBuilder str_sql = new StringBuilder();
         String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(
@@ -192,5 +179,5 @@ public class IndexNative {
         } catch(SQLException ex) {
             System.err.println("SQLException (IndexNative.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-    }
+    }*/
 }

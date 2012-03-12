@@ -1,17 +1,15 @@
 /* TQuotTranscription.java - SQL operations with the table 'quot_transcription'
- * in Wiktionary parsed database.
+ * in SQLite Android Wiktionary parsed database.
  *
- * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2011-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.sql.quote;
+package wikokit.base.wikt.sql.quote;
 
-import java.sql.*;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
-import wikipedia.sql.PageTableBase;
-import wikipedia.language.Encodings;
-import wikipedia.sql.Connect;
 
 /** Operations with the table 'quot_transcription' in MySQL Wiktionary parsed database. */
 public class TQuotTranscription {
@@ -45,7 +43,7 @@ public class TQuotTranscription {
      * @param text      quote transcription
      * @return inserted record, or null if insertion failed
      */
-    public static TQuotTranscription insert (Connect connect,int quote_id, String text) {
+    /*public static TQuotTranscription insert (Connect connect,int quote_id, String text) {
 
         if(null == text || text.length() == 0)
             return null;
@@ -69,18 +67,39 @@ public class TQuotTranscription {
             System.err.println("SQLException (TQuotTranscription.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return new TQuotTranscription(quote_id, text);
-    }
+    }*/
 
     /** Selects row from the table 'quot_transcription' by ID.<br><br>
      * SELECT text FROM quot_transcription WHERE quote_id=1;
      * @return null if data is absent
      */
-    public static TQuotTranscription getByID (Connect connect,int quote_id) {
+    public static TQuotTranscription getByID (SQLiteDatabase db,int _quote_id) {
         
-        StringBuilder str_sql = new StringBuilder();
+        TQuotTranscription result = null;
+        
+        if(_quote_id <= 0)
+            return null;
+        
+        // SELECT text FROM quot_transcription WHERE quote_id=1;
+        Cursor c = db.query("quot_transcription", 
+                new String[] { "text" }, // attention: + apostrophes for SQL keywords
+                "quote_id=" + _quote_id, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_text = c.getColumnIndexOrThrow("text");
+            String _text = c.getString(i_text);
+            
+            result = new TQuotTranscription(_quote_id, _text);
+        }
+        if (c != null && !c.isClosed()) {
+           c.close();
+        }
+        
+        /*StringBuilder str_sql = new StringBuilder();
         str_sql.append("SELECT text FROM quot_transcription WHERE quote_id=");
         str_sql.append(quote_id);
-        TQuotTranscription result = null;
+        
         try {
             Statement s = connect.conn.createStatement ();
             try {
@@ -99,14 +118,14 @@ public class TQuotTranscription {
             }
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotTranscription.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }
+        }*/
         return result;
     }
 
     /** Deletes row from the table 'quot_transcription' by a value of ID.<br><br>
      * DELETE FROM quot_transcription WHERE quote_id=4;
      */
-    public void delete (Connect connect) {
+    /*public void delete (Connect connect) {
 
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("DELETE FROM quot_transcription WHERE quote_id=");
@@ -121,5 +140,5 @@ public class TQuotTranscription {
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotTranscription.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-    }
+    }*/
 }

@@ -8,8 +8,7 @@
 package wikokit.base.wikt.sql;
 
 import wikokit.base.wikipedia.language.LanguageType;
-import wikokit.base.wikipedia.sql.Connect;
-//import wikipedia.sql.PageTableBase;
+//import wikokit.base.wikipedia.sql.Connect;
 
 //import wikt.api.WTMeaning;
 //import wikt.word.*;
@@ -279,7 +278,7 @@ public class TPage {
      */
     public static TPage get (SQLiteDatabase db,String _page_title)
     {
-        if(_page_title.length() == 0)
+        if(null == _page_title || _page_title.length() == 0)
             return null;
                               
         TPage tp = null;
@@ -493,86 +492,6 @@ public class TPage {
             return NULL_TPAGE_ARRAY;
 
         return ((TPage[])tp_list.toArray(NULL_TPAGE_ARRAY));
-        
-        /*try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                String safe_prefix = PageTableBase.convertToSafeWithWildCard(connect, prefix);
-                str_sql.append("SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"");
-                str_sql.append(safe_prefix);
-                    //str_sql.append("%\"");
-                str_sql.append("\"");
-
-                if(b_skip_redirects)
-                    str_sql.append(" AND is_redirect is NULL");
-
-                // temp: skip empty articles
-                //str_sql.append(" AND is_in_wiktionary=1");
-
-                if(limit > 0) {
-                    str_sql.append(" LIMIT ");
-                    str_sql.append(limit_with_reserve);
-                }
-                //System.out.print("safe_prefix=" + safe_prefix);
-
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    while (rs.next () &&
-                            (limit < 0 || null == tp_list || tp_list.size() < limit))
-                    {
-                        int id              = rs.getInt("id");
-                        int word_count      = rs.getInt("word_count");
-                        int wiki_link_count = rs.getInt("wiki_link_count");
-                        boolean is_in_wiktionary = rs.getBoolean("is_in_wiktionary");
-                        String page_title   = Encodings.bytesToUTF8(rs.getBytes("page_title"));
-
-                        boolean is_redirect = 0 != rs.getInt("is_redirect");
-                        String redirect_target = is_redirect ? Encodings.bytesToUTF8(rs.getBytes("redirect_target")) : null;
-
-                        if (b_skip_redirects)
-                            assert(null == redirect_target);
-
-
-                        TPage tp = new TPage(id, page_title, word_count, wiki_link_count,
-                                   is_in_wiktionary, redirect_target);
-
-                        tp.lang_pos = TLangPOS.getRecursive(connect, tp);
-
-                        boolean b_add = true;
-                        if(b_meaning)
-                            b_add = b_add && tp.hasDefinition();
-
-                        if(b_sem_rel)
-                            b_add = b_add && tp.hasSemanticRelation();
-
-                        if(source_lang.length > 0)
-                            b_add = b_add && tp.hasLanguage(source_lang);
-
-                        if(trans_lang.length > 0)
-                            b_add = b_add && tp.hasTranslation(trans_lang);
-
-                        if(b_add) {
-                            if(null == tp_list)
-                                tp_list = new ArrayList<TPage>();
-
-                            tp_list.add(tp);
-                        }
-
-                        // System.out.println(" title=" + page_title);
-                        //        "; redirect_target=" + redirect_target +
-                        //        "; id=" + id +
-                        //        "; is_redirect=" + is_redirect +
-                        //        " (TPage.getByPrefix)");
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TPage.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
-        }*/
     }
 
     /** Deletes row from the table 'page' by the page_title.
@@ -610,12 +529,11 @@ public class TPage {
 
         if(null == lang_pos)
             return false;
-/*
+
         for(TLangPOS lp : lang_pos) {
             if(lp.getMeaning().length > 0)
                 return true;
-        }
-  */      
+        }      
         return false;
     }
     
@@ -627,7 +545,7 @@ public class TPage {
 
         if(null == lang_pos)
             return false;
-/*
+        
         for(TLangPOS lp : lang_pos) {
             TMeaning[] mm = lp.getMeaning();
             for(TMeaning m : mm) {
@@ -635,7 +553,6 @@ public class TPage {
                     return true;
             }
         }
-  */      
         return false;
     }
 
@@ -647,7 +564,7 @@ public class TPage {
 
         if(null == lang_pos)
             return false;
-/*
+
         for(TLangPOS lp : lang_pos) {
             TMeaning[] mm = lp.getMeaning();
             for(TMeaning m : mm) {
@@ -655,7 +572,6 @@ public class TPage {
                     return true;
             }
         }
-*/
         return false;
     }
 

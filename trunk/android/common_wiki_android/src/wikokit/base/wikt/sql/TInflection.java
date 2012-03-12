@@ -110,7 +110,7 @@ public class TInflection {
      */
     public static TInflection get (SQLiteDatabase db,String inflected_form) {
 
-        if(inflected_form.length() == 0)
+        if(null == inflected_form || inflected_form.length() == 0)
             return null;
         
         TInflection inflexio = null;

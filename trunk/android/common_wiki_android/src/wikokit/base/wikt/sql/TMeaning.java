@@ -1,17 +1,14 @@
-/* TMeaning.java - SQL operations with the table 'meaning' in Wiktionary
- * parsed database.
+/* TMeaning.java - SQL operations with the table 'meaning' in SQLite Android 
+ * Wiktionary parsed database.
  *
- * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2009-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikokit.base.wikt.sql;
 
-//import wikipedia.language.Encodings;
-//import wikipedia.sql.PageTableBase;
-import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.constant.Relation;
-//import wikokit.base.wikt.sql.quote.TQuote;
+import wikokit.base.wikt.sql.quote.TQuote;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -57,7 +54,7 @@ public class TMeaning {
     private int wiki_text_id;
 
     /** Quotations illustrate the meaning. */
-//    private TQuote[] quotation;
+    private TQuote[] quotation;
 
     /** Semantic relations: synonymy, antonymy, etc.
      * The map from semantic relation (e.g. synonymy) to array of WRelation
