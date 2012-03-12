@@ -1,6 +1,6 @@
 /* LanguageTypeRu.java - name of languages in Russian.
  *
- * Copyright (c) 2010-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2010-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
@@ -413,6 +413,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal lld = new LanguageTypeRu("Ладинский", LanguageType.lld);
     public static final LanguageTypeLocal lmo = new LanguageTypeRu("Ломбардский", LanguageType.lmo);
     public static final LanguageTypeLocal ln = new LanguageTypeRu("Лингала", LanguageType.ln);
+    public static final LanguageTypeLocal lng = new LanguageTypeRu("Лангобардский", LanguageType.lng);
     public static final LanguageTypeLocal lo = new LanguageTypeRu("Лаосский", LanguageType.lo);
     public static final LanguageTypeLocal lre = new LanguageTypeRu("Лаврентийский", LanguageType.lre);
     public static final LanguageTypeLocal lt = new LanguageTypeRu("Литовский", LanguageType.lt);

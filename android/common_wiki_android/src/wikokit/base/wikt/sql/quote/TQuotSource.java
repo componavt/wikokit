@@ -1,16 +1,15 @@
 /* TQuotSource.java - source of quotation,
- * SQL operations with the table 'quot_source' in Wiktionary parsed database.
+ * SQL operations with the table 'quot_source' in SQLite Android 
+ * Wiktionary parsed database.
  *
- * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2011-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.sql.quote;
+package wikokit.base.wikt.sql.quote;
 
-import java.sql.*;
-import wikipedia.language.Encodings;
-import wikipedia.sql.Connect;
-import wikipedia.sql.PageTableBase;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 /** Source of quotation and
  * operations with the table 'quot_source' in MySQL Wiktionary parsed database.
@@ -49,7 +48,7 @@ public class TQuotSource {
      * @param _text name of the source, it is not empty or NULL
      * @return inserted record, or null if insertion failed
      */
-    public static TQuotSource insert (Connect connect,String _text) {
+    /*public static TQuotSource insert (Connect connect,String _text) {
 
         if(null == _text || 0 == _text.length()) {
             System.err.println("Error (TQuotSource.insert()):: null argument: .");
@@ -86,7 +85,7 @@ public class TQuotSource {
             System.err.println("SQLException (TQuotSource.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
-    }
+    }*/
 
     /** Get's a record from the table 'quot_source' by the source's name.<br><br>.
      * SELECT id FROM quot_source WHERE text="Lib";
@@ -94,33 +93,29 @@ public class TQuotSource {
      * @param _text name of the source
      * @return NULL if data is absent
      */
-    public static TQuotSource get (Connect connect, String _text) {
+    public static TQuotSource get (SQLiteDatabase db, String _text) {
 
+        TQuotSource result = null;
+        
         if(null == _text || 0 == _text.length()) {
             System.err.println("Error (TQuotSource.get()):: null argument: name of a source.");
             return null;
         }
-        StringBuilder str_sql = new StringBuilder();
-        String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
-        str_sql.append("SELECT id FROM quot_source WHERE text=\"");
-        str_sql.append(safe_text);
-        str_sql.append("\"");
-        TQuotSource result = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                        result = new TQuotSource(rs.getInt("id"), _text);
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotSource.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        
+        // SELECT id FROM quot_source WHERE text="Lib";
+        Cursor c = db.query("quot_source", 
+                new String[] { "id" }, 
+                "text=\"" + _text + "\"", 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_id = c.getColumnIndexOrThrow("id");            
+            int _id = c.getInt(i_id);
+            
+            result = new TQuotSource(_id, _text);
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         return result;
     }
@@ -130,7 +125,7 @@ public class TQuotSource {
      *
      * @param _source source of the quote
      */
-    public static TQuotSource getOrInsert (Connect connect,String _source) {
+    /*public static TQuotSource getOrInsert (Connect connect,String _source) {
 
         if(null == _source || 0 == _source.length())
             return null;
@@ -139,39 +134,34 @@ public class TQuotSource {
         if(null == s)
             s = TQuotSource.insert(connect, _source);
         return s;
-    }
+    }*/
 
     /** Selects row from the table 'quot_source' by ID.<br><br>
      * SELECT text FROM quot_source WHERE id=1
      *
      * @return null if data is absent
      */
-    public static TQuotSource getByID (Connect connect,int id) {
+    public static TQuotSource getByID (SQLiteDatabase db,int _id) {
         
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT text FROM quot_source WHERE id=");
-        str_sql.append(id);
         TQuotSource quot_source = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        byte[] bb = rs.getBytes("text");
-                        String _text = null == bb ? null : Encodings.bytesToUTF8(bb);
-
-                        quot_source = new TQuotSource(id, _text);
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotSource.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        
+        if(_id <= 0)
+            return null;
+        
+        // SELECT text FROM quot_source WHERE id=1
+        Cursor c = db.query("quot_source", 
+                new String[] { "text" }, 
+                "id=" + _id, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_text = c.getColumnIndexOrThrow("text");
+            String _text = c.getString(i_text);
+            
+            quot_source = new TQuotSource(_id, _text);
+        }
+        if (c != null && !c.isClosed()) {
+           c.close();
         }
         return quot_source;
     }
@@ -179,7 +169,7 @@ public class TQuotSource {
     /** Deletes row from the table 'quot_source' by a value of ID.<br><br>
      * DELETE FROM quot_source WHERE id=4;
      */
-    public void delete (Connect connect) {
+    /*public void delete (Connect connect) {
 
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("DELETE FROM quot_source WHERE id=");
@@ -194,6 +184,6 @@ public class TQuotSource {
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotSource.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-    }
+    }*/
 
 }

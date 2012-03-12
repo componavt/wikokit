@@ -1,16 +1,18 @@
 /* TQuotRef.java - quotation reference information (year, author, etc.),
- * SQL operations with the table 'quot_ref' in Wiktionary parsed database.
+ * SQL operations with the table 'quot_ref' in SQLite Android  
+ * Wiktionary parsed database.
  *
- * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2011-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikt.sql.quote;
+package wikokit.base.wikt.sql.quote;
 
-import java.sql.*;
-import wikipedia.language.Encodings;
-import wikipedia.sql.Connect;
-import wikipedia.sql.PageTableBase;
+import wikokit.base.wikt.sql.TLangPOS;
+import wikokit.base.wikt.sql.TMeaning;
+import wikokit.base.wikt.sql.TWikiText;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 /** Quotation reference information (year, author, etc.) and
  * operations with the table 'quot_ref' in MySQL Wiktionary parsed database. */
@@ -148,55 +150,51 @@ public class TQuotRef {
      * @param source_id ID of source or "NULL"
      * @return inserted record, or null if insertion failed
      */
-    private static TQuotRef get (Connect connect,
+    public static TQuotRef get (SQLiteDatabase db,
                                 TQuotYear y, TQuotAuthor a,
                                 String _title, String _title_wikilink,
                                 TQuotPublisher p, TQuotSource src)
     {
+        TQuotRef result = null;
+        
         String year_id = (null == y) ? " IS NULL" : "=" + y.getID();
         String author_id = (null == a) ? " IS NULL" : "=" + a.getID();
         String publisher_id = (null == p) ? " IS NULL" : "=" + p.getID();
         String source_id = (null == src) ? " IS NULL" : "=" + src.getID();
 
-        String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title);
-        String safe_title_wikilink = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _title_wikilink);
-
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT id FROM quot_ref WHERE year_id");
-        str_sql.append(year_id);
-        str_sql.append(" AND author_id");
-        str_sql.append(author_id);
-        str_sql.append(" AND title=\"");
-        str_sql.append(safe_title);
-        str_sql.append("\" AND title_wikilink=\"");
-        str_sql.append(safe_title_wikilink);
-        str_sql.append("\" AND publisher_id");
-        str_sql.append(publisher_id);
-        str_sql.append(" AND source_id");
-        str_sql.append(source_id);
-        TQuotRef result = null;
-        try
-        {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        result = new TQuotRef(rs.getInt("id"), _title, _title_wikilink,
-                                              y, // TQuotYear _year
-                                              a, // TQuotAuthor _author,
-                                              p, // TQuotPublisher _publisher,
-                                              src); // TQuotSource _source
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotRef.get):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+        StringBuilder str_sql_where = new StringBuilder();
+        str_sql_where.append("year_id");
+        str_sql_where.append(year_id);
+        str_sql_where.append(" AND author_id");
+        str_sql_where.append(author_id);
+        str_sql_where.append(" AND title=\"");
+        str_sql_where.append(_title);
+        str_sql_where.append("\" AND title_wikilink=\"");
+        str_sql_where.append(_title_wikilink);
+        str_sql_where.append("\" AND publisher_id");
+        str_sql_where.append(publisher_id);
+        str_sql_where.append(" AND source_id");
+        str_sql_where.append(source_id);
+        
+        // SELECT id FROM quot_ref WHERE year_id is NULL AND author_id=7 AND title="test" AND title_wikilink="" AND publisher_id is NULL AND source_id=4
+        Cursor c = db.query("quot_ref", 
+                new String[] { "id"}, 
+                str_sql_where.toString(), 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i_id = c.getColumnIndexOrThrow("id");
+            int _id = c.getInt(i_id);
+            
+            result = new TQuotRef(_id, _title, _title_wikilink,
+                    y, // TQuotYear _year
+                    a, // TQuotAuthor _author,
+                    p, // TQuotPublisher _publisher,
+                    src); // TQuotSource _source
+            
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         return result;
     }
@@ -206,51 +204,46 @@ public class TQuotRef {
      *
      * @return null if data is absent
      */
-    public static TQuotRef getByID (Connect connect,int id) {
+    public static TQuotRef getByID (SQLiteDatabase db,int _id) {
         
-        StringBuilder str_sql = new StringBuilder();
-        str_sql.append("SELECT year_id,author_id,title,title_wikilink,publisher_id,source_id FROM quot_ref WHERE id=");
-        str_sql.append(id);
         TQuotRef quot_ref = null;
-        try {
-            Statement s = connect.conn.createStatement ();
-            try {
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
-                    if (rs.next ())
-                    {
-                        int i = rs.getInt("year_id");
-                        TQuotYear _year = (0 == i) ? null : TQuotYear.getByID(connect, i);
+        
+        if(_id < 0) {
+            System.err.println("Error (TQuotRef.getByID()):: ID is negative.");
+            return null;
+        }
+        
+        // SELECT year_id,author_id,title,title_wikilink,publisher_id,source_id FROM quot_ref WHERE id=1;
+        Cursor c = db.query("quot_ref", 
+                new String[] { "year_id", "author_id", "title", "title_wikilink", "publisher_id", "source_id"}, 
+                "id=" + _id, 
+                null, null, null, null);
+        
+        if (c.moveToFirst()) {
+            int i = c.getInt( c.getColumnIndexOrThrow("year_id") );
+            TQuotYear _year = (0 == i) ? null : TQuotYear.getByID(db, i);
+            
+            i = c.getInt( c.getColumnIndexOrThrow("author_id") );
+            TQuotAuthor _author = (0 == i) ? null : TQuotAuthor.getByID(db, i);
 
-                        i = rs.getInt("author_id");
-                        TQuotAuthor _author = (0 == i) ? null : TQuotAuthor.getByID(connect, i);
+            String _title = c.getString( c.getColumnIndexOrThrow("title") );
+            
+            String _title_wikilink = c.getString( c.getColumnIndexOrThrow("title_wikilink") );
+            
+            i = c.getInt( c.getColumnIndexOrThrow("publisher_id") );
+            TQuotPublisher _publisher = (0 == i) ? null : TQuotPublisher.getByID(db, i);
+            
+            i = c.getInt( c.getColumnIndexOrThrow("source_id") );
+            TQuotSource _source = (0 == i) ? null : TQuotSource.getByID(db, i);
 
-                        byte[] bb = rs.getBytes("title");
-                        String _title = null == bb ? null : Encodings.bytesToUTF8(bb);
-
-                        bb = rs.getBytes("title_wikilink");
-                        String _title_wikilink = null == bb ? null : Encodings.bytesToUTF8(bb);
-
-                        i = rs.getInt("publisher_id");
-                        TQuotPublisher _publisher = (0 == i) ? null : TQuotPublisher.getByID(connect, i);
-
-                        i = rs.getInt("source_id");
-                        TQuotSource _source = (0 == i) ? null : TQuotSource.getByID(connect, i);
-
-                        quot_ref = new TQuotRef(id, _title, _title_wikilink,
-                                              _year,        // TQuotYear
-                                              _author,      // TQuotAuthor
-                                              _publisher,   // TQuotPublisher
-                                              _source);     // TQuotSource
-                    }
-                } finally {
-                    rs.close();
-                }
-            } finally {
-                s.close();
-            }
-        } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotRef.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            quot_ref = new TQuotRef(_id, _title, _title_wikilink,
+                                  _year,        // TQuotYear
+                                  _author,      // TQuotAuthor
+                                  _publisher,   // TQuotPublisher
+                                  _source);     // TQuotSource
+        }
+        if (c != null && !c.isClosed()) {
+            c.close();
         }
         return quot_ref;
     }
@@ -268,7 +261,7 @@ public class TQuotRef {
      * @param source_id ID of source or "NULL"
      * @return inserted record, or null if insertion failed
      */
-    private static TQuotRef insertByID (Connect connect,
+    /*private static TQuotRef insertByID (Connect connect,
                                 TQuotYear y, TQuotAuthor a,
                                 String _title, String _title_wikilink,
                                 TQuotPublisher p, TQuotSource src)
@@ -324,7 +317,7 @@ public class TQuotRef {
             System.err.println("SQLException (TQuotRef.insert):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
-    }
+    }*/
 
     /** Inserts (without years) records into the tables: quot_ref, quot_year, quot_author,
      * quot_publisher, and quot_source.<br><br>
@@ -340,7 +333,7 @@ public class TQuotRef {
      * @param _source quote source
      * @return inserted record, or null if insertion failed
      */
-    public static TQuotRef insert (Connect connect,String _author,String _author_wikilink,
+    /*public static TQuotRef insert (Connect connect,String _author,String _author_wikilink,
                                 String _title, String _title_wikilink,
                                 String _publisher, String _source)
     {
@@ -357,7 +350,7 @@ public class TQuotRef {
         return insertByID (connect, y, a,
                                 _title, _title_wikilink,
                                 p, src);
-    }
+    }*/
 
     /** Inserts (with years) records into the tables: quot_ref, quot_year, quot_author,
      * quot_publisher, and quot_source.<br><br>
@@ -377,7 +370,7 @@ public class TQuotRef {
      * @param _to finish date of a writing book with the quote
      * @return inserted record, or null if insertion failed
      */
-    public static TQuotRef insertWithYears (Connect connect,String page_title,
+    /*public static TQuotRef insertWithYears (Connect connect,String page_title,
                                 String _author,String _author_wikilink,
                                 String _title, String _title_wikilink,
                                 String _publisher, String _source,
@@ -396,7 +389,7 @@ public class TQuotRef {
         return insertByID (connect, y, a,
                                 _title, _title_wikilink,
                                 p, src);
-    }
+    }*/
 
     /** Gets ID of a record or inserts (without years) records (if they are absent)
      * into the tables: quot_ref, quot_year, quot_author, quot_publisher,
@@ -411,7 +404,7 @@ public class TQuotRef {
      * @param _source quote source
      * @return found or inserted record, or null.
      */
-    public static TQuotRef getOrInsert (Connect connect,String _author,String _author_wikilink,
+    /*public static TQuotRef getOrInsert (Connect connect,String _author,String _author_wikilink,
                                 String _title, String _title_wikilink,
                                 String _publisher, String _source)
     {
@@ -433,9 +426,9 @@ public class TQuotRef {
                                 _title, _title_wikilink,
                                 p, src);
         return quot_ref;
-    }
+    }*/
 
-    public static TQuotRef getOrInsertWithYears (Connect connect,String page_title,
+    /*public static TQuotRef getOrInsertWithYears (Connect connect,String page_title,
                                 String _author,String _author_wikilink,
                                 String _title, String _title_wikilink,
                                 String _publisher, String _source,
@@ -459,12 +452,12 @@ public class TQuotRef {
                                 _title, _title_wikilink,
                                 p, src);
         return quot_ref;
-    }
+    }*/
 
     /** Deletes row from the table 'quot_ref' by a value of ID.<br><br>
      * DELETE FROM quot_ref WHERE id=4;
      */
-    public void delete (Connect connect) {
+    /*public void delete (Connect connect) {
 
         StringBuilder str_sql = new StringBuilder();
         str_sql.append("DELETE FROM quot_ref WHERE id=");
@@ -479,6 +472,6 @@ public class TQuotRef {
         } catch(SQLException ex) {
             System.err.println("SQLException (TQuotRef.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
-    }
+    }*/
 
 }

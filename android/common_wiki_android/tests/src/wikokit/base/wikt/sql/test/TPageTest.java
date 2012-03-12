@@ -3,6 +3,7 @@ package wikokit.base.wikt.sql.test;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TLangPOS;
 import wikokit.base.wikt.sql.TMeaning;
+import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.TLang;
 
@@ -14,6 +15,7 @@ public class TPageTest extends TestCase {
 
     public Context context = null;
     Connect ruwikt_conn;
+    SQLiteDatabase db;
     
     protected void setUp() throws Exception {
         super.setUp();
@@ -27,6 +29,9 @@ public class TPageTest extends TestCase {
                 Connect.DB_DIR
                 );
         ruwikt_conn.openDatabase();
+        db = ruwikt_conn.getDB();
+        TLang.createFastMaps(db);
+        TPOS.createFastMaps (db);    // once upon a time: use Wiktionary parsed db
     }
 
     protected void tearDown() throws Exception {
