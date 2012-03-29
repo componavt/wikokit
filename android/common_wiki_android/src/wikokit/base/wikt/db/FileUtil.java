@@ -70,7 +70,7 @@ public class FileUtil {
 		file_path.append(Environment.getExternalStorageDirectory().getAbsolutePath());
 		file_path.append(File.separator);
 		file_path.append(path);
-		file_path.append(File.separator);
+		file_path.append(File.separator); 
 		file_path.append(filename);
 		
 		return file_path.toString();

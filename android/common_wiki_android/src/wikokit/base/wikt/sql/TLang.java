@@ -9,6 +9,8 @@ package wikokit.base.wikt.sql;
 
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikt.sql.lang.LanguageNameComparator;
+import wikokit.base.wikt.sql.lang.LanguageSizeComparator;
 
 /*
 import wikokit.base.wikipedia.sql.UtilSQL;
@@ -18,6 +20,8 @@ import wikokit.base.wikt.sql.index.IndexNative;
 */
 //import java.sql.*;
 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -355,6 +359,10 @@ public class TLang {
 
        return tp;
    }
+   
+   
+   
+   
     
     /** Fills database table 'lang' by data from LanguageType class. */
     /*private static void fillDB(Connect connect, Map<Integer, LanguageType> id2lang) {

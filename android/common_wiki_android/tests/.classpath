@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="lib" path="D:/all/projects/java/synonyms/wikokit/common_wiki/dist/common_wiki.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/common_wiki_alink"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/common_wiki_android"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>

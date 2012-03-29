@@ -83,7 +83,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
      * the file each time you open the application.
      * @return true if it exists, false if it doesn't
      */
-    public boolean isDatabaseAvailable() {
+    public static boolean isDatabaseAvailable() {
 
     	SQLiteDatabase check_db = null;
 
