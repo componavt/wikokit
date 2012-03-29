@@ -45,7 +45,7 @@ Fast upload dump file (e.g. `enwiktionary-20100824-pages-articles.xml`) to MySQL
 
 === Intro ===
 
-There are problems with {{{"<redirect />"}}} and {{{"<DiscussionThreading>"}}} in the XML file.
+There are problems with {{{"<redirect />"}}}, {{{"<DiscussionThreading>"}}}, {{{"<ns>"}}} and {{{"<sha1 />"}}} in the XML file.
 
 The error message is: 
 {{{
