@@ -110,18 +110,17 @@ public class WLanguageRu {
             }
         }
 
-        if(lang_code.length() == 0)
+        if(lang_code.length() == 0) {
+            System.out.println("Warning: empty language code for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
             return null;
+        }
 
         //String lang_code = m.group(1);
         /*if((lang_code.length() < 2) && 2 == m.groupCount()) {
             lang_code = m.group(2);
         }*/
         if (!LanguageType.has(lang_code)) {  // i.e. skip the whole article if the first lang code is unknown
-            if (null == lang_code)
-                System.out.println("Warning: null language code for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
-            else
-                System.out.println("Warning: unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
+            System.out.println("Warning: unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
         } else
             lang_type = LanguageType.get(lang_code);
         

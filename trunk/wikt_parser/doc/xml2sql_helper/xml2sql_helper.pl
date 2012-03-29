@@ -2,12 +2,15 @@
 
 # DESCRIPTION:   .
 #
-#   Deletes redirect lines in the text file <redirect />.
+#   Deletes lines in the text file with text:
+#   <redirect />
+#   <ns>
+#   <sha1 />
 #   Deletes <DiscussionThreading>\n...\n</DiscussionThreading>
 #
 # AUTHOR:       Andrew Krizhanovsky (http://code.google.com/p/wikokit)
 # START DATE:   17.12.2009 17:44:28
-# FINISH DATE:  01.09.2010 20:02:54
+# FINISH DATE:  29.05.2012 
 # SEE: 
 #   Talk:Xml2sql   http://meta.wikimedia.org/wiki/Talk:Xml2sql
 #   MySQL 2 SQLite http://www.perlmonks.org/index.pl?node_id=150476
@@ -28,7 +31,7 @@ my( $synsets, $synwords, %unique_synwords);
 my( $i, $set, $w);
 
 
-$headline = "xml2sql_helper V0.02 (GNU-GPL) 2009-2010 AKA MBG \n";
+$headline = "xml2sql_helper V0.03 (GNU-GPL) 2009-2012 AKA MBG \n";
 # --------------------------------------------------------------
 # subroutine help_exit
 # --------------------------------------------------------------
@@ -37,9 +40,9 @@ sub help_exit
 {
 	if ($#ARGV != 1){
 		print "\n".$headline."\n".
-        "Usage:\n  del_redirect_in_pages-articles_xml.exe in_dump.sql > out\n".
-        "  wiki-pages-articles.xml - dump of Wiki database\n".
-        "Examples: del_redirect_in_pages-articles_xml.exe wiki-pages-articles.xml out.xml";
+        "Usage:\n  xml2sql_helper in_dump.sql out_dump.sql\n".
+        "  in_dump.sql - dump of Wiki database (wiki-pages-articles.xml)\n".
+        "Examples: xml2sql_helper wiki-pages-articles.xml out.xml";
 	}
 	
 	if (1 != $#ARGV){
@@ -92,6 +95,14 @@ sub help_exit
       # remove lines with text "<redirect />"
       # next LINE if $line =~ s/^\s*\<redirect\s\/\>//;
       next LINE if -1 ne index $line, "<redirect />";
+      next LINE if -1 ne index $line, "<redirect"; # e.g.: <redirect title="алтын" />
+
+      # remove lines with text "<ns>", e.g. "<ns>8</ns>"
+      next LINE if -1 ne index $line, "<ns>";
+
+      # remove lines with text "<sha1 />"
+      next LINE if -1 ne index $line, "<sha1 />";
+      next LINE if -1 ne index $line, "<sha1>"; # e.g.: <sha1>0u1</sha1>      
 
       # Print the line to the result file and add a newline
       print h_out $line."\n";

@@ -101,9 +101,6 @@ public class MSRLang {
     /** Gets array of text lines in the form:
      * "Language name, code, number of semantic relations" (header).
      * The first line is a header.  
-     * 
-     * @param db
-     * @return
      */
     public static String[] getLangCodeStatistics(MSRLang[] langs) {
     	

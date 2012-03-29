@@ -372,14 +372,14 @@ public class QuoteTableAll {
             ObjectWithWords s_w = m_source_n.get(_source);
 
                 //System.out.print("|| " + lang.getName() + " || " + lang.getCode());
-            System.out.print("\n|-\n! " + _source +
+            System.out.print("\n|-\n| " + _source +
                     " || " + s_w.counter + " || " );
 
             List<String> words = s_w.example_words;
             for(String w : words)
                 System.out.print("[[" + w + "]], ");
 
-            System.out.print(" || ");
+            //System.out.print(" || ");
         }
         System.out.println("\n|}");
     }
@@ -416,7 +416,7 @@ public class QuoteTableAll {
 
                 //if(s_w.example_words.size() > 2) {
 
-                    System.out.print("\n|-\n! " + _name +
+                    System.out.print("\n|-\n| " + _name +
                             " || " + s_w.object_wikilink +
                             " || " + s_w.counter + " || " );
 
@@ -440,7 +440,7 @@ public class QuoteTableAll {
 
             // if(s_w.example_words.size() > 2) {
 
-                System.out.print("\n|-\n! " + _name +
+                System.out.print("\n|-\n| " + _name +
                         " || " + s_w.object_wikilink +
                         " || " + s_w.counter + " || " );
 

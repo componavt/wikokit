@@ -61,15 +61,17 @@ Wiki tool kit (wikokit) contains several projects related to wiki
 
 ./android/common_wiki_android - functions for access to Wiktionary in Android SQLite version of database (depends on common_wiki.jar).
 
+./android/[https://market.android.com/details?id=wordik.magneto magnetowordik] - Android word game (Wiktionary thesaurus).
+
 ./hits_wiki - API for access to Wikipedia in MySQL database, algorithms to search synonyms in Wikipedia (depends on jcfd.jar, common_wiki.jar).
 
 ./TGWikiBrowser - visual browser to search for synonyms in local or remote Wikipedia (depends on hits_wiki.jar and common_wiki.jar)
 
 ./wikidf - Wiki Index Database (list of lemmas and links to wiki pages, which contain these lemmas).
 
-./[GettingStartedWiktionaryParser wikt_parser] - Wiktionary parser creates a MySQL database (like [http://en.wikipedia.org/wiki/WordNet WordNet]) from an Wiktionary MySQL dump file. The project goal is to convert Wiktionary articles to machine readable format. (It depends on common_wiki.)
+./[GettingStartedWiktionaryParser wikt_parser] - Wiktionary parser creates a MySQL database (like [http://en.wikipedia.org/wiki/WordNet WordNet]) from an Wiktionary MySQL dump file. The project goal is to convert Wiktionary articles to machine readable format. (It depends on common_wiki, common_wiki_jdbc)
 
-./[wiwordik] - Visualization of parsed Wiktionary database. wiki + word = wiwordik.
+./wiwordik - Visualization of parsed Wiktionary database. wiki + word = wiwordik.
 
 The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are used in wikokit.
 
@@ -82,7 +84,7 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
 
 === In Russian ===
   * Крижановский А. [http://scipeople.com/publication/106012/ Количественный анализ лексики английского языка в викисловарях и Wordnet] // Труды СПИИРАН. 2011. Вып. 19. С. 87–101. ([http://cdn.scipeople.com/materials/97/quant_English_2011.pdf PDF]).
-  * Крижановский А. [http://scipeople.com/publication/102432/ Оценка использования корпусов и электронных библиотек в Русском Викисловаре] // Труды международной конференции «Корпусная лингвистика–2011». – СПб.: С.-Петербургский гос. университет, Филологический факультет, 2011, 348 с. – C. 217—222. ISBN 978-5-8465-0005-5 ([http://scipeople.com/uploads/materials/97/wikt_ruscorpora_14_full.pdf PDF], [http://scipeople.com/uploads/materials/97/slides_corpora_in_russian_wiktionary2011.pdf слайды]).
+  * Крижановский А. [http://scipeople.com/publication/102432/ Оценка использования корпусов и электронных библиотек в Русском Викисловаре] // Труды международной конференции «Корпусная лингвистика–2011». – СПб.: С.-Петербургский гос. университет, Филологический факультет, 2011, 348 с. – C. 217—222. ISBN 978-5-8465-0005-5 ([http://cdn.scipeople.com/materials/97/wikt_ruscorpora_14_full.pdf PDF], [http://scipeople.com/uploads/materials/97/slides_corpora_in_russian_wiktionary2011.pdf слайды]).
   * Крижановский А. [http://scipeople.com/publication/100231/ Преобразование структуры словарной статьи Викисловаря в таблицы и отношения реляционной базы данных.] Препринт. 2010.
   * Крижановский А. [http://scipeople.com/publication/99331/ Сравнение тезаурусов Русского и Английского Викисловарей, преобразованных в машинно-читаемый формат.] Препринт. 2010.
   * Крижановский А. Построение машинно-читаемого словаря на основе Русского Викисловаря. [http://scipeople.ru/uploads/materials/97/14_nlpseminar_aot_ruwikt_ru.pdf Презентация]. [http://mathlingvo.ru/nlpseminar/archive/s_31 Видео] // Семинар: Natural Language Processing, 20 марта 2010, Санкт-Петербург.

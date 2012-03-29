@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry combineaccessrules="false" kind="src" path="/common_wiki_alink"/>
 	<classpathentry excluding="wikokit/base/wikipedia/category/CategoryHyponyms.java|wikokit/base/wikipedia/sql/Categorylinks.java|wikokit/base/wikipedia/sql/PageNamespace.java|wikokit/base/wikipedia/sql/PageTableBase.java|wikokit/base/wikipedia/sql/Statistics.java|wikokit/base/wikipedia/sql/UtilSQL.java|wikokit/base/wikt/api/WTMeaning.java|wikokit/base/wikt/api/WTRelation.java|wikokit/base/wikt/api/WTTranslation.java|wikokit/base/wikt/mrd/Keeper.java|wikokit/base/wikt/sql/index/NativeRedLink.java" including="**" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
