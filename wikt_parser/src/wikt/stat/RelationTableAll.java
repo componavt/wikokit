@@ -351,21 +351,21 @@ public class RelationTableAll {
             threshold_type_relations;
 
         // Russian
-/*        LanguageType native_lang = LanguageType.ru;
-        threshold_relations_native  = 40;
-        threshold_relations_foreign = 10;   // threshold_relations = 14;
+        LanguageType native_lang = LanguageType.ru;
+        threshold_relations_native  = 42;   // 40
+        threshold_relations_foreign = 12;   // 10;  threshold_relations = 14;
         
         threshold_type_relations = 5;
         if(DEBUG) threshold_relations_native = 3;
         wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
-*/
+
         // English
-        LanguageType native_lang = LanguageType.en;
+/*        LanguageType native_lang = LanguageType.en;
         threshold_relations_native  = 40; // for English words, more strict rules, too much rich words
         threshold_relations_foreign = 10;
         threshold_type_relations = 3;
         wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
-
+*/
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
         TRelationType.createFastMaps(wikt_parsed_conn);

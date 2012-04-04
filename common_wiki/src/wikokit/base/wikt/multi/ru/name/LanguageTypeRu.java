@@ -600,6 +600,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal snk = new LanguageTypeRu("Сонинке", LanguageType.snk);
     public static final LanguageTypeLocal solresol = new LanguageTypeRu("Сольресоль", LanguageType.solresol);
     public static final LanguageTypeLocal so = new LanguageTypeRu("Сомалийский", LanguageType.so);
+    public static final LanguageTypeLocal sob = new LanguageTypeRu("Собей", LanguageType.sob);
     public static final LanguageTypeLocal sog = new LanguageTypeRu("Согдийский", LanguageType.sog);
     public static final LanguageTypeLocal sov = new LanguageTypeRu("Сонсорол", LanguageType.sov);
     public static final LanguageTypeLocal sqi = new LanguageTypeRu("Албанский", LanguageType.sqi);

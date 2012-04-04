@@ -1,6 +1,6 @@
 /* Connect.java - connection to a database functions, the list of databases.
  *
- * Copyright (c) 2005-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2005-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
@@ -78,10 +78,10 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    public final static String RUWIKT_DB   = "ruwikt20110521?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_DB   = "ruwikt20120325?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     
     // Russian Wiktionary parsed database
-    public final static String RUWIKT_PARSED_DB = "ruwikt20110521_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20120325_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     public final static String RUWIKT_SQLITE = "ruwikt20110521.sqlite";

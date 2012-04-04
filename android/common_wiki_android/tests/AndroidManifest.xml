@@ -8,7 +8,7 @@
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"
-        android:targetPackage="wikokit.base" />
+        android:targetPackage="wikokit.base.test" />
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -17,7 +17,7 @@
     </application>
 
     <instrumentation android:name="android.test.InstrumentationTestRunner"
-    android:targetPackage="wikokit.base"
+    android:targetPackage="wikokit.base.test"
     android:label="Test project for common_wiki_android" />
     
 </manifest>

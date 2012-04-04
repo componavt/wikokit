@@ -563,6 +563,114 @@ public class WQuoteRuTest {
         assertEquals(q.getYearFrom(), exp_year_from);
         assertEquals(q.getYearTo(), exp_year_to);
     }
+    
+    // year = "08-07-2011" "XX-XX-year"
+    // # {{собир.|ba}} [[скот]], [[сельскохозяйственный|сельскохозяйственные]] [[животное|животные]] {{пример|Тап шундай берәҙәк эттәр ваҡ {{выдел|мал}} һәм...|перевод=Как раз...||Юлдарҙа —“тере баръерҙар”|издание=Таң|17-11-2011}}
+    @Test
+    public void testGetQuotes_extract_year_from_day_dash_month_dash_year() {
+        System.out.println("testGetQuotes_extract_year_from_day_dash_month_dash_year");
+        String text, page_title;
+        String exp_text, exp_translation, exp_author, exp_title, exp_publisher, exp_source;
+        int exp_year_from, exp_year_to;
+        WQuote[] quote_result;
+        WQuote q;
+
+        // 1. bad case: "-"
+        page_title = "bad case: -";
+        text =  "# some text {{пример|Quote text.|Some author|Some title|-}}";
+
+        exp_text = "Quote text.";
+        exp_author = "Some author";
+        exp_title = "Some title";
+
+        // -
+        exp_year_from   = -1;
+        exp_year_to     = -1;
+        
+        text = Definition.stripNumberSign(page_title, text);
+        quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+        
+        
+        // 2. good case
+        
+        page_title = "милләт";
+        // 1. 17-11-2011
+        text =  "# {{собир.|ba}} [[скот]], [[сельскохозяйственный|сельскохозяйственные]] [[животное|животные]] {{пример|Тап шундай берәҙәк эттәр ваҡ {{выдел|мал}} һәм...|перевод=Как раз...||Юлдарҙа —“тере баръерҙар”|издание=Таң|17-11-2011}}";
+
+        exp_text = "Тап шундай берәҙәк эттәр ваҡ {{выдел|мал}} һәм...";
+        exp_translation = "Как раз...";
+        exp_author = "";
+        exp_title = "Юлдарҙа —“тере баръерҙар”";
+        exp_publisher = "Таң";
+        exp_source = "";
+
+        // 17-11-2011
+        exp_year_from   = 2011;
+        exp_year_to     = 2011;
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getTranslation().equalsIgnoreCase( exp_translation ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getPublisher().equalsIgnoreCase( exp_publisher ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
+    
+    // year = "06.05.2006" "XX.XX.YEAR"
+    // # [[рубашка]] на [[планка|планке]] {{пример|Свитера, {{выдел|пайты}} и футболки нежно обнимали спинки и подлокотники, диванов и кресел.||Наш Донецк|06.05.2006}}
+    @Test
+    public void testGetQuotes_extract_year_from_day_dot_month_dot_year() {
+        System.out.println("testGetQuotes_extract_year_from_day_dash_month_dash_year");
+        String text, page_title;
+        String exp_text, exp_author, exp_title;
+        int exp_year_from, exp_year_to;
+
+        page_title = "пайта";
+        // 1. 06.05.2006
+        text =  "# [[рубашка]] на [[планка|планке]] {{пример|Свитера, {{выдел|пайты}} и футболки нежно обнимали спинки и подлокотники, диванов и кресел.||Наш Донецк|06.05.2006}}";
+
+        exp_text = "Свитера, {{выдел|пайты}} и футболки нежно обнимали спинки и подлокотники, диванов и кресел.";
+        exp_author = "";
+        exp_title = "Наш Донецк";
+
+        // 06.05.2006
+        exp_year_from   = 2006;
+        exp_year_to     = 2006;
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+    }
 
     // year = "12, 2000"
     // # [[штрафной удар]] {{пример|«Локомотив» вновь впал в анабиоз...|Алексей Самура|Ничья вслепую. Герои и неудачники 21-го тура первенства страны по футболу|издание=Известия|12, 2000|источник=НКРЯ}}
@@ -775,7 +883,7 @@ public class WQuoteRuTest {
         assertEquals(q.getYearTo(), exp_year_to);
     }
 
-    // # {{действие|полоть}} {{пример|Уход за высеянным зерном ячменя ограничивается обыкновенно уничтожением корки при образовании её после сильного дождя (производится это или бороной, или каким-либо другим подходящим для данного случая орудием, например, негладким катком) и {{выдел|полкой}} сорных трав.||[[:s:ЭСБЕ/Ячмень|Ячмень]]|источник=ЭСБЕ}}
+    // # {{действие|полоть}} {{пример|Уход за высеянным зерном ячменя... и {{выдел|полкой}} сорных трав.||[[:s:ЭСБЕ/Ячмень|Ячмень]]|источник=ЭСБЕ}}
     @Test
     public void testGetQuotes_with_title_wikilink_and_slash() {
         System.out.println("testGetQuotes_with_title_wikilink_and_slash");
@@ -813,6 +921,61 @@ public class WQuoteRuTest {
 
         assertEquals(q.getYearFrom(), exp_year_from);
         assertEquals(q.getYearTo(), exp_year_to);
+    }
+    
+    // {{пример|Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.||{{библия|Лук|5:13}}|перев=синодальный|1816—1862|источник=source}}
+    @Test
+    public void testGetQuotes_title_with_template_Bible() {
+        System.out.println("testGetQuotes_title_with_template_Bible");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "прикоснуться";
+        
+        // 1. {{библия|Лук|5:13}}
+        text =  "# [[притронуться]] {{пример|Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.||{{библия|Лук|5:13}}|перев=синодальный|1816—1862|источник=source}}";
+
+// Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.||{{библия|Лук|5:13}}|перев=синодальный|1816—1862|источник=source
+        exp_text = "Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.";
+        exp_author = "";
+        exp_author_wikilink = "";
+        exp_title = "Лук. 5:13";
+        exp_title_wikilink = "";
+        exp_year_from   = 1816;
+        exp_year_to     = 1862;
+        exp_source = "source";
+
+        text = Definition.stripNumberSign(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+        assertTrue(q.getAuthorWikilink().equalsIgnoreCase( exp_author_wikilink ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getTitleWikilink().equalsIgnoreCase( exp_title_wikilink ) );
+        assertTrue(q.getSource().equalsIgnoreCase( exp_source ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+        
+        
+        // 2. {{Библия|Быт|1:1}}—{{Библия2|Быт|1:31|31}}
+        text =  "# [[притронуться]] {{пример|Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.||{{Библия|Быт|1:1}}—{{Библия2|Быт|1:31|31}}|перев=синодальный|1816—1862|источник=source}}";
+        exp_title = "Быт. 1:1—Быт. 1:31.31";
+        
+        text = Definition.stripNumberSign(page_title, text);
+        quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        q = quote_result[0];
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+        assertTrue(q.getTitleWikilink().equalsIgnoreCase( exp_title_wikilink ) );
     }
 
     // title with quote template: Шаблон:"
@@ -965,6 +1128,57 @@ public class WQuoteRuTest {
 
         assertEquals(q.getYearFrom(), exp_year_from);
         assertEquals(q.getYearTo(), exp_year_to);
+    }
+    
+    // # the definition {{пример|The sentence.|The Author|Характеристика вакцины против гепатита A {{"|Avaxim}} производства фирмы {{"|Пастер Мерье}} (результаты поле)}}
+    @Test
+    public void testGetQuotes_title_with_several_quote_templates_in_title() {
+        System.out.println("testGetQuotes_title_with_several_quote_templates_in_title");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        // 1. "|
+        page_title = "замести";
+        text =  "# the definition {{пример|The sentence.|The Author|The title{{\"|}} and {{\"|again}}|1855}}";
+
+        exp_text = "The sentence.";
+        exp_author = "The Author";
+        exp_author_wikilink = "";
+  // source title = The title{{\"|}} and {{\"|again}}
+        exp_title = "The title\"\" and \"again\"";
+        exp_title_wikilink = "";
+        exp_year_from   = 1855;
+        exp_year_to     = 1855;
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+
+        assertEquals(q.getYearFrom(), exp_year_from);
+        assertEquals(q.getYearTo(), exp_year_to);
+        
+        
+        // 2. кавычки|
+        text =  "# the definition {{пример|The sentence.|The Author|The title{{кавычки|}} and {{кавычки|again}}|1855}}";
+        
+        text = Definition.stripNumberSign(page_title, text);
+        //result = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, text);
+        quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        q = quote_result[0];
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
     }
 
 }
