@@ -25,7 +25,7 @@ public class KWConstants {
     
 
     /** Number of words visible in the list */
-    public static int n_words_list;
+    public static int n_words_list = 31;
     
     /** Number of languages sorted by size (in dropdown list) */
     // // public static int n_language_list_by_size = 200; // 100;

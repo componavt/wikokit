@@ -59,7 +59,8 @@ public class TPage {
 
     private final static TPage[]    NULL_TPAGE_ARRAY    = new TPage[0];
     private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];
-
+    private final static String[]   NULL_STRING_ARRAY   = new String[0];
+    
     public TPage(int _id,String _page_title,int _word_count,int _wiki_link_count,
                  boolean _is_in_wiktionary,
                  String _redirect_target)
@@ -594,5 +595,20 @@ public class TPage {
         }
 
         return false;
+    }
+    
+    /** Gets array of titles of pages from TPage[] objects.
+     * @return empty array if source array is empty.
+     */
+    public static String[] getPageTitles (TPage[] page_array) {
+        
+        if(null == page_array || page_array.length < 1)
+            return NULL_STRING_ARRAY;
+        
+        String[] page_titles = new String[ page_array.length ];
+        for(int i=0; i < page_array.length; i++)
+            page_titles[i] = page_array[i].getPageTitle();
+        
+        return page_titles;
     }
 }

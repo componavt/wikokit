@@ -29,7 +29,7 @@ public class QuoteYears {
     private static int MAX_EXAMPLE_WORDS = 3;
     
     /** SELECT `from`,`to` FROM quot_year ORDER BY `from` LIMIT 17; */
-    private static int MIN_YEAR_RU = 1076; // воинъ Изборник Святослава
+    private static int MIN_YEAR_RU = 0; // 1076; // воинъ Изборник Святослава
     
     private static int MAX_YEAR = 2013;
     

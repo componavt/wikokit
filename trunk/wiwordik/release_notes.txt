@@ -3,8 +3,15 @@ wiwordik 0.0X.10XX 2012-XX-XX
   Added (from user's point of view):
     Todo ...
 
+   New version of Russian Wiktionary data, as of March 25, 2012.
+
   Added (from programmer's point of view)
     Todo ...
+
+    Russian Wiktionary: correct extract years from date of quotes 
+    in format "DD-MM-YYYY" or "DD.MM.YYYY".
+
+    Todo: parsing of Шаблон:Библия in quotes.
 
 
 wiwordik 0.09.1094 2012-01-12

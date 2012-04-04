@@ -7,8 +7,8 @@
     <EditText
         android:id="@+id/editText_word"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
+        android:layout_height="wrap_content" 
+        android:inputType="text" >
         <requestFocus />
     </EditText>
 
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" /-->
             
-            <Spinner android:layout_height="wrap_content" android:id="@+id/spinner_id" android:layout_width="match_parent"></Spinner>
+            <Spinner android:layout_height="wrap_content" android:id="@+id/lang_spinner_id" android:layout_width="match_parent"></Spinner>
             
             <TextView
                 android:id="@+id/textView2"
@@ -47,7 +47,7 @@
 </RelativeLayout>
 
     <ListView
-        android:id="@+id/listView1"
+        android:id="@+id/word_listview_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
     </ListView>

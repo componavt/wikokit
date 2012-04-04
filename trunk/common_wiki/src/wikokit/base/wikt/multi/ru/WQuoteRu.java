@@ -10,6 +10,7 @@ package wikokit.base.wikt.multi.ru;
 import wikokit.base.wikipedia.util.StringUtilRegular;
 import wikokit.base.wikipedia.util.StringUtil;
 import wikokit.base.wikt.word.WQuote;
+import wikokit.base.wikt.multi.ru.quote.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,210 +26,6 @@ public class WQuoteRu {
     private static final boolean DEBUG = false;
     private final static WQuote[] NULL_WQUOTE_ARRAY = new WQuote[0];
     private final static String[] NULL_STRING_ARRAY = new String[0];
-
-
-    /** Inner Years class. */
-    private static class YearsRange {
-        YearsRange() {
-            year_from = -1;
-            year_to = -1;
-        }
-
-        /** Start date of a writing book with the quote, if there is no information about date then -1. */
-        public int year_from;
-
-        /** Finish date of a writing book with the quote, if there is no information about date then -1. */
-        public int year_to;
-
-        /** Converts string to integer, if there is any problem then return -1.
-         */
-        private static int stringToInt(String page_title, String text)
-        {
-            int i = -1;
-            if(null != text && text.length() > 0) {
-
-                try {
-                  i = Integer.parseInt(text);
-                }
-                catch (NumberFormatException nfe)
-                {
-                  System.out.println("Error in WQuoteRu:YearsRange:stringToInt: entry '"+ page_title +
-                                     "' unknown year format, " + nfe.getMessage());
-                }
-            }
-            return i;
-        }
-
-        // extract year XXXX from string, e.g. "1875?" or "12, 2000"
-        private final static Pattern pattern_contains_4_year  = Pattern.compile("\\d{4}");
-
-        // day day month year year year year (end of the string), e.g. 22 month 2003
-        //private final static Pattern pattern_day_month_year  = Pattern.compile("\\d{1,2}\\s+\\D+\\s+\\d{4}\\Z");
-
-        // extract_year_from_year_dot_month_dot_day, e.g. 2002.08.26
-        //private final static Pattern pattern_year_dot_month_dot_day  = Pattern.compile("\\d{4}\\.\\d{1,2}\\.\\d{1,2}");
-
-        /** Parses source text (e.g. "1882-1883"), stores years to year_from
-         * and year_to. Store results to year_from and year_to.
-         * If there is only one year, e.g. "1972", then year_from=year_to.
-         * If text was not parsed successfully, then year_from=year_to=-1.
-         */
-        public void parseYearsRange(String page_title, String text) {
-
-            
-            if(text.contains("{{-}}"))  // range of years with dash template {{-}}: 1998{{-}}2001
-                text = text.replace("{{-}}", "-");
-
-            
-            if(text.contains("-е"))     // decade; tens of years, e.g. 1830-е
-                text = text.replace("-е", "");
-
-            // question_in_years e.g. 1862—1875?
-            if(text.endsWith("?"))
-                text = text.substring(0, text.length() - 1);
-
-            // range of years: 1880—1881, 1842–1862
-            int pos = text.indexOf("—");
-            if(-1 == pos)
-                pos = text.indexOf("-");
-            if(-1 == pos)
-                pos = text.indexOf("–");
-
-            if(-1 == pos) {
-                // it's not a range
-
-                int len = text.length();
-                if(len > 4) {
-
-                    // pattern_contains_4_year: "1875?"
-                    Matcher m = pattern_contains_4_year.matcher(text);
-                    if(m.find()) {
-                        text = m.group();
-                    }
-                        
-                    // compare with: 22 month 2003
-                    /*m = pattern_day_month_year.matcher(text);
-                    if(m.find()) {
-                        text = text.substring(len - 4);
-                    } else {
-                        // compare with 2002.08.26
-                        Matcher m2 = pattern_year_dot_month_dot_day.matcher(text);
-                        if(m2.matches())
-                            text = text.substring(0, 4);
-                    }*/
-                }
-
-                year_from = YearsRange.stringToInt(page_title, text);
-                year_to = year_from;
-            } else {
-                // it's a range, split it by "-" or "—"
-                String str_from = text.substring(0, pos);
-                String str_to = text.substring(pos + 1);
-
-                if(str_from.length() > 0) {
-                    year_from = YearsRange.stringToInt(page_title, str_from);
-                    year_to = year_from;
-                }
-
-                if(str_to.length() > 0)
-                    year_to = YearsRange.stringToInt(page_title, str_to);
-            }
-        }
-    }
-
-    /** Inner author class. */
-    private static class AuthorAndWikilink {
-        AuthorAndWikilink() {
-            author = "";
-            author_wikilink = "";
-        }
-
-        /** Author's name of the quotation. */
-        public String  author;
-
-        /** Author's name in Wikipedia (format: [[w:name|]] or [[:w:name|]]). */
-        public String  author_wikilink;
-
-
-        /** Parses text (e.g. "[[:s:У окна (Андреев)|У окна]]") into
-         * title_wikilink "У окна (Андреев)" and title "У окна".
-         */
-        public void parseAuthorName(String text) {
-
-            text = StringUtilRegular.replaceComplexSpacesByTrivialSpaces(text);
-
-            // replace "&nbsp;" by " "
-            if(text.contains("&nbsp;"))
-                text = text.replace("&nbsp;", " ");
-
-            author = text; // first version
-            if(!(text.startsWith("[[:w:") ||
-                 text.startsWith("[[w:")) ||
-               !text.endsWith("]]") ||
-               !text.contains("|"))
-                return;
-
-            if(text.startsWith("[[:w:"))
-                text = text.substring(5, text.length() - 2); // "[[:w:" . text . "]]"
-            else
-                text = text.substring(4, text.length() - 2); // "[[w:" . text . "]]"
-
-            // split by |
-            // [[:w:The title|The title]]
-            int pos = text.indexOf("|");
-            if(-1 == pos)
-                return;
-
-            author_wikilink = text.substring(0, pos);
-            author = text.substring(pos + 1);
-        }
-    }
-
-    /** Inner title class. */
-    private static class TitleAndWikilink {
-        TitleAndWikilink() {
-            title = "";
-            title_wikilink = "";
-        }
-
-        /** Title of the work. */
-        private String  title;
-
-        /** Link to a book in Wikipedia (format: [[s:title|]] or [[:s:title|]]). */
-        private String  title_wikilink;
-
-
-        /** Parses text (e.g. "[[:s:У окна (Андреев)|У окна]]") into
-         * title_wikilink "У окна (Андреев)" and title "У окна".
-         */
-        public void parseTitle(String text) {
-
-            // replace "&nbsp;" by " "
-            if(text.contains("&nbsp;"))
-                text = text.replace("&nbsp;", " ");
-
-            title = text; // first version
-            if(!(text.startsWith("[[:s:") ||
-                 text.startsWith("[[s:")) ||
-               !text.endsWith("]]") ||
-               !text.contains("|"))
-                return;
-
-            if(text.startsWith("[[:s:"))
-                text = text.substring(5, text.length() - 2); // "[[:s:" . text . "]]"
-            else
-                text = text.substring(4, text.length() - 2); // "[[s:" . text . "]]"
-
-            // split by |
-            // [[:s:The title|The title]]
-            int pos = text.indexOf("|");
-            if(-1 == pos)
-                return;
-
-            title_wikilink = text.substring(0, pos);
-            title = text.substring(pos + 1);
-        }
-    }
     
     
     /** Gets, extracts from 'text' a definition till first example sentence starting from {{пример|. */
@@ -377,7 +174,25 @@ public class WQuoteRu {
         }
         return text;
     }
-
+    
+    /** Replaces all quotation template:" by quotations if there is any,
+     * e.g. 'Фрегат {{"|Паллада}}' ->
+     *      'Фрегат "Паллада"';
+     *
+     * @param text      source text with quotation template
+     * @return text without template, but with quotes
+     */
+    private static String replaceAllQuoteTemplateByQuotationMarks(String text) {
+        
+        int pos_quote = text.indexOf("{{\"|");
+        
+        while(-1 != pos_quote) {
+            text = replaceQuoteTemplateByQuotationMarks(text, pos_quote);
+            pos_quote = text.indexOf("{{\"|");
+        }
+        return text;
+    }
+    
     /** Replaces quotation template:кавычки|ru| by quotations,
      * e.g. {{кавычки|ru|Jam temp'esta}} ->
      *                  "Jam temp'esta"
@@ -421,6 +236,24 @@ public class WQuoteRu {
         }
         return text;
     }
+    
+    /** Replaces all quotation кавычки|ru| by quotations if there is any,
+     * e.g. {{кавычки|ru|Jam temp'esta}} ->
+     *                  "Jam temp'esta"
+     *
+     * @param text      source text with quotation template
+     * @return text without template, but with quotes
+     */
+    private static String replaceAllKavychkiTemplateByQuotationMarks(String text) {
+        
+        int pos_quote = text.indexOf("{{кавычки|");
+        
+        while(-1 != pos_quote) {
+            text = replaceKavychkiTemplateByQuotationMarks(text, pos_quote);
+            pos_quote = text.indexOf("{{кавычки|");
+        }
+        return text;
+    }
 
     /** Extracts quote parameters from the template "{{пример|"
      * without start "{{пример|" and end "}}" elements of the template.
@@ -453,13 +286,11 @@ public class WQuoteRu {
             str = str.replace("{{выдел|", "{{выдел!");
 
         // 0b. before splitting by "|", replace template:" by quotations, e.g. 'Фрегат {{"|Паллада}}' -> 'Фрегат "Паллада"';
-        int pos_quote = str.indexOf("{{\"|");
-        if(-1 != pos_quote)
-            str = replaceQuoteTemplateByQuotationMarks(str, pos_quote);
+        if(-1 != str.indexOf("{{\"|"))
+            str = replaceAllQuoteTemplateByQuotationMarks(str);
 
-        pos_quote = str.indexOf("{{кавычки|");
-        if(-1 != pos_quote)
-            str = replaceKavychkiTemplateByQuotationMarks(str, pos_quote);
+        if(-1 != str.indexOf("{{кавычки|"))
+            str = replaceAllKavychkiTemplateByQuotationMarks(str);
 
         // 1. split
         //String[] params = str.split("\\|");

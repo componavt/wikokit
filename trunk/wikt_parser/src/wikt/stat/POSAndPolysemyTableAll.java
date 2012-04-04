@@ -336,7 +336,7 @@ public class POSAndPolysemyTableAll {
         Connect wikt_parsed_conn = new Connect();
         LanguageType native_lang;
         
-        boolean b_english = true;
+        boolean b_english = false;
 
         // English
         if(b_english) {
@@ -359,8 +359,8 @@ public class POSAndPolysemyTableAll {
         System.out.println("* Number of meanings.");
         System.out.println("* Number of empty definitions for each language.");
         System.out.println("* Number of entries for each part of speech (POS).");
+        //System.out.println("\nNumber of entries for each part of speech (POS). Number of meanings.");
         
-        System.out.println("\nNumber of entries for each part of speech (POS). Number of meanings.");
         System.out.println("\nSee about Part of Speech (POS) headers:");
         System.out.println("* [http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained/POS_headers#Standard_non-POS_level_3_headers Wiktionary:Entry layout explained/POS headers]");
         System.out.println("* [http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%A7%D0%B0%D1%81%D1%82%D0%B8_%D1%80%D0%B5%D1%87%D0%B8 Приложение:Части речи]");

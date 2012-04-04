@@ -103,5 +103,31 @@ public class TPageTest extends TestCase {
                 b_meaning, b_sem_rel);
         assertTrue(p.length > 1);// airplane and "airplane ticket"
     }
+    
+    public void testGetPageTitles() {
+        System.out.println("getPageTitles");
+        
+        int limit;
+        String prefix;
+        SQLiteDatabase db = ruwikt_conn.getDB();
+        
+        prefix = "airplane%";
+        
+        TPage p[] = null;
+        boolean b_skip_redirects = true;
+        boolean b_meaning = false;
+        boolean b_sem_rel = false;
+        TLang   source_lang[] = new TLang [0];
+        
+        limit = -1;
+        p = TPage.getByPrefix(db, prefix, limit, b_skip_redirects,
+                source_lang,
+                b_meaning, b_sem_rel);
+        assertTrue(p.length > 1);// airplane and "airplane ticket"
+        
+        String[] page_titles = TPage.getPageTitles(p);
+        assertTrue(page_titles.length > 1);
+        assertEquals(page_titles.length, p.length);
+    }
 
 }
