@@ -74,6 +74,78 @@ mysql> SELECT * FROM wiki_text WHERE id=1589097;
 || id      || text                                           ||
 || 1589097 || Passing or disappearing with time; transitory. ||
 
+
+== Synonyms ==
+
+Let's get list of synonyms for the second meaning of English noun "[http://en.wiktionary.org/wiki/iron iron]".
+
+Sequence of tables:
+  #) page & lang & part_of_speech -> lang_pos -> meaning
+  #) relation_type & meaning -> relation -> wiki_text
+
+=== 1) page -> meaning ===
+
+{{{
+mysql> SELECT id FROM page WHERE page_title="iron";
+}}}
+
+The entry "iron" has page_id = 41364.
+
+{{{
+mysql> SELECT * FROM lang WHERE code="en";
+}}}
+
+The language code "en" has lang_id = 285.
+
+{{{
+mysql> SELECT * FROM part_of_speech WHERE name="noun";
+}}}
+
+The part of speech "noun" has pos_id = 38.
+
+{{{
+mysql> SELECT * FROM lang_pos WHERE page_id=41364 AND lang_id=285 AND pos_id=38;
+}}}
+
+The English noun "iron" has lang_pos_id=460576.
+
+{{{
+mysql> SELECT * FROM meaning WHERE lang_pos_id=460576 AND meaning_n=1;
+}}}
+
+The second meaning (n=1, start from zero) of English noun "iron" has meaning_id=608448, wiki_text_id=796355.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=796355;
+}}}
+
+The second meaning of "iron" has definition: 
+
+_{{countable}} A tool or appliance made of metal, which is heated and then used to transfer heat to something else; most often a thick piece of metal fitted with a handle and having a flat, roughly triangular bottom, which is heated and used to press wrinkles from clothing, and now usually containing an electrical heating apparatus._
+
+=== 2) relation_type & meaning -> relation -> wiki_text ===
+
+{{{
+mysql> SELECT id FROM relation_type WHERE name="synonyms";
+}}}
+
+The Synonymy relation has relation_type_id=8.
+
+{{{
+mysql> SELECT * FROM relation WHERE meaning_id=608448 AND relation_type_id=8;
+}}}
+
+The second meaning of "iron" has two synonyms with wiki_text_id 796356 and 796357.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=796356;
+mysql> SELECT * FROM wiki_text WHERE id=796357;
+}}}
+
+The second meaning of "iron" has two synonyms:
+  * _flatiron {{qualifier|old-fashioned}}_;
+  * _smoothing iron {{qualifier|old-fashioned}}_.
+
 == Translate word from one language to another ==
 
 We consider two ways to get translations by using English Wiktionary:
