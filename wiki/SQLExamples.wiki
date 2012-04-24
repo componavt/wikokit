@@ -323,6 +323,25 @@ mysql> SELECT page_title FROM page WHERE id=245963;
 || *page_title* || 
 || anecdote ||
 
+
+
+<wiki:comment>
+== Warning ==
+
+=== Empty definitions ===
+
+If you run this query:
+
+{{{
+mysql> select * from page, lang_pos, meaning where wiki_text_id is NULL AND lang_pos_id=meaning.lang_pos_id AND page.id=lang_pos.page_id AND page.id < 100 GROUP BY page.id LIMIT 10;
+}}}
+
+then you will see the list of first N words (of 100 words) which has empty definitions (meanings.wiki_text_id is NULL), because... Because (1) the Wiktionary parser is not finished yet and (2) the Wiktionary has a lot of interesting templates which should be parsed correctly.
+
+E.g. The result of this query contains the symbol [http://en.wiktionary.org/wiki/!%3D !=]. It has null ``meanings.wiki_text_id``, because (IMHO) the entry contains the template _{{head|_ which is not parsed in this version of the parser. So the parser can not find the text of the definition due to this template. :(
+</wiki:comment>
+
+
 = See also =
   * [GettingStartedWiktionaryParser]
   * [d2rqMappingSPARQL]
