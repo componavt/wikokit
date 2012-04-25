@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import wikokit.base.wikipedia.text.TemplateParser;
 
 /** Phrase or sentence that illustrates a meaning of a word in Russian Wiktionary.
  */
@@ -285,7 +286,14 @@ public class WQuoteRu {
         if(str.contains("{{выдел|"))
             str = str.replace("{{выдел|", "{{выдел!");
 
-        // 0b. before splitting by "|", replace template:" by quotations, e.g. 'Фрегат {{"|Паллада}}' -> 'Фрегат "Паллада"';
+        // 0b. before splitting by "|"
+        // expand parameters in the template "{{библия|", replace pipes "|" by dots "."
+        if(str.toLowerCase().contains("{{библия")) {
+            str = TemplateParser.expandTemplateParams(str, "библия2", "|", ".");
+            str = TemplateParser.expandTemplateParams(str, "библия", "|", ".");
+        }
+        
+        // 0c. before splitting by "|", replace template:" by quotations, e.g. 'Фрегат {{"|Паллада}}' -> 'Фрегат "Паллада"';
         if(-1 != str.indexOf("{{\"|"))
             str = replaceAllQuoteTemplateByQuotationMarks(str);
 

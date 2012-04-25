@@ -10,8 +10,8 @@ wiwordik 0.0X.10XX 2012-XX-XX
 
     Russian Wiktionary: correct extract years from date of quotes 
     in format "DD-MM-YYYY" or "DD.MM.YYYY".
-
-    Todo: parsing of Шаблон:Библия in quotes.
+    
+    Parsing of Шаблон:Библия (template:Bible) in quotes of Russian Wiktionary.
 
 
 wiwordik 0.09.1094 2012-01-12

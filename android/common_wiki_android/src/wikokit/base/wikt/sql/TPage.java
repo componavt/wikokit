@@ -420,17 +420,26 @@ public class TPage {
                 limit_with_reserve += 55555;
             str_limit = "" + limit_with_reserve;
         }
+
+        // "page_title LIKE \"" + prefix + "\"" + str_skip_redirects
+        StringBuilder s_where = new StringBuilder();
+        if(prefix.length() > 0) {
+            if(b_skip_redirects)
+                s_where.append("page_title LIKE \"" + prefix + "\" AND is_redirect is NULL");
+            else
+                s_where.append("page_title LIKE \"" + prefix + "\"");
+        } else {
+            if(b_skip_redirects)
+                s_where.append("is_redirect is NULL");
+        }
         
-        String str_skip_redirects = "";
-        if(b_skip_redirects)
-            str_skip_redirects = " AND is_redirect is NULL";
 
         List<TPage> tp_list = null;
         // SELECT id,page_title,word_count,wiki_link_count,is_in_wiktionary,is_redirect,redirect_target FROM page WHERE page_title LIKE \"prefix\"
         Cursor c = db.query("page", 
                 new String[] { "id", "page_title", "word_count", "wiki_link_count", 
                             "is_in_wiktionary", "is_redirect", "redirect_target"}, 
-                "page_title LIKE \"" + prefix + "\"" + str_skip_redirects, 
+                s_where.toString(), 
                 null, null, null, null,
                 str_limit);
         
