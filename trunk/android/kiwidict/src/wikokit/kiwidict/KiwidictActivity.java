@@ -37,13 +37,13 @@ import wikokit.kiwidict.lang.LanguageSpinner;
 import wikokit.kiwidict.search_window.QueryTextString;
 import wikokit.kiwidict.util.TipsTeapot;
 import wikokit.kiwidict.wordlist.WordList;
+import wikokit.kiwidict.wordlist.WordListArrayAdapter;
 
 
 public class KiwidictActivity extends Activity {
 
 	private Connect wikt_conn; // private DataBaseHelper db_helper;
 	private static SQLiteDatabase db;
-	//private GameLogic game_logic;
 	
 	DownloadAndInstallActivity install_activity = new DownloadAndInstallActivity();
 	
@@ -57,7 +57,6 @@ public class KiwidictActivity extends Activity {
 	static String word0 = tip.getQuery(); //"*с?рё*";
     
 	public KiwidictActivity () {
-	    word_list = new WordList(this);
 	}
 	
 	/**
@@ -123,8 +122,8 @@ public class KiwidictActivity extends Activity {
 	    //lang_choicebox.initialize(word_list, query_text_string, lang_choice, WConstants.native_lang);
 
 	    
-	    //getApplicationContext();
 	    ListView word_listview = (ListView) findViewById(R.id.word_listview_id);
+	    word_list = new WordList(getApplicationContext());
 	    word_list.initialize(db,
                 query_text_string,
                 lang_choice,
@@ -132,21 +131,22 @@ public class KiwidictActivity extends Activity {
                 KWConstants.native_lang,
                                             //_word0              : String,
                 KWConstants.n_words_list,
-                word_listview);
-	    //setListAdapter(word_list.adapter);
-	    //WordListArrayAdapter
+                word_listview,
+                this);
+	    
+	    
 
-	    word_list.setSkipRedirects(KWConstants.b_skip_redirects);
+//	    word_list.setSkipRedirects(KWConstants.b_skip_redirects);
 
 	    //filter_mean_sem_transl.initialize(word_list, lang_choice, query_text_string);
 	    //debug_panel.initialize();
 
-	    word_list.updateWordList(  KWConstants.b_skip_redirects,
-	                               word0 );
+//	    word_list.updateWordList(  KWConstants.b_skip_redirects,
+//	                               word0 );
 	                            
 	    //query_text_string.saveWordValue();
 
-	    word_list.copyWordsToStringArray( word_list.getPageArray() );
+//	    word_list.copyWordsToStringArray( word_list.getPageArray() );
 	}
 	
 	/** Called when the activity is first created.

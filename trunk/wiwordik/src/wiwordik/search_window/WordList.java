@@ -345,7 +345,6 @@ public class WordList {
                 wc.createCXLangList(wikt_parsed_conn, foreign_page);
             }
         }
-
     }
     
     /** Copies data from page_array to page_array_string

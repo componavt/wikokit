@@ -924,6 +924,7 @@ public class WQuoteRuTest {
     }
     
     // {{пример|Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.||{{библия|Лук|5:13}}|перев=синодальный|1816—1862|источник=source}}
+    // title={{библия|Лук|5:13}}
     @Test
     public void testGetQuotes_title_with_template_Bible() {
         System.out.println("testGetQuotes_title_with_template_Bible");
@@ -940,7 +941,7 @@ public class WQuoteRuTest {
         exp_text = "Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.";
         exp_author = "";
         exp_author_wikilink = "";
-        exp_title = "Лук. 5:13";
+        exp_title = "Лук.5:13";
         exp_title_wikilink = "";
         exp_year_from   = 1816;
         exp_year_to     = 1862;
@@ -966,7 +967,7 @@ public class WQuoteRuTest {
         
         // 2. {{Библия|Быт|1:1}}—{{Библия2|Быт|1:31|31}}
         text =  "# [[притронуться]] {{пример|Он простер руку, {{выдел|прикоснулся}} к нему и сказал: хочу, очистись.||{{Библия|Быт|1:1}}—{{Библия2|Быт|1:31|31}}|перев=синодальный|1816—1862|источник=source}}";
-        exp_title = "Быт. 1:1—Быт. 1:31.31";
+        exp_title = "Быт.1:1—Быт.1:31.31";
         
         text = Definition.stripNumberSign(page_title, text);
         quote_result = WQuoteRu.getQuotes(page_title, text);
