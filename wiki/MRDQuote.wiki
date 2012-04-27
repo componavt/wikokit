@@ -105,7 +105,7 @@ todo
 
 = SPARQL examples =
 
-Now quotes are extracted only from the Russian Wiktionary; English Wiktionary quotes will be extracted till 2012, I hope :)
+Now quotes are extracted only from the Russian Wiktionary; English Wiktionary quotes will be extracted after "[http://en.wiktionary.org/wiki/Category:Context_labels context labels]" extraction :)
 
 See more information about SPARQL queries to Wiktionary data here: [d2rqMappingSPARQL].
 
