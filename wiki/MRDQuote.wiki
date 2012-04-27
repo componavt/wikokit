@@ -8,6 +8,10 @@
 Goal:
   * To add tables (to MRD database) in order to store quotations from the Wiktionaries (English and Russian now).
 
+Very important note:
+  * Now quotes are extracted only from the Russian Wiktionary; 
+  * English Wiktionary quotes will be extracted after "[http://en.wiktionary.org/wiki/Category:Context_labels context labels]" extraction (in 2012, my optimistic plan) :)
+
 == Examples from English Wiktionary ==
 
 Example from English Wiktionary:
@@ -106,8 +110,6 @@ todo
 
 
 = SPARQL examples =
-
-Now quotes are extracted only from the Russian Wiktionary; English Wiktionary quotes will be extracted after "[http://en.wiktionary.org/wiki/Category:Context_labels context labels]" extraction :)
 
 See more information about SPARQL queries to Wiktionary data here: [d2rqMappingSPARQL].
 
