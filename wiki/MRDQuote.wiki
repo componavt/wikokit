@@ -1,5 +1,7 @@
-#summary Quote table (and tables related to quotations) in machine-readable dictionary.
+#summary Quote table (and tables related to quotations) in machine-readable dictionary. SPARQL and SQL query to work with quotes.
 #labels MRD,SQL,quotation
+
+<wiki:toc max_depth="3" />
 
 = Introduction =
 
