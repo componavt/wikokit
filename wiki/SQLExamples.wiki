@@ -345,4 +345,4 @@ E.g. The result of this query contains the symbol [http://en.wiktionary.org/wiki
 = See also =
   * [GettingStartedWiktionaryParser]
   * [d2rqMappingSPARQL]
-  * [MRDQuote#SQL_queries|MRDQuote]
+  * [MRDQuote#SQL_queries MRDQuote]
