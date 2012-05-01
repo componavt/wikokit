@@ -192,7 +192,8 @@ This section contains examples of SQL queries. See also [SQLExamples].
 
 
 
-
+== Further reading ==
+  * Retrieval and analysis of quotes’ dates in corpus of quotes of online dictionary. 2012. [todo link]
 
 = Links =
 == Russian Wiktionary ==
