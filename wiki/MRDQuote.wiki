@@ -199,14 +199,15 @@ mysql> SELECT id FROM lang WHERE code="en";
 || *id* || 
 || 285 ||
 
-2. {{{
+2. 
+{{{
 mysql> SELECT COUNT(*) from quote WHERE lang_id=285;
 }}}
 
 || *COUNT(`*`)* || 
-|| 1355 ||
+| 1355 ||
 
-There are 1355 quotes for English words in the Russian Wiktionary (dump 20120325)
+There are 1355 quotes for English words in the Russian Wiktionary (dump as of March 25, 2012)
 
 
 
