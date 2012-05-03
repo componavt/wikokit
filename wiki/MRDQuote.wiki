@@ -190,8 +190,7 @@ This section contains examples of SQL queries. See also [SQLExamples].
 
 Let's get all quotes in English language with non-empty date (years) (we are working with the Russian Wiktionary now). Let's the data will be in the range _'from'-'to'_, i.e. the quotes from the books written during more than in one year, e.g. 1926-1927.
 
-1. The language code "en" (English) has lang_id = 285. 
-
+1. 
 {{{
 mysql> SELECT id FROM lang WHERE code="en";
 }}}
@@ -199,16 +198,40 @@ mysql> SELECT id FROM lang WHERE code="en";
 || *id* || 
 || 285 ||
 
+The language code "en" (English) has *lang_id* = 285. 
+
 2. 
 {{{
 mysql> SELECT COUNT(*) from quote WHERE lang_id=285;
 }}}
 
 || *COUNT(`*`)* || 
-| 1355 ||
+|| 1355 ||
 
 There are 1355 quotes for English words in the Russian Wiktionary (dump as of March 25, 2012)
 
+N.
+{{{
+mysql> SELECT * FROM lang, quote WHERE code="en" AND lang.id=quote.lang_id LIMIT 33;
+}}}
+
+See examples of several quotes in English.
+
+3. 
+{{{
+mysql> SELECT COUNT(*) FROM quote WHERE lang_id=285 AND ref_id is not NULL;
+}}}
+
+|| *COUNT(`*`)* || 
+|| 222 ||
+
+There are 222 quotes in English with non-empty reference (i.e. there are an author, a title or date of quote).
+
+4.
+
+mysql> SELECT COUNT(*) FROM quote, quot_ref WHERE lang_id=285 AND ref_id=quot_ref.id AND year_id IS NOT NULL;
+
+There are 123 quotes in English with non-empty years in the reference.
 
 
 == Further reading ==
