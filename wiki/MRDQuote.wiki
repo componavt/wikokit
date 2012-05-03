@@ -210,12 +210,10 @@ mysql> SELECT COUNT(*) from quote WHERE lang_id=285;
 
 There are 1355 quotes for English words in the Russian Wiktionary (dump as of March 25, 2012)
 
-N.
+See examples of several quotes in English:
 {{{
 mysql> SELECT * FROM lang, quote WHERE code="en" AND lang.id=quote.lang_id LIMIT 33;
 }}}
-
-See examples of several quotes in English.
 
 3. 
 {{{
@@ -237,6 +235,20 @@ mysql> SELECT COUNT(*) FROM quote, quot_ref WHERE lang_id=285 AND ref_id=quot_re
 
 There are 123 quotes in English with non-empty years in the reference.
 
+See examples of several quotes in English with years:
+{{{
+mysql> SELECT * FROM quote, quot_ref, quot_year WHERE lang_id=285 AND ref_id=quot_ref.id AND year_id=quot_year.id LIMIT 33;
+}}}
+
+5. 
+{{{
+mysql> SELECT COUNT(*) FROM quote, quot_ref, quot_year WHERE lang_id=285 AND ref_id=quot_ref.id AND year_id=quot_year.id AND `to`-`from`>0;
+}}}
+
+|| *COUNT(`*`)* || 
+|| 7 ||
+
+There are 7 quotes in English from books written during more than in one year. These are the quotes from entries: [http://ru.wiktionary.org/wiki/Moscow Moscow], 
 
 == Further reading ==
   * Retrieval and analysis of quotes’ dates in corpus of quotes of online dictionary. 2012. (todo link)
