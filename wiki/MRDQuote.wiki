@@ -188,7 +188,25 @@ This section contains examples of SQL queries. See also [SQLExamples].
 
 == Get all quotes by language ==
 
+Let's get all quotes in English language with non-empty date (years) (we are working with the Russian Wiktionary now). Let's the data will be in the range _'from'-'to'_, i.e. the quotes from the books written during more than in one year, e.g. 1926-1927.
 
+1. The language code "en" (English) has lang_id = 285. 
+
+{{{
+mysql> SELECT id FROM lang WHERE code="en";
+}}}
+
+|| *id* || 
+|| 285 ||
+
+2. {{{
+mysql> SELECT COUNT(*) from quote WHERE lang_id=285;
+}}}
+
+|| *COUNT(`*`)* || 
+|| 1355 ||
+
+There are 1355 quotes for English words in the Russian Wiktionary (dump 20120325)
 
 
 
