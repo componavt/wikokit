@@ -248,7 +248,7 @@ mysql> SELECT COUNT(*) FROM quote, quot_ref, quot_year WHERE lang_id=285 AND ref
 || *COUNT(`*`)* || 
 || 7 ||
 
-There are 7 quotes in English from books written during more than in one year. These are the quotes from entries: [http://ru.wiktionary.org/wiki/Moscow Moscow], 
+There are 7 quotes in English from books written during more than in one year. These are the quotes from entries: [http://ru.wiktionary.org/wiki/Moscow Moscow], [http://ru.wiktionary.org/wiki/cacophony cacophony], [http://ru.wiktionary.org/wiki/hoarder hoarder] (two), [http://ru.wiktionary.org/wiki/order order] (two), [http://ru.wiktionary.org/wiki/practitioner practitioner].
 
 == Further reading ==
   * Retrieval and analysis of quotes’ dates in corpus of quotes of online dictionary. 2012. (todo link)
