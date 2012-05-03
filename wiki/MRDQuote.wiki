@@ -228,8 +228,12 @@ mysql> SELECT COUNT(*) FROM quote WHERE lang_id=285 AND ref_id is not NULL;
 There are 222 quotes in English with non-empty reference (i.e. there are an author, a title or date of quote).
 
 4.
-
+{{{
 mysql> SELECT COUNT(*) FROM quote, quot_ref WHERE lang_id=285 AND ref_id=quot_ref.id AND year_id IS NOT NULL;
+}}}
+
+|| *COUNT(`*`)* || 
+|| 123 ||
 
 There are 123 quotes in English with non-empty years in the reference.
 
