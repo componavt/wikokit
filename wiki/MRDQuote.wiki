@@ -184,7 +184,7 @@ WHERE {
 
 = SQL queries =
 
-This section contains examples of SQL queries. See also [SQLExamples].
+This section contains examples of SQL queries related to quotes. See also [SQLExamples].
 
 == Get all quotes by language ==
 
