@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -36,6 +37,7 @@ import wikokit.kiwidict.lang.LangSpinnerAdapter;
 import wikokit.kiwidict.lang.LanguageSpinner;
 import wikokit.kiwidict.search_window.QueryTextString;
 import wikokit.kiwidict.util.TipsTeapot;
+import wikokit.kiwidict.word_card.WCActivity;
 import wikokit.kiwidict.wordlist.WordList;
 import wikokit.kiwidict.wordlist.WordListArrayAdapter;
 
@@ -51,7 +53,7 @@ public class KiwidictActivity extends Activity {
 	
 	static WordList word_list;
 	static LangChoice  lang_choice    = new LangChoice();
-	static QueryTextString query_text_string = new QueryTextString();
+	static QueryTextString query_text_string;
 	
 	static TipsTeapot tip = TipsTeapot.generateRandomTip();
 	static String word0 = tip.getQuery(); //"*с?рё*";
@@ -107,6 +109,7 @@ public class KiwidictActivity extends Activity {
         wikt_conn.openDatabase();
         
         db = wikt_conn.getDB();
+        KWConstants.setDatabase(db);
         TLang.createFastMaps(db);// once upon a time: use Wiktionary parsed db
         TPOS.createFastMaps (db);
         TRelationType.createFastMaps(db);   //System.out.println("initDatabase: DBName=" + wikt_parsed_conn.getDBName());    
@@ -114,7 +117,8 @@ public class KiwidictActivity extends Activity {
 	
 	void initGUI() {
 
-// todo	    query_text_string.initialize(word0, db, word_list, lang_choice);
+	    query_text_string = new QueryTextString();
+	    query_text_string.word_textfield = (EditText) findViewById(R.id.editText_word);
 
 	    //lang_choice.initialize( word_list, query_text_string, lang_choicebox,
 	    //                        tip.getSourceLangCodes(), WConstants.native_lang);
@@ -123,7 +127,9 @@ public class KiwidictActivity extends Activity {
 
 	    
 	    ListView word_listview = (ListView) findViewById(R.id.word_listview_id);
-	    word_list = new WordList(getApplicationContext());
+	    word_list = new WordList(this);
+	    
+	    query_text_string.initialize(word0, db, word_list, lang_choice);
 	    word_list.initialize(db,
                 query_text_string,
                 lang_choice,
@@ -141,12 +147,12 @@ public class KiwidictActivity extends Activity {
 	    //filter_mean_sem_transl.initialize(word_list, lang_choice, query_text_string);
 	    //debug_panel.initialize();
 
-//	    word_list.updateWordList(  KWConstants.b_skip_redirects,
-//	                               word0 );
+	    word_list.updateWordList(  KWConstants.b_skip_redirects,
+	                               word0 );
 	                            
 	    //query_text_string.saveWordValue();
 
-//	    word_list.copyWordsToStringArray( word_list.getPageArray() );
+	    word_list.copyWordsToStringArray( word_list.getPageArray() );
 	}
 	
 	/** Called when the activity is first created.
@@ -190,9 +196,6 @@ public class KiwidictActivity extends Activity {
         lang_spinner.setOnItemSelectedListener(new LangOnItemSelectedListener(lspinner));
         
         //word_list.onCreate(savedInstanceState);
-        
-        
-        
     }
     
     
@@ -200,7 +203,7 @@ public class KiwidictActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
 		super.onActivityResult(requestCode, resultCode, data); 
-		if (resultCode == Activity.RESULT_CANCELED) { 
+		if (resultCode == Activity.RESULT_CANCELED) {
 			//Toast.makeText(this, "activity canceled", Toast.LENGTH_SHORT).show();
 			// database failed, exit.
 			finish();

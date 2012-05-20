@@ -425,9 +425,9 @@ public class TPage {
         StringBuilder s_where = new StringBuilder();
         if(prefix.length() > 0) {
             if(b_skip_redirects)
-                s_where.append("page_title LIKE \"" + prefix + "\" AND is_redirect is NULL");
+                s_where.append("page_title LIKE \"" + prefix + "%\" AND is_redirect is NULL");
             else
-                s_where.append("page_title LIKE \"" + prefix + "\"");
+                s_where.append("page_title LIKE \"" + prefix + "%\"");
         } else {
             if(b_skip_redirects)
                 s_where.append("is_redirect is NULL");
