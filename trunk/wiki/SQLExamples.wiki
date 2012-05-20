@@ -1,0 +1,328 @@
+#summary How to extract some information from the database wikt_parsed of the parsed Wiktionary. SQL query examples.
+
+<wiki:toc max_depth="3" />
+
+= Introduction =
+
+Download the parsed Wiktionary database from this site, e.g. `enwikt20XXXX_parsed.zip`. Unzip and upload to your local MySQL database.
+
+See the structure (tables and relations) of the Wiktionary parsed database in the page [File_wikt_parsed_empty_sql].
+
+= SQL query examples =
+== From page to definitions ==
+
+It's given an english word, e.g. [http://en.wiktionary.org/wiki/transient transient]. The aim is to get all the definitions.
+
+It could be concluded (from the figure with tables and relations of the Wiktionary parsed database, see above) that the following sequence of tables should be used: `page` -> `lang_pos` -> `meaning` -> `wiki_text`.
+
+1. Table `page`.
+
+{{{
+mysql> SELECT id FROM page WHERE page_title="transient";
+}}}
+
+|| *id* || 
+|| 33823 ||
+
+2. The code of English language is *en*. Let's select identifier (`lang_id`) from the table `lang`.
+
+{{{
+mysql> SELECT * FROM lang WHERE code="en";
+}}}
+
+|| *id* || *name* || *code* || *n_foreign_POS* || *n_translations* ||
+|| 245 || English || en || 265060 || 0 ||
+
+3. Table `page` -> `lang_pos`.
+
+{{{
+mysql> SELECT * FROM lang_pos WHERE page_id=33823 AND lang_id=245;
+}}}
+
+|| id      || page_id || pos_id || lang_id || etymology_n || lemma || redirect_type ||
+|| 1110123 ||   33823 ||      3 ||     245 ||           0 ||       ||          NULL ||
+|| 1110124 ||   33823 ||     11 ||     245 ||           1 ||       ||          NULL ||
+
+There are two records in the table `lang_pos` with different part of speech identifier (field `pos_id`, see the table `part_of_speech`). Let's work with adjective (first record, pos_id=3), then lang_pos.id=1110123
+
+4. Table `lang_pos` -> `meaning`.
+
+{{{
+mysql> SELECT * FROM meaning WHERE lang_pos_id=1110123;
+}}}
+
+|| id      || lang_pos_id || meaning_n || wiki_text_id ||
+|| 1431934 ||     1110123 ||         0 ||      1589097 ||
+|| 1431935 ||     1110123 ||         1 ||      1589106 ||
+|| 1431936 ||     1110123 ||         2 ||      1589107 ||
+|| 1431937 ||     1110123 ||         3 ||      1589109 ||
+|| 1431938 ||     1110123 ||         4 ||      1589110 ||
+|| 1431939 ||     1110123 ||         5 ||      1589111 ||
+|| 1431940 ||     1110123 ||         6 ||      1589112 ||
+
+OK. There are 7 definitions for the adjective [http://en.wiktionary.org/wiki/transient transient].
+
+5. Table `meaning` -> `wiki_text`.
+
+Let's extract the text of the first meaning from the table `wiki_text`.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=1589097;
+}}}
+
+|| id      || text                                           ||
+|| 1589097 || Passing or disappearing with time; transitory. ||
+
+
+== Synonyms ==
+
+Let's get list of synonyms for the second meaning of English noun "[http://en.wiktionary.org/wiki/iron iron]".
+
+Sequence of tables:
+  #) page & lang & part_of_speech -> lang_pos -> meaning
+  #) relation_type & meaning -> relation -> wiki_text
+
+=== 1) page -> meaning ===
+
+{{{
+mysql> SELECT id FROM page WHERE page_title="iron";
+}}}
+
+The entry "iron" has page_id = 41364.
+
+{{{
+mysql> SELECT * FROM lang WHERE code="en";
+}}}
+
+The language code "en" has lang_id = 285.
+
+{{{
+mysql> SELECT * FROM part_of_speech WHERE name="noun";
+}}}
+
+The part of speech "noun" has pos_id = 38.
+
+{{{
+mysql> SELECT * FROM lang_pos WHERE page_id=41364 AND lang_id=285 AND pos_id=38;
+}}}
+
+The English noun "iron" has lang_pos_id=460576.
+
+{{{
+mysql> SELECT * FROM meaning WHERE lang_pos_id=460576 AND meaning_n=1;
+}}}
+
+The second meaning (n=1, start from zero) of English noun "iron" has meaning_id=608448, wiki_text_id=796355.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=796355;
+}}}
+
+The second meaning of "iron" has definition: 
+
+_{{countable}} A tool or appliance made of metal, which is heated and then used to transfer heat to something else; most often a thick piece of metal fitted with a handle and having a flat, roughly triangular bottom, which is heated and used to press wrinkles from clothing, and now usually containing an electrical heating apparatus._
+
+=== 2) relation_type & meaning -> relation -> wiki_text ===
+
+{{{
+mysql> SELECT id FROM relation_type WHERE name="synonyms";
+}}}
+
+The Synonymy relation has relation_type_id=8.
+
+{{{
+mysql> SELECT * FROM relation WHERE meaning_id=608448 AND relation_type_id=8;
+}}}
+
+The second meaning of "iron" has two synonyms with wiki_text_id 796356 and 796357.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=796356;
+mysql> SELECT * FROM wiki_text WHERE id=796357;
+}}}
+
+The second meaning of "iron" has two synonyms:
+  * _flatiron {{qualifier|old-fashioned}}_;
+  * _smoothing iron {{qualifier|old-fashioned}}_.
+
+== Translate word from one language to another ==
+
+We consider two ways to get translations by using English Wiktionary:
+    * _direct translation_ - from English word to words in other languages, which are listed in the section _Translation_ of the entry;
+    * _reverse translation_ - from the non-English word in the section _Translation_ to the English title (header) of the entry;
+
+=== 1) Translate from English ===
+
+Let's find translation of the English (*en* code) word [http://en.wiktionary.org/wiki/anecdote anecdote] into Portuguese language by the first way (_direct translation_).
+
+1. The code of English language is *en*. Let's select identifier (`lang_id`) from the table `lang`.
+
+{{{
+mysql> SELECT * FROM lang WHERE code="en";
+}}}
+
+|| *id* || *name* || *code* || *n_foreign_POS* || *n_translations* ||
+|| 285 || English || en || 255327 || 0 ||
+
+2. Table `page`.
+
+{{{
+mysql> SELECT id FROM page WHERE page_title="anecdote";
+}}}
+
+|| *id* || 
+|| 245963 ||
+
+3. Table `lang` and `page` -> `lang_pos`.
+
+We have found ID of records in the tables `lang` and `page`, so we can find ID of records in the table `lang_pos`.
+
+{{{
+mysql> SELECT * FROM lang_pos WHERE page_id=245963 AND lang_id=285;
+}}}
+
+|| id     || page_id || pos_id || lang_id ||
+|| 138883 || 245963 ||     38 ||     285 || 
+
+4. Table `lang_pos` -> `meaning`
+
+Let's get ID of meaning (definition) by identifier from the table `lang_pos` (lang_pos_id).
+
+{{{
+mysql> SELECT * FROM meaning WHERE lang_pos_id=138883;
+}}}
+
+|| id     || lang_pos_id || meaning_n || wiki_text_id ||
+|| 169914 ||      138883 ||         0 ||       244073 ||
+|| 169915 ||      138883 ||         1 ||       244098 ||
+|| 169916 ||      138883 ||         2 ||       244101 ||
+
+So, there are three meaning for this word. Let's find translation for the first meaning with meaning_id = 169914.
+
+5. Table `meaning` -> `translation`
+
+{{{
+mysql> SELECT * FROM translation WHERE meaning_id=169914;
+}}}
+
+|| id    || lang_pos_id || meaning_summary              || meaning_id ||
+|| 13063 ||      138883 || short account of an incident ||     169914 ||
+
+OK. translation_id = 13063
+
+6. Language code of the target language (Portuguese) is "pt". We need to find lang_id.
+
+{{{
+mysql> SELECT * FROM lang WHERE code="pt";
+}}}
+
+|| *id* || *name*     || *code*|| *n_foreign_POS* || *n_translations* ||
+|| 756  || Portuguese || pt    || 8311            || 0                ||
+
+lang_id = 756
+
+7. Table `translation_entry` -> `wiki_text`
+
+The list of records in the table `translation_entry` which corresponds to this (first) meaning:
+
+{{{
+mysql> SELECT * FROM translation_entry WHERE translation_id=13063 AND lang_id=756;
+}}}
+
+|| id     || translation_id || lang_id || wiki_text_id ||
+|| 134181 ||          13063 ||     756 ||       244093 ||
+
+`wiki_text_id=244093` will helps to find the translation word itself.
+
+8. Result translation.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE id=244093;
+}}}
+
+|| id     || text    ||
+|| 244093 || anedota ||
+
+Good job.
+
+=== 2) Translate to English ===
+
+Let's go back and will find reverse translation: from *anedota* in Portuguese to English. It should be *[http://en.wiktionary.org/wiki/anecdote anecdote]*.
+
+1. We know (see steps above) the IDs of English and Portuguese languages (but be carefull, since language ID is not constant, it could be different in different databases):
+
+* English lang_id = 285
+* Portuguese lang_id = 756
+
+2. wiki_text -> wiki_text_id
+
+We know the word in the Translation section in the Wiktionary entry to be found: *anedota*.
+
+{{{
+mysql> SELECT * FROM wiki_text WHERE text="anedota";
+}}}
+
+|| id     || text    ||
+|| 244093 || anedota ||
+
+3. Table `wiki_text_id` -> `translation_entry` -> `translation_id`
+
+Portuguese lang_id = 756
+
+{{{
+mysql> SELECT * FROM translation_entry WHERE wiki_text_id=13063 AND lang_id=756;
+}}}
+
+|| id     || translation_id || lang_id || wiki_text_id ||
+|| 134181 ||          13063 ||     756 ||       244093 ||
+
+translation_id = 13063;
+
+4.  Table `translation_id` -> `meaning` -> `meaning_id`
+
+{{{
+mysql> SELECT * FROM translation WHERE id=13063;
+}}}
+
+|| id    || lang_pos_id || meaning_summary              || meaning_id ||
+|| 13063 ||      138883 || short account of an incident ||     169914 ||
+
+meaning_id = 169914;
+
+5. Table `meaning_id` -> `lang_pos` -> `lang_pos_id`
+
+{{{
+mysql> SELECT * FROM meaning WHERE id = 169914;
+}}}
+
+|| id     || lang_pos_id || meaning_n || wiki_text_id ||
+|| 169914 ||      138883 ||         0 ||       244073 ||
+
+lang_pos_id = 138883;
+
+6. Table `lang` and `lang_pos_id` -> `page_id`.
+
+English lang_id = 285
+
+{{{
+mysql> SELECT * FROM lang_pos WHERE lang_id=285 AND id=138883;
+}}}
+
+|| id     || page_id || pos_id || lang_id ||
+|| 138883 || 245963 ||     38 ||     285 || 
+
+page_id = 245963;
+
+7. Table `page`. Gets word (headword, i.e. Wiktionary entry) by ID.
+
+{{{
+mysql> SELECT page_title FROM page WHERE id=245963;
+}}}
+
+|| *page_title* || 
+|| anecdote ||
+
+= See also =
+  * [GettingStartedWiktionaryParser]
+  * [d2rqMappingSPARQL]
+

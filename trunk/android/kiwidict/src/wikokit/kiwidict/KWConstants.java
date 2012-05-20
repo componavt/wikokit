@@ -6,6 +6,7 @@
 
 package wikokit.kiwidict; 
 
+import android.database.sqlite.SQLiteDatabase;
 import wikokit.base.wikipedia.language.LanguageType;
 
 //import wikokit.kiwidict.db.DataBaseHelper;
@@ -39,9 +40,11 @@ public class KWConstants {
     public final static String DB_ZIPFILE;
     public final static int    DB_ZIPFILE_SIZE_MB;
     public final static String DB_FILE;
-    public final static int    DB_FILE_SIZE_MB; 
+    public final static int    DB_FILE_SIZE_MB;
     
-    
+    private static SQLiteDatabase db;
+    public static SQLiteDatabase getDatabase() {return db;}
+    public static void           setDatabase(SQLiteDatabase _db) {db = _db;}
     
     
     public final static String kiwidict_version;
