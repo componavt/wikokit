@@ -154,18 +154,20 @@ public class WQuote {
     /** Removes highlighted marks from a sentence. 
      * English Wiktionary: Sentence with '''words'''. -> Sentence with words.
      * Russian Wiktionary:
-     * 1) Sentence with '''words'''. -> Sentence with words.
-     * 2) Sentence with {{выдел|words}}. -> Sentence with words.
+     * 1) Sentence with '''words'''. -> Sentence with <start_replacement>words</end_replacement>.
+     * 2) Sentence with {{выдел|words}}. -> Sentence with <start_replacement>words</end_replacement>.
      */
     public static String removeHighlightedMarksFromSentence(
                                             LanguageType wikt_lang,
-                                            String text)
+                                            String text, 
+                                            String start_replacement,
+                                            String end_replacement)
     {
         String result;
 
         LanguageType l = wikt_lang;
         if(l  == LanguageType.ru) {
-            result = WQuoteRu.removeHighlightedMarksFromSentence(text);
+            result = WQuoteRu.removeHighlightedMarksFromSentence(text, start_replacement, end_replacement);
         } else if(l == LanguageType.en) {
 
             result = WQuoteEn.removeHighlightedMarksFromSentence(text);
@@ -194,6 +196,35 @@ public class WQuote {
         LanguageType l = wikt_lang;
         if(l  == LanguageType.ru) {
             result = WQuoteRu.transformSentenceText(is_sqlite, text);
+        } /*else if(l == LanguageType.en) {
+
+            // todo
+            //result = WQuoteEn.transformSentenceText(text);
+
+        }*/ else {
+            throw new NullPointerException("Null LanguageType");
+        }
+
+        return result;
+    }
+    
+    /** Additional treatment of the sentence text:
+     * English Wiktionary: ?..
+     * ...
+     * Russian Wiktionary:
+     * 1) &nbsp;, &#160; -> the same
+     * 2) {{-}} -> "&nbsp;&mdash; "
+     */
+    public static String transformSentenceTextToHTML(
+                                boolean is_sqlite,
+                                LanguageType wikt_lang,
+                                String text)
+    {
+        String result;
+
+        LanguageType l = wikt_lang;
+        if(l  == LanguageType.ru) {
+            result = WQuoteRu.transformSentenceTextToHTML(is_sqlite, text);
         } /*else if(l == LanguageType.en) {
 
             // todo

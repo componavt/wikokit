@@ -7,6 +7,8 @@
 package wikokit.kiwidict; 
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.util.TypedValue;
 import wikokit.base.wikipedia.language.LanguageType;
 
 //import wikokit.kiwidict.db.DataBaseHelper;
@@ -32,6 +34,11 @@ public class KWConstants {
     // // public static int n_language_list_by_size = 200; // 100;
     // see LangChoice.fillChoiceBoxByLanguages
     
+    public final static int  text_size_normal, text_size_medium, text_size_large;
+    public final static int pos_color, definition_color, quote_color, quote_translatioin_color,
+                            quote_reference_color, relation_background_color;
+    
+    public final static int meaning_gap, quote_gap, relation_gap; // distance between
     
     public final static String DB_DIR;
     
@@ -77,6 +84,28 @@ public class KWConstants {
     static {
         /** Number of words visible in the list */
         n_words_list = 31;
+        
+        // ===========
+        // GUI
+        // ===========
+
+        // TypedValue.COMPLEX_UNIT_SP - Scaled Pixels
+        text_size_normal = 15;
+        text_size_medium = 20;
+        text_size_large = 25;
+        
+        pos_color       = Color.RED;
+        definition_color = Color.WHITE;
+        quote_color     = Color.GREEN;
+        quote_translatioin_color = Color.rgb(210, 105, 30); // chocholate color;
+        quote_reference_color = Color.rgb(178, 190, 181);   // Ash gray
+        relation_background_color = Color.rgb(72, 60, 50);  // Taupe
+        
+        meaning_gap = 18;
+        quote_gap   = 8;
+        relation_gap = 6;
+
+
         
         // ===========
         // Wiktionary parsed database

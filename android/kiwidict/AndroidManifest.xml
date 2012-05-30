@@ -26,6 +26,9 @@
         </activity>
         <activity android:name="DownloadAndInstallActivity"></activity>
         <activity android:name="wikokit.kiwidict.word_card.WCActivity" />
+        <activity android:name="wikokit.kiwidict.word_card.WCLanguageActivity" />
+        <activity android:name="wikokit.kiwidict.word_card.WCPOSActivity" />
+        
     </application>
 
 </manifest>

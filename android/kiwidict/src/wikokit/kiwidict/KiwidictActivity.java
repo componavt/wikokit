@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -26,7 +27,11 @@ import android.widget.TextView;*/
 
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikt.constant.POSLocal;
+import wikokit.base.wikt.constant.RelationLocal;
 import wikokit.base.wikt.db.FileUtil;
+import wikokit.base.wikt.multi.ru.name.POSRu;
+import wikokit.base.wikt.multi.ru.name.RelationRu;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TRelationType;
@@ -54,6 +59,7 @@ public class KiwidictActivity extends Activity {
 	static WordList word_list;
 	static LangChoice  lang_choice    = new LangChoice();
 	static QueryTextString query_text_string;
+	LanguageSpinner lspinner = new LanguageSpinner();
 	
 	static TipsTeapot tip = TipsTeapot.generateRandomTip();
 	static String word0 = tip.getQuery(); //"*с?рё*";
@@ -112,7 +118,9 @@ public class KiwidictActivity extends Activity {
         KWConstants.setDatabase(db);
         TLang.createFastMaps(db);// once upon a time: use Wiktionary parsed db
         TPOS.createFastMaps (db);
-        TRelationType.createFastMaps(db);   //System.out.println("initDatabase: DBName=" + wikt_parsed_conn.getDBName());    
+        TRelationType.createFastMaps(db);   //System.out.println("initDatabase: DBName=" + wikt_parsed_conn.getDBName());
+        RelationLocal _ = RelationRu.synonymy;
+        POSLocal $ = POSRu.noun;
     }
 	
 	void initGUI() {
@@ -120,11 +128,15 @@ public class KiwidictActivity extends Activity {
 	    query_text_string = new QueryTextString();
 	    query_text_string.word_textfield = (EditText) findViewById(R.id.editText_word);
 
-	    //lang_choice.initialize( word_list, query_text_string, lang_choicebox,
-	    //                        tip.getSourceLangCodes(), WConstants.native_lang);
 	    
-	    //lang_choicebox.initialize(word_list, query_text_string, lang_choice, WConstants.native_lang);
-
+	    CheckBox _lang_source_checkbox = (CheckBox) findViewById(wikokit.kiwidict.R.id.lang_source_checkbox);
+	    EditText _lang_source_text = (EditText) findViewById(R.id.lang_source_text);
+	    lang_choice.initialize( word_list, query_text_string, lspinner,
+	                            tip.getSourceLangCodes(), KWConstants.native_lang,
+	                            // GUI
+	                            _lang_source_checkbox, _lang_source_text);
+	    
+	    
 	    
 	    ListView word_listview = (ListView) findViewById(R.id.word_listview_id);
 	    word_list = new WordList(this);
@@ -178,7 +190,7 @@ public class KiwidictActivity extends Activity {
         // GUI
         initGUI();
         
-        LanguageSpinner lspinner = new LanguageSpinner();
+        
         String[] ar_spinner = lspinner.fillByAllLanguages();
         
         Spinner lang_spinner = (Spinner) findViewById(R.id.lang_spinner_id);

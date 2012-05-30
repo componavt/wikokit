@@ -28,19 +28,37 @@
             android:orientation="vertical" >
             <!-- android:layout_marginLeft="43dp" -->
 
-            <!--  Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" /-->
-            
             <Spinner android:layout_height="wrap_content" android:id="@+id/lang_spinner_id" android:layout_width="match_parent"></Spinner>
             
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Medium Text"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <LinearLayout
+	            android:id="@+id/linearLayout1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_centerHorizontal="true"
+	            android:orientation="horizontal" >
+
+                <CheckBox
+                    android:id="@+id/lang_source_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/checkbox_source_language" />
+                
+	            <EditText
+			        android:id="@+id/lang_source_text"
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content" 
+			        android:inputType="text" >
+			    </EditText>
+
+            </LinearLayout>
+            
+            <!-- TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Medium Text"
+                    android:textAppearance="?android:attr/textAppearanceMedium" / -->
             
 </LinearLayout>
 

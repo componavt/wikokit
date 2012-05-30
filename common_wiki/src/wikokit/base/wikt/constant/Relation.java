@@ -11,17 +11,24 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.multi.ru.name.RelationRu;
+
 /** Strictly defined names of semantic relations 
  * used in all wiktionaries.
+ * 
+ * @see http://en.wiktionary.org/wiki/Wiktionary:Semantic_relations
  */
 public class Relation {
 
-     /** Semantic relation name, e.g. synonymy. */
+    /** Semantic relation name, e.g. synonymy. */
     private final String name;
 
-    @Override
-    public String  toString() { return name; }
+    /** Short Relation name, e.g. "syn." for synonymy */
+    //private final String short_name;
 
+    
+    
     /* Set helps to check the presence of elements */
     private static Map<String, Relation> name2relation = new HashMap<String, Relation>();
     //private static Set<String>  name_set = new HashSet<String>();
@@ -30,6 +37,49 @@ public class Relation {
         name = _name;
         name2relation.put(_name, this);
     }
+    
+    
+    @Override
+    public String  toString() { return name; }
+    
+    /** Gets name of Relation in the language l.
+     * If there is no translation then returns Relation name in English */
+    public String toString(LanguageType l) {
+
+        String s = "";
+
+        if(l  == LanguageType.ru) {
+            s = RelationRu.getName(this);
+
+        } else if(l == LanguageType.en) {
+            s = name;
+        } else {
+            throw new NullPointerException("Relation.toString(LanguageType l): Null LanguageType");
+        }
+
+        if(0 == s.length()) // English name is better than nothing
+            s = name;
+
+        return s;
+    }
+
+    /** Gets short name of Relation in the language l. */
+    public String getShortName (LanguageType l) {
+
+        String s = "";
+
+        if(l  == LanguageType.ru) {
+            s = RelationRu.getShortName(this);
+
+        } else if(l == LanguageType.en) {
+            // skip?
+        } else {
+            throw new NullPointerException("Relation.getShortName(LanguageType l): Null LanguageType");
+        }
+       
+        return s;
+    }
+    
 
     /** Checks weather exists a semantic relation by its name. */
     public static boolean has(String name) {
@@ -87,5 +137,7 @@ public class Relation {
         Relation.troponymy, Relation.coordinate_term,
         Relation.otherwise_related
     };
+    
+    
 
 }

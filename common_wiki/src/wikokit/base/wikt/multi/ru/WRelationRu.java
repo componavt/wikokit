@@ -41,6 +41,7 @@ public class WRelationRu {
     private final static Pattern ptrn_antonymy  = Pattern.compile("===?=?\\s*Антонимы\\s*===?=?\\s*\\n");
     private final static Pattern ptrn_hypernymy = Pattern.compile("===?=?\\s*Гиперонимы\\s*===?=?\\s*\\n");
     private final static Pattern ptrn_hyponymy  = Pattern.compile("===?=?\\s*Гипонимы\\s*===?=?\\s*\\n");
+    private final static Pattern ptrn_coordinate_term = Pattern.compile("===?=?\\s*Согипонимы\\s*===?=?\\s*\\n");
     private final static Pattern ptrn_holonymy  = Pattern.compile("===?=?\\s*Холонимы\\s*===?=?\\s*\\n");
     private final static Pattern ptrn_meronymy  = Pattern.compile("===?=?\\s*Меронимы\\s*===?=?\\s*\\n");
 
@@ -98,7 +99,11 @@ public class WRelationRu {
         // hyponymy
         r = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_hyponymy, Relation.hyponymy);
         if(0 < r.length) m_rel.put(Relation.hyponymy, r);
-
+        
+        // coordinate term
+        r = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_coordinate_term, Relation.coordinate_term);
+        if(0 < r.length) m_rel.put(Relation.coordinate_term, r);
+                
         // holonymy
         r = parseOneKindOfRelation (wikt_lang, page_title, text, ptrn_holonymy, Relation.holonymy);
         if(0 < r.length) m_rel.put(Relation.holonymy, r);
