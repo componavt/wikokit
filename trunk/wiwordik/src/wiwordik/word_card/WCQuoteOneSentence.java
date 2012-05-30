@@ -1,4 +1,4 @@
-/* WCQuote.java - A part of word card corresponds to quotations part
+/* WCQuoteOneSentence.java - A part of word card corresponds to one quotation
  * of a page (entry) in Wiktionary.
  *
  * Copyright (c) 2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
@@ -74,7 +74,7 @@ public class WCQuoteOneSentence {
         // todo: substitue '''marked word''' by some color, but
         // we are waiting "Rich Text" in JavaFX 2.0
         String s = WQuote.removeHighlightedMarksFromSentence( WConstants.native_lang,
-                                                  _quote.getText());
+                                                  _quote.getText(), "", "");
                                         
         // additional treatment of the sentence text (e.g., &nbsp;, &#160; -> " ")
         sentence_text = WQuote.transformSentenceText(
@@ -91,7 +91,7 @@ public class WCQuoteOneSentence {
         translation_text = _quote.getTranslation(conn);
         if(translation_text.length() > 0) {
             translation_text = WQuote.removeHighlightedMarksFromSentence( WConstants.native_lang,
-               translation_text);
+               translation_text, "", "");
             
             // Optional node, only if there is a translation of the quote sentence.
             Text translation_text_node = new Text(translation_text);

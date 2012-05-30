@@ -104,13 +104,15 @@ public class WQuoteRu {
     }
 
     /** Removes highlighted marks from a sentence.
-     * 1) Sentence with '''words'''. -> Sentence with words.
-     * 2) Sentence with {{выдел|words}}. -> Sentence with words.
+     * 1) Sentence with '''words'''. -> Sentence with <start_replacement>words</end_replacement>.
+     * 2) Sentence with {{выдел|words}}. -> Sentence with <start_replacement>words</end_replacement>.
      */
-    public static String removeHighlightedMarksFromSentence(String str)
+    public static String removeHighlightedMarksFromSentence(String str,
+                                                    String start_replacement,
+                                                    String end_replacement)
     {
         if(str.contains("{{выдел|")) {
-            String s = str.replace("{{выдел|", "").replace("}}", "");
+            String s = str.replace("{{выдел|", start_replacement).replace("}}", end_replacement);
 
             // because, there are "{{-}}" -> "{{-" in the text
             return s.replace("{{-", " - ");
@@ -146,6 +148,29 @@ public class WQuoteRu {
         return str;
     }
 
+    /** Additional treatment of the sentence text:
+     * 1) &nbsp;, &#160; -> " "
+     * 2) {{-}} -> "&nbsp;&mdash; " @see ru.wiktionary.org/wiki/template:-
+     * 3) poetry: "//" -> "<br>"
+     */
+    public static String transformSentenceTextToHTML(boolean is_sqlite, String str)
+    {
+        str = StringUtil.replaceSpecialChars( str );
+
+        if(str.contains("{{-}}"))
+            str = str.replace("{{-}}", "&nbsp;&mdash; ");
+
+        if(str.contains(" // "))
+            str = str.replace(" // ", "<br>");
+
+        if(str.contains("//"))
+            str = str.replace("//", "<br>");
+
+        if(is_sqlite && str.contains("\\\""))   // \" -> " (SQLite feature)
+            str = str.replace("\\\"", "\"");
+
+        return str;
+    }
 
     /** Replaces quotation template:" by quotations,
      * e.g. 'Фрегат {{"|Паллада}}' ->
