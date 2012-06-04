@@ -1,50 +1,33 @@
 package wikokit.kiwidict;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemSelectedListener;
-/*import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.TextView;*/
+
 
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.constant.POSLocal;
 import wikokit.base.wikt.constant.RelationLocal;
-import wikokit.base.wikt.db.FileUtil;
 import wikokit.base.wikt.multi.ru.name.POSRu;
 import wikokit.base.wikt.multi.ru.name.RelationRu;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TRelationType;
-import wikokit.base.wikt.sql.lang.LanguageSplitter;
 import wikokit.kiwidict.lang.LangChoice;
 import wikokit.kiwidict.lang.LangOnItemSelectedListener;
 import wikokit.kiwidict.lang.LangSpinnerAdapter;
 import wikokit.kiwidict.lang.LanguageSpinner;
 import wikokit.kiwidict.search_window.QueryTextString;
 import wikokit.kiwidict.util.TipsTeapot;
-import wikokit.kiwidict.word_card.WCActivity;
 import wikokit.kiwidict.wordlist.WordList;
-import wikokit.kiwidict.wordlist.WordListArrayAdapter;
 
 
 public class KiwidictActivity extends Activity {
@@ -59,7 +42,7 @@ public class KiwidictActivity extends Activity {
 	static WordList word_list;
 	static LangChoice  lang_choice    = new LangChoice();
 	static QueryTextString query_text_string;
-	LanguageSpinner lspinner = new LanguageSpinner();
+	static LanguageSpinner lspinner = new LanguageSpinner();
 	
 	static TipsTeapot tip = TipsTeapot.generateRandomTip();
 	static String word0 = tip.getQuery(); //"*с?рё*";
@@ -128,6 +111,7 @@ public class KiwidictActivity extends Activity {
 	    query_text_string = new QueryTextString();
 	    query_text_string.word_textfield = (EditText) findViewById(R.id.editText_word);
 
+	    word_list = new WordList(this);
 	    
 	    CheckBox _lang_source_checkbox = (CheckBox) findViewById(wikokit.kiwidict.R.id.lang_source_checkbox);
 	    EditText _lang_source_text = (EditText) findViewById(R.id.lang_source_text);
@@ -139,7 +123,6 @@ public class KiwidictActivity extends Activity {
 	    
 	    
 	    ListView word_listview = (ListView) findViewById(R.id.word_listview_id);
-	    word_list = new WordList(this);
 	    
 	    query_text_string.initialize(word0, db, word_list, lang_choice);
 	    word_list.initialize(db,
@@ -151,8 +134,6 @@ public class KiwidictActivity extends Activity {
                 KWConstants.n_words_list,
                 word_listview,
                 this);
-	    
-	    
 
 //	    word_list.setSkipRedirects(KWConstants.b_skip_redirects);
 
@@ -165,6 +146,28 @@ public class KiwidictActivity extends Activity {
 	    //query_text_string.saveWordValue();
 
 	    word_list.copyWordsToStringArray( word_list.getPageArray() );
+	    
+	    
+	    // language dropdown selection menu (spinner) GUI + logic
+	    String[] ar_spinner = lspinner.fillByAllLanguages();
+        
+	    LangOnItemSelectedListener lang_item_listener = new LangOnItemSelectedListener(lspinner, lang_choice);
+	    
+        Spinner lang_spinner_widget = (Spinner) findViewById(R.id.lang_spinner_id);
+        lspinner.initialize(lang_spinner_widget, lang_item_listener);
+        
+        //ArrayAdapter<String> spinner_adapter = new ArrayAdapter(this,
+        //                                    android.R.layout.simple_spinner_item, ar_spinner);
+        LangSpinnerAdapter 
+        spinner_adapter = new LangSpinnerAdapter(this, android.R.layout.simple_spinner_item, ar_spinner, lspinner);
+        
+        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        
+        lang_spinner_widget.setAdapter(spinner_adapter);
+        lang_spinner_widget.setOnItemSelectedListener(lang_item_listener);
+        
+        
+        lspinner.postInit(tip.getSourceLangCodes());
 	}
 	
 	/** Called when the activity is first created.
@@ -189,25 +192,6 @@ public class KiwidictActivity extends Activity {
         // --------------------------------
         // GUI
         initGUI();
-        
-        
-        String[] ar_spinner = lspinner.fillByAllLanguages();
-        
-        Spinner lang_spinner = (Spinner) findViewById(R.id.lang_spinner_id);
-
-        
-        //ArrayAdapter<String> spinner_adapter = new ArrayAdapter(this,
-        //                                    android.R.layout.simple_spinner_item, ar_spinner);
-        LangSpinnerAdapter 
-        spinner_adapter = new LangSpinnerAdapter(this, android.R.layout.simple_spinner_item, ar_spinner, lspinner);
-        //spinner_adapter.setLanguageSpinner(lspinner);
-        
-        spinner_adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        
-        lang_spinner.setAdapter(spinner_adapter);
-        lang_spinner.setOnItemSelectedListener(new LangOnItemSelectedListener(lspinner));
-        
-        //word_list.onCreate(savedInstanceState);
     }
     
     
