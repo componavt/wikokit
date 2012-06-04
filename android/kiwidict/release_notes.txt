@@ -1,14 +1,18 @@
-kiwidict 0.091 2012-??-??
+kiwidict 0.093 2012-??-??
 
   Added (from user's point of view):
-    Now there are 25 languages in the database of this game. These are the languages which have more than 1000 of synonyms + antonyms + hyperonyms + etc. in the English Wiktionary.
 
-    Added button with the text "www". It is a hyperlink to the corresponding article in the Wiktionary.
+kiwidict 0.092 2012-06-02
 
-    It was found by one player, that if you rotate screen, then
-    the game will be restarted. Undocumented feature.
- 
+- Disabled "app debugging" :)
 
+kiwidict 0.091 2012-06-01
+
+- First version. 
+- It is based on the Russian Wiktionary dump, as of May 21, 2011.
+- There are entries in 423 languages.
+- Added "www" link. It is a hyperlink to the corresponding article in the Wiktionary.
+- It was found by one user, that if you rotate screen, then the program will be restarted. Undocumented feature :(
 
 kiwidict 0.09 2011-10-12
   

@@ -334,13 +334,18 @@ public class IndexForeign {
             if(b_sem_rel)
                 limit_with_reserve += 1312; // since some words without relations will be skipped
             str_limit = "" + limit_with_reserve;
-        }        
-
+        }
+        
+        StringBuilder s_where = new StringBuilder();
+        if(null != prefix_foreign_word && prefix_foreign_word.length() > 0) {
+            s_where.append("foreign_word LIKE \"" + prefix_foreign_word + "%\"");
+        }
+        
         // SELECT foreign_word,foreign_has_definition,native_page_title FROM index_en WHERE foreign_word LIKE 'water-%';
         Cursor c;
         c = db.query(table_name, 
                 new String[] { "foreign_word", "foreign_has_definition", "native_page_title"}, 
-                "foreign_word LIKE \"" + prefix_foreign_word + "\"", 
+                s_where.toString(), 
                 null, null, null, null,
                 str_limit);
         

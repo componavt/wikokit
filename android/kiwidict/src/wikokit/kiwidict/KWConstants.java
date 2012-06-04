@@ -54,7 +54,7 @@ public class KWConstants {
     public static void           setDatabase(SQLiteDatabase _db) {db = _db;}
     
     
-    public final static String kiwidict_version;
+    public final static String wikt_version, kiwidict_version, kiwidict_name;
 
     /** Skips #REDIRECT words if true. */
     public final static boolean b_skip_redirects;
@@ -110,25 +110,41 @@ public class KWConstants {
         // ===========
         // Wiktionary parsed database
         // ===========
-
+        kiwidict_version = "0.092";
+        
+        
+        
+        // Russian Wiktionary
+        kiwidict_name = "kiwidict-ru";
+        wikt_version = "ruwikt20110521";
+        
+        //public static String DB_URL = "http://wikokit.googlecode.com/files/WikPaSPARQL_20110618.7z";          // temp
+        DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
+        
+        DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
+        DB_FILE_SIZE_MB = 239;
+        
+        // English Wiktionary
+        // todo
+        // ...
+        /*
+        kiwidict_name = "kiwidict";
+        
+        */
+        
         /** Database name, folder and files names. */
         DB_DIR = "kiwidict";
         
-        // Russian Wiktionary
-        //public static String DB_URL = "http://wikokit.googlecode.com/files/WikPaSPARQL_20110618.7z";          // temp
-        DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
-        DB_ZIPFILE = "ruwikt20110521_android_sqlite.zip";
-        DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
-        DB_FILE = "ruwikt20110521_android.sqlite";
-        DB_FILE_SIZE_MB = 239; 
+        DB_ZIPFILE = wikt_version + "_android_sqlite.zip";
+        DB_FILE = wikt_version + "_android.sqlite";
+        
         // public static int MAX_NUMBER_DB_PARTS = 341; // Russian Wiktionary
         
         // English
         //NAME = "enwikt"; //"enwikt_mean_semrel_sqlite";
         //public static String DB_NAME = "enwikt"; //"enwikt_mean_semrel_sqlite";
 
-        kiwidict_version = "0.091";
-
+        
         /** Skips #REDIRECT words if true. */
         b_skip_redirects = false;
 
