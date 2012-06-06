@@ -1,6 +1,15 @@
-kiwidict 0.093 2012-??-??
+kiwidict 0.095 2012-??-??
 
-  Added (from user's point of view):
+kiwidict 0.094 2012-??-??
+
+- Added x-mark button - to delete all text in the input field.
+
+
+
+kiwidict 0.093 2012-06-05
+
+- Fixed bug, now you can select "All languages" in dropdown menu.
+- Corrected cropped logo of sweet kiwi :)
 
 kiwidict 0.092 2012-06-02
 

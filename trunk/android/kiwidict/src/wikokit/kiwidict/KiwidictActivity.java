@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.CheckBox;
@@ -110,7 +111,7 @@ public class KiwidictActivity extends Activity {
 
 	    query_text_string = new QueryTextString();
 	    query_text_string.word_textfield = (EditText) findViewById(R.id.editText_word);
-
+	    
 	    word_list = new WordList(this);
 	    
 	    CheckBox _lang_source_checkbox = (CheckBox) findViewById(wikokit.kiwidict.R.id.lang_source_checkbox);
@@ -124,7 +125,7 @@ public class KiwidictActivity extends Activity {
 	    
 	    ListView word_listview = (ListView) findViewById(R.id.word_listview_id);
 	    
-	    query_text_string.initialize(word0, db, word_list, lang_choice);
+	    query_text_string.initialize(word0, db, word_list, lang_choice, this);
 	    word_list.initialize(db,
                 query_text_string,
                 lang_choice,

@@ -3,12 +3,12 @@
 Dictionary.
 A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
 
-== Android version  ==
+=== Android version  ===
 
   * [https://play.google.com/store/apps/details?id=wikokit.kiwidict kiwidict-ru] offline multilingual dictionary and thesaurus based on the Russian Wiktionary.
   * [https://market.android.com/details?id=wordik.magneto magnetowordik] word game based on data extracted from the English Wiktionary.
 
-=== Java Web Start  ===
+=== Java Web Start version ===
 
 Download [http://www.oracle.com/technetwork/java/javase/downloads/index-jsp-138363.html#javasejdk Java 7 JRE] and [http://www.java.com/ru/javafx/ JavaFX] and try it right now with webstart:
 
@@ -107,4 +107,3 @@ This program is multi-licensed and may be used under the terms of any of the fol
   * GPL, GNU General Public License, V2 or later, http://www.gnu.org/licenses/gpl.html
   * AL, Apache License, V2.0 or later, http://www.apache.org/licenses
   * BSD, New BSD License, http://www.opensource.org/licenses/bsd-license
-
