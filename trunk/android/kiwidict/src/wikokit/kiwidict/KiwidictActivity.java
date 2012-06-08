@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 
@@ -38,11 +38,11 @@ public class KiwidictActivity extends Activity {
 	
 	DownloadAndInstallActivity install_activity = new DownloadAndInstallActivity();
 	
-	//TextView word;
+	static QueryTextString query_text_string;
+	static ProgressBar spinning_wheel;
 	
 	static WordList word_list;
 	static LangChoice  lang_choice    = new LangChoice();
-	static QueryTextString query_text_string;
 	static LanguageSpinner lspinner = new LanguageSpinner();
 	
 	static TipsTeapot tip = TipsTeapot.generateRandomTip();
@@ -112,6 +112,8 @@ public class KiwidictActivity extends Activity {
 	    query_text_string = new QueryTextString();
 	    query_text_string.word_textfield = (EditText) findViewById(R.id.editText_word);
 	    
+	    spinning_wheel = (ProgressBar)findViewById(R.id.spinning_wheel);
+	    
 	    word_list = new WordList(this);
 	    
 	    CheckBox _lang_source_checkbox = (CheckBox) findViewById(wikokit.kiwidict.R.id.lang_source_checkbox);
@@ -127,7 +129,7 @@ public class KiwidictActivity extends Activity {
 	    
 	    query_text_string.initialize(word0, db, word_list, lang_choice, this);
 	    word_list.initialize(db,
-                query_text_string,
+                query_text_string, spinning_wheel,
                 lang_choice,
                 //FilterMeanSemRelTrans _filter_mean_sem_transl,
                 KWConstants.native_lang,

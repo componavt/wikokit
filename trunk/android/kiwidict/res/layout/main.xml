@@ -1,68 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <EditText
-        android:id="@+id/editText_word"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" 
-        android:inputType="text" >
-        <requestFocus />
-    </EditText>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
-        android:layout_margin="10dp"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:orientation="vertical" >
-            <!-- android:layout_marginLeft="43dp" -->
-
-            <Spinner android:layout_height="wrap_content" android:id="@+id/lang_spinner_id" android:layout_width="match_parent"></Spinner>
-            
-            <LinearLayout
-	            android:id="@+id/linearLayout1"
-	            android:layout_width="match_parent"
+    <LinearLayout
+                android:id="@+id/linearLayout_QueryTextString"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:orientation="horizontal" >
+        
+        <EditText
+            android:id="@+id/editText_word"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content" 
+            android:inputType="text"
+            android:layout_weight="1" 
+            >
+            <requestFocus />
+        </EditText>
+		        
+        <RelativeLayout
+            android:id="@+id/relativeLayout_glass_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+	        <Button
+	            android:id="@+id/enter_search_button"
+	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_centerHorizontal="true"
-	            android:orientation="horizontal" >
-
-                <CheckBox
-                    android:id="@+id/lang_source_checkbox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/checkbox_source_language" />
-                
-	            <EditText
-			        android:id="@+id/lang_source_text"
-			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content" 
-			        android:inputType="text" >
-			    </EditText>
-
-            </LinearLayout>
+	            android:layout_marginLeft="6dp"
+	            android:background="@drawable/magnifying_glsss2_crystal_project_viewmag"
+	            android:gravity="center" >
+            </Button>
             
-            <!-- TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Medium Text"
-                    android:textAppearance="?android:attr/textAppearanceMedium" / -->
+	        <ProgressBar
+	            android:id="@+id/spinning_wheel"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/enter_search_button"
+                android:layout_below="@id/enter_search_button"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        
+        android:orientation="vertical" >
+
+        <Spinner android:layout_height="wrap_content" android:id="@+id/lang_spinner_id" android:layout_width="match_parent"></Spinner>
+        
+        <LinearLayout
+         android:id="@+id/linearLayout3"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal" >
+
+            <CheckBox
+                android:id="@+id/lang_source_checkbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/checkbox_source_language" />
             
+         <EditText
+       android:id="@+id/lang_source_text"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content" 
+       android:inputType="text" >
+   </EditText>
+
+        </LinearLayout>
+        
+        <!-- TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Medium Text"
+                android:textAppearance="?android:attr/textAppearanceMedium" / -->
+        
 </LinearLayout>
-
-</RelativeLayout>
 
     <ListView
         android:id="@+id/word_listview_id"
