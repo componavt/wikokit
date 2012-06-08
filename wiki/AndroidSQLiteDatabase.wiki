@@ -1,5 +1,5 @@
 #summary How to create and use SQLite database in Android.
-#labels android,SQLite
+#labels android,sqlite
 
 == Archiving ==
 
