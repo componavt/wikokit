@@ -1,9 +1,16 @@
-kiwidict 0.095 2012-??-??
+kiwidict 0.096 2012-??-??
 
-kiwidict 0.094 2012-??-??
+
+
+kiwidict 0.095 2012-06-08
+
+- Added spinning wheel animations.
+
+kiwidict 0.094 2012-06-07
 
 - Added x-mark button - to delete all text in the input field.
-
+- Added search button (magnifying glass).
+- Bug fixed. The item "Russian language" in the dropdown menu works correctly now.
 
 
 kiwidict 0.093 2012-06-05
