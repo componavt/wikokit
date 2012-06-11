@@ -188,7 +188,7 @@ public class WLanguageRu {
         }
 
         if(b_known_lang && 0 == lang_sections.size()) {
-            System.out.println("Warning: Ok. I guess that this is an article about Russian word, without language code. Word = '" + page_title + "'; in WLanguageRu.splitToLanguageSections()");
+//            System.out.println("Warning: Ok. I guess that this is an article about Russian word, without language code. Word = '" + page_title + "'; in WLanguageRu.splitToLanguageSections()");
             LangText lt = new LangText(LanguageType.ru);
             lt.text = text;
             lang_sections.add(lt);

@@ -68,9 +68,19 @@ public class LangOnItemSelectedListener implements OnItemSelectedListener {
             TLang tl = lspinner.dropdown_tlang_array[ index ];  
             LanguageType lt = tl.getLanguage();
             
-            Toast.makeText(view.getContext(), lt.getName() + " language\n" + 
-                    tl.getNumberPOS() + " entries (POS level)\n" + 
-                    tl.getNumberTranslations() + " translations",
+            // release
+            //Toast.makeText(view.getContext(), lt.getName() + " language\n" + 
+            //        tl.getNumberPOS() + " entries (POS level)\n" + 
+            //        tl.getNumberTranslations() + " translations",
+            //        Toast.LENGTH_LONG).show();
+            
+            // debug java.lang.NullPointerException
+            String sname = lt.getName();
+            String snpos = "" + tl.getNumberPOS();
+            String sntrans = "" + tl.getNumberTranslations();
+            Toast.makeText(view.getContext(), sname + " language\n" + 
+                    snpos + " entries (POS level)\n" + 
+                    sntrans + " translations",
                     Toast.LENGTH_LONG).show();
             
             // GUI

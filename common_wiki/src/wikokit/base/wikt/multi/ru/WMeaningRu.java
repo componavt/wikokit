@@ -61,9 +61,9 @@ public class WMeaningRu {
         boolean b_next = m.find();
 
         if(!b_next) {   // there is no definition section!
-            System.out.println("Warning in WMeaningRu.parse(): The article '" +
-                        page_title + "', language section '" +
-                        lang_section.toString() + "' has no section ==== Значение ====.");
+            //System.out.println("Warning in WMeaningRu.parse(): The article '" +
+            //            page_title + "', language section '" +
+            //            lang_section.toString() + "' has no section ==== Значение ====.");
             return NULL_WMEANING_ARRAY;
         }
 

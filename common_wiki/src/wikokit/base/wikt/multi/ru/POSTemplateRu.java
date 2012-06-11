@@ -61,9 +61,19 @@ public class POSTemplateRu extends POSType {
     
     public String getName() { return type.toString(); }
     
-    /** Checks weather exists the part of speech by its abbreviation 'code'. */
+    /** Checks whether the part of speech with the abbreviation 'code' exists. */
     public static boolean has(String code) {
         return name_in_text2type.containsKey(code);
+    }
+    
+    /** Check whether the given abbreviation 'code' contains a known
+     *  part of speech tag. Return unknown if not. */
+    public static POS isPOSIn(String code){
+    	for (Map.Entry<String, POS> entry : name_in_text2type.entrySet()) {
+    		if (code.contains(entry.getKey()))
+    			return entry.getValue();
+    	}
+    	return POS.unknown;
     }
     
     /** Gets part of speech by its abbreviation or template */
@@ -113,6 +123,7 @@ public class POSTemplateRu extends POSType {
     // Наречие, неизменяемое.
     public static final POSType adverb_template     = new POSTemplateRu("adv",      POS.adverb);// "наречие", adv ru, adv-ru
     public static final POSType adverb_word         = new POSTemplateRu("наречие",  POS.adverb);// "наречие",
+    public static final POSType adverb_word2        = new POSTemplateRu("нар",  POS.adverb); // "наречие", 
     
     // {{прил en|round|слоги=round}}
     public static final POSType adjective           = new POSTemplateRu("прил",     POS.adjective);// "прилагательное"
@@ -121,13 +132,16 @@ public class POSTemplateRu extends POSType {
     // прил-сравн - works without this line, since "прил-сравн" starts from "прил-"... public static final POSType adjective_comparative_degree = new POSTemplateRu("прил-сравн",POS.adjective);
 
     // {{мест ru 6*b
-    public static final POSType pronoun             = new POSTemplateRu("мест",     POS.pronoun);
-    public static final POSType pronoun_addon       = new POSTemplateRu("мс",       POS.pronoun);
+    public static final POSType pronoun             = new POSTemplateRu("мест",        POS.pronoun);
+    public static final POSType pronoun2      		= new POSTemplateRu("местоимения", POS.pronoun);
+    public static final POSType pronoun_addon       = new POSTemplateRu("мс",          POS.pronoun);
 
     public static final POSType conjunction         = new POSTemplateRu("conj",     POS.conjunction);// союз
+    public static final POSType conjunction2        = new POSTemplateRu("союз",     POS.conjunction);
     public static final POSType interjection        = new POSTemplateRu("interj",   POS.interjection);// междометие
+    public static final POSType interjection2       = new POSTemplateRu("межд",     POS.interjection);
     public static final POSType preposition         = new POSTemplateRu("prep",     POS.preposition);// Предлог
-
+    public static final POSType postposition        = new POSTemplateRu("послелог", POS.postposition);
     
     // Additional commonly used grammatical headers are:
     // proper_noun ?

@@ -85,7 +85,7 @@ public class WikiWord {
      *
      * It is recommended to call StringUtil.escapeCharDollarAndBackslash(text)
      * before this function.
-     * This is simplified vertions of parseDoubleBrackets.</PRE>
+     * This is simplified versions of parseDoubleBrackets.</PRE>
      *
      * @param page_title    word which are described in this article 'text'
      * @param text          source wikified definition text
@@ -126,7 +126,7 @@ public class WikiWord {
     }
     
     /** Extract wiki links (word_link and word_visible) from wiki texts.
-     * There are the visible to reader words (word_link) and internal links (word_visible).
+     * There are the visible to reader words (word_visible) and internal links (word_link).
      *
      * <PRE>
      * There are cases:
