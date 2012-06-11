@@ -380,7 +380,7 @@ public class WPOSRu {
                 //String pos_name = StringUtilRegular.getLettersTillSpace(text.substring(m.end())).toLowerCase();
                 String pos_name = StringUtilRegular.getLettersTillSpaceHyphenOrPipe(text.substring(m.end())).toLowerCase();
                 if(POSTemplateRu.has(pos_name)) {
-                    p_type = POSTemplateRu.get(pos_name);
+                    p_type = checkIfSuchPOSExist(pos_name);
                 } /*else {
                     // old template of POS with hyphen, e.g. "{{adv-ru|}} instead of {{adv ru|}}, or Мс-п6b
                     pos_name = StringUtilRegular.getLettersTillHyphen(text.substring(m.end())).toLowerCase();
@@ -417,6 +417,19 @@ public class WPOSRu {
         return text.toString().contains("{{phrase");
     }
     
+    public static POS checkIfSuchPOSExist(String pos_name) {
+    	for (int idx = 0; idx < pos_name.length(); idx++)
+    		if (" |}-".indexOf(pos_name.charAt(idx)) >= 0) {
+    			pos_name = pos_name.substring(0, idx);
+    			break;
+    		}
+    	if (POSTemplateRu.has(pos_name))
+    		return POSTemplateRu.get(pos_name); 
+    	// POS may exist in the pos_name as a substring. isPOSin() - checks wheather POS is in the pos_name
+    	else 
+    		return POSTemplateRu.isPOSIn(pos_name.toLowerCase());
+    	 
+    }
     
     /** The POS should be extracted from the text.
      * @return POS, e.g. POS.verb for "== Verb =="

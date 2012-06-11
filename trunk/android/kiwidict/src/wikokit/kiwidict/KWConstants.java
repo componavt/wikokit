@@ -110,7 +110,7 @@ public class KWConstants {
         // ===========
         // Wiktionary parsed database
         // ===========
-        kiwidict_version = "0.095";
+        kiwidict_version = "0.096";
         
         
         

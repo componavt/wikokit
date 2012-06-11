@@ -110,11 +110,11 @@ public class StringUtilRegular {
     }
     
 
-    /** Gets first letters till space. */
+    /** Gets first letters till space (starting at first column). */
     private final static Pattern ptrn_letters_till_space = Pattern.compile(
             "(\\S\\S+)\\s");
     private final static Pattern ptrn_letters_till_hyphen = Pattern.compile(
-            "\\s*([^-]+?)-");
+            "^\\s*([^-]+?)-");
     /** Gets first letters till space, hyphen or pipe. */
     private final static Pattern ptrn_letters_till_pipe = Pattern.compile(
             "\\A(\\S\\S+?)\\|");
