@@ -79,6 +79,7 @@ public class WMeaning {
     public WMeaning(String page_title,ContextLabel[] _labels,
                     String _definition, WQuote[] _quote, boolean _template_not_def) {
         labels = _labels;
+        wikified_text = _definition;
         definition = WikiText.createOnePhrase(page_title, _definition);
         
         form_of_inflection = _template_not_def;
@@ -202,6 +203,17 @@ public class WMeaning {
         }
 
         return wm;
+    }
+    
+    //////////////////////
+    /// JWKTL interface
+    //////////////////////
+    
+    /** Meaning text with wiki markup, with context labels. */
+    private String wikified_text;
+    
+    public String getWikifiedText() {
+   	return wikified_text;
     }
 
 }
