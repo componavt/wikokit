@@ -8,6 +8,8 @@ package wikokit.base.wikt.db;
 
 import java.io.File;
 
+import wikokit.base.wikipedia.sql.Connect;
+
 import android.os.StatFs;
 import android.os.Environment;
 import android.util.Log;
@@ -115,6 +117,12 @@ public class FileUtil {
 			return false;
 		}
 	}
+	
+	public static void deleteFileAtSDCard(String filename) {
+	    File file = new File( FileUtil.getFilePathAtExternalStorage( 
+                Connect.DB_DIR, filename));
+	    file.delete();
+    }
 
 	
 }

@@ -34,39 +34,54 @@ public class Connect extends SQLiteOpenHelper {
     
     /** Language of Wiktionary/Wikipedia edition,
      * e.g. Russian in Russian Wiktionary. */
-    private     LanguageType lang;
-
+    private static LanguageType native_lang;
+    
     /** File path to the SQLite database file. */
     private     String  sqlite_filepath;
 
     // database parameters
-    private	String  db_dir;
-    private	String  db_url;
-    private String  db_zipfile;
-    private int  	db_zipfile_size_mb;
-    private String  db_file;
-    private int  	db_file_size_mb;
+    public final static String DB_DIR;
     
-    public final static String DB_DIR = "kiwidict";
+    public final static String RU_DB_URL, RU_DB_URL2;
+    public final static String EN_DB_URL, EN_DB_URL2;
     
-    // Russian Wiktionary (parsed Wiktionary Android SQLite database)
-    public final static String RU_DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
-    public final static String RU_DB_ZIPFILE = "ruwikt20110521_android_sqlite.zip";
-    public final static int    RU_DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
-    public final static String RU_DB_FILE = "ruwikt20110521_android.sqlite";
-    public final static int    RU_DB_FILE_SIZE_MB = 239; 
+    public final static int RU_DB_ZIPFILE_SIZE_MB, RU_DB_FILE_SIZE_MB;
+    public final static int EN_DB_ZIPFILE_SIZE_MB, EN_DB_FILE_SIZE_MB;
     
+    public final static String ru_wikt_version;
+    public final static String en_wikt_version;
     
-    // English Wiktionary database
-    // English Wiktionary parsed database
-    //public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20101030.sqlite";
-    public final static String ENWIKT_SQLITE = "enwikt20111008.sqlite";
+    /** Database name, folder and files names. */
+    static {
+        DB_DIR = "kiwidict";
+        
+        /** Main parameter, you are winner :) */
+        native_lang = LanguageType.en;
+        //native_lang = LanguageType.ru;
+        
+        // Russian Wiktionary (parsed Wiktionary Android SQLite database)
+        ru_wikt_version = "ruwikt20110521";
+        RU_DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
+        RU_DB_URL2 = null;
+        
+        RU_DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
+        RU_DB_FILE_SIZE_MB = 239;
+        
+        
+        // English Wiktionary (parsed Wiktionary Android SQLite database)
+        en_wikt_version =  "enwikt20111008"; // "test_small"; // "enwikt20111008";
+        EN_DB_URL  = "http://wikokit.googlecode.com/files/todo test_small_part1_android_sqlite.zip";
+        EN_DB_URL2 = "http://wikokit.googlecode.com/files/todo test_small_part2_android_sqlite.zip";
+        
+        EN_DB_ZIPFILE_SIZE_MB = 1; // size of zipped file in MBytes
+        EN_DB_FILE_SIZE_MB = 1;
+    }
     
     /** Gets language of Wiktionary/Wikipedia edition, main or native language,
      * e.g. Russian in Russian Wiktionary.
      */
-    public LanguageType getNativeLanguage() {
-        return lang;
+    public static LanguageType getNativeLanguage() {
+        return native_lang;
     }
     
     /** Constructor
@@ -74,27 +89,37 @@ public class Connect extends SQLiteOpenHelper {
      * @param context
      */
     public Connect(	Context context, 
-		    		String  _db_url,
+                    LanguageType _native_lang)
+                    /*String  _db_url,
 				    String  _db_zipfile,
 				    int  	_db_zipfile_size_mb,
 				    String  _db_file,
 				    int  	_db_file_size_mb,
-				    String  _db_dir)
+				    String  _db_dir)*/
     {                               // DATABASE_VERSION
-    	super(context, _db_file, null, 1);
+    	super(context, getDBFilename(_native_lang), null, 1);
         this.context = context;
+        this.native_lang = _native_lang;
         
-        db_url = _db_url;
+        /*db_url = _db_url;
+        db_url2 = _db_url2;
 	    db_zipfile = _db_zipfile;
 	    db_zipfile_size_mb = _db_zipfile_size_mb;
 	    db_file = _db_file;
 	    db_file_size_mb = _db_file_size_mb;
 	    db_dir = _db_dir;
-	    
+	    */
         //enc        = new Encodings();
         //page_table = new PageTableBase();
     }
     
+    public Connect(Context context)
+
+    {                               // DATABASE_VERSION
+        super(context, getDBFilename(), null, 1);
+        this.context = context;
+    }
+
     public SQLiteDatabase getDB() {
     	return db;
     }
@@ -109,7 +134,7 @@ public class Connect extends SQLiteOpenHelper {
     	// createDatabase();
 
 	 	try {	// Open the database
-	 		String path = FileUtil.getFilePathAtExternalStorage(db_dir, db_file);
+	 		String path = FileUtil.getFilePathAtExternalStorage(DB_DIR, getDBFilename());
 	        db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
 		} catch(SQLException sqle) {
 			throw sqle;
@@ -125,26 +150,33 @@ public class Connect extends SQLiteOpenHelper {
      */
     public boolean createDatabase(){
 
-    	if(!FileUtil.hasEnoughMemory(db_zipfile_size_mb + db_file_size_mb))
+    	if(!FileUtil.hasEnoughMemory(getDatabaseZIPFileSizeMB() + getDatabaseFileSizeMB()))
     		return false;
     	
     	// 1. check unzipped file, if it exists - ok.
     	// 2. else check zipped file, if it exists - unzip it.
     	// 3. else download and unzip database to SD card
 
-    	if( FileUtil.isFileExist(db_dir, db_file) ) {	// 1.
+    	if( FileUtil.isFileExist(DB_DIR, getDBFilename()) ) {	// 1.
     		return isDatabaseAvailable();	// do nothing - database already exist
     	}
 
-    	if( FileUtil.isFileExist(db_dir, db_zipfile) ) {// 2.
-    		Zipper.unpackZipToExternalStorage(db_dir, db_zipfile);
+    	String db_zipfile = getDBZipFilename();
+    	if( FileUtil.isFileExist(DB_DIR, db_zipfile) ) {// 2.
+    		Zipper.unpackZipToExternalStorage(DB_DIR, db_zipfile);
     		return isDatabaseAvailable();
     	}
 
     	// 3. else download and unzip database to SD card
-    	FileUtil.createDirIfNotExists(db_dir);
-    	Downloader.downloadToExternalStorage(db_url, db_dir, db_zipfile);
-    	Zipper.unpackZipToExternalStorage(db_dir, db_zipfile);
+    	FileUtil.createDirIfNotExists(DB_DIR);
+    	Downloader.downloadToExternalStorage(getDatabaseURL(), DB_DIR, db_zipfile);
+    	String url2 = getDatabaseURL2();
+    	if(null != url2) {
+    	    String db_zipfile2 = getDBZipFilename2();
+    	    Downloader.downloadToExternalStorage(url2, DB_DIR, db_zipfile2);
+    	}
+    	
+    	Zipper.unpackZipToExternalStorage(DB_DIR, db_zipfile);
     	return isDatabaseAvailable();
     }
     
@@ -159,7 +191,7 @@ public class Connect extends SQLiteOpenHelper {
     	SQLiteDatabase check_db = null;
 
     	try{
-    		String path = FileUtil.getFilePathAtExternalStorage(db_dir, db_file);
+    		String path = FileUtil.getFilePathAtExternalStorage(DB_DIR, getDBFilename());
     		check_db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
 
     	}catch(SQLiteException e){
@@ -190,56 +222,175 @@ public class Connect extends SQLiteOpenHelper {
 	}
 
 
+    
+
+	
+	
+	/** Gets DB_ZIPFILE, e.g. "ruwikt20110521_android_sqlite.zip",
+	 * or "ruwikt20110521_part1_android_sqlite.zip" if there are two parts. */
+    public static String getDBZipFilename() {
+        
+        String part1 = "_part1";
+        if(null == getDatabaseURL2())
+            part1 = "";
+        
+        if(LanguageType.ru == native_lang) {
+            return ru_wikt_version + part1 + "_android_sqlite.zip";
+            
+        } else if(LanguageType.en == native_lang) {
+            return en_wikt_version + part1 + "_android_sqlite.zip";
+        }
+        return null;
+    }
+    
+    /** Gets second zipped file (with second part), e.g. "ruwikt20110521_part2_android_sqlite.zip". */
+    public static String getDBZipFilename2() {
+        if(null == getDatabaseURL2())
+            return null;
+        
+        if(LanguageType.ru == native_lang) {
+            return ru_wikt_version + "_part2_android_sqlite.zip";
+        } else if(LanguageType.en == native_lang) {
+            return en_wikt_version + "_part2_android_sqlite.zip";
+        }
+        return null;
+    }
+    
+    /** Gets database filename, e.g. "ruwikt20110521_android.sqlite". */
+    public static String getDBFilename() {
+        if(LanguageType.ru == native_lang) {
+            return ru_wikt_version + "_android.sqlite";
+        } else if(LanguageType.en == native_lang) {
+            return en_wikt_version + "_android.sqlite";
+        }
+        return null;
+    }
+    public static String getDBFilename(LanguageType _native_lang) {
+        native_lang = _native_lang;
+        return getDBFilename();
+    }
+    
+    public static String getDBFilenamePart1() {
+        if(null == getDatabaseURL2())
+            return getDBFilename();
+        
+        if(LanguageType.ru == native_lang) {
+            return ru_wikt_version + "_part1_android.sqlite";
+        } else if(LanguageType.en == native_lang) {
+            return en_wikt_version + "_part1_android.sqlite";
+        }
+        return null;
+    }
+    
+    public static String getDBFilenamePart2() {
+        if(null == getDatabaseURL2())
+            return null;
+        
+        if(LanguageType.ru == native_lang) {
+            return ru_wikt_version + "_part2_android.sqlite";
+        } else if(LanguageType.en == native_lang) {
+            return en_wikt_version + "_part2_android.sqlite";
+        }
+        return null;
+    }
+    
+    /** Gets database URL. */
+    public static String getDatabaseURL() {
+        if(LanguageType.ru == native_lang) {            
+            return RU_DB_URL;
+        } else if(LanguageType.en == native_lang) {
+            return EN_DB_URL;
+        }
+        return null;
+    }
+    /** Gets database URL (second part of the huge database). */
+    public static String getDatabaseURL2() {
+        if(LanguageType.ru == native_lang) {            
+            return RU_DB_URL2;
+        } else if(LanguageType.en == native_lang) {
+            return EN_DB_URL2;
+        }
+        return null;
+    }
+    
+    /** Gets dump's version of the Wiktionary. */
+    public static String getWiktionaryDumpVersion() {
+        if(LanguageType.ru == native_lang) {            
+            return ru_wikt_version;
+        } else if(LanguageType.en == native_lang) {
+            return en_wikt_version;
+        }
+        return null;
+    }
+
+    /** Gets the size of the dump file in megabytes. */
+    public static int getDatabaseFileSizeMB() {
+        if(LanguageType.ru == native_lang) {            
+            return RU_DB_FILE_SIZE_MB;
+        } else if(LanguageType.en == native_lang) {
+            return EN_DB_FILE_SIZE_MB;
+        }
+        return 0;
+    }
+
+    /** Gets the size of the archived dump file in megabytes. */
+    public static int getDatabaseZIPFileSizeMB() {
+        if(LanguageType.ru == native_lang) {            
+            return RU_DB_ZIPFILE_SIZE_MB;
+        } else if(LanguageType.en == native_lang) {
+            return EN_DB_ZIPFILE_SIZE_MB;
+        }
+        return 0;
+    }
+
     /** Opens SQLite connection.
-     *
-     * @param _sqlite_filepath File path to the SQLite file,
-     *                      e.g. "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite"
-     * @param _lang language of Wiktionary/Wikipedia edition, main or 
-     *               native language, e.g. Russian in Russian Wiktionary.
-     */
-    /*public void OpenSQLite(String _sqlite_filepath, LanguageType _lang, boolean brelease) {
+    *
+    * @param _sqlite_filepath File path to the SQLite file,
+    *                      e.g. "jdbc:sqlite:C:/w/bin/ruwikt20090707.sqlite"
+    * @param _lang language of Wiktionary/Wikipedia edition, main or 
+    *               native language, e.g. Russian in Russian Wiktionary.
+    */
+   /*public void OpenSQLite(String _sqlite_filepath, LanguageType _lang, boolean brelease) {
 
-        lang    = _lang;
-        sqlite_filepath = _sqlite_filepath;
-        //OpenSQLite(brelease, sqlite_filepath);
-    }*/
+       lang    = _lang;
+       sqlite_filepath = _sqlite_filepath;
+       //OpenSQLite(brelease, sqlite_filepath);
+   }*/
 
-    /** Gets filepath to the SQLite database.
-     * 
-     * @param brelease If true, then SQLite database will be extracted 
-     * from the jar-file and stored to the directory user.dir 
-     * (Add jar-file with SQLite database to the project);
-     * If false, then SQLite database has path ./sqlite/SQLiteFile
-     * 
-     * @param sqlite_filename file name of the SQLite database
-     * @return path to SQLite file in .jar or in local folder of the project
-     */
-    /*private String getFilepathToSQLiteDatabase(boolean brelease, String sqlite_filename) {
+   /** Gets filepath to the SQLite database.
+    * 
+    * @param brelease If true, then SQLite database will be extracted 
+    * from the jar-file and stored to the directory user.dir 
+    * (Add jar-file with SQLite database to the project);
+    * If false, then SQLite database has path ./sqlite/SQLiteFile
+    * 
+    * @param sqlite_filename file name of the SQLite database
+    * @return path to SQLite file in .jar or in local folder of the project
+    */
+   /*private String getFilepathToSQLiteDatabase(boolean brelease, String sqlite_filename) {
 
-        String result_filepath;
+       String result_filepath;
 
-            if( brelease ) {
-                String dbfile_in_jar = sqlite_filename;
-                String target_dir = System.getProperty("user.home") + File.separator + ".wiwordik";
-                result_filepath = target_dir+File.separator + dbfile_in_jar;
+           if( brelease ) {
+               String dbfile_in_jar = sqlite_filename;
+               String target_dir = System.getProperty("user.home") + File.separator + ".wiwordik";
+               result_filepath = target_dir+File.separator + dbfile_in_jar;
 
-                if(!FileWriter.existsFile(result_filepath)) {
-                    Object resource = this;
-                    boolean success = true;
-                    try {                    // creates ~/.wiwordik/
-                        success = FileWriter.retrieveBinaryFileFromJar(dbfile_in_jar, target_dir, resource);
-                    } catch (Exception ex) {
-                        Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    if(!success)
-                        System.err.println("Error in Connect::OpenSQLite() Couldn't retrieve SQLite database from .jar file " + dbfile_in_jar);
-                }
-            } else {
-                result_filepath = "sqlite"+File.separator + sqlite_filename;
-            }
-        return result_filepath;
-    }*/
-
-
+               if(!FileWriter.existsFile(result_filepath)) {
+                   Object resource = this;
+                   boolean success = true;
+                   try {                    // creates ~/.wiwordik/
+                       success = FileWriter.retrieveBinaryFileFromJar(dbfile_in_jar, target_dir, resource);
+                   } catch (Exception ex) {
+                       Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+                   if(!success)
+                       System.err.println("Error in Connect::OpenSQLite() Couldn't retrieve SQLite database from .jar file " + dbfile_in_jar);
+               }
+           } else {
+               result_filepath = "sqlite"+File.separator + sqlite_filename;
+           }
+       return result_filepath;
+   }*/
    
 }

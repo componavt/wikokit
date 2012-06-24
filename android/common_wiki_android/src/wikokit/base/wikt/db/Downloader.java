@@ -45,7 +45,7 @@ public class Downloader {
 
 	
 	/** Downloads file from the str_url location to the /sd_card/dir/filename.
-	 * @param str_url URL, e.g. "http://www/ruwikt20110521_android_sqlite_LZMA_dict8MB_word64.zip"
+	 * @param str_url URL, e.g. "http://www/ruwikt20110521_android_sqlite.zip"
 	 * @dir file path at SD card, e.g. "kiwidict" folder
 	 * @filename file will be saved to
 	 */

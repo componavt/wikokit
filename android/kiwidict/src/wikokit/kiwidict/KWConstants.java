@@ -10,6 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.util.TypedValue;
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 
 //import wikokit.kiwidict.db.DataBaseHelper;
 
@@ -40,21 +41,14 @@ public class KWConstants {
     
     public final static int meaning_gap, quote_gap, relation_gap; // distance between
     
-    public final static String DB_DIR;
-    
-    
-    public final static String DB_URL;
-    public final static String DB_ZIPFILE;
-    public final static int    DB_ZIPFILE_SIZE_MB;
-    public final static String DB_FILE;
-    public final static int    DB_FILE_SIZE_MB;
-    
     private static SQLiteDatabase db;
     public static SQLiteDatabase getDatabase() {return db;}
     public static void           setDatabase(SQLiteDatabase _db) {db = _db;}
+
+    public final static String ru_kiwidict_name;
+    public final static String en_kiwidict_name;
     
-    
-    public final static String wikt_version, kiwidict_version, kiwidict_name;
+    public final static String kiwidict_version;
 
     /** Skips #REDIRECT words if true. */
     public final static boolean b_skip_redirects;
@@ -65,8 +59,6 @@ public class KWConstants {
 
     public static Boolean DEBUGUI;
     
-    //var native_lang : LanguageType;
-    public static LanguageType native_lang;
     
     /** If true, then SQLite database extracted from the .jar and stored
      * to the directory user.dir (Add .jar with SQLite database to the project).
@@ -113,50 +105,22 @@ public class KWConstants {
         kiwidict_version = "0.096";
         
         
-        
-        // Russian Wiktionary
-        kiwidict_name = "kiwidict-ru";
-        wikt_version = "ruwikt20110521";
-        
-        //public static String DB_URL = "http://wikokit.googlecode.com/files/WikPaSPARQL_20110618.7z";          // temp
-        DB_URL = "http://wikokit.googlecode.com/files/ruwikt20110521_android_sqlite.zip";
-        
-        DB_ZIPFILE_SIZE_MB = 90; // size of zipped file in MBytes
-        DB_FILE_SIZE_MB = 239;
-        
         // English Wiktionary
-        // todo
-        // ...
-        /*
-        kiwidict_name = "kiwidict";
+        en_kiwidict_name = "kiwidict";
         
-        */
+        // Russian Wiktionary (parsed Wiktionary Android SQLite database)
+        ru_kiwidict_name = "kiwidict-ru";
         
-        /** Database name, folder and files names. */
-        DB_DIR = "kiwidict";
-        
-        DB_ZIPFILE = wikt_version + "_android_sqlite.zip";
-        DB_FILE = wikt_version + "_android.sqlite";
-        
-        // public static int MAX_NUMBER_DB_PARTS = 341; // Russian Wiktionary
-        
-        // English
-        //NAME = "enwikt"; //"enwikt_mean_semrel_sqlite";
-        //public static String DB_NAME = "enwikt"; //"enwikt_mean_semrel_sqlite";
-
         
         /** Skips #REDIRECT words if true. */
         b_skip_redirects = false;
-
+        
         
         //////////////////////////////
         // Release / publish parameters
         
         DEBUGUI = false;
         
-        native_lang = LanguageType.ru;
-        //native_lang = LanguageType.en;
-        //old public static String native_lang_code = "ru"; // "en"
         
         /** If true, then SQLite database extracted from the .jar and stored
         * to the directory user.dir (Add .jar with SQLite database to the project).
@@ -168,4 +132,17 @@ public class KWConstants {
         //////////////////////////////
         
     }
+    
+    /** Gets name of the application. */
+    public static String getKiwidictName() {
+        LanguageType native_lang = Connect.getNativeLanguage();
+        
+        if(LanguageType.ru == native_lang) {            
+            return ru_kiwidict_name;
+        } else if(LanguageType.en == native_lang) {
+            return en_kiwidict_name;
+        }
+        return null;
+    }
+    
 }

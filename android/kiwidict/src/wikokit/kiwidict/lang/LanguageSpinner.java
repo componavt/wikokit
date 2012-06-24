@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.lang.LanguageSplitter;
 import wikokit.kiwidict.KWConstants;
@@ -21,6 +22,8 @@ public class LanguageSpinner {
     LanguageSplitter lsplitter;
     
     TLang[] dropdown_tlang_array;
+    
+    private final static String[] NULL_STRING_ARRAY = new String[0];
     
     
     public LanguageSplitter getLanguageSplitter() {
@@ -44,21 +47,24 @@ public class LanguageSpinner {
         TLang[] source_lang = TLang.parseLangCode(source_lang_codes);
         
         // update ChoiceBox, let's select in dropdown menu the same language as user types in  text field
-        if(source_lang.length > 0)
+        if(source_lang.length > 0 && null != source_lang[0])
             selectLanguageInDropdownMenu( source_lang[0].getLanguage() );
     }
     
     public String[] fillByAllLanguages() {
     
+        LanguageType native_lang = Connect.getNativeLanguage();
+        
         int border1 = 1000, border2 = 300;
-        if(LanguageType.ru == KWConstants.native_lang) {
+        if(LanguageType.ru == native_lang) {
             border1 = 1000; border2 = 300;          // then part1_end about 20, part2_end about 67
-        } else if(LanguageType.en == KWConstants.native_lang) {
+        } else if(LanguageType.en == native_lang) {
             border1 = 10000; border2 = 1000;
         }
         
         lsplitter = new LanguageSplitter();
-        lsplitter.splitAllLangTo3parts(border1, border2);
+        if(!lsplitter.splitAllLangTo3parts(border1, border2)) 
+            return NULL_STRING_ARRAY;
         
         dropdown_tlang_array = lsplitter.mergeArrays(); 
         

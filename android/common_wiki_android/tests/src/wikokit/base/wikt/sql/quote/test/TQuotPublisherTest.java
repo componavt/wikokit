@@ -1,5 +1,6 @@
 package wikokit.base.wikt.sql.quote.test;
 
+import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
@@ -17,15 +18,7 @@ public class TQuotPublisherTest extends TestCase {
     
     protected void setUp() throws Exception {
         super.setUp();
-        ruwikt_conn = new Connect(
-                context,
-                Connect.RU_DB_URL,
-                Connect.RU_DB_ZIPFILE,
-                Connect.RU_DB_ZIPFILE_SIZE_MB,
-                Connect.RU_DB_FILE,
-                Connect.RU_DB_FILE_SIZE_MB,
-                Connect.DB_DIR
-                );
+        ruwikt_conn = new Connect(context, LanguageType.ru);
         ruwikt_conn.openDatabase();
         db = ruwikt_conn.getDB();
         TLang.createFastMaps(db);

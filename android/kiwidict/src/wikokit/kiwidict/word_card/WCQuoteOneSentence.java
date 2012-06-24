@@ -7,6 +7,8 @@
 
 package wikokit.kiwidict.word_card;
 
+import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.quote.TQuotRef;
 import wikokit.base.wikt.sql.quote.TQuote;
 import wikokit.base.wikt.word.WQuote;
@@ -63,6 +65,7 @@ public class WCQuoteOneSentence {
                         TQuote _quote) 
     {
         // GUI
+        LanguageType native_lang = Connect.getNativeLanguage();
         
         // quote_gap between quotes
         LayoutParams mpwc_top_margin = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT, 1);
@@ -75,13 +78,13 @@ public class WCQuoteOneSentence {
         // 1. Sentence text
         // WT:ELE: "In the quotation itself the word being illustrated should be in boldface."
         // substitues '''marked word''' by <b>bold</b>
-        String s = WQuote.removeHighlightedMarksFromSentence( KWConstants.native_lang,
+        String s = WQuote.removeHighlightedMarksFromSentence( native_lang,
                                                   _quote.getText(), "<b>", "</b>");
                                         
         // additional treatment of the sentence text (e.g., &nbsp;, &#160; -> " ")
         boolean is_sqlite = true;
         sentence_text = WQuote.transformSentenceTextToHTML(
-                            is_sqlite, KWConstants.native_lang, s);
+                            is_sqlite, native_lang, s);
         
         TextView tv_quote = new TextView(_context);
         tv_quote.setLayoutParams(mpwc);
@@ -94,7 +97,7 @@ public class WCQuoteOneSentence {
         // Optional node, only if there is a translation of the quote sentence.
         translation_text = _quote.getTranslation(db);
         if(translation_text.length() > 0) {
-            translation_text = WQuote.removeHighlightedMarksFromSentence( KWConstants.native_lang,
+            translation_text = WQuote.removeHighlightedMarksFromSentence( native_lang,
                translation_text, "<b>", "</b>");
             
             TextView quote_trans = new TextView(_context);

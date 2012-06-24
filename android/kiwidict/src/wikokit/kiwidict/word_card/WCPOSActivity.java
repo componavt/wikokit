@@ -1,5 +1,6 @@
 package wikokit.kiwidict.word_card;
 
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.constant.POS;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TLangPOS;
@@ -91,7 +92,7 @@ public class WCPOSActivity extends Activity {
         
         POS _pos = _lang_pos.getPOS().getPOS();
 
-        String s = _pos.toString(KWConstants.native_lang);
+        String s = _pos.toString(Connect.getNativeLanguage());
         //String s = _pos.getShortName(KWConstants.native_lang);
         
         if (KWConstants.DEBUGUI)

@@ -14,6 +14,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.kiwidict.KWConstants;
 import android.os.Bundle;
 import android.os.Environment;
@@ -39,7 +40,11 @@ public class DownloadProgressThread extends Thread {
 	@Override
 	public void run() {
 		
-		downloadToExternalStorage(KWConstants.DB_URL, KWConstants.DB_DIR, KWConstants.DB_ZIPFILE);
+		downloadToExternalStorage(Connect.getDatabaseURL(), Connect.DB_DIR, Connect.getDBZipFilename());
+		
+		if(null != Connect.getDatabaseURL2())
+		    downloadToExternalStorage(Connect.getDatabaseURL2(), Connect.DB_DIR, Connect.getDBZipFilename2());
+		
 		
 		// Send message to Handler on UI thread
 		// that the downloading was finished.

@@ -8,6 +8,7 @@
 package wikokit.kiwidict.word_card;
 
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.constant.POS;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TLangPOS;
@@ -76,7 +77,7 @@ public class WCLanguageActivity extends TabActivity {
     /** Gets text with a name of language, e.g. "Russian (ru)", or "English (en)". */
     public String getLanguageTitle(LanguageType _lang) {
         //     "lang (code)"
-        return _lang.getName(KWConstants.native_lang) + " (" + _lang.getCode() + ")";
+        return _lang.getName(Connect.getNativeLanguage()) + " (" + _lang.getCode() + ")";
         // System.out.println("WCLanguage.create(). language_name_value = {language_name_value}");
     }
     
@@ -135,7 +136,7 @@ public class WCLanguageActivity extends TabActivity {
         POS _pos = _lang_pos.getPOS().getPOS();
 
         //String s = _pos.toString(KWConstants.native_lang);
-        String s = _pos.getShortName(KWConstants.native_lang);
+        String s = _pos.getShortName(Connect.getNativeLanguage());
         
         if (KWConstants.DEBUGUI)
             s += String.format("; lang_pos.id = %d", _lang_pos.getID());

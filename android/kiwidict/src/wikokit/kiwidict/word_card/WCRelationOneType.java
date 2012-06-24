@@ -1,6 +1,7 @@
 package wikokit.kiwidict.word_card;
 
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.constant.Relation;
 import wikokit.base.wikt.constant.RelationLocal;
 import wikokit.base.wikt.multi.ru.name.RelationRu;
@@ -48,7 +49,7 @@ public class WCRelationOneType {
             
             StringBuilder sb = new StringBuilder();
             
-            sb = sb.append( _relation_type.toString(KWConstants.native_lang) ).
+            sb = sb.append( _relation_type.toString(Connect.getNativeLanguage()) ).
                     append(": ");
             int pos_words = sb.length();
             

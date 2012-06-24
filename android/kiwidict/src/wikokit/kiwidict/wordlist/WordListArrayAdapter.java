@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.index.IndexForeign;
 import wikokit.kiwidict.KWConstants;
@@ -89,9 +90,9 @@ public class WordListArrayAdapter extends ArrayAdapter<String> {
             ViewHolder holder = (ViewHolder) rowView.getTag();
             
             //String s = "I love Wiktionary :)";
-            String s =  KWConstants.kiwidict_name + " " +
+            String s =  KWConstants.getKiwidictName() + " " +
                         KWConstants.kiwidict_version + "\n" +
-                        "Wiktionary parsed database " + KWConstants.wikt_version;
+                        "Wiktionary parsed database " + Connect.getWiktionaryDumpVersion();
             
             if(null != page_array && position < page_array.length) {
                 TPage tpage = page_array[position];     // String s = names[position];
