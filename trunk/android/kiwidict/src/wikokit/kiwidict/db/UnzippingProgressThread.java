@@ -7,18 +7,27 @@
 package wikokit.kiwidict.db;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.OutputStream;
+import java.io.SequenceInputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Enumeration;
+import java.util.Vector;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
+import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikt.db.FileUtil;
 import wikokit.kiwidict.KWConstants;
 import android.os.Bundle;
 import android.os.Environment;
@@ -44,7 +53,38 @@ public class UnzippingProgressThread extends Thread {
 	@Override
 	public void run() {
 		
-		boolean b_success = unpackZipToExternalStorage(KWConstants.DB_DIR, KWConstants.DB_ZIPFILE);
+	    boolean b_success = false;
+	    String path = getPathAtExternalStorageByDirectoryName(Connect.DB_DIR);
+	    
+	    b_success = unpackZip(path, Connect.getDBZipFilename());
+        // b_success = unpackZipToExternalStorage(Connect.DB_DIR, Connect.getDBZipFilename());
+	    
+	    // delete first ZIP file
+	    FileUtil.deleteFileAtSDCard( Connect.getDBZipFilename() );
+        
+		String zip_part2 = Connect.getDBZipFilename2();
+		if(b_success && null != zip_part2) {
+		    
+		    b_success = unpackZip(path, zip_part2);
+		    
+		    // delete second ZIP file
+		    FileUtil.deleteFileAtSDCard( Connect.getDBZipFilename2() );
+	        
+	        String[] file_parts = new String[2];
+            file_parts[0] = Connect.getDBFilenamePart1();
+            file_parts[1] = Connect.getDBFilenamePart2();
+            b_success = concatenateFiles (path, file_parts, Connect.getDBFilename());
+            
+            // delete parts
+            FileUtil.deleteFileAtSDCard( Connect.getDBFilenamePart1() );
+            FileUtil.deleteFileAtSDCard( Connect.getDBFilenamePart2() );
+            
+		    // extract multi-volume .zip, .z01 archive
+		    //String[] zip_file_parts = new String[2];
+		    //zip_file_parts[0] = Connect.getDBZipFilename();
+		    //zip_file_parts[1] = zip_part2;
+		    //b_success = unpackMultiPartZip (path, zip_file_parts);
+		}
 		
 		// Send message to Handler on UI thread
 		// that the downloading was finished.
@@ -61,7 +101,7 @@ public class UnzippingProgressThread extends Thread {
 	 * 
 	 * @see http://stackoverflow.com/questions/3382996/how-to-unzip-files-programmatically-in-android
 	 */
-	public boolean unpackZipToExternalStorage(
+	/*public boolean unpackZipToExternalStorage(
 									String dir, String zip_filename)
 	{	
 		StringBuilder path = new StringBuilder();
@@ -70,8 +110,21 @@ public class UnzippingProgressThread extends Thread {
 		path.append(dir);
 		
 		return unpackZip(path.toString(), zip_filename);
-	}
+	}*/
 	
+	/* Gets file path at SD card by the directory.
+     * 
+     * @see http://stackoverflow.com/questions/3382996/how-to-unzip-files-programmatically-in-android
+     */
+	public String getPathAtExternalStorageByDirectoryName(String dir)
+	{   
+	    StringBuilder path = new StringBuilder();
+	    path.append(Environment.getExternalStorageDirectory().getAbsolutePath());
+	    path.append(File.separator);
+	    path.append(dir);
+
+	    return path.toString();
+	}
 	
 	/* Unzips files from the "file_path / zip_file" location.
 	 * 
@@ -135,5 +188,102 @@ public class UnzippingProgressThread extends Thread {
 		}
 
 		return true;
-	}	
+	}
+	
+	/* Concatenates files to one file, 
+     * from the "file_path / zip_file" location. */
+	private boolean concatenateFiles (String file_path, String[] files, String result_file) {
+        boolean b_success = true;
+
+        SequenceInputStream seq;
+        
+        try {
+            Vector<InputStream> v = new Vector<InputStream>(files.length);
+            for (int i = 0; i < files.length; i++) {
+                FileInputStream fis = new FileInputStream(file_path + File.separator + files[i]);
+                BufferedInputStream bis = new BufferedInputStream(fis);
+                v.add(bis);
+            }
+            Enumeration<InputStream> e = v.elements();
+            seq = new SequenceInputStream(e);
+            
+            String result = file_path + File.separator + result_file;
+            OutputStream os = new BufferedOutputStream(new FileOutputStream(result));
+            try {
+                final int buffer_size = 1024;
+                byte[] buffer = new byte[buffer_size];
+                for (int readBytes = -1; (readBytes = seq.read(buffer, 0, buffer_size)) > -1;) {
+                    os.write(buffer, 0, readBytes);
+                }
+                //int ch;
+                //while ((ch = seq.read()) != -1) {
+                //    os.write(ch);
+                //}
+                os.flush();
+            } finally {
+                os.close();   
+                if (null != seq) {
+                    seq.close();
+                }
+            }
+            
+        } catch (FileNotFoundException e) {
+            b_success = false;
+            e.printStackTrace();
+        } catch (IOException e) {
+            b_success = false;
+            e.printStackTrace();
+    	}            
+        return b_success;
+	}
+	
+	/* Unzips one file from the multi-volume .zip, .z01 archive, 
+	 * from the "file_path / zip_file" location.
+     * 
+     * @see http://stackoverflow.com/questions/8116443/how-do-you-uncompress-a-split-volume-zip-in-java
+     */
+	/* failed
+	 * private boolean unpackMultiPartZip (String file_path, String[] files) {
+	    boolean b_success = true;
+
+	    InputStream seq;
+        ZipInputStream zis;
+
+        try {
+            Vector<InputStream> v = new Vector<InputStream>(files.length);
+    	    for (int x = 0; x < files.length; x++) {
+    	        FileInputStream fis = new FileInputStream(file_path + File.separator + files[x]);
+    	        v.add(fis);
+    	    }
+    	    Enumeration<InputStream> e = v.elements();
+    
+    	    seq = new SequenceInputStream(e);
+    	    zis = new ZipInputStream(seq);
+    	    try {
+    	        for (ZipEntry entry = null; (entry = zis.getNextEntry()) != null;) {
+    	            OutputStream os = new BufferedOutputStream(new FileOutputStream(entry.getName()));
+    	            try {
+    	                final int buffer_size = 1024;
+    	                byte[] buffer = new byte[buffer_size];
+    	                for (int readBytes = -1; (readBytes = zis.read(buffer, 0, buffer_size)) > -1;) {
+    	                    os.write(buffer, 0, readBytes);
+    	                }
+    	                os.flush();
+    	            } finally {
+    	                os.close();
+    	            }
+    	        }
+    	    } finally {
+    	        zis.close();
+    	    }    	    
+        } catch (FileNotFoundException e) {
+            b_success = false;
+            e.printStackTrace();
+        } catch (IOException e) {
+            b_success = false;
+            e.printStackTrace();
+        }
+        return b_success;
+	}*/
+
 }

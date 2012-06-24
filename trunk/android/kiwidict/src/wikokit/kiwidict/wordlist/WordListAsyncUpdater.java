@@ -29,6 +29,8 @@ public class WordListAsyncUpdater extends AsyncTask<Void, Void, TPage[]> {
     WordList wordlist;
     WordListArrayAdapter word_list_adapter;
     ProgressBar spinning_wheel;
+
+    private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
     
     public WordListAsyncUpdater(
                                 SQLiteDatabase _db,String _prefix,
@@ -68,6 +70,9 @@ public class WordListAsyncUpdater extends AsyncTask<Void, Void, TPage[]> {
 
     @Override
     protected TPage[] doInBackground(Void... params) {
+        
+        if(null == db)
+            return NULL_TPAGE_ARRAY;
         
         TPage[] page_array = TPage.getByPrefix ( db, prefix,
                 limit,

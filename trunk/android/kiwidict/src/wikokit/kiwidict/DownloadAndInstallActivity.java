@@ -2,6 +2,7 @@ package wikokit.kiwidict;
 
 import java.io.File;
 
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.db.Downloader;
 import wikokit.base.wikt.db.FileUtil;
 import wikokit.kiwidict.db.*;
@@ -37,7 +38,7 @@ public class DownloadAndInstallActivity extends Activity {
 		setContentView(R.layout.download_install);
 
 		boolean b_enough_memory = false;
-		int mbytes_required = KWConstants.DB_FILE_SIZE_MB + KWConstants.DB_ZIPFILE_SIZE_MB;
+		int mbytes_required = Connect.getDatabaseFileSizeMB() + Connect.getDatabaseZIPFileSizeMB();
 		TextView textView_SD_free_memory = (TextView) findViewById(R.id.textView_SD_free_memory);
 		{
 			String s = "";
@@ -112,13 +113,17 @@ public class DownloadAndInstallActivity extends Activity {
 				layout_progress_bar.setVisibility(View.VISIBLE);
 				
 				// 2. check zipped file, if it exists - unzip it.
-				if( FileUtil.isFileExist(KWConstants.DB_DIR, KWConstants.DB_ZIPFILE) ) {// 2.
-					unzip();
-		    		return; // isDatabaseAvailable();
+				if( FileUtil.isFileExist(Connect.DB_DIR, Connect.getDBZipFilename()) ) {// 2.
+				    
+				    String zip_part2 = Connect.getDBZipFilename2();
+			        if(null == zip_part2 || FileUtil.isFileExist(Connect.DB_DIR, zip_part2)) {
+    					unzip();
+    		    		return; // isDatabaseAvailable();
+			        }
 		    	}
 				
 				// 3. else download and unzip database to SD card
-		    	FileUtil.createDirIfNotExists(KWConstants.DB_DIR);
+		    	FileUtil.createDirIfNotExists(Connect.DB_DIR);
 		    	download();
 		    	// unzip() will be called from handler_downloading when file will be downloaded.
 			}
@@ -164,9 +169,9 @@ public class DownloadAndInstallActivity extends Activity {
         		if(b_success) {
         			
         			// delete ZIP file and exit
-        			File file = new File( FileUtil.getFilePathAtExternalStorage( 
-        							KWConstants.DB_DIR, KWConstants.DB_ZIPFILE));
-        			file.delete();
+        			//File file = new File( FileUtil.getFilePathAtExternalStorage( 
+        			//        Connect.DB_DIR, Connect.getDBZipFilename()));
+        			//file.delete();
         			finalSuccess();
         		}else 
         			finalFailed();

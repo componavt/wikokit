@@ -1,6 +1,7 @@
 package wikokit.kiwidict.lang;
 
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.lang.LanguageSplitter;
 import wikokit.kiwidict.KWConstants;
@@ -89,7 +90,7 @@ public class LangOnItemSelectedListener implements OnItemSelectedListener {
             lang_choice.setLanguageSourceActive(true);
 
             // logic
-            if(lt == KWConstants.native_lang) {
+            if(lt == Connect.getNativeLanguage()) {
                 lang_choice.source_lang = NULL_TLANG_ARRAY; // without filter, all languages
                 lang_choice.updateWordList();               // todo: list only native words
                 // todo: ...

@@ -1,6 +1,7 @@
 package wikokit.kiwidict;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -60,7 +61,7 @@ public class KiwidictActivity extends Activity {
 
         SQLiteDatabase check_db = null;
         try{
-            String path = wikokit.base.wikt.db.FileUtil.getFilePathAtExternalStorage(KWConstants.DB_DIR, KWConstants.DB_FILE);
+            String path = wikokit.base.wikt.db.FileUtil.getFilePathAtExternalStorage(Connect.DB_DIR, Connect.getDBFilename());
             check_db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
 
         }catch(SQLiteException e){
@@ -68,7 +69,7 @@ public class KiwidictActivity extends Activity {
         }
 
         if(check_db != null) {
-            System.out.println("checkDataBase: Database openes, not null.");
+            //System.out.println("checkDataBase: Database openes, not null.");
             check_db.close();
         }
 
@@ -76,25 +77,8 @@ public class KiwidictActivity extends Activity {
     }
 	
 	void openDatabase() {
-    	
-		// SQLite                                   //Connect.testSQLite();
-        if(LanguageType.ru == KWConstants.native_lang) {
-            //wikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru, KWConstants.IS_RELEASE);
-            
-            wikt_conn = new Connect(
-                    this, // context,
-                    Connect.RU_DB_URL,
-                    Connect.RU_DB_ZIPFILE,
-                    Connect.RU_DB_ZIPFILE_SIZE_MB,
-                    Connect.RU_DB_FILE,
-                    Connect.RU_DB_FILE_SIZE_MB,
-                    Connect.DB_DIR
-                    );
-        } else {
-            //wikt_parsed_conn.OpenSQLite(Connect.ENWIKT_SQLITE, LanguageType.en, KWConstants.IS_RELEASE);
-            // todo
-            // ...
-        }
+	    
+        wikt_conn = new Connect(this);  // context
     	
         wikt_conn.openDatabase();
         
@@ -119,7 +103,7 @@ public class KiwidictActivity extends Activity {
 	    CheckBox _lang_source_checkbox = (CheckBox) findViewById(wikokit.kiwidict.R.id.lang_source_checkbox);
 	    EditText _lang_source_text = (EditText) findViewById(R.id.lang_source_text);
 	    lang_choice.initialize( word_list, query_text_string, lspinner,
-	                            tip.getSourceLangCodes(), KWConstants.native_lang,
+	                            tip.getSourceLangCodes(), Connect.getNativeLanguage(),
 	                            // GUI
 	                            _lang_source_checkbox, _lang_source_text);
 	    
@@ -132,7 +116,7 @@ public class KiwidictActivity extends Activity {
                 query_text_string, spinning_wheel,
                 lang_choice,
                 //FilterMeanSemRelTrans _filter_mean_sem_transl,
-                KWConstants.native_lang,
+                Connect.getNativeLanguage(),
                                             //_word0              : String,
                 KWConstants.n_words_list,
                 word_listview,

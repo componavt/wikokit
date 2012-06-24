@@ -24,7 +24,7 @@ public class IndexForeignTest extends TestCase {
     
     protected void setUp() throws Exception {
         super.setUp();
-        ruwikt_conn = new Connect(
+        /*ruwikt_conn = new Connect(
                 context,
                 Connect.RU_DB_URL,
                 Connect.RU_DB_ZIPFILE,
@@ -32,7 +32,10 @@ public class IndexForeignTest extends TestCase {
                 Connect.RU_DB_FILE,
                 Connect.RU_DB_FILE_SIZE_MB,
                 Connect.DB_DIR
-                );
+                );*/
+        
+        ruwikt_conn = new Connect(context, LanguageType.ru);
+        
         ruwikt_conn.openDatabase();
         db = ruwikt_conn.getDB();
         TLang.createFastMaps(db);

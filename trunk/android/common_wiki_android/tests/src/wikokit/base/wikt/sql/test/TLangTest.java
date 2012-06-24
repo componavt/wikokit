@@ -16,15 +16,7 @@ public class TLangTest extends TestCase {
 	
 	protected void setUp() throws Exception {
 		super.setUp();
-		ruwikt_conn = new Connect(
-				context,
-				Connect.RU_DB_URL,
-				Connect.RU_DB_ZIPFILE,
-				Connect.RU_DB_ZIPFILE_SIZE_MB,
-				Connect.RU_DB_FILE,
-				Connect.RU_DB_FILE_SIZE_MB,
-				Connect.DB_DIR
-				);
+		ruwikt_conn = new Connect(context, LanguageType.ru);
 		ruwikt_conn.openDatabase();
 	}
 

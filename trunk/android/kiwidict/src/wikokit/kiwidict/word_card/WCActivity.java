@@ -7,6 +7,7 @@
 package wikokit.kiwidict.word_card;
 
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TLangPOS;
 import wikokit.base.wikt.sql.TPage;
@@ -116,7 +117,7 @@ public class WCActivity extends TabActivity{
             }*/
             
             for (TLang tl : tlanguages)
-                if(tl.getLanguage() == KWConstants.native_lang)
+                if(tl.getLanguage() == Connect.getNativeLanguage())
                     createOneLanguageTab( _tpage, tl );
             
 /*            
@@ -136,7 +137,7 @@ public class WCActivity extends TabActivity{
             }
 */          
             for (TLang tl : tlanguages)
-                if(tl.getLanguage() != KWConstants.native_lang)
+                if(tl.getLanguage() != Connect.getNativeLanguage())
                     createOneLanguageTab( _tpage, tl );
             
             //for (TLangPOS _lang_pos : lang_pos_array) {
@@ -207,7 +208,7 @@ public class WCActivity extends TabActivity{
 
             //s = "<a href=\"http://" + KWConstants.native_lang + ".wiktionary.org/wiki/" + s_underscored + 
             //        "\">" + page_title + "</a>";
-            s = "http://" + KWConstants.native_lang + ".wiktionary.org/wiki/" + s_underscored;
+            s = "http://" + Connect.getNativeLanguage() + ".wiktionary.org/wiki/" + s_underscored;
         }
         return s;
     }
