@@ -53,14 +53,14 @@ public class TipsTeapot {
 
     //public static final TipsTeapot tip2= new TipsTeapot("_н%н", "xal");
     
-    public static final TipsTeapot tip0= new TipsTeapot("", "");
+    public static final TipsTeapot tip0= new TipsTeapot("", "en");
     public static final TipsTeapot tip1= new TipsTeapot("film%h", "de fr");
     public static final TipsTeapot tip2= new TipsTeapot("_н%н", "xal");
-    public static final TipsTeapot tip3= new TipsTeapot("_yg%", "fr");   // *ill?u*
-    public static final TipsTeapot tip4= new TipsTeapot("_р% %", "os");
-    public static final TipsTeapot tip5= new TipsTeapot("% _ % н", "uk");
-    public static final TipsTeapot tip6= new TipsTeapot("", "");
-    public static final TipsTeapot tip7= new TipsTeapot("", "");
-    public static final TipsTeapot tip8= new TipsTeapot("", "");
+    public static final TipsTeapot tip3= new TipsTeapot("_yg%", "fr");      // *ill?u*
+    public static final TipsTeapot tip4= new TipsTeapot("%æ%р%æ", "os");    // ruwikt "_р% %"
+    public static final TipsTeapot tip5= new TipsTeapot("% н", "uk");
+    //public static final TipsTeapot tip6= new TipsTeapot("", "");
+    //public static final TipsTeapot tip7= new TipsTeapot("", "");
+    //public static final TipsTeapot tip8= new TipsTeapot("", "");
 
 }

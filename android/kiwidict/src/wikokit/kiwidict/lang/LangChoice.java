@@ -66,6 +66,18 @@ public class LangChoice {
             return 0;
         return source_lang.length;
     }
+    
+    /** Is native language selected by user? */
+    public boolean isNativeLanguageActive() {
+        if(null == source_lang)
+            return false;
+        
+        if(source_lang.length > 0 && null != source_lang[0])
+            return source_lang[0].getLanguage() == native_lang;
+        
+        return false;
+    }
+    
 
     /** Checks whether the check box "Destination language" is selected. */
     public boolean getDestLangSelected () {
@@ -267,7 +279,7 @@ public class LangChoice {
         
         // update ChoiceBox, let's select in dropdown menu the same language as user types in  text field
         if(source_lang.length > 0) {
-            if(source_lang[0].getLanguage() == native_lang) {
+            /*if(source_lang[0].getLanguage() == native_lang) {
                 
                 lspinner.selectAllLanguagesInDropdownMenu();
                 source_lang = NULL_TLANG_ARRAY; // without filter, all languages
@@ -275,9 +287,12 @@ public class LangChoice {
                 // lspinner.selectLanguageInDropdownMenu( source_lang[0].getLanguage() );
                 // ...
                 
-            } else {
+            } else {*/
                 lspinner.selectLanguageInDropdownMenu( source_lang[0].getLanguage() );
-            }
+            //}
+        } else {
+            //lspinner.selectAllLanguagesInDropdownMenu(); // let's select search within "All languages" words 
+            lspinner.selectLanguageInDropdownMenu(native_lang); // let's native lang by default - it will be more faster than "All lang"
         }
         
         updateWordList();

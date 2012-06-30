@@ -15,11 +15,14 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import wikokit.base.wikipedia.sql.Connect;
+import wikokit.kiwidict.DownloadAndInstallActivity;
 import wikokit.kiwidict.KWConstants;
+import wikokit.kiwidict.enwikt.R;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.TextView;
 
 public class DownloadProgressThread extends Thread {	
         
@@ -31,6 +34,21 @@ public class DownloadProgressThread extends Thread {
 	public DownloadProgressThread(Handler h) {
 		mHandler = h;
 	}
+	
+	/** Send message to Handler on UI thread
+	 * with progress bar text.
+	 */
+	private void setProgressBarText(String text) {
+
+        Message msg = mHandler.obtainMessage();
+        Bundle b = new Bundle();
+        b.putBoolean("done", false);
+        b.putLong("total_size", -1);
+        b.putLong("downloaded_size", -1);
+        b.putString("progressbar_message", text);
+        msg.setData(b);
+        mHandler.sendMessage(msg);
+	}
 
 	// Override the run() method that will be invoked automatically when 
 	// the Thread starts.  Do the work required to update the progress bar on this
@@ -40,11 +58,19 @@ public class DownloadProgressThread extends Thread {
 	@Override
 	public void run() {
 		
+	    // are there many files (parts) to download or only one?
+        boolean multi_part = null != Connect.getDatabaseURL2();
+        
+        String s = "Downloading...";
+        if(multi_part)
+            s = "Downloading file 1 (of 2)...";
+        setProgressBarText(s);
 		downloadToExternalStorage(Connect.getDatabaseURL(), Connect.DB_DIR, Connect.getDBZipFilename());
 		
-		if(null != Connect.getDatabaseURL2())
+		if(multi_part) {
+	        s = "Downloading file 2 (of 2)...";
 		    downloadToExternalStorage(Connect.getDatabaseURL2(), Connect.DB_DIR, Connect.getDBZipFilename2());
-		
+		}
 		
 		// Send message to Handler on UI thread
 		// that the downloading was finished.
@@ -52,6 +78,8 @@ public class DownloadProgressThread extends Thread {
 		Message msg = mHandler.obtainMessage();
 		Bundle b = new Bundle();
 		b.putBoolean("done", true);
+		b.putLong("total_size", -1);
+		b.putLong("downloaded_size", -1);
 		msg.setData(b);
 		mHandler.sendMessage(msg);
 	}

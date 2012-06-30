@@ -1,6 +1,10 @@
-kiwidict 0.096 2012-??-??
+kiwidict 0.097 2012-??-??
 
 
+
+kiwidict 0.096 2012-06-29
+
+- First release based on the English Wiktionary.
 
 kiwidict 0.095 2012-06-08
 

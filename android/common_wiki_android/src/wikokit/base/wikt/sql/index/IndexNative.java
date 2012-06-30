@@ -1,14 +1,18 @@
 /* IndexNative.java - SQL operations with the table 'index_native' in Wiktionary
  * parsed database.
  *
- * Copyright (c) 2009-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2009-2012 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikokit.base.wikt.sql.index;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.sql.*;
 
 
@@ -30,7 +34,10 @@ public class IndexNative {
 
     /** true, if there is any semantic relation in this Wiktionary article */
     private boolean has_relation;
-
+    
+    //private final static IndexNative[] NULL_INDEXNATIVE_ARRAY = new IndexNative[0];
+    private final static TPage[] NULL_TPAGE_ARRAY = new TPage[0];
+    
     public IndexNative(TPage _page, boolean _has_relation)
     {
         page            = _page;
@@ -153,7 +160,91 @@ public class IndexNative {
         
         return _in;
     }
-
+    
+    /** Selects rows from the table 'index_native' by the prefix of word in native language.<br><br>
+    *
+    * old SELECT foreign_word,native_page_title FROM index_en WHERE foreign_word LIKE 'water-%';
+    * new SELECT page_id,page_title FROM index_native WHERE page_title LIKE '%ater%' LIMIT 5;
+    * 
+    * @param  prefix_native_word the begining of the page_titles
+    * @param  limit    constraint of the number of rows returned,
+    *                  if it's negative then a constraint is omitted
+    * @param native_lang       native language in the Wiktionary,
+    *                          e.g. Russian language in Russian Wiktionary
+    * @param b_meaning return articles with definitions (constraint)
+    * @param  b_sem_rel return articles with semantic relations
+    * 
+    * @return array of words started from the prefix (empty array if they are absent)
+    */
+   public static TPage[] getByPrefixNative (
+                                       SQLiteDatabase db,
+                                       String prefix_native_word, int limit,
+                                       LanguageType native_lang,
+                                       //LanguageType foreign_lang,
+                                       //boolean b_meaning,
+                                       boolean b_sem_rel
+                                       ) {
+       if(0 == limit)
+           return NULL_TPAGE_ARRAY;
+       
+       List<TPage> _list = null;
+       
+       String table_name = "index_native";
+       
+       String str_limit = "";
+       int limit_with_reserve = limit;
+       if( limit_with_reserve > 0) {
+           //if(b_meaning)
+           //    limit_with_reserve += 142; // since some words without meaning will be skipped
+           str_limit = "" + limit_with_reserve;
+       }
+       
+       StringBuilder s_where = new StringBuilder();
+       if(null != prefix_native_word && prefix_native_word.length() > 0) {
+           s_where.append("page_title LIKE \"" + prefix_native_word + "%\"");
+       }
+       if(b_sem_rel)
+           s_where.append("AND has_relation > 0"); 
+       
+       // old SELECT foreign_word,foreign_has_definition,native_page_title FROM index_en WHERE foreign_word LIKE 'water-%';
+       // new SELECT page_id,page_title FROM index_native WHERE page_title LIKE '%ater%' LIMIT 5;
+       Cursor c;
+       c = db.query(table_name, 
+               new String[] { "page_id", "page_title", "has_relation"}, 
+               s_where.toString(), 
+               null, null, null, null,
+               str_limit);
+       
+       if (c.moveToFirst()) {
+           do {
+               int i_page_id = c.getColumnIndexOrThrow("page_id");
+               int i_page_title = c.getColumnIndexOrThrow("page_title");
+               int i_has_relation = c.getColumnIndexOrThrow("has_relation");
+               
+               int _page_id = c.getInt(i_page_id);
+               String _page_title = c.getString(i_page_title);
+               boolean _has_relation = 0 != c.getInt(i_has_relation);
+               
+               TPage _page = null;
+               // if(null != _page_title && _page_title.length() > 0)
+               _page = TPage.getByID(db, _page_id);
+               
+               if(null == _list)
+                   _list = new ArrayList<TPage>();
+               _list.add(_page);
+               //System.out.println("IndexNative:getByPrefixNative page_title=" + _page_title +
+               //        "; has_relation=" + _has_relation);
+               
+           } while (c.moveToNext() &&
+                   (limit_with_reserve < 0 || null == _list || _list.size() < limit_with_reserve));
+       }
+       if (c != null && !c.isClosed()) {
+           c.close();
+       }
+       if(null == _list)
+           return NULL_TPAGE_ARRAY;
+       return ((TPage[])_list.toArray(NULL_TPAGE_ARRAY));
+   }
 
     /** Deletes row from the table 'index_native' by the page (e.g. by page_title).<br><br>
      *

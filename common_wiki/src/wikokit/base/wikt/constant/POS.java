@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
 import wikokit.base.wikt.multi.en.POSTemplateEn;
+import wikokit.base.wikt.multi.en.name.POSEn;
 
 /** Strictly defined names of parts of speech
  * used in all wiktionaries.
@@ -37,7 +38,8 @@ public class POS {
             s = POSRu.getName(this);
 
         } else if(l == LanguageType.en) {
-            s = name;
+            //s = name;
+            s = POSEn.getName(this);
         } else {
             throw new NullPointerException("POS.toString(LanguageType l): Null LanguageType");
         }
@@ -53,11 +55,10 @@ public class POS {
 
         String s = "";
 
-        if(l  == LanguageType.ru) {
+        if(l == LanguageType.ru) {
             s = POSRu.getShortName(this);
-
         } else if(l == LanguageType.en) {
-            // skip?
+            s = POSEn.getShortName(this);
         } else {
             throw new NullPointerException("POS.getShortName(LanguageType l): Null LanguageType");
         }
@@ -122,12 +123,6 @@ public class POS {
         return name2type.keySet();
     }
 
-    /*
-    private final int number;
-    private PageNamespace(int number) { this.number = number; }
-    public int toInt() { return number; }
-    public static final PageNamespace MAIN = new PageNamespace(0);          //public static final byte NS_MAIN        = 0;
-    */
     
     /** The POS is unknown :( */
     public static final POS unknown         = new POS("unknown");
@@ -161,6 +156,7 @@ public class POS {
     
     public static final POS abbreviation    = new POS("abbreviation");
     public static final POS initialism      = new POS("initialism");
+    public static final POS contraction     = new POS("contraction");
     
     public static final POS symbol          = new POS("symbol");
     public static final POS letter          = new POS("letter");
@@ -188,10 +184,10 @@ public class POS {
 
     public static final POS proverb = new POS("proverb");
     public static final POS expression = new POS("expression");
-    public static final POS possessive_adjective = new POS("possessive_adjective");
+    public static final POS possessive_adjective = new POS("possessive adjective");
     public static final POS postposition = new POS("postposition");
     public static final POS gerund = new POS("gerund");
-    public static final POS pronominal_adverb = new POS("pronominal_adverb");
+    public static final POS pronominal_adverb = new POS("pronominal adverb");
     public static final POS adnominal = new POS("adnominal");
     public static final POS root = new POS("root");
     public static final POS pinyin_syllable = new POS("pinyin syllable");

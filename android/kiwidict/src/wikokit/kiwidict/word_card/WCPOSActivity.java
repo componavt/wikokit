@@ -8,7 +8,7 @@ import wikokit.base.wikt.sql.TMeaning;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.TTranslation;
 import wikokit.kiwidict.KWConstants;
-import wikokit.kiwidict.R;
+import wikokit.kiwidict.enwikt.R;
 import android.app.Activity;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;

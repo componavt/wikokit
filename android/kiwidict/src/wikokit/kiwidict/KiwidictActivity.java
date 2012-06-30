@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 import wikokit.base.wikipedia.language.LanguageType;
@@ -20,9 +21,11 @@ import wikokit.base.wikt.constant.POSLocal;
 import wikokit.base.wikt.constant.RelationLocal;
 import wikokit.base.wikt.multi.ru.name.POSRu;
 import wikokit.base.wikt.multi.ru.name.RelationRu;
+import wikokit.base.wikt.multi.en.name.POSEn;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TRelationType;
+import wikokit.kiwidict.enwikt.R;
 import wikokit.kiwidict.lang.LangChoice;
 import wikokit.kiwidict.lang.LangOnItemSelectedListener;
 import wikokit.kiwidict.lang.LangSpinnerAdapter;
@@ -80,7 +83,10 @@ public class KiwidictActivity extends Activity {
 	    
         wikt_conn = new Connect(this);  // context
     	
-        wikt_conn.openDatabase();
+        if(!wikt_conn.openDatabase()) {
+            Toast.makeText(this, "Error: database is not available.", Toast.LENGTH_LONG).show();
+            return;
+        }
         
         db = wikt_conn.getDB();
         KWConstants.setDatabase(db);
@@ -88,7 +94,14 @@ public class KiwidictActivity extends Activity {
         TPOS.createFastMaps (db);
         TRelationType.createFastMaps(db);   //System.out.println("initDatabase: DBName=" + wikt_parsed_conn.getDBName());
         RelationLocal _ = RelationRu.synonymy;
-        POSLocal $ = POSRu.noun;
+        
+        // fun initialization: inheritance vs. static fields
+        LanguageType native_lang = Connect.getNativeLanguage();
+        if(LanguageType.ru == native_lang) {
+            POSLocal $ = POSRu.noun;
+        } else if(LanguageType.en == native_lang) {
+            POSLocal $ = POSEn.noun;
+        }         
     }
 	
 	void initGUI() {
@@ -100,7 +113,7 @@ public class KiwidictActivity extends Activity {
 	    
 	    word_list = new WordList(this);
 	    
-	    CheckBox _lang_source_checkbox = (CheckBox) findViewById(wikokit.kiwidict.R.id.lang_source_checkbox);
+	    CheckBox _lang_source_checkbox = (CheckBox) findViewById(wikokit.kiwidict.enwikt.R.id.lang_source_checkbox);
 	    EditText _lang_source_text = (EditText) findViewById(R.id.lang_source_text);
 	    lang_choice.initialize( word_list, query_text_string, lspinner,
 	                            tip.getSourceLangCodes(), Connect.getNativeLanguage(),
@@ -174,11 +187,11 @@ public class KiwidictActivity extends Activity {
         	startActivityForResult(i, 0);
         } else {
         	openDatabase();
+        	
+        	// --------------------------------
+            // GUI
+            initGUI();
         }
-        
-        // --------------------------------
-        // GUI
-        initGUI();
     }
     
     
@@ -196,6 +209,10 @@ public class KiwidictActivity extends Activity {
 			
 			// ok, open database.
 			openDatabase();
+			
+			// --------------------------------
+            // GUI
+            initGUI();
 		}
 	}
     

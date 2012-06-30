@@ -6,7 +6,18 @@
 
 package wikokit.base.wikt.db;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.SequenceInputStream;
+import java.util.Enumeration;
+import java.util.Vector;
 
 import wikokit.base.wikipedia.sql.Connect;
 
@@ -118,11 +129,24 @@ public class FileUtil {
 		}
 	}
 	
+	/* Gets file path at SD card by the directory.
+     * 
+     * @see http://stackoverflow.com/questions/3382996/how-to-unzip-files-programmatically-in-android
+     */
+    public static String getPathAtExternalStorageByDirectoryName(String dir)
+    {   
+        StringBuilder path = new StringBuilder();
+        path.append(Environment.getExternalStorageDirectory().getAbsolutePath());
+        path.append(File.separator);
+        path.append(dir);
+
+        return path.toString();
+    }
+    
 	public static void deleteFileAtSDCard(String filename) {
 	    File file = new File( FileUtil.getFilePathAtExternalStorage( 
                 Connect.DB_DIR, filename));
 	    file.delete();
     }
 
-	
 }

@@ -69,12 +69,15 @@ public class Connect extends SQLiteOpenHelper {
         
         
         // English Wiktionary (parsed Wiktionary Android SQLite database)
-        en_wikt_version =  "enwikt20111008"; // "test_small"; // "enwikt20111008";
-        EN_DB_URL  = "http://wikokit.googlecode.com/files/todo test_small_part1_android_sqlite.zip";
-        EN_DB_URL2 = "http://wikokit.googlecode.com/files/todo test_small_part2_android_sqlite.zip";
+        en_wikt_version =  "enwikt20111008";
+        EN_DB_URL  = "http://wikokit.googlecode.com/files/enwikt20111008_part1_android_sqlite.zip";
+        EN_DB_URL2 = "http://wikokit.googlecode.com/files/enwikt20111008_part2_android_sqlite.zip";
+        //en_wikt_version =  "test_small"; // "test_small"; // "enwikt20111008";
+        //EN_DB_URL  = "http://wikokit.googlecode.com/files/test_small_part1_android_sqlite.zip";
+        //EN_DB_URL2 = "http://wikokit.googlecode.com/files/test_small_part2_android_sqlite.zip";
         
-        EN_DB_ZIPFILE_SIZE_MB = 1; // size of zipped file in MBytes
-        EN_DB_FILE_SIZE_MB = 1;
+        EN_DB_ZIPFILE_SIZE_MB = 316; // size of zipped file in MBytes
+        EN_DB_FILE_SIZE_MB = 755;
     }
     
     /** Gets language of Wiktionary/Wikipedia edition, main or native language,
@@ -130,15 +133,19 @@ public class Connect extends SQLiteOpenHelper {
     	return sqlite_filepath;
     }
     
-    public void openDatabase() {
+    public boolean openDatabase() {
     	// createDatabase();
 
 	 	try {	// Open the database
 	 		String path = FileUtil.getFilePathAtExternalStorage(DB_DIR, getDBFilename());
 	        db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.OPEN_READONLY);
+	        return true;
 		} catch(SQLException sqle) {
-			throw sqle;
+			// throw sqle; 
+		    System.out.println("Error: database is not available.");
 		}
+	 	
+	 	return false;
 	}
     
     /** Downloads and unzips database to SD card.

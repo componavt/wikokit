@@ -81,7 +81,7 @@ public class POSLocal {
         return s;
     }
 
-    /** Gets short name of POS in Russian. */
+    /** Gets short name of POS in some language (e.g. Russian). */
     public static String getShortName (POS p) {
 
         String s = pos2name_short.get(p);
