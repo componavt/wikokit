@@ -11,7 +11,7 @@ import wikokit.base.wikt.sql.TPage;
 import wikokit.kiwidict.DownloadAndInstallActivity;
 import wikokit.kiwidict.KWConstants;
 import wikokit.kiwidict.KiwidictActivity;
-import wikokit.kiwidict.R;
+import wikokit.kiwidict.enwikt.R;
 import wikokit.kiwidict.lang.LangChoice;
 import wikokit.kiwidict.util.GUI;
 import wikokit.kiwidict.word_card.WCActivity;

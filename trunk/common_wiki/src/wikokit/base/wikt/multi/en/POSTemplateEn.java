@@ -51,7 +51,7 @@ public class POSTemplateEn extends POSType {
         {   // store (POS, +=name_in_text) -> type2name_in_text
             Set<String> templates = type2name_in_text.get(type);
             if(null == templates)
-                templates = new HashSet();
+                templates = new HashSet<String>();
 
             templates.add(name_in_text);
             type2name_in_text.put(type, templates);
@@ -117,8 +117,11 @@ public class POSTemplateEn extends POSType {
     public static final POSType acronym_template= new POSTemplateEn("{{acronym}}",  POS.acronym); // ==={{acronym}}===
     public static final POSType acronym         = new POSTemplateEn("acronym",      POS.acronym); // ===Acronym===
     
-    public static final POSType abbreviation    = new POSTemplateEn("{{abbreviation}}", POS.abbreviation);        // ==={{abbreviation}}===
-    public static final POSType initialism      = new POSTemplateEn("{{initialism}}",   POS.initialism);
+    public static final POSType abbreviation_template = new POSTemplateEn("{{abbreviation}}", POS.abbreviation);// ==={{abbreviation}}===
+    public static final POSType abbreviation    = new POSTemplateEn("abbreviation", POS.abbreviation);
+    public static final POSType initialism_template = new POSTemplateEn("{{initialism}}", POS.initialism);
+    public static final POSType initialism      = new POSTemplateEn("initialism", POS.initialism);
+    public static final POSType contraction     = new POSTemplateEn("contraction", POS.contraction);
     
     public static final POSType symbol          = new POSTemplateEn("symbol",       POS.symbol);
     public static final POSType letter          = new POSTemplateEn("letter",       POS.letter);

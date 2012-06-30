@@ -5,6 +5,7 @@ import java.io.File;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.db.Downloader;
 import wikokit.base.wikt.db.FileUtil;
+import wikokit.kiwidict.enwikt.R;
 import wikokit.kiwidict.db.*;
 
 import android.app.Activity;
@@ -24,11 +25,14 @@ public class DownloadAndInstallActivity extends Activity {
 	private Button button_install;
 	private TextView textview_progressbar_message;
 	private ProgressBar progressbar_downloading_unzipping;
+	
 	private DownloadProgressThread download_thread;
 	private UnzippingProgressThread unzipping_thread;
+	private ConcatenatingProgressThread concatenating_thread;
 	
-	private static boolean b_downloading_first_message = true;
-	private static boolean b_unzipping_first_message = true;
+	//private static boolean b_downloading_first_message = true;
+	//private static boolean b_unzipping_first_message = true;
+	private static boolean b_concatenating_first_message = true;
 	
 	/** Called when the activity is first created. */
 	@Override
@@ -86,7 +90,7 @@ public class DownloadAndInstallActivity extends Activity {
 	}
 	
 	private void download() {
-		textview_progressbar_message.setText("Downloading...");
+		//textview_progressbar_message.setText( "Downloading..." ); message will be set from DownloadProgressThread
 
 		if( Downloader.isOnline(this) ) {
 			download_thread = new DownloadProgressThread(handler_downloading);
@@ -97,12 +101,53 @@ public class DownloadAndInstallActivity extends Activity {
 	}
 	
 	private void unzip() {
-		textview_progressbar_message.setText("Unzipping...");
+		// textview_progressbar_message.setText("Unzipping...");
 		progressbar_downloading_unzipping.setProgress(0);
 		
 		unzipping_thread = new UnzippingProgressThread(handler_unzipping);
 		unzipping_thread.start();
 	}
+	
+	private void concatenate() {
+	    
+	    if(areThereFilesToConcatenate())
+        {
+            textview_progressbar_message.setText("Concatenating files...");
+            progressbar_downloading_unzipping.setProgress(0);
+            
+            concatenating_thread = new ConcatenatingProgressThread(handler_concatenating);
+            concatenating_thread.start();
+        } else {
+            finalSuccess();
+        }
+    }
+	
+	private static boolean areThereFilesToConcatenate() {
+	    String[] file_parts = new String[2];
+        file_parts[0] = Connect.getDBFilenamePart1();
+        file_parts[1] = Connect.getDBFilenamePart2();
+        if( FileUtil.isFileExist(Connect.DB_DIR, file_parts[0]) && 
+            FileUtil.isFileExist(Connect.DB_DIR, file_parts[1]) )
+            return true;
+        else
+            return false;
+	}
+	
+	private static void deleteTempFiles() 
+	{
+	    // delete ZIP files, delete concatenated parts and exit
+        //File file = new File( FileUtil.getFilePathAtExternalStorage( 
+        //        Connect.DB_DIR, Connect.getDBZipFilename()));
+        //file.delete();
+	    
+        // delete parts
+	    FileUtil.deleteFileAtSDCard( Connect.getDBFilenamePart1() );// delete first file
+	    
+	    String part2 = Connect.getDBFilenamePart2();
+        if(null != part2)
+            FileUtil.deleteFileAtSDCard( part2 );                   // delete second file
+	}
+
 	
 	/** Starts downloading when user clicks button "Install". */
 	private void showInstallButtonAndPrepareProgressBar() {
@@ -112,7 +157,14 @@ public class DownloadAndInstallActivity extends Activity {
 				button_install.setEnabled(false);
 				layout_progress_bar.setVisibility(View.VISIBLE);
 				
-				// 2. check zipped file, if it exists - unzip it.
+				// 1. check unzipped parts of the huge database, concatenate it
+				if(areThereFilesToConcatenate())
+	            {
+	                concatenate();
+	                return;
+	            }
+	            
+				// 2. check zipped file, if it exists - unzip it, and 1. concatenate.
 				if( FileUtil.isFileExist(Connect.DB_DIR, Connect.getDBZipFilename()) ) {// 2.
 				    
 				    String zip_part2 = Connect.getDBZipFilename2();
@@ -122,7 +174,7 @@ public class DownloadAndInstallActivity extends Activity {
 			        }
 		    	}
 				
-				// 3. else download and unzip database to SD card
+				// 3. else download, 2. unzip and 1. concatenate database to SD card
 		    	FileUtil.createDirIfNotExists(Connect.DB_DIR);
 		    	download();
 		    	// unzip() will be called from handler_downloading when file will be downloaded.
@@ -145,13 +197,15 @@ public class DownloadAndInstallActivity extends Activity {
         	
 	            // Get the current value of the variable total from the message data
 	            // and update the progress bar.
-	        	if( b_downloading_first_message ) {
-	        		b_downloading_first_message = false;
-	        		int total_size = (int)msg.getData().getLong("total_size");
+        	    int total_size = (int)msg.getData().getLong("total_size");
+	        	if( total_size > 0 ) {
 	        		progressbar_downloading_unzipping.setMax( total_size );	// = about KWConstants.DB_ZIPFILE_SIZE_MB
-	        	}	            
-	            int downloaded_size = (int)msg.getData().getLong("downloaded_size");
-	            progressbar_downloading_unzipping.setProgress(downloaded_size);
+	        		int downloaded_size = (int)msg.getData().getLong("downloaded_size");
+	        		progressbar_downloading_unzipping.setProgress(downloaded_size);
+	        	} else {
+    	            String s = msg.getData().getString("progressbar_message");
+    	            textview_progressbar_message.setText( s );
+	        	}
         	}
         }
     };
@@ -164,36 +218,66 @@ public class DownloadAndInstallActivity extends Activity {
         	boolean b_done = msg.getData().getBoolean("done");
         	if(b_done)
         	{
-        		// database unzipped, then exit from this activity to dictionary
+        		// database unzipped, then 
+        	    // 1) optional:concatenate unzipped parts  
+        	    // 2) exit from this activity to dictionary
         		boolean b_success = msg.getData().getBoolean("success");
         		if(b_success) {
-        			
-        			// delete ZIP file and exit
-        			//File file = new File( FileUtil.getFilePathAtExternalStorage( 
-        			//        Connect.DB_DIR, Connect.getDBZipFilename()));
-        			//file.delete();
-        			finalSuccess();
+                    concatenate(); // check unzipped parts of the huge database, concatenate it
         		}else 
         			finalFailed();
         		
         	} else {
         	
-	        	if( b_unzipping_first_message ) {
-	        		b_unzipping_first_message = false;
-	        		int total_size = (int)msg.getData().getLong("total_size");
+        	    int total_size = (int)msg.getData().getLong("total_size");
+	        	if( total_size > 0 ) {
 	        		progressbar_downloading_unzipping.setMax( total_size );	// = about KWConstants.DB_FILE_SIZE_MB
+	        		int unzipped_size = (int)msg.getData().getLong("unzipped_size");
+	                progressbar_downloading_unzipping.setProgress(unzipped_size);
+	        	} else {
+	        	    String s = msg.getData().getString("progressbar_message");
+                    textview_progressbar_message.setText( s );
 	        	}
-	            
-	            int unzipped_size = (int)msg.getData().getLong("unzipped_size");
-	            progressbar_downloading_unzipping.setProgress(unzipped_size);
         	}
+        }
+    };
+    
+    /** Handler on the "concatenating" thread, to update the progress bar. */
+    final Handler handler_concatenating = new Handler() {
+        
+        public void handleMessage(Message msg) {
+            
+            boolean b_done = msg.getData().getBoolean("done");
+            if(b_done)
+            {
+                // database files concatenated, then exit from this activity to dictionary
+                boolean b_success = msg.getData().getBoolean("success");
+                if(b_success) {
+                    finalSuccess();
+                }else 
+                    finalFailed();
+                
+            } else {
+            
+                if( b_concatenating_first_message ) {
+                    b_concatenating_first_message = false;
+                    //int total_size = (int)msg.getData().getLong("total_size");
+                    int total_size = Connect.getDatabaseFileSizeMB() * 1024 * 1024;
+                    progressbar_downloading_unzipping.setMax( total_size );
+                }
+                
+                int read_bytes = (int)msg.getData().getLong("read_bytes");
+                progressbar_downloading_unzipping.setProgress(read_bytes);
+            }
         }
     };
 	
 	private void finalSuccess()
     {
-    	setResult(Activity.RESULT_OK);
-    	finish();
+	    setResult(Activity.RESULT_OK);
+	    deleteTempFiles();
+        finish();
+	    
     }
 	
 	private void finalFailed()

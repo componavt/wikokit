@@ -8,7 +8,7 @@ import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.index.IndexForeign;
 import wikokit.kiwidict.KWConstants;
-import wikokit.kiwidict.R;
+import wikokit.kiwidict.enwikt.R;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;

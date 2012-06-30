@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.util.TypedValue;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
+import wikokit.kiwidict.enwikt.R;
 
 //import wikokit.kiwidict.db.DataBaseHelper;
 

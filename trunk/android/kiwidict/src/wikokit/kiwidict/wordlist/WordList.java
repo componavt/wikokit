@@ -8,6 +8,7 @@ import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.index.IndexForeign;
+import wikokit.base.wikt.sql.index.IndexNative;
 import wikokit.kiwidict.lang.LangChoice;
 import wikokit.kiwidict.search_window.QueryTextString;
 import wikokit.kiwidict.word_card.WCActivity;
@@ -160,7 +161,7 @@ public class WordList extends ListActivity {
      * or from the table 'index_XX', where XX is a foreign language code.
     */
     public boolean isActiveIndexForeign() {
-        //System.out.println("WordList.isActiveIndexForeign(), lang_choice.getNumberSourceLang() = " + lang_choice.getNumberSourceLang());
+        System.out.println("WordList.isActiveIndexForeign(), lang_choice.getNumberSourceLang() = " + lang_choice.getNumberSourceLang());
         return lang_choice.getNumberSourceLang() == 1;
     }
     
@@ -179,49 +180,63 @@ public class WordList extends ListActivity {
          // wheather to filter words by destination language code (destination language filter check box)
          // todo boolean lang_dest_selected = lang_choice.getDestLangSelected();
          
-         if(!isActiveIndexForeign()){
-
-             if(null != wordlist_async) 
-                 wordlist_async.cancel(true);
+         if( lang_choice.isNativeLanguageActive() ) {
              
-             wordlist_async = new WordListAsyncUpdater(
-                     db, word,
-                     n_words_list, // any (first) N words, since "" == prefix
-                     b_skip_redirects,
-                     lang_choice.getSourceLang(), // lang_source_value,
-false,//todo                             filter_mean_sem_transl.filterByMeaning(),  //meaning_checkbox_value,
-false,
-                     this,
-                     word_list_adapter,
-                     spinning_wheel).execute();
-/*             
-             TPage[] page_array_new = TPage.getByPrefix ( db, word,
-                             n_words_list, // any (first) N words, since "" == prefix
-                             b_skip_redirects,
-                             lang_choice.getSourceLang(), // lang_source_value,
-false,//todo                             filter_mean_sem_transl.filterByMeaning(),  //meaning_checkbox_value,
-false); //todo                             filter_mean_sem_transl.filterBySemanticRelation()); //sem_rel_CheckBox_value);
-*/
-         }
-        else {
-
-             TLang foreign_lang = lang_choice.getSourceLang()[0];
-
-             if(null == foreign_lang) {
-                 Toast.makeText(context, 
-                         "Error in WordList.updateWordList(): foreign_lang is NULL!", Toast.LENGTH_LONG).show();
-                 return;
-             }
-             
-             index_foreign = IndexForeign.getByPrefixForeign( db, word,
-                             n_words_list,
-                             native_lang,
-                             foreign_lang.getLanguage(),
-false, //todo                             filter_mean_sem_transl.filterByMeaning(),
+             TPage[] page_array_new = IndexNative.getByPrefixNative( db, word,
+                     n_words_list,
+                     native_lang,
 false);//todo                             filter_mean_sem_transl.filterBySemanticRelation());
-
-             foreign_array_string = copyForeignWordsToStringArray(index_foreign);
-             word_list_adapter.updateData(foreign_array_string, index_foreign);
+             
+             page_array = page_array_new;
+             page_array_string = copyWordsToStringArray(page_array);
+             word_list_adapter.updateData(page_array_string, page_array);
+             
+         } else {
+         
+             if(!isActiveIndexForeign()){ // all words of all languages
+                 
+                 if(null != wordlist_async) 
+                     wordlist_async.cancel(true);
+                 
+                 wordlist_async = new WordListAsyncUpdater(
+                         db, word,
+                         n_words_list, // any (first) N words, since "" == prefix
+                         b_skip_redirects,
+                         lang_choice.getSourceLang(), // lang_source_value,
+    false,//todo                             filter_mean_sem_transl.filterByMeaning(),  //meaning_checkbox_value,
+    false,
+                         this,
+                         word_list_adapter,
+                         spinning_wheel).execute();
+    /*             
+                 TPage[] page_array_new = TPage.getByPrefix ( db, word,
+                                 n_words_list, // any (first) N words, since "" == prefix
+                                 b_skip_redirects,
+                                 lang_choice.getSourceLang(), // lang_source_value,
+    false,//todo                             filter_mean_sem_transl.filterByMeaning(),  //meaning_checkbox_value,
+    false); //todo                             filter_mean_sem_transl.filterBySemanticRelation()); //sem_rel_CheckBox_value);
+    */
+             }
+            else {
+    
+                 TLang foreign_lang = lang_choice.getSourceLang()[0];
+    
+                 if(null == foreign_lang) {
+                     Toast.makeText(context, 
+                             "Error in WordList.updateWordList(): foreign_lang is NULL!", Toast.LENGTH_LONG).show();
+                     return;
+                 }
+                 
+                 index_foreign = IndexForeign.getByPrefixForeign( db, word,
+                                 n_words_list,
+                                 native_lang,
+                                 foreign_lang.getLanguage(),
+    false, //todo                             filter_mean_sem_transl.filterByMeaning(),
+    false);//todo                             filter_mean_sem_transl.filterBySemanticRelation());
+    
+                 foreign_array_string = copyForeignWordsToStringArray(index_foreign);
+                 word_list_adapter.updateData(foreign_array_string, index_foreign);
+             }
          }
      }
     
@@ -269,8 +284,9 @@ false);//todo                             filter_mean_sem_transl.filterBySemanti
              return "";
          
          String selected_item = "";
-         if(!isActiveIndexForeign()){
-             if( position < page_array_string.length ) {
+         // all languages           or native language
+         if(!isActiveIndexForeign() || lang_choice.isNativeLanguageActive()){
+             if(null != page_array_string && position < page_array_string.length ) {
                  
                  //    cur != null && cur.getValue()!= null && cur.getValue().length() > 0) {
                  selected_item = page_array_string[position];
@@ -302,9 +318,9 @@ false);//todo                             filter_mean_sem_transl.filterBySemanti
          //int selected_index = l.getSelectionModel().getSelectedIndex();
          if(selected_index < 0)
              selected_index = 0; // selected first word, when user pressed 'Enter'
-
+         
          // native_lang : LanguageType
-         if(!isActiveIndexForeign()){
+         if(!isActiveIndexForeign() || lang_choice.isNativeLanguageActive()){
              // get data for "page_array[l.selectedIndex]"
              runWordCardActivity(page_array[ selected_index ]);
              
