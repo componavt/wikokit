@@ -5,7 +5,7 @@ import java.io.File;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.db.Downloader;
 import wikokit.base.wikt.db.FileUtil;
-import wikokit.kiwidict.enwikt.R;
+import wikokit.kiwidict.R;
 import wikokit.kiwidict.db.*;
 
 import android.app.Activity;

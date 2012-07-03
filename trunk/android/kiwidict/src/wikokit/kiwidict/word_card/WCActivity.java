@@ -12,7 +12,7 @@ import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TLangPOS;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.kiwidict.KWConstants;
-import wikokit.kiwidict.enwikt.R;
+import wikokit.kiwidict.R;
 import android.app.Activity;
 import android.app.TabActivity;
 import android.content.Intent;

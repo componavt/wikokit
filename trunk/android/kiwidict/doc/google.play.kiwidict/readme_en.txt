@@ -25,4 +25,8 @@ P.S. Dear native speakers! If you can translate this text into your native langu
 
 P.P.S. Dear English native speakers! Feel free to correct my errors in English at this page :) Thank you!
 
+Acknowledgments. 
 
+We thank Sergey Krizhanovsky for translation this text into Deutsch.
+
+This software is quite impossible without the hard work of many Wiktionary lexicographers. Wiktionary - the dictionary to rule them all :)
