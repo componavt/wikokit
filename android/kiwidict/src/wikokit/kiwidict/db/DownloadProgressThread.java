@@ -17,7 +17,7 @@ import java.net.URL;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.kiwidict.DownloadAndInstallActivity;
 import wikokit.kiwidict.KWConstants;
-import wikokit.kiwidict.enwikt.R;
+import wikokit.kiwidict.R;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;

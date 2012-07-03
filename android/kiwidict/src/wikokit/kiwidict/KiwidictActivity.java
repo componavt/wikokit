@@ -25,7 +25,7 @@ import wikokit.base.wikt.multi.en.name.POSEn;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TRelationType;
-import wikokit.kiwidict.enwikt.R;
+import wikokit.kiwidict.R;
 import wikokit.kiwidict.lang.LangChoice;
 import wikokit.kiwidict.lang.LangOnItemSelectedListener;
 import wikokit.kiwidict.lang.LangSpinnerAdapter;
