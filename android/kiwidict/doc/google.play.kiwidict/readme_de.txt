@@ -21,3 +21,5 @@ http://code.google.com/p/wikokit/downloads/detail?name=enwikt20111008_android_sq
 Ich widme mein Programm Natascha.
 
 KiwiDict ist ein mit offener Quellkode Programm: http://code.google.com/p/wikokit/
+
+Ich danke den Autoren von Wiktionary für die mühsame Arbeit bei der Erschaffung des Wörterbuches. Wiktionary ist das beste Wörterbuch.
