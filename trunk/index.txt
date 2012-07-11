@@ -82,6 +82,7 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
 
 == Further reading ==
 === In English ===
+  * A. Krizhanovsky. [http://scipeople.ru/publication/108159/ A quantitative analysis of the English lexicon in Wiktionaries and WordNet] // Preprint. 2012. International Journal of Intelligent Information Technologies (IJIIT)
   * F. Lin, A. Krizhanovsky. [http://arxiv.org/abs/1109.0732 Multilingual ontology matching based on Wiktionary data accessible via SPARQL endpoint] // In: Proceedings of the 13th Russian Conference on Digital Libraries RCDL’2011. October 19-22, Voronezh, Russia. – pp. 19-26. [http://ceur-ws.org/Vol-803/paper1.pdf link2]
   * A. A. Krizhanovsky. [http://arxiv.org/abs/1011.1368 Transformation of Wiktionary entry structure into tables and relations in a relational database schema.] Preprint. 2010.
   * A. A. Krizhanovsky. [http://arxiv.org/abs/1006.5040 The comparison of Wiktionary thesauri transformed into the machine-readable format.] Preprint. 2010.
