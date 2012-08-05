@@ -19,7 +19,7 @@ CREATE  TABLE IF NOT EXISTS `page` (
   PRIMARY KEY (`id`) ,
   INDEX `idx_page_title` (`page_title`(7) ASC) )
 ENGINE = InnoDB
-COMMENT = 'titles of wiki articles, entry names';
+COMMENT = 'titles of wiki articles, entry names' ;
 
 
 -- -----------------------------------------------------
@@ -37,8 +37,8 @@ CREATE  TABLE IF NOT EXISTS `lang_pos` (
   `redirect_type` TINYINT UNSIGNED NULL COMMENT 'Type of soft redirect (Wordform, Misspelling)' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `unique_page_lang_pos` (`page_id` ASC, `lang_id` ASC, `pos_id` ASC, `etymology_n` ASC) )
-ENGINE = InnoDB
-COMMENT = 'terms found in wiki-texts';
+ENGINE = InnoDB, 
+COMMENT = 'terms found in wiki-texts' ;
 
 
 -- -----------------------------------------------------
@@ -51,8 +51,8 @@ CREATE  TABLE IF NOT EXISTS `wikipedia` (
   `page_title` VARCHAR(255) BINARY NOT NULL COMMENT 'copy from MediaWiki page.page_title, see http://www.mediawiki.org/wiki/Page_table' ,
   PRIMARY KEY (`id`) ,
   INDEX `idx_page_title` (`page_title`(7) ASC) )
-ENGINE = InnoDB
-COMMENT = 'Titles of related Wikipedia articles.';
+ENGINE = InnoDB, 
+COMMENT = 'Titles of related Wikipedia articles.' ;
 
 
 -- -----------------------------------------------------
@@ -76,8 +76,8 @@ CREATE  TABLE IF NOT EXISTS `page_wikipedia` (
     REFERENCES `page` (`id` )
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB
-COMMENT = 'pages which contain the term';
+ENGINE = InnoDB, 
+COMMENT = 'pages which contain the term' ;
 
 
 -- -----------------------------------------------------
@@ -93,8 +93,8 @@ CREATE  TABLE IF NOT EXISTS `lang` (
   `n_translations` INT(10) UNSIGNED NOT NULL COMMENT 'Number of translation pairs in this lang' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `code` (`code` ASC) )
-ENGINE = MyISAM
-COMMENT = 'The language of the word in question. \n';
+ENGINE = InnoDB, 
+COMMENT = 'The language of the word in question. \n' ;
 
 
 -- -----------------------------------------------------
@@ -108,8 +108,8 @@ CREATE  TABLE IF NOT EXISTS `inflection` (
   `inflected_form` VARCHAR(255) BINARY NOT NULL COMMENT 'Inflected form, e.g. \"cats\" for \"cat\".' ,
   PRIMARY KEY (`id`) ,
   INDEX `idx_inflected_form` (`inflected_form`(7) ASC) )
-ENGINE = InnoDB
-COMMENT = 'terms found in wiki-texts';
+ENGINE = InnoDB, 
+COMMENT = 'terms found in wiki-texts' ;
 
 
 -- -----------------------------------------------------
@@ -124,8 +124,8 @@ CREATE  TABLE IF NOT EXISTS `page_inflection` (
   `term_freq` INT(6) UNSIGNED NOT NULL COMMENT 'term frequency in the document' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `page_inflection_id_id` (`page_id` ASC, `inflection_id` ASC) )
-ENGINE = InnoDB
-COMMENT = 'pages which contain the term';
+ENGINE = InnoDB, 
+COMMENT = 'pages which contain the term' ;
 
 
 -- -----------------------------------------------------
@@ -139,8 +139,8 @@ CREATE  TABLE IF NOT EXISTS `lang_term_disabled` (
   `hyphenation` VARCHAR(255) NULL ,
   `audio_files` VARCHAR(255) NULL ,
   PRIMARY KEY (`page_id`, `lang_id`) )
-ENGINE = InnoDB
-COMMENT = 'titles of wiki articles, entry names';
+ENGINE = InnoDB, 
+COMMENT = 'titles of wiki articles, entry names' ;
 
 
 -- -----------------------------------------------------
@@ -149,12 +149,12 @@ COMMENT = 'titles of wiki articles, entry names';
 DROP TABLE IF EXISTS `part_of_speech` ;
 
 CREATE  TABLE IF NOT EXISTS `part_of_speech` (
-  `id` SMALLINT NOT NULL AUTO_INCREMENT ,
+  `id` TINYINT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name` (`name` ASC) )
-ENGINE = MyISAM
-COMMENT = 'The language of the word in question. \n';
+ENGINE = InnoDB, 
+COMMENT = 'The language of the word in question. \n' ;
 
 
 -- -----------------------------------------------------
@@ -169,8 +169,8 @@ CREATE  TABLE IF NOT EXISTS `meaning` (
   `wiki_text_id` INT(10) UNSIGNED NULL COMMENT 'NULL if word without definition but with synonym' ,
   PRIMARY KEY (`id`) ,
   INDEX `lang_pos_id` (`lang_pos_id` ASC) )
-ENGINE = InnoDB
-COMMENT = 'Meaning includes: definition; sem. rel., translations.';
+ENGINE = InnoDB, 
+COMMENT = 'Meaning includes: definition; sem. rel., translations.' ;
 
 
 -- -----------------------------------------------------
@@ -186,8 +186,8 @@ CREATE  TABLE IF NOT EXISTS `relation` (
   `meaning_summary` VARCHAR(511) NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `meaning_id` (`meaning_id` ASC) )
-ENGINE = InnoDB
-COMMENT = 'Semantic relations (synonymy, antonymy, etc.)';
+ENGINE = InnoDB, 
+COMMENT = 'Semantic relations (synonymy, antonymy, etc.)' ;
 
 
 -- -----------------------------------------------------
@@ -215,8 +215,8 @@ CREATE  TABLE IF NOT EXISTS `wiki_text_words` (
   `page_inflection_id` INT(10) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `wiki_text_id` (`wiki_text_id` ASC) )
-ENGINE = InnoDB
-COMMENT = 'Binds wiki_text with wiki words (inflection)';
+ENGINE = InnoDB, 
+COMMENT = 'Binds wiki_text with wiki words (inflection)' ;
 
 
 -- -----------------------------------------------------
@@ -229,8 +229,8 @@ CREATE  TABLE IF NOT EXISTS `relation_type` (
   `name` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `name_unique` (`name` ASC) )
-ENGINE = InnoDB
-COMMENT = 'Types of semantic relations (synonym, antonym, etc.)';
+ENGINE = InnoDB, 
+COMMENT = 'Types of semantic relations (synonym, antonym, etc.)' ;
 
 
 -- -----------------------------------------------------
@@ -276,8 +276,8 @@ CREATE  TABLE IF NOT EXISTS `index_native` (
   UNIQUE INDEX `page_id` (`page_id` ASC) ,
   INDEX `idx_page_title` (`page_title`(7) ASC) ,
   PRIMARY KEY (`page_id`) )
-ENGINE = InnoDB
-COMMENT = 'words (with definitions) in native language';
+ENGINE = InnoDB, 
+COMMENT = 'words (with definitions) in native language' ;
 
 
 -- -----------------------------------------------------
@@ -292,8 +292,8 @@ CREATE  TABLE IF NOT EXISTS `native_red_link` (
   `section_type` TINYINT UNSIGNED NULL COMMENT 'The section which contain red link word, e.g. Definition, or Synonyms, etc.' ,
   PRIMARY KEY (`id`) ,
   INDEX `idx_red_link` (`red_link`(7) ASC) )
-ENGINE = InnoDB
-COMMENT = 'words (without articles) in native language';
+ENGINE = InnoDB, 
+COMMENT = 'words (without articles) in native language' ;
 
 
 -- -----------------------------------------------------
@@ -309,8 +309,8 @@ CREATE  TABLE IF NOT EXISTS `quote` (
   `ref_id` INT(9) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `meaning_id_INDEX` (`meaning_id` ASC) )
-ENGINE = InnoDB
-COMMENT = 'Stores quotations and examples.';
+ENGINE = InnoDB, 
+COMMENT = 'Stores quotations and examples.' ;
 
 
 -- -----------------------------------------------------
@@ -365,8 +365,8 @@ CREATE  TABLE IF NOT EXISTS `quot_publisher` (
   `text` VARCHAR(512) BINARY NOT NULL ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `text_UNIQUE` (`text` ASC) )
-ENGINE = InnoDB
-COMMENT = 'in ruwikt: издание';
+ENGINE = InnoDB, 
+COMMENT = 'in ruwikt: издание' ;
 
 
 -- -----------------------------------------------------
@@ -410,8 +410,8 @@ CREATE  TABLE IF NOT EXISTS `quot_ref` (
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `year_auth_tit_pub_s_UNIQUE` (`year_id` ASC, `author_id` ASC, `title` ASC, `publisher_id` ASC, `source_id` ASC) ,
   INDEX `title_INDEX` (`title` ASC) )
-ENGINE = InnoDB
-COMMENT = 'links to tables with reference information (year, etc.)';
+ENGINE = InnoDB, 
+COMMENT = 'links to tables with reference information (year, etc.)' ;
 
 
 
