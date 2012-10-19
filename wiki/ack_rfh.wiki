@@ -36,7 +36,7 @@
 == Библиография ==
 
 === 2012 ===
-  * А.А. Крижановский, А.В. Смирнов. Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря // Известия Академии наук: Теория и системы управления. N6 (номера страниц???), 2012
+  * А.А. Крижановский, А.В. Смирнов. Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря // Известия Академии наук: Теория и системы управления. N2 (номера страниц???), 2013
   * Крижановский А. А., Луговая Н. Б., Круглов В. М. [http://textualheritage.org/content/view/398/188/lang,russian/ Извлечение и анализ дат произведений в корпусе цитат онлайн-словаря] // Информационные технологии и письменное наследие: материалы VI междунар. науч. конф. El'Manuscript-12 (Петрозаводск, 3-8 сентября 2012) / отв. ред. В.А.Баранов, А.Г.Варфоломеев. – Петрозаводск; Ижевск, 2012. – 328 с. – C. 137—142. ISBN 978-5-8021-1402-5. ([http://textualheritage.org/component/option,com_docman/task,doc_download/gid,290/Itemid,/lang,russian/ PDF])
   * A. Krizhanovsky. [http://scipeople.ru/publication/108159/ A quantitative analysis of the English lexicon in Wiktionaries and WordNet] // Preprint. 2012. International Journal of Intelligent Information Technologies (IJIIT)
   * A. Karpov, I. Kipyatkova, A. Ronzhin. [http://www.mica.edu.vn/sltu2012/files/proceedings/16.pdf Speech recognition for east slavic languages: the case of Russian] // 3rd International Workshop on Spoken Language Technologies for Under-resourced Languages, 7-9 May 2012, Cape Town, South Africa. Pp.  84-89.
