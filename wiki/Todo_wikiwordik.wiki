@@ -44,6 +44,7 @@ REDIRECT # (todo and done):
   # + i18n: "See нелётный (Redirect)" vs. "См. нелётный (Перенаправление)"
 
 Done (top - new, bottom - old):
+  # + field `wiki_text.wikified_text` - contains definition with wiki markup, but without context labels
   # generate statistics about number of translations, like [SQLWiktParsedPhantasmagoria], done... see [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations Semantic_relations], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Translations Translations]
   # To add INDEX keys in SQL (`wiki_text_words.wiki_text_id: INDEX wiki_text_id`)
   # remove the field `meaning.definition`
