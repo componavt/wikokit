@@ -1,7 +1,7 @@
 /* WMeaning.java - corresponds to a Meaning (definition + quotations)
  * level of Wiktionary word.
  * 
- * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
@@ -9,7 +9,7 @@ package wikokit.base.wikt.word;
 
 import wikokit.base.wikt.util.WikiWord;
 import wikokit.base.wikt.util.WikiText;
-import wikokit.base.wikt.constant.ContextLabel;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.multi.ru.WMeaningRu;
@@ -25,9 +25,12 @@ public class WMeaning {
     // + wiki word, + number of wiki word or number of first char of wikiword in definition
     
     /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s" */
-    private ContextLabel[]  labels;
+    private Label[]  labels;
 
     private WikiText definition;
+
+    /** Meaning text with wiki markup, but without context labels. */
+    private String wikified_text;
 
     /** True, if the definition defines inflection of the word with the help of
      * (1) template {{form of|}}, or {{plural of|}}, 
@@ -76,7 +79,7 @@ public class WMeaning {
      * @param _template_not_def true if there is template (e.g. {{form of|}} or
      * {{plural of|}}) instead of definiton text (in enwikt)
      */
-    public WMeaning(String page_title,ContextLabel[] _labels,
+    public WMeaning(String page_title,Label[] _labels,
                     String _definition, WQuote[] _quote, boolean _template_not_def) {
         labels = _labels;
         wikified_text = _definition;
@@ -101,7 +104,7 @@ public class WMeaning {
     }
 
     /** Gets array of context labels in the definition. */
-    public ContextLabel[] getLabels() {
+    public Label[] getLabels() {
         return labels;
     }
 
@@ -118,6 +121,11 @@ public class WMeaning {
     /** Gets wiki_text. */
     public WikiText getWikiText() {
         return definition;
+    }
+
+    /** Gets meaning text (definition) with wiki markup, but without context labels. */
+    public String getWikifiedText() {
+   	return wikified_text;
     }
     
     /** Gets array of quotes (sentences) from the definition. */
@@ -203,17 +211,6 @@ public class WMeaning {
         }
 
         return wm;
-    }
-    
-    //////////////////////
-    /// JWKTL interface
-    //////////////////////
-    
-    /** Meaning text with wiki markup, with context labels. */
-    private String wikified_text;
-    
-    public String getWikifiedText() {
-   	return wikified_text;
     }
 
 }

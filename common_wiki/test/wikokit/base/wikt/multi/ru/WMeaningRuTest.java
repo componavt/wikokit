@@ -3,7 +3,7 @@ package wikokit.base.wikt.multi.ru;
 
 import wikokit.base.wikt.multi.ru.WMeaningRu;
 import wikokit.base.wikt.constant.POS;
-import wikokit.base.wikt.constant.ContextLabel;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.util.WikiWord;
 import wikokit.base.wikt.word.WQuote;
 
@@ -49,7 +49,7 @@ public class WMeaningRuTest {
         page_title      = "самолёт";
         lang_section    = LanguageType.ru; // Russian word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _definition_wiki = "летательный [[аппарат]] тяжелее [[воздух]]а с жёстким [[крыло]]м и собственным [[мотор]]ом";
         String _definition      = "летательный аппарат тяжелее воздуха с жёстким крылом и собственным мотором";
         WikiWord[] ww = new WikiWord[4];
@@ -72,8 +72,10 @@ public class WMeaningRuTest {
         assertTrue(null != result);
         assertTrue(result.getDefinition().equalsIgnoreCase(_definition));
         
+        assertTrue(result.getWikifiedText().equalsIgnoreCase(_definition_wiki));
+        
         // labels == null
-        ContextLabel[] labels_result = result.getLabels();
+        Label[] labels_result = result.getLabels();
         assertEquals(0, labels_result.length);
         
         // wikiword.size = 4;
@@ -92,7 +94,7 @@ public class WMeaningRuTest {
         page_title      = "самолёт";
         lang_section    = LanguageType.ru; // Russian word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         WikiWord[] ww = new WikiWord[4];
 
         WQuote[] _quote = null;
@@ -183,7 +185,7 @@ public class WMeaningRuTest {
         page_title      = "лубяной";
         lang_section    = LanguageType.ru; // Russian word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
 
         String _definition = "имеющий волокно, пригодное для выработки пряжи";
         WikiWord[] ww = new WikiWord[4];
@@ -198,7 +200,7 @@ public class WMeaningRuTest {
         assertTrue(result.getDefinition().equalsIgnoreCase(_definition));
 
         // labels = {сельск.}
-        ContextLabel[] labels_result = result.getLabels();
+        Label[] labels_result = result.getLabels();
         assertEquals(1, labels_result.length);
         assertTrue(labels_result[0].toString().equalsIgnoreCase( "сельск." ) );
 
@@ -327,7 +329,7 @@ public class WMeaningRuTest {
         page_title      = "алкоголь";
         lang_section    = LanguageType.ru; // Russian word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _definition1 = "алкогольные, спиртные напитки, вино; винный спирт";
         String _definition2 = "то же, что спирт, бесцветная летучая жидкость, получаемая при ферментации сахара";
         WikiWord[] ww = new WikiWord[4];
@@ -413,7 +415,7 @@ public class WMeaningRuTest {
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
 
         // labels == null
-        ContextLabel[] labels_result = result[0].getLabels();
+        Label[] labels_result = result[0].getLabels();
         assertEquals(0, labels_result.length);
 
         // wikiword.size = 1;
@@ -453,7 +455,7 @@ public class WMeaningRuTest {
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
 
         // labels == null
-        ContextLabel[] labels_result = result[0].getLabels();
+        Label[] labels_result = result[0].getLabels();
         assertEquals(0, labels_result.length);
 
         // wikiword.size = 1;
@@ -502,7 +504,7 @@ public class WMeaningRuTest {
         page_title      = "самолёт";
         lang_section    = LanguageType.ru; // Russian word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _definition = "летательный аппарат тяжелее воздуха с жёстким крылом и собственным мотором";
         WikiWord[] ww = new WikiWord[4];
 

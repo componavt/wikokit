@@ -4,7 +4,7 @@ package wikokit.base.wikt.multi.en;
 //import wikipedia.sql.Connect;
 import wikokit.base.wikt.multi.en.WMeaningEn;
 import wikokit.base.wikt.constant.POS;
-import wikokit.base.wikt.constant.ContextLabel;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.util.WikiWord;
 import wikokit.base.wikt.word.WQuote;
 
@@ -55,7 +55,7 @@ public class WMeaningEnTest {
         page_title      = "luck";
         lang_section    = LanguageType.en; // English word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _def1_source =
             "# Something that happens to someone by [[chance]], a chance occurrence.\n" +
             "#: ''The raffle is just a matter of '''luck'''.''";
@@ -90,7 +90,7 @@ public class WMeaningEnTest {
         assertTrue(result1.getDefinition().equalsIgnoreCase(_def1_result));
 
         // labels == null
-        ContextLabel[] labels_result = result1.getLabels();
+        Label[] labels_result = result1.getLabels();
         assertEquals(0, labels_result.length);
 
         // wikiword.size = 1; chance
@@ -560,7 +560,7 @@ public class WMeaningEnTest {
         page_title      = "beneficiary";
         lang_section    = LanguageType.en; // English word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
 
         String _def_source =
             "# {{legal}} One who [[benefit]]s from the distribution, especially of an estate.\n" +
@@ -584,7 +584,7 @@ public class WMeaningEnTest {
         assertTrue(result.getDefinition().equalsIgnoreCase(_def_result));
 
         // labels == null
-        ContextLabel[] labels_result = result.getLabels();
+        Label[] labels_result = result.getLabels();
         assertEquals(0, labels_result.length);
 
         // wikiword.size = 4;
@@ -604,7 +604,7 @@ public class WMeaningEnTest {
         page_title      = "picture";
         lang_section    = LanguageType.en; // English word
         
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _definition1 = "A painting.";
         String _definition2 = "A photograph.";
         String _definition3 = "A motion picture.";
@@ -649,7 +649,7 @@ public class WMeaningEnTest {
         page_title      = "test_word";
         lang_section    = LanguageType.en; // English word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _definition1 = "First definition";
         String _definition2 = "Second definition.";
         WikiWord[] ww = new WikiWord[4];
@@ -700,7 +700,7 @@ public class WMeaningEnTest {
         page_title      = "airplane";
         lang_section    = LanguageType.en; // English word
 
-        ContextLabel[] _labels = new ContextLabel[0];   //_labels[0] = LabelRu.p;
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _definition1 = "First definition";
         String _definition2 = "Second definition.";
         WikiWord[] ww = new WikiWord[4];

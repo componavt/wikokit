@@ -2,12 +2,12 @@
  * level of a word in Russian Wiktionary.
  *
  * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikokit.base.wikt.multi.ru;
 
-import wikokit.base.wikt.constant.ContextLabel;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.word.WMeaning;
 import wikokit.base.wikt.word.WQuote;
 import wikokit.base.wikipedia.language.LanguageType;
@@ -147,7 +147,7 @@ public class WMeaningRu {
         // 1. extract labels
         // todo
         // ...
-        ContextLabel[] labels = new ContextLabel[0];
+        Label[] labels = new Label[0];
 
         line = LabelRu.removeEmptyLabelPometa(line);
         if(line.length() == 0)

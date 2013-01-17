@@ -279,7 +279,7 @@ public class LanguageType {
     /////////////////////////////////////
     
     /** The set of unknown language codes, which were found during parsing.
-     * There is only one message for one uknown language code (for concise logging).
+     * There is only one message for one unknown language code (for concise logging).
      */
     private static Set<String> unknown_lang_code = new HashSet<String>();
     private static Set<String> unknown_lang_name = new HashSet<String>();
