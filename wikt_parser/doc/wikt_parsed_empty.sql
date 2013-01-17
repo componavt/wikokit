@@ -198,6 +198,7 @@ DROP TABLE IF EXISTS `wiki_text` ;
 CREATE  TABLE IF NOT EXISTS `wiki_text` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `text` VARCHAR(4095) BINARY NOT NULL ,
+  `wikified_text` VARCHAR(4095) BINARY NOT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `idx_text` (`text`(12) ASC) )
 ENGINE = InnoDB;

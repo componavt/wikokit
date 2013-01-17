@@ -1,6 +1,6 @@
 /* Main.java - main file for Wiktionary parsing.
  * 
- * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
@@ -72,12 +72,12 @@ public class Main {
                                             // "American_poets" 9 docs  - OK
         */
         
-        // Russian
+        // Russian Wiktionary
         if(LanguageType.ru == wiki_lang) {
             wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
             wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
         } else {
-            // English
+            // English Wiktionary
             if(LanguageType.en == wiki_lang) {
                 wikt_conn.Open       (Connect.ENWIKT_HOST,        Connect.ENWIKT_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
                 wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
