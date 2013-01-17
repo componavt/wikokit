@@ -5,6 +5,7 @@ A visual interface to the parsed English Wiktionary and Russian Wiktionary datab
 
 === Android version  ===
 
+  * [https://play.google.com/store/apps/details?id=wikokit.kiwidict.enwikt kiwidict] offline multilingual dictionary and thesaurus based on the English Wiktionary.
   * [https://play.google.com/store/apps/details?id=wikokit.kiwidict kiwidict-ru] offline multilingual dictionary and thesaurus based on the Russian Wiktionary.
   * [https://market.android.com/details?id=wordik.magneto magnetowordik] word game based on data extracted from the English Wiktionary.
 
@@ -30,20 +31,20 @@ javaws -viewer
 
 === Description ===
 
-Wiwordik dictionary:
+Machine-readable Wiktionary contains:
+  # word's language and part of speech;
+  # meanings / definitions;
+  # semantic relations;
+  # translations.
 
-Contains:
-  # word's language and part of speech
-  # meanings / definitions
-  # semantic relations
-  # translations
+Developed GUI supports (see [http://wikokit.googlecode.com/svn/trunk/wiwordik/release_notes.txt release_notes.txt]):
+  * words filtering by language code (e.g. de, fr);
+  * wildcard characters: the asterisk sign ({{{*}}}) matches zero or more characters, and question mark (?) a single character;
+  * list of words only with meanings and / or semantic relations (use checkboxes).
 
-Supports (see [http://wikokit.googlecode.com/svn/trunk/wiwordik/release_notes.txt release_notes.txt]):
-  * words filtering by language code (e.g. de, fr)
-  * wildcard characters: the asterisk sign ({{{*}}}) matches zero or more characters, and question mark (?) a single character
-  * list of words only with meanings and / or semantic relations (use checkboxes)
-
-After installation you can find the parsed Wiktionary database in SQLite format on your computer in the folder: `C:\Documents and Settings\YOUR USER NAME\.wiwordik\`
+After installation you can find the parsed Wiktionary database in SQLite format:
+  * on your computer in the folder: `C:\Documents and Settings\YOUR USER NAME\.wiwordik\` (Java Web Start version);
+  * on your phone in the folder `SD card/kiwidict/` (Android version).
 
 Machine-readable Wiktionary framework:
 http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/db_scheme/MRDW_framework_external_applications.png
@@ -89,7 +90,8 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
   * A. A. Krizhanovsky, F. Lin. [http://arxiv.org/abs/0907.2209 Related terms search based on WordNet / Wiktionary and its application in Ontology Matching] // In: Proceedings of the 11th Russian Conference on Digital Libraries RCDL’2009. September 17-21, Petrozavodsk, Russia. – pp. 363-369.
 
 === In Russian ===
-  * Крижановский А. А., Луговая Н. Б., Круглов В. М. [http://textualheritage.org/component/option,com_docman/task,doc_download/gid,264/Itemid,99999999/lang,russian/ Извлечение и анализ дат произведений в корпусе цитат онлайн-словаря] // Информационные технологии и письменное наследие El'Manuscript-12, Петрозаводск, 3-8 сентября 2012.
+  * Крижановский А.А., Смирнов А.В. [http://scipeople.com/publication/111654/ Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря] // Известия РАН. Теория и системы управления. 2013. (в печати).
+  * Крижановский А. А., Луговая Н. Б., Круглов В. М. [http://textualheritage.org/content/view/398/188/lang,russian/ Извлечение и анализ дат произведений в корпусе цитат онлайн-словаря] // Информационные технологии и письменное наследие: материалы VI междунар. науч. конф. El'Manuscript-12 (Петрозаводск, 3-8 сентября 2012) / отв. ред. В.А.Баранов, А.Г.Варфоломеев. – Петрозаводск; Ижевск, 2012. – 328 с. – C. 137—142. ISBN 978-5-8021-1402-5. ([http://textualheritage.org/component/option,com_docman/task,doc_download/gid,290/Itemid,/lang,russian/ PDF])
   * Крижановский А. [http://scipeople.com/publication/106012/ Количественный анализ лексики английского языка в викисловарях и Wordnet] // Труды СПИИРАН. 2011. Вып. 19. С. 87–101. ([http://cdn.scipeople.com/materials/97/quant_English_2011.pdf PDF]).
   * Крижановский А. [http://scipeople.com/publication/102432/ Оценка использования корпусов и электронных библиотек в Русском Викисловаре] // Труды международной конференции «Корпусная лингвистика–2011». – СПб.: С.-Петербургский гос. университет, Филологический факультет, 2011, 348 с. – C. 217—222. ISBN 978-5-8465-0005-5 ([http://cdn.scipeople.com/materials/97/wikt_ruscorpora_14_full.pdf PDF], [http://scipeople.com/uploads/materials/97/slides_corpora_in_russian_wiktionary2011.pdf слайды]).
   * Крижановский А. [http://scipeople.com/publication/100231/ Преобразование структуры словарной статьи Викисловаря в таблицы и отношения реляционной базы данных.] Препринт. 2010.
@@ -102,12 +104,13 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
   * [http://personal.inet.fi/koti/korhoj/ English Wiktionary parser in Java] (or [http://personal.inet.fi/koti/korhoj/source/wikt_cide_latest.7z here]) by Joel Korhonen
   * [http://search.cpan.org/~clbecker/Wiktionary-Parser-0.06/lib/Wiktionary/Parser.pm Wiktionary::Parser] // search.cpan.org, Perl module
   * [http://code.google.com/p/wikily-supervised-pos-tagger/ wikily-supervised-pos-tagger] - part-of-speech taggers for multiple languages implemented by training Hidden Markov with Wiktionary (see paper: Shen Li; João Graça; Ben Taskar, [http://aclweb.org/anthology-new/D/D12/D12-1127.pdf Wiki-ly Supervised Part-of-Speech Tagging], 2012, [http://aclweb.org/anthology-new/D/D12/D12-1127.bib bib])
+  * [http://wiki.okfn.org/Linguistics/llod/datasets/wiktionary Wiktionary RDF versions] (todo)
 
 == License ==
 
 This program is multi-licensed and may be used under the terms of any of the following licenses:
-  * EPL, Eclipse Public License, V1.0 or later, http://www.eclipse.org/legal
-  * LGPL, GNU Lesser General Public License, V2.1 or later, http://www.gnu.org/licenses/lgpl.html
-  * GPL, GNU General Public License, V2 or later, http://www.gnu.org/licenses/gpl.html
+  * EPL, Eclipse Public License V1.0 or later, http://www.eclipse.org/legal
+  * LGPL, GNU Lesser General Public License V3.0 or later, http://www.gnu.org/licenses/lgpl.html
+  * GPL, GNU General Public License V3.0 or later, http://www.gnu.org/licenses/gpl.html
   * AL, Apache License, V2.0 or later, http://www.apache.org/licenses
   * BSD, New BSD License, http://www.opensource.org/licenses/bsd-license
