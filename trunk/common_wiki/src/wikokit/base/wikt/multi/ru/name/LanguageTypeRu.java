@@ -425,6 +425,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal lvk = new LanguageTypeRu("Лавукалеве", LanguageType.lvk);
     public static final LanguageTypeLocal lzz = new LanguageTypeRu("Лазский", LanguageType.lzz);
 
+    public static final LanguageTypeLocal mad = new LanguageTypeRu("Мадурский", LanguageType.mad);
     public static final LanguageTypeLocal mag = new LanguageTypeRu("Магахи", LanguageType.mag);
     public static final LanguageTypeLocal mai = new LanguageTypeRu("Майтхили", LanguageType.mai);
     public static final LanguageTypeLocal man = new LanguageTypeRu("Мандинго", LanguageType.man);

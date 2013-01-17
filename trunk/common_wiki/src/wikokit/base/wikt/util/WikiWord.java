@@ -7,7 +7,7 @@
 
 package wikokit.base.wikt.util;
 
-import wikokit.base.wikt.constant.ContextLabel;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikipedia.util.StringUtil;
 
 import java.util.regex.Pattern;
@@ -64,14 +64,14 @@ public class WikiWord {
      * 
      * This field will not be used for words of definition (meaning).
      */
-    private ContextLabel[] labels;
+    private Label[] labels;
 
     /** Initialize and fill WikiWord structure.
      * @param _word_link    internal wiki link, e.g. "run" in [[run]]ning
      * @param _word_visible visible wiki word,  e.g. "running" in [[run]]ning
      * @param _labels
      */
-    public WikiWord(String _word_link, String _word_visible, ContextLabel[] _labels) {
+    public WikiWord(String _word_link, String _word_visible, Label[] _labels) {
         word_visible = _word_visible;
         word_link = _word_link;
         labels = _labels;

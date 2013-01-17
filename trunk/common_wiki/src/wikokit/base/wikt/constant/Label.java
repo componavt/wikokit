@@ -1,4 +1,4 @@
-/* ContextLabel.java - contexual information for definitions, or Synonyms,
+/* Label.java - contexual information for definitions, or Synonyms,
  *                     or Translations.
  * 
  * Copyright (c) 2008-2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
