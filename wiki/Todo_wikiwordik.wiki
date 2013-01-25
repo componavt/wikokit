@@ -69,5 +69,14 @@ Errors in parsing definitions with example, e.g. parser founds 204 (instead of 2
 
 The phrase should be parsed as one translation: _девятиступенчатый_ (fr) = _à neuf étages_
 
+= Functionality =
+
+== Context labels ==
+Todo:
+  * To build the tree of context labels (dependencies or inclusions). E.g. {{религ.}} label is a hyperonym of  {{ислам.}} label.
+
+
+
+
 = See also =
   * [MRDQuotation]
