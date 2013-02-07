@@ -7,7 +7,7 @@
 
 package wikokit.base.wikt.multi.ru;
 
-import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikt.word.WMeaning;
 import wikokit.base.wikt.word.WQuote;
 import wikokit.base.wikipedia.language.LanguageType;
@@ -147,7 +147,7 @@ public class WMeaningRu {
         // 1. extract labels
         // todo
         // ...
-        Label[] labels = new Label[0];
+        LabelEn[] labels = new LabelEn[0];
 
         line = LabelRu.removeEmptyLabelPometa(line);
         if(line.length() == 0)
