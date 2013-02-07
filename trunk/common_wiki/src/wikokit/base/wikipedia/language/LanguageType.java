@@ -126,7 +126,7 @@ public class LanguageType {
 
     /** Gets name of the language translated to the language l.
      * If there is no translation then returns language name in English */
-    public String getName(LanguageType l) {
+    public String getName(LanguageType  l) {
 
         String s = "";
 
@@ -258,7 +258,6 @@ public class LanguageType {
                     "' is too long (.length() > 12)!");// zh-classical
             return null;
         }
-
 
         if(code2lang.containsKey(code)) {
             System.out.println("Error in LanguageType.addNonUniqueCode(): the language code '"+code+

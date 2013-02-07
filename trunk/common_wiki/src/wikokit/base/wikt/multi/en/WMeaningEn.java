@@ -7,7 +7,7 @@
 
 package wikokit.base.wikt.multi.en;
 
-import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikt.word.WMeaning;
 import wikokit.base.wikt.word.WQuote;
 import wikokit.base.wikipedia.language.LanguageType;
@@ -30,7 +30,7 @@ import java.util.Set;
 public class WMeaningEn {
 
     private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];
-    private final static Label[] NULL_CONTEXTLABEL_ARRAY = new Label[0];
+    private final static LabelEn[] NULL_CONTEXTLABEL_ARRAY = new LabelEn[0];
 
     /** Gets position before first header ^===, e.g. */
     private final static Pattern ptrn_meaning_header_start = Pattern.compile(
@@ -356,7 +356,7 @@ public class WMeaningEn {
         // 1. extract labels
         // todo
         // ...
-        Label[] labels = new Label[0];
+        LabelEn[] labels = new LabelEn[0];
 
         // extract definition by parsing wiki-text
 

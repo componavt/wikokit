@@ -92,7 +92,7 @@ public class LabelCategoryRu extends LabelCategoryLocal {
             mythology,
             religion,
             science,
-            sports;;
+            sports;
     
     static {
         grammatical = new LabelCategoryRu("Грамматические пометы‎", LabelCategory.grammatical);

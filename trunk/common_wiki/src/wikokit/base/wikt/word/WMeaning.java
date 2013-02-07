@@ -9,7 +9,7 @@ package wikokit.base.wikt.word;
 
 import wikokit.base.wikt.util.WikiWord;
 import wikokit.base.wikt.util.WikiText;
-import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.multi.ru.WMeaningRu;
@@ -25,7 +25,7 @@ public class WMeaning {
     // + wiki word, + number of wiki word or number of first char of wikiword in definition
     
     /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s" */
-    private Label[]  labels;
+    private LabelEn[]  labels;
 
     private WikiText definition;
 
@@ -79,7 +79,7 @@ public class WMeaning {
      * @param _template_not_def true if there is template (e.g. {{form of|}} or
      * {{plural of|}}) instead of definiton text (in enwikt)
      */
-    public WMeaning(String page_title,Label[] _labels,
+    public WMeaning(String page_title,LabelEn[] _labels,
                     String _definition, WQuote[] _quote, boolean _template_not_def) {
         labels = _labels;
         wikified_text = _definition;
@@ -104,7 +104,7 @@ public class WMeaning {
     }
 
     /** Gets array of context labels in the definition. */
-    public Label[] getLabels() {
+    public LabelEn[] getLabels() {
         return labels;
     }
 
