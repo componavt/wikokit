@@ -71,5 +71,8 @@ public class WikiTextTest {
         assertTrue(phrases[1].getVisibleText().equalsIgnoreCase( "handbell" ) );
         assertTrue(phrases[2].getVisibleText().equalsIgnoreCase( "doorbell" ) );*/
     }
+    
+    // todo test leading spaces
+    // ...
 
 }

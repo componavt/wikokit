@@ -30,14 +30,18 @@ public class TWikiText {
     /** Unique identifier in the table 'wiki_text'. */
     private int id;
 
-    /** Text (without wikification). */
+    /** Text without wikification (without context labels). */
     private StringBuffer text;
 
+    /** Text with wikification    (without context labels). */
+    private StringBuffer wikified_text;
+    
     //private final static TMeaning[] NULL_TMEANING_ARRAY = new TMeaning[0];
     
-    public TWikiText(int _id,String _text) {
+    public TWikiText(int _id,String _text,String _wikified_text) {
         id              = _id;
         text            = new StringBuffer(_text);
+        wikified_text   = new StringBuffer(_wikified_text);
     }
 
     /** Gets unique ID from database */
@@ -48,6 +52,11 @@ public class TWikiText {
     /** Gets text (without wikification) from database */
     public String getText() {
         return text.toString();
+    }
+    
+    /** Gets text (with wikification) from database */
+    public String getWikifiedText() {
+        return wikified_text.toString();
     }
     
     /** If table 'wiki_text' has this text, then return ID of this record,
@@ -68,12 +77,13 @@ public class TWikiText {
         if(null == wiki_text) return null;
 
         String visible_text = wiki_text.getVisibleText();
-
         if(visible_text.length() == 0) return null;
+        
+        String wikified_text = wiki_text.getWikifiedText();
 
         TWikiText  twiki_text = TWikiText.get(connect, visible_text);
         if(null == twiki_text)
-            twiki_text = TWikiText.insert(connect, visible_text);
+            twiki_text = TWikiText.insert(connect, visible_text, wikified_text);
         
         if(null == twiki_text) { // if two very long wiki_text has the same 100 first symbols
             System.err.println("Error: (wikt_parsed TWikiText.storeToDB()):: two very long wiki_text has the same 100 first symbols. Insertion failed. wiki_text='" + wiki_text.getVisibleText());
@@ -89,10 +99,12 @@ public class TWikiText {
 
     /** Inserts record into the table 'wiki_text'.<br><br>
      * INSERT INTO wiki_text (text) VALUES ("apple");
-     * @param text      text (without wikification).
+     * @param text      text (without wikification)
+     * @param text      wikified_text (with wikification)
+     * 
      * @return inserted record, or null if insertion failed
      */
-    public static TWikiText insert (Connect connect,String text) {
+    public static TWikiText insert (Connect connect, String text, String wikified_text) {
 
         if(text.length() == 0)
             return null;
@@ -113,7 +125,7 @@ public class TWikiText {
                 ResultSet rs = s.executeQuery ("SELECT LAST_INSERT_ID() as id");
                 try {
                     if (rs.next ())
-                        wiki_text = new TWikiText(rs.getInt("id"), text);
+                        wiki_text = new TWikiText(rs.getInt("id"), text, wikified_text);
                 } finally {
                     rs.close();
                 }
@@ -127,7 +139,7 @@ public class TWikiText {
     }
 
     /** Selects row from the table 'wiki_text' by a text.<br><br>
-     *  SELECT id FROM wiki_text WHERE text="apple";
+     *  SELECT id,wikified_text FROM wiki_text WHERE text="apple";
      * @param  text  text (without wikification).
      * @return null if text is absent
      */
@@ -140,7 +152,7 @@ public class TWikiText {
             Statement s = connect.conn.createStatement ();
             try {
                 String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
-                str_sql.append("SELECT id FROM wiki_text WHERE text=\"");
+                str_sql.append("SELECT id,wikified_text FROM wiki_text WHERE text=\"");
                 str_sql.append(safe_title);
                 str_sql.append("\"");
                 ResultSet rs = s.executeQuery (str_sql.toString());
@@ -148,7 +160,8 @@ public class TWikiText {
                     if (rs.next ())
                     {
                         int id = rs.getInt("id");
-                        wiki_text = new TWikiText(id, text);
+                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+                        wiki_text = new TWikiText(id, text, wikified_text);
                     }
                 } finally {
                     rs.close();
@@ -163,7 +176,7 @@ public class TWikiText {
     }
     
     /** Selects row from the table 'wiki_text' by ID<br><br>
-     * SELECT id FROM wiki_text WHERE id=1;
+     * SELECT text,wikified_text FROM wiki_text WHERE id=1;
      * @return null if data is absent
      */
     public static TWikiText getByID (Connect connect,int id) {
@@ -181,7 +194,8 @@ public class TWikiText {
                     if (rs.next ())
                     {
                         String text = Encodings.bytesToUTF8(rs.getBytes("text"));
-                        wiki_text = new TWikiText(id, text);
+                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+                        wiki_text = new TWikiText(id, text, wikified_text);
                     }
                 } finally {
                     rs.close();

@@ -62,6 +62,9 @@ public class TWikiTextTest {
         assertNotNull(wmeaning);
         assertTrue(wmeaning.getDefinition().equalsIgnoreCase(_definition));
         
+        String line2 = wmeaning.getWikifiedText();
+        assertTrue(line2.equalsIgnoreCase("A [[programmable_test]] [[calculation_test]]s_test")); // without "# "
+        
         TWikiText twiki_text = TWikiText.storeToDB (conn, wmeaning.getWikiText());
         assertNotNull(twiki_text);
 
@@ -113,6 +116,7 @@ public class TWikiTextTest {
         System.out.println("insert_ru");
 
         String text = "test_TWikiText_insert_ru";
+        String wikified_text = "[[test_TWikiText_insert_ru]]";
         Connect conn = ruwikt_parsed_conn;
 
         // insert page, get wiki_text.id
@@ -122,7 +126,7 @@ public class TWikiTextTest {
             TWikiText.delete(conn, p);
         }
         // p == p2
-        p = TWikiText.insert(conn, text);
+        p = TWikiText.insert(conn, text, wikified_text);
         p2 = TWikiText.get(conn, text);
         p3 = TWikiText.getByID(conn, p.getID());
 
@@ -145,7 +149,9 @@ public class TWikiTextTest {
     public void testInsert_backslash() {
         System.out.println("insert__backslash");
 
-        String text = " A [[backslash]] (symbol \"\\\").";
+        String wikified_text = " A [[backslash]] (symbol \"\\\").";
+        String          text = " A backslash (symbol \"\\\").";
+        
         Connect conn = ruwikt_parsed_conn;
 
         // insert page, get wiki_text.id
@@ -155,7 +161,7 @@ public class TWikiTextTest {
             TWikiText.delete(conn, p);
         }
         // p == p2
-        p = TWikiText.insert(conn, text);
+        p = TWikiText.insert(conn, text, wikified_text);
         p2 = TWikiText.get(conn, text);
         p3 = TWikiText.getByID(conn, p.getID());
 

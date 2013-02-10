@@ -20,6 +20,9 @@ public class WikiText {
     /** Visible text, e.g. "bullets m." for "[[bullet]]s {{m}}" */
     private String text;
     
+    /** Source wikified text, e.g. "[[bullet]]s {{m}}" */
+    private String wikified_text;
+    
      /** Wiki internal links, e.g. "bullet" and "bullets for "[[bullet]]s" {{m}} */
     private WikiWord[] wiki_words;
 
@@ -29,15 +32,9 @@ public class WikiText {
     private final static Pattern ptrn_comma_semicolon = Pattern.compile(
             "[,;]+");
 
-    /** Context label (reserved for future use).
-     *
-     * Comment: is used in Russian Wiktionary.
-     * It is not used in English Wiktionary.
-     */
-    //private int label_id;
-
-    public WikiText(String _text, WikiWord[] _wiki_words) {
-        text        = _text;
+    public WikiText(String _text, String _wikified_text, WikiWord[] _wiki_words) {
+        text            = _text;
+        wikified_text   = _wikified_text;
         wiki_words  = _wiki_words;
     }
 
@@ -46,9 +43,10 @@ public class WikiText {
         return text;
     }
 
-    // start position of every wiki_words in text
-    // todo
-    // ...
+    /** Source wikified text. */
+    public String getWikifiedText() {
+   	return wikified_text;
+    }
 
     /** Gets array of internal links (wiki words, i.e. words with hyperlinks). */
     public WikiWord[] getWikiWords() {
@@ -70,16 +68,17 @@ public class WikiText {
     /** Parses text, creates array of wiki words (words with hyperlinks),
      * e.g. text is "[[little]] [[bell]]", wiki_words[]="little", "bell"
      */
-    public static WikiText createOnePhrase(String page_title, String text)
+    public static WikiText createOnePhrase(String page_title, String _wikified_text)
     {
-        if(0 == text.trim().length()) {
+        _wikified_text = _wikified_text.trim();
+        if(0 == _wikified_text.length()) {
             return null;
         }
-        StringBuffer sb = new StringBuffer(text);
+        StringBuffer sb = new StringBuffer(_wikified_text);
         
         String      s = WikiWord.parseDoubleBrackets(page_title, sb).toString();
         WikiWord[] ww = WikiWord.getWikiWords(page_title, sb);
-        return new WikiText(s, ww);
+        return new WikiText(s, _wikified_text, ww);
     }
 
     /** Parses text, creates array of wiki words (words with hyperlinks),
@@ -134,7 +133,8 @@ public class WikiText {
             WikiWord[] ww_array1 = new WikiWord[1];
             ww_array1[0] = new WikiWord(w, w, null);
 
-            wt[i++] = new WikiText(w, ww_array1);
+            // todo: check "[["+w+"]]" - is it necessary?
+            wt[i++] = new WikiText(w, "[["+w+"]]", ww_array1);
         }
 
         return wt;

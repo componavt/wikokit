@@ -1,7 +1,7 @@
 /* LabelRu.java - contexual information for definitions, or Synonyms,
  *                or Translations in Russian Wiktionary.
  * 
- * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
