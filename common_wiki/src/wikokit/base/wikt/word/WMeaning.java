@@ -113,6 +113,11 @@ public class WMeaning {
         return definition.getVisibleText();
     }
     
+    /** Gets meaning text (definition) with wiki markup, but without context labels. */
+    public String getWikifiedText() {
+   	return wikified_text;
+    }
+    
     /** Gets array of internal links in the definition (wiki words, i.e. words with hyperlinks). */
     public WikiWord[] getWikiWords() {
         return definition.getWikiWords();
@@ -121,11 +126,6 @@ public class WMeaning {
     /** Gets wiki_text. */
     public WikiText getWikiText() {
         return definition;
-    }
-
-    /** Gets meaning text (definition) with wiki markup, but without context labels. */
-    public String getWikifiedText() {
-   	return wikified_text;
     }
     
     /** Gets array of quotes (sentences) from the definition. */

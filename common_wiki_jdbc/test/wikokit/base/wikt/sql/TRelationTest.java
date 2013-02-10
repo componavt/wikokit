@@ -1,14 +1,6 @@
 
 package wikokit.base.wikt.sql;
 
-import wikokit.base.wikt.sql.TPOS;
-import wikokit.base.wikt.sql.TLangPOS;
-import wikokit.base.wikt.sql.TLang;
-import wikokit.base.wikt.sql.TPage;
-import wikokit.base.wikt.sql.TWikiText;
-import wikokit.base.wikt.sql.TMeaning;
-import wikokit.base.wikt.sql.TRelation;
-import wikokit.base.wikt.sql.TRelationType;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.constant.POS;
@@ -36,7 +28,7 @@ public class TRelationTest {
     TPOS pos;
     TLang lang;
     TPage page;
-    String page_title, page_title2, wiki_text_str;
+    String page_title, page_title2, wiki_text_str, str_wiki_text_wikified;
     TRelationType relation_type;
     TWikiText wiki_text;
     TLangPOS lang_pos;
@@ -114,8 +106,9 @@ public class TRelationTest {
         assertTrue(null != relation_type);
         
         // insert wiki_text
-        wiki_text_str = "test_TWikiText_TRelation";
-        wiki_text = TWikiText.insert(conn, wiki_text_str);
+        wiki_text_str          =   "test_TWikiText_TRelation";
+        str_wiki_text_wikified = "[[test_TWikiText_TRelation]]";
+        wiki_text = TWikiText.insert(conn, wiki_text_str, str_wiki_text_wikified);
         if(null == wiki_text)
             wiki_text = TWikiText.get(conn, wiki_text_str);
         assertTrue(null != wiki_text);

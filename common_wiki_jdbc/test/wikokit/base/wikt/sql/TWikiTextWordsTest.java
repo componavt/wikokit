@@ -22,7 +22,7 @@ public class TWikiTextWordsTest {
 
     public Connect   ruwikt_parsed_conn;
 
-    String page_title, inflected_form, str_wiki_text;
+    String page_title, inflected_form, str_wiki_text, str_wiki_text_wikified;
     TWikiText wiki_text;
     TInflection infl;
     TPage page;
@@ -80,10 +80,11 @@ public class TWikiTextWordsTest {
         }
 
         // insert wiki_text
-        str_wiki_text = "test_TWikiTextWords_insert_ru";
+        str_wiki_text          =   "test_TWikiTextWords_insert_ru";
+        str_wiki_text_wikified = "[[test_TWikiTextWords_insert_ru]]";
         wiki_text = TWikiText.get(conn, str_wiki_text);
         if(null == wiki_text) {
-            wiki_text = TWikiText.insert(conn, str_wiki_text);
+            wiki_text = TWikiText.insert(conn, str_wiki_text, str_wiki_text_wikified);
             assertTrue(null != wiki_text);
         }
     }

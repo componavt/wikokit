@@ -1,14 +1,7 @@
 
 package wikokit.base.wikt.sql;
 
-import wikokit.base.wikt.sql.TPOS;
-import wikokit.base.wikt.sql.TLangPOS;
-import wikokit.base.wikt.sql.TTranslation;
-import wikokit.base.wikt.sql.TPage;
-import wikokit.base.wikt.sql.TLang;
-import wikokit.base.wikt.sql.TMeaning;
-import wikokit.base.wikt.sql.TWikiText;
-import wikokit.base.wikt.sql.TTranslationEntry;
+
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.constant.POS;
 //import wikipedia.sql.UtilSQL;
@@ -34,7 +27,7 @@ public class TTranslationEntryTest {
     TLangPOS lang_pos;
     TMeaning meaning;
     TWikiText wiki_text;
-    String meaning_summary, str_wiki_text;
+    String meaning_summary, str_wiki_text, str_wiki_text_wikified;
 
     public TTranslationEntryTest() {
     }
@@ -133,8 +126,9 @@ public class TTranslationEntryTest {
         assertNotNull(lang_pos);
         assertEquals(page.getID(), lang_pos.getPage().getID());
 
-        str_wiki_text = "test_TWikiText_TTranslationEntry";
-        wiki_text = TWikiText.insert(conn, str_wiki_text);
+        str_wiki_text          =   "test_TWikiText_TTranslationEntry";
+        str_wiki_text_wikified = "[[test_TWikiText_TTranslationEntry]]";
+        wiki_text = TWikiText.insert(conn, str_wiki_text, str_wiki_text_wikified);
         if(null == wiki_text)
             wiki_text = TWikiText.get(conn, str_wiki_text);
         assertNotNull(wiki_text);
