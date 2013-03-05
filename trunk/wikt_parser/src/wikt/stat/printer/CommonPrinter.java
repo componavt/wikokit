@@ -33,6 +33,11 @@ public class CommonPrinter {
                 "[http://code.google.com/p/wikokit wikokit], see Download section." +
                 "</ref>");
     }
+    public static void printHeaderXML (String db_name) {
+
+        System.out.println("<!-- The parsed database name: " + db_name +". -->");
+        System.out.println("<!-- This (or more recent) database would be available at the project site (http://code.google.com/p/wikokit), see Download section. -->");
+    }
     public static void printFooter () {
 
         System.out.println("\n== References ==\n<references />\n");

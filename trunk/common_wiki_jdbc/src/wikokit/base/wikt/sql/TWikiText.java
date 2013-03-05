@@ -152,7 +152,10 @@ public class TWikiText {
             Statement s = connect.conn.createStatement ();
             try {
                 String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
-                str_sql.append("SELECT id,wikified_text FROM wiki_text WHERE text=\"");
+// new                str_sql.append("SELECT id,wikified_text FROM wiki_text WHERE text=\"");
+// old temp:
+                str_sql.append("SELECT id,text FROM wiki_text WHERE text=\"");
+                
                 str_sql.append(safe_title);
                 str_sql.append("\"");
                 ResultSet rs = s.executeQuery (str_sql.toString());
@@ -160,7 +163,9 @@ public class TWikiText {
                     if (rs.next ())
                     {
                         int id = rs.getInt("id");
-                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+// new                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+// old temp:                        
+                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
                         wiki_text = new TWikiText(id, text, wikified_text);
                     }
                 } finally {
@@ -194,7 +199,9 @@ public class TWikiText {
                     if (rs.next ())
                     {
                         String text = Encodings.bytesToUTF8(rs.getBytes("text"));
-                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+// new                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+// temp old
+                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
                         wiki_text = new TWikiText(id, text, wikified_text);
                     }
                 } finally {
@@ -204,7 +211,7 @@ public class TWikiText {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TWikiText.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return wiki_text;
     }
@@ -252,7 +259,7 @@ public class TWikiText {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (wikt_parsed TWikiText.java delete1()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -280,7 +287,7 @@ public class TWikiText {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiText.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (TWikiText.delete2()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }
