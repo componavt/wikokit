@@ -43,6 +43,10 @@ import java.util.HashSet;
  *  http://en.wikipedia.org/wiki/List_of_languages_by_number_of_native_speakers
  */
 public class LanguageType {
+
+    // todo:
+    // to add 81 new language codes:
+    // http://en.wiktionary.org/wiki/User:DTLHS/New_ISO_codes_2013
     
     /** Two (or more) letter language code, e.g. 'en', 'ru'. */
     private final String code;
