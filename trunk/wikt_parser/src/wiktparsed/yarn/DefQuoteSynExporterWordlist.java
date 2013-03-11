@@ -22,7 +22,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
-import wikokit.base.wikipedia.util.StringUtil;
 import wikokit.base.wikt.api.WTMeaning;
 import wikokit.base.wikt.constant.POS;
 import wikokit.base.wikt.constant.Relation;
@@ -33,6 +32,7 @@ import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.TRelation;
 import wikokit.base.wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.quote.TQuote;
 import wikt.stat.printer.CommonPrinter;
 
 /** YARN format exporter
@@ -47,121 +47,6 @@ public class DefQuoteSynExporterWordlist {
     /** map for the first part of YARN file: lexicon. Map from word to "nID" */
     private static final Map<String, Integer> m_noun_word_to_id = new HashMap<String, Integer>();
     
-    public static int getWordEntryID (POS pos, String word) {
-        
-        if(POS.noun == pos) {
-            if(m_noun_word_to_id.containsKey(word))
-                return m_noun_word_to_id.get(word);
-        }
-        
-        return -1;
-    }
-    
-    public static String getPOSOneLetterPrefix(POS pos) {
-        
-        String pos_prefix = "";
-        if(POS.noun == pos)
-            pos_prefix = "n";
-        else if(POS.verb == pos)
-            pos_prefix = "v";
-        else if(POS.adjective == pos)
-            pos_prefix = "a";
-        
-        return pos_prefix;
-    }
-    
-    
-    /** Gets XML chunk with word. Returns empty string if this word was added to the lexicon already.
-     * @param pos_prefix n - noun, v - verb, a - adjective
-     * @param word_id
-     * @param source_url_word Wiktionary entry which is the information source
-     * @param native_language_code main language of Wiktionary
-     * @return 
-     */
-    public static String getWordEntryXMLWithoutDuplicates (POS pos, int word_id, String word, String source_url_word, LanguageType native_lang)
-    {
-        if(getWordEntryID (pos, word) > 0) // this word was added already 
-            return "";
-        
-        String pos_prefix = getPOSOneLetterPrefix(pos);
-        if(POS.noun == pos)
-            m_noun_word_to_id.put(word, word_id);
-        
-        StringBuilder sb = new StringBuilder();
-        String code = native_lang.getCode();
-        
-        sb.append("    <wordEntry id=\"").append(pos_prefix).append(word_id).append("\"");  // id="n123"
-        sb.append(" author=\"").append(code).append(".wiktionary\">\n"); // author="ru.wiktionary" >
-        
-        sb.append("      <word>").append(word).append("</word>\n");
-        sb.append("      <url>http://").append(code).append(".wiktionary.org/wiki/").append(word).append("</url>\n");
-        sb.append("    </wordEntry>\n");
-        return sb.toString();
-    }
-    
-    public static String getSynsetEntryBegin (POS pos, int synset_id, String word)
-    {
-        String pos_prefix = getPOSOneLetterPrefix(pos);
-        
-        int word_id = getWordEntryID (pos, word);
-        
-        StringBuilder sb = new StringBuilder();
-        sb.append("    <synsetEntry id=\"sn").append(synset_id).append("\">\n");  // id="sn1"
-        
-        if(DEBUG)
-            sb.append("      <word ref=\"").append(pos_prefix).append(word_id).append("\"> <!-- " + word + " -->\n");
-        else 
-            sb.append("      <word ref=\"").append(pos_prefix).append(word_id).append("\">\n");
-        
-        // todo sample: quotations
-        // <sample source="В. В. Крестовский, 'Петербургские трущобы', 1867 г.,
-        // НКРЯ">Мечут же карты, передѐргивают и всякие иные фокусы употребляют только главные и
-        // самые искусные престидижитаторы, которые поэтому специально называются
-        // «дергачами».</sample>
-        // ...
-        
-        sb.append("      </word>\n");
-        return sb.toString();
-    }
-    
-    public static String getSynonymWordRef (POS pos, String word)
-    {
-        StringBuilder sb = new StringBuilder();
-        String pos_prefix = getPOSOneLetterPrefix(pos);
-        
-        int word_id = getWordEntryID (pos, word);
-        assert( word_id > 0 ); // at previous step word was added to the lexicon
-        
-        if(DEBUG)
-            sb.append("      <word ref=\"").append(pos_prefix).append(word_id).append("\"/> <!-- " + word + " -->\n");
-        else 
-            sb.append("      <word ref=\"").append(pos_prefix).append(word_id).append("\"/>\n");
-        
-        return sb.toString();
-    }
-    
-    /** Gets word (synset) definition in XML format.
-     * Example:
-     * <definition url="http://ru.wiktionary.org/wiki/престидижитатор" source="ru.wiktionary">фокусник, отличающийся ловкостью рук; манипулятор</definition>
-     */
-    public static String getDefinition (String source_url_word, String definition, LanguageType native_lang)
-    {
-        StringBuilder sb = new StringBuilder();
-        String code = native_lang.getCode();
-        
-        sb.append("      <definition url=\"http://").append(code).append(".wiktionary.org/wiki/").
-                append(source_url_word).
-                append("\" source=\"").append(code).append(".wiktionary\">");
-        sb.append( StringUtil.replaceSpecialChars(definition) );
-        sb.append("</definition>\n");
-        return sb.toString();
-    }
-    
-    public static void nextLangPOSID (int lang_pos_id,
-                    Connect wikt_parsed_conn,
-                    LanguageType native_lang, Set<POS> exported_pos) {
-        
-    }
     
     /** Prints words, definitions, quotations and synonyms for each part_of_speech ("poses") in Wiktonary.
      * .<br><br>
@@ -226,7 +111,8 @@ outerloop:
                     continue;
 
                 current_word_id ++;
-                String xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, page_title, page_title, native_lang);
+                String xml_word = DefQuoteSynExporter.getWordEntryXMLWithoutDuplicates (p, current_word_id, 
+                                    page_title, page_title, native_lang, m_noun_word_to_id);
                 sb_words.append( xml_word );
 
                 if(DEBUG)
@@ -243,9 +129,11 @@ outerloop:
                     if(DEBUG)
                         System.out.print("\n    def: " + meaning_text);
 
+                    TQuote[] quotes = TQuote.get (wikt_parsed_conn, m);
+                    
                     current_synset_id ++;
-                    // String getSynsetEntryBegin (POS pos, int synset_id, int word_id, String source_url_word, LanguageType native_lang)
-                    StringBuilder xml_synset = new StringBuilder(getSynsetEntryBegin (p, current_synset_id, page_title));
+                    StringBuilder xml_synset = new StringBuilder( DefQuoteSynExporter.
+                                                getSynsetEntryBegin (p, current_synset_id, page_title, m_noun_word_to_id, quotes));
 
                     TRelation[] rels = TRelation.get(wikt_parsed_conn, m);
                     if(0 == rels.length)
@@ -261,20 +149,22 @@ outerloop:
                         if(0 == word.compareToIgnoreCase("&nbsp")) // "&nbsp" instead of synonym :(
                             continue;
 
-                        if(-1 == getWordEntryID (p, word)) { // this synonym is absent in the dictionary, it should be added
+                        // if this synonym is absent in the dictionary, it should be added
+                        if(-1 == DefQuoteSynExporter.getWordEntryID (p, word, m_noun_word_to_id)) {
                             current_word_id ++;
-                            xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, word, page_title, native_lang);
+                            xml_word = DefQuoteSynExporter.getWordEntryXMLWithoutDuplicates (p, current_word_id, 
+                                    word, page_title, native_lang, m_noun_word_to_id);
                             sb_words.append( xml_word );
                         }
 
-                        xml_synset.append( getSynonymWordRef (p, word) );
+                        xml_synset.append( DefQuoteSynExporter.getSynonymWordRef (p, word, m_noun_word_to_id) );
                         if(DEBUG)
                             System.out.print("\n        syn: " + word);
                     }
 
                     sb_synsets.append( xml_synset );
 
-                    String def = getDefinition (page_title, meaning_text, native_lang);
+                    String def = DefQuoteSynExporter.getDefinition (page_title, meaning_text, native_lang);
                     sb_synsets.append( def );
 
                     sb_synsets.append("    </synsetEntry>\n");

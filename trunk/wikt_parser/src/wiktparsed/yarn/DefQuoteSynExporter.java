@@ -13,10 +13,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import net.htmlparser.jericho.Source;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.Statistics;
-import wikokit.base.wikipedia.util.FileWriter;
 import wikokit.base.wikipedia.util.StringUtil;
 import wikokit.base.wikt.api.WTMeaning;
 import wikokit.base.wikt.constant.POS;
@@ -28,6 +28,8 @@ import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.TRelation;
 import wikokit.base.wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.quote.TQuotRef;
+import wikokit.base.wikt.sql.quote.TQuote;
 import wikt.stat.printer.CommonPrinter;
 
 /** YARN format exporter
@@ -36,22 +38,26 @@ import wikt.stat.printer.CommonPrinter;
  * @see YARN format https://github.com/xoposhiy/yarn/commit/65411750ee8f867c79cdd77bcbaf8024df2c9d63
  */
 public class DefQuoteSynExporter {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     //private static final FileWriter file;
     
     /** map for the first part of YARN file: lexicon. Map from word to "nID" */
     private static final Map<String, Integer> m_noun_word_to_id = new HashMap<String, Integer>();
     
-    public static int getWordEntryID (POS pos, String word) {
+    /** Gets ID of word in the exported list.
+     * @return -1 if this word is absent, i.e. it was not exported yet.
+     **/
+    public static int getWordEntryID (POS pos, String word, Map<String, Integer> _m_noun_word_to_id) {
         
         if(POS.noun == pos) {
-            if(m_noun_word_to_id.containsKey(word))
-                return m_noun_word_to_id.get(word);
+            if(_m_noun_word_to_id.containsKey(word))
+                return _m_noun_word_to_id.get(word);
         }
         
         return -1;
     }
     
+    /** Gets Part-of-speech prefix (letter) n - noun, v - verb, a - adjective. */
     public static String getPOSOneLetterPrefix(POS pos) {
         
         String pos_prefix = "";
@@ -73,14 +79,15 @@ public class DefQuoteSynExporter {
      * @param native_language_code main language of Wiktionary
      * @return 
      */
-    public static String getWordEntryXMLWithoutDuplicates (POS pos, int word_id, String word, String source_url_word, LanguageType native_lang)
+    public static String getWordEntryXMLWithoutDuplicates (POS pos, int word_id, String word, String source_url_word, 
+                                LanguageType native_lang, Map<String, Integer> _m_noun_word_to_id)
     {
-        if(getWordEntryID (pos, word) > 0) // this word was added already 
-            return "";
+        if(getWordEntryID (pos, word, _m_noun_word_to_id) > 0)
+            return "";  // this word was added already 
         
         String pos_prefix = getPOSOneLetterPrefix(pos);
         if(POS.noun == pos)
-            m_noun_word_to_id.put(word, word_id);
+            _m_noun_word_to_id.put(word, word_id);
         
         StringBuilder sb = new StringBuilder();
         String code = native_lang.getCode();
@@ -89,42 +96,152 @@ public class DefQuoteSynExporter {
         sb.append(" author=\"").append(code).append(".wiktionary\">\n"); // author="ru.wiktionary" >
         
         sb.append("      <word>").append(word).append("</word>\n");
-        sb.append("      <url>http://").append(code).append(".wiktionary.org/wiki/").append(word).append("</url>\n");
+        sb.append("      <url>http://").append(code).append(".wiktionary.org/wiki/").append(source_url_word).append("</url>\n");
         sb.append("    </wordEntry>\n");
         return sb.toString();
     }
     
-    public static String getSynsetEntryBegin (POS pos, int synset_id, String word)
+    /** Converts HTML to text by Jericho (TextExtractor). 
+     * @see http://jericho.htmlparser.net/docs/javadoc/net/htmlparser/jericho/TextExtractor.html
+     */
+    public static String HTMLToText (String text)
+    {
+            Source source = new Source(text);
+            return source.getTextExtractor().toString();
+    }
+    
+    public static String HTMLEscape (String text)
+    {
+            return text.replace("<", "&lt;").replace(">", "&gt;").
+                    replace("&", "&amp;").replace("\"", "&quot;");
+    }    
+    
+    
+    /** Gets bibliographic information about quote sentence in the form:
+     * Author, 'Title' // Publisher, Years, Source
+     * 
+     * Example: "В. В. Крестовский, 'Петербургские трущобы', 1867 г., НКРЯ"
+
+     * @return null if there are no author name, title, years for this quotation.
+     **/
+    private static String getReference (TQuote _quote)
+    {
+        TQuotRef quot_ref = _quote.getReference();
+        if(null == quot_ref)
+            return null;
+        
+        /** Related bibliography text: author, title, year, publisher. */
+        
+        /** Author name. */
+        String author_name;
+
+        /** Source title. */
+        String title;
+
+        /** Years of the book. */
+        String years_range;
+
+        /** Publisher. */
+        String publisher;
+
+        /** Source. */
+        String source;
+        
+        // 2a. data and logic
+        //reference_text = "{quot_ref.getYearsRange()}{quot_ref.getAuthorName()}";
+        years_range =            quot_ref.getYearsRange();
+        author_name = HTMLEscape(quot_ref.getAuthorName());
+        title       = HTMLEscape(quot_ref.getTitle());
+        publisher   = HTMLEscape(quot_ref.getPublisherName());
+        source      =            quot_ref.getSourceName();
+        
+        // 0. 'title'
+        if(title.length() > 0)
+            title = "'".concat(title).concat("'");
+        
+        // 1. author_name, title
+        if(author_name.length() > 0 && (title.length() > 0 || years_range.length() > 0 || source.length() > 0))
+            author_name = author_name.concat(", ");
+
+        // 2. title // (publisher or source)
+        if(title.length() > 0 && publisher.length() > 0)
+            title = title.concat(" // ");
+
+        // 3. (title or publisher), year
+        if((title.length() > 0 || publisher.length() > 0) && (years_range.length() > 0 || source.length() > 0))
+            publisher = publisher.concat(", ");
+        
+        // 4. year, source
+        if(years_range.length() > 0 && source.length() > 0)
+            years_range = years_range.concat(", ");
+        
+        // Author, 'Title' // Publisher, Years, Source
+        
+        StringBuilder sb = new StringBuilder();            
+        if(0 < author_name.length())
+            sb = sb.append(author_name);
+            
+        if(0 < title.length())
+            sb = sb.append(title);
+        
+        if(0 < publisher.length())
+            sb = sb.append(publisher);
+        
+        if(0 < years_range.length())
+            sb = sb.append(years_range);
+        
+        if(0 < source.length())
+            sb = sb.append(source);
+        
+        return sb.toString();
+    }
+    
+    public static String getSynsetEntryBegin (POS pos, int synset_id, String word, 
+                                Map<String, Integer> _m_noun_word_to_id, TQuote[] quotes)
     {
         String pos_prefix = getPOSOneLetterPrefix(pos);
         
-        int word_id = getWordEntryID (pos, word);
+        int word_id = getWordEntryID (pos, word, _m_noun_word_to_id);
         
         StringBuilder sb = new StringBuilder();
         sb.append("    <synsetEntry id=\"sn").append(synset_id).append("\">\n");  // id="sn1"
         
-        if(DEBUG)
+        if(DEBUG) // comment: <!-- word -->
             sb.append("      <word ref=\"").append(pos_prefix).append(word_id).append("\"> <!-- " + word + " -->\n");
         else 
             sb.append("      <word ref=\"").append(pos_prefix).append(word_id).append("\">\n");
         
+        
         // todo sample: quotations
-        // <sample source="В. В. Крестовский, 'Петербургские трущобы', 1867 г.,
-        // НКРЯ">Мечут же карты, передѐргивают и всякие иные фокусы употребляют только главные и
+        // <sample source="В. В. Крестовский, 'Петербургские трущобы', 1867 г., НКРЯ">Мечут же карты, передѐргивают и всякие иные фокусы употребляют только главные и
         // самые искусные престидижитаторы, которые поэтому специально называются
         // «дергачами».</sample>
         // ...
+        
+        for(TQuote q : quotes ) {
+            // sb.append("        <sample source=\"todo ref\">").append(q.getText()).append("</sample>\n"); // variant 1.
+            
+            String text = HTMLToText (q.getTextWithoutWikification());
+            String ref = getReference (q);
+            
+            sb.append("        <sample source=\"").append(ref).append("\">").append(text).append("</sample>\n");
+        
+            //TQuotRef quot_ref = result.getReference();
+            //TQuotAuthor a = quot_ref.getAuthor();
+        }
+        
+        
         
         sb.append("      </word>\n");
         return sb.toString();
     }
     
-    public static String getSynonymWordRef (POS pos, String word)
+    public static String getSynonymWordRef (POS pos, String word, Map<String, Integer> _m_noun_word_to_id)
     {
         StringBuilder sb = new StringBuilder();
         String pos_prefix = getPOSOneLetterPrefix(pos);
         
-        int word_id = getWordEntryID (pos, word);
+        int word_id = getWordEntryID (pos, word, _m_noun_word_to_id);
         assert( word_id > 0 ); // at previous step word was added to the lexicon
         
         if(DEBUG)
@@ -147,7 +264,8 @@ public class DefQuoteSynExporter {
         sb.append("      <definition url=\"http://").append(code).append(".wiktionary.org/wiki/").
                 append(source_url_word).
                 append("\" source=\"").append(code).append(".wiktionary\">");
-        sb.append( StringUtil.replaceSpecialChars(definition) );
+        //sb.append( StringUtil.replaceSpecialChars(definition) );
+        sb.append( HTMLEscape(definition.replace("{{-}}", " - ")) );
         sb.append("</definition>\n");
         return sb.toString();
     }
@@ -210,7 +328,7 @@ public class DefQuoteSynExporter {
                     continue;
 
                 current_word_id ++;
-                String xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, page_title, page_title, native_lang);
+                String xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, page_title, page_title, native_lang, m_noun_word_to_id);
                 sb_words.append( xml_word );
 
                 if(DEBUG)
@@ -226,10 +344,12 @@ public class DefQuoteSynExporter {
                     
                     if(DEBUG)
                         System.out.print("\n    def: " + meaning_text);
+                    
+                    TQuote[] quotes = TQuote.get (wikt_parsed_conn, m);
 
                     current_synset_id ++;
-                    // String getSynsetEntryBegin (POS pos, int synset_id, int word_id, String source_url_word, LanguageType native_lang)
-                    StringBuilder xml_synset = new StringBuilder(getSynsetEntryBegin (p, current_synset_id, page_title));
+                    StringBuilder xml_synset = new StringBuilder( DefQuoteSynExporter.
+                                                getSynsetEntryBegin (p, current_synset_id, page_title, m_noun_word_to_id, quotes));
                     
                     TRelation[] rels = TRelation.get(wikt_parsed_conn, m);
                     if(0 == rels.length)
@@ -242,14 +362,17 @@ public class DefQuoteSynExporter {
                             continue;
                         
                         String word = tr.getWikiText().getText(); // synonym
+                        if(0 == word.compareToIgnoreCase("&nbsp")) // "&nbsp" instead of synonym :(
+                            continue;
                         
-                        if(-1 == getWordEntryID (p, word)) { // this synonym is absent in the dictionary, it should be added
+                        // if this synonym is absent in the dictionary, it should be added
+                        if(-1 == getWordEntryID (p, word, m_noun_word_to_id)) {
                             current_word_id ++;
-                            xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, word, page_title, native_lang);
+                            xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, word, page_title, native_lang, m_noun_word_to_id);
                             sb_words.append( xml_word );
                         }
                         
-                        xml_synset.append( getSynonymWordRef (p, word) );
+                        xml_synset.append( getSynonymWordRef (p, word, m_noun_word_to_id) );
                         if(DEBUG)
                             System.out.print("\n        syn: " + word);
                     }

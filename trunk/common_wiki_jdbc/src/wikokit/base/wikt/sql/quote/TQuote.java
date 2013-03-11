@@ -66,6 +66,13 @@ public class TQuote {
     public String getText() {
         return text;
     }
+    
+    /** Gets quotation text without wikification, i.e. dewikified text. 
+     * Replace template "{{-}}" and "{{--}}" by " - ".
+     */
+    public String getTextWithoutWikification() {
+        return text.replace("{{-}}", " - ").replace("{{--}}", " - ");
+    }
 
     /** Gets reference data about quote from database. */
     public TQuotRef getReference() {

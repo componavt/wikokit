@@ -415,6 +415,64 @@ ENGINE = InnoDB,
 COMMENT = 'links to tables with reference information (year, etc.)' ;
 
 
+-- -----------------------------------------------------
+-- Table `label`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `label` ;
+
+CREATE  TABLE IF NOT EXISTS `label` (
+  `id` INT(7) UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `label` VARCHAR(255) NOT NULL ,
+  `full_name` VARCHAR(255) NULL ,
+  `category_id` TINYINT UNSIGNED NULL ,
+  `counter` INT(10) UNSIGNED NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `label_UNIQUE` (`label` ASC) )
+ENGINE = InnoDB, 
+COMMENT = 'Context labels.' ;
+
+
+-- -----------------------------------------------------
+-- Table `label_meaning`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `label_meaning` ;
+
+CREATE  TABLE IF NOT EXISTS `label_meaning` (
+  `label_id` INT(7) UNSIGNED NOT NULL ,
+  `meaning_id` INT(10) UNSIGNED NOT NULL ,
+  UNIQUE INDEX `unique_label_meaning` (`label_id` ASC, `meaning_id` ASC) )
+ENGINE = InnoDB, 
+COMMENT = 'Binds context labels and numbered meaning.' ;
+
+
+-- -----------------------------------------------------
+-- Table `label_category`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `label_category` ;
+
+CREATE  TABLE IF NOT EXISTS `label_category` (
+  `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `name` VARCHAR(255) NOT NULL ,
+  `parent_category_id` TINYINT UNSIGNED NULL ,
+  PRIMARY KEY (`id`) ,
+  UNIQUE INDEX `name_UNIQUE` (`name` ASC) )
+ENGINE = InnoDB, 
+COMMENT = 'Categories of context labels.' ;
+
+
+-- -----------------------------------------------------
+-- Table `label_relation`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `label_relation` ;
+
+CREATE  TABLE IF NOT EXISTS `label_relation` (
+  `label_id` INT(7) UNSIGNED NOT NULL ,
+  `relation_id` INT(10) UNSIGNED NOT NULL ,
+  UNIQUE INDEX `unique_label_relation` (`label_id` ASC, `relation_id` ASC) )
+ENGINE = InnoDB, 
+COMMENT = 'Binds context labels and semantic relations.' ;
+
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
