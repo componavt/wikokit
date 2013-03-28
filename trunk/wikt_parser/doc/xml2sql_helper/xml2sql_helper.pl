@@ -6,11 +6,16 @@
 #   <redirect />
 #   <ns>
 #   <sha1 />
-#   Deletes <DiscussionThreading>\n...\n</DiscussionThreading>
+#   <model>
+#   <format>
+#   <parentid>
+#
+#   Also deletes:
+#   <DiscussionThreading>\n...\n</DiscussionThreading>
 #
 # AUTHOR:       Andrew Krizhanovsky (http://code.google.com/p/wikokit)
-# START DATE:   17.12.2009 17:44:28
-# FINISH DATE:  29.05.2012 
+# START DATE:   2009
+# FINISH DATE:  2013
 # SEE: 
 #   Talk:Xml2sql   http://meta.wikimedia.org/wiki/Talk:Xml2sql
 #   MySQL 2 SQLite http://www.perlmonks.org/index.pl?node_id=150476
@@ -31,7 +36,7 @@ my( $synsets, $synwords, %unique_synwords);
 my( $i, $set, $w);
 
 
-$headline = "xml2sql_helper V0.03 (GNU-GPL) 2009-2012 AKA MBG \n";
+$headline = "xml2sql_helper V0.04 (GNU-GPL) 2009-2013 AKA MBG \n";
 # --------------------------------------------------------------
 # subroutine help_exit
 # --------------------------------------------------------------
@@ -99,6 +104,15 @@ sub help_exit
 
       # remove lines with text "<ns>", e.g. "<ns>8</ns>"
       next LINE if -1 ne index $line, "<ns>";
+
+      # remove lines with text "<model>", e.g. "<model>wikitext</model>"
+      next LINE if -1 ne index $line, "<model>";
+
+      # remove lines with text "<format>", e.g. "<format>text/x-wiki</format>"
+      next LINE if -1 ne index $line, "<format>";
+
+      # remove lines with text "<parentid>", e.g. "<parentid>5322</parentid>"
+      next LINE if -1 ne index $line, "<parentid>";
 
       # remove lines with text "<sha1 />"
       next LINE if -1 ne index $line, "<sha1 />";
