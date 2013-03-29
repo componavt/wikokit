@@ -17,7 +17,6 @@ import net.htmlparser.jericho.Source;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.Statistics;
-import wikokit.base.wikipedia.util.StringUtil;
 import wikokit.base.wikt.api.WTMeaning;
 import wikokit.base.wikt.constant.POS;
 import wikokit.base.wikt.constant.Relation;
@@ -33,7 +32,6 @@ import wikokit.base.wikt.sql.quote.TQuote;
 import wikt.stat.printer.CommonPrinter;
 
 /** YARN format exporter
- *
  * 
  * @see YARN format https://github.com/xoposhiy/yarn/commit/65411750ee8f867c79cdd77bcbaf8024df2c9d63
  */
