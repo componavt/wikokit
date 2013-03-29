@@ -742,7 +742,10 @@ public class LanguageType {
     public static final LanguageType az2 = LanguageType.addNonUniqueName(az, "Azerbaijani Turkic");
     public static final LanguageType az3 = LanguageType.addNonUniqueName(az, "Azeri Turkic");
 
-
+    public static final LanguageType az_cyr = LanguageType.addNonUniqueCode(az, "az.cyr");// ruwikt
+    public static final LanguageType az_lat = LanguageType.addNonUniqueCode(az, "az.lat");// ruwikt
+    public static final LanguageType az_arab = LanguageType.addNonUniqueCode(az, "az.arab");// ruwikt
+    
     public static final LanguageType azj = LanguageType.addNonUnique(az, "azj", "North Azeri");
     public static final LanguageType azj2 = LanguageType.addNonUniqueName(az, "North Azerbaijani");
 
