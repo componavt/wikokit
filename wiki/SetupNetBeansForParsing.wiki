@@ -16,7 +16,7 @@ public final static String ENWIKT_PARSED_DB = "enwikt20100824_parsed?useUnicode=
 
 = wikt_parser =
 
-  * Set *wikt_parser* as a main project in NetBeans.
+  * Set *wikt_parser* as a main project in !NetBeans.
   * Compile it.
   * Open project properties / Run. Set:
     * Main class: *`wikt.parser.Main`*
