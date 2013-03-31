@@ -14,7 +14,7 @@ public final static String ENWIKT_DB = "enwikt20100824?useUnicode=false&characte
 public final static String ENWIKT_PARSED_DB = "enwikt20100824_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 }}}
 
-= PageTableAll.java =
+= !PageTableAll.java =
 
 Check the file [http://code.google.com/p/wikokit/source/browse/trunk/wikt_parser/src/wikt/parser/PageTableAll.java PageTableAll.java].
 
