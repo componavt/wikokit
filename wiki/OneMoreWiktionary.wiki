@@ -36,7 +36,7 @@ Let's we want to extend our parser by files and classes in order to parse e.g. F
 
 = 2. Adding new code to existing files and classes =
 
-Each file in the package _[http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word wikokit.base.wikt.word]_ contains the call of WLE parser module. E.g. [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word/WLanguage.java WLanguage.java] contains code:
+Each file in the package [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word wikokit.base.wikt.word] contains the call of WLE parser module. E.g. [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word/WLanguage.java WLanguage.java] contains code:
 {{{
 LanguageType wikt_lang; // language of Wiktionary
 
@@ -49,11 +49,24 @@ if(l  == LanguageType.ru) {
 }
 }}}
 
-
+If you remember we wanted to parse new French Wiktionary. Then this code should be extended:
+{{{
+if(l  == LanguageType.ru) {
+  lang_sections = WLanguageRu.splitToLanguageSections(page_title, text);
+} else if(l == LanguageType.*fr*) {
+  lang_sections = WLanguageFr.splitToLanguageSections(page_title, text);
+} else if(l == LanguageType.en) {
+  lang_sections = WLanguageEn.splitToLanguageSections(page_title, text);
+} else {
+  throw new NullPointerException("Null LanguageType");
+}
+}}}
 
 todo
   * add code to the files in the package [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/?r=820#wikt%2Fword wikokit.base.wikt.word] in order to call .
 
 
 = Comments =
-Don't forget about Unit-test. It's a best documentation for our code. E.g. 
+1. Don't forget about Unit-test. It's a best documentation for our code. E.g. ... todo
+
+2. language of Wiktionary, main file
