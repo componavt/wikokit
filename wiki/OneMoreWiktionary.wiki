@@ -70,4 +70,9 @@ Now we are calling *WLanguageFr.java* which should be located at the package *wi
 = Comments =
 1. Don't forget about Unit-test. It's a best documentation of our and your code. E.g. class [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/WLanguageRu.java WLanguageRu] has Unit-tests in the file [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/test/wikokit/base/wikt/multi/ru/WLanguageRuTest.java WLanguageRuTest.java]
 
-2. WLE is an input parameter of the file [http://code.google.com/p/wikokit/source/browse/trunk/wikt_parser/src/wikt/parser/Main.java Main.java] in the wikt_parser project. We should also add code to this file in order to parse French Wiktionary.
+2. Parsed Wiktionary language edition is defined as inpu parameter of the file [http://code.google.com/p/wikokit/source/browse/trunk/wikt_parser/src/wikt/parser/Main.java Main.java] in the wikt_parser project:
+{{{
+LanguageType wikt_lang; // language of Wiktionary
+}}}
+
+We should also add code to this file in order to parse French Wiktionary.
