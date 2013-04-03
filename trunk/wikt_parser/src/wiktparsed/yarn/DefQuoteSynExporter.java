@@ -16,6 +16,7 @@ import java.util.Set;
 import net.htmlparser.jericho.Source;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.PageTableBase;
 import wikokit.base.wikipedia.sql.Statistics;
 import wikokit.base.wikt.api.WTMeaning;
 import wikokit.base.wikt.constant.POS;
@@ -77,7 +78,8 @@ public class DefQuoteSynExporter {
      * @param native_language_code main language of Wiktionary
      * @return 
      */
-    public static String getWordEntryXMLWithoutDuplicates (POS pos, int word_id, String word, String source_url_word, 
+    public static String getWordEntryXMLWithoutDuplicates (Connect wikt_parsed_conn,
+                                POS pos, int word_id, String word, String source_url_word, 
                                 LanguageType native_lang, Map<String, Integer> _m_noun_word_to_id)
     {
         if(getWordEntryID (pos, word, _m_noun_word_to_id) > 0)
@@ -86,6 +88,9 @@ public class DefQuoteSynExporter {
         String pos_prefix = getPOSOneLetterPrefix(pos);
         if(POS.noun == pos)
             _m_noun_word_to_id.put(word, word_id);
+        
+        if(null != TPage.get (wikt_parsed_conn, word)) // if there is an entry for synonym, then write <url>http://ru.wiktionary.org/wiki/word</url>
+            source_url_word = word;
         
         StringBuilder sb = new StringBuilder();
         String code = native_lang.getCode();
@@ -326,7 +331,8 @@ public class DefQuoteSynExporter {
                     continue;
 
                 current_word_id ++;
-                String xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, page_title, page_title, native_lang, m_noun_word_to_id);
+                String xml_word = getWordEntryXMLWithoutDuplicates (wikt_parsed_conn,
+                                  p, current_word_id, page_title, page_title, native_lang, m_noun_word_to_id);
                 sb_words.append( xml_word );
 
                 if(DEBUG)
@@ -366,7 +372,7 @@ public class DefQuoteSynExporter {
                         // if this synonym is absent in the dictionary, it should be added
                         if(-1 == getWordEntryID (p, word, m_noun_word_to_id)) {
                             current_word_id ++;
-                            xml_word = getWordEntryXMLWithoutDuplicates (p, current_word_id, word, page_title, native_lang, m_noun_word_to_id);
+                            xml_word = getWordEntryXMLWithoutDuplicates (wikt_parsed_conn, p, current_word_id, word, page_title, native_lang, m_noun_word_to_id);
                             sb_words.append( xml_word );
                         }
                         

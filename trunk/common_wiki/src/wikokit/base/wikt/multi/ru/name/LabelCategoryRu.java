@@ -1,6 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/* LabelCategoryRu.java - names of categories of context labels in Russian.
+ *
+ * Copyright (c) 2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 package wikokit.base.wikt.multi.ru.name;
 
