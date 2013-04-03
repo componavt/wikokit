@@ -7,15 +7,27 @@ This page will describe Java files to be added to the parser in order to parse o
 
 In order to parse new WLE you have to know the formatting rules of this WLE, because each WLE has different communities and different rules. See interwiki at [http://en.wiktionary.org/wiki/Wiktionary:ELE enwikt formatting rules].
 
-= Files and classes =
+= 1. Adding new files and classes =
+== Example of existing parser module (Russian Wiktionary) ==
 
-Let's we want to extend our parser by files and classes in order to parse Russian Wiktionary. 
+There are files and classes in the parser in order to extract information from the Russian Wiktionary. 
 
-Russian language code is "ru" (ISO 639). So we will add suffix _Ru_ to new Java files and suffix _.ru_ to new Java packages (related to Russian language).
-
+Russian language code is "ru" (ISO 639). So the suffix _Ru_ to new Java files and suffix _.ru_ to new Java packages (related to Russian language).
 
 There is a special package [http://code.google.com/p/wikokit/source/browse/#svn%2Ftrunk%2Fcommon_wiki%2Fsrc%2Fwikokit%2Fbase%2Fwikt%2Fmulti wikokit.base.wikt.multi] which contains subpackages for each WLE: en, ru.
 
-Create files in the package *wikokit.base.wikt.multi.ru.name*: 
+Russian Wiktionary module files in the package *wikokit.base.wikt.multi.ru.name*: 
   * [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/LanguageTypeRu.java LanguageTypeRu.java] - names of languages in Russian and links to the [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikipedia/language/LanguageType.java LanguageType] codes
   * [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/POSRu.java POSRu.java] - names of parts of speech in Russian and the links to the [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/constant/POS.java POS] objects.
+
+== New parser module (copy and paste) ==
+
+Let's we want to extend our parser by files and classes in order to parse French Wiktionary (language code is "fr"). The following "сopy and paste" method could simplify work:
+  * copy package folder `wikokit.base.wikt.multi.ru` to `wikokit.base.wikt.multi.fr
+  * copy `wikokit.base.wikt.multi.ru.name` to `wikokit.base.wikt.multi.fr.name`
+  * rename files in this folders (e.g. `LanguageTypeRu.java` to `LanguageTypeFr.java` etc.)
+
+= 2. Adding new code to existing files and classes =
+
+todo
+  * add code to the files in the package [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/?r=820#wikt%2Fword wikokit.base.wikt.word] in order to call .
