@@ -12,7 +12,7 @@ In order to parse new WLE you have to know the formatting rules of this WLE, bec
 
 There are files and classes in the parser in order to extract information from the Russian Wiktionary. 
 
-Russian language code is "ru" (ISO 639). So the suffix _Ru_ to new Java files and suffix _.ru_ to new Java packages (related to Russian language).
+Russian language code is "ru" (ISO 639) is used as the suffix _Ru_ in names of new Java files and suffix _.ru_ in names of new Java packages (related to Russian language).
 
 There is a special package [http://code.google.com/p/wikokit/source/browse/#svn%2Ftrunk%2Fcommon_wiki%2Fsrc%2Fwikokit%2Fbase%2Fwikt%2Fmulti wikokit.base.wikt.multi] which contains subpackages for each WLE: en, ru.
 
