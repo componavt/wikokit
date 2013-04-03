@@ -31,7 +31,7 @@ Russian Wiktionary module files in the package *[http://code.google.com/p/wikoki
 Let's we want to extend our parser by files and classes in order to parse e.g. French Wiktionary (language code is "fr"). The following "сopy and paste" method could simplify work:
   # copy folder (package) _wikokit.base.wikt.multi.*ru*_ to _wikokit.base.wikt.multi.*fr*_;
   # copy _wikokit.base.wikt.multi.*ru*.name_ to _wikokit.base.wikt.multi.*fr*.name_;
-  # rename files in this folders (e.g. _LanguageTypeRu.java_ to _LanguageTypeFr.java_ etc.)
+  # rename files in this folders (e.g. _!LanguageTypeRu.java_ to _!LanguageTypeFr.java_ etc.)
   # change the code of these files in accordance with formatting rules of your (e.g. French) Wiktionary - the most fun part of work :)
 
 = 2. Adding new code to existing files and classes =
