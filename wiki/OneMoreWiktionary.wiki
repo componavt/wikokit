@@ -53,8 +53,11 @@ If you remember we wanted to parse new French Wiktionary. Then this code should 
 {{{
 if(l  == LanguageType.ru) {
   lang_sections = WLanguageRu.splitToLanguageSections(page_title, text);
-} else if(l == LanguageType.*fr*) {
+
+// these two lines were added
+} else if(l == LanguageType.fr) {
   lang_sections = WLanguageFr.splitToLanguageSections(page_title, text);
+
 } else if(l == LanguageType.en) {
   lang_sections = WLanguageEn.splitToLanguageSections(page_title, text);
 } else {
