@@ -24,7 +24,7 @@ Russian Wiktionary module files in the package *[http://code.google.com/p/wikoki
 
 Russian Wiktionary module files in the package *[http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/ wikokit.base.wikt.multi.ru]*:
   * each file in this package corresponds to the file in the package _[http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word wikokit.base.wikt.word]_ (see next section), which correspond to one level (header, subsection) of the Wiktionary entry;
-  * + additional file [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/POSTemplateRu.java POSTemplateRu.java] - correspondence between part of speech (POS) template in ruwikt and POS name.
+  * + additional file [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/POSTemplateRu.java POSTemplateRu.java] - correspondences between part of speech (POS) templates in ruwikt and POS names.
 
 == New parser module (copy and paste) ==
 
