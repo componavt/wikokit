@@ -38,3 +38,7 @@ Let's we want to extend our parser by files and classes in order to parse e.g. F
 
 todo
   * add code to the files in the package [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/?r=820#wikt%2Fword wikokit.base.wikt.word] in order to call .
+
+
+= Comments =
+Don't forget about Unit-test. It's a best documentation for our code. E.g. 
