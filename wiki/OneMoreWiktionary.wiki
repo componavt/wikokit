@@ -28,10 +28,10 @@ Russian Wiktionary module files in the package *[http://code.google.com/p/wikoki
 
 == New parser module (copy and paste) ==
 
-Let's we want to extend our parser by files and classes in order to parse French Wiktionary (language code is "fr"). The following "сopy and paste" method could simplify work:
-  * copy package folder `wikokit.base.wikt.multi.ru` to `wikokit.base.wikt.multi.fr
-  * copy `wikokit.base.wikt.multi.ru.name` to `wikokit.base.wikt.multi.fr.name`
-  * rename files in this folders (e.g. `LanguageTypeRu.java` to `LanguageTypeFr.java` etc.)
+Let's we want to extend our parser by files and classes in order to parse e.g. French Wiktionary (language code is "fr"). The following "сopy and paste" method could simplify work:
+  # copy package folder `wikokit.base.wikt.multi.ru` to `wikokit.base.wikt.multi.fr
+  # copy `wikokit.base.wikt.multi.ru.name` to `wikokit.base.wikt.multi.fr.name`
+  # rename files in this folders (e.g. `LanguageTypeRu.java` to `LanguageTypeFr.java` etc.)
 
 = 2. Adding new code to existing files and classes =
 
