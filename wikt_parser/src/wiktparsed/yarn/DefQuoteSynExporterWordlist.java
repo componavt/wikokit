@@ -111,8 +111,8 @@ outerloop:
                     continue;
 
                 current_word_id ++;
-                String xml_word = DefQuoteSynExporter.getWordEntryXMLWithoutDuplicates (p, current_word_id, 
-                                    page_title, page_title, native_lang, m_noun_word_to_id);
+                String xml_word = DefQuoteSynExporter.getWordEntryXMLWithoutDuplicates (wikt_parsed_conn, 
+                                    p, current_word_id, page_title, page_title, native_lang, m_noun_word_to_id);
                 sb_words.append( xml_word );
 
                 if(DEBUG)
@@ -152,8 +152,8 @@ outerloop:
                         // if this synonym is absent in the dictionary, it should be added
                         if(-1 == DefQuoteSynExporter.getWordEntryID (p, word, m_noun_word_to_id)) {
                             current_word_id ++;
-                            xml_word = DefQuoteSynExporter.getWordEntryXMLWithoutDuplicates (p, current_word_id, 
-                                    word, page_title, native_lang, m_noun_word_to_id);
+                            xml_word = DefQuoteSynExporter.getWordEntryXMLWithoutDuplicates (wikt_parsed_conn, 
+                                       p, current_word_id, word, page_title, native_lang, m_noun_word_to_id);
                             sb_words.append( xml_word );
                         }
 

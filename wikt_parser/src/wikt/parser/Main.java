@@ -55,7 +55,7 @@ public class Main {
         
         System.out.println("Wiktionary parser will create wikt_parsed database.\n");
         
-        LanguageType wiki_lang = LanguageType.get(s);
+        LanguageType wikt_lang = LanguageType.get(s);
         System.out.println("OK. language code is '" + s + "'");
 
         int n_start_from = Integer.parseInt(args[1]);
@@ -73,14 +73,14 @@ public class Main {
         */
         
         // Russian Wiktionary
-        if(LanguageType.ru == wiki_lang) {
-            wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
-            wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wiki_lang);
+        if(LanguageType.ru == wikt_lang) {
+            wikt_conn.Open       (Connect.RUWIKT_HOST,        Connect.RUWIKT_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wikt_lang);
+            wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, wikt_lang);
         } else {
             // English Wiktionary
-            if(LanguageType.en == wiki_lang) {
-                wikt_conn.Open       (Connect.ENWIKT_HOST,        Connect.ENWIKT_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
-                wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wiki_lang);
+            if(LanguageType.en == wikt_lang) {
+                wikt_conn.Open       (Connect.ENWIKT_HOST,        Connect.ENWIKT_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wikt_lang);
+                wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, wikt_lang);
             } else {
                 System.out.println("This language code ('" + s + "') is not supported yet. Stop.");
                 return;
@@ -98,7 +98,7 @@ public class Main {
 //        w.runSubCategories(wiki_lang, wikt_conn, wikt_parsed_conn, category_name);
         
 
-        PageTableAll.parseAllPages(wiki_lang, wikt_conn, wikt_parsed_conn, n_start_from);
+        PageTableAll.parseAllPages(wikt_lang, wikt_conn, wikt_parsed_conn, n_start_from);
         
         wikt_conn.Close();
         wikt_parsed_conn.Close();
