@@ -65,7 +65,7 @@ if(l  == LanguageType.ru) {
 }
 }}}
 
-Now we are calling *WLanguageFr* which should be located at the package *wikokit.base.wikt.multi.fr*. 
+Now we are calling *WLanguageFr.java* which should be located at the package *wikokit.base.wikt.multi.fr*. 
 
 = Comments =
 1. Don't forget about Unit-test. It's a best documentation for our code. E.g. ... todo
