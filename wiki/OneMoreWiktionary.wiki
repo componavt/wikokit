@@ -68,7 +68,7 @@ if(l  == LanguageType.ru) {
 Now we are calling *WLanguageFr.java* which should be located at the package *wikokit.base.wikt.multi.fr*. 
 
 = Comments =
-1. Don't forget about Unit-test. It's a best documentation of our and your code. E.g. class [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/WLanguageRu.java WLanguageRu] has Unit-tests in the file [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/test/wikokit/base/wikt/multi/ru/WLanguageRuTest.java WLanguageRuTest.java]
+1. Don't forget about [http://en.wikipedia.org/wiki/Unit_testing unit test]. It's a best documentation of our code. Every nontrivial class and function in this project have unit tests, e.g. class [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/WLanguageRu.java WLanguageRu] has Unit-tests in the file [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/test/wikokit/base/wikt/multi/ru/WLanguageRuTest.java WLanguageRuTest.java]
 
 2. Parsed Wiktionary language edition is defined as inpu parameter of the file [http://code.google.com/p/wikokit/source/browse/trunk/wikt_parser/src/wikt/parser/Main.java Main.java] in the wikt_parser project:
 {{{
