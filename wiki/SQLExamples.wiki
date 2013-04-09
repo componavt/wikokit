@@ -7,7 +7,7 @@
 
 Download the parsed Wiktionary database from this site, e.g. `enwikt20XXXX_parsed.zip`. Unzip and upload to your local MySQL database.
 
-See the structure (tables and relations) of the Wiktionary parsed database in the page [File_wikt_parsed_empty_sql].
+Queries below will be trivial, obvious, clear and easily understood :) if you print and meditate on the figure "the structure (tables and relations) of the Wiktionary parsed database" (see [File_wikt_parsed_empty_sql]).
 
 = SQL query examples =
 == From page to definitions ==
