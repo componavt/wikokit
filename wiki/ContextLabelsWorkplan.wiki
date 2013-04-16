@@ -20,7 +20,10 @@ _Второй этап_. Обходим словарные пометы Русс
 
 2) SVN-клиент [http://tortoisesvn.net/ TortoiseSVN].
 
-
+3] Как написано здесь [http://code.google.com/p/wikokit/source/checkout] выполните из svn команду, чтобы получить исходный код:
+{{{
+svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
+}}}
 
 
 = Пример конкретной работы =
