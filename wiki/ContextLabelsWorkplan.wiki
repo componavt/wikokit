@@ -16,6 +16,8 @@ _Второй этап_. Обходим словарные пометы Русс
   * либо создаём под неё новую помету в файле ``LabelEn``, к которой и привязываем эту русскую сиротинку.
 
 = Что нужно скачать / установить =
+0) [http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html JDK]
+
 1) Редактор [https://netbeans.org/downloads/ NetBeans]. Нужна версия "Java SE".
 
 2) SVN-клиент [http://tortoisesvn.net/ TortoiseSVN].
