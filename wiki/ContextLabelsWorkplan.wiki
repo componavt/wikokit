@@ -46,7 +46,7 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
 // period 15 Krizhanovsky
 }}}
 
-== Пример 1 (первый этап). "неологизм" ==
+== Пример 1 (первый этап). "neologism" ==
 
 Итак, взяли из Английского Викисловаря помету [http://en.wiktionary.org/wiki/Template:neologism Template:neologism] ("неологизм"). Добавляем код в !LabelEn:
 {{{
@@ -63,6 +63,22 @@ public static final Label neologism = new LabelRu("неол.", "неологиз
 }}}
 
 Имя переменной (neologism) совпадает с имененем соответствующей переменной в !LabelEn. Первый и второй параметры - краткое и полное название пометы. Третий параметр - имя переменной в !LabelEn, к которой привязывается эта переменная.
+
+== Пример 2 (первый этап). "ru-pre-reform" ==
+
+Берём следующую помету из категории "period". Шаблон [http://en.wiktionary.org/wiki/Template:ru-pre-reform Template:ru-pre-reform] указывает на устаревшее значение слова. Т.е. это синоним для другой пометы: "obsolete". Поэтому добавляем в !LabelEn:
+{{{
+public static final Label obsolete = new LabelEn("obsolete", "obsolete", LabelCategory.period);
+public static final Label ru_pre_reform = LabelEn.addNonUniqueShortName(obsolete, "ru-pre-reform");
+}}}
+Во второй строке помета _ru_pre_reform_ как синоним ссылается на помету в первой строке "obsolete". У функции _addNonUniqueShortName_ второй параметр "ru-pre-reform" - это имя шаблона, который будет извлекать парсер.
+
+Для синонимов (т.е. помета _ru_pre_reform_, добавленная методом !addNonUniqueShortName) не нужно писать перевод в LabelRu.
+Для основных помет (типа "obsolete") перевод в !LabelRu пишем:
+{{{
+public static final Label obsolete = new LabelRu("устар.", "устаревшее", LabelEn.obsolete);
+}}}
+
 
 == Разделение работы по первому этапу ==
 
