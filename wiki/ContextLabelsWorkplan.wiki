@@ -87,7 +87,7 @@ public static final Label obsolete = new LabelRu("устар.", "устарев�
 {{{
 public static final Label ecclesiastical_latin = new LabelEn("Ecclesiastical Latin", "Ecclesiastical Latin", LabelCategory.period);
 }}}
-Имя помете даю маленькими буквами, слова в имени объединяю подчёркиванием ``ecclesiastical_latin''.
+Имя помете даю маленькими буквами, слова в имени объединяю подчёркиванием "ecclesiastical_latin".
 
 == Разделение работы по первому этапу ==
 
