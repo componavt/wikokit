@@ -33,7 +33,7 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
 
 = Пример конкретной работы (первый этап) =
 
-1) Открываю файл *LabelEn*, нахожу строку со своей фамилией:
+1) Открываю файл _!LabelEn_, нахожу строку со своей фамилией:
 {{{
 // period 15 Krizhanovsky
 }}}
