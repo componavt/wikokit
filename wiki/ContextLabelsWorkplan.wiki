@@ -41,7 +41,7 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
 
 2) Открываю страницу enwikt [http://en.wiktionary.org/wiki/Category:Context_labels Category:Context_labels], нахожу подкатегорию словарных помет со словом "period", это [http://en.wiktionary.org/wiki/Category:Period_context_labels Category:Period context labels]
 
-3) Беру последовательно пометы с этой страницы и в алфавитном порядке добавляю в файл _LabelEn_ после
+3) Беру последовательно пометы с этой страницы и в алфавитном порядке добавляю в файл _!LabelEn_ после
 {{{
 // period 15 Krizhanovsky
 }}}
