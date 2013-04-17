@@ -20,13 +20,20 @@ _Второй этап_. Обходим словарные пометы Русс
 
 2) SVN-клиент [http://tortoisesvn.net/ TortoiseSVN].
 
-3] Как написано здесь [http://code.google.com/p/wikokit/source/checkout] выполните из svn команду, чтобы получить исходный код:
+3) Как пишут гугловцы здесь [http://code.google.com/p/wikokit/source/checkout] - выполните из svn команду, чтобы получить исходный код:
 {{{
 svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
 }}}
 
+4) Откройте из NetBeans скачанный проект "common_wiki" и откройте в нём файлы, с которыми будете работать:
+  * LabelCategory
+  * LabelCategoryRu
+  * LabelEn
+  * LabelRu
 
-= Пример конкретной работы =
+= Пример конкретной работы (первый этап) =
+
+
 
 = Разделение работы =
 
