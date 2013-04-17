@@ -50,7 +50,7 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
 
 Итак, взяли из Английского Викисловаря помету [http://en.wiktionary.org/wiki/Template:neologism Template:neologism] ("неологизм"). Добавляем код в !LabelEn:
 {{{
-public static final Label neologism = new LabelEn("neologism",  "neologism", LabelCategory.period);
+public static final Label neologism = new LabelEn("neologism", "neologism", LabelCategory.period);
 }}}
 Первый и второй параметры - короткое и длинное имя пометы (здесь совпадают), третий параметр - категория ("period"), к которой относится помета.
 
