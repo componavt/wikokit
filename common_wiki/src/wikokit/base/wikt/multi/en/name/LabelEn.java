@@ -65,18 +65,21 @@ public class LabelEn extends Label {
     // //////////////////////////
     
     
-    // period
+    // period 15 Krizhanovsky
     // //////////////////////////
-    public static final Label archaic = new LabelEn("archaic",  "archaic", LabelCategory.period);
+    public static final Label archaic = new LabelEn("archaic", "archaic", LabelCategory.period);
     
-    public static final Label dated = new LabelEn("dated",  "dated", LabelCategory.period);
+    public static final Label dated = new LabelEn("dated", "dated", LabelCategory.period);
     public static final Label dated_sense = LabelEn.addNonUniqueShortName(dated, "dated_sense");
     
-    public static final Label historical = new LabelEn("historical",  "historical", LabelCategory.period);
+    public static final Label ecclesiastical_latin = new LabelEn("Ecclesiastical Latin", "Ecclesiastical Latin", LabelCategory.period);
     
-    public static final Label obsolete = new LabelEn("obsolete",  "obsolete", LabelCategory.period);
+    public static final Label historical = new LabelEn("historical", "historical", LabelCategory.period);
+    
+    public static final Label neologism = new LabelEn("neologism", "neologism", LabelCategory.period);
+    
+    public static final Label obsolete = new LabelEn("obsolete", "obsolete", LabelCategory.period);
     public static final Label ru_pre_reform = LabelEn.addNonUniqueShortName(obsolete, "ru-pre-reform");
-    
     
     
     // qualifier

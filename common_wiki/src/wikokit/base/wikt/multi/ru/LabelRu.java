@@ -62,6 +62,7 @@ public class LabelRu extends LabelLocal  {
     // period
     // //////////////////////////
     public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);
+    public static final Label neologism = new LabelRu("неол.", "неологизм", LabelEn.neologism);
     public static final Label obsolete = new LabelRu("устар.", "устаревшее", LabelEn.obsolete);
     public static final Label historical = new LabelRu("истор.", "историческое", LabelEn.historical);
 
