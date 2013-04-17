@@ -46,8 +46,13 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
 // period 15 Krizhanovsky
 }}}
 
-Например, помета "неологизм" (Template:neologism)
+== Пример 1 (первый этап). "неологизм" ==
 
+Например, помета "неологизм" (Template:neologism). Добавляем код в !LabelEn:
+{{{
+public static final Label neologism = new LabelEn("neologism",  "neologism", LabelCategory.period);
+}}}
+Первый и второй параметры - короткое и длинное имя пометы (здесь совпадают), третий параметр - категория ("period"), к которой относится помета.
 
 = Разделение работы =
 
