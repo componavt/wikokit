@@ -26,10 +26,10 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
 }}}
 
 4) Откройте из NetBeans скачанный проект "common_wiki" и откройте в нём файлы, с которыми будете работать:
-  * LabelCategory
-  * LabelCategoryRu
-  * LabelEn
-  * LabelRu
+  * !LabelCategory
+  * !LabelCategoryRu
+  * !LabelEn
+  * !LabelRu
 
 = Пример конкретной работы (первый этап) =
 
