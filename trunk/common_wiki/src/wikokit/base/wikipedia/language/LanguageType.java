@@ -3555,6 +3555,7 @@ public class LanguageType {
     public static final LanguageType xfa = new LanguageType("xfa", "Faliscan", "Faliscan");
     public static final LanguageType xht = new LanguageType("xht", "Hattic", "Hattic");
     public static final LanguageType xhu = new LanguageType("xhu", "Hurrian", "Hurrian");
+    public static final LanguageType xil = new LanguageType("xil", "Illyrian", "Illyrian");
     public static final LanguageType xlc = new LanguageType("xlc", "Lycian", "Lycian");
     public static final LanguageType xld = new LanguageType("xld", "Lydian", "Lydian");
     public static final LanguageType xls = new LanguageType("xls", "Lusitanian", "Lusitanian");
