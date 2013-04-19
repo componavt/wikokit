@@ -33,6 +33,8 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
   * !LabelEn
   * !LabelRu
 
+Чтобы открыть нужный файл, нажмите в NetBeans комбинацию клавиш Ctrl+O и напишите название файла, например !LabelEn. NetBeans выполнит поиск по всем файлам открытых проектов. 
+
 = Пример конкретной работы (первый этап) =
 
 1) Открываю файл _!LabelEn_, нахожу строку со своей фамилией:
