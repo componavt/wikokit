@@ -29,7 +29,9 @@ public class LabelCategory {
     
     public String toString() { return name; }
     
-    public static final LabelCategory   
+    public static final LabelCategory
+            empty, // base category, or context labels without any 
+            
             grammatical, 
             period,
             qualifier,
@@ -48,6 +50,7 @@ public class LabelCategory {
                 
     
     static {
+        empty = new LabelCategory("Empty");
         grammatical = new LabelCategory("Grammatical");
         period      = new LabelCategory("Period");
         qualifier   = new LabelCategory("Qualifier");
