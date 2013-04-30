@@ -57,20 +57,30 @@ public class LabelRu extends LabelLocal  {
     
     // grammatical
     // //////////////////////////
-    
-    
+    public static final Label animate = new LabelRu("одуш.", "одушевлённое", LabelEn.animate);
+    public static final Label countable = new LabelRu("исч.", "исчислимое", LabelEn.countable);
+    public static final Label in_the_plural = new LabelRu("мн. ч.", "множественное число", LabelEn.in_the_plural);
+    public static final Label inanimate = new LabelRu("неодуш.", "неодушевлённое", LabelEn.inanimate);
+    public static final Label indecl = new LabelRu("нескл.", "несклоняемое", LabelEn.indecl);
+    public static final Label intransitive = new LabelRu("неперех.", "непереходный глагол", LabelEn.intransitive);
+    public static final Label passive = new LabelRu("страд.", "страдательный (залог)", LabelEn.passive);
+    public static final Label predicate = new LabelRu("предик.", "предикатив", LabelEn.predicate);
+    public static final Label transitive = new LabelRu("перех.", "переходный глагол", LabelEn.transitive);
+    public static final Label uncountable = new LabelRu("неисч.", "неисчислимое", LabelEn.uncountable);
+     
     // period
     // //////////////////////////
     public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);
+    public static final Label historical = new LabelRu("истор.", "историческое", LabelEn.historical);
     public static final Label neologism = new LabelRu("неол.", "неологизм", LabelEn.neologism);
     public static final Label obsolete = new LabelRu("устар.", "устаревшее", LabelEn.obsolete);
-    public static final Label historical = new LabelRu("истор.", "историческое", LabelEn.historical);
 
     
     // qualifier
     // //////////////////////////
-    
-    
+    public static final Label humorously = new LabelRu("шутл.", "шутливое", LabelEn.humorously);
+    public static final Label literally = new LabelRu("букв.", "буквально", LabelEn.literally);
+   
     // regional
     // //////////////////////////
     public static final Label AU = new LabelRu("австрал.", "австралийский вариант английского языка", LabelEn.AU);
@@ -78,8 +88,21 @@ public class LabelRu extends LabelLocal  {
     
     // usage
     // //////////////////////////
+    public static final Label childish = new LabelRu("детск.", "детское",  LabelEn.childish);
+    public static final Label colloquial = new LabelRu("разг.", "разговорное",  LabelEn.colloquial);
+    public static final Label derogatory = new LabelRu("унич.", "уничижительное",  LabelEn.derogatory);
+    public static final Label dialectal = new LabelRu("диал.", "диалектное",  LabelEn.dialectal);
+    public static final Label euphemistic = new LabelRu("эвф.", "эвфемизм",  LabelEn.euphemistic);
+    public static final Label familiar = new LabelRu("фам.", "фамильярное",  LabelEn.familiar);
     public static final Label figuratively = new LabelRu("п.", "переносное значение",  LabelEn.figuratively);
     public static final Label figuratively_peren = LabelRu.addNonUniqueShortName(figuratively, "перен.");// synonym context labels: п. перен.
+    public static final Label Internet_slang = new LabelRu("интернет.", "интернетовский жаргон",  LabelEn.Internet_slang);
+    public static final Label pejorative = new LabelRu("унич.", "уничижительное",  LabelEn.pejorative);
+    public static final Label poetic = new LabelRu("поэт.", "поэтическое",  LabelEn.poetic);
+    public static final Label politically_correct = new LabelRu("политкорр. (пк)", "политкорректное выражение",  LabelEn.politically_correct);
+    public static final Label rare = new LabelRu("редк.", "редкое", LabelEn.rare);
+    public static final Label vulgar = new LabelRu("вульг.", "вульгарное",  LabelEn.vulgar);
+//    public static final Label  = new LabelRu(".", "",  LabelEn.);
     //public static final LabelLocal figuratively_peren = LabelRu.addNonUniqueShortName(Label.figuratively, "перен.");// synonym context labels: п. перен.
     //public static final LanguageType INT = LanguageType.addNonUniqueCode(mul, "INT");// Russian Wiktionary, yes! outdated :)
     //LabelLocal.addNonUniqueShortName(null, "перен.");
@@ -93,6 +116,9 @@ public class LabelRu extends LabelLocal  {
     
     // synonym context labels: рег., обл.
 
+    // topical
+    // //////////////////////////
+    public static final Label Wiktionary_and_WMF_jargon = new LabelRu("жаргон википроектов", "жаргон википроектов", LabelEn.Wiktionary_and_WMF_jargon);
     
     
     // DEBUG: should be one error for each line of code
