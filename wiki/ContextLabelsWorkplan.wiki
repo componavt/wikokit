@@ -78,7 +78,7 @@ public static final Label ru_pre_reform = LabelEn.addNonUniqueShortName(obsolete
 Во второй строке помета _ru_pre_reform_ как синоним ссылается на помету в первой строке "obsolete". У функции _addNonUniqueShortName_ второй параметр "ru-pre-reform" - это имя шаблона, который будет извлекать парсер.
 
 Для синонимов (т.е. помета _ru_pre_reform_, добавленная методом addNonUniqueShortName) не нужно писать перевод в LabelRu.
-Для основных помет (типа "obsolete") перевод в !LabelRu пишем:
+Для основных помет (основная т.е. нет синонимов, например помета "obsolete") в !LabelRu записываем такую строку:
 {{{
 public static final Label obsolete = new LabelRu("устар.", "устаревшее", LabelEn.obsolete);
 }}}
