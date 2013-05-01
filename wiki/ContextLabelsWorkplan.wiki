@@ -109,9 +109,13 @@ public static final Label ecclesiastical_latin = new LabelEn("Ecclesiastical Lat
 LabelRu.addNonUniqueShortName // см. примеры использования в файле LabelRu
 }}}
 
-== Late Latin ==
+== Повтор шаблона ==
 
-== Литература ==
+Может оказаться, что шаблон, который вы добавляете, уже есть в файле LabelEn
+
+Late Latin
+
+= Литература =
 
 В наличие есть книга в бумажном и электронном виде, которая поможет в переводе помет:
   * Ахманова О. С. [https://www.dropbox.com/s/qtaagjxeci7zln4/%D0%90%D1%85%D0%BC%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0%20%D0%9E.%D0%A1.%20-%20%D0%A1%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C%20%D0%BB%D0%B8%D0%BD%D0%B3%D0%B2%D0%B8%D1%81%D1%82%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D1%85%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%BE%D0%B2.djvu Словарь лингвистических терминов], 1969.
