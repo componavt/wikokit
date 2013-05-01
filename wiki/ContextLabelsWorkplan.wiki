@@ -77,7 +77,7 @@ public static final Label ru_pre_reform = LabelEn.addNonUniqueShortName(obsolete
 }}}
 Во второй строке помета _ru_pre_reform_ как синоним ссылается на помету в первой строке "obsolete". У функции _addNonUniqueShortName_ второй параметр "ru-pre-reform" - это имя шаблона, который будет извлекать парсер.
 
-Для синонимов (т.е. помета _ru_pre_reform_, добавленная методом addNonUniqueShortName) не нужно писать перевод в LabelRu.
+Для синонимов (т.е. помета _ru_pre_reform_, добавленная методом addNonUniqueShortName) не нужно писать перевод в !LabelRu.
 Для основных помет (основная т.е. нет синонимов, например помета "obsolete") в !LabelRu записываем такую строку:
 {{{
 public static final Label obsolete = new LabelRu("устар.", "устаревшее", LabelEn.obsolete);
@@ -111,9 +111,19 @@ LabelRu.addNonUniqueShortName // см. примеры использования
 
 == Повтор шаблона ==
 
-Может оказаться, что шаблон, который вы добавляете, уже есть в файле LabelEn
+Может оказаться, что шаблон, который вы добавляете, уже есть в файле !LabelEn, т.е. его добавили раньше и его добавлять ещё раз не нужно. 
 
-Late Latin
+Это может случиться, если шаблон принадлежит сразу нескольким категориям. Например [http://en.wiktionary.org/wiki/Template:Late_Latin шаблон:Late Latin] принадлежит двум категориям:
+  * Context labels
+  * Period context labels
+
+Если встречается шаблон с несколькими категориями, то нужно подумать, какую из двух категорий, т.е. какую из двух строчек, оставить:
+{{{
+public static final Label Late_Latin = new LabelEn("Late Latin", "Late Latin", LabelCategory.empty);
+public static final Label Late_Latin = new LabelEn("Late Latin", "Late Latin", LabelCategory.period);
+}}}
+
+В данном случае выбрать легко - категория времени (period) предпочтительнее, чем пустая категория (empty), которая ничего не говорит о словарной помете. В других случаях придётся думать и выбирать более подходящую категорию для словарной пометы, т.к. у пометы мы можем указать только одну категорию.
 
 = Литература =
 
