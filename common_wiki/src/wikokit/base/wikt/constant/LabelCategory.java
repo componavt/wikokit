@@ -50,7 +50,8 @@ public class LabelCategory {
                 
     
     static {
-        empty = new LabelCategory("Empty");
+        empty       = new LabelCategory("Empty");
+        
         grammatical = new LabelCategory("Grammatical");
         period      = new LabelCategory("Period");
         qualifier   = new LabelCategory("Qualifier");

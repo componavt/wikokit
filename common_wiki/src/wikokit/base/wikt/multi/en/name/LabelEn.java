@@ -65,12 +65,9 @@ public class LabelEn extends Label {
 // context needed
     public static final Label E_number = new LabelEn("E number", "food manufacture", LabelCategory.empty);
     public static final Label element_symbol = new LabelEn("element symbol", "chemistry", LabelCategory.empty); 
-//  item
-//  Karabakh
-//  Kromanti
+//  item // it's not a context label
     public static final Label Rumantsch_Grischun = new LabelEn("Rumantsch Grischun", "Rumantsch Grischun", LabelCategory.empty);
-//  Tigranakert 
-//   public static final Label  = new LabelEn("", "", LabelCategory.empty);
+
      
     // grammatical 67-2 Krizhanovsky
     // //////////////////////////
@@ -174,7 +171,7 @@ public class LabelEn extends Label {
     // qualifier 22-2 Krizhanovsky
     // //////////////////////////
     public static final Label chiefly = new LabelEn("chiefly", "chiefly", LabelCategory.qualifier); //главным образом, особенно, в основном
-    public static final Label context = new LabelEn("context", "context", LabelCategory.qualifier);
+    //public static final Label context = new LabelEn("context", "context", LabelCategory.qualifier); // meta context label will be treated in a special way. http://en.wiktionary.org/wiki/Template:context
     public static final Label excluding = new LabelEn("excluding", "excluding", LabelCategory.qualifier);
     public static final Label extremely = new LabelEn("extremely", "extremely", LabelCategory.qualifier);
     public static final Label frequently = new LabelEn("frequently", "frequently", LabelCategory.qualifier);
@@ -203,8 +200,11 @@ public class LabelEn extends Label {
     public static final Label Helsinki_slang = new LabelEn("Helsinki slang", "Helsinki slang", LabelCategory.regional);
     public static final Label Hoisanese = new LabelEn("Hoisanese", "Hoisanese", LabelCategory.regional);
     public static final Label Ijekavian = new LabelEn("Ijekavian", "Ijekavian", LabelCategory.regional);
+    public static final Label Karabakh = new LabelEn("Karabakh", "Karabakh", LabelCategory.regional);
+    public static final Label Kromanti = new LabelEn("Kromanti", "Kromanti spirit possession language", LabelCategory.regional);
     public static final Label Polari = new LabelEn("Polari", "Polari", LabelCategory.regional);
     public static final Label southern_US = new LabelEn("southern US", "southern US", LabelCategory.regional);
+    public static final Label Tigranakert = new LabelEn("Tigranakert", "Tigranakert", LabelCategory.regional);
     
     
     // usage 73-3+1 Krizhanovsky
@@ -221,14 +221,18 @@ public class LabelEn extends Label {
     public static final Label chu_Nom = new LabelEn("chu Nom",  "Vietnamese chữ Nôm", LabelCategory.usage);
     public static final Label Classic_1811 = new LabelEn("Classic 1811 Dictionary of the Vulgar Tongue",  "obsolete, slang", LabelCategory.usage);
     public static final Label Cockney_rhyming_slang = new LabelEn("Cockney rhyming slang",  "Cockney rhyming slang", LabelCategory.usage);
+    
     public static final Label colloquial = new LabelEn("colloquial",  "colloquial", LabelCategory.usage);
     public static final Label colloquial_um = LabelEn.addNonUniqueShortName(colloquial, "colloquial-um");
     public static final Label colloquial_un = LabelEn.addNonUniqueShortName(colloquial, "colloquial-un");
+    
     public static final Label derogatory = new LabelEn("derogatory",  "derogatory", LabelCategory.usage);
+    
     public static final Label dialect = new LabelEn("dialect",  "dialect", LabelCategory.usage);
-    public static final Label dialectal = new LabelEn("dialectal",  "dialectal", LabelCategory.usage);
-    public static final Label dialectal_n = LabelEn.addNonUniqueShortName(dialectal, "dialectal-n");
-    public static final Label dialects = new LabelEn("dialects",  "dialects", LabelCategory.usage);
+    public static final Label dialectal = LabelEn.addNonUniqueShortName(dialect, "dialectal");
+    public static final Label dialectal_n = LabelEn.addNonUniqueShortName(dialect, "dialectal_n");
+    public static final Label dialects = LabelEn.addNonUniqueShortName(dialect, "dialects");
+    
     public static final Label dismissal = new LabelEn("dismissal",  "dismissal", LabelCategory.usage);
     public static final Label endearing = new LabelEn("endearing",  "endearing", LabelCategory.usage);
     public static final Label ethnic_slur = new LabelEn("ethnic slur",  "ethnic slur", LabelCategory.usage);
@@ -294,27 +298,56 @@ public class LabelEn extends Label {
     public static final Label honorific = new LabelEn("honorific", "honorific", LabelCategory.topical);
     public static final Label Wiktionary_and_WMF_jargon = new LabelEn("Wiktionary and WMF jargon", "Wiktionary and WMF jargon", LabelCategory.topical);
     
-    // Sasha First 186
-    //        computing, 
-    //        games,
+    // Sasha First 186 all Subcategories in http://en.wiktionary.org/wiki/Category:Topical_context_labels
+    
+    // computing Sasha First
+    // //////////////////////////
+    public static final Label programming = new LabelEn("programming", "programming", LabelCategory.computing);
+    
+    // games Sasha First
+    // //////////////////////////
+    public static final Label chess = new LabelEn("chess", "chess", LabelCategory.games);
     public static final Label dominoes = new LabelEn("dominoes", "dominoes", LabelCategory.games);
     public static final Label Tetris = new LabelEn("Tetris", "Tetris", LabelCategory.games);
 
-    //        mathematics,
-    //        music, 5
-    //        mythology 15
-    //        religion,
-    //        science,
-    //        sports
-    
-    // science
+    // mathematics Sasha First
     // //////////////////////////
-    public static final LabelEn astronomy = new LabelEn("astronomy" ,"astronomy",   LabelCategory.science);
+    public static final Label arithmetic = new LabelEn("arithmetic", "arithmetic", LabelCategory.mathematics);
     
+    // music Sasha First
+    // //////////////////////////
+    public static final Label music = new LabelEn("music", "music", LabelCategory.music);
+
+    // mythology Sasha First
+    // //////////////////////////
+    public static final Label mythology = new LabelEn("mythology", "mythology", LabelCategory.mythology);
+
+    // religion Sasha First
+    // //////////////////////////
+    public static final Label religion = new LabelEn("religion", "religion", LabelCategory.religion);
     
+    // science Sasha First
+    // //////////////////////////
+    public static final Label astronomy = new LabelEn("astronomy" ,"astronomy", LabelCategory.science);
     // synonyms:  {{math}} and {{maths}} -> (mathematics)
     
+    // sports Sasha First
+    // //////////////////////////
+    public static final Label baseball = new LabelEn("baseball" ,"baseball", LabelCategory.sports);
+    public static final Label basketball = new LabelEn("basketball" ,"basketball", LabelCategory.sports);
+    public static final Label billiards = new LabelEn("billiards" ,"billiards", LabelCategory.sports);
+    public static final Label croquet = new LabelEn("croquet" ,"croquet", LabelCategory.sports); // only in ruwikt
+    public static final Label football = new LabelEn("football" ,"football", LabelCategory.sports); // only in ruwikt
+    public static final Label gymnastics = new LabelEn("gymnastics" ,"gymnastics", LabelCategory.sports);
     
+    public static final Label hockey = new LabelEn("hockey" ,"hockey", LabelCategory.sports);
+    public static final Label ice_hockey = LabelEn.addNonUniqueShortName(hockey, "ice hockey");
+    public static final Label field_hockey = LabelEn.addNonUniqueShortName(hockey, "field hockey");
+    
+    public static final Label rugby = new LabelEn("rugby" ,"rugby", LabelCategory.sports);
+    public static final Label sports = new LabelEn("sports" ,"sports", LabelCategory.sports);
+    public static final Label tennis = new LabelEn("tennis" ,"tennis", LabelCategory.sports);
+    public static final Label volleyball = new LabelEn("volleyball" ,"volleyball", LabelCategory.sports);
     
     
     // DEBUG: should be one error for each line of code

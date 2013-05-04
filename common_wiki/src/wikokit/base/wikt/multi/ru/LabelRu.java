@@ -91,7 +91,7 @@ public class LabelRu extends LabelLocal  {
     public static final Label childish = new LabelRu("детск.", "детское",  LabelEn.childish);
     public static final Label colloquial = new LabelRu("разг.", "разговорное",  LabelEn.colloquial);
     public static final Label derogatory = new LabelRu("унич.", "уничижительное",  LabelEn.derogatory);
-    public static final Label dialectal = new LabelRu("диал.", "диалектное",  LabelEn.dialectal);
+    public static final Label dialect = new LabelRu("диал.", "диалектное",  LabelEn.dialect);
     public static final Label euphemistic = new LabelRu("эвф.", "эвфемизм",  LabelEn.euphemistic);
     public static final Label familiar = new LabelRu("фам.", "фамильярное",  LabelEn.familiar);
     public static final Label figuratively = new LabelRu("п.", "переносное значение",  LabelEn.figuratively);
@@ -116,11 +116,56 @@ public class LabelRu extends LabelLocal  {
     
     // synonym context labels: рег., обл.
 
+    // **************************
     // topical
-    // //////////////////////////
+    // **************************
     public static final Label Wiktionary_and_WMF_jargon = new LabelRu("жаргон википроектов", "жаргон википроектов", LabelEn.Wiktionary_and_WMF_jargon);
     
+    // computing
+    // //////////////////////////
+    public static final Label programming = new LabelRu("прогр.", "программистское", LabelEn.programming);
+
+    // games
+    // //////////////////////////
+    public static final Label chess = new LabelRu("шахм.", "шахматное", LabelEn.chess);
     
+    // mathematics
+    // //////////////////////////
+    
+    
+    // music
+    // //////////////////////////
+    public static final Label music = new LabelRu("муз.", "музыкальное", LabelEn.music);
+    
+    // mythology
+    // //////////////////////////
+    public static final Label mythology = new LabelRu("мифол.", "мифологическое", LabelEn.mythology);
+    
+    // religion
+    // //////////////////////////
+    public static final Label religion = new LabelRu("религ.", "религиозное", LabelEn.religion);
+    
+    // science
+    // //////////////////////////
+    
+    // sports - special treatment for all sport labels except {{sport}} itself
+    // it is need to parse parameter "вид=" of {{спорт.|вид=}}
+    // @see ru.wiktionary.org/wiki/template:спорт.
+    // //////////////////////////
+    public static final Label baseball = new LabelRu("бейсб", "бейсбол", LabelEn.baseball);
+    public static final Label basketball = new LabelRu("баскет", "баскетбол", LabelEn.basketball);
+    public static final Label billiards = new LabelRu("бильярд", "бильярд", LabelEn.billiards);
+    public static final Label croquet = new LabelRu("крокет", "крокет", LabelEn.croquet);
+    // "chess" see in section "games"
+    public static final Label football = new LabelRu("футб", "футбол", LabelEn.football);
+    public static final Label gymnastics = new LabelRu("акробат", "акробатика", LabelEn.gymnastics);
+    public static final Label hockey = new LabelRu("хокк", "хоккей", LabelEn.hockey);
+    public static final Label rugby = new LabelRu("регби", "регби", LabelEn.rugby);    
+    public static final Label sports = new LabelRu("спорт.", "спортивное", LabelEn.sports);
+    public static final Label tennis = new LabelRu("теннис", "теннис", LabelEn.tennis);
+    public static final Label volleyball = new LabelRu("волейб", "волейбол", LabelEn.volleyball);
+    
+            
     // DEBUG: should be one error for each line of code
     // DDDDDDDDDDDDDDDDDDDDDDDDDD
     // source: public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);

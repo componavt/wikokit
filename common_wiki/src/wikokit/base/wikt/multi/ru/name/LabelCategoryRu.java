@@ -79,6 +79,8 @@ public class LabelCategoryRu extends LabelCategoryLocal {
     }
 
     public static final LabelCategoryLocal 
+            empty,
+            
             grammatical,
             period,
             qualifier,
@@ -96,6 +98,8 @@ public class LabelCategoryRu extends LabelCategoryLocal {
             sports;
     
     static {
+        empty = new LabelCategoryRu("Пометы‎", LabelCategory.empty);
+        
         grammatical = new LabelCategoryRu("Грамматические пометы‎", LabelCategory.grammatical);
         
         period = new LabelCategoryRu("Временные пометы‎", LabelCategory.period); // virtual, absent in ruwikt
