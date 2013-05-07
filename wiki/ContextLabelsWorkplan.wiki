@@ -31,7 +31,7 @@ svn checkout http://wikokit.googlecode.com/svn/trunk/ wikokit-read-only
   * [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/constant/LabelCategory.java LabelCategory.java]
   * [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/LabelCategoryRu.java LabelCategoryRu.java]
   * [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/en/name/LabelEn.java LabelEn.java]
-  * [[http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/LabelRu.java LabelRu.java]
+  * [http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/LabelRu.java LabelRu.java]
 
 Чтобы открыть нужный файл, нажмите в !NetBeans комбинацию клавиш Ctrl+O и напишите название файла, например !LabelEn. Редактор !NetBeans выполнит поиск по всем файлам открытых проектов. 
 
