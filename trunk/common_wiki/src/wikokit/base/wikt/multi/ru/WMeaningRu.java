@@ -7,6 +7,7 @@
 
 package wikokit.base.wikt.multi.ru;
 
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikt.word.WMeaning;
 import wikokit.base.wikt.word.WQuote;
