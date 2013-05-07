@@ -96,7 +96,10 @@ public static final Label ecclesiastical_latin = new LabelEn("Ecclesiastical Lat
 == Последовательность работ ==
 
   # Крижановские
-  # ...
+  # Румянцев (до 16 мая)
+  # Чирковы (до 1 июня)
+  # Огийко (до 15 июня)
+  # Головин (до 1 июля)
 
 = Подсказки =
 
