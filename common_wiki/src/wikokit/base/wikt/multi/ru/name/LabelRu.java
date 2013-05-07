@@ -5,7 +5,7 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-package wikokit.base.wikt.multi.ru;
+package wikokit.base.wikt.multi.ru.name;
 
 import wikokit.base.wikt.multi.en.name.LabelEn;
 

@@ -16,7 +16,7 @@ import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
 import static wikokit.base.wikt.constant.LabelCategory.empty;
 
-import wikokit.base.wikt.multi.ru.LabelRu;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 
 /** Contextual information for definitions, such as archaic, by analogy, 
  * chemistry, etc.
@@ -350,9 +350,10 @@ public class LabelEn extends Label {
     public static final Label volleyball = new LabelEn("volleyball" ,"volleyball", LabelCategory.sports);
     
     
-    // DEBUG: should be one error for each line of code
+    // DEBUG: should be one error for each code line below:
     // DDDDDDDDDDDDDDDDDDDDDDDDDD
     //public static final Label archaic_short_name_duplication = new LabelEn("archaic",  "archaic full name (duplication of short name)", LabelCategory.period);
     //public static final Label archaic_full_name_duplication = new LabelEn("archaic short name (duplication of full name)", "archaic", LabelCategory.period);
     //public static final Label dated_sense_again = LabelEn.addNonUniqueShortName(dated, "dated_sense");
+    // DDDDDDDDDDDDDDDDDDeo DEBUG
 }

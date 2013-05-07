@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.multi.en.name.LabelEn;
-import wikokit.base.wikt.multi.ru.LabelRu;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 
 /** Contextual information for definitions, such as archaic, by analogy, 
  * chemistry, etc.
