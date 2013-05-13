@@ -21,6 +21,12 @@ gvim "C:\w\Apache Software Foundation\Apache2.2\conf\httpd.conf"
 }}}
 Add the following text to `httpd.conf`:
 {{{
+<Directory "D:/all/inetpub">
+    Order Allow,Deny
+    Allow from All
+    # Any other directory-specific stuff
+</Directory>
+
 NameVirtualHost *:80
 <VirtualHost *:80>
     DocumentRoot D:/all/inetpub/mediawiki-1.16.0.enwikt.20100824
