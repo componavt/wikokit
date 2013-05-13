@@ -24,7 +24,6 @@ Add the following text to `httpd.conf`:
 <Directory "D:/all/inetpub">
     Order Allow,Deny
     Allow from All
-    # Any other directory-specific stuff
 </Directory>
 
 NameVirtualHost *:80
