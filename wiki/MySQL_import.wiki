@@ -38,7 +38,7 @@ NameVirtualHost *:80
   * Open in browser [http://localhost/mw-config/index.php http://localhost/mw-config/index.php].
   * Set up the wiki:
     ** select database name, e.g. `enwikt20100824`.
-    ** select storage engine: `MyISAM`.
+    ** select storage engine: `InnoDB` <s>`MyISAM`</s>.
     ** select database character set: `Binary`.
 
 Add the line: `$wgCapitalLinks=false;` at the end of file `LocalSettings.php`.
