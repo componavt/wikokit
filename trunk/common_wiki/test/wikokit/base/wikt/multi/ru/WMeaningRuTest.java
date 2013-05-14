@@ -206,7 +206,7 @@ public class WMeaningRuTest {
 
 
         // 2. complex: 4 label
-        line =  "# {{п.}}, {{прост.}}, {{вульг.}}, {{помета|что}} извлекать хитростью, насильно {{пример|Сосать деньги.}}";
+        line =  "# {{п.}}, {{прост.}}, {{вульг.}}, {{помета|что|что-то}} извлекать хитростью, насильно {{пример|Сосать деньги.}}";
         page_title      = "сосать";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -222,7 +222,7 @@ public class WMeaningRuTest {
         assertTrue(labels_result[0].toString().equalsIgnoreCase( "п." ) );
         assertTrue(labels_result[1].toString().equalsIgnoreCase( "прост." ) );
         assertTrue(labels_result[2].toString().equalsIgnoreCase( "вульг." ) );
-        assertTrue(labels_result[3].toString().equalsIgnoreCase( "|что" ) );
+        assertTrue(labels_result[3].toString().equalsIgnoreCase( "что" ) );
     }
 
     @Test

@@ -124,10 +124,13 @@ public class LabelRu extends LabelLocal  {
     // computing
     // //////////////////////////
     public static final Label programming = new LabelRu("прогр.", "программистское", LabelEn.programming);
+    public static final Label computing = new LabelRu("комп.", "компьютерное", LabelEn.computing);
 
     // games
     // //////////////////////////
     public static final Label chess = new LabelRu("шахм.", "шахматное", LabelEn.chess);
+    public static final Label gaming = new LabelRu("игр.", "игровое", LabelEn.gaming);
+    
     
     // mathematics
     // //////////////////////////
@@ -143,13 +146,29 @@ public class LabelRu extends LabelLocal  {
     
     // religion
     // //////////////////////////
+    public static final Label ecclesiastical = new LabelRu("церк.", "церковное", LabelEn.ecclesiastical);
+    public static final Label Islam = new LabelRu("ислам.", "исламское", LabelEn.Islam);
     public static final Label religion = new LabelRu("религ.", "религиозное", LabelEn.religion);
+    
     
     // science
     // //////////////////////////
     
+    public static final Label alchemy = new LabelRu("алхим.", "алхимическое", LabelEn.alchemy);
+    public static final Label anthropology = new LabelRu("антроп.", "антропологическое", LabelEn.anthropology);
+    public static final Label archaeology = new LabelRu("археол.", "археология", LabelEn.archaeology);
+    public static final Label astronomy = new LabelRu("астрон.", "астрономическое", LabelEn.astronomy);
+    public static final Label biochemistry = new LabelRu("биохим.", "биохимическое", LabelEn.biochemistry);
+    public static final Label biology = new LabelRu("биол.", "биологическое", LabelEn.biology);
+    public static final Label botany = new LabelRu("ботан.", "ботаническое", LabelEn.botany);
+    public static final Label chemistry = new LabelRu("хим.", "химическое", LabelEn.chemistry);
+    public static final Label psychology = new LabelRu("психол.", "психология", LabelEn.psychology);
+    public static final Label computer_science = new LabelRu("информ.", "информатическое", LabelEn.computer_science);
+    public static final Label physics = new LabelRu("физ.", "физическое", LabelEn.physics);
+    public static final Label zoology = new LabelRu("зоол.", "зоологическое", LabelEn.zoology);
+    
     // sports - special treatment for all sport labels except {{sport}} itself
-    // it is need to parse parameter "вид=" of {{спорт.|вид=}}
+    // it is needed to parse parameter "вид=" of {{спорт.|вид=}}
     // @see ru.wiktionary.org/wiki/template:спорт.
     // //////////////////////////
     public static final Label baseball = new LabelRu("бейсб", "бейсбол", LabelEn.baseball);
@@ -157,15 +176,15 @@ public class LabelRu extends LabelLocal  {
     public static final Label billiards = new LabelRu("бильярд", "бильярд", LabelEn.billiards);
     public static final Label croquet = new LabelRu("крокет", "крокет", LabelEn.croquet);
     // "chess" see in section "games"
-    public static final Label football = new LabelRu("футб", "футбол", LabelEn.football);
+    public static final Label soccer = new LabelRu("футб", "футбол", LabelEn.soccer); // ПОМЕНЯЛ С football 
     public static final Label gymnastics = new LabelRu("акробат", "акробатика", LabelEn.gymnastics);
     public static final Label hockey = new LabelRu("хокк", "хоккей", LabelEn.hockey);
     public static final Label rugby = new LabelRu("регби", "регби", LabelEn.rugby);    
-    public static final Label sports = new LabelRu("спорт.", "спортивное", LabelEn.sports);
     public static final Label tennis = new LabelRu("теннис", "теннис", LabelEn.tennis);
     public static final Label volleyball = new LabelRu("волейб", "волейбол", LabelEn.volleyball);
     
-            
+    public static final Label fishing = new LabelRu("рыбол.", "рыболовецкое", LabelEn.fishing);
+                
     // DEBUG: should be one error for each line of code
     // DDDDDDDDDDDDDDDDDDDDDDDDDD
     // source: public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);

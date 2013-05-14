@@ -295,60 +295,269 @@ public class LabelEn extends Label {
     // **************************
     // topical 376 Ann
     // **************************
+    public static final Label ecclesiastical = new LabelEn("ecclesiastical", "ecclesiastical", LabelCategory.topical); // церк. - церковный
     public static final Label honorific = new LabelEn("honorific", "honorific", LabelCategory.topical);
     public static final Label Wiktionary_and_WMF_jargon = new LabelEn("Wiktionary and WMF jargon", "Wiktionary and WMF jargon", LabelCategory.topical);
     
-    // Sasha First 186 all Subcategories in http://en.wiktionary.org/wiki/Category:Topical_context_labels
     
-    // computing Sasha First
-    // //////////////////////////
-    public static final Label programming = new LabelEn("programming", "programming", LabelCategory.computing);
     
-    // games Sasha First
+    // Rumyantsev 186 all Subcategories in http://en.wiktionary.org/wiki/Category:Topical_context_labels
+    
+    // computing Rumyantsev
     // //////////////////////////
-    public static final Label chess = new LabelEn("chess", "chess", LabelCategory.games);
-    public static final Label dominoes = new LabelEn("dominoes", "dominoes", LabelCategory.games);
-    public static final Label Tetris = new LabelEn("Tetris", "Tetris", LabelCategory.games);
+    
+    public static final Label artificial_intelligence = new LabelEn("artificial intelligence", "artificial intelligence", LabelCategory.computing); // искусственный интеллект
+    public static final Label computational_linguistics = new LabelEn("computational linguistics", "computational linguistics", LabelCategory.computing); // компьютерная лингвистика (Как особое научное направление компьютерная лингвистика оформилась в 1960-е годы. Русский термин «компьютерная лингвистика» является калькой с английского computational linguistics. Поскольку прилагательное computational по-русски может переводиться и как «вычислительный», в литературе встречается также термин «вычислительная лингвистика», однако в отечественной науке он приобретает более узкое значение, приближающееся к понятию «квантитативной лингвистики». Alex Lilo)
+    public static final Label computer_graphics = new LabelEn("computer graphics", "computer graphics", LabelCategory.computing); // компьютерная графика, машинная графика
+    public static final Label computer_hardware = new LabelEn("computer hardware", "computer hardware", LabelCategory.computing); // аппаратное обеспечение компьютера
+    public static final Label computer_security = new LabelEn("computer security", "computer security", LabelCategory.computing); // компьютерная безопасность, защита ЭВМ
+    public static final Label computing = new LabelEn("computing", "computing", LabelCategory.computing); // вычислительная техника, обработка данных, компьютинг
+    public static final Label computing_theory = new LabelEn("computing theory", "computing theory", LabelCategory.computing); // теория вычислений, аналог computer science?
+    public static final Label data_management = new LabelEn("data management", "data management", LabelCategory.computing); // управление данными
+    public static final Label data_modeling = new LabelEn("data modeling", "data modeling", LabelCategory.computing); // моделирование данных 
+    public static final Label databases = new LabelEn("databases", "databases", LabelCategory.computing); // базы данных
+    public static final Label demoscene = new LabelEn("demoscene", "demoscene", LabelCategory.computing); // перевод странный, мультитран переводит как "демонстрационный ролик", а enwikt считает, что это сообщество просмотрщиков демо-программ для ПК
+    
+    public static final Label graphical_user_interface = new LabelEn("graphical user interface", "graphical user interface", LabelCategory.computing); // графический интерфейс пользователя
+    public static final Label GUI = LabelEn.addNonUniqueShortName(graphical_user_interface, "GUI"); // добавил сокращение
+    
+    public static final Label HTML = new LabelEn("HTML", "HTML", LabelCategory.computing); // язык гипертекстовой маркировки
+    public static final Label networking = new LabelEn("networking", "networking", LabelCategory.computing); // сетевые технологии
+    public static final Label programming = new LabelEn("programming", "programming", LabelCategory.computing); // программирование, в ruwikt есть категория прогр.
+    public static final Label software = new LabelEn("software", "software", LabelCategory.computing); // программное обеспечение, программа
+    public static final Label software_engineering = new LabelEn("software engineering", "software engineering", LabelCategory.computing); // разработка программ, не синоним programming, т. к. здесь больше рассмотрены вопросы управления ПО, чем создания кода
+    public static final Label web_design = new LabelEn("web design", "web design", LabelCategory.computing); // веб-дизайн
+    
+    // games Rumyantsev
+    // //////////////////////////
+    
+    public static final Label backgammon = new LabelEn("backgammon", "backgammon", LabelCategory.games); // нарды
+    public static final Label bingo = new LabelEn("bingo", "bingo", LabelCategory.games); // бинго
+    public static final Label board_games = new LabelEn("board games", "board games", LabelCategory.games); // настольные игры
+    public static final Label bridge = new LabelEn("bridge", "bridge", LabelCategory.games); // бридж
+    public static final Label card_games = new LabelEn("card games", "card games", LabelCategory.games); // карточные игры
+    public static final Label chess = new LabelEn("chess", "chess", LabelCategory.games); // шахматы
+    public static final Label computer_games = new LabelEn("computer games", "computer games", LabelCategory.games); // компьютерные игры
+    public static final Label cribbage = new LabelEn("cribbage", "cribbage", LabelCategory.games); // криббидж
+    public static final Label dominoes = new LabelEn("dominoes", "dominoes", LabelCategory.games); // домино
+    public static final Label game_of_go = new LabelEn("game of go", "game of go", LabelCategory.games); // игра Го, любопытное написание, обычно пишут Go game, multitran вообще о таком переводе не знает, google не переводит, только lingvo
+    public static final Label games = new LabelEn("games", "games", LabelCategory.games); // игры (здесь в основном названия игр)
+    public static final Label gaming = new LabelEn("gaming", "gaming", LabelCategory.games); // игр. - игровое
+    public static final Label online_gaming = new LabelEn("online gaming", "online gaming", LabelCategory.games); // компьютерные игры в режиме online (странная категория, много пересечений с gaming, но есть специфика)
 
-    // mathematics Sasha First
-    // //////////////////////////
-    public static final Label arithmetic = new LabelEn("arithmetic", "arithmetic", LabelCategory.mathematics);
-    
-    // music Sasha First
-    // //////////////////////////
-    public static final Label music = new LabelEn("music", "music", LabelCategory.music);
+    public static final Label poker = new LabelEn("poker", "poker", LabelCategory.games); // покер
+    public static final Label poker_slang = LabelEn.addNonUniqueShortName(poker, "poker slang"); // сленг игроков в покер, но мне кажется, эти две категории являются синонимами (судя по статьям в них)
 
-    // mythology Sasha First
-    // //////////////////////////
-    public static final Label mythology = new LabelEn("mythology", "mythology", LabelCategory.mythology);
-
-    // religion Sasha First
-    // //////////////////////////
-    public static final Label religion = new LabelEn("religion", "religion", LabelCategory.religion);
+    public static final Label role_playing_games = new LabelEn("role-playing games", "role-playing games", LabelCategory.games); // ролевые игры
+    public static final Label shogi = new LabelEn("shogi", "shogi", LabelCategory.games); // сёги
+    public static final Label tarot = new LabelEn("tarot", "tarot", LabelCategory.games); // таро
+    public static final Label Tetris = new LabelEn("Tetris", "Tetris", LabelCategory.games); // тетрис
     
-    // science Sasha First
+    public static final Label video_games = new LabelEn("video games", "video games", LabelCategory.games); // видеоигры
+    public static final Label video_game_genre = LabelEn.addNonUniqueShortName(video_games, "video game genre"); // вообще псевдокатегория, соответствующая страница на enwikt имеет странное оформление
+	
+    // mathematics Rumyantsev
     // //////////////////////////
-    public static final Label astronomy = new LabelEn("astronomy" ,"astronomy", LabelCategory.science);
-    // synonyms:  {{math}} and {{maths}} -> (mathematics)
+    
+    public static final Label algebra = new LabelEn("algebra", "algebra", LabelCategory.mathematics); // алгебра
+    public static final Label algebraic_geometry = new LabelEn("algebraic geometry", "algebraic geometry", LabelCategory.mathematics); // алгебраическая геометрия
+    public static final Label analytic_geometry = new LabelEn("analytic geometry", "analytic geometry", LabelCategory.mathematics); // аналитическая геометрия
+    public static final Label arithmetic = new LabelEn("arithmetic", "arithmetic", LabelCategory.mathematics); // арифметика
+    public static final Label calculus = new LabelEn("calculus", "calculus", LabelCategory.mathematics); // математический анализ
+    public static final Label category_theory = new LabelEn("category theory", "category theory", LabelCategory.mathematics); // теория категорий
+    public static final Label combinatorics = new LabelEn("combinatorics", "combinatorics", LabelCategory.mathematics); // комбинаторика
+    public static final Label complex_analysis = new LabelEn("complex analysis", "complex analysis", LabelCategory.mathematics); // комплексный анализ
+    public static final Label functional_analysis = new LabelEn("functional analysis", "functional analysis", LabelCategory.mathematics); // функциональный анализ
+    public static final Label fuzzy_logic = new LabelEn("fuzzy logic", "fuzzy logic", LabelCategory.mathematics); // нечеткая логика
+    public static final Label game_theory = new LabelEn("game theory", "game theory", LabelCategory.mathematics); // теория игр
+    public static final Label geometry = new LabelEn("geometry", "geometry", LabelCategory.mathematics); // геометрия
+    public static final Label graph_theory = new LabelEn("graph theory", "graph theory", LabelCategory.mathematics); // теория графов
+    public static final Label group_theory = new LabelEn("group theory", "group theory", LabelCategory.mathematics); // теория групп
+    public static final Label linear_algebra = new LabelEn("linear algebra", "linear algebra", LabelCategory.mathematics); // линейная алгебра
+    
+    public static final Label mathematics = new LabelEn("mathematics", "mathematics", LabelCategory.mathematics);
+    public static final Label math = LabelEn.addNonUniqueShortName(mathematics, "math");
+    public static final Label maths = LabelEn.addNonUniqueShortName(mathematics, "maths");
+    
+    public static final Label probability_theory = new LabelEn("probability theory", "probability theory", LabelCategory.mathematics); // теория вероятностей
+    public static final Label trigonometry = new LabelEn("trigonometry", "trigonometry", LabelCategory.mathematics); // тригонометрия
+    public static final Label vector_algebra = new LabelEn("vector algebra", "vector algebra", LabelCategory.mathematics); // векторная алгебра
+    
+    // music Rumyantsev
+    // //////////////////////////
+    public static final Label jazz = new LabelEn("jazz", "jazz", LabelCategory.music); // джаз
+    public static final Label marching = new LabelEn("marching", "marching", LabelCategory.music); // марш
+    public static final Label music = new LabelEn("music", "music", LabelCategory.music); // муз. - музыкальное
+	public static final Label musical_instruments = new LabelEn("musical instruments", "musical instruments", LabelCategory.music); // музыкальные инструменты
+	public static final Label opera = new LabelEn("opera", "opera", LabelCategory.music); // опера
+
+    // mythology Rumyantsev
+    // //////////////////////////
+    
+    public static final Label Armenian_mythology = new LabelEn("Armenian mythology", "Armenian mythology", LabelCategory.mythology); // Армянская мифология
+    public static final Label Asturian_mythology = new LabelEn("Asturian mythology", "Asturian mythology", LabelCategory.mythology); // Астурийская мифология
+    public static final Label Egyptian_mythology = new LabelEn("Egyptian mythology", "Egyptian mythology", LabelCategory.mythology); // Египетская мифология
+    
+    public static final Label Greek_mythology = new LabelEn("Greek mythology", "Greek mythology", LabelCategory.mythology); // Греческая мифология
+    public static final Label Greek_god = LabelEn.addNonUniqueShortName(Greek_mythology, "Greek god"); // Считаю, что целесообразно так, поскольку в ссылающихся на этот шаблон enwikt страницах расшифровывается именно как Greek mythology, а также есть пересечения терминов (см., напр. Hera)
+    
+    public static final Label Hawaiian_mythology = new LabelEn("Hawaiian mythology", "Hawaiian mythology", LabelCategory.mythology); // Гавайская мифология
+    public static final Label Iranian_mythology = new LabelEn("Iranian mythology", "Iranian mythology", LabelCategory.mythology); // Иранская мифология
+    public static final Label Irish_mythology = new LabelEn("Irish mythology", "Irish mythology", LabelCategory.mythology); // Ирландская мифология
+    public static final Label mythology = new LabelEn("mythology", "mythology", LabelCategory.mythology); // мифол. - мифологическое
+    public static final Label Norse_mythology = new LabelEn("Norse mythology", "Norse mythology", LabelCategory.mythology); // Скандинавская мифология
+    
+    public static final Label Roman_mythology = new LabelEn("Roman mythology", "Roman mythology", LabelCategory.mythology); // Римская мифология
+    public static final Label Roman_god = LabelEn.addNonUniqueShortName(Roman_mythology, "Roman god"); // симметрично греческой - та же ситуация
+
+    // religion Rumyantsev
+    // //////////////////////////
+    
+    public static final Label Buddhism = new LabelEn("Buddhism", "Buddhism", LabelCategory.religion); // буддизм
+    public static final Label Christianity = new LabelEn("Christianity", "Christianity", LabelCategory.religion); // христианство
+    public static final Label Gnosticism = new LabelEn("Gnosticism", "Gnosticism", LabelCategory.religion); // гностицизм
+    public static final Label Hinduism = new LabelEn("Hinduism", "Hinduism", LabelCategory.religion); // индуизм
+    public static final Label Islam = new LabelEn("Islam", "Islam", LabelCategory.religion); // ислам. - исламское
+    public static final Label Jainism = new LabelEn("Jainism", "Jainism", LabelCategory.religion); // джайнизм
+    public static final Label Judaism = new LabelEn("Judaism", "Judaism", LabelCategory.religion); // иудаизм
+    public static final Label Mormonism = new LabelEn("Mormonism", "Mormonism", LabelCategory.religion); // мормонство
+    public static final Label Protestantism = new LabelEn("Protestantism", "Protestantism", LabelCategory.religion); // протестантство
+    public static final Label religion = new LabelEn("religion", "religion", LabelCategory.religion); // религ. - религиозное
+    
+    public static final Label Rastafarian = new LabelEn("Rastafarian", "Rastafarian", LabelCategory.religion); // растафари
+    public static final Label rasta = LabelEn.addNonUniqueShortName(Rastafarian, "rasta"); // шаблон называется rasta, но расшифровка шаблона Rastafarian, поэтому принял решение удлиннить название шаблона (полное), а укороченное сделать синонимом - так логичнее в сравнении с остальными
+    
+    public static final Label Raelism = new LabelEn("Raëlism", "Raëlism", LabelCategory.religion); // раэлиты
+    public static final Label Raelism_latin = LabelEn.addNonUniqueShortName(Raelism, "Raеlism"); // добавил синоним без юникодовского символа ё, использую суффикс _latin
+    
+    public static final Label Roman_Catholicism = new LabelEn("Roman Catholicism", "Roman Catholicism", LabelCategory.religion); // католичество
+    public static final Label Catholicism = LabelEn.addNonUniqueShortName(Roman_Catholicism, "Catholicism"); // синоним
+        
+    public static final Label Scientology = new LabelEn("Scientology", "Scientology", LabelCategory.religion); // сайентология
+    
+    public static final Label Shinto = new LabelEn("Shintō", "Shintō", LabelCategory.religion); // синтоизм
+    public static final Label Shinto_latin = LabelEn.addNonUniqueShortName(Shinto, "Shinto"); // добавил синоним без юникодовского символа ō, использую суффикс _latin
+    
+    public static final Label Sikhism = new LabelEn("Sikhism", "Sikhism", LabelCategory.religion); // сикхизм
+    // public static final Label Yorubic = new LabelEn("Yorubic", "Yorubic", LabelCategory.religion); // !!!!!!!!!!!!! перевода НЕТ, более того, категория пустая - нужна ли она?
+    public static final Label Zoroastrianism = new LabelEn("Zoroastrianism", "Zoroastrianism", LabelCategory.religion); // зороастризм
+    
+    // science Rumyantsev
+    // //////////////////////////
+    public static final Label aeronautics = new LabelEn("aeronautics" ,"aeronautics", LabelCategory.science); // аэронавтика
+    
+    public static final Label aerospace = new LabelEn("aerospace" ,"aeronautics, space", LabelCategory.science); // изучение воздушно-космического пространства
+    public static final Label space_science = new LabelEn("space science" ,"space science", LabelCategory.science); // аналог???
+        
+    public static final Label alchemy = new LabelEn("alchemy" ,"alchemy", LabelCategory.science); // алхим. - алхимическое
+    public static final Label analytical_chemistry = new LabelEn("analytical chemistry" ,"analytical chemistry", LabelCategory.science); // аналитическая химия
+    public static final Label anthropology = new LabelEn("anthropology" ,"anthropology", LabelCategory.science); // антроп. - антропологическое
+    public static final Label arachnology = new LabelEn("arachnology" ,"arachnology", LabelCategory.science); // арахнология
+    public static final Label archaeology = new LabelEn("archaeology" ,"archaeology", LabelCategory.science); // археол. - археология
+    public static final Label astronautics = new LabelEn("astronautics" ,"astronautics", LabelCategory.science); // астронавтика
+    public static final Label astronomy = new LabelEn("astronomy" ,"astronomy", LabelCategory.science); // астрон. - астрономическое
+    public static final Label astrophysics = new LabelEn("astrophysics" ,"astrophysics", LabelCategory.science); // астрофизика
+    public static final Label bacteriology = new LabelEn("bacteriology" ,"bacteriology", LabelCategory.science); // бактериология
+    
+    public static final Label biochemistry = new LabelEn("biochemistry" ,"biochemistry", LabelCategory.science); // биохим. - биохимическое
+    public static final Label amino_acid = LabelEn.addNonUniqueShortName(biochemistry, "amino acid"); // странный синоним, здесь собраны все аминокислоты, но они в тексте раскрываются как биохимия
+    
+    public static final Label biology = new LabelEn("biology" ,"biology", LabelCategory.science); // биол. - биологическое
+    public static final Label botany = new LabelEn("botany" ,"botany", LabelCategory.science); // ботан. - ботаническое
+    public static final Label chemistry = new LabelEn("chemistry" ,"chemistry", LabelCategory.science); // хим. - химическое
+    
+    public static final Label psychology = new LabelEn("psychology" ,"psychology", LabelCategory.science); // психол. - психология
+    public static final Label clinical_psychology = LabelEn.addNonUniqueShortName(psychology, "clinical psychology"); //
+    
+    public static final Label computer_science = new LabelEn("computer science" ,"computer science", LabelCategory.science); // информ. - информатическое
+    public static final Label cryptozoology = new LabelEn("cryptozoology" ,"cryptozoology", LabelCategory.science); // криптозоология
+    public static final Label gerontology = new LabelEn("gerontology" ,"gerontology", LabelCategory.science); // геронтология
+    public static final Label marine_biology = new LabelEn("marine biology" ,"marine biology", LabelCategory.science); // морская биология
+    public static final Label neuroscience = new LabelEn("neuroscience" ,"neuroscience", LabelCategory.science); // нейробиология???
+    public static final Label physics = new LabelEn("physics" ,"physics", LabelCategory.science); // физ. - физическое
+    public static final Label systematics = new LabelEn("systematics" ,"systematics", LabelCategory.science); // систематика, таксономия
+    public static final Label systems_theory = new LabelEn("systems theory" ,"systems theory", LabelCategory.science); // теория систем
+    public static final Label zoology = new LabelEn("zoology" ,"zoology", LabelCategory.science); // зоол. - зоологическое
+    public static final Label zootomy = new LabelEn("zootomy" ,"zootomy", LabelCategory.science); // зоотомия
     
     // sports Sasha First
     // //////////////////////////
-    public static final Label baseball = new LabelEn("baseball" ,"baseball", LabelCategory.sports);
-    public static final Label basketball = new LabelEn("basketball" ,"basketball", LabelCategory.sports);
-    public static final Label billiards = new LabelEn("billiards" ,"billiards", LabelCategory.sports);
+ 
+    public static final Label archery = new LabelEn("archery" ,"archery", LabelCategory.sports); // стрельба из лука
+    public static final Label athletics = new LabelEn("athletics" ,"athletics", LabelCategory.sports); // атлетика
+    public static final Label auto_racing = new LabelEn("auto racing" ,"auto racing", LabelCategory.sports); // автогонки
+    public static final Label badminton = new LabelEn("badminton" ,"badminton", LabelCategory.sports); // бадминтон
+    public static final Label ball_games = new LabelEn("ball games" ,"ball games", LabelCategory.sports); // игры с мячом
+    public static final Label baseball = new LabelEn("baseball" ,"baseball", LabelCategory.sports); // бейсбол
+    public static final Label basketball = new LabelEn("basketball" ,"basketball", LabelCategory.sports); // баскетбол
+    public static final Label billiards = new LabelEn("billiards" ,"billiards", LabelCategory.sports); // бильярд
+    public static final Label board_sports = new LabelEn("board sports" ,"board sports", LabelCategory.sports); // спорт на досках (скейтборд, сноуборд)
+    public static final Label bodybuilding = new LabelEn("bodybuilding" ,"bodybuilding", LabelCategory.sports); // бодибилдинг
+    public static final Label bowling = new LabelEn("bowling" ,"bowling", LabelCategory.sports); // боулинг
+    public static final Label boxing = new LabelEn("boxing" ,"boxing", LabelCategory.sports); // бокс
+    public static final Label bullfighting = new LabelEn("bullfighting" ,"bullfighting", LabelCategory.sports); // бой быков, коррида?
+    public static final Label canoeing = new LabelEn("canoeing" ,"canoeing", LabelCategory.sports); // гонки на каноэ
+    public static final Label caving = new LabelEn("caving" ,"caving", LabelCategory.sports); // практическая спелеология
+    public static final Label cheerleading = new LabelEn("cheerleading" ,"cheerleading", LabelCategory.sports); // чирлидинг
+    public static final Label climbing = new LabelEn("climbing" ,"climbing", LabelCategory.sports); // альпинизм
+    public static final Label cricket = new LabelEn("cricket" ,"cricket", LabelCategory.sports); // крикет
     public static final Label croquet = new LabelEn("croquet" ,"croquet", LabelCategory.sports); // only in ruwikt
-    public static final Label football = new LabelEn("football" ,"football", LabelCategory.sports); // only in ruwikt
-    public static final Label gymnastics = new LabelEn("gymnastics" ,"gymnastics", LabelCategory.sports);
-    
-    public static final Label hockey = new LabelEn("hockey" ,"hockey", LabelCategory.sports);
+    public static final Label curling = new LabelEn("curling" ,"curling", LabelCategory.sports); // керлинг
+    public static final Label cycling = new LabelEn("cycling" ,"cycling", LabelCategory.sports); // велоспорт
+    public static final Label dance = new LabelEn("dance" ,"dance", LabelCategory.sports); // танцы
+    public static final Label darts = new LabelEn("darts" ,"darts", LabelCategory.sports); // дартс
+    public static final Label diving = new LabelEn("diving" ,"diving", LabelCategory.sports); // погружение, подводное плавание
+    public static final Label dressage = new LabelEn("dressage" ,"dressage", LabelCategory.sports); // выездка
+    public static final Label exercise = new LabelEn("exercise" ,"exercise (sport)", LabelCategory.sports); // спортивные упражнения
+    public static final Label fencing = new LabelEn("fencing" ,"fencing", LabelCategory.sports); // фехтование
+    public static final Label figure_skating = new LabelEn("figure skating" ,"figure skating", LabelCategory.sports); // фигурное катание
+    public static final Label fishing = new LabelEn("fishing" ,"fishing", LabelCategory.sports); // рыбол. - рыболовецкое
+    public static final Label golf = new LabelEn("golf" ,"golf", LabelCategory.sports); // гольф
+    public static final Label gymnastics = new LabelEn("gymnastics" ,"gymnastics", LabelCategory.sports); // гимнастика
+    public static final Label handball = new LabelEn("handball" ,"handball", LabelCategory.sports); // гандбол
+    public static final Label horse_racing = new LabelEn("horse racing" ,"horse racing", LabelCategory.sports); // конские бега
+
+    public static final Label hockey = new LabelEn("hockey" ,"hockey", LabelCategory.sports); 
     public static final Label ice_hockey = LabelEn.addNonUniqueShortName(hockey, "ice hockey");
     public static final Label field_hockey = LabelEn.addNonUniqueShortName(hockey, "field hockey");
+
+    public static final Label hurling = new LabelEn("hurling" ,"hurling", LabelCategory.sports); // ирландский травяной хоккей
+    public static final Label judo = new LabelEn("judo" ,"judo", LabelCategory.sports); // дзюдо
+    public static final Label lacrosse = new LabelEn("lacrosse" ,"lacrosse", LabelCategory.sports); // лакросс
+    public static final Label luge = new LabelEn("luge" ,"luge", LabelCategory.sports); // санный спорт
+    public static final Label martial_arts = new LabelEn("martial arts" ,"martial arts", LabelCategory.sports); // боевые искусства
+    public static final Label motor_racing = new LabelEn("motor racing" ,"motor racing", LabelCategory.sports); // мотоспорт
+    public static final Label netball = new LabelEn("netball" ,"netball", LabelCategory.sports); // нетбол
+    public static final Label paintball = new LabelEn("paintball" ,"paintball", LabelCategory.sports); // пейнтбол
+    public static final Label roller_derby = new LabelEn("roller derby" ,"roller derby", LabelCategory.sports); // не нашел перевода
+    public static final Label rowing = new LabelEn("rowing" ,"rowing", LabelCategory.sports); // гребля
     
-    public static final Label rugby = new LabelEn("rugby" ,"rugby", LabelCategory.sports);
+    public static final Label rugby = new LabelEn("rugby" ,"rugby", LabelCategory.sports); // регби
+    public static final Label rugby_union = LabelEn.addNonUniqueShortName(rugby, "rugby union"); // Союз регби, но по содержанию статей, ссылающихся на термин, здесь должно быть регби
+    
+    public static final Label sailing = new LabelEn("sailing" ,"sailing", LabelCategory.sports); // парусный спорт
+    public static final Label skateboarding = new LabelEn("skateboarding" ,"skateboarding", LabelCategory.sports); // скейтбординг, есть ли смысл объединить с board_sports? (на board_sports всего 3 ссылки) see http://en.wiktionary.org/wiki/Wiktionary:Beer_parlour/2013/May#board_sports_vs._skateboarding
+    public static final Label skiing = new LabelEn("skiing" ,"skiing", LabelCategory.sports); // лыжный спорт
+    public static final Label snooker = new LabelEn("snooker" ,"snooker", LabelCategory.sports); // снукер
+    public static final Label snowboarding = new LabelEn("snowboarding" ,"snowboarding", LabelCategory.sports); // сноубординг
+    
+    public static final Label soccer = new LabelEn("soccer" ,"soccer", LabelCategory.sports); // футб - футбол
+    public static final Label American_football = new LabelEn("American football" ,"American football", LabelCategory.sports); // американский футбол
+    public static final Label Australian_rules_football = new LabelEn("Australian rules football" ,"Australian rules football", LabelCategory.sports); // австралийский футбол
+    public static final Label Canadian_football = new LabelEn("Canadian football" ,"Canadian football", LabelCategory.sports); // канадский футбол
+    public static final Label Gaelic_football = new LabelEn("Gaelic football" ,"Gaelic football", LabelCategory.sports); // гэльский футбол
+    
+    public static final Label softball = new LabelEn("softball" ,"softball", LabelCategory.sports); // софтбол
     public static final Label sports = new LabelEn("sports" ,"sports", LabelCategory.sports);
-    public static final Label tennis = new LabelEn("tennis" ,"tennis", LabelCategory.sports);
-    public static final Label volleyball = new LabelEn("volleyball" ,"volleyball", LabelCategory.sports);
-    
+    public static final Label squash = new LabelEn("squash" ,"squash (sport)", LabelCategory.sports); // сквош
+    public static final Label sumo = new LabelEn("sumo" ,"sumo", LabelCategory.sports); // сумо
+    public static final Label surfing = new LabelEn("surfing" ,"surfing", LabelCategory.sports); // сёрфинг
+    public static final Label swimming = new LabelEn("swimming" ,"swimming", LabelCategory.sports); // плавание
+    public static final Label table_tennis = new LabelEn("table tennis" ,"table tennis", LabelCategory.sports); // настольный теннис
+    public static final Label tennis = new LabelEn("tennis" ,"tennis", LabelCategory.sports); // теннис - теннис
+    public static final Label volleyball = new LabelEn("volleyball" ,"volleyball", LabelCategory.sports); // волейб - волейбол
+    public static final Label weightlifting = new LabelEn("weightlifting" ,"weightlifting", LabelCategory.sports); // тяжелая атлетика
+    public static final Label wrestling = new LabelEn("wrestling" ,"wrestling", LabelCategory.sports); // борьба
     
     // DEBUG: should be one error for each code line below:
     // DDDDDDDDDDDDDDDDDDDDDDDDDD
