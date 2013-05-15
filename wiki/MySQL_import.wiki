@@ -98,7 +98,7 @@ mysql$ SOURCE /temp/revision.sql
 
 // restore back to square one
 mysql$ ALTER TABLE revision ADD COLUMN rev_len INT(10) UNSIGNED DEFAULT NULL AFTER rev_deleted, ADD COLUMN rev_parent_id INT(10) UNSIGNED DEFAULT NULL AFTER rev_len;
-mysql$ ALTER TABLE revision ADD COLUMN rev_sha1 VARBINARY(32) NULL  AFTER rev_deleted;
+mysql$ ALTER TABLE revision ADD COLUMN rev_sha1 VARBINARY(32) NULL AFTER rev_deleted;
 }}}
 
 === pagelinks and categorylinks ===
