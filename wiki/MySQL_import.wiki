@@ -87,7 +87,7 @@ If there is the error (due to `revision.sql`): _"ERROR 1136 (21S01): Column coun
 
 remove two fields, load by _SOURCE_, and return (add) two fields back:
 {{{
-mysql$ ALTER TABLE revision DROP COLUMN rev_len, DROP COLUMN rev_parent_id; 
+mysql$ ALTER TABLE revision DROP COLUMN rev_len, DROP COLUMN rev_parent_id, DROP COLUMN rev_sha1; 
 mysql$ SOURCE /temp/revision.sql
 mysql$ ALTER TABLE revision ADD COLUMN rev_len INT(10) UNSIGNED DEFAULT NULL AFTER rev_deleted, ADD COLUMN rev_parent_id INT(10) UNSIGNED DEFAULT NULL AFTER rev_len;
 }}}
