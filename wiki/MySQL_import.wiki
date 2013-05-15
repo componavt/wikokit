@@ -95,7 +95,10 @@ remove three fields (rev_len, rev_parent_id, rev_sha1), change rev_comment from 
 mysql$ ALTER TABLE revision DROP COLUMN rev_len, DROP COLUMN rev_parent_id, DROP COLUMN rev_sha1; 
 mysql$ ALTER TABLE revision CHANGE COLUMN `rev_comment` `rev_comment` BLOB NOT NULL;
 mysql$ SOURCE /temp/revision.sql
+
+// restore back to square one
 mysql$ ALTER TABLE revision ADD COLUMN rev_len INT(10) UNSIGNED DEFAULT NULL AFTER rev_deleted, ADD COLUMN rev_parent_id INT(10) UNSIGNED DEFAULT NULL AFTER rev_len;
+mysql$ ALTER TABLE revision ADD COLUMN rev_sha1 VARBINARY(32) NULL  AFTER rev_deleted;
 }}}
 
 === pagelinks and categorylinks ===
