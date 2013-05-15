@@ -85,7 +85,7 @@ mysql$ SOURCE /temp/revision.sql
 
 === revision.sql ===
 
-If there are the errors (due to `revision.sql`): 
+If there are the errors (due to `SOURCE revision.sql`): 
   * _"ERROR 1136 (21S01): Column count doesn't match value count at row 1"_,
   * _"ERROR 1406 (22001): Data too long for column 'rev_comment'_, 
 then try the following commands (see [http://www.mediawiki.org/wiki/Talk:Revision_table#Problem%20with%20import%20wiki%20to%20MySQL MediaWiki/Talk:Revision_table]):
