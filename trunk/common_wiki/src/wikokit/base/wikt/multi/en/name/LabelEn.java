@@ -193,6 +193,8 @@ public class LabelEn extends Label {
 
     // regional 225 Chirkov
     // //////////////////////////
+    public static final Label regional = new LabelEn("regional", "regional", LabelCategory.regional); // meta regional context label
+    
     public static final Label Acadia = new LabelEn("Acadia", "Acadian", LabelCategory.regional);
     public static final Label Africa = new LabelEn("Africa", "Africa",    LabelCategory.regional);
     public static final Label African_American_Vernacular_English = new LabelEn("African American Vernacular English",     "African American Vernacular",    LabelCategory.regional);
@@ -385,7 +387,6 @@ public class LabelEn extends Label {
 
     public static final Label Quebec = new LabelEn("Quebec", "Quebec", LabelCategory.regional);
 
-    public static final Label regional = new LabelEn("regional", "regional", LabelCategory.regional);
     public static final Label Rio_de_Janeiro = new LabelEn("Rio de Janeiro", "Rio de Janeiro city", LabelCategory.regional);
     public static final Label Réunion = new LabelEn("Réunion", "Réunion", LabelCategory.regional);
 
