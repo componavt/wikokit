@@ -11,8 +11,10 @@ import wikokit.base.wikt.multi.en.name.LabelEn;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import wikokit.base.wikipedia.util.TemplateExtractor;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelLocal;
+import wikokit.base.wikt.util.LabelText;
 
 /** Contexual information for definitions, or Synonyms, or Translations 
  * in Russian Wiktionary.
@@ -40,7 +42,7 @@ public class LabelRu extends LabelLocal  {
      * @param line          definition line
      * @return definition text line without "{{помета?|...}}"
      */
-    public static String removeEmptyLabelPometa(String line)
+    private static String removeEmptyLabelPometa(String line)
     {
         Matcher m = ptrn_label_pometa_question.matcher(line);
         if(m.find()){ // there is "{{помета?|...}}"
@@ -50,6 +52,46 @@ public class LabelRu extends LabelLocal  {
             return sb.toString().trim();
         }
         return line;
+    }
+    
+    /** Extracts labels from a text string, remove these labels from the text line,
+     * store the result to the object LabelText.
+     *
+     * @param line          (wikified) definition line
+     * @return labels array (NULL if absent) and a definition text line without context labels substring, 
+     *         return NULL if there is no text and context labels
+     */
+    public static LabelText extractLabelsTrimText(String line)
+    {   
+        line = removeEmptyLabelPometa(line);
+        if(line.length() == 0)
+            return null;
+        
+        if(!line.contains("{{"))    // every context label is a template "{{"
+            return new LabelText(null, line);
+        
+        // 1. extract labels {{экон.|en}} or {{экон.}}, or {{помета|экон.}}
+        // todo
+        // ...
+        // Label[] labels = new Label[0];
+        // todo 
+        // ...
+  
+        // @returns:
+        // name of template, array of parameters, first and last position in the source string
+        TemplateExtractor te = TemplateExtractor.getFirstTemplate(line);
+        
+        assert(null != te); // temp line, sometimes it is NULL
+        
+        // 2. special templates, which require special treatment, they will be sipped right now
+        // {{=|
+        // {{as ru|
+        // {{аббр.|en|abbreviation|description}} -> context label "аббр." and text "[[description]]"
+        // {{сокр.|en|identification|[[идентификация]]}} or {{сокр.|en|identification}}; [[идентификация]]
+        // todo
+        // ...
+        
+        return null;
     }
 
 
@@ -83,19 +125,54 @@ public class LabelRu extends LabelLocal  {
    
     // regional
     // //////////////////////////
-    public static final Label AU = new LabelRu("австрал.", "австралийский вариант английского языка", LabelEn.AU);
+    public static final Label regional = new LabelRu("обл.", "областное", LabelEn.regional);
+    public static final Label regional_reg = LabelRu.addNonUniqueShortName(regional, "рег.");
+    
+    public static final Label Australia = new LabelRu("австрал.", "австралийское вариант английского языка", LabelEn.Australia);
+    public static final Label Belgium = new LabelRu("бельг.", "бельгийский вариант нидерландского языка", LabelEn.Belgium);
+    public static final Label Brazil = new LabelRu("браз.", "бразильский вариант португальского языка", LabelEn.Brazil);
+    public static final Label British = new LabelRu("брит.", "британский вариант английского языка", LabelEn.British);
+    public static final Label Canada = new LabelRu("канадск.", "канадское", LabelEn.Canada);
+    public static final Label Chile = new LabelRu("чили", "чилийский вариант испанского языка", LabelEn.Chile);
+    public static final Label Cornwall = new LabelRu("корнск.", "корнское", LabelEn.Cornwall);
+    public static final Label Croatia = new LabelRu("хорв.", "хорватское", LabelEn.Croatia);
+    
+    public static final Label Dominican_Republic = new LabelRu("доминик.", "доминиканский вариант испанского языка", LabelEn.Dominican_Republic);
+    public static final Label England = new LabelRu("англ.", "английское", LabelEn.England);
+    public static final Label Finland = new LabelRu("финск.", "финское", LabelEn.Finland);
+    public static final Label France = new LabelRu("франц.", "французское", LabelEn.France);
+    public static final Label Germany = new LabelRu("нем.", "немецкое", LabelEn.Germany);
+    public static final Label Hollandic = new LabelRu("голл.", "голландский вариант нидерландского языка", LabelEn.Hollandic);
+    
+    public static final Label Indonesia = new LabelRu("индонез.", "индонезийское", LabelEn.Indonesia);
+    public static final Label Ionic_Greek = new LabelRu("ион.", "ионийское", LabelEn.Ionic_Greek);
+    public static final Label Ireland = new LabelRu("ирл.", "ирландский вариант английского языка", LabelEn.Ireland);
+    
+    public static final Label Japan = new LabelRu("яп.", "японское", LabelEn.Japan);
+    public static final Label Javanese = new LabelRu("яванск.", "яванское", LabelEn.Javanese);
+    
+    public static final Label Malaysia = new LabelRu("малайск.", "малайское", LabelEn.Malaysia);
+    public static final Label Netherlands = new LabelRu("нидерл.", "нидерландское", LabelEn.Netherlands);
+    public static final Label New_Zealand = new LabelRu("нов.-зел.", "ново-зеландский вариант английского языка", LabelEn.New_Zealand);
+    public static final Label Scotland = new LabelRu("шотл.", "шотландский вариант английского языка", LabelEn.Scotland);
+    public static final Label Spain = new LabelRu("исп.", "испанское", LabelEn.Spain);
+    public static final Label Switzerland = new LabelRu("швейц.", "швейцарский вариант немецкого языка", LabelEn.Switzerland);
+    public static final Label Taiwan = new LabelRu("тайв.", "тайваньский вариант китайского языка", LabelEn.Taiwan);
+    public static final Label US = new LabelRu("амер.", "американский вариант английского языка", LabelEn.US);
     
     
     // usage
     // //////////////////////////
-    public static final Label childish = new LabelRu("детск.", "детское",  LabelEn.childish);
-    public static final Label colloquial = new LabelRu("разг.", "разговорное",  LabelEn.colloquial);
-    public static final Label derogatory = new LabelRu("унич.", "уничижительное",  LabelEn.derogatory);
-    public static final Label dialect = new LabelRu("диал.", "диалектное",  LabelEn.dialect);
-    public static final Label euphemistic = new LabelRu("эвф.", "эвфемизм",  LabelEn.euphemistic);
-    public static final Label familiar = new LabelRu("фам.", "фамильярное",  LabelEn.familiar);
-    public static final Label figuratively = new LabelRu("п.", "переносное значение",  LabelEn.figuratively);
-    public static final Label figuratively_peren = LabelRu.addNonUniqueShortName(figuratively, "перен.");// synonym context labels: п. перен.
+    public static final Label childish = new LabelRu("детск.", "детское", LabelEn.childish);
+    public static final Label colloquial = new LabelRu("разг.", "разговорное", LabelEn.colloquial);
+    public static final Label derogatory = new LabelRu("унич.", "уничижительное", LabelEn.derogatory);
+    public static final Label dialect = new LabelRu("диал.", "диалектное", LabelEn.dialect);
+    public static final Label euphemistic = new LabelRu("эвф.", "эвфемизм", LabelEn.euphemistic);
+    public static final Label familiar = new LabelRu("фам.", "фамильярное", LabelEn.familiar);
+    
+    public static final Label figuratively = new LabelRu("перен.", "переносное значение", LabelEn.figuratively);
+    public static final Label figuratively_p = LabelRu.addNonUniqueShortName(figuratively, "п.");
+    
     public static final Label Internet_slang = new LabelRu("интернет.", "интернетовский жаргон",  LabelEn.Internet_slang);
     public static final Label pejorative = new LabelRu("унич.", "уничижительное",  LabelEn.pejorative);
     public static final Label poetic = new LabelRu("поэт.", "поэтическое",  LabelEn.poetic);
@@ -114,7 +191,7 @@ public class LabelRu extends LabelLocal  {
     
     
     
-    // synonym context labels: рег., обл.
+    
 
     // **************************
     // topical

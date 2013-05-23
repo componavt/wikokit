@@ -1,7 +1,7 @@
 /* WikiText.java - wiki text is a text, where some words are wikified.
  *
  * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikokit.base.wikt.util;

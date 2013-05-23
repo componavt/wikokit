@@ -98,7 +98,7 @@ public class TWikiText {
     }
 
     /** Inserts record into the table 'wiki_text'.<br><br>
-     * INSERT INTO wiki_text (text) VALUES ("apple");
+     * INSERT INTO wiki_text (text, wikified_text) VALUES ("apple", "[[apple]]");
      * @param text      text (without wikification)
      * @param text      wikified_text (with wikification)
      * 
@@ -115,10 +115,15 @@ public class TWikiText {
         {
             Statement s = connect.conn.createStatement ();
             try {
-                str_sql.append("INSERT INTO wiki_text (text) VALUES (\"");
+                str_sql.append("INSERT INTO wiki_text (text,wikified_text) VALUES (\"");
                 String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
                 str_sql.append(safe_text);
+                str_sql.append("\",\"");
+                
+                String wikified_safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, wikified_text);
+                str_sql.append(wikified_safe_text);
                 str_sql.append("\")");
+                
                 s.executeUpdate (str_sql.toString());
 
                 s = connect.conn.createStatement ();
@@ -152,9 +157,10 @@ public class TWikiText {
             Statement s = connect.conn.createStatement ();
             try {
                 String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
-// new                str_sql.append("SELECT id,wikified_text FROM wiki_text WHERE text=\"");
+// new          
+                str_sql.append("SELECT id,wikified_text FROM wiki_text WHERE text=\"");
 // old temp:
-                str_sql.append("SELECT id,text FROM wiki_text WHERE text=\"");
+                //str_sql.append("SELECT id,text FROM wiki_text WHERE text=\"");
                 
                 str_sql.append(safe_title);
                 str_sql.append("\"");
@@ -163,9 +169,10 @@ public class TWikiText {
                     if (rs.next ())
                     {
                         int id = rs.getInt("id");
-// new                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+// new                  
+                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
 // old temp:                        
-                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
+                        //String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
                         wiki_text = new TWikiText(id, text, wikified_text);
                     }
                 } finally {
@@ -192,16 +199,17 @@ public class TWikiText {
         try {
             Statement s = connect.conn.createStatement ();
             try {
-                str_sql.append("SELECT text FROM wiki_text WHERE id=");
+                str_sql.append("SELECT text,wikified_text FROM wiki_text WHERE id=");
                 str_sql.append(id);
                 ResultSet rs = s.executeQuery (str_sql.toString());
                 try {
                     if (rs.next ())
                     {
                         String text = Encodings.bytesToUTF8(rs.getBytes("text"));
-// new                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+// new                  
+                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
 // temp old
-                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
+                        //String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
                         wiki_text = new TWikiText(id, text, wikified_text);
                     }
                 } finally {
@@ -229,8 +237,9 @@ public class TWikiText {
 
         // 2. delete WikiTextWords by WikiText.ID
         TWikiTextWords[] ww = TWikiTextWords.getByWikiText(connect, wiki_text);
-        for(TWikiTextWords w : ww)
-            TWikiTextWords.delete(connect, w);
+        for(TWikiTextWords w : ww) {
+            TWikiTextWords.delete(connect, w); 
+        }
 
         // 3. delete WikiText
         TWikiText.delete(connect, wiki_text);
@@ -263,13 +272,13 @@ public class TWikiText {
         }
     }
 
-    /** Deletes row from the table 'wiki_text' by a value of a wiki_text string.<br><br>
+    /** Deletes row from the table 'wiki_text' by a value of a text string (without wikification).<br><br>
      * DELETE FROM wiki_text WHERE wiki_text="wiki_text";
      * @param  wiki_text  wiki text (without wikification)
      */
-    public static void delete (Connect connect,String wiki_text) {
+    public static void delete (Connect connect,String text) {
 
-        if(0 == wiki_text.length()) {
+        if(0 == text.length()) {
             System.err.println("Error (wikt_parsed TWikiText.delete()):: empty string wiki_text.");
             return;
         }
@@ -280,7 +289,7 @@ public class TWikiText {
             try {
                 str_sql.append("DELETE FROM wiki_text WHERE text=\"");
                 str_sql.append( PageTableBase.convertToSafeStringEncodeToDBWunderscore(
-                                connect, wiki_text));
+                                connect, text));
                 str_sql.append('"');
                 s.execute (str_sql.toString());
             } finally {

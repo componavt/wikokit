@@ -20,6 +20,8 @@ import java.util.regex.Matcher;
 
 import java.util.List;
 import java.util.ArrayList;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.util.LabelText;
 
 /** Meaning consists of <PRE>
  * # Definition (preceded by "#", which causes automatic numbering).
@@ -145,16 +147,10 @@ public class WMeaningRu {
         if(line.startsWith("{{морфема"))
             return null;    // skip now, todo (parse) in future
 
-        // 1. extract labels
-        // todo
-        // ...
-        LabelEn[] labels = new LabelEn[0];
-
-        line = LabelRu.removeEmptyLabelPometa(line);
-        if(line.length() == 0)
+        LabelText label_text = LabelRu.extractLabelsTrimText(line);
+        if(null == label_text)
             return null;
-        
-        // extract definition by parsing wiki-text
+        line = label_text.getText();
         
         // 2. extract text till first {{пример|
         String wiki_definition = WQuoteRu.getDefinitionBeforeFirstQuote(page_title, line);
@@ -168,7 +164,7 @@ public class WMeaningRu {
         // 5. extract quotations
         WQuote[] quote = WQuoteRu.getQuotes(page_title, line);        
 
-        return new WMeaning(page_title, labels, wiki_definition, quote, false);
+        return new WMeaning(page_title, label_text.getLabels(), wiki_definition, quote, false);
     }
 
 }
