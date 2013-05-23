@@ -1,7 +1,7 @@
 /* LangText.java - data structure consists of a language code and the corresponding text.
  * 
  * Copyright (c) 2008 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
- * Distributed under GNU General Public License.
+ * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
 package wikokit.base.wikt.util;

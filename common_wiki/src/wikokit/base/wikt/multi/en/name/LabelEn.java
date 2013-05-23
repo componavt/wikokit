@@ -64,7 +64,7 @@ public class LabelEn extends Label {
     // Context labels without categories (empty category) 43 Krizhanovsky
 // context needed
     public static final Label E_number = new LabelEn("E number", "food manufacture", LabelCategory.empty);
-    public static final Label element_symbol = new LabelEn("element symbol", "chemistry", LabelCategory.empty); 
+    
 //  item // it's not a context label
     public static final Label Rumantsch_Grischun = new LabelEn("Rumantsch Grischun", "Rumantsch Grischun", LabelCategory.empty);
 
@@ -109,7 +109,7 @@ public class LabelEn extends Label {
     public static final Label intensive = new LabelEn("intensive", "intensive", LabelCategory.grammatical); // усилительный
     public static final Label interrogative = new LabelEn("interrogative", "interrogative", LabelCategory.grammatical); //вопросительный
     public static final Label intransitive = new LabelEn("intransitive", "intransitive", LabelCategory.grammatical);
-    public static final Label la_proper_noun_indecl = new LabelEn("la-proper noun-indecl", "indeclinable", LabelCategory.grammatical);
+    // public static final Label la_proper_noun_indecl = new LabelEn("la-proper noun-indecl", "indeclinable", LabelCategory.grammatical); it is not a context label in really
     public static final Label momentane = new LabelEn("momentane", "momentane", LabelCategory.grammatical);
     public static final Label negative = new LabelEn("negative", "negative", LabelCategory.grammatical);
  
@@ -193,20 +193,263 @@ public class LabelEn extends Label {
 
     // regional 225 Chirkov
     // //////////////////////////
-    public static final Label AU = new LabelEn("AU",     "Australia",    LabelCategory.regional);
+    public static final Label Acadia = new LabelEn("Acadia", "Acadian", LabelCategory.regional);
+    public static final Label Africa = new LabelEn("Africa", "Africa",    LabelCategory.regional);
+    public static final Label African_American_Vernacular_English = new LabelEn("African American Vernacular English",     "African American Vernacular",    LabelCategory.regional);
+    public static final Label Alberta = new LabelEn("Alberta", "Alberta", LabelCategory.regional);
+    public static final Label Algeria = new LabelEn("Algeria", "Algeria", LabelCategory.regional);
+    public static final Label Alghero = new LabelEn("Alghero", "Alghero", LabelCategory.regional);
+    public static final Label American_spelling = new LabelEn("American spelling", "American", LabelCategory.regional);
+    public static final Label Anglo_Norman = new LabelEn("Anglo-Norman", "Anglo-Norman", LabelCategory.regional);
+    public static final Label Angola = new LabelEn("Angola", "Angola", LabelCategory.regional);
+    public static final Label Appalachian = new LabelEn("Appalachian", "Appalachian", LabelCategory.regional);
+    public static final Label Argentina = new LabelEn("Argentina", "Argentina", LabelCategory.regional);
+    public static final Label Atlantic_Canada = new LabelEn("Atlantic Canada", "Atlantic Canada", LabelCategory.regional);
+
+    public static final Label Australia = new LabelEn("Australia", "Australia", LabelCategory.regional);
+    public static final Label AU = LabelEn.addNonUniqueShortName(Australia, "Australia");
+
+    public static final Label Austria = new LabelEn("Austria", "Austria", LabelCategory.regional);
+
+    public static final Label Balearics = new LabelEn("Balearics", "Balearics", LabelCategory.regional);
+    public static final Label Balhae = new LabelEn("Balhae", "Balhae", LabelCategory.regional);
     public static final Label Balkar = new LabelEn("Balkar", "Balkar", LabelCategory.regional);
+    public static final Label Belgium = new LabelEn("Belgium", "Belgium", LabelCategory.regional);
+    public static final Label Belize = new LabelEn("Belize", "Belize",  LabelCategory.regional);
+    public static final Label Bolivia = new LabelEn("Bolivia", "Bolivia", LabelCategory.regional);
+    public static final Label Border_Scots = new LabelEn("Border Scots", "Border Scots", LabelCategory.regional);
+    public static final Label Bosnia = new LabelEn("Bosnia", "Bosnia", LabelCategory.regional);
+    public static final Label Brabant = new LabelEn("Brabant", "Brabant", LabelCategory.regional);
+    public static final Label Brazil = new LabelEn("Brazil", "Brazil", LabelCategory.regional);
+    public static final Label Bristol = new LabelEn("Bristol", "Bristolian", LabelCategory.regional);
+
+    public static final Label British = new LabelEn("British", "UK", LabelCategory.regional);
+    public static final Label UK = LabelEn.addNonUniqueShortName(British, "British");
+
+    public static final Label British_Columbia = new LabelEn("British Columbia", "British Columbia", LabelCategory.regional);
+    public static final Label British_spelling = new LabelEn("British spelling", "British", LabelCategory.regional);
+    public static final Label Brunei = new LabelEn("Brunei", "Brunei", LabelCategory.regional);
+
+    public static final Label Canada = new LabelEn("Canada", "Canada", LabelCategory.regional);
+    public static final Label Canadian_Prairies = new LabelEn("Canadian Prairies", "Canadian Prairies", LabelCategory.regional);
+    public static final Label Caribbean = new LabelEn("Caribbean", "Caribbean", LabelCategory.regional);
+    public static final Label Chakavian = new LabelEn("Chakavian", "Chakavian", LabelCategory.regional);
+    public static final Label Channel_Islands = new LabelEn("Channel Islands", "Channel Islands", LabelCategory.regional);
+    public static final Label Chile = new LabelEn("Chile", "Chile", LabelCategory.regional);
+    public static final Label China = new LabelEn("China", "China", LabelCategory.regional);
     public static final Label Chinglish = new LabelEn("Chinglish", "Chinglish", LabelCategory.regional);
+    public static final Label Cockney = new LabelEn("Cockney", "Cockney", LabelCategory.regional);
+    public static final Label Cockney_rhyming_slang = new LabelEn("Cockney rhyming slang", "Cockney rhyming slang", LabelCategory.regional);
+    public static final Label Colombia = new LabelEn("Colombia", "Colombia", LabelCategory.regional);
+    public static final Label Commonwealth = new LabelEn("Commonwealth", "Commonwealth of Nations", LabelCategory.regional);
+    public static final Label Connacht = new LabelEn("Connacht", "Connacht", LabelCategory.regional);
+    public static final Label Cornwall = new LabelEn("Cornwall", "Cornish", LabelCategory.regional);
+    public static final Label Costa_Rica = new LabelEn("Costa Rica", "Costa Rica", LabelCategory.regional);
+    public static final Label cretan = new LabelEn("cretan", "Cretan dialect", LabelCategory.regional);
+    public static final Label Crimean = new LabelEn("Crimean", "Crimean", LabelCategory.regional);
+    public static final Label Croatia = new LabelEn("Croatia", "Croatia", LabelCategory.regional);
+    public static final Label Cuba = new LabelEn("Cuba", "Cuba", LabelCategory.regional);
+    public static final Label Cumbria = new LabelEn("Cumbria", "Cumbrian", LabelCategory.regional);
+    public static final Label cypriot = new LabelEn("cypriot", "Cypriot dialect", LabelCategory.regional);
+
+    public static final Label Dari = new LabelEn("Dari", "Dari (Afghanistan)", LabelCategory.regional);
+    public static final Label DDR = new LabelEn("DDR", "East Germany", LabelCategory.regional);
+    public static final Label Digor = new LabelEn("Digor", "Digor dialect", LabelCategory.regional);
+    public static final Label Dominican_Republic = new LabelEn("Dominican Republic", "Dominican Republic", LabelCategory.regional);
+    public static final Label Dublin = new LabelEn("Dublin", "Dublin", LabelCategory.regional);
+
+    public static final Label East_Africa = new LabelEn("East Africa", "East Africa", LabelCategory.regional);
+    public static final Label East_Germanic = new LabelEn("East Germanic", "East Germanic", LabelCategory.regional);
+    public static final Label Eastern_Armenian = new LabelEn("Eastern Armenian", "Eastern Armenian", LabelCategory.regional);
+    public static final Label Eastern_Catalan = new LabelEn("Eastern Catalan", "Eastern Catalan", LabelCategory.regional);
+    public static final Label Ecuador = new LabelEn("Ecuador", "Ecuador", LabelCategory.regional);
     public static final Label Ekavian = new LabelEn("Ekavian", "Ekavian", LabelCategory.regional);
+    public static final Label El_Salvador = new LabelEn("El Salvador", "El Salvador", LabelCategory.regional);
+    public static final Label England = new LabelEn("England", "England", LabelCategory.regional);
+    public static final Label Europe = new LabelEn("Europe", "Europe", LabelCategory.regional);
+
+    public static final Label Finland = new LabelEn("Finland", "Finland", LabelCategory.regional);
+    public static final Label Flemish = new LabelEn("Flemish", "Flemish", LabelCategory.regional);
+    public static final Label France = new LabelEn("France", "France", LabelCategory.regional);
+    public static final Label Gascony = new LabelEn("Gascony", "Gascony", LabelCategory.regional);
+    public static final Label Geordie = new LabelEn("Geordie", "Geordie", LabelCategory.regional);
+    public static final Label Germany = new LabelEn("Germany", "Germany", LabelCategory.regional);// only in ruwikt
+    public static final Label Gheg = new LabelEn("Gheg", "Gheg", LabelCategory.regional);
+    public static final Label Guardiol = new LabelEn("Guardiol", "Guardiol", LabelCategory.regional);
+    public static final Label Guatemala = new LabelEn("Guatemala", "Guatemala", LabelCategory.regional);
+    public static final Label Guernsey = new LabelEn("Guernsey", "Guernsey", LabelCategory.regional);
+
+    public static final Label Hartlepool = new LabelEn("Hartlepool", "Hartlepool", LabelCategory.regional);
+    public static final Label Hawaii = new LabelEn("Hawaii", "Hawaii", LabelCategory.regional);
     public static final Label Helsinki_slang = new LabelEn("Helsinki slang", "Helsinki slang", LabelCategory.regional);
     public static final Label Hoisanese = new LabelEn("Hoisanese", "Hoisanese", LabelCategory.regional);
+    public static final Label Hollandic = new LabelEn("Hollandic", "Hollandic", LabelCategory.regional);
+    public static final Label Honduras = new LabelEn("Honduras", "Honduras", LabelCategory.regional);
+    public static final Label Hong_Kong = new LabelEn("Hong Kong", "Hong Kong", LabelCategory.regional);
+    public static final Label Hulu_Pahang = new LabelEn("Hulu Pahang", "Hulu Pahang", LabelCategory.regional);
+
     public static final Label Ijekavian = new LabelEn("Ijekavian", "Ijekavian", LabelCategory.regional);
+    public static final Label Ikavian = new LabelEn("Ikavian", "Ikavian", LabelCategory.regional);
+    public static final Label India = new LabelEn("India", "India", LabelCategory.regional);
+    public static final Label Indonesia = new LabelEn("Indonesia", "Indonesia", LabelCategory.regional);
+    public static final Label Ionic_Greek = new LabelEn("Ionic Greek", "Ionic Greek", LabelCategory.regional);// only in ruwikt
+    public static final Label Iran = new LabelEn("Iran", "Iran", LabelCategory.regional);
+    public static final Label Ireland = new LabelEn("Ireland", "Ireland", LabelCategory.regional);
+    public static final Label Iron = new LabelEn("Iron", "Iron dialect", LabelCategory.regional);
+    public static final Label Isle_of_Mann = new LabelEn("Isle of Mann", "Manx", LabelCategory.regional);
+
+    public static final Label Jakarta = new LabelEn("Jakarta", "Jakarta", LabelCategory.regional);
+    public static final Label Jamaica = new LabelEn("Jamaica", "Jamaica", LabelCategory.regional);
+    public static final Label Japan = new LabelEn("Japan", "Japan", LabelCategory.regional);// only in ruwikt
+    public static final Label Javanese = new LabelEn("Javanese", "Java", LabelCategory.regional);
+    public static final Label Jersey = new LabelEn("Jersey", "Jersey", LabelCategory.regional);
+
+    public static final Label Kajkavian = new LabelEn("Kajkavian", "Kajkavian", LabelCategory.regional);
+    public static final Label Kansai = new LabelEn("Kansai", "Kansai", LabelCategory.regional);
     public static final Label Karabakh = new LabelEn("Karabakh", "Karabakh", LabelCategory.regional);
+    public static final Label katharevousa = new LabelEn("katharevousa", "Katharevousa", LabelCategory.regional);
+    public static final Label Kenya = new LabelEn("Kenya", "Kenya", LabelCategory.regional);
     public static final Label Kromanti = new LabelEn("Kromanti", "Kromanti spirit possession language", LabelCategory.regional);
+
+    public static final Label Lancashire = new LabelEn("Lancashire", "Lancashire", LabelCategory.regional);
+    public static final Label Languedoc = new LabelEn("Languedoc", "Languedoc", LabelCategory.regional);
+    public static final Label Latin_America = new LabelEn("Latin America", "Latin America", LabelCategory.regional);
+    public static final Label Limousin = new LabelEn("Limousin", "Limousin", LabelCategory.regional);
+    public static final Label Lincolnshire = new LabelEn("Lincolnshire", "Lincolnshire", LabelCategory.regional);
+    public static final Label Liverpool = new LabelEn("Liverpool", "Liverpudlian", LabelCategory.regional);
+    public static final Label London = new LabelEn("London", "London", LabelCategory.regional);
+    public static final Label Louisiana_French = new LabelEn("Louisiana French", "Louisiana French", LabelCategory.regional);
+    public static final Label Low_Prussian = new LabelEn("Low Prussian", "Low Prussian", LabelCategory.regional);
+    public static final Label Lowlands_Scots = new LabelEn("Lowlands Scots", "Lowlands Scots", LabelCategory.regional);
+    public static final Label Luxembourg = new LabelEn("Luxembourg", "Luxembourg", LabelCategory.regional);
+    public static final Label Lviv = new LabelEn("Lviv", "Lviv", LabelCategory.regional);
+
+    public static final Label Malayeri = new LabelEn("Malayeri", "Malayeri", LabelCategory.regional);
+    public static final Label Malaysia = new LabelEn("Malaysia", "Malaysia", LabelCategory.regional);
+    public static final Label Mallorca = new LabelEn("Mallorca", "Mallorca", LabelCategory.regional);
+    public static final Label maniot = new LabelEn("maniot", "Maniot dialect", LabelCategory.regional);
+    public static final Label Manitoba = new LabelEn("Manitoba", "Manitoba", LabelCategory.regional);
+    public static final Label Marseille = new LabelEn("Marseille", "Marseille", LabelCategory.regional);
+    public static final Label Mecayapan = new LabelEn("Mecayapan", "Mecayapan", LabelCategory.regional);
+    public static final Label Mecklenburgisch_Low_German = new LabelEn("Mecklenburgisch Low German", "Mecklenburgisch", LabelCategory.regional);
+    public static final Label Mexico = new LabelEn("Mexico", "Mexico", LabelCategory.regional);
+    public static final Label Midwest_US = new LabelEn("Midwest US", "Midwest US", LabelCategory.regional);
+    public static final Label Mistralian = new LabelEn("Mistralian", "Mistralian", LabelCategory.regional);
+    public static final Label Montenegro = new LabelEn("Montenegro", "Montenegro", LabelCategory.regional);
+    public static final Label Morocco = new LabelEn("Morocco", "Morocco", LabelCategory.regional);
+    public static final Label Multicultural_London_English = new LabelEn("Multicultural London English", "MLE", LabelCategory.regional);
+    public static final Label Munster = new LabelEn("Munster", "Munster", LabelCategory.regional);
+
+    public static final Label Namibia = new LabelEn("Namibia", "Namibia", LabelCategory.regional);
+    public static final Label Negeri_Sembilan = new LabelEn("Negeri Sembilan", "Negeri Sembilan", LabelCategory.regional);
+    public static final Label Netherlands = new LabelEn("Netherlands", "Netherlands", LabelCategory.regional);
+    public static final Label New_Brunswick = new LabelEn("New Brunswick", "New Brunswick", LabelCategory.regional);
+    public static final Label New_England = new LabelEn("New England", "New England", LabelCategory.regional);
+    public static final Label New_York = new LabelEn("New York", "New York", LabelCategory.regional);
+    public static final Label New_Zealand = new LabelEn("New Zealand", "New Zealand", LabelCategory.regional);
+    public static final Label Newfoundland = new LabelEn("Newfoundland", "Newfoundland", LabelCategory.regional);
+    public static final Label Nicaragua = new LabelEn("Nicaragua", "Nicaragua", LabelCategory.regional);
+    public static final Label Norfolk = new LabelEn("Norfolk", "Norfolk", LabelCategory.regional);
+    public static final Label North_America = new LabelEn("North America", "North America", LabelCategory.regional);
+    public static final Label North_Germanic = new LabelEn("North Germanic", "North Germanic", LabelCategory.regional);
+    public static final Label North_Korea = new LabelEn("North Korea", "North Korea", LabelCategory.regional);
+    public static final Label Northeast_England = new LabelEn("Northeast England", "Northeast England", LabelCategory.regional);
+    public static final Label Northern_Crimea = new LabelEn("Northern Crimea", "Northern Crimea", LabelCategory.regional);
+    public static final Label Northern_Dutch = new LabelEn("Northern Dutch", "Northern Dutch", LabelCategory.regional);
+    public static final Label Northern_England = new LabelEn("Northern England", "Northern England", LabelCategory.regional);
+    public static final Label Northern_Ireland = new LabelEn("Northern Ireland", "Northern Ireland", LabelCategory.regional);
+    public static final Label Northumbria = new LabelEn("Northumbria", "Northumbrian", LabelCategory.regional);
+    public static final Label northwest = new LabelEn("northwest", "Northwest", LabelCategory.regional);
+    public static final Label Northwest_Germanic = new LabelEn("Northwest Germanic", "Northwest Germanic", LabelCategory.regional);
+    public static final Label Northwest_Territories = new LabelEn("Northwest Territories", "Northwest Territories", LabelCategory.regional);
+    public static final Label Nova_Scotia = new LabelEn("Nova Scotia", "Nova Scotia", LabelCategory.regional);
+    public static final Label Nunavut = new LabelEn("Nunavut", "Nunavut", LabelCategory.regional);
+
+    public static final Label Ontario= new LabelEn("Ontario", "Ontario", LabelCategory.regional);
+
+    public static final Label Pahang = new LabelEn("Pahang", "Pahang", LabelCategory.regional);
+    public static final Label Pakistan = new LabelEn("Pakistan", "Pakistan", LabelCategory.regional);
+    public static final Label Paraguay = new LabelEn("Paraguay", "Paraguay", LabelCategory.regional);
+    public static final Label Pennsylvania_Dutch_English = new LabelEn("Pennsylvania Dutch English", "Pennsylvania Dutch English", LabelCategory.regional);
+    public static final Label Perak = new LabelEn("Perak", "Perak", LabelCategory.regional);
+    public static final Label Peru = new LabelEn("Peru", "Peru", LabelCategory.regional);
+    public static final Label Philippines = new LabelEn("Philippines", "Philippines", LabelCategory.regional);
+    public static final Label Picardy = new LabelEn("Picardy", "Picardy", LabelCategory.regional);
     public static final Label Polari = new LabelEn("Polari", "Polari", LabelCategory.regional);
+    public static final Label Pomeranian_Low_German = new LabelEn("Pomeranian Low German", "Pomeranian", LabelCategory.regional);
+    public static final Label pontian = new LabelEn("pontian", "Pontian dialect", LabelCategory.regional);
+    public static final Label Portugal = new LabelEn("Portugal", "Portugal", LabelCategory.regional);
+    public static final Label Prince_Edward_Island = new LabelEn("Prince Edward Island", "Prince Edward Island", LabelCategory.regional);
+    public static final Label Provence = new LabelEn("Provence", "Provence", LabelCategory.regional);
+    public static final Label Puter = new LabelEn("Puter", "Puter", LabelCategory.regional);
+
+    public static final Label Quebec = new LabelEn("Quebec", "Quebec", LabelCategory.regional);
+
+    public static final Label regional = new LabelEn("regional", "regional", LabelCategory.regional);
+    public static final Label Rio_de_Janeiro = new LabelEn("Rio de Janeiro", "Rio de Janeiro city", LabelCategory.regional);
+    public static final Label Réunion = new LabelEn("Réunion", "Réunion", LabelCategory.regional);
+
+    public static final Label Saint_Ouen = new LabelEn("Saint Ouen", "Saint Ouën", LabelCategory.regional);
+    public static final Label Saskatchewan = new LabelEn("Saskatchewan", "Saskatchewan", LabelCategory.regional);
+    public static final Label Scania = new LabelEn("Scania", "Scanian", LabelCategory.regional);
+    public static final Label Scotland = new LabelEn("Scotland", "Scotland", LabelCategory.regional);
+    public static final Label Serbia = new LabelEn("Serbia", "Serbia", LabelCategory.regional);
+    public static final Label Shopski = new LabelEn("Shopski", "Shopski dialect", LabelCategory.regional);
+    public static final Label Silla = new LabelEn("Silla", "Silla", LabelCategory.regional);
+    public static final Label Singapore = new LabelEn("Singapore", "Singapore", LabelCategory.regional);
+    public static final Label Sistani = new LabelEn("Sistani", "Sistani", LabelCategory.regional);
+    public static final Label Skiri_Pawnee = new LabelEn("Skiri Pawnee", "Skiri Pawnee", LabelCategory.regional);
+    public static final Label South_Africa = new LabelEn("South Africa", "South Africa", LabelCategory.regional);
+    public static final Label South_Korea = new LabelEn("South Korea", "South Korea", LabelCategory.regional);
+    public static final Label South_Scots = new LabelEn("South Scots", "South Scots", LabelCategory.regional);
+    public static final Label Southern_Dutch = new LabelEn("Southern Dutch", "Southern Dutch", LabelCategory.regional);
     public static final Label southern_US = new LabelEn("southern US", "southern US", LabelCategory.regional);
+    public static final Label Spain = new LabelEn("Spain", "Spain", LabelCategory.regional);
+    public static final Label Surmiran = new LabelEn("Surmiran", "Surmiran", LabelCategory.regional);
+    public static final Label Sursilvan = new LabelEn("Sursilvan", "Sursilvan", LabelCategory.regional);
+    public static final Label Sussex = new LabelEn("Sussex", "Sussex", LabelCategory.regional);
+    public static final Label Sutsilvan = new LabelEn("Sutsilvan", "Sutsilvan", LabelCategory.regional);
+    public static final Label South_Island = new LabelEn("Suðuroy", "Suðuroy dialect", LabelCategory.regional);
+    public static final Label Sweden = new LabelEn("Sweden", "Sweden", LabelCategory.regional);
+    public static final Label Switzerland = new LabelEn("Switzerland", "Switzerland", LabelCategory.regional);
+    public static final Label Sao_Paulo = new LabelEn("São Paulo", "São Paulo city", LabelCategory.regional);
+
+    public static final Label Taiwan = new LabelEn("Taiwan", "Taiwan", LabelCategory.regional);
+    public static final Label Teesside = new LabelEn("Teesside", "Teesside", LabelCategory.regional);
     public static final Label Tigranakert = new LabelEn("Tigranakert", "Tigranakert", LabelCategory.regional);
-    
-    
+    public static final Label Tosk = new LabelEn("Tosk", "Tosk", LabelCategory.regional);
+    public static final Label Trinidad_and_Tobago = new LabelEn("Trinidad and Tobago", "Trinidad and Tobago", LabelCategory.regional);
+    public static final Label Tyneside = new LabelEn("Tyneside", "Tyneside", LabelCategory.regional);
+
+    public static final Label uds = new LabelEn("uds.", "used formally in Spain", LabelCategory.regional);
+    public static final Label Ullans = new LabelEn("Ullans", "Ulster Scots", LabelCategory.regional);
+    public static final Label Ulster = new LabelEn("Ulster", "Ulster", LabelCategory.regional);
+    public static final Label Uruguay = new LabelEn("Uruguay", "Uruguay", LabelCategory.regional);
+    public static final Label US = new LabelEn("US", "US", LabelCategory.regional);
+
+    public static final Label Valencia = new LabelEn("Valencia", "Valencia", LabelCategory.regional);
+    public static final Label Vallader = new LabelEn("Vallader", "Vallader", LabelCategory.regional);
+    public static final Label Venezuela = new LabelEn("Venezuela", "Venezuela", LabelCategory.regional);
+    public static final Label Venice = new LabelEn("Venice", "Venice", LabelCategory.regional);
+    public static final Label Vivaro_Alpine = new LabelEn("Vivaro-Alpine", "Vivaro-Alpine", LabelCategory.regional);
+
+    public static final Label Wales = new LabelEn("Wales", "Wales", LabelCategory.regional);
+    public static final Label Wearside = new LabelEn("Wearside", "Wearside", LabelCategory.regional);
+    public static final Label West_Germanic = new LabelEn("West Germanic", "West Germanic", LabelCategory.regional);
+    public static final Label West_Midlands = new LabelEn("West Midlands", "West Midlands", LabelCategory.regional);
+    public static final Label Western_Armenian = new LabelEn("Western Armenian", "Western Armenian", LabelCategory.regional);
+    public static final Label Western_Catalan = new LabelEn("Western Catalan", "Western Catalan", LabelCategory.regional); 
+    public static final Label Western_Malayo_Polynesian = new LabelEn("Western Malayo-Polynesian", "Western Malayo-Polynesian", LabelCategory.regional);
+    public static final Label Western_Pomeranian_Low_German = new LabelEn("Western Pomeranian Low German", "Western Pomeranian", LabelCategory.regional);
+    public static final Label Western_Ukraine = new LabelEn("Western Ukraine", "Western Ukraine", LabelCategory.regional);
+
+    public static final Label Yanbian = new LabelEn("Yanbian", "Yanbian", LabelCategory.regional);
+    public static final Label Yorkshire = new LabelEn("Yorkshire", "Yorkshire", LabelCategory.regional);
+    public static final Label Yukon = new LabelEn("Yukon", "Yukon", LabelCategory.regional);
+
+    public static final Label Zimbabwe = new LabelEn("Zimbabwe", "Zimbabwe", LabelCategory.regional);
+
+
     // usage 73-3+1 Krizhanovsky
     // //////////////////////////
     public static final Label ad_slang = new LabelEn("ad slang",  "advertising slang", LabelCategory.usage);
@@ -220,7 +463,6 @@ public class LabelEn extends Label {
     public static final Label childish = new LabelEn("childish",  "childish", LabelCategory.usage);
     public static final Label chu_Nom = new LabelEn("chu Nom",  "Vietnamese chữ Nôm", LabelCategory.usage);
     public static final Label Classic_1811 = new LabelEn("Classic 1811 Dictionary of the Vulgar Tongue",  "obsolete, slang", LabelCategory.usage);
-    public static final Label Cockney_rhyming_slang = new LabelEn("Cockney rhyming slang",  "Cockney rhyming slang", LabelCategory.usage);
     
     public static final Label colloquial = new LabelEn("colloquial",  "colloquial", LabelCategory.usage);
     public static final Label colloquial_um = LabelEn.addNonUniqueShortName(colloquial, "colloquial-um");
@@ -464,7 +706,9 @@ public class LabelEn extends Label {
     
     public static final Label biology = new LabelEn("biology" ,"biology", LabelCategory.science); // биол. - биологическое
     public static final Label botany = new LabelEn("botany" ,"botany", LabelCategory.science); // ботан. - ботаническое
+    
     public static final Label chemistry = new LabelEn("chemistry" ,"chemistry", LabelCategory.science); // хим. - химическое
+    public static final Label element_symbol = LabelEn.addNonUniqueShortName(chemistry, "element symbol");
     
     public static final Label psychology = new LabelEn("psychology" ,"psychology", LabelCategory.science); // психол. - психология
     public static final Label clinical_psychology = LabelEn.addNonUniqueShortName(psychology, "clinical psychology"); //

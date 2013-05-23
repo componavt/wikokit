@@ -9,8 +9,8 @@ package wikokit.base.wikt.word;
 
 import wikokit.base.wikt.util.WikiWord;
 import wikokit.base.wikt.util.WikiText;
-import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.multi.ru.WMeaningRu;
 import wikokit.base.wikt.multi.en.WMeaningEn;
@@ -25,7 +25,7 @@ public class WMeaning {
     // + wiki word, + number of wiki word or number of first char of wikiword in definition
     
     /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s" */
-    private LabelEn[]  labels;
+    private Label[]  labels;
 
     private WikiText definition;
 
@@ -47,7 +47,7 @@ public class WMeaning {
     /** Example sentences and quotations. */
     private WQuote[] quote;
 
-    private final static WQuote[] NULL_WQUOTE_ARRAY = new WQuote[0];
+    private final static WQuote[]   NULL_WQUOTE_ARRAY   = new WQuote[0];
     private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];
     private final static WMeaning   NULL_WMEANING       = new WMeaning();
 
@@ -79,7 +79,7 @@ public class WMeaning {
      * @param _template_not_def true if there is template (e.g. {{form of|}} or
      * {{plural of|}}) instead of definiton text (in enwikt)
      */
-    public WMeaning(String page_title,LabelEn[] _labels,
+    public WMeaning(String page_title,Label[] _labels,
                     String _definition, WQuote[] _quote, boolean _template_not_def) {
         labels = _labels;
         wikified_text = _definition;
@@ -104,7 +104,7 @@ public class WMeaning {
     }
 
     /** Gets array of context labels in the definition. */
-    public LabelEn[] getLabels() {
+    public Label[] getLabels() {
         return labels;
     }
 
