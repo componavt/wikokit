@@ -20,7 +20,7 @@ public class WikiText {
     /** Visible text, e.g. "bullets m." for "[[bullet]]s {{m}}" */
     private String text;
     
-    /** Source wikified text, e.g. "[[bullet]]s {{m}}" */
+    /** Source wikified text, e.g. "[[bullet]]s {{m}}". It is NULL if "text" hasn't any wikification. */
     private String wikified_text;
     
      /** Wiki internal links, e.g. "bullet" and "bullets for "[[bullet]]s" {{m}} */
@@ -66,7 +66,10 @@ public class WikiText {
 
 
     /** Parses text, creates array of wiki words (words with hyperlinks),
-     * e.g. text is "[[little]] [[bell]]", wiki_words[]="little", "bell"
+     * e.g. text is "[[little]] [[bell]]", wiki_words[]={"little", "bell"}
+     * This function should be used for definitions / meanings.
+     * 
+     * @return NULL if there is no text.
      */
     public static WikiText createOnePhrase(String page_title, String _wikified_text)
     {
@@ -78,21 +81,25 @@ public class WikiText {
         
         String      s = WikiWord.parseDoubleBrackets(page_title, sb).toString();
         WikiWord[] ww = WikiWord.getWikiWords(page_title, sb);
+        
+        if(s.length() == _wikified_text.length())
+            _wikified_text = null; // wikified text is NULL if "text" hasn't any wikification
+        
         return new WikiText(s, _wikified_text, ww);
     }
 
-    /** Parses text, creates array of wiki words (words with hyperlinks),
+    /** Parses text (split by commas), creates array of wiki words (words with hyperlinks),
      * e.g. text is "[[little]] [[bell]], [[handbell]], [[doorbell]]".
+     * This function should be used to split wikified list of synonyms and translations.
      * @return empty array if there is no text.
      */
-    public static WikiText[] create(String page_title, String text)
+    public static WikiText[] createSplitByComma(String page_title, String text)
     {
         if(0 == text.trim().length()) {
             return NULL_WIKITEXT_ARRAY;
         }
         
         String[] ww = ptrn_comma_semicolon.split(text);   // split by comma and semicolon
-
         // split should take into account brackets, e.g. "bread (new, old), butter" -> "bread (new, old)", "butter"
         // todo
         // ...

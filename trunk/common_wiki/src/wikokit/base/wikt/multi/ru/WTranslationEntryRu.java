@@ -60,7 +60,7 @@ public class WTranslationEntryRu {
                 trans_text.equalsIgnoreCase("[[]]"))
             return null;
 
-        WikiText[] wt = WikiText.create(page_title, trans_text);
+        WikiText[] wt = WikiText.createSplitByComma(page_title, trans_text);
         if(0 == wt.length)
             return null;
         

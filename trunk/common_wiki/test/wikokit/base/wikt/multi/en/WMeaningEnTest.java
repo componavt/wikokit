@@ -16,6 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.word.WLanguage;
 import wikokit.base.wikt.word.WMeaning;
@@ -90,7 +91,7 @@ public class WMeaningEnTest {
         assertTrue(result1.getDefinition().equalsIgnoreCase(_def1_result));
 
         // labels == null
-        LabelEn[] labels_result = result1.getLabels();
+        Label[] labels_result = result1.getLabels();
         assertEquals(0, labels_result.length);
 
         // wikiword.size = 1; chance
@@ -584,7 +585,7 @@ public class WMeaningEnTest {
         assertTrue(result.getDefinition().equalsIgnoreCase(_def_result));
 
         // labels == null
-        LabelEn[] labels_result = result.getLabels();
+        Label[] labels_result = result.getLabels();
         assertEquals(0, labels_result.length);
 
         // wikiword.size = 4;
