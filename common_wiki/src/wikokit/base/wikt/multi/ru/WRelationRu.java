@@ -208,7 +208,7 @@ public class WRelationRu {
             return null;
 
         // 2. split by semicolon and comma
-        WikiText[] wt = WikiText.create(page_title, text);
+        WikiText[] wt = WikiText.createSplitByComma(page_title, text);
         if(0 == wt.length) return null;
         
         return new WRelation(null, wt);

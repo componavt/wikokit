@@ -31,11 +31,14 @@ import wikokit.base.wikt.multi.ru.name.LabelRu;
  */
 public abstract class Label {
     
-    /** Label itself, e.g. 'устар.', 'п.'. */
+    /** Label itself, e.g. {{obsolete}}, {{slang}}. */
     protected String short_name;
     
-    /** Label name, e.g. 'устарелое', 'переносное значение'. */
+    /** Label name, e.g. 'New Zealand' for {{NZ}}. */
     protected String name;
+    
+    /** Weather the label was added manually to the code of wikokit, or was gathered automatically by parser. */
+    protected boolean added_by_hand;
     
     protected final static Map<String, Label> short_name2label = new HashMap<String, Label>();
     protected final static Map<Label, String> label2short_name = new HashMap<Label, String>();

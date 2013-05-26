@@ -469,7 +469,7 @@ public class WRelationEn {
             onym_list = replaceTemplateL(onym_list);
         
         // 4. split by semicolon and comma
-        WikiText[] wt = WikiText.create(page_title, onym_list);
+        WikiText[] wt = WikiText.createSplitByComma(page_title, onym_list);
         if(0 == wt.length) return null;
         
         return new WRelation(meaning_summary, wt);
