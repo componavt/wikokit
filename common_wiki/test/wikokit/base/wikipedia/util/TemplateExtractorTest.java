@@ -39,7 +39,6 @@ public class TemplateExtractorTest {
         System.out.println("getFirstTemplate");
         String text = "template is absent";
         
-        
         TemplateExtractor result = TemplateExtractor.getFirstTemplate(text);
         assertNull(result);
         

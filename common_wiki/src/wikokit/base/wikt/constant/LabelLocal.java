@@ -9,7 +9,7 @@ package wikokit.base.wikt.constant;
 
 import java.util.HashMap;
 import java.util.Map;
-import wikokit.base.wikt.multi.en.name.LabelEn;
+//import wikokit.base.wikt.multi.en.name.LabelEn;
 
 /** Base (abstract) class for non-English Wiktionary labels, e.g.
  * LabelRu (Russian Wiktionary labels), LabelJa, LabelDe should be based 
@@ -25,8 +25,8 @@ public abstract class LabelLocal extends Label {
     /** Label translation: from English label to local label */
     protected static Map<Label, Label> translation_en2local = new HashMap<Label, Label>();
     
-    protected LabelLocal(String short_name, String name, Label label_en) { 
-        super(short_name, name);
+    protected LabelLocal(String short_name, String name, Label label_en, boolean added_by_hand) {
+        super(short_name, name, added_by_hand);
         initLabel(this);
         
         if(short_name.length() == 0 || name.length() == 0 || null == label_en)
@@ -50,7 +50,7 @@ public abstract class LabelLocal extends Label {
     }
 
     /** Checks weather exists the translation for this Label. */
-    public static boolean has(LabelEn t) {
+    public static boolean has(Label t) {
         return label2short_name.containsKey(t);
     }
     
@@ -81,5 +81,12 @@ public abstract class LabelLocal extends Label {
             return label.getName(); // if there is no translation into local language, then English name
         
         return local_label.getName();
+    }
+    
+    /** Gets label itself (short name) in English. 
+     *  This functions is needed for comparison (equals()) with LabelEn labels.
+     */
+    public String getShortNameEnglish() {
+        return label_en.getShortName();
     }
 }

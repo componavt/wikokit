@@ -10,19 +10,29 @@ package wikokit.base.wikipedia.util;
 public class TemplateExtractor {
     
     /** Name of template. */
-    String name;
+    private String name;
     
     /** Template parameters,
      * if there are not parameters then params = NULL_STRING_ARRAY. */
-    String[] params;
+    private String[] params;
     
     /** Start position of the template in the source string. */
-    int start_pos;
+    private int start_pos;
     
     /** End location of the template in the source string. */
-    int end_pos;
+    private int end_pos;
     
-    private final static String[]       NULL_STRING_ARRAY = new String[0];
+    private final static String[] NULL_STRING_ARRAY = new String[0];
+    
+    /** Gets name of template. */
+    public String getName() {
+        return name;
+    }
+    
+    /** Counts number of parameters of the template. */
+    public int countTemplateParameters() {
+        return params.length;
+    }
     
     protected TemplateExtractor(String _name, String[] _params,int _start_pos, int _end_pos) {
     
@@ -63,8 +73,6 @@ public class TemplateExtractor {
         
         return true;
     };
-    
-    
     
     /** Gets first template from the source string 'text'.
      * 
@@ -115,5 +123,25 @@ public class TemplateExtractor {
             }
         }
         return new TemplateExtractor(template_name, params, start_pos, end_pos);
+    }
+    
+    /** Removes substring {{template text}} from the source 'text', trims result string.
+     * !Attention: te should be created by function getFirstTemplate().
+     * 
+     *                |---- template text ------|
+     * "text before {{template name|parameter one}} text after" : source
+     *              ^ start_pos                   ^ end_pos
+     * 
+     * "text before text after" : result
+     * 
+     * @param text source text
+     * @param te TemplateExtractor created with the help getFirstTemplate() over the same source text.
+     */    
+    public static String extractTextWithoutTemplate (String text, TemplateExtractor te) {
+        
+        StringBuilder s = new StringBuilder(text.substring(0, te.start_pos));
+        s.append(text.substring(te.end_pos + 1));
+        
+        return s.toString().trim();
     }
 }

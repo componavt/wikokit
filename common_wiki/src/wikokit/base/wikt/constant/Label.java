@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import wikokit.base.wikipedia.language.LanguageType;
-import wikokit.base.wikt.multi.en.name.LabelEn;
-import wikokit.base.wikt.multi.ru.name.LabelRu;
+//import wikokit.base.wikipedia.language.LanguageType;
+//import wikokit.base.wikt.multi.en.name.LabelEn;
+//import wikokit.base.wikt.multi.ru.name.LabelRu;
 
 /** Contextual information for definitions, such as archaic, by analogy, 
  * chemistry, etc.
@@ -49,14 +49,14 @@ public abstract class Label {
     /** If there are more than one context label (synonyms,  short name label): <synonymic_label, source_main_unique_label> */
     private static Map<String, Label> multiple_synonym2label = new HashMap<String, Label>();
     
-    protected Label(String short_name, String name) {
+    protected Label(String short_name, String name, boolean added_by_hand) {
     
         if(short_name.length() == 0 || name.length() == 0)
             System.out.println("Error in Label.Label(): one of parameters is empty! label="+short_name+"; name=\'"+name+"\'.");
         
-        this.short_name  = short_name; 
-        this.name       = name; 
-    
+        this.short_name    = short_name; 
+        this.name          = name;
+        this.added_by_hand = added_by_hand;
     };
     
     protected void initLabel(Label label) {
@@ -114,6 +114,13 @@ public abstract class Label {
         return short_name;
     }
     
+    /** Gets label itself (short name) in English. 
+     *  This functions is needed for comparison (equals()) with LabelLocal labels.
+     */
+    public String getShortNameEnglish() {
+        return getShortName();
+    }
+    
     /** Gets label by short name of the label. */
     public static Label getByShortName(String short_name) throws NullPointerException
     {
@@ -161,6 +168,11 @@ public abstract class Label {
         return short_name2label.size();
     }
 
+    /** @return true if short name of two labels are the same. */
+    static public boolean equals (Label one, Label two) {
+        //return one.short_name.equals( two.short_name );
+        return one.getShortNameEnglish().equals( two.getShortNameEnglish() );
+    }
     
     
     /** Adds synonymic context label for the main (source) label.

@@ -45,7 +45,7 @@ public class LabelEn extends Label {
     //private static Map<String, LabelEn> multiple_synonym2label = new HashMap<String, LabelEn>();
     
     protected LabelEn(String short_name, String name, LabelCategory category) { 
-        super(short_name, name);
+        super(short_name, name, true);  // added_by_hand = true by default
         initLabel(this);
         
         if(null == category)
@@ -209,7 +209,7 @@ public class LabelEn extends Label {
     public static final Label Atlantic_Canada = new LabelEn("Atlantic Canada", "Atlantic Canada", LabelCategory.regional);
 
     public static final Label Australia = new LabelEn("Australia", "Australia", LabelCategory.regional);
-    public static final Label AU = LabelEn.addNonUniqueShortName(Australia, "Australia");
+    public static final Label AU = LabelEn.addNonUniqueShortName(Australia, "AU");
 
     public static final Label Austria = new LabelEn("Austria", "Austria", LabelCategory.regional);
 
@@ -226,7 +226,7 @@ public class LabelEn extends Label {
     public static final Label Bristol = new LabelEn("Bristol", "Bristolian", LabelCategory.regional);
 
     public static final Label British = new LabelEn("British", "UK", LabelCategory.regional);
-    public static final Label UK = LabelEn.addNonUniqueShortName(British, "British");
+    public static final Label UK = LabelEn.addNonUniqueShortName(British, "UK");
 
     public static final Label British_Columbia = new LabelEn("British Columbia", "British Columbia", LabelCategory.regional);
     public static final Label British_spelling = new LabelEn("British spelling", "British", LabelCategory.regional);
