@@ -11,10 +11,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-/**
- *
- * @author andrew
- */
 public class TemplateExtractorTest {
     
     private final static String[]       NULL_STRING_ARRAY = new String[0];

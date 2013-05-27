@@ -23,6 +23,7 @@ public class RelationRu extends RelationLocal {
     
     public static final RelationLocal   synonymy,
                                         antonymy,
+                                        relational_antonym,
                                         hypernymy,
                                         hyponymy,
                                         holonymy,
@@ -36,6 +37,7 @@ public class RelationRu extends RelationLocal {
     
         synonymy = new RelationRu("синонимы", "син.", Relation.synonymy);
         antonymy = new RelationRu("антонимы", "ант.", Relation.antonymy);
+        relational_antonym = new RelationRu("конверсивы", "конв.", Relation.relational_antonym);
         
         hypernymy = new RelationRu("гиперонимы", "гиперн.", Relation.hypernymy);
         hyponymy = new RelationRu("гипонимы", "гипон.", Relation.hyponymy);
