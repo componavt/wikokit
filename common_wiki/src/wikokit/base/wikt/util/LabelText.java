@@ -7,7 +7,8 @@ package wikokit.base.wikt.util;
 
 import wikokit.base.wikt.constant.Label;
 
-/** Data structure consists of an array of context labels and the corresponding text.
+/** Data structure consists of an array of context labels 
+ * and the corresponding text (e.g. a definition).
  */
 public class LabelText {
     

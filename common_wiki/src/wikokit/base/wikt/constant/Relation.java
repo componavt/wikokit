@@ -120,6 +120,7 @@ public class Relation {
 
     public static final Relation synonymy           = new Relation("synonyms");
     public static final Relation antonymy           = new Relation("antonyms");
+    public static final Relation relational_antonym = new Relation("relational antonym"); // ruwikt
     public static final Relation hypernymy          = new Relation("hypernyms");
     public static final Relation hyponymy           = new Relation("hyponyms");
     public static final Relation holonymy           = new Relation("holonyms");
@@ -131,11 +132,12 @@ public class Relation {
     
     //private final static Relation[] NULL_RELATION_ARRAY = new Relation[0];
     private final static Relation[] RELATION_ORDERED_ARRAY = {
-        Relation.synonymy,  Relation.antonymy,
+        Relation.synonymy,  Relation.antonymy, Relation.relational_antonym,
         Relation.hypernymy, Relation.hyponymy,
         Relation.holonymy, Relation.meronymy,
         Relation.troponymy, Relation.coordinate_term,
         Relation.otherwise_related
+        //  // converse
     };
     
     
