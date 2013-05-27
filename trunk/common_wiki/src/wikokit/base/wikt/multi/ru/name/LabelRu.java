@@ -7,6 +7,8 @@
 
 package wikokit.base.wikt.multi.ru.name;
 
+import java.util.ArrayList;
+import java.util.List;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 
 import java.util.regex.Pattern;
@@ -24,8 +26,10 @@ import wikokit.base.wikt.util.LabelText;
  */
 public class LabelRu extends LabelLocal  {
     
+    private final static Label[] NULL_LABEL_ARRAY = new Label[0];
+    
     protected LabelRu(String label,String name,Label label_en) {
-        super(label, name, label_en);
+        super(label, name, label_en, true);  // added_by_hand = true by default
     }
     
     /** Temporary empty label {{помета?|XX}}, where XX - language code
@@ -68,7 +72,10 @@ public class LabelRu extends LabelLocal  {
             return null;
         
         if(!line.contains("{{"))    // every context label is a template "{{"
-            return new LabelText(null, line);
+            return new LabelText(NULL_LABEL_ARRAY, line);
+        
+        LabelText result = null;
+        List<Label> labels = new ArrayList<Label>();
         
         // 1. extract labels {{экон.|en}} or {{экон.}}, or {{помета|экон.}}
         // todo
@@ -80,8 +87,24 @@ public class LabelRu extends LabelLocal  {
         // @returns:
         // name of template, array of parameters, first and last position in the source string
         TemplateExtractor te = TemplateExtractor.getFirstTemplate(line);
+        if(null == te)
+            return new LabelText(NULL_LABEL_ARRAY, line); // there are no any templates
         
-        assert(null != te); // temp line, sometimes it is NULL
+        String template_name = te.getName();
+        if(Label.hasShortName( template_name )) {
+            
+            Label l = Label.getByShortName(template_name);
+            labels.add(l);
+            
+            String text_wo_labels = TemplateExtractor.extractTextWithoutTemplate(line, te);
+            result = new LabelText(labels, text_wo_labels);
+            
+            //if(0 == te.countTemplateParameters()) { // {{zero parameters}}
+            //}
+        } else {
+            result = new LabelText(NULL_LABEL_ARRAY, line); // this template is not context label
+        }
+        
         
         // 2. special templates, which require special treatment, they will be sipped right now
         // {{=|
@@ -91,7 +114,7 @@ public class LabelRu extends LabelLocal  {
         // todo
         // ...
         
-        return null;
+        return result;
     }
 
 
@@ -165,7 +188,7 @@ public class LabelRu extends LabelLocal  {
     // //////////////////////////
     public static final Label childish = new LabelRu("детск.", "детское", LabelEn.childish);
     public static final Label colloquial = new LabelRu("разг.", "разговорное", LabelEn.colloquial);
-    public static final Label derogatory = new LabelRu("унич.", "уничижительное", LabelEn.derogatory);
+    public static final Label derogatory = new LabelRu("унич.", "уничижительное", LabelEn.derogatory);// унич. порицательный
     public static final Label dialect = new LabelRu("диал.", "диалектное", LabelEn.dialect);
     public static final Label euphemistic = new LabelRu("эвф.", "эвфемизм", LabelEn.euphemistic);
     public static final Label familiar = new LabelRu("фам.", "фамильярное", LabelEn.familiar);
@@ -174,7 +197,7 @@ public class LabelRu extends LabelLocal  {
     public static final Label figuratively_p = LabelRu.addNonUniqueShortName(figuratively, "п.");
     
     public static final Label Internet_slang = new LabelRu("интернет.", "интернетовский жаргон",  LabelEn.Internet_slang);
-    public static final Label pejorative = new LabelRu("унич.", "уничижительное",  LabelEn.pejorative);
+    public static final Label pejorative = new LabelRu("неодобр.", "неодобрительное",  LabelEn.pejorative);// унич. неодобр. умаляющий
     public static final Label poetic = new LabelRu("поэт.", "поэтическое",  LabelEn.poetic);
     public static final Label politically_correct = new LabelRu("политкорр. (пк)", "политкорректное выражение",  LabelEn.politically_correct);
     public static final Label rare = new LabelRu("редк.", "редкое", LabelEn.rare);
