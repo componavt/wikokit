@@ -8,6 +8,7 @@
 package wikokit.base.wikt.multi.ru.name;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 
@@ -58,7 +59,103 @@ public class LabelRu extends LabelLocal  {
         return line;
     }
     
-    /** Extracts labels from a text string, remove these labels from the text line,
+    /** Extracts first template parameter, except parameter "nocolor", 
+     * and gets known LabelEn (.added_by_hand = true),
+     * or create new context label (.added_by_hand = false).
+     * add to database to the table Label with 
+     * 
+     * @see http://ru.wiktionary.org/wiki/Шаблон:помета
+     * @param params array
+     * @return found or created context label, null in the case of some error
+     */
+    private static Label getPometaLabel(String[] params)
+    {
+        if(null == params || params.length == 0)
+            return null;
+        
+        //Label result; // pometa_label 
+        
+        String str = params[0];
+        if(str.length() > 8 && str.startsWith("nocolor=")) {
+            if(params.length == 1) {
+                return null;    // there is only one parameter: {{помета|nocolor=1}}
+            } else {
+                str = params[1];// let's check the parameter after the "|nocolor=1|" parameter
+            }
+        }
+        
+        if(null == str || str.length() == 0)
+            return null;
+                
+        if(Label.hasShortName( str ))
+            return Label.getByShortName( str );
+        
+        return new LabelEn(str);    // let's create new context label
+    }
+    
+    
+    /** Extracts labels from the first template from the beginning of the text string, 
+     * remove these template from the text line, 
+     * store the result to the object LabelText.
+     *
+     * @param line          (wikified) definition line
+     * @return labels array (empty array if absent) 
+     *         and a definition text line without context labels substring, 
+     *         return NULL if there is no text and context labels
+     */
+    private static LabelText extractFirstContextLabel(String line)
+    {   
+        LabelText result = null;
+        List<Label> labels = new ArrayList<Label>();
+        
+        // 1. extract labels {{экон.|en}} or {{экон.}}, or {{помета|экон.}}
+  
+        // @returns: name of template, array of parameters, first and last position of the template in the source string
+        TemplateExtractor te = TemplateExtractor.getFirstTemplate(line);
+        if(null == te)
+            return new LabelText(NULL_LABEL_ARRAY, line); // there are no any templates
+        
+        String template_name = te.getName();
+        String text_from_label = "";
+        if(Label.hasShortName( template_name )) {
+            
+            Label l = Label.getByShortName(template_name);
+            if(Label.equals( l, LabelEn.context )) { // {{помета|}}
+                Label pometa_label = getPometaLabel( te.getTemplateParameters() );
+                if(null != pometa_label)
+                    labels.add( pometa_label );
+                
+            } else if (FormOfRu.isDefinitionTransformingLabel(l, te.countTemplateParameters())) {
+        
+                // 2. special templates, which require special treatment, they will be stripped right now
+                // {{=|
+                // {{as ru|
+                // {{аббр.|en|abbreviation|description}} -> context label "аббр." and text "[[description]]"
+                // {{сокр.|en|identification|[[идентификация]]}} or {{сокр.|en|identification}}; [[идентификация]]
+
+                text_from_label = FormOfRu.transformTemplateToText(l, te.getTemplateParameters());
+                labels.add( l );
+            } else {
+                labels.add(l);
+            }
+            
+            // between (or before) context labels only space and punctuation marks could be
+            String text_before = TemplateExtractor.extractTextBeforeTemplate(line, te);
+            if (text_before.matches("[\\s\\pP]*")) {
+                String text_wo_labels = text_from_label.concat( TemplateExtractor.extractTextAfterTemplate(line, te) );
+                result = new LabelText(labels, text_wo_labels);
+            }
+            
+            //if(0 == te.countTemplateParameters()) { // {{zero parameters}}
+            //}
+        } else {
+            result = new LabelText(NULL_LABEL_ARRAY, line); // this template is not context label
+        }
+        
+        return result;
+    }
+    
+    /** Extracts labels from the beginning of the text string, remove these labels from the text line,
      * store the result to the object LabelText.
      *
      * @param line          (wikified) definition line
@@ -74,54 +171,39 @@ public class LabelRu extends LabelLocal  {
         if(!line.contains("{{"))    // every context label is a template "{{"
             return new LabelText(NULL_LABEL_ARRAY, line);
         
-        LabelText result = null;
         List<Label> labels = new ArrayList<Label>();
         
-        // 1. extract labels {{экон.|en}} or {{экон.}}, or {{помета|экон.}}
-        // todo
-        // ...
-        // Label[] labels = new Label[0];
-        // todo 
-        // ...
-  
-        // @returns:
-        // name of template, array of parameters, first and last position in the source string
-        TemplateExtractor te = TemplateExtractor.getFirstTemplate(line);
-        if(null == te)
-            return new LabelText(NULL_LABEL_ARRAY, line); // there are no any templates
-        
-        String template_name = te.getName();
-        if(Label.hasShortName( template_name )) {
+        LabelText lt = extractFirstContextLabel(line);
+        while(lt != null && lt.getLabels().length > 0) {
             
-            Label l = Label.getByShortName(template_name);
-            labels.add(l);
-            
-            String text_wo_labels = TemplateExtractor.extractTextWithoutTemplate(line, te);
-            result = new LabelText(labels, text_wo_labels);
-            
-            //if(0 == te.countTemplateParameters()) { // {{zero parameters}}
-            //}
-        } else {
-            result = new LabelText(NULL_LABEL_ARRAY, line); // this template is not context label
+            labels.addAll(Arrays.asList(lt.getLabels()));
+            lt = extractFirstContextLabel(lt.getText());
         }
         
+        String result_line = "";
+        if(lt != null)
+            result_line = lt.getText().trim();
         
-        // 2. special templates, which require special treatment, they will be sipped right now
-        // {{=|
-        // {{as ru|
-        // {{аббр.|en|abbreviation|description}} -> context label "аббр." and text "[[description]]"
-        // {{сокр.|en|identification|[[идентификация]]}} or {{сокр.|en|identification}}; [[идентификация]]
-        // todo
-        // ...
-        
-        return result;
+        return new LabelText(labels, result_line);
     }
 
 
+    // ///////////////////////////////////////////////////////////////////////////////////////
     // context label short, context label full name, Category of words with this context label
+    
+    public static final Label context = new LabelRu("помета", "помета", LabelEn.context);// meta context label will be treated in a special way. http://ru.wiktionary.org/wiki/Шаблон:помета
+                                                                                         // this is a fake label, which shouldn't be visible to user in GUI
+    
+    // form-of templates (which are not context labels, but a definition text should be extracted from these templates - it's a dirty hack %)
+    public static final Label form_of_templates = new LabelRu("dirty hack", ":)", LabelEn.form_of_templates);
+    public static final Label equal = LabelRu.addNonUniqueShortName(form_of_templates, "=");
     
     // grammatical
     // //////////////////////////
+    // abbreviation
+    public static final Label abbreviation = new LabelRu("аббр.", "аббревиатура", LabelEn.abbreviation);
+    public static final Label abbreviation_sokr = LabelRu.addNonUniqueShortName(abbreviation, "сокр.");
+    
     public static final Label animate = new LabelRu("одуш.", "одушевлённое", LabelEn.animate);
     public static final Label countable = new LabelRu("исч.", "исчислимое", LabelEn.countable);
     public static final Label in_the_plural = new LabelRu("мн. ч.", "множественное число", LabelEn.in_the_plural);
@@ -133,6 +215,8 @@ public class LabelRu extends LabelLocal  {
     public static final Label transitive = new LabelRu("перех.", "переходный глагол", LabelEn.transitive);
     public static final Label uncountable = new LabelRu("неисч.", "неисчислимое", LabelEn.uncountable);
      
+    
+    
     // period
     // //////////////////////////
     public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);
@@ -261,7 +345,10 @@ public class LabelRu extends LabelLocal  {
     public static final Label biochemistry = new LabelRu("биохим.", "биохимическое", LabelEn.biochemistry);
     public static final Label biology = new LabelRu("биол.", "биологическое", LabelEn.biology);
     public static final Label botany = new LabelRu("ботан.", "ботаническое", LabelEn.botany);
+    
     public static final Label chemistry = new LabelRu("хим.", "химическое", LabelEn.chemistry);
+    public static final Label element_symbol = LabelRu.addNonUniqueShortName(chemistry, "хим-элем");// form-of
+    
     public static final Label psychology = new LabelRu("психол.", "психология", LabelEn.psychology);
     public static final Label computer_science = new LabelRu("информ.", "информатическое", LabelEn.computer_science);
     public static final Label physics = new LabelRu("физ.", "физическое", LabelEn.physics);

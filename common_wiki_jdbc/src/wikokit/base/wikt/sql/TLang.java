@@ -243,7 +243,7 @@ public class TLang {
             return NULL_TLANG_ARRAY;
         }
         
-        List<TLang>tlang_list = new ArrayList<TLang>(size);
+        List<TLang>tlang_list = new ArrayList<>(size);
 
         Map<String, LanguageType> ll = LanguageType.getAllLanguages();
         for(LanguageType l : ll.values()) {

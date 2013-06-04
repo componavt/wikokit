@@ -30,6 +30,8 @@ public class LabelCategory {
     public String toString() { return name; }
     
     public static final LabelCategory
+            unknown, // category for labels added automatically by parser
+            
             empty, // base category, or context labels without any 
             
             grammatical, 
@@ -50,6 +52,8 @@ public class LabelCategory {
                 
     
     static {
+        unknown     = new LabelCategory("Unknown");
+        
         empty       = new LabelCategory("Empty");
         
         grammatical = new LabelCategory("Grammatical");

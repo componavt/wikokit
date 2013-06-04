@@ -7,6 +7,7 @@ package wikokit.base.wikt.util;
 
 import java.util.List;
 import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.multi.en.name.LabelEn;
 
 /** Data structure consists of an array of context labels 
  * and the corresponding text (e.g. a definition).
@@ -15,6 +16,9 @@ public class LabelText {
     
     /** Array of context labels. */
     private Label[]  labels;
+    
+    /** to delete: New context labels from the template {{context|new label}} which are not listed in the LabelEn. */
+    // private String[] new_labels; 
     
     /** Text */
     private String text;
@@ -38,6 +42,11 @@ public class LabelText {
         return labels;
     }
     
+    /** to delete Gets array of new context labels which are not listed in the LabelEn. */
+    /*public String[] getNewLabels() {
+        return new_labels;
+    }*/
+    
     /** Gets context labels array. */
     public String getText() {
         return text;
@@ -55,6 +64,8 @@ public class LabelText {
             return false;
         
         // compare two arrays of labels
+        if(one.labels.length != two.labels.length)
+            return false;
         for(int i=0; i<one.labels.length; i++) {
             boolean b_identical = false;
             

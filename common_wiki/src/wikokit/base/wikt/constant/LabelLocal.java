@@ -27,7 +27,7 @@ public abstract class LabelLocal extends Label {
     
     protected LabelLocal(String short_name, String name, Label label_en, boolean added_by_hand) {
         super(short_name, name, added_by_hand);
-        initLabel(this);
+        initLabelAddedByHand(this);
         
         if(short_name.length() == 0 || name.length() == 0 || null == label_en)
             System.out.println("Error in LabelLocal.LabelLocal(): one of parameters is empty! label="+short_name+"; name=\'"+name+"\'; label (in English Wiktionary)=\'"+label_en.toString()+"\'.");
@@ -44,11 +44,6 @@ public abstract class LabelLocal extends Label {
         this.label_en   = label_en; 
     }
     
-    /** Gets English Wiktionary context label associated with this label. */
-    protected Label getLinkedLabelEn() {
-        return label_en;
-    }
-
     /** Checks weather exists the translation for this Label. */
     public static boolean has(Label t) {
         return label2short_name.containsKey(t);
@@ -88,5 +83,10 @@ public abstract class LabelLocal extends Label {
      */
     public String getShortNameEnglish() {
         return label_en.getShortName();
+    }
+    
+    /** Gets English Wiktionary context label associated with this label. */
+    protected Label getLinkedLabelEn() {
+        return label_en;
     }
 }
