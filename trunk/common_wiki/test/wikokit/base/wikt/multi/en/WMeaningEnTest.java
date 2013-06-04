@@ -567,7 +567,8 @@ public class WMeaningEnTest {
             "# {{legal}} One who [[benefit]]s from the distribution, especially of an estate.\n" +
             "#: ''If any '''beneficiary''' does not survive the Settlor for a period of 30 days then the Trustee shall distribute that '''beneficiary'''’s share to the surviving '''beneficiaries''' by right of representation.''";
 
-        String _def_result = "One who [[benefit]]s from the distribution, especially of an estate.";
+        String _def_result          = "One who benefits from the distribution, especially of an estate.";
+        String _def_result_wikified = "One who [[benefit]]s from the distribution, especially of an estate.";
         String _quote_result = "If any '''beneficiary''' does not survive the Settlor for a period of 30 days then the Trustee shall distribute that '''beneficiary'''’s share to the surviving '''beneficiaries''' by right of representation.";
 
         WikiWord[] ww = new WikiWord[1];
@@ -583,6 +584,7 @@ public class WMeaningEnTest {
 
         assertTrue(null != result);
         assertTrue(result.getDefinition().equalsIgnoreCase(_def_result));
+        assertTrue(result.getWikifiedText().equalsIgnoreCase(_def_result_wikified));
 
         // labels == null
         Label[] labels_result = result.getLabels();

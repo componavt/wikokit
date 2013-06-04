@@ -49,6 +49,7 @@ public abstract class Label {
     /** If there are more than one context label (synonyms,  short name label): <synonymic_label, source_main_unique_label> */
     private static Map<String, Label> multiple_synonym2label = new HashMap<String, Label>();
     
+    /** Constructor for labels added by hand, @see list in LabelEn, LabelRu, etc. */
     protected Label(String short_name, String name, boolean added_by_hand) {
     
         if(short_name.length() == 0 || name.length() == 0)
@@ -59,10 +60,26 @@ public abstract class Label {
         this.added_by_hand = added_by_hand;
     };
     
-    protected void initLabel(Label label) {
+    /** Constructor for new context labels which are extracted by parser 
+     * from the template {{context|new label}} and added automatically,
+     * these new labels are not listed in the LabelEn.
+     * 
+     * @param short_name name of the found of context label
+     */
+    public Label(String short_name) {
+    
+        if(short_name.length() == 0)
+            System.out.println("Error in Label.Label(String short_name): label short_name has zero length!.");
+        
+        this.short_name    = short_name; 
+        this.name          = "";
+        this.added_by_hand = false; // added automatically, e.g. some label extracted from {{context|some label}}
+    };
+    
+    protected void initLabelAddedByHand(Label label) {
     
         if(null == label)
-            System.out.println("Error in Label.initLabel(): label is null, short_name="+short_name+"; name=\'"+name+"\'.");
+            System.out.println("Error in Label.initLabelAddedByHand(): label is null, short_name="+short_name+"; name=\'"+name+"\'.");
         
         checksPrefixSuffixSpace(short_name);
         checksPrefixSuffixSpace(name);
@@ -72,11 +89,11 @@ public abstract class Label {
         Label label_prev_by_name       =       name2label.get(      name);
         
         if(null != label_prev_by_short_name)
-            System.out.println("Error in Label.initLabel(): duplication of label (short name)! short name='"+short_name+
+            System.out.println("Error in Label.initLabelAddedByHand(): duplication of label (short name)! short name='"+short_name+
                     "' name='"+name+"'. Check the maps short_name2label and name2label.");
 
         if(null != label_prev_by_name)
-            System.out.println("Error in Label.initLabel(): duplication of label (full name)! short_name='"+short_name+
+            System.out.println("Error in Label.initLabelAddedByHand(): duplication of label (full name)! short_name='"+short_name+
                     "' name='"+name+ "'. Check the maps short_name2label and name2label.");
         
         short_name2label.put(short_name, label);
@@ -84,6 +101,24 @@ public abstract class Label {
         
         name2label.put(name, label);
         label2name.put(label, name);
+    };
+    
+    protected void initLabelAddedAutomatically(Label label) {
+    
+        if(null == label)
+            System.out.println("Error in Label.initLabelAddedAutomatically(): label is null, short_name="+short_name+".");
+        
+        checksPrefixSuffixSpace(short_name);
+        
+        // check the uniqueness of the label short name
+        Label label_prev_by_short_name = short_name2label.get(short_name);
+        
+        if(null != label_prev_by_short_name)
+            System.out.println("Error in Label.initLabelAddedAutomatically(): duplication of label (short name)! short name='"+short_name+
+                    ". Check the maps short_name2label.");
+        
+        short_name2label.put(short_name, label);
+        label2short_name.put(label, short_name);
     };
     
     /** Checks whitespace characters in the prefix or suffix of a string.
@@ -94,11 +129,6 @@ public abstract class Label {
         if(s.charAt(0) == ' ' || s.charAt(s.length()-1) == ' ')
             System.out.println("Error in Label.checksPrefixSuffixSpace(): there are leading spaces, string='"+s+"'.");
     }
-    
-    
-    /** Gets English Wiktionary context label associated with this label. 
-     * This function is needed for compatibility with LabelLocal.java (other child class of Label.java). */
-    protected abstract Label getLinkedLabelEn();
     
     @Override
     public String toString() { return short_name; }
@@ -121,6 +151,10 @@ public abstract class Label {
         return getShortName();
     }
     
+    /** Gets English Wiktionary context label associated with this label. 
+     * This function is needed for compatibility with LabelLocal.java (other child class of Label.java). */
+    //protected abstract Label getLinkedLabelEn();
+    
     /** Gets label by short name of the label. */
     public static Label getByShortName(String short_name) throws NullPointerException
     {
@@ -142,6 +176,11 @@ public abstract class Label {
     /** Gets label full name. */
     public String getName() {
         return name;
+    }
+    
+    /** Checks weather the label was added manually to the code of wikokit, or was gathered automatically by parser. */
+    public boolean getAddedByHand() {
+        return added_by_hand;
     }
     
     /** Gets (full) name of context label by label object.

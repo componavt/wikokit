@@ -24,9 +24,11 @@ public class WMeaning {
     // StringBuffer definition;
     // + wiki word, + number of wiki word or number of first char of wikiword in definition
     
-    /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s" */
+    /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s".
+     * @see full list of labels in LabelEn, LabelRu, etc.
+     */
     private Label[]  labels;
-
+    
     private WikiText definition;
 
     /** Meaning text with wiki markup, but without context labels. */
@@ -50,6 +52,7 @@ public class WMeaning {
     private final static WQuote[]   NULL_WQUOTE_ARRAY   = new WQuote[0];
     private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];
     private final static WMeaning   NULL_WMEANING       = new WMeaning();
+    private final static WikiWord[] NULL_WIKIWORD       = new WikiWord[0];
 
     public WMeaning() {
         labels = null;
@@ -82,6 +85,7 @@ public class WMeaning {
     public WMeaning(String page_title,Label[] _labels,
                     String _definition, WQuote[] _quote, boolean _template_not_def) {
         labels = _labels;
+        
         wikified_text = _definition;
         definition = WikiText.createOnePhrase(page_title, _definition);
         
@@ -110,6 +114,8 @@ public class WMeaning {
 
     /** Gets definition line of text. */
     public String getDefinition() {
+        if(null == definition)
+            return "";
         return definition.getVisibleText();
     }
     
@@ -120,6 +126,8 @@ public class WMeaning {
     
     /** Gets array of internal links in the definition (wiki words, i.e. words with hyperlinks). */
     public WikiWord[] getWikiWords() {
+        if(null == definition)
+            return NULL_WIKIWORD;
         return definition.getWikiWords();
     }
 

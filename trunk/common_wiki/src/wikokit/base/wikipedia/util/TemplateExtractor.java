@@ -29,6 +29,11 @@ public class TemplateExtractor {
         return name;
     }
     
+    /** Gets parameters of the template. */
+    public String[] getTemplateParameters() {
+        return params;
+    }
+    
     /** Counts number of parameters of the template. */
     public int countTemplateParameters() {
         return params.length;
@@ -143,5 +148,12 @@ public class TemplateExtractor {
         s.append(text.substring(te.end_pos + 1));
         
         return s.toString().trim();
+    }
+    
+    public static String extractTextBeforeTemplate (String text, TemplateExtractor te) {
+        return text.substring(0, te.start_pos);
+    }
+    public static String extractTextAfterTemplate (String text, TemplateExtractor te) {
+        return text.substring(te.end_pos + 1);
     }
 }

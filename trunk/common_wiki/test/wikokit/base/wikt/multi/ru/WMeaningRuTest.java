@@ -14,6 +14,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.word.WMeaning;
 
@@ -193,7 +195,7 @@ public class WMeaningRuTest {
         WQuote[] _quote = null;
         // WMeaning expResult = new WMeaning(_labels, _definition, ww, _quote);      // expResult[0] = new WMeaning();
 
-        line =  "# {{сельск.}} имеющий [[волокно]], пригодное для выработки пряжи {{пример|Увязочные и прошивочные материалы в виде кручёных шнуров, изготовленных из льнопеньковой пряжи, отбойки (кручёный шпагат), шпагатов увязочных (из {{выдел|лубяных}} волокон), ниток льняных и хлопчатобумажных применяют при выполнении работ по переплетению пружин, прошивке заготовок, стёжке бортов, зашиванию покровных и облицовочных тканей.|Татьяна Матвеева|Реставрация столярно-мебельных изделий|1988|источник=НКРЯ}}";
+        line =  "# {{зоол.}} имеющий [[волокно]], пригодное для выработки пряжи {{пример|Увязочные и прошивочные материалы в виде кручёных шнуров, изготовленных из льнопеньковой пряжи, отбойки (кручёный шпагат), шпагатов увязочных (из {{выдел|лубяных}} волокон), ниток льняных и хлопчатобумажных применяют при выполнении работ по переплетению пружин, прошивке заготовок, стёжке бортов, зашиванию покровных и облицовочных тканей.|Татьяна Матвеева|Реставрация столярно-мебельных изделий|1988|источник=НКРЯ}}";
 
         WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
@@ -204,11 +206,11 @@ public class WMeaningRuTest {
         // labels = {сельск.}
         Label[] labels_result = result.getLabels();
         assertEquals(1, labels_result.length);
-        assertTrue(labels_result[0].toString().equalsIgnoreCase( "сельск." ) );
+        assertTrue( Label.equals( LabelEn.zoology, labels_result[0]) ); // зоол. == LabelEn.zoology
 
 
-        // 2. complex: 4 label
-        line =  "# {{п.}}, {{прост.}}, {{вульг.}}, {{помета|что|что-то}} извлекать хитростью, насильно {{пример|Сосать деньги.}}";
+        // 2. complex: 4 label        
+        line =  "# {{п.}}, {{неодобр.}}, {{вульг.}}, {{помета|что|что-то}} извлекать хитростью, насильно {{пример|Сосать деньги.}}";
         page_title      = "сосать";
         lang_section    = LanguageType.ru; // Russian word
 
@@ -221,10 +223,10 @@ public class WMeaningRuTest {
         // labels = {{п.}}, {{прост.}}, {{вульг.}}, {{помета|что}}
         labels_result = result.getLabels();
         assertEquals(4, labels_result.length);
-        assertTrue(labels_result[0].toString().equalsIgnoreCase( "п." ) );
-        assertTrue(labels_result[1].toString().equalsIgnoreCase( "прост." ) );
-        assertTrue(labels_result[2].toString().equalsIgnoreCase( "вульг." ) );
-        assertTrue(labels_result[3].toString().equalsIgnoreCase( "что" ) );
+        assertTrue( Label.equals( LabelEn.figuratively, labels_result[0]) ); // п. перен.
+        assertTrue( Label.equals( LabelEn.pejorative,   labels_result[1]) ); // неодобр.
+        assertTrue( Label.equals( LabelEn.vulgar,       labels_result[2]) ); // вульг.
+        assertEquals( "что",                            labels_result[3].getShortName());
     }
 
     @Test
@@ -235,7 +237,7 @@ public class WMeaningRuTest {
         String line;
 
         // 1. simple: 1 empty quote
-        line =  "# {{хим-элем|5|B}} {{пример}}";
+        line =  "# {{хим-элем|5}} {{пример}}"; // only 2, 3, or 4 parameters of {{хим-элем|}} should be recognized and transformed to text
 
         page_title      = "бор";
         lang_section    = LanguageType.ru; // Russian word
@@ -243,12 +245,12 @@ public class WMeaningRuTest {
         WMeaning result = WMeaningRu.parseOneDefinition(page_title, lang_section, line);
 
         assertTrue(null != result);
-        String def = result.getDefinition();
-
-        // temporary result: "{{хим-элем|5|B}}"
-            // todo future work: "" - definition is empty, because this is the label.
-            //assertEquals(0, def.length());
-        assertTrue(def.equalsIgnoreCase( "{{хим-элем|5|B}}" ));
+        assertTrue(result.getDefinition().length() == 0);
+        
+        assertNotNull(result.getLabels());
+        Label[] labels = result.getLabels();
+        assertEquals(1, labels.length);
+        assertTrue(Label.equals(LabelRu.chemistry, labels[0]));
     }
 
     @Test
@@ -334,6 +336,8 @@ public class WMeaningRuTest {
         Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
         String _definition1 = "алкогольные, спиртные напитки, вино; винный спирт";
         String _definition2 = "то же, что спирт, бесцветная летучая жидкость, получаемая при ферментации сахара";
+        String _definition3 = "химический элемент с атомным номером 5, обозначается химическим символом B";
+        String _definition3_wikified = "[[химический элемент]] с [[атомный номер|атомным номером]] 5, обозначается [[химический символ|химическим символом]] B";
         WikiWord[] ww = new WikiWord[4];
 
         str =   "Before \n" +
@@ -342,23 +346,21 @@ public class WMeaningRuTest {
                 "{{илл|CachacaDivininha.jpg|Алкоголь [1]}}\n" +
                 "==== Значение ====\n" +
                 "# {{разг.}} [[алкогольный|алкогольные]], [[спиртной|спиртные]] напитки, [[вино]]; [[винный]] [[спирт]] {{пример|Изгнать {{выдел|алкоголь}} из быта рабочих.}}\n" +
-                "# {{хим.}} {{=|спирт}}, бесцветная летучая жидкость, получаемая при ферментации сахара {{пример|}}" +
+                "# {{хим.}} {{=|спирт}}, бесцветная летучая жидкость, получаемая при ферментации сахара {{пример|}}\n" +
                 "# {{хим-элем|5|B}} {{пример}}";
         pt = new POSText(POS.noun, str);
         WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertEquals(3, result.length);
         assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
         assertTrue(result[1].getDefinition().equalsIgnoreCase(_definition2));
-        assertEquals(0, result[2].getDefinition().length());
+        assertTrue(result[2].getDefinition().equalsIgnoreCase(_definition3));
+        assertTrue(result[2].getWikifiedText().equalsIgnoreCase(_definition3_wikified));
 
         // todo
         // test wikiwords
 
         // todo
         // test quotation
-
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     // tests that old-wrong-format do not crush the parser

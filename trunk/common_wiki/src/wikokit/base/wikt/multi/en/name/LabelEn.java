@@ -46,12 +46,26 @@ public class LabelEn extends Label {
     
     protected LabelEn(String short_name, String name, LabelCategory category) { 
         super(short_name, name, true);  // added_by_hand = true by default
-        initLabel(this);
+        initLabelAddedByHand(this);
         
         if(null == category)
             System.out.println("Error in LabelEn.LabelEn(): category is empty! label="+short_name+"; name=\'"+name+"\'; category=\'"+category.toString()+"\'.");
         
         this.category   = category; 
+        label2category. put(this, category);
+    }
+    
+    /** Constructor for new context labels which are extracted by parser 
+     * from the template {{context|new label}} and added automatically,
+     * these new labels are not listed in the LabelEn.
+     * 
+     * @param short_name name of the found context label
+     */
+    public LabelEn(String short_name) { 
+        super(short_name);  // added_by_hand = false
+        initLabelAddedAutomatically(this);
+        
+        this.category   = LabelCategory.unknown; 
         label2category. put(this, category);
     }
     
@@ -67,10 +81,18 @@ public class LabelEn extends Label {
     
 //  item // it's not a context label
     public static final Label Rumantsch_Grischun = new LabelEn("Rumantsch Grischun", "Rumantsch Grischun", LabelCategory.empty);
-
+    
+    
+    // ///////////////////////////////////////////////////////////////////////////////////////
+    // context label short, context label full name, Category of words with this context label
+    
+    public static final Label context = new LabelEn("context", "context", LabelCategory.qualifier); // meta context label will be treated in a special way. http://en.wiktionary.org/wiki/Template:context
      
     // grammatical 67-2 Krizhanovsky
     // //////////////////////////
+    public static final Label abbreviation = new LabelEn("abbreviation", "abbreviation", LabelCategory.grammatical);
+            // todo http://en.wiktionary.org/wiki/Template:abbreviation_of
+    public static final Label acronym = new LabelEn("acronym", "acronym", LabelCategory.grammatical);
     public static final Label ambitransitive = new LabelEn("transitive, intransitive", "transitive, intransitive", LabelCategory.grammatical);
     public static final Label animate = new LabelEn("animate", "animate", LabelCategory.grammatical);
     public static final Label attributive = new LabelEn("attributive", "attributive", LabelCategory.grammatical); //определение
@@ -171,7 +193,6 @@ public class LabelEn extends Label {
     // qualifier 22-2 Krizhanovsky
     // //////////////////////////
     public static final Label chiefly = new LabelEn("chiefly", "chiefly", LabelCategory.qualifier); //главным образом, особенно, в основном
-    //public static final Label context = new LabelEn("context", "context", LabelCategory.qualifier); // meta context label will be treated in a special way. http://en.wiktionary.org/wiki/Template:context
     public static final Label excluding = new LabelEn("excluding", "excluding", LabelCategory.qualifier);
     public static final Label extremely = new LabelEn("extremely", "extremely", LabelCategory.qualifier);
     public static final Label frequently = new LabelEn("frequently", "frequently", LabelCategory.qualifier);
@@ -803,6 +824,13 @@ public class LabelEn extends Label {
     public static final Label volleyball = new LabelEn("volleyball" ,"volleyball", LabelCategory.sports); // волейб - волейбол
     public static final Label weightlifting = new LabelEn("weightlifting" ,"weightlifting", LabelCategory.sports); // тяжелая атлетика
     public static final Label wrestling = new LabelEn("wrestling" ,"wrestling", LabelCategory.sports); // борьба
+
+    // ///////////////////////////////////////////////////////////////////////////////////////
+    // form-of templates in ruwikt (which are not a context label, but a definition text should be extracted from these templates - it's a dirty hack %)
+    public static final Label form_of_templates = new LabelEn("dirty hack", ":)", LabelCategory.empty);
+    //public static final Label equal = new LabelEn("=", "=", LabelCategory.empty);
+    
+    
     
     // DEBUG: should be one error for each code line below:
     // DDDDDDDDDDDDDDDDDDDDDDDDDD

@@ -201,7 +201,27 @@ public class WPOSRuTest {
         pt = WPOSRu.guessPOS(lt.text);
         assertEquals(POS.adverb, pt.getPOSType());
     }
+    
+    @Test
+    public void guessPOS_one_more_line_between_header_and_POS_template() {
+        System.out.println("testGuessPOS_one_more_line_between_header_and_POS_template");
 
+        String str, page_title;
+        LangText lt;
+        POSText pt;
+
+        // particle
+        page_title = "шум";
+        lt = new LangText(LanguageType.en);
+        str =   "Before \n" +
+                "=== Морфологические и синтаксические свойства ===\n" +
+                "В значениях «беспорядочный звук», «обсуждения», «ссора»\n" +
+                "{{сущ ru m ina 1a\n" +
+                "\n";
+        lt.text = new StringBuffer(str);
+        pt = WPOSRu.guessPOS(lt.text);
+        assertEquals(POS.noun, pt.getPOSType());
+    }
     
     @Test
     public void guessPOSWith2ndLevelHeader() {

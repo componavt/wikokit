@@ -30,7 +30,7 @@ import java.util.Set;
 public class WMeaningEn {
 
     private final static WMeaning[] NULL_WMEANING_ARRAY = new WMeaning[0];
-    private final static LabelEn[] NULL_CONTEXTLABEL_ARRAY = new LabelEn[0];
+    private final static LabelEn[] NULL_LABEL_ARRAY = new LabelEn[0];
 
     /** Gets position before first header ^===, e.g. */
     private final static Pattern ptrn_meaning_header_start = Pattern.compile(
@@ -346,7 +346,7 @@ public class WMeaningEn {
         if( containsFormOf(line))
         {
             form_of = true;
-            return new WMeaning("", NULL_CONTEXTLABEL_ARRAY, "", null, form_of);
+            return new WMeaning("", NULL_LABEL_ARRAY, "", null, form_of);
         }
         
 
