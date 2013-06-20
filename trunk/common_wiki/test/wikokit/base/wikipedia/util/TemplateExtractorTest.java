@@ -87,4 +87,35 @@ public class TemplateExtractorTest {
         assertTrue( TemplateExtractor.equals( expResult, result) );
     }
     // {{template name|parameter one|parameter two|...}}
+    
+    // {"param1", "param2=value2", ...} get value2 by param2
+    @Test
+    public void testgetParameterValue() {
+        System.out.println("getParameterValue");
+        String parameter_name, value;
+        
+        // ////////////////////////////
+        // NULL
+        // NULL if this parameter is absent or, there are no values for this parameter.
+        
+        parameter_name = "my_parameer";
+        String[] params_zero = {};
+        value = TemplateExtractor.getParameterValue (params_zero, parameter_name);
+        assertNull(value);
+        
+        String[] my_param_absent = {"other param = some value"};
+        value = TemplateExtractor.getParameterValue (my_param_absent, parameter_name);
+        assertNull(value);
+        
+        String[] my_param_exist_but_without_value = {"other param = some value", parameter_name+"="};
+        value = TemplateExtractor.getParameterValue (my_param_exist_but_without_value, parameter_name);
+        assertNull(value);
+        
+        // NULL
+        // ////////////////////////////
+        
+        String[] my_param_exist = {"other param = some value", parameter_name+"= value 2 "};
+        value = TemplateExtractor.getParameterValue (my_param_exist, parameter_name);
+        assertEquals(value, "value 2");
+    }
 }

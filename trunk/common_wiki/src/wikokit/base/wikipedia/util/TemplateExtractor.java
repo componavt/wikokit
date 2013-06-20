@@ -5,6 +5,9 @@
  */
 package wikokit.base.wikipedia.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /** Set of functions to extract {{template data|from the text}} with known location (position) in text.
  */
 public class TemplateExtractor {
@@ -156,4 +159,50 @@ public class TemplateExtractor {
     public static String extractTextAfterTemplate (String text, TemplateExtractor te) {
         return text.substring(te.end_pos + 1);
     }
+    
+    /** Gets value by parameter name from an array of parameters in the form {"param1", "param2=value2", ...}
+     * 
+     * @param template_params
+     * @param parameter_name
+     * @return NULL if this parameter is absent or, there are no values for this parameter.
+     */
+    public static String getParameterValue (String[] params, String parameter_name) {
+        if(null == params || params.length == 0)
+            return null;
+        
+        for(String p : params) {
+            String[] words = p.split("=");
+            if(words.length != 2)   // name = value (2 words)
+                continue;
+            if(words[0].trim().equalsIgnoreCase(parameter_name))
+                return words[1].trim();
+        }
+        return null;
+    }
+    
+    /** Excludes one parameter from the array of params, return new array.
+     * 
+     * @return empty array if there are no elements after excluding
+     */
+    public static String[] excludeParameter (String[] params, String removable_parameter_name) {
+        
+        if(null == params || params.length == 0)
+            return NULL_STRING_ARRAY;
+        
+        List<String> result = new ArrayList<String>();
+        
+        for(String p : params) {
+            String[] words = p.split("=");
+            
+            if(!words[0].trim().equalsIgnoreCase(removable_parameter_name))
+                result.add(p);
+        }
+        
+        if(result.isEmpty())
+            return NULL_STRING_ARRAY;
+        
+        return( (String[])result.toArray(NULL_STRING_ARRAY) );
+    }
+    
+    
 }

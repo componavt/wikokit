@@ -827,10 +827,13 @@ public class LabelEn extends Label {
 
     // ///////////////////////////////////////////////////////////////////////////////////////
     // form-of templates in ruwikt (which are not a context label, but a definition text should be extracted from these templates - it's a dirty hack %)
-    public static final Label form_of_templates = new LabelEn("dirty hack", ":)", LabelCategory.empty);
-    //public static final Label equal = new LabelEn("=", "=", LabelCategory.empty);
+    // public static final Label form_of_templates = new LabelEn("dirty hack", ":)", LabelCategory.empty);
     
-    
+    public static final Label ru_as_ru = new LabelEn("ruwikt as ru", "ruwikt {{as ru}}", LabelCategory.empty);
+    public static final Label ru_equal = new LabelEn("ruwikt =", "ruwikt {{=}}", LabelCategory.empty);
+    public static final Label ru_action = new LabelEn("ruwikt действие", "ruwikt {{действие}}", LabelCategory.empty);
+    public static final Label ru_property = new LabelEn("ruwikt свойство", "ruwikt {{свойство}}", LabelCategory.empty);
+    public static final Label ru_sootn = new LabelEn("ruwikt соотн.", "ruwikt {{соотн.}}", LabelCategory.empty);
     
     // DEBUG: should be one error for each code line below:
     // DDDDDDDDDDDDDDDDDDDDDDDDDD
