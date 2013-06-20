@@ -168,7 +168,7 @@ public class LabelRu extends LabelLocal  {
         if(line.length() == 0)
             return null;
         
-        if(!line.contains("{{"))    // every context label is a template "{{"
+        if(!line.contains("{{"))    // every context label should be a template "{{"
             return new LabelText(NULL_LABEL_ARRAY, line);
         
         List<Label> labels = new ArrayList<Label>();
@@ -194,19 +194,17 @@ public class LabelRu extends LabelLocal  {
     public static final Label context = new LabelRu("помета", "помета", LabelEn.context);// meta context label will be treated in a special way. http://ru.wiktionary.org/wiki/Шаблон:помета
                                                                                          // this is a fake label, which shouldn't be visible to user in GUI
     
-    // form-of templates (which are not context labels, but a definition text should be extracted from these templates - it's a dirty hack %)
-    public static final Label form_of_templates = new LabelRu("dirty hack", ":)", LabelEn.form_of_templates);
-    public static final Label equal = LabelRu.addNonUniqueShortName(form_of_templates, "=");
-    
     // grammatical
     // //////////////////////////
-    // abbreviation
     public static final Label abbreviation = new LabelRu("аббр.", "аббревиатура", LabelEn.abbreviation);
     public static final Label abbreviation_sokr = LabelRu.addNonUniqueShortName(abbreviation, "сокр.");
     
     public static final Label animate = new LabelRu("одуш.", "одушевлённое", LabelEn.animate);
     public static final Label countable = new LabelRu("исч.", "исчислимое", LabelEn.countable);
+    
     public static final Label in_the_plural = new LabelRu("мн. ч.", "множественное число", LabelEn.in_the_plural);
+    public static final Label in_the_plural2 = LabelRu.addNonUniqueShortName(in_the_plural, "мн");
+    
     public static final Label inanimate = new LabelRu("неодуш.", "неодушевлённое", LabelEn.inanimate);
     public static final Label indecl = new LabelRu("нескл.", "несклоняемое", LabelEn.indecl);
     public static final Label intransitive = new LabelRu("неперех.", "непереходный глагол", LabelEn.intransitive);
@@ -371,7 +369,41 @@ public class LabelRu extends LabelLocal  {
     public static final Label volleyball = new LabelRu("волейб", "волейбол", LabelEn.volleyball);
     
     public static final Label fishing = new LabelRu("рыбол.", "рыболовецкое", LabelEn.fishing);
-                
+
+    
+    // ///////////////////////////////////////////////////////////////////////////////////////   
+    // form-of templates (which are not context labels, but a definition text should be extracted from these templates - it's a dirty hack %)
+    // public static final Label form_of_templates = new LabelRu("dirty hack ru", ":) ru", LabelEn.form_of_templates);
+    
+    public static final Label as_ru = new LabelRu("as ru", "as ru", LabelEn.ru_as_ru);
+    public static final Label equal = new LabelRu("=", "=", LabelEn.ru_equal);
+    public static final Label action = new LabelRu("действие", "действие", LabelEn.ru_action);
+    public static final Label property = new LabelRu("свойство", "свойство", LabelEn.ru_property);
+    public static final Label sootn = new LabelRu("соотн.", "соотн.", LabelEn.ru_sootn);
+    
+    // eo form-of templates 
+    // ///////////////////////////////////////////////////////////////////////////////////////   
+    
+    // check todo:
+    // english {{c}} -> общ. - форма общего рода
+    // {{f}} -> ж. — женский род
+    // f.pl -> ж. мн.
+    // f.sg -> ж. ед.
+    // m -> м. - мужской род
+    // m/f -> м./ж. - форма мужского или женского рода по контексту
+    // n -> ср. - средний род
+    // 
+    // 
+    
+    
+    // todo in distant future:
+    // {{морфема|
+    // {{verb-dir|
+    // {{verb-dir-n|
+    // {{актанты|
+    // {{гидроним}}
+    
+    
     // DEBUG: should be one error for each line of code
     // DDDDDDDDDDDDDDDDDDDDDDDDDD
     // source: public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);

@@ -4,9 +4,7 @@ wiwordik 0.XX 2011-0?-??
   common_wiki_android_test Runs: 59 errors 0 failures 1
 
 Split to common_wiki and common_wiki_jdbc
-  common_wiki 264 tests passed, 5 tests failed
-  common_wiki 237 tests passed, 11 tests failed, 3 error
-
+  common_wiki 269 tests passed, 5 tests failed
   common_wiki 237 tests passed, 6 tests failed
   common_wiki_jdbc 88 tests passed, 10 tests failed
   common_wiki_jdbc 58 tests passed, 38 tests failed (wo wikt_parsed)
