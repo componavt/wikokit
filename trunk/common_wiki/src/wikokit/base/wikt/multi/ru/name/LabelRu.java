@@ -301,7 +301,138 @@ public class LabelRu extends LabelLocal  {
     // **************************
     // topical
     // **************************
+    public static final Label aviation = new LabelRu("авиац.", "авиационное", LabelEn.aviation);
+    public static final Label vehicle = new LabelRu("автомоб.", "автомобильное", LabelEn.vehicle);
+    public static final Label agronomy = new LabelRu("агрон.", "агрономическое", LabelEn.agronomy);
+    public static final Label climbing = new LabelRu("альп.", "альпинистское", LabelEn.climbing);
+    public static final Label anatomy = new LabelRu("анат.", "анатомическое", LabelEn.anatomy);    
+    public static final Label artillery = new LabelRu("артилл.", "артиллерийское", LabelEn.artillery);
+    public static final Label architecture = new LabelRu("архит.", "архитектурное", LabelEn.architecture);
+    public static final Label astrology = new LabelRu("астрол.", "астрологическое", LabelEn.astrology); 
+    
+    public static final Label accounting = new LabelRu("бухг.", "бухгалтерское", LabelEn.accounting);    
+    public static final Label biblical = new LabelRu("библейск.", "библейское", LabelEn.biblical);
+    
+    public static final Label veterinary_medicine = new LabelRu("вет.", "ветеринарное", LabelEn.veterinary_medicine);   
+    public static final Label military = new LabelRu("военн.", "военное", LabelEn.military);
+    
+    public static final Label gastronomic = new LabelRu("гастрон.", "гастрономическое", LabelEn.gastronomic);
+    public static final Label genetics = new LabelRu("генет.", "генетическое", LabelEn.genetics);
+    public static final Label grammar = new LabelRu("грам.", "грамматическое", LabelEn.grammar);       
+    public static final Label geography = new LabelRu("геогр.", "географическое", LabelEn.geography);
+    public static final Label geodesy = new LabelRu("геод.", "геодезическое", LabelEn.geodesy);
+    public static final Label geophysics = new LabelRu("геофиз.", "геофизическое", LabelEn.geophysics);
+    public static final Label heraldry = new LabelRu("геральд.", "геральдическое", LabelEn.heraldry);
+    public static final Label geometry = new LabelRu("геометр.", "геометрическое", LabelEn.geometry);
+    public static final Label geology = new LabelRu("геол.", "геологическое", LabelEn.geology);
+    public static final Label hydrology = new LabelRu("гидрол.", "гидрологическое", LabelEn.hydrology);
+    public static final Label mining = new LabelRu("горн.", "горное дело", LabelEn.mining);
+    
+    public static final Label diplomacy = new LabelRu("дипл.", "дипломатическое", LabelEn.diplomacy);
+	
+    public static final Label natural_science = new LabelRu("ест.", "естествознание", LabelEn.natural_science);
+
     public static final Label Wiktionary_and_WMF_jargon = new LabelRu("жаргон википроектов", "жаргон википроектов", LabelEn.Wiktionary_and_WMF_jargon);
+    
+    public static final Label rail_transport = new LabelRu("ж.-д.", "железнодорожное", LabelEn.rail_transport);
+    public static final Label rail_transport2 = LabelRu.addNonUniqueShortName(rail_transport, "жд");
+    
+    public static final Label painting = new LabelRu("живоп.", "живопись", LabelEn.painting);
+    
+    public static final Label arts = new LabelRu("искусств.", "искусствоведческое", LabelEn.arts);
+    public static final Label ichthyology = new LabelRu("ихтиол.", "ихтиологическое", LabelEn.ichthyology);
+    public static final Label yoga = new LabelRu("йогич.", "йогическое", LabelEn.yoga);
+	
+    public static final Label card_games = new LabelRu("карт.", "картёжное", LabelEn.card_games);
+    public static final Label ceramics = new LabelRu("керам.", "керамическое", LabelEn.ceramics);
+    public static final Label cinematography = new LabelRu("кино", "кинематографическое", LabelEn.cinematography);
+    public static final Label cynology = new LabelRu("кинол.", "кинологическое", LabelEn.cynology);
+    public static final Label space_science = new LabelRu("косм.", "космическое", LabelEn.space_science);
+    public static final Label criminal = new LabelRu("крим.", "криминальное", LabelEn.criminal);
+    public static final Label cooking = new LabelRu("кулин.", "кулинарное", LabelEn.cooking);
+    public static final Label cultural_anthropology = new LabelRu("культурол.", "культурологическое", LabelEn.cultural_anthropology);
+    
+    public static final Label forestry = new LabelRu("лес.", "лесоводство", LabelEn.forestry);
+    public static final Label linguistics = new LabelRu("лингв.", "лингвистическое", LabelEn.linguistics);
+    public static final Label literature = new LabelRu("лит.", "литературоведение", LabelEn.literature);
+    
+    public static final Label mathematics = new LabelRu("матем.", "математическое", LabelEn.mathematics);
+    public static final Label microbiology = new LabelRu("микробиол.", "микробиологическое", LabelEn.microbiology);
+    public static final Label mechanics = new LabelRu("мех.", "механика", LabelEn.mechanics);
+    public static final Label mineralogy = new LabelRu("минер.", "минералогия", LabelEn.mineralogy);
+    public static final Label meteorology = new LabelRu("метеорол.", "метеорологическое", LabelEn.meteorology);
+    public static final Label metallurgy = new LabelRu("металл.", "металлургическое", LabelEn.metallurgy);
+    public static final Label medicine = new LabelRu("мед.", "медицинское", LabelEn.medicine);
+    public static final Label nautical = new LabelRu("морск.", "морское", LabelEn.nautical);
+	
+    public static final Label sciences = new LabelRu("научн.", "научное", LabelEn.sciences);
+    public static final Label oil_industry = new LabelRu("нефтегаз.", "нефтегазодобыча", LabelEn.oil_industry);
+    public static final Label numismatics = new LabelRu("нумизм.", "нумизматическое", LabelEn.numismatics);
+	
+    public static final Label occult = new LabelRu("оккульт.", "оккультное", LabelEn.occult);
+    public static final Label optics = new LabelRu("опт.", "оптическое", LabelEn.optics);
+    public static final Label ornithology = new LabelRu("орнитол.", "орнитологическое", LabelEn.ornithology);
+    public static final Label hunting = new LabelRu("охотн.", "охотничье", LabelEn.hunting);
+	
+    public static final Label paleontology = new LabelRu("палеонт.", "палеонтологическое", LabelEn.paleontology);
+    public static final Label hairdressing = new LabelRu("парикмах.", "парикмахерское", LabelEn.hairdressing);
+    public static final Label carpentry = new LabelRu("плотн.", "плотницкое дело", LabelEn.carpentry);
+    public static final Label printing = new LabelRu("полигр.", "полиграфическое", LabelEn.printing);
+    public static final Label politics = new LabelRu("полит.", "политическое", LabelEn.politics);
+    public static final Label sartorial = new LabelRu("портн.", "портновское дело", LabelEn.sartorial);
+    public static final Label psychiatry = new LabelRu("психиатр.", "психиатрия", LabelEn.psychiatry);
+
+    public static final Label advertising = new LabelRu("рекл.", "рекламное", LabelEn.advertising);
+    public static final Label radio = new LabelRu("радио", "радиодело, радиовещание", LabelEn.radio);
+    
+    public static final Label sexology = new LabelRu("сексол.", "сексология", LabelEn.sexology);
+    
+    public static final Label agriculture = new LabelRu("сельск.", "сельскохозяйственное", LabelEn.agriculture);
+    public static final Label agriculture2 = LabelRu.addNonUniqueShortName(agriculture, "сх");
+    public static final Label agriculture3 = LabelRu.addNonUniqueShortName(agriculture, "с.-х.");
+    
+    public static final Label sociology = new LabelRu("социол.", "социология", LabelEn.sociology);
+    public static final Label soviet = new LabelRu("совет.", "советизм", LabelEn.soviet);
+    public static final Label speleology = new LabelRu("спелеол.", "спелеологическое", LabelEn.speleology);
+    public static final Label sports = new LabelRu("спорт.", "спортивное", LabelEn.sports);
+    public static final Label statistics = new LabelRu("стат.", "статистическое", LabelEn.statistics);
+    public static final Label construction = new LabelRu("строит.", "строительное", LabelEn.construction);
+    public static final Label special = new LabelRu("спец.", "специальное", LabelEn.special);
+    
+    public static final Label theater = new LabelRu("театр.", "театральное", LabelEn.theater);
+    public static final Label textiles = new LabelRu("текст.", "текстильное", LabelEn.textiles);
+    public static final Label technology = new LabelRu("техн.", "техническое", LabelEn.technology);
+    public static final Label trading = new LabelRu("торг.", "торговое", LabelEn.trading);
+    public static final Label transport = new LabelRu("трансп.", "транспортное", LabelEn.transport);
+    
+    public static final Label management = new LabelRu("управл.", "управленческое", LabelEn.management);
+    
+    public static final Label science_fiction = new LabelRu("фант.", "фантастическое", LabelEn.science_fiction);
+    public static final Label philately = new LabelRu("филат.", "филателистическое", LabelEn.philately);
+    public static final Label finance = new LabelRu("фин.", "финансовое", LabelEn.finance);
+    public static final Label photography = new LabelRu("фотогр.", "фотографическое", LabelEn.photography);
+    public static final Label pharmacy = new LabelRu("фарм.", "фармацевтический термин", LabelEn.pharmacy);
+    public static final Label physiology = new LabelRu("физиол.", "физиология", LabelEn.physiology);
+    public static final Label philosophy = new LabelRu("филос.", "швейное", LabelEn.philosophy);
+    public static final Label philology = new LabelRu("филол.", "филологическое", LabelEn.philology);
+    public static final Label folklore = new LabelRu("фолькл.", "фольклорное", LabelEn.folklore);
+    
+    public static final Label choreography = new LabelRu("хореогр.", "хореографическое", LabelEn.choreography);
+	
+    public static final Label sewing = new LabelRu("швейн.", "философское", LabelEn.sewing);
+    
+    public static final Label circus = new LabelRu("цирк.", "цирковое", LabelEn.circus);
+	
+    public static final Label ecology = new LabelRu("экол.", "экологическое", LabelEn.ecology);
+    public static final Label economics = new LabelRu("экон.", "экономическое", LabelEn.economics);
+    public static final Label electrical_engineering = new LabelRu("эл.-техн.", "электротехническое", LabelEn.electrical_engineering);
+    public static final Label electric_power = new LabelRu("эл.-энерг.", "электроэнергетическое", LabelEn.electric_power);
+    public static final Label entomology = new LabelRu("энтомол.", "энтомологическое", LabelEn.entomology);
+    public static final Label ethnology = new LabelRu("этнолог.", "этнологическое", LabelEn.ethnology);
+    public static final Label ethnography = new LabelRu("этногр.", "этнографическое", LabelEn.ethnography);
+    
+    public static final Label legal = new LabelRu("юр.", "юридическое или нормативное", LabelEn.legal);
+    public static final Label jewellery = new LabelRu("ювел.", "ювелирное", LabelEn.jewellery);
     
     // computing
     // //////////////////////////
