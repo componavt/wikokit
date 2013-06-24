@@ -194,113 +194,107 @@ public class LabelRu extends LabelLocal  {
     public static final Label context = new LabelRu("помета", "помета", LabelEn.context);// meta context label will be treated in a special way. http://ru.wiktionary.org/wiki/Шаблон:помета
                                                                                          // this is a fake label, which shouldn't be visible to user in GUI
     
-    // grammatical
+    // grammatical - грамматические категории
     // //////////////////////////
     public static final Label abbreviation = new LabelRu("аббр.", "аббревиатура", LabelEn.abbreviation);
     public static final Label abbreviation_sokr = LabelRu.addNonUniqueShortName(abbreviation, "сокр.");
     
-    public static final Label animate = new LabelRu("одуш.", "одушевлённое", LabelEn.animate);
     public static final Label countable = new LabelRu("исч.", "исчислимое", LabelEn.countable);
     
     public static final Label in_the_plural = new LabelRu("мн. ч.", "множественное число", LabelEn.in_the_plural);
     public static final Label in_the_plural2 = LabelRu.addNonUniqueShortName(in_the_plural, "мн");
     
     public static final Label inanimate = new LabelRu("неодуш.", "неодушевлённое", LabelEn.inanimate);
-    public static final Label indecl = new LabelRu("нескл.", "несклоняемое", LabelEn.indecl);
     public static final Label intransitive = new LabelRu("неперех.", "непереходный глагол", LabelEn.intransitive);
-    public static final Label passive = new LabelRu("страд.", "страдательный (залог)", LabelEn.passive);
+    public static final Label uncountable = new LabelRu("неисч.", "неисчислимое", LabelEn.uncountable);
+    public static final Label indecl = new LabelRu("нескл.", "несклоняемое", LabelEn.indecl);
+    public static final Label animate = new LabelRu("одуш.", "одушевлённое", LabelEn.animate);
     public static final Label predicate = new LabelRu("предик.", "предикатив", LabelEn.predicate);
     public static final Label transitive = new LabelRu("перех.", "переходный глагол", LabelEn.transitive);
-    public static final Label uncountable = new LabelRu("неисч.", "неисчислимое", LabelEn.uncountable);
-     
+    public static final Label passive = new LabelRu("страд.", "страдательный (залог)", LabelEn.passive);
     
     
     // period
     // //////////////////////////
-    public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);
     public static final Label historical = new LabelRu("истор.", "историческое", LabelEn.historical);
     public static final Label neologism = new LabelRu("неол.", "неологизм", LabelEn.neologism);
+    public static final Label archaic = new LabelRu("старин.", "старинное", LabelEn.archaic);
     public static final Label obsolete = new LabelRu("устар.", "устаревшее", LabelEn.obsolete);
 
     
     // qualifier
     // //////////////////////////
-    public static final Label humorously = new LabelRu("шутл.", "шутливое", LabelEn.humorously);
     public static final Label literally = new LabelRu("букв.", "буквально", LabelEn.literally);
-   
-    // regional
-    // //////////////////////////
-    public static final Label regional = new LabelRu("обл.", "областное", LabelEn.regional);
-    public static final Label regional_reg = LabelRu.addNonUniqueShortName(regional, "рег.");
+    public static final Label humorously = new LabelRu("шутл.", "шутливое", LabelEn.humorously);
     
+    
+    // regional - языковая принадлежность
+    // //////////////////////////
     public static final Label Australia = new LabelRu("австрал.", "австралийское вариант английского языка", LabelEn.Australia);
+    public static final Label US = new LabelRu("амер.", "американский вариант английского языка", LabelEn.US);
+    public static final Label England = new LabelRu("англ.", "английское", LabelEn.England);
+    
     public static final Label Belgium = new LabelRu("бельг.", "бельгийский вариант нидерландского языка", LabelEn.Belgium);
     public static final Label Brazil = new LabelRu("браз.", "бразильский вариант португальского языка", LabelEn.Brazil);
     public static final Label British = new LabelRu("брит.", "британский вариант английского языка", LabelEn.British);
-    public static final Label Canada = new LabelRu("канадск.", "канадское", LabelEn.Canada);
-    public static final Label Chile = new LabelRu("чили", "чилийский вариант испанского языка", LabelEn.Chile);
-    public static final Label Cornwall = new LabelRu("корнск.", "корнское", LabelEn.Cornwall);
-    public static final Label Croatia = new LabelRu("хорв.", "хорватское", LabelEn.Croatia);
-    
-    public static final Label Dominican_Republic = new LabelRu("доминик.", "доминиканский вариант испанского языка", LabelEn.Dominican_Republic);
-    public static final Label England = new LabelRu("англ.", "английское", LabelEn.England);
-    public static final Label Finland = new LabelRu("финск.", "финское", LabelEn.Finland);
-    public static final Label France = new LabelRu("франц.", "французское", LabelEn.France);
-    public static final Label Germany = new LabelRu("нем.", "немецкое", LabelEn.Germany);
     public static final Label Hollandic = new LabelRu("голл.", "голландский вариант нидерландского языка", LabelEn.Hollandic);
+    public static final Label Dominican_Republic = new LabelRu("доминик.", "доминиканский вариант испанского языка", LabelEn.Dominican_Republic);
     
     public static final Label Indonesia = new LabelRu("индонез.", "индонезийское", LabelEn.Indonesia);
     public static final Label Ionic_Greek = new LabelRu("ион.", "ионийское", LabelEn.Ionic_Greek);
     public static final Label Ireland = new LabelRu("ирл.", "ирландский вариант английского языка", LabelEn.Ireland);
+    public static final Label Spain = new LabelRu("исп.", "испанское", LabelEn.Spain);
     
-    public static final Label Japan = new LabelRu("яп.", "японское", LabelEn.Japan);
-    public static final Label Javanese = new LabelRu("яванск.", "яванское", LabelEn.Javanese);
+    public static final Label Canada = new LabelRu("канадск.", "канадское", LabelEn.Canada);
+    public static final Label Cornwall = new LabelRu("корнск.", "корнское", LabelEn.Cornwall);
     
     public static final Label Malaysia = new LabelRu("малайск.", "малайское", LabelEn.Malaysia);
+    public static final Label Germany = new LabelRu("нем.", "немецкое", LabelEn.Germany);
     public static final Label Netherlands = new LabelRu("нидерл.", "нидерландское", LabelEn.Netherlands);
     public static final Label New_Zealand = new LabelRu("нов.-зел.", "ново-зеландский вариант английского языка", LabelEn.New_Zealand);
-    public static final Label Scotland = new LabelRu("шотл.", "шотландский вариант английского языка", LabelEn.Scotland);
-    public static final Label Spain = new LabelRu("исп.", "испанское", LabelEn.Spain);
-    public static final Label Switzerland = new LabelRu("швейц.", "швейцарский вариант немецкого языка", LabelEn.Switzerland);
+    
+    public static final Label regional = new LabelRu("обл.", "областное", LabelEn.regional);
+    public static final Label regional_reg = LabelRu.addNonUniqueShortName(regional, "рег.");
+    
     public static final Label Taiwan = new LabelRu("тайв.", "тайваньский вариант китайского языка", LabelEn.Taiwan);
-    public static final Label US = new LabelRu("амер.", "американский вариант английского языка", LabelEn.US);
+    
+    public static final Label Finland = new LabelRu("финск.", "финское", LabelEn.Finland);
+    public static final Label France = new LabelRu("франц.", "французское", LabelEn.France);
+    public static final Label Croatia = new LabelRu("хорв.", "хорватское", LabelEn.Croatia);
+    public static final Label Chile = new LabelRu("чили", "чилийский вариант испанского языка", LabelEn.Chile);
+    public static final Label Switzerland = new LabelRu("швейц.", "швейцарский вариант немецкого языка", LabelEn.Switzerland);
+    public static final Label Scotland = new LabelRu("шотл.", "шотландский вариант английского языка", LabelEn.Scotland);
+    public static final Label Javanese = new LabelRu("яванск.", "яванское", LabelEn.Javanese);
+    public static final Label Japan = new LabelRu("яп.", "японское", LabelEn.Japan);
     
     
-    // usage
+    // usage - стиль
     // //////////////////////////
+    public static final Label vulgar = new LabelRu("вульг.", "вульгарное",  LabelEn.vulgar);
     public static final Label childish = new LabelRu("детск.", "детское", LabelEn.childish);
-    public static final Label colloquial = new LabelRu("разг.", "разговорное", LabelEn.colloquial);
-    public static final Label derogatory = new LabelRu("унич.", "уничижительное", LabelEn.derogatory);// унич. порицательный
     public static final Label dialect = new LabelRu("диал.", "диалектное", LabelEn.dialect);
-    public static final Label euphemistic = new LabelRu("эвф.", "эвфемизм", LabelEn.euphemistic);
-    public static final Label familiar = new LabelRu("фам.", "фамильярное", LabelEn.familiar);
+    public static final Label Internet_slang = new LabelRu("интернет.", "интернетовский жаргон",  LabelEn.Internet_slang);
+    public static final Label pejorative = new LabelRu("неодобр.", "неодобрительное",  LabelEn.pejorative);// унич. неодобр. умаляющий
     
     public static final Label figuratively = new LabelRu("перен.", "переносное значение", LabelEn.figuratively);
     public static final Label figuratively_p = LabelRu.addNonUniqueShortName(figuratively, "п.");
     
-    public static final Label Internet_slang = new LabelRu("интернет.", "интернетовский жаргон",  LabelEn.Internet_slang);
-    public static final Label pejorative = new LabelRu("неодобр.", "неодобрительное",  LabelEn.pejorative);// унич. неодобр. умаляющий
-    public static final Label poetic = new LabelRu("поэт.", "поэтическое",  LabelEn.poetic);
-    public static final Label politically_correct = new LabelRu("политкорр. (пк)", "политкорректное выражение",  LabelEn.politically_correct);
-    public static final Label rare = new LabelRu("редк.", "редкое", LabelEn.rare);
-    public static final Label vulgar = new LabelRu("вульг.", "вульгарное",  LabelEn.vulgar);
-//    public static final Label  = new LabelRu(".", "",  LabelEn.);
-    //public static final LabelLocal figuratively_peren = LabelRu.addNonUniqueShortName(Label.figuratively, "перен.");// synonym context labels: п. перен.
-    //public static final LanguageType INT = LanguageType.addNonUniqueCode(mul, "INT");// Russian Wiktionary, yes! outdated :)
-    //LabelLocal.addNonUniqueShortName(null, "перен.");
+    public static final Label politically_correct = new LabelRu("политкорр.", "политкорректное выражение",  LabelEn.politically_correct);
+    public static final Label politically_correct2 = LabelRu.addNonUniqueShortName(politically_correct, "пк");
     
-    // addNonUniqueShortName(Label label, String synonymic_short_name) {
+    public static final Label poetic = new LabelRu("поэт.", "поэтическое",  LabelEn.poetic);
+    
+    public static final Label colloquial = new LabelRu("разг.", "разговорное", LabelEn.colloquial);
+    public static final Label rare = new LabelRu("редк.", "редкое", LabelEn.rare);
     
     public static final Label slang = new LabelRu("сленг", "сленг", LabelEn.slang);
-    
-    
-    
-    
+    public static final Label derogatory = new LabelRu("унич.", "уничижительное", LabelEn.derogatory);// унич. порицательный
+    public static final Label familiar = new LabelRu("фам.", "фамильярное", LabelEn.familiar);
+    public static final Label euphemistic = new LabelRu("эвф.", "эвфемизм", LabelEn.euphemistic);
     
 
-    // **************************
-    // topical
-    // **************************
+    // topical - предметные области + жаргон
+    // //////////////////////////
     public static final Label aviation = new LabelRu("авиац.", "авиационное", LabelEn.aviation);
     public static final Label vehicle = new LabelRu("автомоб.", "автомобильное", LabelEn.vehicle);
     public static final Label agronomy = new LabelRu("агрон.", "агрономическое", LabelEn.agronomy);
@@ -436,13 +430,14 @@ public class LabelRu extends LabelLocal  {
     
     // computing
     // //////////////////////////
-    public static final Label programming = new LabelRu("прогр.", "программистское", LabelEn.programming);
     public static final Label computing = new LabelRu("комп.", "компьютерное", LabelEn.computing);
-
+    public static final Label programming = new LabelRu("прогр.", "программистское", LabelEn.programming);
+    
+    
     // games
     // //////////////////////////
-    public static final Label chess = new LabelRu("шахм.", "шахматное", LabelEn.chess);
     public static final Label gaming = new LabelRu("игр.", "игровое", LabelEn.gaming);
+    public static final Label chess = new LabelRu("шахм.", "шахматное", LabelEn.chess);
     
     
     // mathematics
@@ -459,9 +454,9 @@ public class LabelRu extends LabelLocal  {
     
     // religion
     // //////////////////////////
-    public static final Label ecclesiastical = new LabelRu("церк.", "церковное", LabelEn.ecclesiastical);
     public static final Label Islam = new LabelRu("ислам.", "исламское", LabelEn.Islam);
     public static final Label religion = new LabelRu("религ.", "религиозное", LabelEn.religion);
+    public static final Label ecclesiastical = new LabelRu("церк.", "церковное", LabelEn.ecclesiastical);
     
     
     // science
@@ -474,33 +469,35 @@ public class LabelRu extends LabelLocal  {
     public static final Label biochemistry = new LabelRu("биохим.", "биохимическое", LabelEn.biochemistry);
     public static final Label biology = new LabelRu("биол.", "биологическое", LabelEn.biology);
     public static final Label botany = new LabelRu("ботан.", "ботаническое", LabelEn.botany);
+    public static final Label zoology = new LabelRu("зоол.", "зоологическое", LabelEn.zoology);
+    public static final Label computer_science = new LabelRu("информ.", "информатическое", LabelEn.computer_science);
+    
+    public static final Label psychology = new LabelRu("психол.", "психология", LabelEn.psychology);
+    
+    public static final Label physics = new LabelRu("физ.", "физическое", LabelEn.physics);
     
     public static final Label chemistry = new LabelRu("хим.", "химическое", LabelEn.chemistry);
     public static final Label element_symbol = LabelRu.addNonUniqueShortName(chemistry, "хим-элем");// form-of
     
-    public static final Label psychology = new LabelRu("психол.", "психология", LabelEn.psychology);
-    public static final Label computer_science = new LabelRu("информ.", "информатическое", LabelEn.computer_science);
-    public static final Label physics = new LabelRu("физ.", "физическое", LabelEn.physics);
-    public static final Label zoology = new LabelRu("зоол.", "зоологическое", LabelEn.zoology);
     
     // sports - special treatment for all sport labels except {{sport}} itself
     // it is needed to parse parameter "вид=" of {{спорт.|вид=}}
     // @see ru.wiktionary.org/wiki/template:спорт.
     // //////////////////////////
-    public static final Label baseball = new LabelRu("бейсб", "бейсбол", LabelEn.baseball);
-    public static final Label basketball = new LabelRu("баскет", "баскетбол", LabelEn.basketball);
-    public static final Label billiards = new LabelRu("бильярд", "бильярд", LabelEn.billiards);
-    public static final Label croquet = new LabelRu("крокет", "крокет", LabelEn.croquet);
-    // "chess" see in section "games"
-    public static final Label soccer = new LabelRu("футб", "футбол", LabelEn.soccer); // ПОМЕНЯЛ С football 
     public static final Label gymnastics = new LabelRu("акробат", "акробатика", LabelEn.gymnastics);
-    public static final Label hockey = new LabelRu("хокк", "хоккей", LabelEn.hockey);
-    public static final Label rugby = new LabelRu("регби", "регби", LabelEn.rugby);    
-    public static final Label tennis = new LabelRu("теннис", "теннис", LabelEn.tennis);
+    public static final Label basketball = new LabelRu("баскет", "баскетбол", LabelEn.basketball);
+    public static final Label baseball = new LabelRu("бейсб", "бейсбол", LabelEn.baseball);
+    public static final Label billiards = new LabelRu("бильярд", "бильярд", LabelEn.billiards);
     public static final Label volleyball = new LabelRu("волейб", "волейбол", LabelEn.volleyball);
     
+    public static final Label croquet = new LabelRu("крокет", "крокет", LabelEn.croquet);
+    public static final Label rugby = new LabelRu("регби", "регби", LabelEn.rugby);
     public static final Label fishing = new LabelRu("рыбол.", "рыболовецкое", LabelEn.fishing);
-
+    public static final Label tennis = new LabelRu("теннис", "теннис", LabelEn.tennis);
+    // "chess" see in section "games"
+    public static final Label soccer = new LabelRu("футб", "футбол", LabelEn.soccer); // ПОМЕНЯЛ С football 
+    public static final Label hockey = new LabelRu("хокк", "хоккей", LabelEn.hockey);
+    
     
     // ///////////////////////////////////////////////////////////////////////////////////////   
     // form-of templates (which are not context labels, but a definition text should be extracted from these templates - it's a dirty hack %)
