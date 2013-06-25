@@ -219,9 +219,64 @@ public class FormOfRuTest {
         assertEquals(expResult, result);
     }
     
+    // {{совершить|клевать}} -> "совершить действие, выраженное гл. [[клевать]]; провести некоторое время, совершая такое действие"
+    @Test
+    public void testTransformTemplateToText_sovershiti() {
+        System.out.println("transformTemplateToText_sovershiti");
+        String result, expResult;
+        Label source_label = LabelRu.sovershiti;
+        
+        String[] one_param = {"клевать"};
+        expResult = "совершить действие, выраженное гл. [[клевать]]; провести некоторое время, совершая такое действие";
+        result = FormOfRu.transformTemplateToText(source_label, one_param);
+        assertEquals(expResult, result);
+    }
+    
+    // {{однокр.|глядеть}} -> "[[однократно|однокр.]] к [[глядеть]]"
+    @Test
+    public void testTransformTemplateToText_odnokr() {
+        System.out.println("transformTemplateToText_odnokr");
+        String result, expResult;
+        Label source_label = LabelRu.odnokr;
+        
+        String[] one_param = {"глядеть"};
+        expResult = "[[однократно|однокр.]] к [[глядеть]]";
+        result = FormOfRu.transformTemplateToText(source_label, one_param);
+        assertEquals(expResult, result);
+    }
+    
+    // {{многокр.|говорить}} -> [[многократно|многокр.]] к [[говорить]]
+    @Test
+    public void testTransformTemplateToText_mnogokr() {
+        System.out.println("transformTemplateToText_mnogokr");
+        String result, expResult;
+        Label source_label = LabelRu.mnogokr;
+        
+        String[] one_param = {"говорить"};
+        expResult = "[[многократно|многокр.]] к [[говорить]]";
+        result = FormOfRu.transformTemplateToText(source_label, one_param);
+        assertEquals(expResult, result);
+    }
+    
+    // {{состояние|спать|от=гл}} -> "[[состояние]] по значению [[глагол|гл.]] [[спать]]"
+    @Test
+    public void testTransformTemplateToText_sostoyanie() {
+        System.out.println("transformTemplateToText_sostoyanie");
+        String result, expResult;
+        Label source_label = LabelRu.sostoyanie;
+        
+        String[] two_params = {"спать", "от=гл"};
+        expResult = "[[состояние]] по значению [[глагол|гл.]] [[спать]]";
+        result = FormOfRu.transformTemplateToText(source_label, two_params);
+        assertEquals(expResult, result);
+    }
+    
     
     // todo
     // Шаблон:прич.
+    
+    // todo
+    // {{наречие|однократный}}
     
     
     // transformTemplateToText

@@ -24,13 +24,16 @@ public class FormOfRu extends FormOf {
     private static final Map<Label, int[]> transforming_labels_to_number_of_params;
     static {
         Map<Label, int[]> nop = new HashMap<Label, int[]>();
-        nop.put(LabelRu.abbreviation,   new int[] {       2, 3 });
+        nop.put(LabelRu.abbreviation,   new int[] {       2, 3 }); // template {{abbreviation}} with 2 or 3 parameters
         nop.put(LabelRu.action,         new int[] {    1, 2 });
         nop.put(LabelRu.as_ru,          new int[] { 0 });
         nop.put(LabelRu.equal,          new int[] {    1, 2 });
         nop.put(LabelRu.element_symbol, new int[] {       2, 3, 4 });
+        nop.put(LabelRu.mnogokr,        new int[] {    1 });
+        nop.put(LabelRu.odnokr,         new int[] {    1 });
         nop.put(LabelRu.property,       new int[] {    1, 2, 3, 4 });
         nop.put(LabelRu.sootn,          new int[] {    1, 2, 3, 4, 5 });
+        nop.put(LabelRu.sovershiti,     new int[] {    1 });
         
         transforming_labels_to_number_of_params = Collections.unmodifiableMap(nop);
     }
@@ -129,6 +132,18 @@ public class FormOfRu extends FormOf {
                 case 4: result = "[[химический элемент]] с [[атомный номер|атомным номером]] "+template_params[0]+", обозначается [[химический символ|химическим символом]] "+template_params[1]+", "+template_params[2];
             }
             
+        } else if(Label.equals(label, LabelRu.mnogokr)) {
+            switch( template_params.length ) {
+                case 1: result = "[[многократно|многокр.]] к [["+template_params[0]+"]]";
+                        break;
+            }
+            
+        } else if(Label.equals(label, LabelRu.odnokr)) {
+            switch( template_params.length ) {
+                case 1: result = "[[однократно|однокр.]] к [["+template_params[0]+"]]";
+                        break;
+            }
+            
         } else if(Label.equals(label, LabelRu.property)) {
             // {{свойство|эгалитарный|описание|состояние=1|lang=en}} ->  "[[свойство]] или [[состояние]] по значению [[прилагательное|прил.]] [[эгалитарный]]; описание"
             //            1,          2,       2 или 3,    2 или 3 или 4
@@ -181,6 +196,11 @@ public class FormOfRu extends FormOf {
                             }
                         }
                     
+            }
+        } else if(Label.equals(label, LabelRu.sovershiti)) {
+            switch( template_params.length ) {
+                case 1: result = "совершить действие, выраженное гл. [["+template_params[0]+"]]; провести некоторое время, совершая такое действие";
+                        break;
             }
         }
         return result;
