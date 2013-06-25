@@ -473,6 +473,7 @@ public class LabelEn extends Label {
 
     // usage 73-3+1 Krizhanovsky
     // //////////////////////////
+    public static final Label abusive = new LabelEn("abusive",  "abusive", LabelCategory.usage); // ruwikt бранное
     public static final Label ad_slang = new LabelEn("ad slang",  "advertising slang", LabelCategory.usage);
     public static final Label Australian_slang = new LabelEn("Australian slang",  "Australian slang", LabelCategory.usage);
     public static final Label avoidance = new LabelEn("avoidance",  "avoidance term", LabelCategory.usage);

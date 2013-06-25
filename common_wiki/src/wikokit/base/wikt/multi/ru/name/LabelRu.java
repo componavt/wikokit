@@ -270,6 +270,9 @@ public class LabelRu extends LabelLocal  {
     
     // usage - стиль
     // //////////////////////////
+    public static final Label abusive = new LabelRu("бранн.", "бранное",  LabelEn.abusive);
+    public static final Label abusive2 = LabelRu.addNonUniqueShortName(abusive, "бран.");
+    
     public static final Label vulgar = new LabelRu("вульг.", "вульгарное",  LabelEn.vulgar);
     public static final Label childish = new LabelRu("детск.", "детское", LabelEn.childish);
     public static final Label dialect = new LabelRu("диал.", "диалектное", LabelEn.dialect);
@@ -508,6 +511,8 @@ public class LabelRu extends LabelLocal  {
     public static final Label action = new LabelRu("действие", "действие", LabelEn.ru_action);
     public static final Label property = new LabelRu("свойство", "свойство", LabelEn.ru_property);
     public static final Label sootn = new LabelRu("соотн.", "соотн.", LabelEn.ru_sootn);
+    // 
+    // public static final Label sootn = new LabelRu("совершить", "совершить", LabelEn.ru_sootn);
     
     // eo form-of templates 
     // ///////////////////////////////////////////////////////////////////////////////////////   
