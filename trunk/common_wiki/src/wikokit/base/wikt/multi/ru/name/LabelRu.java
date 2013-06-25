@@ -511,9 +511,13 @@ public class LabelRu extends LabelLocal  {
     public static final Label action = new LabelRu("действие", "действие", LabelEn.ru_action);
     public static final Label property = new LabelRu("свойство", "свойство", LabelEn.ru_property);
     public static final Label sootn = new LabelRu("соотн.", "соотн.", LabelEn.ru_sootn);
-    // 
-    // public static final Label sootn = new LabelRu("совершить", "совершить", LabelEn.ru_sootn);
     
+    public static final Label sovershiti = new LabelRu("совершить", "совершить", LabelEn.ru_sovershiti);
+    public static final Label odnokr = new LabelRu("однокр.", "однократное действие", LabelEn.ru_odnokr);
+    public static final Label mnogokr = new LabelRu("многокр.", "многократное действие", LabelEn.ru_mnogokr);
+    
+    public static final Label sostoyanie = new LabelRu("состояние", "состояние", LabelEn.ru_sostoyanie);
+            
     // eo form-of templates 
     // ///////////////////////////////////////////////////////////////////////////////////////   
     

@@ -1287,6 +1287,13 @@ public class LabelEn extends Label {
     public static final Label ru_property = new LabelEn("ruwikt свойство", "ruwikt {{свойство}}", LabelCategory.empty);
     public static final Label ru_sootn = new LabelEn("ruwikt соотн.", "ruwikt {{соотн.}}", LabelCategory.empty);
     
+    public static final Label ru_sovershiti = new LabelEn("ruwikt совершить", "ruwikt {{совершить}}", LabelCategory.empty);
+    public static final Label ru_odnokr = new LabelEn("ruwikt однокр.", "ruwikt {{однокр.}}", LabelCategory.empty);
+    public static final Label ru_mnogokr = new LabelEn("ruwikt многокр.", "ruwikt {{многокр.}}", LabelCategory.empty);
+    
+    public static final Label ru_sostoyanie = new LabelEn("ruwikt состояние", "ruwikt {{состояние}}", LabelCategory.empty);
+    
+    
     // DEBUG: should be one error for each code line below:
     // DDDDDDDDDDDDDDDDDDDDDDDDDD
     //public static final Label archaic_short_name_duplication = new LabelEn("archaic",  "archaic full name (duplication of short name)", LabelCategory.period);
