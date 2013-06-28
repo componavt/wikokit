@@ -113,6 +113,20 @@ public class FormOfRuTest {
         assertEquals(expResult2, result2);
     }
     
+    // {{элемент|золото|золота}} -> "обозначение для химического элемента [[золото|золота]]"
+    @Test
+    public void testTransformTemplateToText_element() {
+        System.out.println("transformTemplateToText_element");
+        
+        Label source_label = LabelRu.element;
+        
+        String[] template_params = {"золото", "золота"};
+        String expResult = "обозначение для химического элемента [[золото|золота]]";
+        String result = FormOfRu.transformTemplateToText(source_label, template_params);
+        assertEquals(expResult, result);
+    }
+    
+    
     // {{хим-элем|17|Cl|[[хлор]]|lang=en}} ->  "[[химический элемент]] с [[атомный номер|атомным номером]] 17, обозначается [[химический символ|химическим символом]] Cl, [[хлор]]"
     @Test
     public void testTransformTemplateToText_element_symbol_4_params() {
@@ -258,7 +272,9 @@ public class FormOfRuTest {
         assertEquals(expResult, result);
     }
     
-    // {{состояние|спать|от=гл}} -> "[[состояние]] по значению [[глагол|гл.]] [[спать]]"
+    // {{состояние|спать|от=гл}}        -> "[[состояние]] по значению [[глагол|гл.]] [[спать]]"
+    // {{состояние|причастный}}         -> "[[состояние]] по значению [[прилагательное|прил.]] [[причастный]]"
+    // {{состояние|причастный|от=прил}} -> "[[состояние]] по значению [[прилагательное|прил.]] [[причастный]]"
     @Test
     public void testTransformTemplateToText_sostoyanie() {
         System.out.println("transformTemplateToText_sostoyanie");
@@ -269,15 +285,92 @@ public class FormOfRuTest {
         expResult = "[[состояние]] по значению [[глагол|гл.]] [[спать]]";
         result = FormOfRu.transformTemplateToText(source_label, two_params);
         assertEquals(expResult, result);
+        
+        // {{состояние|причастный}} -> "[[состояние]] по значению [[прилагательное|прил.]] [[причастный]]"
+        String[] one_param = {"причастный"};
+        expResult = "[[состояние]] по значению [[прилагательное|прил.]] [[причастный]]";
+        result = FormOfRu.transformTemplateToText(source_label, one_param);
+        assertEquals(expResult, result);
+        
+        // {{состояние|причастный|от=прил}} -> "[[состояние]] по значению [[прилагательное|прил.]] [[причастный]]"
+        String[] two_param_adjective = {"причастный", "от=прил"};
+        // expResult = the same result
+        result = FormOfRu.transformTemplateToText(source_label, two_param_adjective);
+        assertEquals(expResult, result);
+    }
+    
+    // Шаблон:прич.
+    // {{прич.|ведать}} -> "[[причастие|прич.]] от [[ведать]]"
+    // {{прич.|ведать|страд}} -> "[[причастие|прич.]] [[страдательный залог|страд.]] от [[ведать]]"
+    // {{прич.|ведать|наст}} -> "[[причастие|прич.]] [[настоящее время|наст.]] от [[ведать]]"
+    // {{прич.|ведать|прош}} -> "[[причастие|прич.]] [[прошедшее время|прош.]] от [[ведать]]"
+    @Test
+    public void testTransformTemplateToText_participle() {
+        System.out.println("transformTemplateToText_participle");
+        String result, expResult;
+        Label source_label = LabelRu.participle;
+        
+        // {{прич.|ведать}} -> "[[причастие|прич.]] от [[ведать]]"
+        String[] one_param = {"ведать"};
+        expResult = "[[причастие|прич.]] от [[ведать]]";
+        result = FormOfRu.transformTemplateToText(source_label, one_param);
+        assertEquals(expResult, result);
+        
+        // {{прич.|ведать|страд}} -> "[[причастие|прич.]] [[страдательный залог|страд.]] от [[ведать]]"
+        String[] two_params = {"ведать", "страд"};
+        expResult = "[[причастие|прич.]] [[страдательный залог|страд.]] от [[ведать]]";
+        result = FormOfRu.transformTemplateToText(source_label, two_params);
+        assertEquals(expResult, result);
+        
+        // {{прич.|ведать|наст}} -> "[[причастие|прич.]] [[настоящее время|наст.]] от [[ведать]]"
+        String[] two_params_nast = {"ведать", "наст"};
+        expResult = "[[причастие|прич.]] [[настоящее время|наст.]] от [[ведать]]";
+        result = FormOfRu.transformTemplateToText(source_label, two_params_nast);
+        assertEquals(expResult, result);
+
+        // {{прич.|ведать|прош}} -> "[[причастие|прич.]] [[прошедшее время|прош.]] от [[ведать]]"
+        String[] two_params_prosh = {"ведать", "прош"};
+        expResult = "[[причастие|прич.]] [[прошедшее время|прош.]] от [[ведать]]";
+        result = FormOfRu.transformTemplateToText(source_label, two_params_prosh);
+        assertEquals(expResult, result);
+    }
+    
+    // *******************************
+    // Категория:Грамматические пометы
+    
+    // {{наречие|аккуратный}} -> "[[наречие]] к [[прилагательное|прил.]] [[аккуратный]]"
+    @Test
+    public void testTransformTemplateToText_adverb() {
+        System.out.println("transformTemplateToText_adverb");
+        String result, expResult;
+        Label source_label = LabelRu.adverb;
+        
+        // {{наречие|аккуратный}} -> "[[наречие]] к [[прилагательное|прил.]] [[аккуратный]]"
+        String[] one_param = {"аккуратный"};
+        expResult = "[[наречие]] к [[прилагательное|прил.]] [[аккуратный]]";
+        result = FormOfRu.transformTemplateToText(source_label, one_param);
+        assertEquals(expResult, result);
+        
+        // # {{наречие|аккуратный|param 2}} -> "[[наречие]] к [[прилагательное|прил.]] [[аккуратный]]; param 2"
+        String[] two_params = {"аккуратный", "param 2"};
+        expResult = "[[наречие]] к [[прилагательное|прил.]] [[аккуратный]]; param 2";
+        result = FormOfRu.transformTemplateToText(source_label, two_params);
+        assertEquals(expResult, result);
     }
     
     
     // todo
-    // Шаблон:прич.
+    // Шаблон:женск.
+    // Шаблон:страд.
     
     // todo
-    // {{наречие|однократный}}
+    // Шаблон:субстантивир
+    // # {{субстантивир.}}, {{лингв.}} {{=|нидерландский язык}} {{пример|Нидерландский является языком германской группы.}}
+    // redirect: Шаблон:субст.
     
+    
+    // Категория:Грамматические пометы
+    // *******************************
     
     // transformTemplateToText
     // ////////////////////////////////////////////

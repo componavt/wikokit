@@ -25,13 +25,17 @@ public class FormOfRu extends FormOf {
     static {
         Map<Label, int[]> nop = new HashMap<Label, int[]>();
         nop.put(LabelRu.abbreviation,   new int[] {       2, 3 }); // template {{abbreviation}} with 2 or 3 parameters
+        nop.put(LabelRu.adverb,         new int[] {    1, 2 });
         nop.put(LabelRu.action,         new int[] {    1, 2 });
         nop.put(LabelRu.as_ru,          new int[] { 0 });
         nop.put(LabelRu.equal,          new int[] {    1, 2 });
+        nop.put(LabelRu.element,        new int[] {       2 });
         nop.put(LabelRu.element_symbol, new int[] {       2, 3, 4 });
         nop.put(LabelRu.mnogokr,        new int[] {    1 });
         nop.put(LabelRu.odnokr,         new int[] {    1 });
+        nop.put(LabelRu.participle,     new int[] {    1, 2 });
         nop.put(LabelRu.property,       new int[] {    1, 2, 3, 4 });
+        nop.put(LabelRu.sostoyanie,     new int[] {    1, 2 });
         nop.put(LabelRu.sootn,          new int[] {    1, 2, 3, 4, 5 });
         nop.put(LabelRu.sovershiti,     new int[] {    1 });
         
@@ -108,6 +112,14 @@ public class FormOfRu extends FormOf {
                         break;
                 case 2: result = "действие по значению гл. [["+template_params[0]+"]]; "+template_params[1];
             }
+        
+        } else if(Label.equals(label, LabelRu.adverb)) {
+            switch( template_params.length ) {
+                case 1: result = "[[наречие]] к [[прилагательное|прил.]] [["+template_params[0]+"]]";
+                        break;
+                case 2: result = "[[наречие]] к [[прилагательное|прил.]] [["+template_params[0]+"]]; "+template_params[1];
+            }
+            
             
         } else if(Label.equals(label, LabelRu.as_ru)) {
             switch( template_params.length ) {
@@ -121,6 +133,11 @@ public class FormOfRu extends FormOf {
                 case 1: result = "то же, что [["+template_params[0]+"]]";
                         break;
                 case 2: result = "то же, что [["+template_params[0]+"]]; "+template_params[1];
+            }
+        
+        } else if(Label.equals(label, LabelRu.element)) {
+            switch( template_params.length ) {
+                case 2: result = "обозначение для химического элемента [["+template_params[0]+"|"+template_params[1]+"]]";
             }
             
         } else if(Label.equals(label, LabelRu.element_symbol)) {
@@ -144,6 +161,28 @@ public class FormOfRu extends FormOf {
                         break;
             }
             
+        } else if(Label.equals(label, LabelRu.participle)) {
+            switch( template_params.length ) {
+                case 1: result = "[[причастие|прич.]] от [["+template_params[0]+"]]";
+                        break;
+                
+                // {{прич.|ведать|страд}} -> "[[причастие|прич.]] [[страдательный залог|страд.]] от [[ведать]]"
+                // {{прич.|ведать|наст}} -> "[[причастие|прич.]] [[настоящее время|наст.]] от [[ведать]]"
+                // {{прич.|ведать|прош}} -> "[[причастие|прич.]] [[прошедшее время|прош.]] от [[ведать]]"
+                case 2: 
+                    
+                    String s = "";
+                    if(template_params[1].equalsIgnoreCase("страд"))
+                        s = "страдательный залог|страд.";
+                    if(template_params[1].equalsIgnoreCase("наст"))
+                        s = "настоящее время|наст.";
+                    if(template_params[1].equalsIgnoreCase("прош"))
+                        s = "прошедшее время|прош.";
+                    
+                    if(s.length() > 0)
+                    result = "[[причастие|прич.]] [["+s+"]] от [["+template_params[0]+"]]";
+            }
+            
         } else if(Label.equals(label, LabelRu.property)) {
             // {{свойство|эгалитарный|описание|состояние=1|lang=en}} ->  "[[свойство]] или [[состояние]] по значению [[прилагательное|прил.]] [[эгалитарный]]; описание"
             //            1,          2,       2 или 3,    2 или 3 или 4
@@ -165,6 +204,22 @@ public class FormOfRu extends FormOf {
                             result = "[[свойство]]"+param_optional+" по значению [[прилагательное|прил.]] [["+template_params[0]+"]]; "+template_params[1];
                         }
             }
+            
+        } else if(Label.equals(label, LabelRu.sostoyanie)) {
+            switch( template_params.length ) {
+                case 1: result = "[[состояние]] по значению [[прилагательное|прил.]] [["+template_params[0]+"]]";
+                        break;
+                case 2: 
+                    String s = TemplateExtractor.getParameterValue (template_params, "от");
+                        if(null != s) {
+                            if(s.equalsIgnoreCase("прил"))
+                                result = "[[состояние]] по значению [[прилагательное|прил.]] [["+template_params[0]+"]]";
+                            
+                            if(s.equalsIgnoreCase("гл"))
+                                result = "[[состояние]] по значению [[глагол|гл.]] [["+template_params[0]+"]]";
+                        }
+            }
+            
         } else if(Label.equals(label, LabelRu.sootn)) {
             
             switch( template_params.length ) {
