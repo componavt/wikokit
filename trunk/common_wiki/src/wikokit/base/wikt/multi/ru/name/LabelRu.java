@@ -481,6 +481,8 @@ public class LabelRu extends LabelLocal  {
     
     public static final Label chemistry = new LabelRu("хим.", "химическое", LabelEn.chemistry);
     public static final Label element_symbol = LabelRu.addNonUniqueShortName(chemistry, "хим-элем");// form-of
+    //public static final Label element = LabelRu.addNonUniqueShortName(chemistry, "химическое");// form-of
+    public static final Label element = new LabelRu("элемент", "химическое", LabelEn.ru_element);// form-of - it should be synonyms of "chemistry" (prev line), but there is tech constraints: FormOfRu.java can have only one synonym
     
     
     // sports - special treatment for all sport labels except {{sport}} itself
@@ -506,9 +508,14 @@ public class LabelRu extends LabelLocal  {
     // form-of templates (which are not context labels, but a definition text should be extracted from these templates - it's a dirty hack %)
     // public static final Label form_of_templates = new LabelRu("dirty hack ru", ":) ru", LabelEn.form_of_templates);
     
+    // The templates below should be absent at "Викисловарь:Условные сокращения"
+    // todo check
+    
+    public static final Label adverb = new LabelRu("нареч.", "нареч.", LabelEn.ru_adverb);
     public static final Label as_ru = new LabelRu("as ru", "as ru", LabelEn.ru_as_ru);
     public static final Label equal = new LabelRu("=", "=", LabelEn.ru_equal);
     public static final Label action = new LabelRu("действие", "действие", LabelEn.ru_action);
+    public static final Label participle = new LabelRu("прич.", "прич.", LabelEn.ru_participle);
     public static final Label property = new LabelRu("свойство", "свойство", LabelEn.ru_property);
     public static final Label sootn = new LabelRu("соотн.", "соотн.", LabelEn.ru_sootn);
     
