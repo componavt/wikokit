@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import wikokit.base.wikipedia.util.TemplateExtractor;
 import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.LabelCategory;
 import wikokit.base.wikt.constant.LabelLocal;
 import wikokit.base.wikt.util.LabelText;
 
@@ -90,7 +91,7 @@ public class LabelRu extends LabelLocal  {
         if(Label.hasShortName( str ))
             return Label.getByShortName( str );
         
-        return new LabelEn(str);    // let's create new context label
+        return new LabelEn(str, LabelCategory.unknown);    // let's create new context label
     }
     
     
@@ -119,13 +120,22 @@ public class LabelRu extends LabelLocal  {
         String text_from_label = "";
         if(Label.hasShortName( template_name )) {
             
+            int number_of_params = te.countTemplateParameters();
+            String[] template_params = te.getTemplateParameters();
+            
             Label l = Label.getByShortName(template_name);
             if(Label.equals( l, LabelEn.context )) { // {{помета|}}
-                Label pometa_label = getPometaLabel( te.getTemplateParameters() );
+                Label pometa_label = getPometaLabel( template_params );
                 if(null != pometa_label)
                     labels.add( pometa_label );
                 
-            } else if (FormOfRu.isDefinitionTransformingLabel(l, te.countTemplateParameters())) {
+            } else if (LabelParamsRu.isLabelWithParams(l, number_of_params)) { // 
+                
+                Label result_label = LabelParamsRu.getNewLabelByParams (l, template_params);
+                if(null != result_label)
+                    labels.add(result_label);
+                
+            } else if (FormOfRu.isDefinitionTransformingLabel(l, number_of_params)) {
         
                 // 2. special templates, which require special treatment, they will be stripped right now
                 // {{=|
@@ -133,7 +143,7 @@ public class LabelRu extends LabelLocal  {
                 // {{аббр.|en|abbreviation|description}} -> context label "аббр." and text "[[description]]"
                 // {{сокр.|en|identification|[[идентификация]]}} or {{сокр.|en|identification}}; [[идентификация]]
 
-                text_from_label = FormOfRu.transformTemplateToText(l, te.getTemplateParameters());
+                text_from_label = FormOfRu.transformTemplateToText(l, template_params);
                 labels.add( l );
             } else {
                 labels.add(l);

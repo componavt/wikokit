@@ -37,7 +37,7 @@ public class LabelCategory {
             grammatical, 
             period,
             qualifier,
-            regional,
+            regional, 
             usage,
             
             topical,

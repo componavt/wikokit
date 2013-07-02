@@ -15,6 +15,7 @@ import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 
 /** A set of functions related to form-of templates in Russian Wiktionary.
+ * The (context label) templates which transform text of the definition.
  */
 public class FormOfRu extends FormOf {
     
@@ -24,6 +25,7 @@ public class FormOfRu extends FormOf {
     private static final Map<Label, int[]> transforming_labels_to_number_of_params;
     static {
         Map<Label, int[]> nop = new HashMap<Label, int[]>();
+        
         nop.put(LabelRu.abbreviation,   new int[] {       2, 3 }); // template {{abbreviation}} with 2 or 3 parameters
         nop.put(LabelRu.adverb,         new int[] {    1, 2 });
         nop.put(LabelRu.action,         new int[] {    1, 2 });
