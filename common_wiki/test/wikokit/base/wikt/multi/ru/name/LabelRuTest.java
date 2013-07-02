@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.LabelCategory;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikt.util.LabelText;
 
@@ -109,8 +110,44 @@ public class LabelRuTest {
         assertTrue( LabelText.equals( expResult, result) );
     }
     
+    
     // ///////////////////////////////////////////////////////////
-    // eo getPometaLabel
+    // LabelParamsRu
+    
+    // in ruwikt names of regions given as parameter to the template {{regional|regions free text}}
+    // Regional {{рег.|regions}} or {{обл.|regions}} // рег. == LabelEn.regional
+    // харьк., луг., донецкое, белгородск.
+    // {{рег.|сиб., сев.-вост.}} [[ловушка]] 
+    @Test
+    public void testExtractLabelsTrimText_with_regional_with_paremeter() {
+        System.out.println("extractLabelsTrimText_with_regional_with_paremeter");
+        
+        String line        = "{{рег.|сиб., сев.-вост.}} [[ловушка]]"; // http://ru.wiktionary.org/wiki/кулёма
+        String result_line =                           "[[ловушка]]";
+        
+        Label[] _labels = { LabelEn.regional };
+        // LabelText expResult = new LabelText(_labels, result_line);
+        
+        LabelText result = LabelRu.extractLabelsTrimText(line);
+        Label[]   result_labels = result.getLabels();
+        
+        assertEquals( result_labels.length, 1); // one label "сиб., сев.-вост."
+        Label la = result_labels[0];
+        assertFalse(la.getAddedByHand()); // this label text was gathered automatically
+        assertEquals(la.getShortName(), "сиб., сев.-вост.");
+        assertEquals(la.getName(),      "");
+        
+         LabelCategory result_label_category = LabelEn.getCategoryByLabel(result_labels[0]);
+         assertEquals(result_label_category.getName(), "Regional");
+         assertEquals(result_label_category, LabelCategory.regional);
+    }
+    // LabelParamsRu
+    // ///////////////////////////////////////////////////////////
+    
+    
+    
+    // ///////////////////////////////////////////////////////////
+    // getPometaLabel
     
     // {{помета|разг.}} [[что]]    // "разг." == LabelEn.colloquial
     @Test

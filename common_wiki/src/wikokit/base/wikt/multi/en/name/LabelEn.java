@@ -39,7 +39,8 @@ public class LabelEn extends Label {
     
     //private static Map<String, String> short_name2name = new HashMap<String, String>();
     
-    private static Map<LabelEn, LabelCategory> label2category = new HashMap<LabelEn, LabelCategory>();
+    //                                                                    LabelEn in fact
+    private static Map<Label, LabelCategory> label2category = new HashMap<Label, LabelCategory>();
     
     /** If there are more than one context label (synonyms,  short name label): <synonymic_label, source_main_unique_label> */
     //private static Map<String, LabelEn> multiple_synonym2label = new HashMap<String, LabelEn>();
@@ -61,11 +62,11 @@ public class LabelEn extends Label {
      * 
      * @param short_name name of the found context label
      */
-    public LabelEn(String short_name) { 
+    public LabelEn(String short_name, LabelCategory label_cat) { 
         super(short_name);  // added_by_hand = false
         initLabelAddedAutomatically(this);
         
-        this.category   = LabelCategory.unknown; 
+        this.category   = label_cat; // usually it is LabelCategory.unknown; 
         label2category. put(this, category);
     }
     
@@ -73,6 +74,11 @@ public class LabelEn extends Label {
      * This function is needed for compatibility with other child class (LabelLocal.java) of Label.java */
     protected Label getLinkedLabelEn() {
         return this;
+    }
+    
+    /** Gets label's category. */
+    public static LabelCategory getCategoryByLabel(Label label_en) {        
+        return label2category.get(label_en);
     }
     
     // Context labels without categories (empty category) 43 Krizhanovsky

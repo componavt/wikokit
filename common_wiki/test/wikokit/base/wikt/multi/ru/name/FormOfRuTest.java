@@ -360,6 +360,9 @@ public class FormOfRuTest {
     
     
     // todo
+    // Шаблон:рег.
+    
+    // todo
     // Шаблон:женск.
     // Шаблон:страд.
     

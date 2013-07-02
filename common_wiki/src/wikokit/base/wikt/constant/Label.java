@@ -133,12 +133,6 @@ public abstract class Label {
     @Override
     public String toString() { return short_name; }
     
-    /** Checks weather exists the Label (short name) by its name, checks synonyms also. */
-    public static boolean hasShortName(String short_name) {
-        return short_name2label.containsKey(short_name) || 
-         multiple_synonym2label.containsKey(short_name);
-    }
-    
     /** Gets label itself (short name). */
     public String getShortName() {
         return short_name;
@@ -149,6 +143,12 @@ public abstract class Label {
      */
     public String getShortNameEnglish() {
         return getShortName();
+    }
+    
+    /** Checks weather exists the Label (short name) by its name, checks synonyms also. */
+    public static boolean hasShortName(String short_name) {
+        return short_name2label.containsKey(short_name) || 
+         multiple_synonym2label.containsKey(short_name);
     }
     
     /** Gets English Wiktionary context label associated with this label. 
