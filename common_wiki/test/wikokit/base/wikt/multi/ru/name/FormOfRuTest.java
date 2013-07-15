@@ -115,10 +115,10 @@ public class FormOfRuTest {
     
     // {{элемент|золото|золота}} -> "обозначение для химического элемента [[золото|золота]]"
     @Test
-    public void testTransformTemplateToText_element() {
-        System.out.println("transformTemplateToText_element");
+    public void testTransformTemplateToText_element_symbol() {
+        System.out.println("transformTemplateToText_element_symbol");
         
-        Label source_label = LabelRu.element;
+        Label source_label = LabelRu.element_symbol;
         
         String[] template_params = {"золото", "золота"};
         String expResult = "обозначение для химического элемента [[золото|золота]]";
@@ -129,10 +129,10 @@ public class FormOfRuTest {
     
     // {{хим-элем|17|Cl|[[хлор]]|lang=en}} ->  "[[химический элемент]] с [[атомный номер|атомным номером]] 17, обозначается [[химический символ|химическим символом]] Cl, [[хлор]]"
     @Test
-    public void testTransformTemplateToText_element_symbol_4_params() {
-        System.out.println("transformTemplateToText_element_symbol_4_params");
+    public void testTransformTemplateToText_chem_element_4_params() {
+        System.out.println("transformTemplateToText_chem_element_4_params");
         
-        Label source_label = LabelRu.element_symbol;
+        Label source_label = LabelRu.chem_element;
         
         String[] template_params = {"17", "Cl", "[[хлор]]", "lang=en"};
         String expResult = "[[химический элемент]] с [[атомный номер|атомным номером]] 17, обозначается [[химический символ|химическим символом]] Cl, [[хлор]]";
@@ -142,10 +142,10 @@ public class FormOfRuTest {
     
     // {{хим-элем|105|Db}}  -> "[[химический элемент]] с [[атомный номер|атомным номером]] 105, обозначается [[химический символ|химическим символом]] Db"
     @Test
-    public void testTransformTemplateToText_element_symbol_2_params() {
-        System.out.println("transformTemplateToText_element_symbol_2_params");
+    public void testTransformTemplateToText_chem_element_2_params() {
+        System.out.println("transformTemplateToText_chem_element_2_params");
         
-        Label source_label = LabelRu.element_symbol;
+        Label source_label = LabelRu.chem_element;
         
         // {{хим-элем|105|Db}}  -> "[[химический элемент]] с [[атомный номер|атомным номером]] 105, обозначается [[химический символ|химическим символом]] Db"
         String[] template_params = {"105", "Db"};

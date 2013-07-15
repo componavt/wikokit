@@ -1347,7 +1347,8 @@ public class LabelEn extends Label {
     public static final Label plant = LabelEn.addNonUniqueShortName(botany, "plant"); // растения
     
     public static final Label chemistry = new LabelEn("chemistry" ,"chemistry", LabelCategory.science); // хим. - химическое
-    public static final Label element_symbol = LabelEn.addNonUniqueShortName(chemistry, "element symbol");
+    // public static final Label element_symbol = LabelEn.addNonUniqueShortName(chemistry, "element symbol");// it is not a synonym of chemistry because it should be separate label for Russian form-of template
+    public static final Label element_symbol = new LabelEn("element symbol", "element symbol", LabelCategory.empty);//ruwikt form-of
     
     public static final Label psychology = new LabelEn("psychology" ,"psychology", LabelCategory.science); // психол. - психология
     public static final Label clinical_psychology = LabelEn.addNonUniqueShortName(psychology, "clinical psychology"); //
@@ -1447,19 +1448,19 @@ public class LabelEn extends Label {
 
     // ///////////////////////////////////////////////////////////////////////////////////////
     // form-of templates in ruwikt (which are not a context label, but a definition text should be extracted from these templates - it's a dirty hack %)
-    // public static final Label form_of_templates = new LabelEn("dirty hack", ":)", LabelCategory.empty);
+    // other Russian form-of templates marked by "//ruwikt form-of"
     
     // public static final Label ru_adverb = new LabelEn("ruwikt нареч.", "ruwikt {{нареч.}}", LabelCategory.empty);
-    public static final Label ru_as_ru = new LabelEn("ruwikt as ru", "ruwikt {{as ru}}", LabelCategory.empty);
-    public static final Label ru_action = new LabelEn("ruwikt действие", "ruwikt {{действие}}", LabelCategory.empty);
-    public static final Label ru_equal = new LabelEn("ruwikt =", "ruwikt {{=}}", LabelCategory.empty);
-    public static final Label ru_element = new LabelEn("элемент", "ruwikt {{элемент}}", LabelCategory.empty);
-    //public static final Label ru_participle = new LabelEn("ruwikt прич.", "ruwikt {{прич.}}", LabelCategory.empty);
-    public static final Label ru_property = new LabelEn("ruwikt свойство", "ruwikt {{свойство}}", LabelCategory.empty);
-    public static final Label ru_sootn = new LabelEn("ruwikt соотн.", "ruwikt {{соотн.}}", LabelCategory.empty);
+    public static final Label ru_as_ru = new LabelEn("ruwikt as ru", "ruwikt {{as ru}}", LabelCategory.empty);//ruwikt form-of
+    public static final Label ru_action = new LabelEn("ruwikt действие", "ruwikt {{действие}}", LabelCategory.empty);//ruwikt form-of
+    public static final Label ru_equal = new LabelEn("ruwikt =", "ruwikt {{=}}", LabelCategory.empty);//ruwikt form-of
     
-    public static final Label ru_sovershiti = new LabelEn("ruwikt совершить", "ruwikt {{совершить}}", LabelCategory.empty);
-    public static final Label ru_sostoyanie = new LabelEn("ruwikt состояние", "ruwikt {{состояние}}", LabelCategory.empty);
+    //public static final Label ru_participle = new LabelEn("ruwikt прич.", "ruwikt {{прич.}}", LabelCategory.empty);
+    public static final Label ru_property = new LabelEn("ruwikt свойство", "ruwikt {{свойство}}", LabelCategory.empty);//ruwikt form-of
+    public static final Label ru_sootn = new LabelEn("ruwikt соотн.", "ruwikt {{соотн.}}", LabelCategory.empty);//ruwikt form-of
+    
+    public static final Label ru_sovershiti = new LabelEn("ruwikt совершить", "ruwikt {{совершить}}", LabelCategory.empty);//ruwikt form-of
+    public static final Label ru_sostoyanie = new LabelEn("ruwikt состояние", "ruwikt {{состояние}}", LabelCategory.empty);//ruwikt form-of
     
     
     // DEBUG: should be one error for each code line below:
