@@ -707,9 +707,9 @@ public class LabelRu extends LabelLocal  {
     public static final Label physics = new LabelRu("физ.", "физическое", LabelEn.physics);
     
     public static final Label chemistry = new LabelRu("хим.", "химическое", LabelEn.chemistry);
-    public static final Label element_symbol = LabelRu.addNonUniqueShortName(chemistry, "хим-элем");// form-of
+    public static final Label chem_element = LabelRu.addNonUniqueShortName(chemistry, "хим-элем");// form-of
     //public static final Label element = LabelRu.addNonUniqueShortName(chemistry, "химическое");// form-of
-    public static final Label element = new LabelRu("элемент", "химический элемент", LabelEn.ru_element);// form-of - it should be synonyms of "chemistry" (prev line), but there is tech constraints: FormOfRu.java can have only one synonym
+    public static final Label element_symbol = new LabelRu("элемент", "химический элемент", LabelEn.element_symbol);// form-of - it should be synonyms of "chemistry" (prev line), but there is tech constraints: FormOfRu.java can have only one synonym
     
     
     // sports - special treatment for all sport labels except {{sport}} itself

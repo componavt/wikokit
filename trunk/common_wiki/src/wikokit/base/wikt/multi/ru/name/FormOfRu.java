@@ -31,8 +31,8 @@ public class FormOfRu extends FormOf {
         nop.put(LabelRu.action,         new int[] {    1, 2 });
         nop.put(LabelRu.as_ru,          new int[] { 0 });
         nop.put(LabelRu.equal,          new int[] {    1, 2 });
-        nop.put(LabelRu.element,        new int[] {       2 });
-        nop.put(LabelRu.element_symbol, new int[] {       2, 3, 4 });
+        nop.put(LabelRu.element_symbol, new int[] {       2 });
+        nop.put(LabelRu.chem_element,   new int[] {       2, 3, 4 });
         nop.put(LabelRu.frequentative,  new int[] {    1 });
         nop.put(LabelRu.momentane,      new int[] {    1 });
         nop.put(LabelRu.participle,     new int[] {    1, 2 });
@@ -137,12 +137,12 @@ public class FormOfRu extends FormOf {
                 case 2: result = "то же, что [["+template_params[0]+"]]; "+template_params[1];
             }
         
-        } else if(Label.equals(label, LabelRu.element)) {
+        } else if(Label.equals(label, LabelRu.element_symbol)) {
             switch( template_params.length ) {
                 case 2: result = "обозначение для химического элемента [["+template_params[0]+"|"+template_params[1]+"]]";
             }
             
-        } else if(Label.equals(label, LabelRu.element_symbol)) {
+        } else if(Label.equals(label, LabelRu.chem_element)) {
             // {{хим-элем|17|Cl|[[хлор]]|lang=en}} ->  "[[химический элемент]] с [[атомный номер|атомным номером]] 17, обозначается [[химический символ|химическим символом]] Cl, [[хлор]]"
             switch( template_params.length ) {
                 case 2: result = "[[химический элемент]] с [[атомный номер|атомным номером]] "+template_params[0]+", обозначается [[химический символ|химическим символом]] "+template_params[1];
