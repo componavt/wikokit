@@ -251,7 +251,7 @@ public class FormOfRuTest {
     public void testTransformTemplateToText_odnokr() {
         System.out.println("transformTemplateToText_odnokr");
         String result, expResult;
-        Label source_label = LabelRu.odnokr;
+        Label source_label = LabelRu.momentane;
         
         String[] one_param = {"глядеть"};
         expResult = "[[однократно|однокр.]] к [[глядеть]]";
@@ -264,7 +264,7 @@ public class FormOfRuTest {
     public void testTransformTemplateToText_mnogokr() {
         System.out.println("transformTemplateToText_mnogokr");
         String result, expResult;
-        Label source_label = LabelRu.mnogokr;
+        Label source_label = LabelRu.frequentative;
         
         String[] one_param = {"говорить"};
         expResult = "[[многократно|многокр.]] к [[говорить]]";

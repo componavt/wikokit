@@ -96,7 +96,12 @@ public class LabelEn extends Label {
     // //////////////////////////
     public static final Label abbreviation = new LabelEn("abbreviation", "abbreviation", LabelCategory.grammatical);
             // todo http://en.wiktionary.org/wiki/Template:abbreviation_of
+    public static final Label adjectival = new LabelEn("adjectival", "adjectival", LabelCategory.grammatical); // ruwikt винительный падеж
+    public static final Label adjective = new LabelEn("adjective", "adjective", LabelCategory.grammatical); // ruwikt прилагательное
+    public static final Label adverb = new LabelEn("adverb", "adverb", LabelCategory.grammatical); // ruwikt form-of
+    public static final Label ablative = new LabelEn("ablative", "ablative", LabelCategory.grammatical); // ruwikt исходный падеж
     public static final Label acronym = new LabelEn("acronym", "acronym", LabelCategory.grammatical);
+    public static final Label accusative = new LabelEn("accusative", "accusative", LabelCategory.grammatical); // ruwikt адъективное
     public static final Label ambitransitive = new LabelEn("transitive, intransitive", "transitive, intransitive", LabelCategory.grammatical);
     public static final Label animate = new LabelEn("animate", "animate", LabelCategory.grammatical);
     public static final Label attributive = new LabelEn("attributive", "attributive", LabelCategory.grammatical); //определение
@@ -106,9 +111,12 @@ public class LabelEn extends Label {
     public static final Label by_ellipsis = new LabelEn("by ellipsis", "by ellipsis", LabelCategory.grammatical); //под многоточием
     public static final Label cardinal = new LabelEn("cardinal", "cardinal", LabelCategory.grammatical); // количественное числительное
     public static final Label causative = new LabelEn("causative", "causative", LabelCategory.grammatical); //понудительный залог
+    public static final Label collective = new LabelEn("collective", "collective", LabelCategory.grammatical); // ruwikt собирательное
+    public static final Label common_gender = new LabelEn("common gender", "common gender", LabelCategory.grammatical); // ruwikt форма общего рода
     public static final Label comparable = new LabelEn("comparable", "comparable", LabelCategory.grammatical); //сравнимый
     public static final Label copulative = new LabelEn("copulative", "copulative", LabelCategory.grammatical); //соединительный союз
     public static final Label countable = new LabelEn("countable", "countable", LabelCategory.grammatical);
+    public static final Label dative = new LabelEn("dative", "dative", LabelCategory.grammatical); // ruwikt дательный падеж
     public static final Label defective = new LabelEn("defective", "defective", LabelCategory.grammatical); // недостаточный глагол
     public static final Label definite = new LabelEn("definite", "definite", LabelCategory.grammatical); //определенный
     public static final Label demonstrative = new LabelEn("demonstrative", "demonstrative", LabelCategory.grammatical); //указательное  местоимение
@@ -119,8 +127,13 @@ public class LabelEn extends Label {
     public static final Label ditransitive = new LabelEn("ditransitive", "ditransitive", LabelCategory.grammatical);
     public static final Label emphatic = new LabelEn("emphatic", "emphatic", LabelCategory.grammatical);
     public static final Label ergative = new LabelEn("ergative", "ergative", LabelCategory.grammatical); //эргатив
+    public static final Label exclamatory = new LabelEn("exclamatory", "exclamatory", LabelCategory.grammatical); //ruwikt в восклицательных предложениях
+    public static final Label feminine_formed_from_male = new LabelEn("feminine formed from male", "feminine formed from male", LabelCategory.grammatical); // ruwikt женского рода, образованные от мужского
+    public static final Label feminine_gender = new LabelEn("feminine gender", "feminine gender", LabelCategory.grammatical); // ruwikt женский род
     public static final Label fractional = new LabelEn("fractional", "fractional", LabelCategory.grammatical); //дробный
-    public static final Label frequentative = new LabelEn("frequentative", "frequentative", LabelCategory.grammatical); // многократный
+    public static final Label frequentative = new LabelEn("frequentative", "frequentative", LabelCategory.grammatical);
+    public static final Label generalized_abstract = new LabelEn("generalized abstract", "generalized abstract", LabelCategory.grammatical); // ruwikt обобщённое
+    public static final Label genitive_case = new LabelEn("genitive case", "genitive case", LabelCategory.grammatical); // ruwikt родительный падеж
     public static final Label idiomatic = new LabelEn("idiomatic", "idiomatic", LabelCategory.grammatical); // идиоматический
     public static final Label imperative = new LabelEn("imperative", "imperative", LabelCategory.grammatical); // повелительное наклонение
     public static final Label impersonal = new LabelEn("impersonal", "impersonal", LabelCategory.grammatical); //безличный
@@ -132,20 +145,29 @@ public class LabelEn extends Label {
     public static final Label indecl = new LabelEn("indecl", "indeclinable", LabelCategory.grammatical);
     public static final Label indefinite = new LabelEn("indefinite", "indefinite", LabelCategory.grammatical); // неопределенный
     public static final Label injunctive = new LabelEn("injunctive", "injunctive", LabelCategory.grammatical); //инъюнктив
-    public static final Label intensive = new LabelEn("intensive", "intensive", LabelCategory.grammatical); // усилительный
+    public static final Label instrumental = new LabelEn("instrumental", "instrumental", LabelCategory.grammatical); // ruwikt творительный падеж
+    public static final Label intensive = new LabelEn("intensive", "intensive", LabelCategory.grammatical); // ruwiktусилительный
     public static final Label interrogative = new LabelEn("interrogative", "interrogative", LabelCategory.grammatical); //вопросительный
     public static final Label intransitive = new LabelEn("intransitive", "intransitive", LabelCategory.grammatical);
+    public static final Label locative = new LabelEn("locative", "locative", LabelCategory.grammatical); // ruwikt местный падеж
     // public static final Label la_proper_noun_indecl = new LabelEn("la-proper noun-indecl", "indeclinable", LabelCategory.grammatical); it is not a context label in really
+    public static final Label masculine_gender = new LabelEn("masculine gender", "masculine gender", LabelCategory.grammatical); // ruwikt мужской род
     public static final Label momentane = new LabelEn("momentane", "momentane", LabelCategory.grammatical);
     public static final Label negative = new LabelEn("negative", "negative", LabelCategory.grammatical);
+    public static final Label neuter_gender = new LabelEn("neuter gender", "neuter gender", LabelCategory.grammatical); // ruwikt средний род
+    public static final Label nominative_case = new LabelEn("nominative case", "nominative case", LabelCategory.grammatical); // ruwikt именительный падеж
+    public static final Label noun = new LabelEn("noun", "noun", LabelCategory.grammatical); // ruwikt существительное
  
     public static final Label not_comparable = new LabelEn("not comparable", "not comparable", LabelCategory.grammatical); //несравнимый 
     public static final Label notcomp = LabelEn.addNonUniqueShortName(not_comparable, "notcomp");
 
-     public static final Label of_a_person = new LabelEn("of a person", "of a person", LabelCategory.grammatical);
+    public static final Label of_a_person = new LabelEn("of a person", "of a person", LabelCategory.grammatical);
     public static final Label onomatopoeia = new LabelEn("onomatopoeia", "onomatopoeia", LabelCategory.grammatical); //звукоподражание
     public static final Label ordinal = new LabelEn("ordinal", "ordinal", LabelCategory.grammatical); //порядковое числительное
+    public static final Label parenthetical_word = new LabelEn("parenthetical word", "parenthetical word", LabelCategory.grammatical); // ruwikt вводное слово
+    public static final Label participle = new LabelEn("participle", "participle", LabelCategory.grammatical); //ruwikt form-of
     public static final Label passive = new LabelEn("passive", "passive", LabelCategory.grammatical);
+    public static final Label past_tense = new LabelEn("past tense", "past tense", LabelCategory.grammatical); // ruwikt прошедшее время, прошедшего времени
     public static final Label personal = new LabelEn("personal", "personal", LabelCategory.grammatical);
     
     public static final Label plurale_tantum = new LabelEn("plurale tantum", "plural only", LabelCategory.grammatical);
@@ -156,6 +178,7 @@ public class LabelEn extends Label {
 
     public static final Label postpositive = new LabelEn("postpositive", "postpositive", LabelCategory.grammatical); //постпозитивный
     public static final Label predicate = new LabelEn("predicate", "predicate", LabelCategory.grammatical);
+    public static final Label prepositional_case = new LabelEn("prepositional case", "prepositional case", LabelCategory.grammatical); // ruwikt предложный падеж
     public static final Label productive = new LabelEn("productive", "productive", LabelCategory.grammatical);
     public static final Label pronominal = new LabelEn("pronominal", "pronominal", LabelCategory.grammatical); //местоименный
     public static final Label reflexive = new LabelEn("reflexive", "reflexive", LabelCategory.grammatical); //возвратный 
@@ -163,12 +186,15 @@ public class LabelEn extends Label {
     public static final Label rhetorical_question = new LabelEn("rhetorical question", "rhetorical question", LabelCategory.grammatical); //риторический вопрос
     public static final Label set_phrase = new LabelEn("set phrase", "set phrase", LabelCategory.grammatical); //словосочетание
     public static final Label simile = new LabelEn("simile", "simile", LabelCategory.grammatical); // сравнение
+    public static final Label singular = new LabelEn("singular", "singular", LabelCategory.grammatical); // ruwikt единственное число
     
     public static final Label singulare_tantum = new LabelEn("singulare tantum", "singular only", LabelCategory.grammatical);
     public static final Label singularonly = LabelEn.addNonUniqueShortName(singulare_tantum, "singularonly");
  
+    public static final Label substantivized = new LabelEn("substantivized", "substantivized", LabelCategory.grammatical); // ruwikt субстантивированное
     public static final Label transitive = new LabelEn("transitive", "transitive", LabelCategory.grammatical);
     public static final Label uncountable = new LabelEn("uncountable", "uncountable", LabelCategory.grammatical);
+    public static final Label verb = new LabelEn("verb", "verb", LabelCategory.grammatical); // ruwikt глагол
         
     // period 15+1 Krizhanovsky
     // //////////////////////////
@@ -221,33 +247,50 @@ public class LabelEn extends Label {
     public static final Label regional = new LabelEn("regional", "regional", LabelCategory.regional); // meta regional context label
     
     public static final Label Acadia = new LabelEn("Acadia", "Acadian", LabelCategory.regional);
+    public static final Label Adygei = new LabelEn("Adygei", "Adygei", LabelCategory.regional); // ruwikt адыгейское
     public static final Label Africa = new LabelEn("Africa", "Africa",    LabelCategory.regional);
+    public static final Label Afrikaans = new LabelEn("Afrikaans", "Afrikaans",    LabelCategory.regional); // ruwikt африкаанс
     public static final Label African_American_Vernacular_English = new LabelEn("African American Vernacular English",     "African American Vernacular",    LabelCategory.regional);
+    public static final Label Ainu = new LabelEn("Ainu", "Ainu",    LabelCategory.regional); // ruwikt айнское
+    public static final Label Albania = new LabelEn("Albania", "Albania", LabelCategory.regional); // ruwikt албанское
     public static final Label Alberta = new LabelEn("Alberta", "Alberta", LabelCategory.regional);
+    public static final Label Alemannic = new LabelEn("Alemannic", "Alemannic", LabelCategory.regional); // ruwikt алеманское
     public static final Label Algeria = new LabelEn("Algeria", "Algeria", LabelCategory.regional);
     public static final Label Alghero = new LabelEn("Alghero", "Alghero", LabelCategory.regional);
     public static final Label American_spelling = new LabelEn("American spelling", "American", LabelCategory.regional);
     public static final Label Anglo_Norman = new LabelEn("Anglo-Norman", "Anglo-Norman", LabelCategory.regional);
     public static final Label Angola = new LabelEn("Angola", "Angola", LabelCategory.regional);
     public static final Label Appalachian = new LabelEn("Appalachian", "Appalachian", LabelCategory.regional);
+    public static final Label Arabic = new LabelEn("Arabic", "Arabic", LabelCategory.regional); // ruwikt арабское
+    public static final Label Aragonese = new LabelEn("Aragonese", "Aragonese", LabelCategory.regional); // ruwikt арагонское
     public static final Label Argentina = new LabelEn("Argentina", "Argentina", LabelCategory.regional);
+    public static final Label Armenia = new LabelEn("Armenia", "Armenia", LabelCategory.regional); // ruwikt армянское
+    public static final Label Assam = new LabelEn("Assam", "Assam", LabelCategory.regional); // ruwikt ассамское
+    public static final Label Asturias = new LabelEn("Asturias", "Asturias", LabelCategory.regional); // ruwikt астурийское
     public static final Label Atlantic_Canada = new LabelEn("Atlantic Canada", "Atlantic Canada", LabelCategory.regional);
 
     public static final Label Australia = new LabelEn("Australia", "Australia", LabelCategory.regional);
     public static final Label AU = LabelEn.addNonUniqueShortName(Australia, "AU");
 
     public static final Label Austria = new LabelEn("Austria", "Austria", LabelCategory.regional);
+    public static final Label Aymara = new LabelEn("Aymara", "Aymara", LabelCategory.regional); // ruwikt аймарское
+    public static final Label Azerbaijan = new LabelEn("Azerbaijan", "Azerbaijan", LabelCategory.regional); // ruwikt азейбарджанское
 
     public static final Label Balearics = new LabelEn("Balearics", "Balearics", LabelCategory.regional);
     public static final Label Balhae = new LabelEn("Balhae", "Balhae", LabelCategory.regional);
     public static final Label Balkar = new LabelEn("Balkar", "Balkar", LabelCategory.regional);
+    public static final Label Bashkiria = new LabelEn("Bashkiria", "Bashkiria", LabelCategory.regional); // ruwikt башкирское
+    public static final Label Basque = new LabelEn("Basque", "Basque", LabelCategory.regional); // ruwikt баскское
+    public static final Label Belarus = new LabelEn("Belarus", "Belarus", LabelCategory.regional); // ruwikt белорусское
     public static final Label Belgium = new LabelEn("Belgium", "Belgium", LabelCategory.regional);
     public static final Label Belize = new LabelEn("Belize", "Belize",  LabelCategory.regional);
+    public static final Label Bengal = new LabelEn("Bengal", "Bengal",  LabelCategory.regional); // ruwikt бенгальское
     public static final Label Bolivia = new LabelEn("Bolivia", "Bolivia", LabelCategory.regional);
     public static final Label Border_Scots = new LabelEn("Border Scots", "Border Scots", LabelCategory.regional);
     public static final Label Bosnia = new LabelEn("Bosnia", "Bosnia", LabelCategory.regional);
     public static final Label Brabant = new LabelEn("Brabant", "Brabant", LabelCategory.regional);
     public static final Label Brazil = new LabelEn("Brazil", "Brazil", LabelCategory.regional);
+    public static final Label Breton = new LabelEn("Breton", "Breton", LabelCategory.regional); // ruwikt бретонское
     public static final Label Bristol = new LabelEn("Bristol", "Bristolian", LabelCategory.regional);
 
     public static final Label British = new LabelEn("British", "UK", LabelCategory.regional);
@@ -256,15 +299,20 @@ public class LabelEn extends Label {
     public static final Label British_Columbia = new LabelEn("British Columbia", "British Columbia", LabelCategory.regional);
     public static final Label British_spelling = new LabelEn("British spelling", "British", LabelCategory.regional);
     public static final Label Brunei = new LabelEn("Brunei", "Brunei", LabelCategory.regional);
+    public static final Label Bulgaria = new LabelEn("Bulgaria", "Bulgaria",  LabelCategory.regional); // ruwikt болгарское
+    public static final Label Buryat = new LabelEn("Buryat", "Buryat",  LabelCategory.regional); // ruwikt бурятское
 
     public static final Label Canada = new LabelEn("Canada", "Canada", LabelCategory.regional);
     public static final Label Canadian_Prairies = new LabelEn("Canadian Prairies", "Canadian Prairies", LabelCategory.regional);
     public static final Label Caribbean = new LabelEn("Caribbean", "Caribbean", LabelCategory.regional);
     public static final Label Chakavian = new LabelEn("Chakavian", "Chakavian", LabelCategory.regional);
     public static final Label Channel_Islands = new LabelEn("Channel Islands", "Channel Islands", LabelCategory.regional);
+    public static final Label Chechen_Republic = new LabelEn("Chechen Republic", "Chechen Republic",  LabelCategory.regional); // ruwikt чеченское
+    public static final Label Church_Slavonic = new LabelEn("Church Slavonic", "Church Slavonic", LabelCategory.regional); // ruwikt церковно-славянское
     public static final Label Chile = new LabelEn("Chile", "Chile", LabelCategory.regional);
     public static final Label China = new LabelEn("China", "China", LabelCategory.regional);
     public static final Label Chinglish = new LabelEn("Chinglish", "Chinglish", LabelCategory.regional);
+    public static final Label Chuvashia = new LabelEn("Chuvashia", "Chuvashia",  LabelCategory.regional); // ruwikt чувашское
     public static final Label Cockney = new LabelEn("Cockney", "Cockney", LabelCategory.regional);
     public static final Label Cockney_rhyming_slang = new LabelEn("Cockney rhyming slang", "Cockney rhyming slang", LabelCategory.regional);
     public static final Label Colombia = new LabelEn("Colombia", "Colombia", LabelCategory.regional);
@@ -278,9 +326,11 @@ public class LabelEn extends Label {
     public static final Label Cuba = new LabelEn("Cuba", "Cuba", LabelCategory.regional);
     public static final Label Cumbria = new LabelEn("Cumbria", "Cumbrian", LabelCategory.regional);
     public static final Label cypriot = new LabelEn("cypriot", "Cypriot dialect", LabelCategory.regional);
+    public static final Label Czech_Republic = new LabelEn("Czech Republic", "Czech Republic",  LabelCategory.regional); // ruwikt чешское
 
     public static final Label Dari = new LabelEn("Dari", "Dari (Afghanistan)", LabelCategory.regional);
     public static final Label DDR = new LabelEn("DDR", "East Germany", LabelCategory.regional);
+    public static final Label Denmark = new LabelEn("Denmark", "Denmark", LabelCategory.regional); //ruwikt датское
     public static final Label Digor = new LabelEn("Digor", "Digor dialect", LabelCategory.regional);
     public static final Label Dominican_Republic = new LabelEn("Dominican Republic", "Dominican Republic", LabelCategory.regional);
     public static final Label Dublin = new LabelEn("Dublin", "Dublin", LabelCategory.regional);
@@ -293,10 +343,18 @@ public class LabelEn extends Label {
     public static final Label Ekavian = new LabelEn("Ekavian", "Ekavian", LabelCategory.regional);
     public static final Label El_Salvador = new LabelEn("El Salvador", "El Salvador", LabelCategory.regional);
     public static final Label England = new LabelEn("England", "England", LabelCategory.regional);
+    public static final Label Erzya = new LabelEn("Erzya", "Erzya", LabelCategory.regional); //ruwikt эрзянское
+    public static final Label Estonia = new LabelEn("Estonia", "Estonia", LabelCategory.regional); //ruwikt эстонское
     public static final Label Europe = new LabelEn("Europe", "Europe", LabelCategory.regional);
+    public static final Label Evenki = new LabelEn("Evenki", "Evenki", LabelCategory.regional); //ruwikt эвенкийское
+    public static final Label Even = new LabelEn("Even", "Even", LabelCategory.regional); //ruwikt эвенское
 
+    public static final Label Faroese = new LabelEn("Faroese", "Faroese", LabelCategory.regional); //ruwikt фарерское
+    public static final Label Fiji = new LabelEn("Fiji", "Fiji", LabelCategory.regional); //ruwikt фиджийское
     public static final Label Finland = new LabelEn("Finland", "Finland", LabelCategory.regional);
     public static final Label Flemish = new LabelEn("Flemish", "Flemish", LabelCategory.regional);
+    public static final Label Frisia = new LabelEn("Frisia", "Frisia", LabelCategory.regional); //ruwikt фризское
+    public static final Label Friuli = new LabelEn("Friuli", "Friuli", LabelCategory.regional); //ruwikt фриульское
     public static final Label France = new LabelEn("France", "France", LabelCategory.regional);
     public static final Label Gascony = new LabelEn("Gascony", "Gascony", LabelCategory.regional);
     public static final Label Geordie = new LabelEn("Geordie", "Geordie", LabelCategory.regional);
@@ -305,16 +363,20 @@ public class LabelEn extends Label {
     public static final Label Guardiol = new LabelEn("Guardiol", "Guardiol", LabelCategory.regional);
     public static final Label Guatemala = new LabelEn("Guatemala", "Guatemala", LabelCategory.regional);
     public static final Label Guernsey = new LabelEn("Guernsey", "Guernsey", LabelCategory.regional);
+    public static final Label Greece = new LabelEn("Greece", "Greece", LabelCategory.regional); // ruwikt греческое
 
     public static final Label Hartlepool = new LabelEn("Hartlepool", "Hartlepool", LabelCategory.regional);
     public static final Label Hawaii = new LabelEn("Hawaii", "Hawaii", LabelCategory.regional);
     public static final Label Helsinki_slang = new LabelEn("Helsinki slang", "Helsinki slang", LabelCategory.regional);
+    public static final Label Hittite = new LabelEn("Hittite", "Hittite", LabelCategory.regional); // ruwikt хеттское
     public static final Label Hoisanese = new LabelEn("Hoisanese", "Hoisanese", LabelCategory.regional);
     public static final Label Hollandic = new LabelEn("Hollandic", "Hollandic", LabelCategory.regional);
     public static final Label Honduras = new LabelEn("Honduras", "Honduras", LabelCategory.regional);
     public static final Label Hong_Kong = new LabelEn("Hong Kong", "Hong Kong", LabelCategory.regional);
     public static final Label Hulu_Pahang = new LabelEn("Hulu Pahang", "Hulu Pahang", LabelCategory.regional);
+    public static final Label Hungary = new LabelEn("Hungary", "Hungary", LabelCategory.regional); // ruwikt венгерское
 
+    public static final Label Iceland = new LabelEn("Iceland", "Iceland", LabelCategory.regional); // ruwikt исландское
     public static final Label Ijekavian = new LabelEn("Ijekavian", "Ijekavian", LabelCategory.regional);
     public static final Label Ikavian = new LabelEn("Ikavian", "Ikavian", LabelCategory.regional);
     public static final Label India = new LabelEn("India", "India", LabelCategory.regional);
@@ -324,6 +386,7 @@ public class LabelEn extends Label {
     public static final Label Ireland = new LabelEn("Ireland", "Ireland", LabelCategory.regional);
     public static final Label Iron = new LabelEn("Iron", "Iron dialect", LabelCategory.regional);
     public static final Label Isle_of_Mann = new LabelEn("Isle of Mann", "Manx", LabelCategory.regional);
+    public static final Label Italy = new LabelEn("Italy", "Italy", LabelCategory.regional); // ruwikt итальянское
 
     public static final Label Jakarta = new LabelEn("Jakarta", "Jakarta", LabelCategory.regional);
     public static final Label Jamaica = new LabelEn("Jamaica", "Jamaica", LabelCategory.regional);
@@ -335,15 +398,31 @@ public class LabelEn extends Label {
     public static final Label Kansai = new LabelEn("Kansai", "Kansai", LabelCategory.regional);
     public static final Label Karabakh = new LabelEn("Karabakh", "Karabakh", LabelCategory.regional);
     public static final Label Karachay = new LabelEn("Karachay", "Karachay", LabelCategory.regional);
+    public static final Label Karelia = new LabelEn("Karelia", "Karelia", LabelCategory.regional); // ruwikt карельское
+    public static final Label Kashmiri = new LabelEn("Kashmiri", "Kashmiri", LabelCategory.regional); // ruwikt кашмири
+    public static final Label Kashubian = new LabelEn("Kashubian", "Kashubian", LabelCategory.regional); // ruwikt кашубское
     public static final Label katharevousa = new LabelEn("katharevousa", "Katharevousa", LabelCategory.regional);
+    public static final Label Kazakhstan = new LabelEn("Kazakhstan", "Kazakhstan", LabelCategory.regional); // ruwikt казахское
     public static final Label Kenya = new LabelEn("Kenya", "Kenya", LabelCategory.regional);
+    public static final Label Khakassia = new LabelEn("Khakassia", "Khakassia", LabelCategory.regional); // ruwikt хакасское
+    public static final Label Khmer = new LabelEn("Khmer", "Khmer", LabelCategory.regional); // ruwikt кхмерское
+    public static final Label Korea = new LabelEn("Korea", "Korea", LabelCategory.regional); // ruwikt корейское
     public static final Label Kromanti = new LabelEn("Kromanti", "Kromanti spirit possession language", LabelCategory.regional);
+    public static final Label Kuban = new LabelEn("Kuban", "Kuban", LabelCategory.regional); // ruwikt кубанское
+    public static final Label Kurdish = new LabelEn("Kurdish", "Kurdish", LabelCategory.regional); // ruwikt курдское
+    public static final Label Kyrgyzstan = new LabelEn("Kyrgyzstan", "Kyrgyzstan", LabelCategory.regional); // ruwikt киргизское
 
+    public static final Label Lak = new LabelEn("Lak", "Lak", LabelCategory.regional); // ruwikt лакское
     public static final Label Lancashire = new LabelEn("Lancashire", "Lancashire", LabelCategory.regional);
     public static final Label Languedoc = new LabelEn("Languedoc", "Languedoc", LabelCategory.regional);
+    public static final Label Laos = new LabelEn("Laos", "Laos", LabelCategory.regional); // ruwikt лаосское
+    public static final Label Latgale = new LabelEn("Latgale", "Latgale", LabelCategory.regional); // ruwikt латгальское
+    public static final Label Latin = new LabelEn("Latin", "Latin", LabelCategory.regional); // ruwikt латинское
     public static final Label Latin_America = new LabelEn("Latin America", "Latin America", LabelCategory.regional);
+    public static final Label Latvia = new LabelEn("Latvia", "Latvia", LabelCategory.regional); // ruwikt латышское
     public static final Label Limousin = new LabelEn("Limousin", "Limousin", LabelCategory.regional);
     public static final Label Lincolnshire = new LabelEn("Lincolnshire", "Lincolnshire", LabelCategory.regional);
+    public static final Label Lithuania = new LabelEn("Lithuania", "Lithuania", LabelCategory.regional); // ruwikt литовское
     public static final Label Liverpool = new LabelEn("Liverpool", "Liverpudlian", LabelCategory.regional);
     public static final Label London = new LabelEn("London", "London", LabelCategory.regional);
     public static final Label Louisiana_French = new LabelEn("Louisiana French", "Louisiana French", LabelCategory.regional);
@@ -351,25 +430,37 @@ public class LabelEn extends Label {
     public static final Label Lowlands_Scots = new LabelEn("Lowlands Scots", "Lowlands Scots", LabelCategory.regional);
     public static final Label Luxembourg = new LabelEn("Luxembourg", "Luxembourg", LabelCategory.regional);
     public static final Label Lviv = new LabelEn("Lviv", "Lviv", LabelCategory.regional);
+    public static final Label Lusatia = new LabelEn("Lusatia", "Lusatia", LabelCategory.regional); // ruwikt лужицкое
 
+    public static final Label Macedonia = new LabelEn("Macedonia", "Macedonia", LabelCategory.regional); // ruwikt македонское
+    public static final Label Malagasy = new LabelEn("Malagasy", "Malagasy", LabelCategory.regional); // ruwikt малагасийское
     public static final Label Malayeri = new LabelEn("Malayeri", "Malayeri", LabelCategory.regional);
     public static final Label Malaysia = new LabelEn("Malaysia", "Malaysia", LabelCategory.regional);
     public static final Label Mallorca = new LabelEn("Mallorca", "Mallorca", LabelCategory.regional);
+    public static final Label Malta = new LabelEn("Malta", "Malta", LabelCategory.regional); // ruwikt мальтийское
     public static final Label maniot = new LabelEn("maniot", "Maniot dialect", LabelCategory.regional);
     public static final Label Manitoba = new LabelEn("Manitoba", "Manitoba", LabelCategory.regional);
     public static final Label Marseille = new LabelEn("Marseille", "Marseille", LabelCategory.regional);
     public static final Label Mecayapan = new LabelEn("Mecayapan", "Mecayapan", LabelCategory.regional);
     public static final Label Mecklenburgisch_Low_German = new LabelEn("Mecklenburgisch Low German", "Mecklenburgisch", LabelCategory.regional);
+    public static final Label Megrelia = new LabelEn("Megrelia", "Megrelia", LabelCategory.regional); // ruwikt мегрельское
     public static final Label Mexico = new LabelEn("Mexico", "Mexico", LabelCategory.regional);
     public static final Label Midwest_US = new LabelEn("Midwest US", "Midwest US", LabelCategory.regional);
     public static final Label Mistralian = new LabelEn("Mistralian", "Mistralian", LabelCategory.regional);
+    public static final Label Moldavia = new LabelEn("Moldavia", "Moldavia", LabelCategory.regional); // ruwikt молдавское
+    public static final Label Mon = new LabelEn("Mon", "Mon", LabelCategory.regional); // ruwikt монское
+    public static final Label Mongolia = new LabelEn("Mongolia", "Mongolia", LabelCategory.regional); // ruwikt монгольское
     public static final Label Montenegro = new LabelEn("Montenegro", "Montenegro", LabelCategory.regional);
     public static final Label Morocco = new LabelEn("Morocco", "Morocco", LabelCategory.regional);
     public static final Label Multicultural_London_English = new LabelEn("Multicultural London English", "MLE", LabelCategory.regional);
     public static final Label Munster = new LabelEn("Munster", "Munster", LabelCategory.regional);
 
     public static final Label Namibia = new LabelEn("Namibia", "Namibia", LabelCategory.regional);
+    public static final Label Naples = new LabelEn("Naples", "Naples", LabelCategory.regional); // ruwikt неаполитанское
     public static final Label Negeri_Sembilan = new LabelEn("Negeri Sembilan", "Negeri Sembilan", LabelCategory.regional);
+    public static final Label Nenets = new LabelEn("Nenets", "Nenets", LabelCategory.regional); // ruwikt ненецкое
+    public static final Label Nepal = new LabelEn("Nepal", "Nepal", LabelCategory.regional); // ruwikt непальское
+    public static final Label Nepal_Bhasa = new LabelEn("Nepal Bhasa", "Nepal Bhasa", LabelCategory.regional); // ruwikt неварское
     public static final Label Netherlands = new LabelEn("Netherlands", "Netherlands", LabelCategory.regional);
     public static final Label New_Brunswick = new LabelEn("New Brunswick", "New Brunswick", LabelCategory.regional);
     public static final Label New_England = new LabelEn("New England", "New England", LabelCategory.regional);
@@ -390,42 +481,64 @@ public class LabelEn extends Label {
     public static final Label northwest = new LabelEn("northwest", "Northwest", LabelCategory.regional);
     public static final Label Northwest_Germanic = new LabelEn("Northwest Germanic", "Northwest Germanic", LabelCategory.regional);
     public static final Label Northwest_Territories = new LabelEn("Northwest Territories", "Northwest Territories", LabelCategory.regional);
+    public static final Label Norway = new LabelEn("Norway", "Norway", LabelCategory.regional); // ruwikt норвежское
     public static final Label Nova_Scotia = new LabelEn("Nova Scotia", "Nova Scotia", LabelCategory.regional);
     public static final Label Nunavut = new LabelEn("Nunavut", "Nunavut", LabelCategory.regional);
 
-    public static final Label Ontario= new LabelEn("Ontario", "Ontario", LabelCategory.regional);
+    public static final Label Occitania = new LabelEn("Occitania", "Occitania", LabelCategory.regional); // ruwikt окситанское
+    public static final Label Old_High_German = new LabelEn("Old High German", "Old High German", LabelCategory.regional); // ruwikt древневерхненемецкое
+    public static final Label Old_Prussian = new LabelEn("Old Prussian", "Old Prussian", LabelCategory.regional); // ruwikt древнепрусское
+    public static final Label Ontario = new LabelEn("Ontario", "Ontario", LabelCategory.regional);
+    public static final Label Ossetia = new LabelEn("Ossetia", "Ossetia", LabelCategory.regional); // ruwikt осетинское
 
     public static final Label Pahang = new LabelEn("Pahang", "Pahang", LabelCategory.regional);
     public static final Label Pakistan = new LabelEn("Pakistan", "Pakistan", LabelCategory.regional);
     public static final Label Paraguay = new LabelEn("Paraguay", "Paraguay", LabelCategory.regional);
     public static final Label Pennsylvania_Dutch_English = new LabelEn("Pennsylvania Dutch English", "Pennsylvania Dutch English", LabelCategory.regional);
     public static final Label Perak = new LabelEn("Perak", "Perak", LabelCategory.regional);
+    public static final Label Persian = new LabelEn("Persian", "Persian", LabelCategory.regional); // ruwikt персидское
     public static final Label Peru = new LabelEn("Peru", "Peru", LabelCategory.regional);
     public static final Label Philippines = new LabelEn("Philippines", "Philippines", LabelCategory.regional);
     public static final Label Picardy = new LabelEn("Picardy", "Picardy", LabelCategory.regional);
+    public static final Label Polabian = new LabelEn("Polabian", "Polabian", LabelCategory.regional); // ruwikt полабское
+    public static final Label Poland = new LabelEn("Poland", "Poland", LabelCategory.regional); // ruwikt польское
     public static final Label Polari = new LabelEn("Polari", "Polari", LabelCategory.regional);
     public static final Label Pomeranian_Low_German = new LabelEn("Pomeranian Low German", "Pomeranian", LabelCategory.regional);
     public static final Label pontian = new LabelEn("pontian", "Pontian dialect", LabelCategory.regional);
     public static final Label Portugal = new LabelEn("Portugal", "Portugal", LabelCategory.regional);
     public static final Label Prince_Edward_Island = new LabelEn("Prince Edward Island", "Prince Edward Island", LabelCategory.regional);
     public static final Label Provence = new LabelEn("Provence", "Provence", LabelCategory.regional);
+    public static final Label Prussia= new LabelEn("Prussia", "Prussia", LabelCategory.regional); // ruwikt прусское
+    public static final Label Punjab= new LabelEn("Punjab", "Punjab", LabelCategory.regional); // ruwikt панджабское
     public static final Label Puter = new LabelEn("Puter", "Puter", LabelCategory.regional);
 
     public static final Label Quebec = new LabelEn("Quebec", "Quebec", LabelCategory.regional);
 
     public static final Label Rio_de_Janeiro = new LabelEn("Rio de Janeiro", "Rio de Janeiro city", LabelCategory.regional);
     public static final Label Réunion = new LabelEn("Réunion", "Réunion", LabelCategory.regional);
-
+    public static final Label Romani = new LabelEn("Romani", "Romani", LabelCategory.regional); // ruwikt цыганское
+    public static final Label Romania = new LabelEn("Romania", "Romania", LabelCategory.regional); // ruwikt румынское
+    public static final Label Russia = new LabelEn("Russia", "Russia", LabelCategory.regional); // ruwikt русское
+    
     public static final Label Saint_Ouen = new LabelEn("Saint Ouen", "Saint Ouën", LabelCategory.regional);
+    public static final Label Sakha_Republic = new LabelEn("Sakha Republic", "Sakha (Yakutia) Republic", LabelCategory.regional); // ruwikt якутское
+    public static final Label Samogitia = new LabelEn("Samogitia", "Samogitia", LabelCategory.regional); // ruwikt жемайтское
+    public static final Label Sanskrit = new LabelEn("Sanskrit", "Sanskrit", LabelCategory.regional); // ruwikt санскритское
     public static final Label Saskatchewan = new LabelEn("Saskatchewan", "Saskatchewan", LabelCategory.regional);
     public static final Label Scania = new LabelEn("Scania", "Scanian", LabelCategory.regional);
     public static final Label Scotland = new LabelEn("Scotland", "Scotland", LabelCategory.regional);
     public static final Label Serbia = new LabelEn("Serbia", "Serbia", LabelCategory.regional);
+    public static final Label Serbo_Croat = new LabelEn("Serbo-Croat", "Serbo-Croat", LabelCategory.regional); // ruwikt сербохорватское
+    public static final Label Sherpa = new LabelEn("Sherpa", "Sherpa", LabelCategory.regional); // ruwikt шерпское
     public static final Label Shopski = new LabelEn("Shopski", "Shopski dialect", LabelCategory.regional);
+    public static final Label Shor = new LabelEn("Shor", "Shor", LabelCategory.regional); // ruwikt шорское
+    public static final Label Silesia = new LabelEn("Silesia", "Silesia", LabelCategory.regional); // ruwikt силезское
     public static final Label Silla = new LabelEn("Silla", "Silla", LabelCategory.regional);
     public static final Label Singapore = new LabelEn("Singapore", "Singapore", LabelCategory.regional);
     public static final Label Sistani = new LabelEn("Sistani", "Sistani", LabelCategory.regional);
     public static final Label Skiri_Pawnee = new LabelEn("Skiri Pawnee", "Skiri Pawnee", LabelCategory.regional);
+    public static final Label Slovakia = new LabelEn("Slovakia", "Slovakia", LabelCategory.regional); // ruwikt словацкое
+    public static final Label Slovenia = new LabelEn("Slovenia", "Slovenia", LabelCategory.regional); // ruwikt словенское
     public static final Label South_Africa = new LabelEn("South Africa", "South Africa", LabelCategory.regional);
     public static final Label South_Korea = new LabelEn("South Korea", "South Korea", LabelCategory.regional);
     public static final Label South_Scots = new LabelEn("South Scots", "South Scots", LabelCategory.regional);
@@ -441,26 +554,43 @@ public class LabelEn extends Label {
     public static final Label Switzerland = new LabelEn("Switzerland", "Switzerland", LabelCategory.regional);
     public static final Label Sao_Paulo = new LabelEn("São Paulo", "São Paulo city", LabelCategory.regional);
 
+    public static final Label Tabasaran = new LabelEn("Tabasaran", "Tabasaran", LabelCategory.regional); // ruwikt табасаранское
+    public static final Label Tagalog = new LabelEn("Tagalog", "Tagalog", LabelCategory.regional); // ruwikt тагальское
     public static final Label Taiwan = new LabelEn("Taiwan", "Taiwan", LabelCategory.regional);
+    public static final Label Tajikistan = new LabelEn("Tajikistan", "Tajikistan", LabelCategory.regional); // ruwikt таджикское
+    public static final Label Tamil = new LabelEn("Tamil", "Tamil", LabelCategory.regional); // ruwikt тамильское
+    public static final Label Tatarstan = new LabelEn("Tatarstan", "Tatarstan", LabelCategory.regional); // ruwikt татарское
+    public static final Label Tat = new LabelEn("Tat", "Tat", LabelCategory.regional); // ruwikt татское
     public static final Label Teesside = new LabelEn("Teesside", "Teesside", LabelCategory.regional);
+    public static final Label Thai = new LabelEn("Thai", "Thai", LabelCategory.regional); // ruwikt тайское
     public static final Label Tigranakert = new LabelEn("Tigranakert", "Tigranakert", LabelCategory.regional);
     public static final Label Tosk = new LabelEn("Tosk", "Tosk", LabelCategory.regional);
     public static final Label Trinidad_and_Tobago = new LabelEn("Trinidad and Tobago", "Trinidad and Tobago", LabelCategory.regional);
+    public static final Label Turkey = new LabelEn("Turkey", "Turkey", LabelCategory.regional); // ruwikt турецкое
+    public static final Label Turkic = new LabelEn("Turkic", "Turkic", LabelCategory.regional); // ruwikt тюркское
+    public static final Label Turkmenistan = new LabelEn("Turkmenistan", "Turkmenistan", LabelCategory.regional); // ruwikt туркменское
     public static final Label Tyneside = new LabelEn("Tyneside", "Tyneside", LabelCategory.regional);
 
+    public static final Label Udmurtia = new LabelEn("Udmurtia", "Udmurtia", LabelCategory.regional); // ruwikt удмуртское
     public static final Label uds = new LabelEn("uds.", "used formally in Spain", LabelCategory.regional);
+    public static final Label Ukraine = new LabelEn("Ukraine", "Ukraine", LabelCategory.regional); // ruwikt украинское
     public static final Label Ullans = new LabelEn("Ullans", "Ulster Scots", LabelCategory.regional);
     public static final Label Ulster = new LabelEn("Ulster", "Ulster", LabelCategory.regional);
     public static final Label Uruguay = new LabelEn("Uruguay", "Uruguay", LabelCategory.regional);
     public static final Label US = new LabelEn("US", "US", LabelCategory.regional);
+    public static final Label Uyghur = new LabelEn("Uyghur", "Uyghur", LabelCategory.regional); // ruwikt уйгурское
+    public static final Label Uzbekistan = new LabelEn("Uzbekistan", "Uzbekistan", LabelCategory.regional); // ruwikt узбекское
 
     public static final Label Valencia = new LabelEn("Valencia", "Valencia", LabelCategory.regional);
     public static final Label Vallader = new LabelEn("Vallader", "Vallader", LabelCategory.regional);
     public static final Label Venezuela = new LabelEn("Venezuela", "Venezuela", LabelCategory.regional);
     public static final Label Venice = new LabelEn("Venice", "Venice", LabelCategory.regional);
+    public static final Label Veps = new LabelEn("Veps", "Veps", LabelCategory.regional); // ruwikt вепсское
     public static final Label Vivaro_Alpine = new LabelEn("Vivaro-Alpine", "Vivaro-Alpine", LabelCategory.regional);
 
     public static final Label Wales = new LabelEn("Wales", "Wales", LabelCategory.regional);
+    public static final Label Walloon = new LabelEn("Walloon", "Walloon", LabelCategory.regional); // ruwikt валлонское
+    public static final Label Waray = new LabelEn("Waray", "Waray", LabelCategory.regional); // ruwikt варайское
     public static final Label Wearside = new LabelEn("Wearside", "Wearside", LabelCategory.regional);
     public static final Label West_Germanic = new LabelEn("West Germanic", "West Germanic", LabelCategory.regional);
     public static final Label West_Midlands = new LabelEn("West Midlands", "West Midlands", LabelCategory.regional);
@@ -472,20 +602,26 @@ public class LabelEn extends Label {
 
     public static final Label Yanbian = new LabelEn("Yanbian", "Yanbian", LabelCategory.regional);
     public static final Label Yorkshire = new LabelEn("Yorkshire", "Yorkshire", LabelCategory.regional);
+    public static final Label Yoruba = new LabelEn("Yoruba", "Yoruba", LabelCategory.regional); // ruwikt йоруба
     public static final Label Yukon = new LabelEn("Yukon", "Yukon", LabelCategory.regional);
 
     public static final Label Zimbabwe = new LabelEn("Zimbabwe", "Zimbabwe", LabelCategory.regional);
-
+    
 
     // usage 73-3+1 Krizhanovsky
     // //////////////////////////
     public static final Label abusive = new LabelEn("abusive",  "abusive", LabelCategory.usage); // ruwikt бранное
+    public static final Label acerbity = new LabelEn("acerbity",  "acerbity", LabelCategory.usage); // ruwikt грубое
     public static final Label ad_slang = new LabelEn("ad slang",  "advertising slang", LabelCategory.usage);
+    public static final Label augmentative = new LabelEn("augmentative",  "augmentative", LabelCategory.usage); // ruwikt увеличительное
     public static final Label Australian_slang = new LabelEn("Australian slang",  "Australian slang", LabelCategory.usage);
     public static final Label avoidance = new LabelEn("avoidance",  "avoidance term", LabelCategory.usage);
+    public static final Label bombast = new LabelEn("bombast",  "bombast", LabelCategory.usage); // ruwikt высокопарное
     public static final Label British_slang = new LabelEn("British slang",  "British slang", LabelCategory.usage);
+    public static final Label beaurocratic = new LabelEn("beaurocratic",  "beaurocratic", LabelCategory.usage); // ruwikt канцелярское
     public static final Label buzzword = new LabelEn("buzzword",  "buzzword", LabelCategory.usage);
     public static final Label by_extension = new LabelEn("by extension",  "by extension", LabelCategory.usage);
+    public static final Label cacography = new LabelEn("cacography",  "cacography", LabelCategory.usage); // ruwikt эрративное (перевод посредством перехода с русской вики на английскую, в словарях не нашел)
     public static final Label cant = new LabelEn("cant",  "cant", LabelCategory.usage); // косяк, жаргон
     public static final Label capitalized = new LabelEn("capitalized",  "capitalized", LabelCategory.usage); // с большой буквы?
     public static final Label childish = new LabelEn("childish",  "childish", LabelCategory.usage);
@@ -496,6 +632,9 @@ public class LabelEn extends Label {
     public static final Label colloquial_um = LabelEn.addNonUniqueShortName(colloquial, "colloquial-um");
     public static final Label colloquial_un = LabelEn.addNonUniqueShortName(colloquial, "colloquial-un");
     
+    public static final Label computerese = new LabelEn("computerese",  "computerese", LabelCategory.usage); // ruwikt компьютерный жаргон    
+    public static final Label contemptuous = new LabelEn("contemptuous",  "contemptuous", LabelCategory.usage); // ruwikt презрительное
+    public static final Label corroborative = new LabelEn("corroborative",  "corroborative", LabelCategory.usage); // ruwikt усилительное
     public static final Label derogatory = new LabelEn("derogatory",  "derogatory", LabelCategory.usage);
     
     public static final Label dialect = new LabelEn("dialect",  "dialect", LabelCategory.usage);
@@ -503,16 +642,23 @@ public class LabelEn extends Label {
     public static final Label dialectal_n = LabelEn.addNonUniqueShortName(dialect, "dialectal_n");
     public static final Label dialects = LabelEn.addNonUniqueShortName(dialect, "dialects");
     
+    public static final Label diminutive = new LabelEn("diminutive",  "diminutive", LabelCategory.usage); // ruwikt уменьшительное
+    public static final Label diminutive_hypocoristic = new LabelEn("diminutive hypocoristic",  "diminutive hypocoristic", LabelCategory.usage); // ruwikt уменьшительно-ласкательное
     public static final Label dismissal = new LabelEn("dismissal",  "dismissal", LabelCategory.usage);
+    public static final Label distorted = new LabelEn("distorted",  "distorted", LabelCategory.usage); // ruwikt искажённое
+    public static final Label dysphemism = new LabelEn("dysphemism",  "dysphemism", LabelCategory.usage); // ruwikt дисфемизм
     public static final Label endearing = new LabelEn("endearing",  "endearing", LabelCategory.usage);
     public static final Label ethnic_slur = new LabelEn("ethnic slur",  "ethnic slur", LabelCategory.usage);
     public static final Label euphemistic = new LabelEn("euphemistic",  "euphemistic", LabelCategory.usage);
+    public static final Label expressive = new LabelEn("expressive",  "expressive", LabelCategory.usage); // ruwikt экспрессивное
     public static final Label familiar = new LabelEn("familiar",  "familiar", LabelCategory.usage);
     public static final Label fandom_slang = new LabelEn("fandom slang",  "fandom slang", LabelCategory.usage);
     
     public static final Label figuratively = new LabelEn("figuratively", "figuratively", LabelCategory.usage);
     // la-conj-form-gloss/iacio/context6 -> figuratively // strange context label which will skipped by parser
     
+    public static final Label folk_colloquial = new LabelEn("folk colloquial",  "folk colloquial", LabelCategory.usage); // ruwikt народно-разговорное
+    public static final Label folk_poetic = new LabelEn("folk poetic",  "folk poetic", LabelCategory.usage); // ruwikt народно-поэтическое
     public static final Label formal = new LabelEn("formal",  "formal", LabelCategory.usage);
     public static final Label gay_slang = new LabelEn("gay slang",  "gay slang", LabelCategory.usage);
     public static final Label humorous = new LabelEn("humorous",  "humorous", LabelCategory.usage);
@@ -526,6 +672,7 @@ public class LabelEn extends Label {
     public static final Label leet = new LabelEn("leet",  "leetspeak", LabelCategory.usage);
     public static final Label literary = new LabelEn("literary",  "literary", LabelCategory.usage);
     public static final Label loosely = new LabelEn("loosely",  "loosely", LabelCategory.usage);
+    public static final Label low_style = new LabelEn("low style",  "low style", LabelCategory.usage); // ruwikt сниженное (низкий стиль)
     public static final Label Lubunyaca = new LabelEn("Lubunyaca",  "Lubunyaca", LabelCategory.usage);
     public static final Label medical_slang = new LabelEn("medical slang",  "medical slang", LabelCategory.usage);
     public static final Label metonymy = new LabelEn("metonymy",  "metonymically", LabelCategory.usage);
@@ -533,11 +680,14 @@ public class LabelEn extends Label {
     public static final Label military_slang = new LabelEn("military slang",  "military slang", LabelCategory.usage);
     public static final Label nonce = new LabelEn("nonce",  "nonce word", LabelCategory.usage);
     public static final Label nonstandard = new LabelEn("nonstandard",  "nonstandard", LabelCategory.usage);
+    public static final Label obscene_language = new LabelEn("obscene language",  "obscene language", LabelCategory.usage); // ruwikt мат
     public static final Label offensive = new LabelEn("offensive",  "offensive", LabelCategory.usage); // оскорбительный, агрессивный
+    public static final Label others = new LabelEn("others",  "others", LabelCategory.usage); // ruwikt прочее
     public static final Label pejorative = new LabelEn("pejorative", "pejorative", LabelCategory.usage);
     public static final Label poetic = new LabelEn("poetic", "poetic", LabelCategory.usage);
     public static final Label polite = new LabelEn("polite",  "polite", LabelCategory.usage);  // вежливый
     public static final Label politically_correct = new LabelEn("politically correct",  "politically correct", LabelCategory.usage);
+    public static final Label popular_language = new LabelEn("popular language", "popular language", LabelCategory.usage); // ruwikt просторечное
     public static final Label proscribed = new LabelEn("proscribed",  "proscribed", LabelCategory.usage);
     public static final Label radio_slang = new LabelEn("radio slang",  "radio slang", LabelCategory.usage);
     
@@ -546,14 +696,25 @@ public class LabelEn extends Label {
     public static final Label rare_sense = LabelEn.addNonUniqueShortName(rare, "rare sense");
     public static final Label rare_term = LabelEn.addNonUniqueShortName(rare, "rare term");
     
+    public static final Label reproach = new LabelEn("reproach",  "reproach", LabelCategory.usage); // ruwikt укорительное
     public static final Label retronym = new LabelEn("retronym",  "retronym", LabelCategory.usage);
     public static final Label rfd_redundant = new LabelEn("rfd-redundant",  "rfd-redundant", LabelCategory.usage);
     public static final Label rfv_sense = new LabelEn("rfv-sense",  "rfv-sense", LabelCategory.usage);
+    
     public static final Label sarcastic = new LabelEn("sarcastic",  "sarcastic", LabelCategory.usage);
+    public static final Label ironic = LabelEn.addNonUniqueShortName(sarcastic, "ironic");
+    public static final Label sarcasm = LabelEn.addNonUniqueShortName(sarcastic, "sarcasm");
+    
+    public static final Label scornful = new LabelEn("scornful",  "scornful", LabelCategory.usage); // ruwikt пренебрежительное
     public static final Label slang = new LabelEn("slang",  "slang", LabelCategory.usage);
+    public static final Label solemn = new LabelEn("solemn",  "solemn", LabelCategory.usage); // ruwikt торжественное
+    public static final Label student_slang = new LabelEn("student slang",  "student slang", LabelCategory.usage); // ruwikt студенческий жаргон
+    public static final Label tabooed = new LabelEn("tabooed",  "tabooed", LabelCategory.usage); // ruwikt табуированное
+    public static final Label technical_jargon = new LabelEn("technical jargon",  "technical jargon", LabelCategory.usage); // ruwikt технический жаргон
     public static final Label text_messaging = new LabelEn("text messaging",  "text messaging", LabelCategory.usage);
     public static final Label tiopês = new LabelEn("tiopês",  "tiopês", LabelCategory.usage);
     public static final Label trademark = new LabelEn("trademark",  "trademark", LabelCategory.usage);
+    public static final Label traditionally_poetic = new LabelEn("traditionally poetic",  "traditionally poetic", LabelCategory.usage); // ruwikt традиционно-поэтическое
     
     public static final Label transferred_sense = new LabelEn("transferred sense",  "transferred sense", LabelCategory.usage); // В ПЕРЕНОСНОМ СМЫСЛЕ
     public static final Label transferred_senses = LabelEn.addNonUniqueShortName(transferred_sense, "transferred_senses");
@@ -561,6 +722,7 @@ public class LabelEn extends Label {
     public static final Label uncommon = new LabelEn("uncommon",  "uncommon", LabelCategory.usage); // РЕДКИЙ
     public static final Label US_slang = new LabelEn("US slang",  "US slang", LabelCategory.usage);
     public static final Label vulgar = new LabelEn("vulgar",  "vulgar", LabelCategory.usage);
+    public static final Label youth = new LabelEn("youth",  "youth", LabelCategory.usage);    
     
     // **************************
     // topical 376 Ann
@@ -1287,19 +1449,16 @@ public class LabelEn extends Label {
     // form-of templates in ruwikt (which are not a context label, but a definition text should be extracted from these templates - it's a dirty hack %)
     // public static final Label form_of_templates = new LabelEn("dirty hack", ":)", LabelCategory.empty);
     
-    public static final Label ru_adverb = new LabelEn("ruwikt нареч.", "ruwikt {{нареч.}}", LabelCategory.empty);
+    // public static final Label ru_adverb = new LabelEn("ruwikt нареч.", "ruwikt {{нареч.}}", LabelCategory.empty);
     public static final Label ru_as_ru = new LabelEn("ruwikt as ru", "ruwikt {{as ru}}", LabelCategory.empty);
     public static final Label ru_action = new LabelEn("ruwikt действие", "ruwikt {{действие}}", LabelCategory.empty);
     public static final Label ru_equal = new LabelEn("ruwikt =", "ruwikt {{=}}", LabelCategory.empty);
     public static final Label ru_element = new LabelEn("элемент", "ruwikt {{элемент}}", LabelCategory.empty);
-    public static final Label ru_participle = new LabelEn("ruwikt прич.", "ruwikt {{прич.}}", LabelCategory.empty);
+    //public static final Label ru_participle = new LabelEn("ruwikt прич.", "ruwikt {{прич.}}", LabelCategory.empty);
     public static final Label ru_property = new LabelEn("ruwikt свойство", "ruwikt {{свойство}}", LabelCategory.empty);
     public static final Label ru_sootn = new LabelEn("ruwikt соотн.", "ruwikt {{соотн.}}", LabelCategory.empty);
     
     public static final Label ru_sovershiti = new LabelEn("ruwikt совершить", "ruwikt {{совершить}}", LabelCategory.empty);
-    public static final Label ru_odnokr = new LabelEn("ruwikt однокр.", "ruwikt {{однокр.}}", LabelCategory.empty);
-    public static final Label ru_mnogokr = new LabelEn("ruwikt многокр.", "ruwikt {{многокр.}}", LabelCategory.empty);
-    
     public static final Label ru_sostoyanie = new LabelEn("ruwikt состояние", "ruwikt {{состояние}}", LabelCategory.empty);
     
     
