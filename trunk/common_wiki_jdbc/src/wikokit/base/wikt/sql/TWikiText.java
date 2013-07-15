@@ -33,7 +33,8 @@ public class TWikiText {
     /** Text without wikification (without context labels). */
     private StringBuffer text;
 
-    /** Text with wikification    (without context labels). */
+    /** Text with wikification    (without context labels). 
+     * If there is no any wikification in the text, then wikified_text = ""; (empty string). */
     private StringBuffer wikified_text;
     
     //private final static TMeaning[] NULL_TMEANING_ARRAY = new TMeaning[0];
@@ -41,7 +42,12 @@ public class TWikiText {
     public TWikiText(int _id,String _text,String _wikified_text) {
         id              = _id;
         text            = new StringBuffer(_text);
-        wikified_text   = new StringBuffer(_wikified_text);
+        
+        if(null == _wikified_text) {
+            wikified_text = new StringBuffer("");
+        } else { 
+            wikified_text   = new StringBuffer(_wikified_text);
+        }
     }
 
     /** Gets unique ID from database */
@@ -115,14 +121,21 @@ public class TWikiText {
         {
             Statement s = connect.conn.createStatement ();
             try {
-                str_sql.append("INSERT INTO wiki_text (text,wikified_text) VALUES (\"");
                 String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, text);
-                str_sql.append(safe_text);
-                str_sql.append("\",\"");
                 
-                String wikified_safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, wikified_text);
-                str_sql.append(wikified_safe_text);
-                str_sql.append("\")");
+                if(null == wikified_text) {
+                    str_sql.append("INSERT INTO wiki_text (text) VALUES (\"");
+                    str_sql.append(safe_text);
+                    str_sql.append("\")");
+                } else {
+                    str_sql.append("INSERT INTO wiki_text (text,wikified_text) VALUES (\"");
+                    str_sql.append(safe_text);
+                    str_sql.append("\",\"");
+
+                    String wikified_safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, wikified_text);
+                    str_sql.append(wikified_safe_text);
+                    str_sql.append("\")");
+                }
                 
                 s.executeUpdate (str_sql.toString());
 
@@ -170,7 +183,8 @@ public class TWikiText {
                     {
                         int id = rs.getInt("id");
 // new                  
-                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+                        byte[] bb = rs.getBytes("wikified_text");
+                        String wikified_text = (null == bb) ? null : Encodings.bytesToUTF8( bb );
 // old temp:                        
                         //String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
                         wiki_text = new TWikiText(id, text, wikified_text);

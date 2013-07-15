@@ -33,8 +33,8 @@ public class FormOfRu extends FormOf {
         nop.put(LabelRu.equal,          new int[] {    1, 2 });
         nop.put(LabelRu.element,        new int[] {       2 });
         nop.put(LabelRu.element_symbol, new int[] {       2, 3, 4 });
-        nop.put(LabelRu.mnogokr,        new int[] {    1 });
-        nop.put(LabelRu.odnokr,         new int[] {    1 });
+        nop.put(LabelRu.frequentative,  new int[] {    1 });
+        nop.put(LabelRu.momentane,      new int[] {    1 });
         nop.put(LabelRu.participle,     new int[] {    1, 2 });
         nop.put(LabelRu.property,       new int[] {    1, 2, 3, 4 });
         nop.put(LabelRu.sostoyanie,     new int[] {    1, 2 });
@@ -151,13 +151,13 @@ public class FormOfRu extends FormOf {
                 case 4: result = "[[химический элемент]] с [[атомный номер|атомным номером]] "+template_params[0]+", обозначается [[химический символ|химическим символом]] "+template_params[1]+", "+template_params[2];
             }
             
-        } else if(Label.equals(label, LabelRu.mnogokr)) {
+        } else if(Label.equals(label, LabelRu.frequentative)) {
             switch( template_params.length ) {
                 case 1: result = "[[многократно|многокр.]] к [["+template_params[0]+"]]";
                         break;
             }
             
-        } else if(Label.equals(label, LabelRu.odnokr)) {
+        } else if(Label.equals(label, LabelRu.momentane)) {
             switch( template_params.length ) {
                 case 1: result = "[[однократно|однокр.]] к [["+template_params[0]+"]]";
                         break;

@@ -198,7 +198,7 @@ DROP TABLE IF EXISTS `wiki_text` ;
 CREATE  TABLE IF NOT EXISTS `wiki_text` (
   `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `text` VARCHAR(4095) BINARY NOT NULL ,
-  `wikified_text` VARCHAR(4095) BINARY NOT NULL ,
+  `wikified_text` VARCHAR(4095) BINARY NULL DEFAULT NULL ,
   PRIMARY KEY (`id`) ,
   INDEX `idx_text` (`text`(12) ASC) )
 ENGINE = InnoDB;
@@ -425,7 +425,7 @@ CREATE  TABLE IF NOT EXISTS `label` (
   `label` VARCHAR(255) NOT NULL COMMENT 'label itself, e.g. {{obsolete}}, {{slang}}' ,
   `full_name` VARCHAR(255) NULL COMMENT 'label name, e.g. \'New Zealand\' for {{NZ}}' ,
   `category_id` TINYINT UNSIGNED NULL COMMENT 'ID of category of context labels' ,
-  `added_by_hand` TINYINT(1)  NULL COMMENT 'added manually to code or was gathered automatically by parser' ,
+  `added_by_hand` TINYINT(1)  NULL COMMENT 'added manually to code or gathered automatically by parser' ,
   `counter` INT(10) UNSIGNED NULL COMMENT 'number of times that this label was used in articles' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `label_UNIQUE` (`label` ASC) )

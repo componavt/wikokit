@@ -3,6 +3,9 @@ wiwordik 0.XX 2011-0?-??
 
   common_wiki_android_test Runs: 59 errors 0 failures 1
 
+-Xms1212m -Xmx1212m -Xmn16m -XX:+DisableExplicitGC -verbose:gc
+-Xms1212m -Xmx1212m -Xmn16m -XX:+DisableExplicitGC -verbose:gc -XX:PermSize=256m
+
 Split to common_wiki and common_wiki_jdbc
   common_wiki 277 tests passed, 5 tests failed
   common_wiki 237 tests passed, 6 tests failed
