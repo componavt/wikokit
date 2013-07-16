@@ -110,6 +110,22 @@ public class LabelRuTest {
         assertTrue( LabelText.equals( expResult, result) );
     }
     
+    // complex case: list of labels with short words between
+    // # {{устар.}} ''или'' {{поэт.}}; {{старин.}} {{=|город}}
+    @Test
+    public void testExtractLabelsTrimText_labels_and_short_words_between() {
+        System.out.println("extractLabelsTrimText_labels_and_short_words_between");
+        
+        String line        = "{{устар.}} ''или'' {{поэт.}}; {{старин.}} {{=|город}}"; // http://ru.wiktionary.org/wiki/град
+        String result_line =                                    "то же, что [[город]]";
+        
+        Label[] _labels = { LabelEn.obsolete, LabelEn.poetic, LabelEn.archaic, LabelEn.ru_equal };
+        LabelText expResult = new LabelText(_labels, result_line);
+        
+        LabelText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelText.equals( expResult, result) );
+    }
+    
     
     // ///////////////////////////////////////////////////////////
     // LabelParamsRu

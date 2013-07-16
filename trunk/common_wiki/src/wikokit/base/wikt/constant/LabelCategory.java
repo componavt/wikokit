@@ -48,7 +48,9 @@ public class LabelCategory {
             mythology,
             religion,
             science,
-            sports;
+            sports,
+            
+            invisible; // special category for form-of templates (ruwikt), e.g. "{{=|word}}" => "the same as [[word]]" - there is nothing to be printed for this template
                 
     
     static {
@@ -71,5 +73,7 @@ public class LabelCategory {
         religion    = new LabelCategory("Religion");
         science     = new LabelCategory("Science");
         sports      = new LabelCategory("Sports");
+        
+        invisible   = new LabelCategory("Invisible");
     }
 }

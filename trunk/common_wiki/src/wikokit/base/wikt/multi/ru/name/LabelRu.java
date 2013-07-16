@@ -149,9 +149,11 @@ public class LabelRu extends LabelLocal  {
                 labels.add(l);
             }
             
-            // between (or before) context labels only space and punctuation marks could be
+            
             String text_before = TemplateExtractor.extractTextBeforeTemplate(line, te);
-            if (text_before.matches("[\\s\\pP]*")) {
+            if (text_before.length() < 10 ||       // or very short text, e.g. {{label1}} ``and`` {{label2}}
+                text_before.matches("[\\s\\pP]*")) // between (or before) context labels only space and punctuation marks could be
+            {
                 String text_wo_labels = text_from_label.concat( TemplateExtractor.extractTextAfterTemplate(line, te) );
                 result = new LabelText(labels, text_wo_labels);
             }
