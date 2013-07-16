@@ -83,6 +83,7 @@ public class WLanguageRu {
         String group2 = m.group(2);
         String group3 = m.group(3);
         String group4 = m.group(4);
+        boolean zagolovok = false; // {{заголовок| // let's skip "unknown language code" for "{{заголовок|"
 
         if(null == group1 && null == group3)
             return null;
@@ -91,6 +92,7 @@ public class WLanguageRu {
             lang_code = group2;
         else {
             if(null != group3 && group3.equalsIgnoreCase("{{заголовок|")) {
+                zagolovok = true;
 
                 int pipe_index = group4.indexOf('|');
                 if(-1 == pipe_index) {
@@ -111,7 +113,8 @@ public class WLanguageRu {
         }
 
         if(lang_code.length() == 0) {
-            System.out.println("Warning: empty language code for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
+            if(!zagolovok)
+                System.out.println("Warning in WLanguageRu.getLanguageType(): empty language code for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
             return null;
         }
 
@@ -120,7 +123,8 @@ public class WLanguageRu {
             lang_code = m.group(2);
         }*/
         if (!LanguageType.has(lang_code)) {  // i.e. skip the whole article if the first lang code is unknown
-            System.out.println("Warning: unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
+            if(!zagolovok)
+                System.out.println("Warning in WLanguageRu.getLanguageType(): unknown language code '" + lang_code + "' for the word '" + page_title + "' in WLanguageRu.getLanguageType()");
         } else
             lang_type = LanguageType.get(lang_code);
         

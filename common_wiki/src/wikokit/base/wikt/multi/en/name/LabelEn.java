@@ -1451,16 +1451,16 @@ public class LabelEn extends Label {
     // other Russian form-of templates marked by "//ruwikt form-of"
     
     // public static final Label ru_adverb = new LabelEn("ruwikt нареч.", "ruwikt {{нареч.}}", LabelCategory.empty);
-    public static final Label ru_as_ru = new LabelEn("ruwikt as ru", "ruwikt {{as ru}}", LabelCategory.empty);//ruwikt form-of
-    public static final Label ru_action = new LabelEn("ruwikt действие", "ruwikt {{действие}}", LabelCategory.empty);//ruwikt form-of
-    public static final Label ru_equal = new LabelEn("ruwikt =", "ruwikt {{=}}", LabelCategory.empty);//ruwikt form-of
+    public static final Label ru_as_ru = new LabelEn("ruwikt as ru", "ruwikt {{as ru}}", LabelCategory.invisible);//ruwikt form-of
+    public static final Label ru_action = new LabelEn("ruwikt действие", "ruwikt {{действие}}", LabelCategory.invisible);//ruwikt form-of
+    public static final Label ru_equal = new LabelEn("ruwikt =", "ruwikt {{=}}", LabelCategory.invisible);//ruwikt form-of
     
     //public static final Label ru_participle = new LabelEn("ruwikt прич.", "ruwikt {{прич.}}", LabelCategory.empty);
-    public static final Label ru_property = new LabelEn("ruwikt свойство", "ruwikt {{свойство}}", LabelCategory.empty);//ruwikt form-of
-    public static final Label ru_sootn = new LabelEn("ruwikt соотн.", "ruwikt {{соотн.}}", LabelCategory.empty);//ruwikt form-of
+    public static final Label ru_property = new LabelEn("ruwikt свойство", "ruwikt {{свойство}}", LabelCategory.invisible);//ruwikt form-of
+    public static final Label ru_sootn = new LabelEn("ruwikt соотн.", "ruwikt {{соотн.}}", LabelCategory.invisible);//ruwikt form-of
     
-    public static final Label ru_sovershiti = new LabelEn("ruwikt совершить", "ruwikt {{совершить}}", LabelCategory.empty);//ruwikt form-of
-    public static final Label ru_sostoyanie = new LabelEn("ruwikt состояние", "ruwikt {{состояние}}", LabelCategory.empty);//ruwikt form-of
+    public static final Label ru_sovershiti = new LabelEn("ruwikt совершить", "ruwikt {{совершить}}", LabelCategory.invisible);//ruwikt form-of
+    public static final Label ru_sostoyanie = new LabelEn("ruwikt состояние", "ruwikt {{состояние}}", LabelCategory.invisible);//ruwikt form-of
     
     
     // DEBUG: should be one error for each code line below:

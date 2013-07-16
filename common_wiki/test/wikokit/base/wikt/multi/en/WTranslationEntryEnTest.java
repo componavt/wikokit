@@ -123,5 +123,31 @@ public class WTranslationEntryEnTest {
         result = WTranslationEntryEn.parse(page_title, text);
         assertEquals(null, result);
     }
+    
+    // t-SOP, @see http://en.wiktionary.org/wiki/Template:t-SOP
+    // livelihood
+    // * Russian: {{t-SOP|ru|[[средство|средства]] [[к]] [[существование|существованию]]|tr=srédstva k suščestvovániju|n-p}}
+    @Test
+    public void testParse_t_SOP() {
+        System.out.println("parameters_t_SOP");
+
+        String page_title = "livelihood";
+        String text = "* Russian: {{t-SOP|ru|[[средство|средства]] [[к]] [[существование|существованию]]|tr=srédstva k suščestvovániju|n-p}}";
+        WTranslationEntry result = WTranslationEntryEn.parse(page_title, text);
+
+        assertNotNull(result);
+        if(null == result) {
+            assertEquals(1, result.getWikiPhrases().length);
+
+            WikiText[] phrases = result.getWikiPhrases();
+
+            assertTrue(phrases[0].getVisibleText().equalsIgnoreCase( "‎средства к существованию" ) );
+            assertTrue(phrases[0].getWikifiedText().equalsIgnoreCase( "[[средство|средства]] [[к]] [[существование|существованию]]" ) );
+            WikiWord[] ww0 = phrases[0].getWikiWords();
+            assertEquals(3, ww0.length);
+            assertTrue(ww0[2].getWordVisible().equalsIgnoreCase( "существованию" ) );
+            assertTrue(ww0[2].getWordLink().   equalsIgnoreCase( "существование" ) );
+        }
+    }
 
 }
