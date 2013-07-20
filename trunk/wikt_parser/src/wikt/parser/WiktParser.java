@@ -23,6 +23,8 @@ import wikokit.base.wikipedia.sql.UtilSQL;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.label.TLabel;
+import wikokit.base.wikt.sql.label.TLabelCategory;
 
 /** Top level functions for Wiktionary parsing.
  */
@@ -49,6 +51,7 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
  * ruwikt20080620_parsed
  */
     public static void clearDatabase (Connect wikt_parsed_conn, LanguageType native_lang) {
+                
         TLang.recreateTable(wikt_parsed_conn);
         TLang.createFastMaps(wikt_parsed_conn);
 
@@ -57,6 +60,12 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
 
         TRelationType.recreateTable(wikt_parsed_conn);
         TRelationType.createFastMaps(wikt_parsed_conn);
+        
+        TLabelCategory.recreateTable(wikt_parsed_conn);
+        TLabelCategory.createFastMaps(wikt_parsed_conn);
+                
+//        TLabel.recreateTable(wikt_parsed_conn);
+//        TLabel.createFastMaps(wikt_parsed_conn);
 
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "inflection");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "lang_pos");

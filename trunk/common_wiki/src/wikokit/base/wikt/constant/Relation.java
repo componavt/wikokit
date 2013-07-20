@@ -1,4 +1,4 @@
-/* Relation.java - list of semantic relations used in all wiktionaries.
+    /* Relation.java - list of semantic relations used in all wiktionaries.
  *
  * Copyright (c) 2009 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
