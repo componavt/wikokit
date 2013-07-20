@@ -133,7 +133,7 @@ public class TRelationType {
             return NULL_TRELATIONTYPE_ARRAY;
         }
 
-        List<TRelationType>list_rel = new ArrayList<TRelationType>(size);
+        List<TRelationType>list_rel = new ArrayList<>(size);
 
         Collection<Relation> rr = Relation.getAllRelations();
         for(Relation r : rr) {

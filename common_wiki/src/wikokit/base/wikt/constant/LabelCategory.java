@@ -6,6 +6,11 @@
  */
 package wikokit.base.wikt.constant;
 
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /** Categories of context labels (templates).
  * @see http://en.wiktionary.org/wiki/Category:Context_labels
  */
@@ -14,12 +19,46 @@ public class LabelCategory {
     /** Label category name, e.g. "Regional" context labels. */
     private final String name;
     
+    /** Root (LabelCategory.empty) has .parent_category == null. */
+    private final LabelCategory parent_category;
     
-    private LabelCategory(String name) {
+    protected final static Map<String, LabelCategory> name2category = new HashMap<String, LabelCategory>();
+    protected final static Map<LabelCategory, String> category2name = new HashMap<LabelCategory, String>();
+    
+    private LabelCategory(String name, LabelCategory parent_category) {
         this.name = name;
+        this.parent_category = parent_category;
 
+        init(this);
+        
         if(name.length() == 0)
             System.out.println("Error in LabelCategory.LabelCategory(): The label category name is empty.");
+    }
+    
+    protected void init(LabelCategory label_category) {
+    
+        if(null == label_category)
+            System.out.println("Error in LabelCategory.init(): label_category is null, category name="+name+".");
+        
+        checksPrefixSuffixSpace(name);
+        
+        // check the uniqueness of the label short name and full name
+        LabelCategory cat_prev_by_name = name2category.get(name);
+
+        if(null != cat_prev_by_name)
+            System.out.println("Error in LabelCategory.init(): duplication of category_label names! name='"+name+ "'. Check the maps name2category.");
+        
+        name2category.put(name, label_category);
+        category2name.put(label_category, name);
+    };
+    
+    /** Checks whitespace characters in the prefix or suffix of a string.
+     * Prints "error" message if there is any.
+     */
+    protected static void checksPrefixSuffixSpace(String s) {
+
+        if(s.charAt(0) == ' ' || s.charAt(s.length()-1) == ' ')
+            System.out.println("Error in LabelCategory.checksPrefixSuffixSpace(): there are leading spaces, string='"+s+"'.");
     }
     
     /** Gets label category name. */
@@ -27,12 +66,53 @@ public class LabelCategory {
         return name;
     }
     
+    /** Gets parent label category. */
+    public LabelCategory getParent() {
+        return parent_category;
+    }
+    
+    /** Gets ID of parent label category from the table 'label_category'. */
+    //public LabelCategory getParent() {
+    //    return parent_category;
+    //}
+    
     public String toString() { return name; }
     
+    public static boolean hasName(String name) {
+        return name2category.containsKey(name);
+    }
+
+    /** Gets category label by name of this category. */
+    public static LabelCategory getByName(String name) throws NullPointerException
+    {
+        LabelCategory label_category;
+
+        if(null != (label_category = name2category.get(name)))
+            return  label_category;
+
+        throw new NullPointerException("Null LabelCategory.getByName(), label category name="+ name);
+    }
+    
+    /** Gets all relations. */
+    public static Collection<LabelCategory> getAllLabelCats() {
+        return name2category.values();
+    }
+    
+    /** Counts number of labels. */
+    public static int size() {
+        return name2category.size();
+    }
+    
+    /** Gets all names of labels (short name). */
+    public static Set<String> getAllNames() {
+        return name2category.keySet();
+    }
+    
     public static final LabelCategory
-            unknown, // category for labels added automatically by parser
+            root, // base (root) category of context labels
             
-            empty, // base category, or context labels without any 
+            unknown,    // category for labels added automatically by parser
+            invisible,  // special category for form-of templates (ruwikt), e.g. "{{=|word}}" => "the same as [[word]]" - there is nothing to be printed for this template
             
             grammatical, 
             period,
@@ -48,32 +128,29 @@ public class LabelCategory {
             mythology,
             religion,
             science,
-            sports,
-            
-            invisible; // special category for form-of templates (ruwikt), e.g. "{{=|word}}" => "the same as [[word]]" - there is nothing to be printed for this template
+            sports;
                 
     
     static {
-        unknown     = new LabelCategory("Unknown");
+        root       = new LabelCategory("Root", null); // root
         
-        empty       = new LabelCategory("Empty");
+        unknown     = new LabelCategory("Unknown", LabelCategory.root);
+        invisible   = new LabelCategory("Invisible", LabelCategory.root);
         
-        grammatical = new LabelCategory("Grammatical");
-        period      = new LabelCategory("Period");
-        qualifier   = new LabelCategory("Qualifier");
-        regional    = new LabelCategory("Regional");
-        usage       = new LabelCategory("Usage");
+        grammatical = new LabelCategory("Grammatical", LabelCategory.root);
+        period      = new LabelCategory("Period", LabelCategory.root);
+        qualifier   = new LabelCategory("Qualifier", LabelCategory.root);
+        regional    = new LabelCategory("Regional", LabelCategory.root);
+        usage       = new LabelCategory("Usage", LabelCategory.root);
         
-        topical     = new LabelCategory("Topical");
-        computing   = new LabelCategory("Computing");
-        games       = new LabelCategory("Games");
-        mathematics = new LabelCategory("Mathematics");
-        music       = new LabelCategory("Music");
-        mythology   = new LabelCategory("Mythology");
-        religion    = new LabelCategory("Religion");
-        science     = new LabelCategory("Science");
-        sports      = new LabelCategory("Sports");
-        
-        invisible   = new LabelCategory("Invisible");
+        topical     = new LabelCategory("Topical", LabelCategory.root);
+        computing   = new LabelCategory("Computing", LabelCategory.topical);
+        games       = new LabelCategory("Games", LabelCategory.topical);
+        mathematics = new LabelCategory("Mathematics", LabelCategory.topical);
+        music       = new LabelCategory("Music", LabelCategory.topical);
+        mythology   = new LabelCategory("Mythology", LabelCategory.topical);
+        religion    = new LabelCategory("Religion", LabelCategory.topical);
+        science     = new LabelCategory("Science", LabelCategory.topical);
+        sports      = new LabelCategory("Sports", LabelCategory.topical);
     }
 }

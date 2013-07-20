@@ -206,6 +206,11 @@ public abstract class Label {
     public static int size() {
         return short_name2label.size();
     }
+    
+    /** Gets all names of labels (short name). */
+    public static Set<String> getAllLabelShortNames() {
+        return short_name2label.keySet();
+    }
 
     /** @return true if short name of two labels are the same. */
     static public boolean equals (Label one, Label two) {

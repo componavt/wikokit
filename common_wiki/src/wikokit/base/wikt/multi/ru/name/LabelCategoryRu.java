@@ -98,7 +98,7 @@ public class LabelCategoryRu extends LabelCategoryLocal {
             sports;
     
     static {
-        empty = new LabelCategoryRu("Пометы‎", LabelCategory.empty);
+        empty = new LabelCategoryRu("Пометы‎", LabelCategory.root);
         
         grammatical = new LabelCategoryRu("Грамматические пометы‎", LabelCategory.grammatical);
         

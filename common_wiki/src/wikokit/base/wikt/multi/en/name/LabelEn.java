@@ -14,7 +14,6 @@ import java.util.Set;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
-import static wikokit.base.wikt.constant.LabelCategory.empty;
 
 import wikokit.base.wikt.multi.ru.name.LabelRu;
 
@@ -84,7 +83,7 @@ public class LabelEn extends Label {
     // Context labels without categories (empty category) 43 Krizhanovsky
     
 //  item // it's not a context label
-    public static final Label Rumantsch_Grischun = new LabelEn("Rumantsch Grischun", "Rumantsch Grischun", LabelCategory.empty);
+    public static final Label Rumantsch_Grischun = new LabelEn("Rumantsch Grischun", "Rumantsch Grischun", LabelCategory.root);
     
     
     // ///////////////////////////////////////////////////////////////////////////////////////
@@ -1348,7 +1347,7 @@ public class LabelEn extends Label {
     
     public static final Label chemistry = new LabelEn("chemistry" ,"chemistry", LabelCategory.science); // хим. - химическое
     // public static final Label element_symbol = LabelEn.addNonUniqueShortName(chemistry, "element symbol");// it is not a synonym of chemistry because it should be separate label for Russian form-of template
-    public static final Label element_symbol = new LabelEn("element symbol", "element symbol", LabelCategory.empty);//ruwikt form-of
+    public static final Label element_symbol = new LabelEn("element symbol", "element symbol", LabelCategory.science);//ruwikt form-of
     
     public static final Label psychology = new LabelEn("psychology" ,"psychology", LabelCategory.science); // психол. - психология
     public static final Label clinical_psychology = LabelEn.addNonUniqueShortName(psychology, "clinical psychology"); //
