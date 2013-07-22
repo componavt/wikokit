@@ -6,10 +6,12 @@
  */
 package wikokit.base.wikt.constant;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import wikokit.base.wikt.multi.en.name.LabelEn;
 //import wikokit.base.wikipedia.language.LanguageType;
 //import wikokit.base.wikt.multi.en.name.LabelEn;
 //import wikokit.base.wikt.multi.ru.name.LabelRu;
@@ -130,6 +132,9 @@ public abstract class Label {
             System.out.println("Error in Label.checksPrefixSuffixSpace(): there are leading spaces, string='"+s+"'.");
     }
     
+    /** Gets English Wiktionary context label (LabelEn) associated with this label (e.g. LabelRu, LabelFr, etc.). */
+    abstract public LabelEn getLinkedLabelEn();
+    
     @Override
     public String toString() { return short_name; }
     
@@ -201,6 +206,10 @@ public abstract class Label {
         return s;
     }*/
     
+    /** Gets all labels. */
+    public static Collection<Label> getAllLabels() {
+        return short_name2label.values();
+    }
     
     /** Counts number of labels. */
     public static int size() {

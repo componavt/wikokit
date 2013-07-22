@@ -167,7 +167,7 @@ public class TRelationType {
     public static Map<Integer, Relation> fillLocalMaps() {
 
         int size = Relation.size();
-        List<String>list_rel = new ArrayList<String>(size);
+        List<String>list_rel = new ArrayList<>(size);
         list_rel.addAll(Relation.getAllRelationNames());
         Collections.sort(list_rel);             // Collections.sort(list_rel, StringUtil.LEXICOGRAPHICAL_ORDER);
 
@@ -175,11 +175,11 @@ public class TRelationType {
 
         // Local map from id to Relation. It is created from data in Relation.java.
         // It is used to fill the table 'relation_type' in right sequence.
-        Map<Integer, Relation> _id2relation = new LinkedHashMap<Integer, Relation>(size);
+        Map<Integer, Relation> _id2relation = new LinkedHashMap<>(size);
         for(int id=0; id<size; id++) {
             String s = list_rel.get(id);    // s - semantic relation name
             assert(Relation.has(s));                                                 //System.out.println("fillLocalMaps---id="+id+"; s="+s);
-            _id2relation.put(id, Relation.get(s));
+            _id2relation.put(id+1, Relation.get(s));
         }
         return _id2relation;
     }

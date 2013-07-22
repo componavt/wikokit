@@ -71,11 +71,17 @@ public class LabelEn extends Label {
     
     /** Gets English Wiktionary context label associated with this label. 
      * This function is needed for compatibility with other child class (LabelLocal.java) of Label.java */
-    protected Label getLinkedLabelEn() {
+    @Override 
+    public LabelEn getLinkedLabelEn() {
         return this;
     }
     
     /** Gets label's category. */
+    public LabelCategory getCategory() {        
+        return category;
+    }
+    
+    /** Gets label's category by label's name. */
     public static LabelCategory getCategoryByLabel(Label label_en) {        
         return label2category.get(label_en);
     }

@@ -93,12 +93,12 @@ public class LabelCategory {
         throw new NullPointerException("Null LabelCategory.getByName(), label category name="+ name);
     }
     
-    /** Gets all relations. */
+    /** Gets all label categories. */
     public static Collection<LabelCategory> getAllLabelCats() {
         return name2category.values();
     }
     
-    /** Counts number of labels. */
+    /** Counts number of labels categories. */
     public static int size() {
         return name2category.size();
     }
@@ -132,25 +132,25 @@ public class LabelCategory {
                 
     
     static {
-        root       = new LabelCategory("Root", null); // root
+        root       = new LabelCategory("root", null); // root
         
-        unknown     = new LabelCategory("Unknown", LabelCategory.root);
-        invisible   = new LabelCategory("Invisible", LabelCategory.root);
+        unknown     = new LabelCategory("unknown", LabelCategory.root);
+        invisible   = new LabelCategory("invisible", LabelCategory.root);
         
-        grammatical = new LabelCategory("Grammatical", LabelCategory.root);
-        period      = new LabelCategory("Period", LabelCategory.root);
-        qualifier   = new LabelCategory("Qualifier", LabelCategory.root);
-        regional    = new LabelCategory("Regional", LabelCategory.root);
-        usage       = new LabelCategory("Usage", LabelCategory.root);
+        grammatical = new LabelCategory("grammatical", LabelCategory.root);
+        period      = new LabelCategory("period", LabelCategory.root);
+        qualifier   = new LabelCategory("qualifier", LabelCategory.root);
+        regional    = new LabelCategory("regional", LabelCategory.root);
+        usage       = new LabelCategory("usage", LabelCategory.root);
         
-        topical     = new LabelCategory("Topical", LabelCategory.root);
-        computing   = new LabelCategory("Computing", LabelCategory.topical);
-        games       = new LabelCategory("Games", LabelCategory.topical);
-        mathematics = new LabelCategory("Mathematics", LabelCategory.topical);
-        music       = new LabelCategory("Music", LabelCategory.topical);
-        mythology   = new LabelCategory("Mythology", LabelCategory.topical);
-        religion    = new LabelCategory("Religion", LabelCategory.topical);
-        science     = new LabelCategory("Science", LabelCategory.topical);
-        sports      = new LabelCategory("Sports", LabelCategory.topical);
+        topical     = new LabelCategory("topical", LabelCategory.root);
+        computing   = new LabelCategory("computing", LabelCategory.topical);
+        games       = new LabelCategory("games", LabelCategory.topical);
+        mathematics = new LabelCategory("mathematics", LabelCategory.topical);
+        music       = new LabelCategory("music", LabelCategory.topical);
+        mythology   = new LabelCategory("mythology", LabelCategory.topical);
+        religion    = new LabelCategory("religion", LabelCategory.topical);
+        science     = new LabelCategory("science", LabelCategory.topical);
+        sports      = new LabelCategory("sports", LabelCategory.topical);
     }
 }
