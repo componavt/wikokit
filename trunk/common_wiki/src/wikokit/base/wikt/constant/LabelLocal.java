@@ -9,7 +9,7 @@ package wikokit.base.wikt.constant;
 
 import java.util.HashMap;
 import java.util.Map;
-//import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.en.name.LabelEn;
 
 /** Base (abstract) class for non-English Wiktionary labels, e.g.
  * LabelRu (Russian Wiktionary labels), LabelJa, LabelDe should be based 
@@ -86,7 +86,8 @@ public abstract class LabelLocal extends Label {
     }
     
     /** Gets English Wiktionary context label associated with this label. */
-    protected Label getLinkedLabelEn() {
-        return label_en;
+    @Override
+    public LabelEn getLinkedLabelEn() {
+        return (LabelEn)label_en;
     }
 }

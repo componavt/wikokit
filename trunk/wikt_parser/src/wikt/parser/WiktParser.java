@@ -6,11 +6,9 @@
 
 package wikt.parser;
 
-import wikokit.base.wikt.word.WordBase;
 import java.util.*;
-//import java.io.*;
 
-
+import wikokit.base.wikt.word.WordBase;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.category.CategoryHyponyms;
 import wikokit.base.wikt.mrd.Keeper;
@@ -19,6 +17,9 @@ import wikokit.base.wikt.sql.index.IndexForeign;
 import wikokit.base.wikipedia.sql.PageTableBase;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.UtilSQL;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
@@ -63,9 +64,12 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         
         TLabelCategory.recreateTable(wikt_parsed_conn);
         TLabelCategory.createFastMaps(wikt_parsed_conn);
-                
-//        TLabel.recreateTable(wikt_parsed_conn);
-//        TLabel.createFastMaps(wikt_parsed_conn);
+
+        Label temp1 = LabelEn.Acadia; // let's initialize maps in LabelEn class
+        Label temp2 = LabelRu.Yoruba; //                  ... in LabelRu class
+        
+        TLabel.recreateTable(wikt_parsed_conn, TLabelCategory.getMapCategory2ID());
+        TLabel.createFastMaps(wikt_parsed_conn);
 
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "inflection");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "lang_pos");

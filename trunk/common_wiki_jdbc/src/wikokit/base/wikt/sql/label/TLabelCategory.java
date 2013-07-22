@@ -40,19 +40,29 @@ public class TLabelCategory {
     /** Parent category of context label category (parent_category_id), 
      * e.g. label category "Computing context labels‎" 
      * has parent category "Topical context labels‎". */
-    private LabelCategory parent_category;
+    // private LabelCategory parent_category;
     
     
-    /** Map from label category to id.*/
+    /** Map from label category to ID.*/
     private static Map<LabelCategory, Integer> category2id;
+    
+    /** Map from ID to label category.*/
+    private static Map<Integer, LabelCategory> id2category;
 
     private final static TLabelCategory[] NULL_TLABEL_CATEGORY_ARRAY = new TLabelCategory[0];
     
-    public TLabelCategory(int _id, LabelCategory _label_category, LabelCategory _parent) {
+    public TLabelCategory(int _id, LabelCategory _label_category) {
         id      = _id;
         label_category  = _label_category;
-        parent_category = _parent;
     }
+    
+    public static Map<LabelCategory, Integer> getMapCategory2ID() {
+        return category2id;
+    }
+    
+    //public static Map<Integer, LabelCategory> getMapID2Category() {
+    //    return id2category;
+    //}
     
     /** Read all records from the table 'label_category',
      * fills the internal map from a table ID to a label category .<br><br>
@@ -64,85 +74,39 @@ public class TLabelCategory {
 
         System.out.println("Loading table `label_category`...");
 
-        TLabelCategory[] label_cats = getAllLabelCategories(connect);
-  /*      int size = label_cats.length;
-        if(label_cats.length != Relation.size())
-            System.out.println("Warning (wikt_parsed TRelationType.java createFastMaps()):: Relation.size (" + Relation.size()
-                    + ") is not equal to size of table 'label_category'("+ size +"). Is the database outdated?");
-
-        if(null != id2relation && id2relation.size() > 0)
-            id2relation.clear();
-        if(null != relation2id && relation2id.size() > 0)
-            relation2id.clear();
-
-        id2relation  = new LinkedHashMap<Integer, TRelationType>(size);
-        relation2id  = new LinkedHashMap<Relation, Integer>(size);
-
-        for(TRelationType t : label_cats) {
-            id2relation.put(t.getID(), t);
-            relation2id.put(t.getRelation(), t.getID());
-        }
-        */ 
-    }
-    
-    /** Gets all records from the table 'label_category'.
-     */
-    private static TLabelCategory[] getAllLabelCategories(Connect connect) {
-
         int size = Statistics.Count(connect, "label_category");
         if(0==size) {
-            System.err.println("Error (wikt_parsed TLabelCategory.java getAllLabelCategories()):: The table `label_category` is empty!");
-            return NULL_TLABEL_CATEGORY_ARRAY;
+            System.err.println("Error (wikt_parsed TLabelCategory.createFastMaps()):: The table `label_category` is empty!");
+            return;
         }
-
         
-        // 1. get map id2parent_category_id // label_category_id to parent_category_id
-        // 2. get map id2name               // label_category_id to name of label category
-        // 3. create TLabelCategory[]
+        if(null != category2id && category2id.size() > 0)
+            category2id.clear();
         
-        /** Map from label category to id.*/
-        // private static Map<LabelCategory, Integer> category2id;
-    
-        Map<Integer, Integer> id2parent_category_id = new LinkedHashMap<>(size);
-        Map<Integer, String>  id2name = new LinkedHashMap<>(size);
+        if(null != id2category && id2category.size() > 0)
+            id2category.clear();
+        
+        category2id = new LinkedHashMap<>(size);
+        id2category = new LinkedHashMap<>(size);
         
         Collection<LabelCategory> labs = LabelCategory.getAllLabelCats();
         for(LabelCategory lc : labs) {
             
             String name   = lc.getName();
             int id        = getIDByName(connect, name);
-            int parent_id = getIDByName(connect, lc.getParent().getName()); // ==0 if parent_category_id==NULL
             
             if (0 == id) {
-                System.err.println("Error (wikt_parsed TLabelCategory.java getAllLabelCategories()):: There is an empty label category name, check the table `label_category`!");
+                System.err.println("Error (wikt_parsed TLabelCategory.createFastMaps()):: There is an empty label category name, check the table `label_category`!");
                 continue;
             }
-            
-            id2parent_category_id.put(id, parent_id);
-            id2name.put(id, name);
+        
+            category2id.put(lc, id);
+            id2category.put(id, lc);
         }
         
-        // 3. create TLabelCategory[]
-        // todo ...
-        
-        // to check:
-            //if(0 == parent_id)
-            //  then  parent_category := null;
-        
-        
-        
-        // old version:
-        /*List<TLabelCategory>list_tlc = new ArrayList<>(size);
-
-        Collection<LabelCategory> labs = LabelCategory.getAllLabelCats();
-        for(LabelCategory lc : labs) {
-            TLabelCategory t = get(connect, lc);
-            if(null != t)
-                list_tlc.add(t);
-        }
-        return( (TLabelCategory[])list_tlc.toArray(NULL_TLABEL_CATEGORY_ARRAY) );
-        */
-        return null;
+        if(size != LabelCategory.size())
+            System.out.println("Warning (wikt_parsed TLabelCategory.createFastMaps()):: LabelCategory.size (" + LabelCategory.size()
+                    + ") is not equal to size of table 'label_category'("+ size +"). Is the database outdated?");
     }
     
     /** Deletes all records from the table 'label_category',
@@ -242,7 +206,7 @@ public class TLabelCategory {
         }
     }
     
-    /** Selects row from the table 'label_category' by a label category name.<br><br>
+    /** Selects ID from the table 'label_category' by a label category name.<br><br>
      *  SELECT id FROM label_category WHERE name="Usage";
      * @param  label_category_name    name of label category
      * @return 0 if a label category name is empty in the table 'label_category'

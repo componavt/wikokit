@@ -98,26 +98,26 @@ public class LabelCategoryRu extends LabelCategoryLocal {
             sports;
     
     static {
-        empty = new LabelCategoryRu("Пометы‎", LabelCategory.root);
+        empty = new LabelCategoryRu("пометы‎", LabelCategory.root);
         
-        grammatical = new LabelCategoryRu("Грамматические пометы‎", LabelCategory.grammatical);
+        grammatical = new LabelCategoryRu("грамматические пометы‎", LabelCategory.grammatical);
         
-        period = new LabelCategoryRu("Временные пометы‎", LabelCategory.period); // virtual, absent in ruwikt
-        qualifier = new LabelCategoryRu("Дополняющие пометы‎", LabelCategory.period); // virtual, absent in ruwikt
+        period = new LabelCategoryRu("временные пометы‎", LabelCategory.period); // virtual, absent in ruwikt
+        qualifier = new LabelCategoryRu("дополняющие пометы‎", LabelCategory.period); // virtual, absent in ruwikt
 
-        regional = new LabelCategoryRu("Пометы языковой принадлежности", LabelCategory.period);
-        usage = new LabelCategoryRu("Стилистические пометы‎", LabelCategory.period);
+        regional = new LabelCategoryRu("пометы языковой принадлежности", LabelCategory.period);
+        usage = new LabelCategoryRu("стилистические пометы‎", LabelCategory.period);
         
-        topical = new LabelCategoryRu("Пометы предметных областей‎", LabelCategory.period);
+        topical = new LabelCategoryRu("пометы предметных областей‎", LabelCategory.period);
         
-        computing = new LabelCategoryRu("Компьютерные ‎пометы‎", LabelCategory.computing); // virtual, absent in ruwikt
-        games = new LabelCategoryRu("‎Игровые ‎пометы‎", LabelCategory.games); // virtual, absent in ruwikt
-        mathematics = new LabelCategoryRu("Математические‎ ‎пометы‎", LabelCategory.mathematics); // virtual, absent in ruwikt
-        music = new LabelCategoryRu("‎Музыкальные ‎пометы‎", LabelCategory.music); // virtual, absent in ruwikt
-        mythology = new LabelCategoryRu("‎Мифологические ‎пометы‎", LabelCategory.mythology); // virtual, absent in ruwikt
-        religion = new LabelCategoryRu("‎Религиозные ‎пометы‎", LabelCategory.religion); // virtual, absent in ruwikt
-        science = new LabelCategoryRu("‎Научные ‎пометы‎", LabelCategory.science); // virtual, absent in ruwikt
-        sports = new LabelCategoryRu("Спортивные ‎пометы‎‎", LabelCategory.sports); // virtual, absent in ruwikt
+        computing = new LabelCategoryRu("компьютерные ‎пометы‎", LabelCategory.computing); // virtual, absent in ruwikt
+        games = new LabelCategoryRu("‎игровые ‎пометы‎", LabelCategory.games); // virtual, absent in ruwikt
+        mathematics = new LabelCategoryRu("математические‎ ‎пометы‎", LabelCategory.mathematics); // virtual, absent in ruwikt
+        music = new LabelCategoryRu("‎музыкальные ‎пометы‎", LabelCategory.music); // virtual, absent in ruwikt
+        mythology = new LabelCategoryRu("‎мифологические ‎пометы‎", LabelCategory.mythology); // virtual, absent in ruwikt
+        religion = new LabelCategoryRu("‎религиозные ‎пометы‎", LabelCategory.religion); // virtual, absent in ruwikt
+        science = new LabelCategoryRu("‎научные ‎пометы‎", LabelCategory.science); // virtual, absent in ruwikt
+        sports = new LabelCategoryRu("спортивные ‎пометы‎‎", LabelCategory.sports); // virtual, absent in ruwikt
     }
     
 }
