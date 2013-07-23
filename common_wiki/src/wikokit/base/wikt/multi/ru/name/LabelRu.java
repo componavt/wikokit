@@ -9,14 +9,17 @@ package wikokit.base.wikt.multi.ru.name;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 import wikokit.base.wikipedia.util.TemplateExtractor;
 import wikokit.base.wikt.constant.Label;
-import wikokit.base.wikt.constant.LabelCategory;
 import wikokit.base.wikt.constant.LabelLocal;
 import wikokit.base.wikt.util.LabelText;
 
@@ -26,13 +29,198 @@ import wikokit.base.wikt.util.LabelText;
  * See http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%A3%D1%81%D0%BB%D0%BE%D0%B2%D0%BD%D1%8B%D0%B5_%D1%81%D0%BE%D0%BA%D1%80%D0%B0%D1%89%D0%B5%D0%BD%D0%B8%D1%8F
  *     http://ru.wiktionary.org/wiki/Викисловарь:Условные_сокращения </PRE>
  */
-public class LabelRu extends LabelLocal  {
+public final class LabelRu extends LabelLocal  {
+    
+    protected final static Map<String, Label> short_name2label = new HashMap<String, Label>();
+    protected final static Map<Label, String> label2short_name = new HashMap<Label, String>();
+    
+    protected final static Map<String, Label> name2label = new HashMap<String, Label>();
+    protected final static Map<Label, String> label2name = new HashMap<Label, String>();
+    
+    /** If there are more than one context label (synonyms,  short name label): <synonymic_label, source_main_unique_label> */
+    private static Map<String, Label> multiple_synonym2label = new HashMap<String, Label>();
+    
+    /** Label translation: from English label to local label */
+    protected static Map<Label, Label> translation_en2local = new HashMap<Label, Label>();
     
     private final static Label[] NULL_LABEL_ARRAY = new Label[0];
     
-    protected LabelRu(String label,String name,Label label_en) {
-        super(label, name, label_en, true);  // added_by_hand = true by default
+    
+    /** Constructor for static context labels listed in this file below.
+     */
+    protected LabelRu(String short_name, String name,Label label_en) {
+        super(short_name, name, label_en, true);  // added_by_hand = true by default
+        initLabelAddedByHand(this);
+        
+        if(short_name.length() == 0 || name.length() == 0 || null == label_en)
+            System.out.println("Error in LabelRu.LabelRu(): one of parameters is empty! label="+short_name+"; name=\'"+name+"\'; label (in English Wiktionary)=\'"+label_en.toString()+"\'.");
+        
+        // it should be only one local label corresponding to the English label (LabelEn)
+        Label label_prev_by_label_en = translation_en2local.get(label_en);
+        if(null != label_prev_by_label_en)
+            System.out.println("Error in LabelRu.LabelRu(): duplication of LabelEn '"+ label_en.toString() +
+                    "', short name='"+short_name+
+                    "' name='"+name+"'. It should be only one local label corresponding to the English label. Check the map translation_en2local.");
+        
+        translation_en2local.put(label_en, this);
     }
+    
+    /** Constructor for new context labels which are extracted by parser 
+     * from the template {{помета|new label}} and added automatically,
+     * these new labels are not listed in the LabelRu.
+     * 
+     * @param short_name name of the found context label
+     * 
+     * !Attention, automatically added labels (LabelRu) don't have corresponding English labels (LabelEn)!
+     */
+    public LabelRu(String short_name) { 
+        super(short_name);  // added_by_hand = false
+        initLabelAddedAutomatically(this);
+    }
+    
+    protected void initLabelAddedByHand(Label label) {
+    
+        if(null == label)
+            System.out.println("Error in LabelEn.initLabelAddedByHand(): label is null, short_name="+short_name+"; name=\'"+name+"\'.");
+        
+        checksPrefixSuffixSpace(short_name);
+        checksPrefixSuffixSpace(name);
+        
+        // check the uniqueness of the label short name and full name
+        Label label_prev_by_short_name = short_name2label.get(short_name);
+        Label label_prev_by_name       =       name2label.get(      name);
+        
+        if(null != label_prev_by_short_name)
+            System.out.println("Error in LabelEn.initLabelAddedByHand(): duplication of label (short name)! short name='"+short_name+
+                    "' name='"+name+"'. Check the maps short_name2label and name2label.");
+
+        if(null != label_prev_by_name)
+            System.out.println("Error in LabelEn.initLabelAddedByHand(): duplication of label (full name)! short_name='"+short_name+
+                    "' name='"+name+ "'. Check the maps short_name2label and name2label.");
+        
+        short_name2label.put(short_name, label);
+        label2short_name.put(label, short_name);
+        
+        name2label.put(name, label);
+        label2name.put(label, name);
+    };
+    
+    protected void initLabelAddedAutomatically(Label label) {
+    
+        if(null == label)
+            System.out.println("Error in LabelRu.initLabelAddedAutomatically(): label is null, short_name="+short_name+".");
+        
+        checksPrefixSuffixSpace(short_name);
+        
+        // check the uniqueness of the label short name
+        Label label_prev_by_short_name = short_name2label.get(short_name);
+        
+        if(null != label_prev_by_short_name)
+            System.out.println("Error in LabelRu.initLabelAddedAutomatically(): duplication of label (short name)! short name='"+short_name+
+                    ". Check the maps short_name2label.");
+        
+        short_name2label.put(short_name, label);
+        label2short_name.put(label, short_name);
+    };
+    
+    /** Checks weather exists the Label (short name) by its name, checks synonyms also. */
+    public static boolean hasShortName(String short_name) {
+        return short_name2label.containsKey(short_name) || 
+         multiple_synonym2label.containsKey(short_name);
+    }
+    
+    /** Gets label by short name of the label. */
+    public static Label getByShortName(String short_name) throws NullPointerException
+    {
+        Label label;
+
+        if(null != (label = short_name2label.get(short_name)))
+            return  label;
+
+        if(null != (label = multiple_synonym2label.get(short_name)))
+            return  label;
+
+        throw new NullPointerException("Null LabelRu.getByShortName(), label short_name="+ short_name);
+    }
+    
+    /** Adds synonymic context label for the main (source) label.
+     * @param label source main unique label
+     * @param synonymic_label synonym of label (short name)
+     */
+    public static Label addNonUniqueShortName(Label label, String synonymic_short_name) {
+
+        checksPrefixSuffixSpace(synonymic_short_name);
+        if(synonymic_short_name.length() > 255) {
+            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label='"+synonymic_short_name+
+                    "' is too long (.length() > 255)!");
+            return null;
+        }
+
+        if(short_name2label.containsKey(synonymic_short_name)) {
+            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label '"+synonymic_short_name+
+                    "' is already presented in the map label2name!");
+            return null;
+        }
+        
+        if(multiple_synonym2label.containsKey(synonymic_short_name)) {
+            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label '"+synonymic_short_name+
+                    "' is already presented in the map multiple_synonym2label!");
+            return null;
+        }
+        
+        multiple_synonym2label.put(synonymic_short_name, label);
+        return label;
+    }
+    
+    /** Checks weather exists the translation for this Label. */
+    public static boolean has(Label t) {
+        return label2short_name.containsKey(t);
+    }
+    
+    /** Gets short name of label in local language.
+     * E.g. gets name of the English label "AU" ("Australia") in Russian "австрал." (LabelRu.java)
+     * 
+     * @param label - English Wiktionary short label
+     */
+    public static String getShortName (Label label) {
+
+        Label local_label = translation_en2local.get(label);
+        
+        if(null == local_label)
+            return label.getShortName(); // if there is no translation into local language, then English name
+        
+        return local_label.getShortName();
+    }
+    
+    /** Gets name of label in local language.
+     * E.g. gets name of the English label "offensive" in Russian (LabelRu.java)
+     * 
+     * @param label - English Wiktionary context label
+     */
+    public static String getName (Label label) {
+
+        Label local_label = translation_en2local.get(label);
+        if(null == local_label)
+            return label.getName(); // if there is no translation into local language, then English name
+        
+        return local_label.getName();
+    }
+    
+    /** Gets all labels. */
+    public static Collection<Label> getAllLabels() {
+        return short_name2label.values();
+    }
+    
+    /** Counts number of labels. */
+    public static int size() {
+        return short_name2label.size();
+    }
+    
+    /** Gets all names of labels (short name). */
+    public static Set<String> getAllLabelShortNames() {
+        return short_name2label.keySet();
+    }
+    
     
     /** Temporary empty label {{помета?|XX}}, where XX - language code
      *  e.g. {{помета?|uk}} or {{помета?|sq}}.
@@ -88,10 +276,11 @@ public class LabelRu extends LabelLocal  {
         if(null == str || str.length() == 0)
             return null;
                 
-        if(Label.hasShortName( str ))
-            return Label.getByShortName( str );
+        if(LabelRu.hasShortName( str ))
+            return LabelRu.getByShortName( str );
         
-        return new LabelEn(str, LabelCategory.unknown);    // let's create new context label
+      //return new LabelEn(str, LabelCategory.unknown);     // let's create new context label
+        return new LabelRu(str);                                // let's create new context label
     }
     
     
@@ -118,12 +307,12 @@ public class LabelRu extends LabelLocal  {
         
         String template_name = te.getName();
         String text_from_label = "";
-        if(Label.hasShortName( template_name )) {
+        if(LabelRu.hasShortName( template_name )) {
             
             int number_of_params = te.countTemplateParameters();
             String[] template_params = te.getTemplateParameters();
             
-            Label l = Label.getByShortName(template_name);
+            Label l = LabelRu.getByShortName(template_name);
             if(Label.equals( l, LabelEn.context )) { // {{помета|}}
                 Label pometa_label = getPometaLabel( template_params );
                 if(null != pometa_label)

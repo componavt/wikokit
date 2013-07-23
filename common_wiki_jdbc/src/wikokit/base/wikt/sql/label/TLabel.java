@@ -15,12 +15,13 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
+import wikokit.base.wikipedia.sql.PageTableBase;
 import wikokit.base.wikipedia.sql.Statistics;
 import wikokit.base.wikipedia.sql.UtilSQL;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
-import wikokit.base.wikt.multi.en.name.LabelEn;
 
 /** An operations with the table 'label' (context labels) in MySQL Wiktionary_parsed database.
  * 
@@ -28,8 +29,6 @@ import wikokit.base.wikt.multi.en.name.LabelEn;
  * (category_id in the table label).
  */
 public class TLabel {
-    
-    private LabelEn init_me_please;
     
     /** Unique identifier in the table 'label'. */
     private int id;
@@ -61,7 +60,7 @@ public class TLabel {
      * REM: during a creation of Wiktionary parsed database
      * the functions recreateTable() should be called (before this function).
      */
-    public static void createFastMaps(Connect connect) {
+    public static void createFastMaps(Connect connect, LanguageType wikt_lang) {
 
         System.out.println("Loading table `label`...");
 
@@ -79,8 +78,8 @@ public class TLabel {
         
         label2id = new LinkedHashMap<>(size);
         id2label = new LinkedHashMap<>(size);
-        
-        Collection<Label> labs = Label.getAllLabels();
+                
+        Collection<Label> labs = Label.getAllLabels(wikt_lang);
         for(Label label : labs) {
             
             String short_name = label.getShortName();
@@ -95,64 +94,68 @@ public class TLabel {
             id2label.put(id, label);
         }
         
-        if(size != Label.size())
-            System.out.println("Warning (wikt_parsed TLabel.createFastMaps()):: Label.size (" + Label.size()
+        int labels_in_class = Label.size(wikt_lang);
+        if(size != labels_in_class)
+            System.out.println("Warning (wikt_parsed TLabel.createFastMaps()):: Label.size (" + labels_in_class
                     + ") is not equal to size of table 'label'("+ size +"). Is the database outdated?");
     }
 
     /** Deletes all records from the table 'label',
-     * loads labels names from LabelEn.java,
+     * loads labels names from LabelXX.java (XX is parameter wikt_lang),
      * sorts by name,
      * fills the table.
      */
-    public static void recreateTable(Connect connect, Map<LabelCategory, Integer> category2id) {
+    public static void recreateTable(Connect connect, Map<LabelCategory, Integer> category2id, LanguageType wikt_lang) {
 
         System.out.println("Recreating the table `label`...");
-        Map<Integer, Label> _id2label = fillLocalMaps();
+        Map<Integer, Label> _id2label = fillLocalMaps(wikt_lang);
         UtilSQL.deleteAllRecordsResetAutoIncrement(connect, "label");
         fillDB(connect, _id2label, category2id);
         {
             int db_current_size = wikokit.base.wikipedia.sql.Statistics.Count(connect, "label");
-            assert(db_current_size == Label.size()); // ~ ??? labels entered by hand
+            assert(db_current_size == Label.size(wikt_lang)); // ~ ??? labels entered by hand
         }
     }
 
-    /** Load data from a LabelEn class, sorts,
-     * and fills the local map 'id2label'. */
-    public static Map<Integer, Label> fillLocalMaps() {
+    /** Load data from a Label class, sorts,
+     * and fills the local map 'id2label'. 
+     * 
+     * @param wikt_lang defines LabelXX.java where XX is ru, en, de, fr...
+     */
+    public static Map<Integer, Label> fillLocalMaps(LanguageType wikt_lang) {
 
-        int size = Label.size();
+        int size = Label.size(wikt_lang);
         List<String>list_label = new ArrayList<>(size);
-        list_label.addAll(Label.getAllLabelShortNames());
+        list_label.addAll(Label.getAllLabelShortNames(wikt_lang));
         Collections.sort(list_label);
 
         // OK, we have list of labels (short names). Sorted list 'list_label'
 
-        // Local map from id to Label. It is created from data in LabelEn.java.
+        // Local map from id to Label. It is created from data in LabelXX.java or LabelRu.java
         // It is used to fill the table 'label' in right sequence.
         Map<Integer, Label> _id2label = new LinkedHashMap<>(size);
         for(int id=0; id<size; id++) {
             String s = list_label.get(id);    // s - context label name
-            assert(Label.hasShortName(s));                                      //System.out.println("fillLocalMaps---id="+id+"; s="+s);
-            _id2label.put(id+1, LabelEn.getByShortName(s)); // ID in MySQL starts from 1
+            assert(Label.hasShortName(s, wikt_lang));                           //System.out.println("fillLocalMaps---id="+id+"; s="+s);
+            _id2label.put(id+1, Label.getByShortName(s, wikt_lang)); // ID in MySQL starts from 1
         }
         return _id2label;
     }
 
-    /** Fills database table 'label' by data from LabelEn class. */
+    /** Fills database table 'label' by data from LabelXX class. */
     public static void fillDB(  Connect connect, Map<Integer, Label> id2label, 
                                 Map<LabelCategory, Integer> category2id)
     {        
         for(int id : id2label.keySet()) {
-            Label label_en = id2label.get(id);
-            if(null == label_en)
+            Label label = id2label.get(id);
+            if(null == label)
                 continue;
             
-            LabelCategory lc = label_en.getLinkedLabelEn().getCategory();
+            LabelCategory lc = label.getLinkedLabelEn().getCategory();
             int category_id = category2id.get(lc);
                     
             //               short_name,              name,               category_id, added_by_hand (default FALSE), counter (default 0)
-            insert (connect, label_en.getShortName(), label_en.getName(), category_id);
+            insert (connect, label.getShortName(), label.getName(), category_id);
         }
     }
     
@@ -171,12 +174,13 @@ public class TLabel {
         {
             try (Statement s = connect.conn.createStatement ()) {
                 str_sql.append("INSERT INTO label (short_name, name, category_id) VALUES (\"");
-                //String safe_title = StringUtil.spaceToUnderscore(
-                //                    StringUtil.escapeChars(name));
-                //str_sql.append(safe_title);
-                str_sql.append(short_name);
+                
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, short_name);
+                str_sql.append(safe_title);
                 str_sql.append("\",\"");
-                str_sql.append(name);
+                
+                safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, name);
+                str_sql.append(safe_title);
                 str_sql.append("\",");
                 str_sql.append(category_id);
                 str_sql.append(")");
@@ -204,19 +208,20 @@ public class TLabel {
             Statement s = connect.conn.createStatement ();
             try {
                 str_sql.append("SELECT id FROM label WHERE short_name=\"");
-                str_sql.append(short_name);
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, short_name);
+                str_sql.append(safe_title);
                 str_sql.append("\"");
                 try (ResultSet rs = s.executeQuery (str_sql.toString())) {
                     if (rs.next ())
                         result_id = rs.getInt("id");
                     else
-                        System.err.println("Warning: (wikt_parsed Label.getIDByName()):: name (" + short_name + ") is absent in the table 'label_category'.");
+                        System.err.println("Warning: (TLabel.getIDByShortName()):: name (" + short_name + ") is absent in the table 'label_category'.");
                 }
             } finally {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (LabelCategory.getIDByShortName()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.err.println("SQLException (TLabel.getIDByShortName()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result_id;
     }
