@@ -68,8 +68,8 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         Label temp1 = LabelEn.Acadia; // let's initialize maps in LabelEn class
         Label temp2 = LabelRu.Yoruba; //                  ... in LabelRu class
         
-        TLabel.recreateTable(wikt_parsed_conn, TLabelCategory.getMapCategory2ID());
-        TLabel.createFastMaps(wikt_parsed_conn);
+        TLabel.recreateTable(wikt_parsed_conn, TLabelCategory.getMapCategory2ID(), native_lang);
+        TLabel.createFastMaps(wikt_parsed_conn, native_lang);
 
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "inflection");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "lang_pos");

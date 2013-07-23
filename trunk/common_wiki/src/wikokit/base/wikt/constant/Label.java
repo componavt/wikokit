@@ -7,14 +7,12 @@
 package wikokit.base.wikt.constant;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.multi.en.name.LabelEn;
-//import wikokit.base.wikipedia.language.LanguageType;
-//import wikokit.base.wikt.multi.en.name.LabelEn;
-//import wikokit.base.wikt.multi.ru.name.LabelRu;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
+
 
 /** Contextual information for definitions, such as archaic, by analogy, 
  * chemistry, etc.
@@ -42,15 +40,6 @@ public abstract class Label {
     /** Weather the label was added manually to the code of wikokit, or was gathered automatically by parser. */
     protected boolean added_by_hand;
     
-    protected final static Map<String, Label> short_name2label = new HashMap<String, Label>();
-    protected final static Map<Label, String> label2short_name = new HashMap<Label, String>();
-    
-    protected final static Map<String, Label> name2label = new HashMap<String, Label>();
-    protected final static Map<Label, String> label2name = new HashMap<Label, String>();
-    
-    /** If there are more than one context label (synonyms,  short name label): <synonymic_label, source_main_unique_label> */
-    private static Map<String, Label> multiple_synonym2label = new HashMap<String, Label>();
-    
     /** Constructor for labels added by hand, @see list in LabelEn, LabelRu, etc. */
     protected Label(String short_name, String name, boolean added_by_hand) {
     
@@ -60,7 +49,7 @@ public abstract class Label {
         this.short_name    = short_name; 
         this.name          = name;
         this.added_by_hand = added_by_hand;
-    };
+    }
     
     /** Constructor for new context labels which are extracted by parser 
      * from the template {{context|new label}} and added automatically,
@@ -71,57 +60,12 @@ public abstract class Label {
     public Label(String short_name) {
     
         if(short_name.length() == 0)
-            System.out.println("Error in Label.Label(String short_name): label short_name has zero length!.");
+            System.out.println("Error in Label.Label(String short_name): label short_name is empty (\"\")!");
         
         this.short_name    = short_name; 
         this.name          = "";
         this.added_by_hand = false; // added automatically, e.g. some label extracted from {{context|some label}}
-    };
-    
-    protected void initLabelAddedByHand(Label label) {
-    
-        if(null == label)
-            System.out.println("Error in Label.initLabelAddedByHand(): label is null, short_name="+short_name+"; name=\'"+name+"\'.");
-        
-        checksPrefixSuffixSpace(short_name);
-        checksPrefixSuffixSpace(name);
-        
-        // check the uniqueness of the label short name and full name
-        Label label_prev_by_short_name = short_name2label.get(short_name);
-        Label label_prev_by_name       =       name2label.get(      name);
-        
-        if(null != label_prev_by_short_name)
-            System.out.println("Error in Label.initLabelAddedByHand(): duplication of label (short name)! short name='"+short_name+
-                    "' name='"+name+"'. Check the maps short_name2label and name2label.");
-
-        if(null != label_prev_by_name)
-            System.out.println("Error in Label.initLabelAddedByHand(): duplication of label (full name)! short_name='"+short_name+
-                    "' name='"+name+ "'. Check the maps short_name2label and name2label.");
-        
-        short_name2label.put(short_name, label);
-        label2short_name.put(label, short_name);
-        
-        name2label.put(name, label);
-        label2name.put(label, name);
-    };
-    
-    protected void initLabelAddedAutomatically(Label label) {
-    
-        if(null == label)
-            System.out.println("Error in Label.initLabelAddedAutomatically(): label is null, short_name="+short_name+".");
-        
-        checksPrefixSuffixSpace(short_name);
-        
-        // check the uniqueness of the label short name
-        Label label_prev_by_short_name = short_name2label.get(short_name);
-        
-        if(null != label_prev_by_short_name)
-            System.out.println("Error in Label.initLabelAddedAutomatically(): duplication of label (short name)! short name='"+short_name+
-                    ". Check the maps short_name2label.");
-        
-        short_name2label.put(short_name, label);
-        label2short_name.put(label, short_name);
-    };
+    }
     
     /** Checks whitespace characters in the prefix or suffix of a string.
      * Prints "error" message if there is any.
@@ -146,37 +90,7 @@ public abstract class Label {
     /** Gets label itself (short name) in English. 
      *  This functions is needed for comparison (equals()) with LabelLocal labels.
      */
-    public String getShortNameEnglish() {
-        return getShortName();
-    }
-    
-    /** Checks weather exists the Label (short name) by its name, checks synonyms also. */
-    public static boolean hasShortName(String short_name) {
-        return short_name2label.containsKey(short_name) || 
-         multiple_synonym2label.containsKey(short_name);
-    }
-    
-    /** Gets English Wiktionary context label associated with this label. 
-     * This function is needed for compatibility with LabelLocal.java (other child class of Label.java). */
-    //protected abstract Label getLinkedLabelEn();
-    
-    /** Gets label by short name of the label. */
-    public static Label getByShortName(String short_name) throws NullPointerException
-    {
-        Label label;
-
-        if(null != (label = short_name2label.get(short_name)))
-            return  label;
-
-        if(null != (label = multiple_synonym2label.get(short_name)))
-            return  label;
-
-        throw new NullPointerException("Null Label.getByShortName(), label short_name="+ short_name);
-    }
-    
-    public static boolean hasName(String name) {
-        return name2label.containsKey(name);
-    }
+    abstract public String getShortNameEnglish();
 
     /** Gets label full name. */
     public String getName() {
@@ -207,57 +121,20 @@ public abstract class Label {
     }*/
     
     /** Gets all labels. */
-    public static Collection<Label> getAllLabels() {
-        return short_name2label.values();
-    }
+    // ? abstract public static Collection<Label> getAllLabels();
     
     /** Counts number of labels. */
-    public static int size() {
-        return short_name2label.size();
-    }
+    // ?? abstract public static int size();
     
     /** Gets all names of labels (short name). */
-    public static Set<String> getAllLabelShortNames() {
-        return short_name2label.keySet();
-    }
+    // ??? abstract public static Set<String> getAllLabelShortNames();
+    
 
     /** @return true if short name of two labels are the same. */
     static public boolean equals (Label one, Label two) {
         //return one.short_name.equals( two.short_name );
         return one.getShortNameEnglish().equals( two.getShortNameEnglish() );
     }
-    
-    
-    /** Adds synonymic context label for the main (source) label.
-     * @param label source main unique label
-     * @param synonymic_label synonym of label (short name)
-     */
-    public static Label addNonUniqueShortName(Label label, String synonymic_short_name) {
-
-        checksPrefixSuffixSpace(synonymic_short_name);
-        if(synonymic_short_name.length() > 255) {
-            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label='"+synonymic_short_name+
-                    "' is too long (.length() > 255)!");
-            return null;
-        }
-
-        if(short_name2label.containsKey(synonymic_short_name)) {
-            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label '"+synonymic_short_name+
-                    "' is already presented in the map label2name!");
-            return null;
-        }
-        
-        if(multiple_synonym2label.containsKey(synonymic_short_name)) {
-            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label '"+synonymic_short_name+
-                    "' is already presented in the map multiple_synonym2label!");
-            return null;
-        }
-        
-        multiple_synonym2label.put(synonymic_short_name, label);
-        return label;
-    }
-    
-    
     
     /** The set of unknown labels, which were found during parsing.
      * It should be only one message for one unknown label (for concise logging).
@@ -274,4 +151,119 @@ public abstract class Label {
         return unknown_label.add(label);
     }
     
+    
+    /** Gets all labels. */
+    public static Collection<Label> getAllLabels(LanguageType lang_code) {
+        
+        Collection<Label> result;
+        LanguageType l = lang_code;
+        
+        if(l  == LanguageType.en) {
+            result = LabelEn.getAllLabels();
+        } else if(l == LanguageType.ru) {
+            result = LabelRu.getAllLabels();
+
+        //} //else if(code.equalsIgnoreCase( "simple" )) {
+            
+            // todo 
+            // ...
+            
+        } else {
+            throw new NullPointerException("Exception in Label.getAllLabels(): Null LanguageType");
+        }
+        
+        return result;
+    }
+    
+    /** Counts number of labels. */
+    public static int size(LanguageType lang_code) {
+        
+        int result;
+        LanguageType l = lang_code;
+        
+        if(l  == LanguageType.en) {
+            result = LabelEn.size();
+        } else if(l == LanguageType.ru) {
+            result = LabelRu.size();
+
+        //} //else if(code.equalsIgnoreCase( "simple" )) {
+            
+            // todo 
+            // ...
+            
+        } else {
+            throw new NullPointerException("Exception in Label.size(): Null LanguageType");
+        }
+        
+        return result;
+    }
+    
+    /** Gets all names of labels (short name). */
+    public static Set<String> getAllLabelShortNames(LanguageType lang_code) {
+        
+        Set<String> result;
+        LanguageType l = lang_code;
+        
+        if(l  == LanguageType.en) {
+            result = LabelEn.getAllLabelShortNames();
+        } else if(l == LanguageType.ru) {
+            result = LabelRu.getAllLabelShortNames();
+
+        //} //else if(code.equalsIgnoreCase( "simple" )) {
+            
+            // todo 
+            // ...
+            
+        } else {
+            throw new NullPointerException("Exception in Label.getAllLabelShortNames(): Null LanguageType");
+        }
+        
+        return result;
+    }
+    
+    /** Checks weather exists the Label (short name) by its name, checks synonyms also. */
+    public static boolean hasShortName(String short_name, LanguageType lang_code) {
+        
+        boolean result;
+        LanguageType l = lang_code;
+        
+        if(l  == LanguageType.en) {
+            result = LabelEn.hasShortName(short_name);
+        } else if(l == LanguageType.ru) {
+            result = LabelRu.hasShortName(short_name);
+
+        //} else if(l == LanguageType.??) {
+            
+            // todo 
+            // ...
+            
+        } else {
+            throw new NullPointerException("Exception in Label.hasShortName(): Null LanguageType");
+        }
+        
+        return result;
+    }
+    
+    /** Gets label by short name of the label. */
+    public static Label getByShortName(String short_name, LanguageType lang_code) {
+        
+        Label result;
+        LanguageType l = lang_code;
+        
+        if(l  == LanguageType.en) {
+            result = LabelEn.getByShortName(short_name);
+        } else if(l == LanguageType.ru) {
+            result = LabelRu.getByShortName(short_name);
+
+        //} else if(l == LanguageType.??) {
+            
+            // todo 
+            // ...
+            
+        } else {
+            throw new NullPointerException("Exception in Label.getByShortName(): Null LanguageType");
+        }
+        
+        return result;
+    }
 }

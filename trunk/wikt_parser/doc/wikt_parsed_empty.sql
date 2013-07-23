@@ -428,7 +428,7 @@ CREATE  TABLE IF NOT EXISTS `label` (
   `added_by_hand` TINYINT(1)  NULL DEFAULT FALSE COMMENT 'added manually to code or gathered automatically by parser' ,
   `counter` INT(10) UNSIGNED NULL DEFAULT 0 COMMENT 'number of times that this label was used in articles' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `label_UNIQUE` (`short_name` ASC) )
+  UNIQUE INDEX `short_name_UNQ` (`short_name` ASC) )
 ENGINE = InnoDB, 
 COMMENT = 'Context labels.' ;
 

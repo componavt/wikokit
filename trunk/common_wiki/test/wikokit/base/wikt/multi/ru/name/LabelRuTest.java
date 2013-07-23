@@ -154,7 +154,7 @@ public class LabelRuTest {
         assertEquals(la.getName(),      "");
         
          LabelCategory result_label_category = LabelEn.getCategoryByLabel(result_labels[0]);
-         assertEquals(result_label_category.getName(), "Regional");
+         assertEquals(result_label_category.getName(), "regional");
          assertEquals(result_label_category, LabelCategory.regional);
     }
     // LabelParamsRu

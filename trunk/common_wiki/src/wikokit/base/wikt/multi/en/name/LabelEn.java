@@ -7,15 +7,13 @@
 
 package wikokit.base.wikt.multi.en.name;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
-import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
 
-import wikokit.base.wikt.multi.ru.name.LabelRu;
 
 /** Contextual information for definitions, such as archaic, by analogy, 
  * chemistry, etc.
@@ -31,19 +29,25 @@ import wikokit.base.wikt.multi.ru.name.LabelRu;
  * @see http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
  * @see http://en.wiktionary.org/wiki/Template:context
  */
-public class LabelEn extends Label {       
+public final class LabelEn extends Label {       
+    
+    protected final static Map<String, Label> short_name2label = new HashMap<String, Label>();
+    protected final static Map<Label, String> label2short_name = new HashMap<Label, String>();
+    
+    protected final static Map<String, Label> name2label = new HashMap<String, Label>();
+    protected final static Map<Label, String> label2name = new HashMap<Label, String>();
+    
+    /** If there are more than one context label (synonyms,  short name label): <synonymic_label, source_main_unique_label> */
+    private static Map<String, Label> multiple_synonym2label = new HashMap<String, Label>();
+    
     
     /** Category associated with this label. */
     private final LabelCategory category;
-    
-    //private static Map<String, String> short_name2name = new HashMap<String, String>();
-    
     //                                                                    LabelEn in fact
     private static Map<Label, LabelCategory> label2category = new HashMap<Label, LabelCategory>();
     
-    /** If there are more than one context label (synonyms,  short name label): <synonymic_label, source_main_unique_label> */
-    //private static Map<String, LabelEn> multiple_synonym2label = new HashMap<String, LabelEn>();
-    
+    /** Constructor for static context labels listed in this file below.
+     */
     protected LabelEn(String short_name, String name, LabelCategory category) { 
         super(short_name, name, true);  // added_by_hand = true by default
         initLabelAddedByHand(this);
@@ -69,11 +73,121 @@ public class LabelEn extends Label {
         label2category. put(this, category);
     }
     
+    protected void initLabelAddedByHand(Label label) {
+    
+        if(null == label)
+            System.out.println("Error in LabelEn.initLabelAddedByHand(): label is null, short_name="+short_name+"; name=\'"+name+"\'.");
+        
+        checksPrefixSuffixSpace(short_name);
+        checksPrefixSuffixSpace(name);
+        
+        // check the uniqueness of the label short name and full name
+        Label label_prev_by_short_name = short_name2label.get(short_name);
+        Label label_prev_by_name       =       name2label.get(      name);
+        
+        if(null != label_prev_by_short_name)
+            System.out.println("Error in LabelEn.initLabelAddedByHand(): duplication of label (short name)! short name='"+short_name+
+                    "' name='"+name+"'. Check the maps short_name2label and name2label.");
+
+        if(null != label_prev_by_name)
+            System.out.println("Error in LabelEn.initLabelAddedByHand(): duplication of label (full name)! short_name='"+short_name+
+                    "' name='"+name+ "'. Check the maps short_name2label and name2label.");
+        
+        short_name2label.put(short_name, label);
+        label2short_name.put(label, short_name);
+        
+        name2label.put(name, label);
+        label2name.put(label, name);
+    };
+    
+    protected void initLabelAddedAutomatically(Label label) {
+    
+        if(null == label)
+            System.out.println("Error in LabelEn.initLabelAddedAutomatically(): label is null, short_name="+short_name+".");
+        
+        checksPrefixSuffixSpace(short_name);
+        
+        // check the uniqueness of the label short name
+        Label label_prev_by_short_name = short_name2label.get(short_name);
+        
+        if(null != label_prev_by_short_name)
+            System.out.println("Error in LabelEn.initLabelAddedAutomatically(): duplication of label (short name)! short name='"+short_name+
+                    ". Check the maps short_name2label.");
+        
+        short_name2label.put(short_name, label);
+        label2short_name.put(label, short_name);
+    };
+    
     /** Gets English Wiktionary context label associated with this label. 
      * This function is needed for compatibility with other child class (LabelLocal.java) of Label.java */
     @Override 
     public LabelEn getLinkedLabelEn() {
         return this;
+    }
+    
+    /** Gets label itself (short name) in English. 
+     *  This functions is needed for comparison (equals()) with LabelLocal labels.
+     */
+    @Override
+    public String getShortNameEnglish() {
+        return getShortName();
+    }
+    
+    /** Checks weather exists the Label (short name) by its name, checks synonyms also. */
+    public static boolean hasShortName(String short_name) {
+        return short_name2label.containsKey(short_name) || 
+         multiple_synonym2label.containsKey(short_name);
+    }
+    
+    /** Gets English Wiktionary context label associated with this label. 
+     * This function is needed for compatibility with LabelLocal.java (other child class of Label.java). */
+    //protected abstract Label getLinkedLabelEn();
+    
+    /** Gets label by short name of the label. */
+    public static Label getByShortName(String short_name) throws NullPointerException
+    {
+        Label label;
+
+        if(null != (label = short_name2label.get(short_name)))
+            return  label;
+
+        if(null != (label = multiple_synonym2label.get(short_name)))
+            return  label;
+
+        throw new NullPointerException("Exception (null pointer) in LabelEn.getByShortName(), label short_name="+ short_name);
+    }
+    
+    /** Adds synonymic context label for the main (source) label.
+     * @param label source main unique label
+     * @param synonymic_label synonym of label (short name)
+     */
+    public static Label addNonUniqueShortName(Label label, String synonymic_short_name) {
+
+        checksPrefixSuffixSpace(synonymic_short_name);
+        if(synonymic_short_name.length() > 255) {
+            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label='"+synonymic_short_name+
+                    "' is too long (.length() > 255)!");
+            return null;
+        }
+
+        if(short_name2label.containsKey(synonymic_short_name)) {
+            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label '"+synonymic_short_name+
+                    "' is already presented in the map label2name!");
+            return null;
+        }
+        
+        if(multiple_synonym2label.containsKey(synonymic_short_name)) {
+            System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label '"+synonymic_short_name+
+                    "' is already presented in the map multiple_synonym2label!");
+            return null;
+        }
+        
+        multiple_synonym2label.put(synonymic_short_name, label);
+        return label;
+    }
+    
+    public static boolean hasName(String name) {
+        return name2label.containsKey(name);
     }
     
     /** Gets label's category. */
@@ -85,6 +199,26 @@ public class LabelEn extends Label {
     public static LabelCategory getCategoryByLabel(Label label_en) {        
         return label2category.get(label_en);
     }
+    
+    /** Gets all labels. */
+    public static Collection<Label> getAllLabels() {
+        return short_name2label.values();
+    }
+    
+    /** Counts number of labels. */
+    public static int size() {
+        return short_name2label.size();
+    }
+    
+    /** Gets all names of labels (short name). */
+    public static Set<String> getAllLabelShortNames() {
+        return short_name2label.keySet();
+    }
+    
+    
+    
+    
+    
     
     // Context labels without categories (empty category) 43 Krizhanovsky
     
