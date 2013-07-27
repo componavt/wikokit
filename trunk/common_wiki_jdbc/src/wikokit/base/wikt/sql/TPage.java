@@ -221,7 +221,7 @@ public class TPage {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TPage.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPage.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return page;
     }
@@ -255,7 +255,7 @@ public class TPage {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.setIsInWiktionary()):: page_title='"+page_title+"'; sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TPage.setIsInWiktionary()):: page_title='"+page_title+"'; sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -323,7 +323,7 @@ public class TPage {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TPage.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPage.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -365,7 +365,7 @@ public class TPage {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TPage.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPage.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -514,7 +514,7 @@ public class TPage {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TPage.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPage.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == tp_list)
             return NULL_TPAGE_ARRAY;
@@ -545,7 +545,7 @@ public class TPage {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPage.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TPage.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

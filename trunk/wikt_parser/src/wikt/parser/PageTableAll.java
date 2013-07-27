@@ -13,11 +13,12 @@ import wikokit.base.wikipedia.language.Encodings;
 import wikokit.base.wikt.sql.TLang;
 
 import java.sql.*;
+import wikokit.base.wikt.sql.label.TLabel;
 
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG_PAGES = true;
+    private static final boolean DEBUG_PAGES = false;
     
     //private static final boolean PRINT_PROGRESS = true;
     
@@ -88,7 +89,8 @@ public class PageTableAll {
         "маня",     // soft redirect, prints the word normal form (lemma)
         "негритянка",
         "borda", "one", "vai", "aqhsna", // -lang- --lang--
-        "шах",  // TMeaning.insert()):: null argument lang_pos
+        "шах",  // TMeaning.insert()):: null argument 
+        "yo", "yobioctet", // TLangPOS.java insert()): the language header is repeated twice or more!'
         "злато", "зограф", "кан", "кар", "карта",
         "журавль", "игнатовец", "мурашкинец", 
         "punainen", "alt", "unter", "that", "tester",
@@ -98,7 +100,8 @@ public class PageTableAll {
         "-iti-", "-лык", "-io-", "zwölf", "Википедия", "bread",
 
         "шумерский язык", "хам", "телескопирование", "общий род", "марашка", // long quotes
-        "град", "снѣгъ", "жестокий"
+        "град", "снѣгъ", "жестокий",
+        "casar", "mariposa" // labels
     };
     
     /** Selects all pages (not categories, not redirects), 
@@ -183,7 +186,7 @@ public class PageTableAll {
                 WiktParser.parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (parseAllPages.java PageTableAll()): " + ex.getMessage());
+            System.out.println("SQLException (parseAllPages.PageTableAll()): " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -191,6 +194,9 @@ public class PageTableAll {
 
         // post-processing
         TLang.calcIndexStatistics(wikt_parsed_conn, native_lang);
+        
+        TLabel.createFastMaps(wikt_parsed_conn, native_lang);
+        TLabel.calcCounterStatistics(wikt_parsed_conn, native_lang);
         
         long  t_end;
         t_end  = System.currentTimeMillis();

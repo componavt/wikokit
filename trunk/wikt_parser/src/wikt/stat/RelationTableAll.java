@@ -155,7 +155,7 @@ public class RelationTableAll {
                     n_unknown_lang_pos ++;
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (RelationTableAll.countRelationsPerLanguage()): " + ex.getMessage());
+            System.out.println("SQLException (RelationTableAll.countRelationsPerLanguage()): " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -332,7 +332,7 @@ public class RelationTableAll {
                 }
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (RelationTableAll.countRelationsHistogram()): " + ex.getMessage());
+            System.out.println("SQLException (RelationTableAll.countRelationsHistogram()): " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }

@@ -328,7 +328,7 @@ public class QuoteTableAll {
                     n_unknown_lang_pos ++;
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (QuoteTableAll.countQuotes()): " + ex.getMessage());
+            System.out.println("SQLException (QuoteTableAll.countQuotes()): " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }

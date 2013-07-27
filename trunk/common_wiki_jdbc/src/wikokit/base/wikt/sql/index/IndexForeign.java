@@ -136,7 +136,7 @@ public class IndexForeign {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (IndexForeign.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexForeign.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -239,7 +239,7 @@ public class IndexForeign {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (IndexForeign.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexForeign.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return size;
     }
@@ -305,7 +305,7 @@ public class IndexForeign {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (IndexForeign.countNativePageTitleIsNull()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexForeign.countNativePageTitleIsNull()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return size;
     }
@@ -418,7 +418,7 @@ public class IndexForeign {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (IndexForeign.getByPrefixForeign()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexForeign.getByPrefixForeign()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == if_list)
             return NULL_INDEXFOREIGN_ARRAY;
@@ -472,7 +472,7 @@ public class IndexForeign {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (IndexForeign.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexForeign.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
     
@@ -532,7 +532,7 @@ public class IndexForeign {
                 s.execute (str_sql.toString());
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (IndexForeign.generateTables()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexForeign.generateTables()): sql='" + str_sql + "' " + ex.getMessage());
         } finally {
             if (s != null) {
                 try { s.close();

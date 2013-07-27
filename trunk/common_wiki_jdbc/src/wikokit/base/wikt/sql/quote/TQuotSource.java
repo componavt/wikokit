@@ -52,7 +52,7 @@ public class TQuotSource {
     public static TQuotSource insert (Connect connect,String _text) {
 
         if(null == _text || 0 == _text.length()) {
-            System.err.println("Error (TQuotSource.insert()):: null argument: .");
+            System.out.println("Error (TQuotSource.insert()):: null argument: .");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -83,7 +83,7 @@ public class TQuotSource {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotSource.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotSource.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -97,7 +97,7 @@ public class TQuotSource {
     public static TQuotSource get (Connect connect, String _text) {
 
         if(null == _text || 0 == _text.length()) {
-            System.err.println("Error (TQuotSource.get()):: null argument: name of a source.");
+            System.out.println("Error (TQuotSource.get()):: null argument: name of a source.");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -120,7 +120,7 @@ public class TQuotSource {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotSource.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotSource.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result;
     }
@@ -171,7 +171,7 @@ public class TQuotSource {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotSource.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotSource.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return quot_source;
     }
@@ -192,7 +192,7 @@ public class TQuotSource {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotSource.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotSource.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

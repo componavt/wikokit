@@ -196,7 +196,7 @@ public class TQuotRef {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotRef.get):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotRef.get):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -250,7 +250,7 @@ public class TQuotRef {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotRef.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotRef.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return quot_ref;
     }
@@ -321,7 +321,7 @@ public class TQuotRef {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotRef.insert):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotRef.insert):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -345,7 +345,7 @@ public class TQuotRef {
                                 String _publisher, String _source)
     {
         if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
-            System.err.println("Error (TQuotRef.insert()):: all arguments are empty.");
+            System.out.println("Error (TQuotRef.insert()):: all arguments are empty.");
             return null;
         }
 
@@ -384,7 +384,7 @@ public class TQuotRef {
                                 int _from,int _to)
     {
         if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
-            System.err.println("Error (TQuotRef.insertWithYears()):: all arguments are empty.");
+            System.out.println("Error (TQuotRef.insertWithYears()):: all arguments are empty.");
             return null;
         }
 
@@ -416,7 +416,7 @@ public class TQuotRef {
                                 String _publisher, String _source)
     {
         if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
-            // System.err.println("Error (TQuotRef.getOrInsert()):: all arguments are empty.");
+            // System.out.println("Error (TQuotRef.getOrInsert()):: all arguments are empty.");
             return null;
         }
 
@@ -442,7 +442,7 @@ public class TQuotRef {
                                 int _from,int _to)
     {
         if(isEmptyString(_author, _author_wikilink, _title, _title_wikilink, _publisher, _source)) {
-            // System.err.println("Error (TQuotRef.getOrInsertWithYears()):: all arguments are empty.");
+            // System.out.println("Error (TQuotRef.getOrInsertWithYears()):: all arguments are empty.");
             return null;
         }
 
@@ -477,7 +477,7 @@ public class TQuotRef {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotRef.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotRef.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

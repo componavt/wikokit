@@ -61,11 +61,11 @@ public class TRelationType {
      */
     public static int getIDFast(Relation r) {
         if(null == relation2id) {
-            System.err.println("Error (wikt_parsed TRelationType.getIDFast()):: What about calling 'createFastMaps()' before?");
+            System.out.println("Error (wikt_parsed TRelationType.getIDFast()):: What about calling 'createFastMaps()' before?");
             return -1;
         }
         if(null == r) {
-            System.err.println("Error (wikt_parsed TRelationType.getIDFast()):: argument POS is null");
+            System.out.println("Error (wikt_parsed TRelationType.getIDFast()):: argument POS is null");
             return -1;
         }
         return relation2id.get(r);
@@ -76,11 +76,11 @@ public class TRelationType {
      */
     public static TRelationType getRelationFast(int id) {
         if(null == id2relation) {
-            System.err.println("Error (wikt_parsed TRelationType.getRelationFast()):: What about calling 'createFastMaps()' before?");
+            System.out.println("Error (wikt_parsed TRelationType.getRelationFast()):: What about calling 'createFastMaps()' before?");
             return null;
         }
         if(id <= 0) {
-            System.err.println("Error (wikt_parsed TRelationType.getRelationFast()):: argument id <=0, id = "+id);
+            System.out.println("Error (wikt_parsed TRelationType.getRelationFast()):: argument id <=0, id = "+id);
             return null;
         }
         return id2relation.get(id);
@@ -129,7 +129,7 @@ public class TRelationType {
 
         int size = Statistics.Count(connect, "relation_type");
         if(0==size) {
-            System.err.println("Error (wikt_parsed TRelationType.java getAllRelations()):: The table `relation_type` is empty!");
+            System.out.println("Error (wikt_parsed TRelationType.java getAllRelations()):: The table `relation_type` is empty!");
             return NULL_TRELATIONTYPE_ARRAY;
         }
 
@@ -216,7 +216,7 @@ public class TRelationType {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelationType.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TRelationType.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -242,7 +242,7 @@ public class TRelationType {
                     if (rs.next ())
                         rel_type = new TRelationType(rs.getInt("id"), r);
                     else
-                        System.err.println("Warning: (wikt_parsed TRelationType.java get()):: POS (" + r.toString() + ") is absent in the table 'relation_type'.");
+                        System.out.println("Warning: (wikt_parsed TRelationType.java get()):: POS (" + r.toString() + ") is absent in the table 'relation_type'.");
                 } finally {
                     rs.close();
                 }
@@ -250,7 +250,7 @@ public class TRelationType {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TRelationType.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TRelationType.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return rel_type;
     }
@@ -275,7 +275,7 @@ public class TRelationType {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TRelationType.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TRelationType.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

@@ -425,8 +425,7 @@ CREATE  TABLE IF NOT EXISTS `label` (
   `short_name` VARCHAR(255) NOT NULL COMMENT 'label itself, e.g. {{obsolete}}, {{slang}}' ,
   `name` VARCHAR(255) NULL COMMENT 'label name, e.g. \'New Zealand\' for {{NZ}}' ,
   `category_id` TINYINT UNSIGNED NULL COMMENT 'ID of category of context labels' ,
-  `added_by_hand` TINYINT(1)  NULL DEFAULT FALSE COMMENT 'added manually to code or gathered automatically by parser' ,
-  `counter` INT(10) UNSIGNED NULL DEFAULT 0 COMMENT 'number of times that this label was used in articles' ,
+  `counter` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'number of times that this label was used in articles' ,
   PRIMARY KEY (`id`) ,
   UNIQUE INDEX `short_name_UNQ` (`short_name` ASC) )
 ENGINE = InnoDB, 

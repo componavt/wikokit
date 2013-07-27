@@ -49,7 +49,7 @@ public final class LabelRu extends LabelLocal  {
     /** Constructor for static context labels listed in this file below.
      */
     protected LabelRu(String short_name, String name,Label label_en) {
-        super(short_name, name, label_en, true);  // added_by_hand = true by default
+        super(short_name, name, label_en);
         initLabelAddedByHand(this);
         
         if(short_name.length() == 0 || name.length() == 0 || null == label_en)
@@ -778,8 +778,11 @@ public final class LabelRu extends LabelLocal  {
     public static final Label meteorology = new LabelRu("метеорол.", "метеорологическое", LabelEn.meteorology);
     public static final Label metallurgy = new LabelRu("металл.", "металлургическое", LabelEn.metallurgy);
     public static final Label medicine = new LabelRu("мед.", "медицинское", LabelEn.medicine);
+    
     public static final Label nautical = new LabelRu("морск.", "морское", LabelEn.nautical);
-	
+    public static final Label regional_mor = LabelRu.addNonUniqueShortName(nautical, "мор.");
+    public static final Label regional_Mor = LabelRu.addNonUniqueShortName(nautical, "Мор.");
+
     public static final Label sciences = new LabelRu("научн.", "научное", LabelEn.sciences);
     public static final Label oil_industry = new LabelRu("нефтегаз.", "нефтегазодобыча", LabelEn.oil_industry);
     public static final Label numismatics = new LabelRu("нумизм.", "нумизматическое", LabelEn.numismatics);

@@ -73,7 +73,7 @@ public class TTranslationEntry {
             TLang lang,TWikiText wiki_text) {
 
         if(null == trans || null == lang || null == wiki_text) {
-            System.err.println("Error (wikt_parsed TTranslationEntry.insert()):: null arguments: trans = "+trans+
+            System.out.println("Error (wikt_parsed TTranslationEntry.insert()):: null arguments: trans = "+trans+
                     "; lang="+ lang +"; wiki_text=" + wiki_text);
             return null;
         }
@@ -109,7 +109,7 @@ public class TTranslationEntry {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslationEntry.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TTranslationEntry.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return trans_entry;
     }
@@ -139,7 +139,7 @@ public class TTranslationEntry {
                         if(null != trans && null != lang && null != wiki_text)
                             trans_entry = new TTranslationEntry(id, trans, lang, wiki_text);
                         else
-                            System.err.println("Error (wikt_parsed TTranslationEntry.getByID()):: null value: trans = "+trans+
+                            System.out.println("Error (wikt_parsed TTranslationEntry.getByID()):: null value: trans = "+trans+
                             "; lang="+ lang +"; wiki_text=" + wiki_text);
                     }
                 } finally {
@@ -149,7 +149,7 @@ public class TTranslationEntry {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TTranslationEntry.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TTranslationEntry.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return trans_entry;
     }
@@ -162,7 +162,7 @@ public class TTranslationEntry {
                                         TTranslation trans, TLang lang) {
 
         if(null == trans || null == lang) {
-            System.err.println("Error (TTranslationEntry.getByLanguageAndTranslation()):: null arguments, trans="+trans+", lang="+lang);
+            System.out.println("Error (TTranslationEntry.getByLanguageAndTranslation()):: null arguments, trans="+trans+", lang="+lang);
             return null;
         }
         
@@ -197,7 +197,7 @@ public class TTranslationEntry {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslationEntry.getByLanguageAndTranslation()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TTranslationEntry.getByLanguageAndTranslation()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_trans)
             return NULL_TTRANSLATIONENTRY_ARRAY;
@@ -214,7 +214,7 @@ public class TTranslationEntry {
                                         TWikiText wiki_text, TLang lang) {
                                         
         if(null == wiki_text || null == lang) {
-            System.err.println("Error (TTranslationEntry.getByWikiTextAndLanguage()):: null arguments, wiki_text="+wiki_text+", lang="+lang);
+            System.out.println("Error (TTranslationEntry.getByWikiTextAndLanguage()):: null arguments, wiki_text="+wiki_text+", lang="+lang);
             return null;
         }
 
@@ -247,7 +247,7 @@ public class TTranslationEntry {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslationEntry.getByWikiTextAndLanguage()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TTranslationEntry.getByWikiTextAndLanguage()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
 
         if(null == list_entry)
@@ -263,7 +263,7 @@ public class TTranslationEntry {
     public static TTranslationEntry[] getByTranslation (Connect connect,TTranslation trans) {
 
         if(null == trans) {
-            System.err.println("Error (TTranslationEntry.getByTranslation()):: null arguments: translation.");
+            System.out.println("Error (TTranslationEntry.getByTranslation()):: null arguments: translation.");
             return null;
         }
 
@@ -296,7 +296,7 @@ public class TTranslationEntry {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed getByWikiTextAndLanguage.getByTranslation()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed getByWikiTextAndLanguage.getByTranslation()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_trans)
             return NULL_TTRANSLATIONENTRY_ARRAY;
@@ -310,7 +310,7 @@ public class TTranslationEntry {
     public static void delete (Connect connect,TTranslationEntry trans_entry) {
 
         if(null == trans_entry) {
-            System.err.println("Error (wikt_parsed TTranslationEntry.delete()):: null argument 'translation_entry'");
+            System.out.println("Error (wikt_parsed TTranslationEntry.delete()):: null argument 'translation_entry'");
             return;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -326,7 +326,7 @@ public class TTranslationEntry {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslationEntry.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TTranslationEntry.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

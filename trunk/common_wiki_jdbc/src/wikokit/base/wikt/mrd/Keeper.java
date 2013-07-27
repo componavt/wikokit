@@ -28,6 +28,8 @@ import wikokit.base.wikt.util.WikiText;
 import wikokit.base.wikipedia.language.LanguageType;
 
 import java.util.Map;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.sql.label.TLabel;
 import wikokit.base.wikt.sql.quote.TQuote;
 
 /** Manager stores parsed data to MRD Wiktionary database (wikt_parsed).
@@ -59,7 +61,7 @@ public class Keeper {
                 is_in_wiktionary, word.getRedirect());
 
         if(null == tpage) {
-            System.err.println("(Keeper.storeToDB()):: TPage.getOrInsert returned null. page_title='" + page_title + "'");
+            System.out.println("(Keeper.storeToDB()):: TPage.getOrInsert returned null. page_title='" + page_title + "'");
         }
 
         if(word.isRedirect())
@@ -98,7 +100,8 @@ public class Keeper {
                     TQuote.storeToDB(conn, page_title, tmeaning, tlang, w_meaning.getQuotes());
                     
                     TRelation.storeToDB(conn, tmeaning, i, m_relations);
-
+                    TLabel.storeToDB(conn, page_title, tmeaning, tlang, w_meaning.getLabels());
+                    
                     if(translations.length > i) // not every meaning is happy to have it's own translation
                         TTranslation.storeToDB(conn, native_lang, page_title,
                                             lang_pos, tmeaning, translations[i]);

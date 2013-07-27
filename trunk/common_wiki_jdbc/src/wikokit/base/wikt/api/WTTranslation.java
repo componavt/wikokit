@@ -38,11 +38,11 @@ public class WTTranslation {
             
         TLang source_tlang = TLang.get(connect.getNativeLanguage());
         if(null == source_tlang) {
-            System.err.println("Error (WTTranslation.getDirectTranslation()):: What about calling 'TLang.createFastMaps()' and 'TPOS.createFastMaps()' before?");
+            System.out.println("Error (WTTranslation.getDirectTranslation()):: What about calling 'TLang.createFastMaps()' and 'TPOS.createFastMaps()' before?");
             return NULL_STRING_ARRAY;
         }
         if(connect.getNativeLanguage() == target_lang) {
-            System.err.println("Error (WTTranslation.getDirectTranslation()):: How to translate from "+target_lang+" to "+target_lang+"?");
+            System.out.println("Error (WTTranslation.getDirectTranslation()):: How to translate from "+target_lang+" to "+target_lang+"?");
             return NULL_STRING_ARRAY;
         }
         
@@ -66,7 +66,7 @@ public class WTTranslation {
             LanguageType foreign_lang,String word) {
 
         if(connect.getNativeLanguage() == foreign_lang) {
-            System.err.println("Error (WTTranslation.getBackwardTranslation()):: How to translate from "+foreign_lang+" to "+foreign_lang+"?");
+            System.out.println("Error (WTTranslation.getBackwardTranslation()):: How to translate from "+foreign_lang+" to "+foreign_lang+"?");
             return NULL_STRING_ARRAY;
         }
 
@@ -76,7 +76,7 @@ public class WTTranslation {
 
         TLang source_tlang = TLang.get(connect.getNativeLanguage());
         if(null == source_tlang) {
-            System.err.println("Error (WTTranslation.getBackwardTranslation()):: What about calling 'TLang.createFastMaps()' and 'TPOS.createFastMaps()' before?");
+            System.out.println("Error (WTTranslation.getBackwardTranslation()):: What about calling 'TLang.createFastMaps()' and 'TPOS.createFastMaps()' before?");
             return NULL_STRING_ARRAY;
         }
 
@@ -171,12 +171,12 @@ public class WTTranslation {
             String source_lang,String target_lang,String word) {
 
         if(!LanguageType.has(source_lang)) {
-            System.err.println("Error (common_wiki WTTranslation.translate(3 strings)):: uknown source language code:"+source_lang);
+            System.out.println("Error (common_wiki WTTranslation.translate(3 strings)):: uknown source language code:"+source_lang);
             return NULL_STRING_ARRAY;
         }
 
         if(!LanguageType.has(target_lang)) {
-            System.err.println("Error (common_wiki WTTranslation.translate(3 strings)):: uknown target language code:"+target_lang);
+            System.out.println("Error (common_wiki WTTranslation.translate(3 strings)):: uknown target language code:"+target_lang);
             return NULL_STRING_ARRAY;
         }
 

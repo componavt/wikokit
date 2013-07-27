@@ -155,7 +155,7 @@ public class TRelation {
             String meaning_summary) {
 
         if(null == meaning || null == wiki_text || null == relation_type) {
-            System.err.println("Error (wikt_parsed TRelation.insert()):: null arguments, meaning="+meaning+", wiki_text="+wiki_text+", relation_type="+relation_type);
+            System.out.println("Error (wikt_parsed TRelation.insert()):: null arguments, meaning="+meaning+", wiki_text="+wiki_text+", relation_type="+relation_type);
             return null;
         }
         
@@ -205,7 +205,7 @@ public class TRelation {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TRelation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TRelation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return relation;
     }
@@ -217,7 +217,7 @@ public class TRelation {
     public static TRelation[] get (Connect connect,TMeaning meaning) {
 
         if(null == meaning) {
-            System.err.println("Error (wikt_parsed TRelation.get()):: null argument: meaning.");
+            System.out.println("Error (wikt_parsed TRelation.get()):: null argument: meaning.");
             return NULL_TRELATION_ARRAY;
         }
         
@@ -254,7 +254,7 @@ public class TRelation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelation.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TRelation.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
 
         if(null == list_rel)
@@ -270,7 +270,7 @@ public class TRelation {
     public static int count (Connect connect,TMeaning meaning) {
 
         if(null == meaning) {
-            System.err.println("Error (wikt_parsed TRelation.count()):: null argument: meaning.");
+            System.out.println("Error (wikt_parsed TRelation.count()):: null argument: meaning.");
             return 0;
         }
         
@@ -293,7 +293,7 @@ public class TRelation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TRelation.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TRelation.count()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return n;
     }
@@ -334,7 +334,7 @@ public class TRelation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelation.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TRelation.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return relation;
     }
@@ -346,7 +346,7 @@ public class TRelation {
     public static void delete (Connect connect,TRelation relation) {
 
         if(null == relation) {
-            System.err.println("Error (wikt_parsed TRelation.delete()):: null argument page.");
+            System.out.println("Error (wikt_parsed TRelation.delete()):: null argument page.");
             return;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -360,7 +360,7 @@ public class TRelation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TRelation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -469,7 +469,7 @@ public class TRelation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TRelation.java getAllWordPairs()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TRelation.java getAllWordPairs()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
 
         long  t_end;

@@ -63,7 +63,7 @@ public class TLangTest {
             TLang.delete(conn, lt);
         }
 
-        //System.err.println("One warnings should be...");
+        //System.out.println("One warnings should be...");
         TLang.insert(conn, code, name);
         p = TLang.get(conn, lt);
         

@@ -37,18 +37,18 @@ public abstract class Label {
     /** Label name, e.g. 'New Zealand' for {{NZ}}. */
     protected String name;
     
-    /** Weather the label was added manually to the code of wikokit, or was gathered automatically by parser. */
-    protected boolean added_by_hand;
+    /** Weather the label was added manually to the code of wikokit, or it was gathered automatically by parser. */
+    // protected boolean added_by_hand; // true : added_by_hand == true if LabelCategory is not NULL in database,
+                                        // false: automatically    i.e. some labels extracted from {{context|some label}}
     
     /** Constructor for labels added by hand, @see list in LabelEn, LabelRu, etc. */
-    protected Label(String short_name, String name, boolean added_by_hand) {
+    protected Label(String short_name, String name) {
     
         if(short_name.length() == 0 || name.length() == 0)
             System.out.println("Error in Label.Label(): one of parameters is empty! label="+short_name+"; name=\'"+name+"\'.");
         
         this.short_name    = short_name; 
         this.name          = name;
-        this.added_by_hand = added_by_hand;
     }
     
     /** Constructor for new context labels which are extracted by parser 
@@ -64,7 +64,6 @@ public abstract class Label {
         
         this.short_name    = short_name; 
         this.name          = "";
-        this.added_by_hand = false; // added automatically, e.g. some label extracted from {{context|some label}}
     }
     
     /** Checks whitespace characters in the prefix or suffix of a string.
@@ -98,9 +97,9 @@ public abstract class Label {
     }
     
     /** Checks weather the label was added manually to the code of wikokit, or was gathered automatically by parser. */
-    public boolean getAddedByHand() {
+    /*public boolean getAddedByHand() {
         return added_by_hand;
-    }
+    }*/
     
     /** Gets (full) name of context label by label object.
      * 
@@ -132,8 +131,20 @@ public abstract class Label {
 
     /** @return true if short name of two labels are the same. */
     static public boolean equals (Label one, Label two) {
-        //return one.short_name.equals( two.short_name );
-        return one.getShortNameEnglish().equals( two.getShortNameEnglish() );
+        
+        // !attention: non enwikt context labels added automatically have .getShortNameEnglish() == null :(
+        
+        String en1 = one.getShortNameEnglish();
+        String en2 = two.getShortNameEnglish();
+        
+        if(null != en1 && null != en2) // both labels English names are not null
+            return one.getShortNameEnglish().equals( two.getShortNameEnglish() );
+        
+        if(null == en1 || null == en2) // i.e. one label English name is null, another is not null
+            return false;
+        
+        // both labels English names are null, so we cannot compare English names
+        return one.short_name.equals( two.short_name );    
     }
     
     /** The set of unknown labels, which were found during parsing.

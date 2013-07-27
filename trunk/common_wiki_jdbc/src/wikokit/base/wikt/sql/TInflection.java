@@ -98,7 +98,7 @@ public class TInflection {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TInflection.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TInflection.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return inflexio;
     }
@@ -136,7 +136,7 @@ public class TInflection {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TInflection.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TInflection.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return inflexio;
     }
@@ -173,7 +173,7 @@ public class TInflection {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TInflection.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TInflection.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return inflexio;
     }
@@ -185,7 +185,7 @@ public class TInflection {
     public static void delete (Connect connect,TInflection wiki_text) {
 
         if(null == wiki_text) {
-            System.err.println("Error (TInflection.delete()):: null argument wiki_text.");
+            System.out.println("Error (TInflection.delete()):: null argument wiki_text.");
             return;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -199,7 +199,7 @@ public class TInflection {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TInflection.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TInflection.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

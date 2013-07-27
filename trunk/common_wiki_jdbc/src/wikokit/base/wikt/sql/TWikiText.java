@@ -92,7 +92,7 @@ public class TWikiText {
             twiki_text = TWikiText.insert(connect, visible_text, wikified_text);
         
         if(null == twiki_text) { // if two very long wiki_text has the same 100 first symbols
-            System.err.println("Error: (wikt_parsed TWikiText.storeToDB()):: two very long wiki_text has the same 100 first symbols. Insertion failed. wiki_text='" + wiki_text.getVisibleText());
+            System.out.println("Error: (wikt_parsed TWikiText.storeToDB()):: two very long wiki_text has the same 100 first symbols. Insertion failed. wiki_text='" + wiki_text.getVisibleText());
             return null;
         }
 
@@ -151,7 +151,7 @@ public class TWikiText {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TWikiText.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return wiki_text;
     }
@@ -196,7 +196,7 @@ public class TWikiText {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TWikiText.java get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return wiki_text;
     }
@@ -233,7 +233,7 @@ public class TWikiText {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TWikiText.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return wiki_text;
     }
@@ -245,7 +245,7 @@ public class TWikiText {
     public static void deleteWithWords (Connect connect, TWikiText wiki_text) {
 
         if(null == wiki_text) {
-            System.err.println("Error (wikt_parsed TWikiText.deleteWithWords()):: null argument wiki_text.");
+            System.out.println("Error (wikt_parsed TWikiText.deleteWithWords()):: null argument wiki_text.");
             return;
         }
 
@@ -267,7 +267,7 @@ public class TWikiText {
     public static void delete (Connect connect,TWikiText wiki_text) {
 
         if(null == wiki_text) {
-            System.err.println("Error (wikt_parsed TWikiText.delete()):: null argument wiki_text.");
+            System.out.println("Error (wikt_parsed TWikiText.delete()):: null argument wiki_text.");
             return;
         }
            
@@ -282,7 +282,7 @@ public class TWikiText {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiText.java delete1()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TWikiText.java delete1()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -293,7 +293,7 @@ public class TWikiText {
     public static void delete (Connect connect,String text) {
 
         if(0 == text.length()) {
-            System.err.println("Error (wikt_parsed TWikiText.delete()):: empty string wiki_text.");
+            System.out.println("Error (wikt_parsed TWikiText.delete()):: empty string wiki_text.");
             return;
         }
         
@@ -310,7 +310,7 @@ public class TWikiText {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiText.delete2()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TWikiText.delete2()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

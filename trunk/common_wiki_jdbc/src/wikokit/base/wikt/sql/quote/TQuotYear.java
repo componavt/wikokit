@@ -110,7 +110,7 @@ public class TQuotYear {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotYear.insert):: _from="+_from+"; _to="+_to+"; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotYear.insert):: _from="+_from+"; _to="+_to+"; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -145,7 +145,7 @@ public class TQuotYear {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotYear.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotYear.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return quot_year;
     }
@@ -195,7 +195,7 @@ public class TQuotYear {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotYear.get()):: entry '" + page_title + "', years: _from="+_from+"; _to="+_to+"; sql='" + ex.getMessage());
+            System.out.println("SQLException (TQuotYear.get()):: entry '" + page_title + "', years: _from="+_from+"; _to="+_to+"; sql='" + ex.getMessage());
         }
         return result;
     }
@@ -239,7 +239,7 @@ public class TQuotYear {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotYear.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotYear.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

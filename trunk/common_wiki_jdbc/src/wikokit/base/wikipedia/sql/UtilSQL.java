@@ -24,7 +24,7 @@ public class UtilSQL {
             s.executeBatch();
 
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikipedia.sql UtilSQL.java deleteAllRecordsResetAutoIncrement()):: table = "+ table_name +"; msg = " + ex.getMessage());
+            System.out.println("SQLException (wikipedia.sql UtilSQL.java deleteAllRecordsResetAutoIncrement()):: table = "+ table_name +"; msg = " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -47,7 +47,7 @@ public class UtilSQL {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (MSRMeanSemrelXX.dropTable()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (MSRMeanSemrelXX.dropTable()): sql='" + str_sql + "' " + ex.getMessage());
         }
     }
     

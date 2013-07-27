@@ -216,7 +216,7 @@ public class TTranslation {
                                                 TLang target_tlang) {   // language of translations
         
         if(null == source_tlang || null == translation_page || null == target_tlang) {
-            System.err.println("Error (wikt_parsed TTranslation.fromTranslationsToPage()):: null arguments, source_tlang="+
+            System.out.println("Error (wikt_parsed TTranslation.fromTranslationsToPage()):: null arguments, source_tlang="+
                     source_tlang+", translation_page="+translation_page+", target_tlang="+target_tlang);
             return NULL_TPAGE_ARRAY;
         }
@@ -240,7 +240,7 @@ public class TTranslation {
                     if(source_lang == trans.getLangPOS().getLang().getLanguage()) {
                         TPage p = trans.getLangPOS().getPage();
                         if(null == p) {
-                            System.err.println("Error (wikt_parsed TTranslation.fromTranslationsToPage()):: There is no page with translation (translation_page)="+translation_page.getPageTitle());
+                            System.out.println("Error (wikt_parsed TTranslation.fromTranslationsToPage()):: There is no page with translation (translation_page)="+translation_page.getPageTitle());
                             return NULL_TPAGE_ARRAY;
                         }
                         if(null == list_page) {
@@ -280,7 +280,7 @@ public class TTranslation {
 
         TPage page = TPage.get(connect, translation_page);
         if(null == page) {
-            System.err.println("Error (TTranslation.fromTranslationsToPage()):: null argument page");
+            System.out.println("Error (TTranslation.fromTranslationsToPage()):: null argument page");
             return NULL_STRING_ARRAY;
         }
         
@@ -309,7 +309,7 @@ public class TTranslation {
             String meaning_summary,TMeaning meaning) {
 
         if(null == lang_pos) {
-            System.err.println("Error (wikt_parsed TTranslation.insert()):: null argument lang_pos");
+            System.out.println("Error (wikt_parsed TTranslation.insert()):: null argument lang_pos");
             return null;
         }
 
@@ -354,7 +354,7 @@ public class TTranslation {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TTranslation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TTranslation.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return trans;
     }
@@ -392,7 +392,7 @@ public class TTranslation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TMeaning.java getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return trans;
     }
@@ -404,7 +404,7 @@ public class TTranslation {
     public static TTranslation[] getByLangPOS (Connect connect,TLangPOS lang_pos) {
 
         if(null == lang_pos) {
-            System.err.println("Error (wikt_parsed TTranslation.getByLangPOS()):: null arguments lang_pos");
+            System.out.println("Error (wikt_parsed TTranslation.getByLangPOS()):: null arguments lang_pos");
             return NULL_TTRANSLATION_ARRAY;
         }
 
@@ -438,7 +438,7 @@ public class TTranslation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TTranslation.getByLangPOS()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TTranslation.getByLangPOS()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_trans)
             return NULL_TTRANSLATION_ARRAY;
@@ -454,7 +454,7 @@ public class TTranslation {
     public static TTranslation getByMeaning(Connect connect,TMeaning meaning) {
 
         if(null == meaning) {
-            System.err.println("Error (wikt_parsed TTranslation.getByMeaning()):: null argument meaning");
+            System.out.println("Error (wikt_parsed TTranslation.getByMeaning()):: null argument meaning");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -483,7 +483,7 @@ public class TTranslation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TTranslation.getByMeaning()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TTranslation.getByMeaning()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return ttrans;
     }
@@ -494,7 +494,7 @@ public class TTranslation {
     public static void deleteWithEntries (Connect connect,TTranslation trans) {
 
         if(null == trans) {
-            System.err.println("Error (wikt_parsed TTranslation.deleteWithEntries()):: null argument 'translation'");
+            System.out.println("Error (wikt_parsed TTranslation.deleteWithEntries()):: null argument 'translation'");
             return;
         }
         
@@ -512,7 +512,7 @@ public class TTranslation {
     public static void delete (Connect connect,TTranslation trans) {
 
         if(null == trans) {
-            System.err.println("Error (wikt_parsed TTranslation.delete()):: null argument 'translation'");
+            System.out.println("Error (wikt_parsed TTranslation.delete()):: null argument 'translation'");
             return;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -528,7 +528,7 @@ public class TTranslation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TTranslation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TTranslation.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 

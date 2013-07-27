@@ -143,7 +143,7 @@ public class TMeaning {
             int meaning_n, TWikiText wiki_text) {
 
         if(null == lang_pos) {
-            System.err.println("Error (wikt_parsed TMeaning.insert()):: null argument lang_pos");
+            System.out.println("Error (wikt_parsed TMeaning.insert()):: null argument lang_pos");
             return null;
         }
 
@@ -189,7 +189,7 @@ public class TMeaning {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TMeaning.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TMeaning.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return meaning;
     }
@@ -201,7 +201,7 @@ public class TMeaning {
     public static TMeaning[] get (Connect connect,TLangPOS lang_pos) {
 
         if(null == lang_pos) {
-            System.err.println("Error (wikt_parsed TMeaning.get()):: null argument lang_pos");
+            System.out.println("Error (wikt_parsed TMeaning.get()):: null argument lang_pos");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -232,7 +232,7 @@ public class TMeaning {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TMeaning.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TMeaning.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_meaning)
             return NULL_TMEANING_ARRAY;
@@ -351,7 +351,7 @@ public class TMeaning {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TMeaning.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TMeaning.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return meaning;
     }
@@ -363,7 +363,7 @@ public class TMeaning {
     public static void delete (Connect connect,TMeaning meaning) {
 
         if(null == meaning) {
-            System.err.println("Error (wikt_parsed TMeaning.delete()):: null argument meaning");
+            System.out.println("Error (wikt_parsed TMeaning.delete()):: null argument meaning");
             return;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -379,7 +379,7 @@ public class TMeaning {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TMeaning.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TMeaning.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
