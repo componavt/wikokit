@@ -47,6 +47,7 @@ $mkdir /enwikt20100824/wikt_parser
 wikt_parser/run_wikt_parser.bat
 wikt_parser/dist/wikt_parser.jar
 wikt_parser/dist/lib/common_wiki.jar
+wikt_parser/dist/lib/common_wiki_jdbc.jar
 wikt_parser/dist/lib/mysql-connector-java-5.1.13-bin.jar
 
 mysql$ DROP DATABASE enwikt20100824_parsed;
