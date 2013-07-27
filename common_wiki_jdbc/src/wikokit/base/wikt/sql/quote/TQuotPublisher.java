@@ -50,7 +50,7 @@ public class TQuotPublisher {
     public static TQuotPublisher insert (Connect connect,String _text) {
 
         if(null == _text || 0 == _text.length()) {
-            System.err.println("Error (TQuotPublisher.insert()):: null argument: .");
+            System.out.println("Error (TQuotPublisher.insert()):: null argument: .");
             return null;
         }
         String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
@@ -80,7 +80,7 @@ public class TQuotPublisher {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotPublisher.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotPublisher.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -94,7 +94,7 @@ public class TQuotPublisher {
     public static TQuotPublisher get (Connect connect, String _text) {
 
         if(null == _text || 0 == _text.length()) {
-            System.err.println("Error (TQuotPublisher.get()):: null argument: publisher's name.");
+            System.out.println("Error (TQuotPublisher.get()):: null argument: publisher's name.");
             return null;
         }
         String safe_text = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, _text);
@@ -117,7 +117,7 @@ public class TQuotPublisher {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotPublisher.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotPublisher.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result;
     }
@@ -168,7 +168,7 @@ public class TQuotPublisher {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotPublisher.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotPublisher.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return quot_publisher;
     }
@@ -189,7 +189,7 @@ public class TQuotPublisher {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotPublisher.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotPublisher.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

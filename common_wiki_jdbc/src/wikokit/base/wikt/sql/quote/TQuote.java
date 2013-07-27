@@ -148,15 +148,15 @@ public class TQuote {
                   TQuotRef _quot_ref)
     {
         if(null == _text || _text.length() == 0) {
-            System.err.println("Error (TQuote.insert()):: quotation text is empty.");
+            System.out.println("Error (TQuote.insert()):: quotation text is empty.");
             return null;
         }
         if(null == _meaning) {
-            System.err.println("Error (TQuote.insert()):: _meaning is null.");
+            System.out.println("Error (TQuote.insert()):: _meaning is null.");
             return null;
         }
         if(null == _lang) {
-            System.err.println("Error (TQuote.insert()):: _lang is null.");
+            System.out.println("Error (TQuote.insert()):: _lang is null.");
             return null;
         }
         String quot_ref_id = (null == _quot_ref) ? "NULL" : "" + _quot_ref.getID();
@@ -196,7 +196,7 @@ public class TQuote {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotRef.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotRef.insert):: _text='"+_text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -369,7 +369,7 @@ public class TQuote {
     public static TQuote[] get (Connect connect,TMeaning meaning) {
 
         if(null == meaning) {
-            System.err.println("Error (wikt_parsed TQuote.get()):: null argument: meaning.");
+            System.out.println("Error (wikt_parsed TQuote.get()):: null argument: meaning.");
             return NULL_TQUOTE_ARRAY;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -402,7 +402,7 @@ public class TQuote {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuote.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuote.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_quote)
             return NULL_TQUOTE_ARRAY;
@@ -425,7 +425,7 @@ public class TQuote {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuote.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuote.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

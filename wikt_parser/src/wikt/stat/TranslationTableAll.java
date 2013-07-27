@@ -92,10 +92,10 @@ public class TranslationTableAll {
                 TLang tlang = lang_pos.getLang();
                 LanguageType lt = tlang.getLanguage();  // see: Wiktionary:About Translingual
                 if(null != tlang && native_lang != lt && LanguageType.mul != lt) {
-                    System.err.print("Error (TranslationTableAll.countTranslationPerLanguage()): There is a translation box from a foreign language, code=" + tlang.getLanguage().getCode());
+                    System.out.print("Error (TranslationTableAll.countTranslationPerLanguage()): There is a translation box from a foreign language, code=" + tlang.getLanguage().getCode());
                     TPage p = lang_pos.getPage();
                     if(null != p)
-                        System.err.println(", page_title=" + p.getPageTitle());
+                        System.out.println(", page_title=" + p.getPageTitle());
                 }
 
                 if(null != lang_pos) {
@@ -137,7 +137,7 @@ public class TranslationTableAll {
                     n_unknown_lang_pos ++;
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TranslationTableAll.countTranslationPerLanguage()): " + ex.getMessage());
+            System.out.println("SQLException (TranslationTableAll.countTranslationPerLanguage()): " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }

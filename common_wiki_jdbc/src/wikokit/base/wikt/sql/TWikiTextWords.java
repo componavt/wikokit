@@ -204,7 +204,7 @@ public class TWikiTextWords {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TWikiTextWords.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return words;
     }
@@ -251,7 +251,7 @@ public class TWikiTextWords {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByWikiText()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TWikiTextWords.getByWikiText()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_words)
             return NULL_TWIKITEXTWORDS_ARRAY;
@@ -266,7 +266,7 @@ public class TWikiTextWords {
     public static TWikiTextWords[] getByPage (Connect connect,TPage page) {
 
         if(null == page) {
-            System.err.println("Error (TWikiTextWords.getByPage()):: null argument page.");
+            System.out.println("Error (TWikiTextWords.getByPage()):: null argument page.");
             return NULL_TWIKITEXTWORDS_ARRAY;
         }
         
@@ -299,7 +299,7 @@ public class TWikiTextWords {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByPage()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TWikiTextWords.getByPage()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_words)
             return NULL_TWIKITEXTWORDS_ARRAY;
@@ -346,7 +346,7 @@ public class TWikiTextWords {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByWikiText()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TWikiTextWords.getByWikiText()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return word;
     }
@@ -387,7 +387,7 @@ public class TWikiTextWords {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TWikiTextWords.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return word;
     }
@@ -401,7 +401,7 @@ public class TWikiTextWords {
     public static TWikiTextWords getOneByWikiText (Connect connect,TWikiText wiki_text) {
         
         if(null == wiki_text) {
-            System.err.println("Error (TWikiTextWords.getOneByWikiText()):: null argument wiki_text.");
+            System.out.println("Error (TWikiTextWords.getOneByWikiText()):: null argument wiki_text.");
             return null;
         }
         
@@ -434,7 +434,7 @@ public class TWikiTextWords {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TWikiTextWords.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TWikiTextWords.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return word;
     }
@@ -459,7 +459,7 @@ public class TWikiTextWords {
     public static TPage getPageForOneWordWikiText (Connect connect,TWikiText wiki_text) {
         
         if(null == wiki_text) {
-            System.err.println("Error (TWikiTextWords.getPageForOneWordWikiText()):: null argument wiki_text.");
+            System.out.println("Error (TWikiTextWords.getPageForOneWordWikiText()):: null argument wiki_text.");
             return null;
         }
         
@@ -478,7 +478,7 @@ public class TWikiTextWords {
     public static TWikiText[] getOneWordWikiTextByPage (Connect connect,TPage page) {
 
         if(null == page) {
-            System.err.println("Error (TWikiTextWords.getOneWordWikiTextByPage()):: null argument page.");
+            System.out.println("Error (TWikiTextWords.getOneWordWikiTextByPage()):: null argument page.");
             return NULL_TWIKITEXT_ARRAY;
         }
 
@@ -515,7 +515,7 @@ public class TWikiTextWords {
     public static void delete (Connect connect,TWikiTextWords word) {
 
         if(null == word) {
-            System.err.println("Error (wikt_parsed TWikiTextWords.delete()):: null argument word.");
+            System.out.println("Error (wikt_parsed TWikiTextWords.delete()):: null argument word.");
             return;
         }
         
@@ -531,7 +531,7 @@ public class TWikiTextWords {
             }
             //System.out.println("TWikiTextWords.delete()):: wiki_text='" + word.getWikiText().getText() + "'; id=" + word.getID());
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TWikiTextWords.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TWikiTextWords.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

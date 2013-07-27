@@ -41,7 +41,7 @@ public class Statistics {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (Statistics.java Count()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (Statistics.java Count()): sql='" + str_sql + "' " + ex.getMessage());
         }
         return size;
     }
@@ -73,7 +73,7 @@ public class Statistics {
                 size = rs.getInt("size");
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (Statistics.java CountPageForNamespace()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (Statistics.java CountPageForNamespace()): sql='" + str_sql + "' " + ex.getMessage());
         } finally {
             if (rs != null) {
                 try { rs.close();
@@ -143,7 +143,7 @@ public class Statistics {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (Statistics.java Count()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (Statistics.java Count()): sql='" + str_sql + "' " + ex.getMessage());
         }
         return sum;
     }

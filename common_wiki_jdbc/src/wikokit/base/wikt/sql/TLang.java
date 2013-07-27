@@ -90,11 +90,11 @@ public class TLang {
      */
     public static int getIDFast(LanguageType lt) {
         if(null == lang2id || 0 == lang2id.size()) {
-            System.err.println("Error (wikt_parsed TLang.getIDFast()):: What about calling 'createFastMaps()' before?");
+            System.out.println("Error (wikt_parsed TLang.getIDFast()):: What about calling 'createFastMaps()' before?");
             return -1;
         }
         if(null == lt) {
-            System.err.println("Error (wikt_parsed TLang.getIDFast()):: argument LanguageType is null");
+            System.out.println("Error (wikt_parsed TLang.getIDFast()):: argument LanguageType is null");
             return -1;
         }
         
@@ -113,11 +113,11 @@ public class TLang {
      */  
     public static TLang getTLangFast(int id) {
         if(null == id2lang) {
-            System.err.println("Error (wikt_parsed TLang.getTLangFast()):: What about calling 'createFastMaps()' before?");
+            System.out.println("Error (wikt_parsed TLang.getTLangFast()):: What about calling 'createFastMaps()' before?");
             return null;
         }
         if(id <= 0) {
-            System.err.println("Error (wikt_parsed TLang.getTLangFast()):: argument id <=0, id = "+id);
+            System.out.println("Error (wikt_parsed TLang.getTLangFast()):: argument id <=0, id = "+id);
             return null;
         }
         return id2lang.get(id);
@@ -239,7 +239,7 @@ public class TLang {
 
         int size = Statistics.Count(connect, "lang");
         if(0==size) {
-            System.err.println("Error (wikt_parsed TLang.java getAllTLang()):: The table `lang` is empty!");
+            System.out.println("Error (wikt_parsed TLang.java getAllTLang()):: The table `lang` is empty!");
             return NULL_TLANG_ARRAY;
         }
         
@@ -386,7 +386,7 @@ public class TLang {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TLang.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLang.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -417,7 +417,7 @@ public class TLang {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TLang.update()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLang.update()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 
@@ -453,11 +453,11 @@ public class TLang {
                                         rs.getInt("n_translations"));
 
                         /*if(!lt.getName().equalsIgnoreCase(name)) { // cause: field lang.name is NOT unique, only .code is unique
-                            System.err.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name +
+                            System.out.println("Warning: (wikt_parsed TLang.java get()):: Table 'lang' has unknown language name =" + name +
                                     " (language code = " + lt.getCode() + ")");
                         }*/
                     } else {
-                            System.err.println("Error: (wikt_parsed TLang.java get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
+                            System.out.println("Error: (wikt_parsed TLang.java get()):: The language code '" + lang_code + "' is absent in the table 'lang'.");
                     }
                 } finally {
                     rs.close();
@@ -466,7 +466,7 @@ public class TLang {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLang.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLang.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -495,7 +495,7 @@ public class TLang {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLang.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLang.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }    
 }

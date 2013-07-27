@@ -111,7 +111,9 @@ public class LabelCategory {
     public static final LabelCategory
             root, // base (root) category of context labels
             
-            unknown,    // category for labels added automatically by parser
+            //unknown,  // category for labels added automatically by parser
+                        // if label_category is unknown then label.category_id == NULL
+            
             invisible,  // special category for form-of templates (ruwikt), e.g. "{{=|word}}" => "the same as [[word]]" - there is nothing to be printed for this template
             
             grammatical, 
@@ -134,7 +136,7 @@ public class LabelCategory {
     static {
         root       = new LabelCategory("root", null); // root
         
-        unknown     = new LabelCategory("unknown", LabelCategory.root);
+        // unknown     = new LabelCategory("unknown", LabelCategory.root);
         invisible   = new LabelCategory("invisible", LabelCategory.root);
         
         grammatical = new LabelCategory("grammatical", LabelCategory.root);

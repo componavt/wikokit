@@ -68,7 +68,7 @@ public class TPageInflection {
     public static TPageInflection insert (Connect connect,TPage page,TInflection inflection,int term_freq) {
 
         if(null == page || null == inflection) {
-            System.err.println("Error (TPageInflection.insert()):: null arguments: page="+page+"; inflection="+inflection);
+            System.out.println("Error (TPageInflection.insert()):: null arguments: page="+page+"; inflection="+inflection);
             return null;
         }
 
@@ -99,7 +99,7 @@ public class TPageInflection {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPageInflection.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TPageInflection.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return page_infl;
     }
@@ -113,7 +113,7 @@ public class TPageInflection {
     public static TPageInflection get (Connect connect,TPage page,TInflection infl) {
 
         if(null == page || null == infl) {
-            System.err.println("Error (wikt_parsed TPageInflection.get()):: null arguments: page="+page+"; inflection="+infl);
+            System.out.println("Error (wikt_parsed TPageInflection.get()):: null arguments: page="+page+"; inflection="+infl);
             return null;
         }
         
@@ -143,7 +143,7 @@ public class TPageInflection {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TPageInflection.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPageInflection.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return page_infl;
     }
@@ -180,7 +180,7 @@ public class TPageInflection {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TPageInflection.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPageInflection.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return page_infl;
     }
@@ -192,7 +192,7 @@ public class TPageInflection {
     public static void delete (Connect connect,TPageInflection page_infl) {
 
         if(null == page_infl) {
-            System.err.println("Error (wikt_parsed TPageInflection.delete()):: null argument 'page inflection'");
+            System.out.println("Error (wikt_parsed TPageInflection.delete()):: null argument 'page inflection'");
             return;
         }
         
@@ -207,7 +207,7 @@ public class TPageInflection {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TPageInflection.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPageInflection.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

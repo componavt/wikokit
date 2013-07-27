@@ -62,11 +62,11 @@ public class TPOS {
      */
     public static int getIDFast(POS p) {
         if(null == pos2id) {
-            System.err.println("Error (wikt_parsed TPOS.getIDFast()):: What about calling 'createFastMaps()' before?");
+            System.out.println("Error (wikt_parsed TPOS.getIDFast()):: What about calling 'createFastMaps()' before?");
             return -1;
         }
         if(null == p) {
-            System.err.println("Error (wikt_parsed TPOS.getIDFast()):: argument POS is null");
+            System.out.println("Error (wikt_parsed TPOS.getIDFast()):: argument POS is null");
             return -1;
         }
         return pos2id.get(p);
@@ -77,11 +77,11 @@ public class TPOS {
      */
     public static TPOS getTPOSFast(int id) {
         if(null == id2pos) {
-            System.err.println("Error (wikt_parsed TPOS.getTPOSFast()):: What about calling 'createFastMaps()' before?");
+            System.out.println("Error (wikt_parsed TPOS.getTPOSFast()):: What about calling 'createFastMaps()' before?");
             return null;
         }
         if(id <= 0) {
-            System.err.println("Error (wikt_parsed TPOS.getTPOSFast()):: argument id <=0, id = "+id);
+            System.out.println("Error (wikt_parsed TPOS.getTPOSFast()):: argument id <=0, id = "+id);
             return null;
         }
         return id2pos.get(id);
@@ -130,7 +130,7 @@ public class TPOS {
 
         int size = Statistics.Count(connect, "part_of_speech");
         if(0==size) {
-            System.err.println("Error (wikt_parsed TPOS.java getAllTPOS()):: The table `part_of_speech` is empty!");
+            System.out.println("Error (wikt_parsed TPOS.java getAllTPOS()):: The table `part_of_speech` is empty!");
             return NULL_TPOS_ARRAY;
         }
         
@@ -217,7 +217,7 @@ public class TPOS {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPOS.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TPOS.java insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
     
@@ -243,7 +243,7 @@ public class TPOS {
                     if (rs.next ())
                         tp = new TPOS(rs.getInt("id"), p);
                     else
-                        System.err.println("Warning: (TPOS.get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
+                        System.out.println("Warning: (TPOS.get()):: POS (" + p.toString() + ") is absent in the table 'part_of_speech'.");
                 } finally {
                     rs.close();
                 }
@@ -251,7 +251,7 @@ public class TPOS {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TPOS.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TPOS.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return tp;
     }
@@ -276,7 +276,7 @@ public class TPOS {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TPOS.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TPOS.java delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

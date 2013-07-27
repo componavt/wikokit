@@ -158,7 +158,7 @@ public class TLangPOS {
             int etymology_n,String lemma) {
 
         if(null == page || null == lang || null == pos) {
-            System.err.println("Error (wikt_parsed TLangPOS.insert()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
+            System.out.println("Error (wikt_parsed TLangPOS.insert()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
             return null;
         }
         
@@ -210,7 +210,7 @@ public class TLangPOS {
             }
         }catch(SQLException ex) {
             String page_title = page.getPageTitle();
-            System.err.println("SQLException (TLangPOS.insert()):: page_title="+page_title+
+            System.out.println("SQLException (TLangPOS.insert()):: page_title="+page_title+
                     "; sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return lang_pos;
@@ -232,7 +232,7 @@ public class TLangPOS {
         //String safe_title = PageTableBase.convertToSafeStringEncodeToDB(connect, page_title);
 
         if(null == page) {
-            System.err.println("Error (wikt_parsed TLangPOS.get()):: null argument: page.");
+            System.out.println("Error (wikt_parsed TLangPOS.get()):: null argument: page.");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -266,7 +266,7 @@ public class TLangPOS {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLangPOS.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLangPOS.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_lp)
             return NULL_TLANGPOS_ARRAY;
@@ -284,7 +284,7 @@ public class TLangPOS {
                                 TPage page,TLang lang,TPOS pos,int etymology_n)
     {
         if(null == page || null == lang || null == pos) {
-            System.err.println("Error (TLangPOS.getUniqueByPagePOSLangEtymology()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
+            System.out.println("Error (TLangPOS.getUniqueByPagePOSLangEtymology()):: null arguments, page="+page+", lang="+lang+", pos="+pos);
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -320,7 +320,7 @@ public class TLangPOS {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLangPOS.getUniqueByPagePOSLangEtymology()):: page_title="+page.getPageTitle()+
+            System.out.println("SQLException (TLangPOS.getUniqueByPagePOSLangEtymology()):: page_title="+page.getPageTitle()+
                     "; sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return lang_pos;
@@ -351,7 +351,7 @@ public class TLangPOS {
     public static TLang[] getLanguages (Connect connect,TPage page) {
         
         if(null == page) {
-            System.err.println("Error (TLangPOS.get()):: null argument: page.");
+            System.out.println("Error (TLangPOS.get()):: null argument: page.");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -381,7 +381,7 @@ public class TLangPOS {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLangPOS.getLanguages()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLangPOS.getLanguages()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_lang)
             return NULL_TLANG_ARRAY;
@@ -424,7 +424,7 @@ public class TLangPOS {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLangPOS.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLangPOS.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return lang_pos;
     }
@@ -436,7 +436,7 @@ public class TLangPOS {
     public static void delete (Connect connect,TPage page) {
 
         if(null == page) {
-            System.err.println("Error (TLangPOS.delete()):: null argument page.");
+            System.out.println("Error (TLangPOS.delete()):: null argument page.");
             return;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -450,7 +450,7 @@ public class TLangPOS {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLangPOS.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLangPOS.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
     

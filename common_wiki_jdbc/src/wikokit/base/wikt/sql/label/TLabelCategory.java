@@ -64,6 +64,30 @@ public class TLabelCategory {
     //    return id2category;
     //}
     
+    
+    /** Gets label category ID from the table 'label_category'.<br><br>
+     * 
+     * REM: the function 'createFastMaps()' should be run at least once,
+     * before this function execution.
+     */
+    public static int getIDFast(LabelCategory lc) {
+        if(null == category2id || 0 == category2id.size()) {
+            System.out.println("Error (wikt_parsed TLabelCategory.getIDFast()):: What about calling 'createFastMaps()' before?");
+            return -1;
+        }
+        if(null == lc) {
+            System.out.println("Error (wikt_parsed TLabelCategory.getIDFast()):: argument LanguageCategory is null");
+            return -1;
+        }
+        
+        Integer result = category2id.get(lc);
+        if(null == result) {
+            System.out.println("Warning (wikt_parsed TLabelCategory.getIDFast()):: map category2id don't have this id.");
+            return -1;
+        }
+        return result;
+    }
+    
     /** Read all records from the table 'label_category',
      * fills the internal map from a table ID to a label category .<br><br>
      *
@@ -76,7 +100,7 @@ public class TLabelCategory {
 
         int size = Statistics.Count(connect, "label_category");
         if(0==size) {
-            System.err.println("Error (wikt_parsed TLabelCategory.createFastMaps()):: The table `label_category` is empty!");
+            System.out.println("Error (wikt_parsed TLabelCategory.createFastMaps()):: The table `label_category` is empty!");
             return;
         }
         
@@ -96,7 +120,7 @@ public class TLabelCategory {
             int id        = getIDByName(connect, name);
             
             if (0 == id) {
-                System.err.println("Error (wikt_parsed TLabelCategory.createFastMaps()):: There is an empty label category name, check the table `label_category`!");
+                System.out.println("Error (wikt_parsed TLabelCategory.createFastMaps()):: There is an empty label category name, check the table `label_category`!");
                 continue;
             }
         
@@ -202,7 +226,7 @@ public class TLabelCategory {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLabelCategory.java insert):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TLabelCategory.java insert):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
     
@@ -228,13 +252,13 @@ public class TLabelCategory {
                     if (rs.next ())
                         result_id = rs.getInt("id");
                     else
-                        System.err.println("Warning: (wikt_parsed LabelCategory.getIDByName()):: name (" + label_category_name + ") is absent in the table 'label_category'.");
+                        System.out.println("Warning: (wikt_parsed LabelCategory.getIDByName()):: name (" + label_category_name + ") is absent in the table 'label_category'.");
                 }
             } finally {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (LabelCategory.getIDByName()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (LabelCategory.getIDByName()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result_id;
     }

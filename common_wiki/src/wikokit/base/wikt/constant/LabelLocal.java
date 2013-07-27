@@ -26,15 +26,21 @@ public abstract class LabelLocal extends Label {
         super(short_name);
     }
     
-    protected LabelLocal(String short_name, String name, Label label_en, boolean added_by_hand) {
-        super(short_name, name, added_by_hand);
+    protected LabelLocal(String short_name, String name, Label label_en) {
+        super(short_name, name);
         this.label_en   = label_en; 
     }
     
     /** Gets label itself (short name) in English. 
      *  This functions is needed for comparison (equals()) with LabelEn labels.
+     * 
+     * @return null for new context labels added automatically
      */
-    public String getShortNameEnglish() {
+    public String getShortNameEnglish() { 
+        
+        if(null == label_en)
+            return null;
+            
         return label_en.getShortName();
     }
     

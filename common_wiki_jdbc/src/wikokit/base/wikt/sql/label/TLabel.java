@@ -22,6 +22,8 @@ import wikokit.base.wikipedia.sql.Statistics;
 import wikokit.base.wikipedia.sql.UtilSQL;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
+import wikokit.base.wikt.sql.TLang;
+import wikokit.base.wikt.sql.TMeaning;
 
 /** An operations with the table 'label' (context labels) in MySQL Wiktionary_parsed database.
  * 
@@ -39,7 +41,7 @@ public class TLabel {
     /** Context label full name. */
     private String name;
     
-    /** Category of context label (category_id). */
+    /** Category of context label (category_id). NULL means that label_category is unknown. */
     private TLabelCategory label_category;
     
     /** Weather the label was added manually to the code of wikokit, or was gathered automatically by parser. */
@@ -54,6 +56,26 @@ public class TLabel {
     /** Map from ID to label.*/
     private static Map<Integer, Label> id2label;
     
+    
+    /** Gets the map from label to ID (ID in the table 'label').
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static Map<Label, Integer> getAllLabels2ID() {
+        return label2id;
+    }
+    
+    /** Gets the map from label ID (ID in the table 'label') to label.
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */
+    public static Map<Integer, Label> getAllID2Labels() {
+        return id2label;
+    }
+    
+    
     /** Read all records from the table 'label',
      * fills the internal map from a table ID to a label.<br><br>
      *
@@ -66,7 +88,7 @@ public class TLabel {
 
         int size = Statistics.Count(connect, "label");
         if(0==size) {
-            System.err.println("Error (wikt_parsed TLabel.createFastMaps()):: The table `label` is empty!");
+            System.out.println("Error (wikt_parsed TLabel.createFastMaps()):: The table `label` is empty!");
             return;
         }
         
@@ -83,10 +105,10 @@ public class TLabel {
         for(Label label : labs) {
             
             String short_name = label.getShortName();
-            int id        = getIDByShortName(connect, short_name);
+            int id        = getIDByShortName(connect, short_name, "createFastMaps");
             
             if (0 == id) {
-                System.err.println("Error (wikt_parsed TLabel.createFastMaps()):: There is an empty label short name, check the table `label_category`!");
+                System.out.println("Error (wikt_parsed TLabel.createFastMaps()):: There is an empty label short name, check the table `label_category`!");
                 continue;
             }
         
@@ -159,6 +181,29 @@ public class TLabel {
         }
     }
     
+    /** Calculates number of labels in the table 'label_meaning', 
+     * stores statistics to the field: 'label.counter'. <br><br>
+     *
+     * REM: this func should be called after the a creation of Wiktionary
+     * parsed database, and the tables should be filled with data.
+     *
+     * @param native_lang       native language in the Wiktionary,
+     *                          e.g. Russian language in Russian Wiktionary
+     */
+    public static void calcCounterStatistics(Connect connect,
+                                            LanguageType native_lang) {
+
+        System.out.println("Fill `label.counter` by statistics from the table 'label_meaning' ...");
+
+        Map<Integer, Label> _id2label = TLabel.getAllID2Labels();
+        
+        for(int label_id : _id2label.keySet()) {
+            
+            int counter = TLabelMeaning.countRecordsWithLabelID(connect, label_id); // SELECT COUNT(*) FROM label_meaning WHERE label_id = 3;
+            update(connect, label_id, counter);                                     // UPDATE label SET counter=7 WHERE id=3;
+        }
+    }
+    
     /** Inserts record into the table 'label'.<br><br>
      * INSERT INTO label (short_name, name, category_id) VALUES ("short name", "name", 1);
      * @param short_name    label itself
@@ -188,8 +233,47 @@ public class TLabel {
                 s.executeUpdate (str_sql.toString());
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (wikt_parsed TLabel.insert()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (wikt_parsed TLabel.insert(with category_id)):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
+    }
+    
+    /** Inserts record into the table 'label', gets last inserted ID.<br><br>
+     * INSERT INTO label (short_name, name) VALUES ("short name", "name");
+     * @param short_name    label itself
+     * @param name          full name of label
+     * 
+     * @return last inserted ID, 0 means error
+     */
+    public static int insert (Connect connect,String short_name, String name) {
+
+        if(null == short_name || short_name.length() == 0) return 0;
+        
+        int result_id = 0;
+        StringBuilder str_sql = new StringBuilder();
+        try
+        {
+            try (Statement s = connect.conn.createStatement ()) {
+                str_sql.append("INSERT INTO label (short_name, name) VALUES (\"");
+                
+                String safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, short_name);
+                str_sql.append(safe_title);
+                str_sql.append("\",\"");
+                
+                safe_title = PageTableBase.convertToSafeStringEncodeToDBWunderscore(connect, name);
+                str_sql.append(safe_title);
+                str_sql.append("\")");
+
+                s.executeUpdate (str_sql.toString(), Statement.RETURN_GENERATED_KEYS);
+                ResultSet rs = s.getGeneratedKeys();
+                if (rs.next()){
+                    result_id = rs.getInt(1);
+                }
+                
+            }
+        }catch(SQLException ex) {
+            System.out.println("SQLException (wikt_parsed TLabel.insert(without category_id)):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        }
+        return result_id;
     }
     
     /** Selects ID from the table 'label' by a label short name.<br><br>
@@ -197,7 +281,7 @@ public class TLabel {
      * @param  short_name    name of label category
      * @return 0 if a label name is empty in the table 'label_category'
      */
-    public static int getIDByShortName (Connect connect,String short_name) {
+    public static int getIDByShortName (Connect connect,String short_name,String page_title) {
 
         if(null == short_name
                 || short_name.isEmpty()) return 0;
@@ -215,14 +299,65 @@ public class TLabel {
                     if (rs.next ())
                         result_id = rs.getInt("id");
                     else
-                        System.err.println("Warning: (TLabel.getIDByShortName()):: name (" + short_name + ") is absent in the table 'label_category'.");
+                        System.out.println("Warning: (TLabel.getIDByShortName()):: name '" + short_name + "' is absent in the table 'label', page_title="+page_title+".");
                 }
             } finally {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TLabel.getIDByShortName()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TLabel.getIDByShortName()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result_id;
+    }
+    
+    /** Updates values (n_foreign_POS, n_translations) in the table 'lang'. <br><br>
+     *
+     * UPDATE label SET counter=7 WHERE id=3;
+     */
+    public static void update (Connect connect,int label_id,int counter) {
+        
+        StringBuilder str_sql = new StringBuilder();
+        try
+        {
+            Statement s = connect.conn.createStatement ();
+            try {
+                // UPDATE label SET counter=7 WHERE id=3;
+                str_sql.append("UPDATE label SET counter=");
+                str_sql.append(counter);
+                str_sql.append(" WHERE id=");
+                str_sql.append(label_id);
+                s.executeUpdate (str_sql.toString());
+            } finally {
+                s.close();
+            }
+        }catch(SQLException ex) {
+            System.out.println("SQLException (TLabel.update()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+        }
+    }
+    
+    /** Stores context labels related to this meaning into table:
+     * 'label_meaning'. New labels will be stored to the table 'label' automatically (added_by_hand = false).
+     *
+     * @param page_title    word described in this article
+     * @param _meaning      corresponding record in table 'meaning' to this relation
+     * @param lang          language of this meaning
+     * @param _labels        labels extracted from the definition of this meaning
+     */
+    public static void storeToDB (Connect connect,String page_title,
+                                  TMeaning _meaning, TLang _lang,
+                                  Label[] _labels)
+    {
+        if(null == _meaning || _labels.length == 0) return;
+
+        for(Label la : _labels)
+        {
+            // 1. if 'la' is new label then add 'la' to the table 'label' (label.added_by_hand = false).
+            int label_id = TLabel.getIDByShortName(connect, la.getShortName(), page_title);
+            if(0 == label_id)
+                label_id = TLabel.insert (connect, la.getShortName(), la.getName());
+            
+            // 2. add to the table 'label_meaning' the record (la.label_id, _meaning.id)
+            TLabelMeaning.insert( connect, page_title, label_id, _meaning.getID());
+        }
     }
 }

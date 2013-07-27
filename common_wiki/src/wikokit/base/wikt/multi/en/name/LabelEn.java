@@ -49,7 +49,7 @@ public final class LabelEn extends Label {
     /** Constructor for static context labels listed in this file below.
      */
     protected LabelEn(String short_name, String name, LabelCategory category) { 
-        super(short_name, name, true);  // added_by_hand = true by default
+        super(short_name, name);
         initLabelAddedByHand(this);
         
         if(null == category)
@@ -66,7 +66,7 @@ public final class LabelEn extends Label {
      * @param short_name name of the found context label
      */
     public LabelEn(String short_name, LabelCategory label_cat) { 
-        super(short_name);  // added_by_hand = false
+        super(short_name);
         initLabelAddedAutomatically(this);
         
         this.category   = label_cat; // usually it is LabelCategory.unknown; 

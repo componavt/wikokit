@@ -88,7 +88,7 @@ public class TQuotAuthor {
     public static TQuotAuthor insertNameWikilink (Connect connect,String _name,String _wikilink) {
 
         if(null == _name || 0 == _name.length()) {
-            System.err.println("Error (TQuotAuthor.insertNameAndWikilink()):: null argument: author's name.");
+            System.out.println("Error (TQuotAuthor.insertNameAndWikilink()):: null argument: author's name.");
             return null;
         }
         if(null == _wikilink)
@@ -122,7 +122,7 @@ public class TQuotAuthor {
             }
 
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotAuthor.insertName):: _name='"+_name+"'; _wikilink='"+_wikilink+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotAuthor.insertName):: _name='"+_name+"'; _wikilink='"+_wikilink+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -136,7 +136,7 @@ public class TQuotAuthor {
     public static TQuotAuthor getFirst (Connect connect,String _name) {
 
         if(null == _name || 0 == _name.length()) {
-            System.err.println("Error (TQuotAuthor[] TQuotAuthor.get()):: null argument: author's name.");
+            System.out.println("Error (TQuotAuthor[] TQuotAuthor.get()):: null argument: author's name.");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -165,7 +165,7 @@ public class TQuotAuthor {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result;
     }
@@ -179,7 +179,7 @@ public class TQuotAuthor {
     public static TQuotAuthor[] get (Connect connect,String _name) {
 
         if(null == _name || 0 == _name.length()) {
-            System.err.println("Error (TQuotAuthor[] TQuotAuthor.get()):: null argument: author's name.");
+            System.out.println("Error (TQuotAuthor[] TQuotAuthor.get()):: null argument: author's name.");
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -210,7 +210,7 @@ public class TQuotAuthor {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         if(null == list_authors)
             return NULL_TQUOTAUTHOR_ARRAY;
@@ -228,7 +228,7 @@ public class TQuotAuthor {
     public static TQuotAuthor get (Connect connect, String _name, String _wikilink) {
 
         if(null == _name || 0 == _name.length()) {
-            System.err.println("Error (TQuotAuthor TQuotAuthor.get()):: null argument: author's name.");
+            System.out.println("Error (TQuotAuthor TQuotAuthor.get()):: null argument: author's name.");
             return null;
         }
         if(null == _wikilink)
@@ -257,7 +257,7 @@ public class TQuotAuthor {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotAuthor.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result;
     }
@@ -315,7 +315,7 @@ public class TQuotAuthor {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotAuthor.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotAuthor.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return quot_author;
     }
@@ -336,7 +336,7 @@ public class TQuotAuthor {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotAuthor.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotAuthor.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
     

@@ -65,7 +65,7 @@ public class TQuotTranslation {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (TQuotTranslation.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotTranslation.insert()):: text='"+text+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return new TQuotTranslation(quote_id, text);
     }
@@ -97,7 +97,7 @@ public class TQuotTranslation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotTranslation.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotTranslation.getByID()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return result;
     }
@@ -118,7 +118,7 @@ public class TQuotTranslation {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (TQuotTranslation.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (TQuotTranslation.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }

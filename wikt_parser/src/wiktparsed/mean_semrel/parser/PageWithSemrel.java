@@ -212,7 +212,7 @@ public class PageWithSemrel {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (PageWithSemrel.parse()): " + ex.getMessage());
+            System.out.println("SQLException (PageWithSemrel.parse()): " + ex.getMessage());
         }
 
         // post-processing 1

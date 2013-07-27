@@ -30,7 +30,7 @@ import wikokit.base.wikt.sql.label.TLabelCategory;
 /** Top level functions for Wiktionary parsing.
  */
 public class WiktParser {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
 /* 
 Clear the export of MySQL Workbench Visual

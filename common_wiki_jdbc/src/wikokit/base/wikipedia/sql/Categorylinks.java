@@ -45,7 +45,7 @@ public class Categorylinks {
                 size = rs.getInt("size");
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (Categorylinks.java countCategoryLinks()):: sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (Categorylinks.java countCategoryLinks()):: sql='" + str_sql + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -83,7 +83,7 @@ public class Categorylinks {
             }
             
         } catch(SQLException ex) {
-            System.err.println("SQLException (Categorylinks.java getArticlesIDSubcategoryIDByCategoryTitle()):: sql='" + sb.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (Categorylinks.java getArticlesIDSubcategoryIDByCategoryTitle()):: sql='" + sb.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
@@ -145,7 +145,7 @@ public class Categorylinks {
                 }
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (Categorylinks.java GetCategory()):: sql='" + sb.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (Categorylinks.java GetCategory()):: sql='" + sb.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }

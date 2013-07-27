@@ -81,7 +81,7 @@ public class IndexNative {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (IndexNative.countNumberPOSWithDefinition()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexNative.countNumberPOSWithDefinition()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return size;
     }
@@ -97,7 +97,7 @@ public class IndexNative {
                                         TPage   page,
                                         boolean has_relation) {
         if(null == page) {
-            System.err.println("Error (IndexNative.insert()):: null argument: page="+page);
+            System.out.println("Error (IndexNative.insert()):: null argument: page="+page);
             return null;
         }
         StringBuilder str_sql = new StringBuilder();
@@ -120,7 +120,7 @@ public class IndexNative {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.err.println("SQLException (IndexNative.insert()):: page_title="+page_title+
+            System.out.println("SQLException (IndexNative.insert()):: page_title="+page_title+
                     "; sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         IndexNative index_native = null;
@@ -165,7 +165,7 @@ public class IndexNative {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (IndexNative.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexNative.get()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
         return _in;
     }
@@ -193,7 +193,7 @@ public class IndexNative {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.err.println("SQLException (IndexNative.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
+            System.out.println("SQLException (IndexNative.delete()):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
     }
 }
