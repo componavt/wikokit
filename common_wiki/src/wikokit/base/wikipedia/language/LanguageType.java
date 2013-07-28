@@ -2671,7 +2671,8 @@ public class LanguageType {
     public static final LanguageType bgx = new LanguageType("bgx", "Balkan Gagauz Turkish", "Balkan Gagauz Turkish");
     
     public static final LanguageType trp = new LanguageType("trp", "Kokborok", "Kokborok");
-    public static final LanguageType ria = new LanguageType("ria", "Riang", "Riang");
+    public static final LanguageType ria = new LanguageType("ria", "Riang (India)", "Riang (India)");
+    public static final LanguageType ril = new LanguageType("ril", "Riang (Myanmar)", "Riang (Myanmar)");
     public static final LanguageType tpe = new LanguageType("tpe", "Tippera", "Tippera");
     public static final LanguageType usi = new LanguageType("usi", "Usui", "Usui");// typo? Usoi
     public static final LanguageType xtr = new LanguageType("xtr", "Early Tripuri", "Early Tripuri");
@@ -2818,7 +2819,14 @@ public class LanguageType {
 
     public static final LanguageType wyb = new LanguageType("wyb", "Ngiyambaa", "Ngiyambaa");
     public static final LanguageType wyb2 = LanguageType.addNonUniqueName(wyb, "Wangaaybuwan-Ngiyambaa");
-
+    
+    public static final LanguageType xbo = new LanguageType("xbo", "Bulgar", "Bulgar");
+    public static final LanguageType xbo2 = LanguageType.addNonUniqueName(xbo, "Bolğar");
+    public static final LanguageType xbo3 = LanguageType.addNonUniqueName(xbo, "Bulghar");
+    public static final LanguageType xbo4 = LanguageType.addNonUniqueName(xbo, "Bolghar");
+    public static final LanguageType xbo5 = LanguageType.addNonUniqueName(xbo, "Bolgarian");
+    public static final LanguageType xbo6 = LanguageType.addNonUniqueName(xbo, "Bolgar");
+    
     public static final LanguageType xal = new LanguageType("xal", "Kalmyk", "Kalmyk");
     public static final LanguageType xal2 = LanguageType.addNonUniqueName(xal, "Kalmyk-Oirat");
 
@@ -2854,7 +2862,11 @@ public class LanguageType {
 
     public static final LanguageType yo = new LanguageType("yo", "Yorùbá", "Yoruba");
     public static final LanguageType yor = LanguageType.addNonUniqueCode(yo, "yor");
-
+    
+    public static final LanguageType ysr = new LanguageType("ysr", "Сиӷы́ных", "Sirenik");
+    public static final LanguageType ysr2 = LanguageType.addNonUniqueName(ysr, "Sirenik Eskimo");
+    public static final LanguageType ysr3 = LanguageType.addNonUniqueName(ysr, "Sirenik Yupik");
+    
     public static final LanguageType yuf = new LanguageType("yuf", "Yavapai", "Yavapai");
     public static final LanguageType yuf2 = LanguageType.addNonUniqueName(yuf, "Havasupai-Walapai-Yavapai");
 
@@ -3224,6 +3236,7 @@ public class LanguageType {
     public static final LanguageType glk = new LanguageType("glk", "Gilaki", "Gilaki");
     public static final LanguageType gnd = new LanguageType("gnd", "Zulgo-Gemzek", "Zulgo-Gemzek");
     public static final LanguageType gni = new LanguageType("gni", "Gooniyandi", "Gooniyandi");
+    public static final LanguageType goe = new LanguageType("goe", "Gongduk", "Gongduk");
     public static final LanguageType gon = new LanguageType("gon", "Gōndi", "Gondi");
     public static final LanguageType got = new LanguageType("got", "Gothic", "Gothic");
     public static final LanguageType grb = new LanguageType("grb", "Grebo", "Grebo");
@@ -3244,6 +3257,7 @@ public class LanguageType {
     public static final LanguageType hay = new LanguageType("hay", "OluHaya", "Haya");
     public static final LanguageType heh = new LanguageType("heh", "Hehe", "Hehe");
     public static final LanguageType hit = new LanguageType("hit", "Hittite", "Hittite");
+    public static final LanguageType hne = new LanguageType("hne", "छत्तीसगढ़ी", "Chhattisgarhi");
     public static final LanguageType hop = new LanguageType("hop", "Hopi", "Hopi");
     public static final LanguageType hsn = new LanguageType("hsn", "Xiang", "Xiang");
     public static final LanguageType huh = new LanguageType("huh", "Huilliche", "Huilliche");

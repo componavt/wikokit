@@ -100,8 +100,10 @@ public class PageTableAll {
         "-iti-", "-лык", "-io-", "zwölf", "Википедия", "bread",
 
         "шумерский язык", "хам", "телескопирование", "общий род", "марашка", // long quotes
-        "град", "снѣгъ", "жестокий",
-        "casar", "mariposa" // labels
+        "град", "снѣгъ", "жестокий", "позаимствовавший", "позади",
+        "железо", // many translations
+        "casar", "mariposa", // labels
+        "пѣти", // template:Cyrs
     };
     
     /** Selects all pages (not categories, not redirects), 

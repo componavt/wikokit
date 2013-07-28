@@ -298,8 +298,8 @@ public class TLabel {
                 try (ResultSet rs = s.executeQuery (str_sql.toString())) {
                     if (rs.next ())
                         result_id = rs.getInt("id");
-                    else
-                        System.out.println("Warning: (TLabel.getIDByShortName()):: name '" + short_name + "' is absent in the table 'label', page_title="+page_title+".");
+                    //else
+                    // too many to print System.out.println("Warning: (TLabel.getIDByShortName()):: name '" + short_name + "' is absent in the table 'label', page_title="+page_title+".");
                 }
             } finally {
                 s.close();
