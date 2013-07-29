@@ -2999,7 +2999,10 @@ public class LanguageType {
     
     public static final LanguageType letter_ru = new LanguageType("Буква", "Letter", "Letter");
     public static final LanguageType bagua  = new LanguageType("bagua", "Ba gua", "Ba gua");
+    
     public static final LanguageType hanzi  = new LanguageType("hanzi", "Chinese character", "Chinese character");
+    public static final LanguageType Hani = LanguageType.addNonUniqueCode(hanzi, "Hani");
+    public static final LanguageType hani = LanguageType.addNonUniqueCode(hanzi, "hani");
 
     public static final LanguageType abq = new LanguageType("abq", "Abaza", "Abaza");
     public static final LanguageType ady    = new LanguageType("ady", "Adyghe", "Adyghe");

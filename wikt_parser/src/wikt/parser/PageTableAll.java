@@ -18,7 +18,7 @@ import wikokit.base.wikt.sql.label.TLabel;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG_PAGES = false;
+    private static final boolean DEBUG_PAGES = true;
     
     //private static final boolean PRINT_PROGRESS = true;
     
