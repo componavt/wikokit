@@ -670,6 +670,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label folk_poetic = new LabelRu("нар.-поэт.", "народно-поэтическое", LabelEn.folk_poetic);
     public static final Label folk_colloquial = new LabelRu("нар.-разг.", "народно-разговорное", LabelEn.folk_colloquial);
     public static final Label pejorative = new LabelRu("неодобр.", "неодобрительное",  LabelEn.pejorative);// унич. неодобр. умаляющий
+    public static final Label approving = new LabelRu("одобр.", "одобрительное",  LabelEn.approving);
     public static final Label formal = new LabelRu("офиц.", "официальное",  LabelEn.formal);
 
     public static final Label figuratively = new LabelRu("перен.", "переносное значение", LabelEn.figuratively);
@@ -798,6 +799,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label printing = new LabelRu("полигр.", "полиграфическое", LabelEn.printing);
     public static final Label politics = new LabelRu("полит.", "политическое", LabelEn.politics);
     public static final Label sartorial = new LabelRu("портн.", "портновское дело", LabelEn.sartorial);
+    public static final Label professional = new LabelRu("проф.", "профессиональное", LabelEn.professional);
     public static final Label psychiatry = new LabelRu("психиатр.", "психиатрия", LabelEn.psychiatry);
 
     public static final Label advertising = new LabelRu("рекл.", "рекламное", LabelEn.advertising);
