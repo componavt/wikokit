@@ -1,8 +1,8 @@
 _Language is a city to the building of which every human being brought a stone._ /Ralph Waldo Emerson/
 
-== Wiwordik - Machine-readable Wiktionary ==
+== Wikokit - Machine-readable Wiktionary ==
 
-Stone I. Parser.
+Stone I. Parser. This program parses Wiktionaries, builds and constructs machine-readable Wiktionaries.
 
 Stone II. Dictionary. A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
 
@@ -16,14 +16,14 @@ The goal of this project is to extract [http://en.wikipedia.org/wiki/Semi-struct
 
 Graphical user interface (kiwidict and kiwidict-ru) supports (see [http://wikokit.googlecode.com/svn/trunk/wiwordik/release_notes.txt release_notes.txt]):
   * words filtering by language code (e.g. de, fr);
-  * wildcard characters: the asterisk sign ({{{*}}}) matches zero or more characters, and question mark (?) a single character;
+  * wildcard characters: the percent sign (%) matches zero or more characters, and underscore ({{{_}}}) a single character;
   * todo: list of words only with meanings and / or semantic relations (use checkboxes).
 
 After installation you can find the parsed Wiktionary database in SQLite format on your phone in the folder `SD card/kiwidict/`.
 
 === Stone I: Parser and dictionary description ===
 
-I) The maximum goal (in distant future) is to extract all information (i.e. [http://en.wiktionary.org/wiki/Wiktionary:ELE all sections of entry]) from all wiktionaries and convert data to machine-readable database.
+I) The maximum goal (in distant future) is to extract all information (i.e. [http://en.wiktionary.org/wiki/Wiktionary:ELE all sections of entry]) from all wiktionaries and convert data to machine-readable format.
 
 II) Today's result. Now machine-readable Wiktionary contains the following information extracted from Russian Wiktionary and English Wiktionary:
   # word's language and part of speech;
@@ -39,8 +39,11 @@ http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/db_scheme/MRDW_fram
 
 I am interested that all two hundred Wiktionaries were parsed by this parser. But I know only Russian and English :)
 
-If you are developer and if you are interested in adding modules to parse "your Wiktionary", then start from the paper describing the tables and relations of machine-readable database: [http://arxiv.org/abs/1011.1368 Transformation of Wiktionary entry structure into tables and relations in a relational database schema.]. 2010.
-  * After this publications new tables related to *quotations* and *context labels* appeared. See [http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql#Machine-readable_database_schema Machine-readable database schema].
+If you are developer and if you are interested in adding modules to parse "your Wiktionary", then 
+  * start from the paper describing the database (tables and relations) of machine-readable Wiktionary: [http://arxiv.org/abs/1011.1368 Transformation of Wiktionary entry structure into tables and relations in a relational database schema.]. 2010. But there are new tables (absent in the publication) related to _quotations_ and _context labels_, see [http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql#Machine-readable_database_schema Machine-readable database schema];
+  * GettingStartedWiktionaryParser - install parser and try to parse English Wiktionary and Russian Wiktionary;
+  * Play with parsed English or Russian Wiktionary SQL dump (see Donwload section);
+  * OneMoreWiktionary - extend parser in order to extract invaluable information from your Wiktionary.
 
 === Statistics ===
 
@@ -95,10 +98,12 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
   * Крижановский А. [http://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%92%D0%B8%D0%BA%D0%B8-%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F_2009/%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0/%D0%94%D0%BE%D0%BA%D0%BB%D0%B0%D0%B4%D1%8B/%D0%9C%D0%B0%D1%88%D0%B8%D0%BD%D0%BD%D0%B0%D1%8F_%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0_%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8F Машинная обработка Русского Викисловаря] // Вики-конференция 2009. 24—25 октября, Санкт-Петербург.
 
 == See also ==
-  * [http://www.ukp.tu-darmstadt.de/software/jwktl/ Java Wiktionary Library (JWKTL)]
+  * [http://www.ukp.tu-darmstadt.de/software/jwktl/ Java Wiktionary Library (JWKTL)] and [http://code.google.com/p/jwktl jwktl] at code.google.com
   * [http://personal.inet.fi/koti/korhoj/ English Wiktionary parser in Java] (or [http://personal.inet.fi/koti/korhoj/source/wikt_cide_latest.7z here]) by Joel Korhonen
-  * [http://search.cpan.org/~clbecker/Wiktionary-Parser-0.06/lib/Wiktionary/Parser.pm Wiktionary::Parser] // search.cpan.org, Perl module
+  * [https://github.com/clbecker/perl-wiktionary-parser/ perl-wiktionary-parser] // github.com, Perl module
+  * [https://github.com/benreynwar/wiktionary-parser/tree/master/wiktionary_parser wiktionary_parser] // github.com, Perl module
   * [http://code.google.com/p/wikily-supervised-pos-tagger/ wikily-supervised-pos-tagger] - part-of-speech taggers for multiple languages implemented by training Hidden Markov with Wiktionary (see paper: Shen Li; João Graça; Ben Taskar, [http://aclweb.org/anthology-new/D/D12/D12-1127.pdf Wiki-ly Supervised Part-of-Speech Tagging], 2012, [http://aclweb.org/anthology-new/D/D12/D12-1127.bib bib])
+  * [http://dbpedia.org/Wiktionary DBpedia Wiktionary]
   * [http://wiki.okfn.org/Linguistics/llod/datasets/wiktionary Wiktionary RDF versions] (todo)
 
 == License ==

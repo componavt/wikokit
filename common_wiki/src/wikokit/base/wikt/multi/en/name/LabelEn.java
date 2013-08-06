@@ -28,6 +28,7 @@ import wikokit.base.wikt.constant.LabelCategory;
  * @see http://en.wiktionary.org/wiki/Template_talk:context
  * @see http://en.wiktionary.org/wiki/Wiktionary:Entry_layout_explained
  * @see http://en.wiktionary.org/wiki/Template:context
+ * @see http://en.wiktionary.org/wiki/Module:labels/data
  */
 public final class LabelEn extends Label {       
     
@@ -752,6 +753,7 @@ public final class LabelEn extends Label {
     public static final Label abusive = new LabelEn("abusive",  "abusive", LabelCategory.usage); // ruwikt бранное
     public static final Label acerbity = new LabelEn("acerbity",  "acerbity", LabelCategory.usage); // ruwikt грубое
     public static final Label ad_slang = new LabelEn("ad slang",  "advertising slang", LabelCategory.usage);
+    public static final Label approving = new LabelEn("approving", "approving", LabelCategory.usage); //ruwikt одобр.
     public static final Label augmentative = new LabelEn("augmentative",  "augmentative", LabelCategory.usage); // ruwikt увеличительное
     public static final Label Australian_slang = new LabelEn("Australian slang",  "Australian slang", LabelCategory.usage);
     public static final Label avoidance = new LabelEn("avoidance",  "avoidance term", LabelCategory.usage);
@@ -1197,6 +1199,7 @@ public final class LabelEn extends Label {
     public static final Label pottery = new LabelEn("pottery", "pottery", LabelCategory.topical);
     public static final Label pragmatics = new LabelEn("pragmatics", "pragmatics", LabelCategory.topical);
     public static final Label printing = new LabelEn("printing", "printing", LabelCategory.topical); // полигр. — полиграфическое
+    public static final Label professional = new LabelEn("professional", "professional", LabelCategory.topical); //ruwikt проф.
     public static final Label property_law = new LabelEn("property law", "property law", LabelCategory.topical);
     public static final Label prosody = new LabelEn("prosody", "prosody", LabelCategory.topical);
     public static final Label pseudoscience = new LabelEn("pseudoscience", "pseudoscience", LabelCategory.topical);
