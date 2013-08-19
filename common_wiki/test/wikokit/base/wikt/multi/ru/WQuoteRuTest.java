@@ -1181,5 +1181,37 @@ public class WQuoteRuTest {
         q = quote_result[0];
         assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
     }
+    
+    // text with template:Cyrs
+    // # [[петь]] {{пример|{{Cyrs|Дѣвици {{выдел|поютъ}} на Дунаи — вьются голоси чрезъ море до Кіева}}||Слово о походе Игоревом (XII век)}}
+    @Test
+    public void testGetQuotes_with_Cyrs_template() {
+        System.out.println("testGetQuotes_with_Cyrs_template");
+        String text, page_title;
+        String exp_text, exp_author, exp_author_wikilink, exp_title, exp_title_wikilink, exp_source;
+        int exp_year_from, exp_year_to;
+
+        page_title = "пѣти";
+        text =  "# [[петь]] {{пример|{{Cyrs|Дѣвици {{выдел|поютъ}} на Дунаи — вьются голоси чрезъ море до Кіева}}||Слово о походе Игоревом (XII век)}}";
+
+        // {{кавычки|ru|Jam temp'esta}}
+        exp_text = "Дѣвици {{выдел|поютъ}} на Дунаи — вьются голоси чрезъ море до Кіева";
+        exp_author = "";
+        exp_author_wikilink = "";
+        exp_title = "Слово о походе Игоревом (XII век)";
+        exp_title_wikilink = "";
+        exp_source = "";
+
+        text = Definition.stripNumberSign(page_title, text);
+        WQuote[] quote_result = WQuoteRu.getQuotes(page_title, text);
+        assertTrue(null != quote_result);
+        assertEquals(1, quote_result.length);
+
+        WQuote q = quote_result[0];
+        assertTrue(q.getText().equalsIgnoreCase( exp_text ) );
+        assertTrue(q.getAuthor().equalsIgnoreCase( exp_author ) );
+
+        assertTrue(q.getTitle().equalsIgnoreCase( exp_title ) );
+    }
 
 }

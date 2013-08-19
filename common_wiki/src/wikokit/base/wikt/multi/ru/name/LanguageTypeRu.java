@@ -620,6 +620,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal ss = new LanguageTypeRu("Свати", LanguageType.ss);
     public static final LanguageTypeLocal st = new LanguageTypeRu("Сесото", LanguageType.st);
     public static final LanguageTypeLocal stq = new LanguageTypeRu("Восточнофризский", LanguageType.stq);
+    public static final LanguageTypeLocal sty = new LanguageTypeRu("Сибирскотатарский", LanguageType.sty);
     public static final LanguageTypeLocal su = new LanguageTypeRu("Сунданский", LanguageType.su);
     public static final LanguageTypeLocal suk = new LanguageTypeRu("Сукума", LanguageType.suk);
     public static final LanguageTypeLocal sux = new LanguageTypeRu("Шумерский", LanguageType.sux);
@@ -631,6 +632,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
 
     public static final LanguageTypeLocal ta = new LanguageTypeRu("Тамильский", LanguageType.ta);
     public static final LanguageTypeLocal tab = new LanguageTypeRu("Табасаранский", LanguageType.tab);
+    public static final LanguageTypeLocal tati = new LanguageTypeRu("Тати", LanguageType.tati);
     public static final LanguageTypeLocal tay = new LanguageTypeRu("Атаяльский", LanguageType.tay);
     public static final LanguageTypeLocal tcy = new LanguageTypeRu("Тулу", LanguageType.tcy);
     public static final LanguageTypeLocal te = new LanguageTypeRu("Телугу", LanguageType.te);

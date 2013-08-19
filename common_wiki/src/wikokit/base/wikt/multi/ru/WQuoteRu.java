@@ -19,7 +19,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import wikokit.base.wikipedia.text.TemplateParser;
+import wikokit.base.wikipedia.util.template.TemplateParser;
 
 /** Phrase or sentence that illustrates a meaning of a word in Russian Wiktionary.
  */
@@ -325,6 +325,11 @@ public class WQuoteRu {
         if(-1 != str.indexOf("{{кавычки|"))
             str = replaceAllKavychkiTemplateByQuotationMarks(str);
 
+        // 0d. before splitting by "|" - expand the parameter in the template "{{Cyrs|"
+        if(str.startsWith("{{Cyrs")) {
+            str = TemplateParser.expandTemplateWithOneParameter(str, "Cyrs");
+        }
+        
         // 1. split
         //String[] params = str.split("\\|");
         String[] params = splitParameters(str);

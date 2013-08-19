@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package wikokit.base.wikipedia.util;
+package wikokit.base.wikipedia.util.template;
 
+import wikokit.base.wikipedia.util.template.TemplateExtractor;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;

@@ -47,7 +47,7 @@ public class WTranslationEntryRu {
                 System.out.println("Warning in WTranslationEntryRu.parse(): The article '"+
                         page_title + "' has translation into unknown language with code: " + lang_code + ".");
             }
-            if(lang_code.length() > 7)
+            if(lang_code.length() > 10)
                 System.out.println("Error in WTranslationEntryRu.parse(): The article '"+
                         page_title + "' has too long unknown language code: " + lang_code + ".");
             return null;

@@ -78,10 +78,10 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    public final static String RUWIKT_DB   = "ruwikt20130508?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_DB   = "ruwikt20130815?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     
     // Russian Wiktionary parsed database
-    public final static String RUWIKT_PARSED_DB = "ruwikt20130508_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20130815_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     public final static String RUWIKT_SQLITE = "ruwikt20110521.sqlite";

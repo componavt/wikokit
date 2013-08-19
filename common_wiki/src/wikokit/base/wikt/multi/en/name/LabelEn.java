@@ -1184,7 +1184,6 @@ public final class LabelEn extends Label {
     public static final Label photography = new LabelEn("photography", "photography", LabelCategory.topical); //фотогр. — фотографическое
     public static final Label physical_chemistry = new LabelEn("physical chemistry", "physical chemistry", LabelCategory.topical);
     public static final Label physiology = new LabelEn("physiology", "physiology", LabelCategory.topical); //физиол. — физиология
-    public static final Label philology = new LabelEn("philology", "philology", LabelCategory.topical); // ruwikt филологическое
     
     public static final Label planetology = new LabelEn("planetology", "planetology", LabelCategory.topical); 
     public static final Label surface_feature = LabelEn.addNonUniqueShortName(planetology, "surface feature");

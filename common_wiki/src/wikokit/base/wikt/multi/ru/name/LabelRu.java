@@ -18,7 +18,7 @@ import wikokit.base.wikt.multi.en.name.LabelEn;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import wikokit.base.wikipedia.util.TemplateExtractor;
+import wikokit.base.wikipedia.util.template.TemplateExtractor;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelLocal;
 import wikokit.base.wikt.util.LabelText;
@@ -543,7 +543,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label Latin = new LabelRu("лат.", "латинское", LabelEn.Latin);
     public static final Label Latgale = new LabelRu("латг.", "латгальское", LabelEn.Latgale);
     public static final Label Latvia = new LabelRu("латышск.", "латышское", LabelEn.Latvia);
-    public static final Label Lithuania = new LabelRu("лит.", "литовское", LabelEn.Lithuania);// todo
+    public static final Label Lithuania = new LabelRu("литовск.", "литовское", LabelEn.Lithuania);
     public static final Label Lusatia = new LabelRu("луж.", "лужицкое", LabelEn.Lusatia);
         
     public static final Label Macedonia = new LabelRu("макед.", "македонское", LabelEn.Macedonia);
@@ -733,7 +733,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label military = new LabelRu("военн.", "военное", LabelEn.military);
     
     public static final Label gastronomic = new LabelRu("гастрон.", "гастрономическое", LabelEn.gastronomic);
-    public static final Label genetics = new LabelRu("генет.", "генетическое", LabelEn.genetics);
+    public static final Label genetics = new LabelRu("генет.", "молекулярная биология и генетика", LabelEn.genetics);
     public static final Label grammar = new LabelRu("грам.", "грамматическое", LabelEn.grammar);       
     public static final Label geography = new LabelRu("геогр.", "географическое", LabelEn.geography);
     public static final Label geodesy = new LabelRu("геод.", "геодезическое", LabelEn.geodesy);
@@ -770,7 +770,6 @@ public final class LabelRu extends LabelLocal  {
     
     public static final Label forestry = new LabelRu("лес.", "лесоводство", LabelEn.forestry);
     public static final Label linguistics = new LabelRu("лингв.", "лингвистическое", LabelEn.linguistics);
-    public static final Label literature = new LabelRu("лит.", "литературоведение", LabelEn.literature);// todo
     
     public static final Label mathematics = new LabelRu("матем.", "математическое", LabelEn.mathematics);
     public static final Label microbiology = new LabelRu("микробиол.", "микробиологическое", LabelEn.microbiology);
@@ -834,7 +833,11 @@ public final class LabelRu extends LabelLocal  {
     public static final Label pharmacy = new LabelRu("фарм.", "фармацевтический термин", LabelEn.pharmacy);
     public static final Label physiology = new LabelRu("физиол.", "физиология", LabelEn.physiology);
     public static final Label philosophy = new LabelRu("филос.", "философское", LabelEn.philosophy);
-    public static final Label philology = new LabelRu("филол.", "филологическое", LabelEn.philology);
+    
+    public static final Label philology = new LabelRu("филол.", "филологическое", LabelEn.literature);
+    public static final Label philology_lit = LabelRu.addNonUniqueShortName(philology, "лит.");// literature
+    public static final Label philology_liter = LabelRu.addNonUniqueShortName(philology, "литер.");// literature also
+    
     public static final Label folklore = new LabelRu("фолькл.", "фольклорное", LabelEn.folklore);
     
     public static final Label choreography = new LabelRu("хореогр.", "хореографическое", LabelEn.choreography);
