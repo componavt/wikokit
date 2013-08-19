@@ -1,6 +1,7 @@
 
-package wikokit.base.wikipedia.text;
+package wikokit.base.wikipedia.util.template;
 
+import wikokit.base.wikipedia.util.template.TemplateParser;
 import org.junit.*;
 import static org.junit.Assert.*;
 
@@ -54,5 +55,29 @@ public class TemplateParserTest {
         String expResult = "ABCParam1.paraM2xyz";
         String result = TemplateParser.expandTemplateParams(source_text, template_name, target, replacement);
         assertEquals(expResult, result);
+    }
+    
+    
+    /* Search closing brackets "}}" in 1) "start }} end".
+     *                                 2) "start {{templatos}} lala }} end".
+     */
+    @Test
+    public void testindexOfClosingBracketsSameLevel() {
+        System.out.println("indexOfClosingBracketsSameLevel");
+        
+        String source_text = "start }} end";
+        int pos = 6; // length of "start "
+        int result_pos = TemplateParser.indexOfClosingBracketsSameLevel(source_text, 0, "{{", "}}");
+        assertEquals(pos, result_pos);
+        
+        source_text = "start {{ absent}} end";
+        pos = -1;
+        result_pos = TemplateParser.indexOfClosingBracketsSameLevel(source_text, 0, "{{", "}}");
+        assertEquals(pos, result_pos);
+        
+        source_text = "start {{ absent}} end }}";
+        pos = source_text.length() - 2;
+        result_pos = TemplateParser.indexOfClosingBracketsSameLevel(source_text, 0, "{{", "}}");
+        assertEquals(pos, result_pos);
     }
 }

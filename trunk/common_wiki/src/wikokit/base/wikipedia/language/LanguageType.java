@@ -5,9 +5,6 @@
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
-//http://ru.wiktionary.org/w/index.php?title=%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%BF%D0%B5%D1%80%D0%B5%D0%B2-%D0%B1%D0%BB%D0%BE%D0%BA&diff=next&oldid=1243557
-//http://en.wiktionary.org/wiki/Wiktionary:List_of_languages
-
 package wikokit.base.wikipedia.language;
 
 import wikokit.base.wikt.multi.ru.name.LanguageTypeRu;
@@ -31,7 +28,7 @@ import java.util.HashSet;
  *   Шаблон:lang        or http://ru.wiktionary.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:lang
  *
  * English Wiktionary
- *  http://en.wiktionary.org/wiki/Wiktionary:Index_to_templates/languages
+ *  http://en.wiktionary.org/wiki/Wiktionary:List_of_languages
  *  http://en.wiktionary.org/wiki/Wiktionary:LANGCODE
  *  http://en.wiktionary.org/wiki/Wiktionary:Translations/Wikification
  *  http://en.wiktionary.org/wiki/Wiktionary:Language_codes
@@ -2637,6 +2634,15 @@ public class LanguageType {
     public static final LanguageType tkd = new LanguageType("tkd", "Tukudede", "Tukudede");
     public static final LanguageType tkd2 = LanguageType.addNonUniqueName(tkd, "Tocodede");
     
+    public static final LanguageType tati = new LanguageType("tati", "Tati", "Tati");// tati - fictitious code
+    public static final LanguageType tks = LanguageType.addNonUnique(tati, "tks", "Takestani");
+    public static final LanguageType xkc = LanguageType.addNonUnique(tati, "xkc", "Kho'ini");
+    public static final LanguageType hrz = LanguageType.addNonUnique(tati, "hrz", "Harzandi");
+    public static final LanguageType rdb = LanguageType.addNonUnique(tati, "rdb", "Rudbari");
+    public static final LanguageType esh = LanguageType.addNonUnique(tati, "esh", "Eshtehardi");
+    public static final LanguageType tov = LanguageType.addNonUnique(tati, "tov", "Taromi");
+    public static final LanguageType xkp = LanguageType.addNonUnique(tati, "xkp", "Kabatei");
+    
     public static final LanguageType tmh = new LanguageType("tmh", "Tamashaq", "Tamashaq");
     public static final LanguageType tmh2 = LanguageType.addNonUniqueName(tmh, "Tamashek");
     public static final LanguageType taq = LanguageType.addNonUnique(tmh, "taq", "Tamasheq");
@@ -3512,6 +3518,7 @@ public class LanguageType {
     public static final LanguageType ssc = new LanguageType("ssc", "Suba-Simbiti", "Suba-Simbiti");
     public static final LanguageType sth = new LanguageType("sth", "Shelta", "Shelta");
     public static final LanguageType str = new LanguageType("str", "Saanich", "Saanich");
+    public static final LanguageType sty = new LanguageType("sty", "Sebertatar tel", "Siberian Tatar");
     public static final LanguageType suj = new LanguageType("suj", "Shubi", "Shubi");
     public static final LanguageType suk = new LanguageType("suk", "Sukuma", "Sukuma");
     public static final LanguageType sus = new LanguageType("sus", "Susu", "Susu");

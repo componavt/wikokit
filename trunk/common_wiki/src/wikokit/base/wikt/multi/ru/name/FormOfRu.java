@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import wikokit.base.wikipedia.util.StringUtil;
-import wikokit.base.wikipedia.util.TemplateExtractor;
+import wikokit.base.wikipedia.util.template.TemplateExtractor;
 import wikokit.base.wikt.constant.FormOf;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.multi.en.name.LabelEn;
