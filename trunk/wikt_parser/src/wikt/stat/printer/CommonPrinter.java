@@ -281,33 +281,35 @@ public class CommonPrinter {
         //System.out.println("\n=== Quote languages ===\n\n");
 
         System.out.println("{| class=\"sortable prettytable\"");
-        System.out.print("! Language name || Language code || Number");
+        System.out.println("! Language name");
+        System.out.println("! Number");
 
+        // in Russian
         if(LanguageType.en != native_lang) // let's print translations of the language for non-English Wiktionaries
-            System.out.print("|| in " + native_lang.getName());
-        System.out.println();
+            System.out.println("! in " + native_lang.getName());
+        System.out.println("! Template");
 
         // print values
         for(LanguageType lang : m_lang_n.keySet()) {
-            /*if(!m_lang_rel_n.containsKey(lang))
-                System.out.println(lang.toString() + " : 0");
-            else {*/
+            System.out.println("|-");
                 
-                int n = m_lang_n.get(lang);
-                System.out.print("|-\n! " + lang.getName() + " || " + lang.getCode() + "\n|| " + n);
-                //System.out.print("|| " + lang.getCode() + " || " + lang.getName());
-                // System.out.println(" || " + n + " ||");
+            int n = m_lang_n.get(lang);
+            //System.out.print("|-\n! " + lang.getName() + " || " + lang.getCode() + "\n|| " + n);
+            System.out.print("|" + lang.getName() + "||" + n);
+            //System.out.print("|| " + lang.getCode() + " || " + lang.getName());
+            // System.out.println(" || " + n + " ||");
 
-                if(LanguageType.en != native_lang) {
-                    String local_name = "";
-                    if (lang.hasTranslation(native_lang))
-                        local_name = lang.translateTo(native_lang);
-                    System.out.print(" || " + local_name);
-                }
-                System.out.println();
+            if(LanguageType.en != native_lang) {
+                String local_name = "";
+                if (lang.hasTranslation(native_lang))
+                    local_name = lang.translateTo(native_lang);
+                System.out.print("||" + local_name);
 
-                total += n;
-            //}
+                System.out.print("||{{" + lang.getCode() + "}}");
+            }
+            System.out.println();
+
+            total += n;
         }
         System.out.println("|}");
         

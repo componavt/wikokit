@@ -62,16 +62,17 @@ public final class LabelEn extends Label {
     
     /** Constructor for new context labels which are extracted by parser 
      * from the template {{context|new label}} and added automatically,
-     * these new labels are not (?) listed in the LabelEn.
+     * these new labels are not (?) listed in the LabelEn,
+     * but they are presented in TLabel.id2label.
      * 
      * @param short_name name of the found context label
      */
-    public LabelEn(String short_name, LabelCategory label_cat) { 
+    public LabelEn(String short_name) { // , LabelCategory label_cat) { 
         super(short_name);
         initLabelAddedAutomatically(this);
         
-        this.category   = label_cat; // usually it is LabelCategory.unknown; 
-        label2category. put(this, category);
+        this.category   = null; // it is unknown; 
+        //label2category. put(this, category);
     }
     
     protected void initLabelAddedByHand(Label label) {
