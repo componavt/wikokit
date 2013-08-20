@@ -7,8 +7,6 @@
 
 package wikokit.base.wikt.constant;
 
-import java.util.HashMap;
-import java.util.Map;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 
 /** Base (abstract) class for non-English Wiktionary labels, e.g.

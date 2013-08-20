@@ -26,9 +26,11 @@ public class WRelation {
     /** Kind of semantic relation, e.g. synonymy, antonymy, etc... */
     //private Relation semantic_relation;
     
-    /** List of words (phrases) with context comments, i.e, labels,
-     * e.g. two phrases: "[[служба]]; частичн.: [[пост]]".*/
+    /** List of words (phrases) with context labels,
+     * e.g. two phrases: "[[служба]]; частичн.: [[пост]]", 
+     * one phrase can have several labels. */
     private WikiText[] phrases;
+    
 
     // In some Wiktionaries (e.g. Russian): 
     // "near synonyms" are split by comma, far synonyms are split by semicolon

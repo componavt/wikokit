@@ -15,6 +15,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import wikokit.base.wikipedia.language.Encodings;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.PageTableBase;
@@ -22,6 +23,8 @@ import wikokit.base.wikipedia.sql.Statistics;
 import wikokit.base.wikipedia.sql.UtilSQL;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
+import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TMeaning;
 
@@ -76,6 +79,44 @@ public class TLabel {
     }
     
     
+    /** Gets all labels from the table 'label' of database. */
+    public static Collection<Label> getLabelsFoundByParserFromDatabase(Connect wikt_parsed_conn, 
+                                                    LanguageType native_lang) {
+        
+        Statement   s = null;
+        ResultSet   rs= null;
+        Collection<Label> result = new ArrayList<>();
+        
+        try {
+            s = wikt_parsed_conn.conn.createStatement();
+            StringBuilder str_sql = new StringBuilder();
+            str_sql.append("SELECT short_name FROM label WHERE category_id is NULL");
+            
+            s.executeQuery (str_sql.toString());
+            rs = s.getResultSet ();
+            while (rs.next ())
+            {
+                String short_name = Encodings.bytesToUTF8(rs.getBytes("short_name"));
+                
+                Label _label = null;
+
+                LanguageType l = native_lang;
+                if(l == LanguageType.ru) {
+                    _label = new LabelRu(short_name);
+                } else if(l == LanguageType.en) {
+                    _label = new LabelEn(short_name);
+                }
+                result.add(_label);
+            }
+        } catch(SQLException ex) {
+            System.out.println("SQLException (TLabel.getLabelsFoundByParserFromDatabase()): " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        return result;
+    }
+    
     /** Read all records from the table 'label',
      * fills the internal map from a table ID to a label.<br><br>
      *
@@ -101,6 +142,11 @@ public class TLabel {
         label2id = new LinkedHashMap<>(size);
         id2label = new LinkedHashMap<>(size);
                 
+        
+        // get labels found by parser
+        TLabel.getLabelsFoundByParserFromDatabase(connect, wikt_lang);
+        
+        // labels found by parser + labels by hand
         Collection<Label> labs = Label.getAllLabels(wikt_lang);
         for(Label label : labs) {
             
@@ -202,6 +248,82 @@ public class TLabel {
             int counter = TLabelMeaning.countRecordsWithLabelID(connect, label_id); // SELECT COUNT(*) FROM label_meaning WHERE label_id = 3;
             update(connect, label_id, counter);                                     // UPDATE label SET counter=7 WHERE id=3;
         }
+    }
+    
+    /** Counts number of labels added by hand. <br><br>
+     *
+     * SELECT COUNT(*) FROM label WHERE category_id is NOT NULL;
+     * 
+     * @return 0 means error
+     **/
+    public static int countLabelsAddedByHand(Connect connect) {
+
+        Statement s = null;
+        ResultSet rs= null;
+        int size = 0;
+        String str_sql = null;
+
+        if(null==connect || null==connect.conn)
+            return 0;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql = "SELECT COUNT(*) AS size FROM label WHERE category_id is NOT NULL";
+            rs = s.executeQuery (str_sql);
+            if (rs.next ())
+                size = rs.getInt("size");
+            
+        } catch(SQLException ex) {
+            System.out.println("SQLException (TLabel.countLabelsAddedByHand()): sql='" + str_sql + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {
+                try { rs.close();
+                } catch (SQLException sqlEx) { }
+            }
+            if (s != null) {
+                try { s.close();
+                } catch (SQLException sqlEx) { }
+            }
+        }
+        return size;
+    }
+    
+    /** Counts number of labels found by parser (automatically). <br><br>
+     *
+     * select COUNT(*) FROM label WHERE category_id is NULL;
+     * 
+     * @return 0 means error
+     **/
+    public static int countLabelsFoundByParser(Connect connect) {
+
+        Statement s = null;
+        ResultSet rs= null;
+        int size = 0;
+        String str_sql = null;
+
+        if(null==connect || null==connect.conn)
+            return 0;
+
+        try {
+            s = connect.conn.createStatement ();
+            str_sql = "SELECT COUNT(*) AS size FROM label WHERE category_id is NULL";
+            rs = s.executeQuery (str_sql);
+            if (rs.next ())
+                size = rs.getInt("size");
+            
+        } catch(SQLException ex) {
+            System.out.println("SQLException (TLabel.countLabelsAddedByHand()): sql='" + str_sql + "' " + ex.getMessage());
+        } finally {
+            if (rs != null) {
+                try { rs.close();
+                } catch (SQLException sqlEx) { }
+            }
+            if (s != null) {
+                try { s.close();
+                } catch (SQLException sqlEx) { }
+            }
+        }
+        return size;
     }
     
     /** Inserts record into the table 'label'.<br><br>

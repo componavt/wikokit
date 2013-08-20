@@ -215,19 +215,17 @@ public class TWikiText {
             try {
                 str_sql.append("SELECT text,wikified_text FROM wiki_text WHERE id=");
                 str_sql.append(id);
-                ResultSet rs = s.executeQuery (str_sql.toString());
-                try {
+                try (ResultSet rs = s.executeQuery (str_sql.toString())) {
                     if (rs.next ())
                     {
                         String text = Encodings.bytesToUTF8(rs.getBytes("text"));
 // new                  
-                        String wikified_text = Encodings.bytesToUTF8(rs.getBytes("wikified_text"));
+                        byte[] bb = rs.getBytes("wikified_text");
+                        String wikified_text = (null == bb) ? null : Encodings.bytesToUTF8( bb );
 // temp old
                         //String wikified_text = Encodings.bytesToUTF8(rs.getBytes("text"));
                         wiki_text = new TWikiText(id, text, wikified_text);
                     }
-                } finally {
-                    rs.close();
                 }
             } finally {
                 s.close();

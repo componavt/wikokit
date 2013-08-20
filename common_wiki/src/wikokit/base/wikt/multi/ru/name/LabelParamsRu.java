@@ -84,7 +84,7 @@ public class LabelParamsRu {
                         if(null != label_existing)
                             return label_existing;
                     } else {                    
-                        return new LabelEn(regions, LabelCategory.regional); // let's create new LabelRu with label=regions
+                        return new LabelEn(regions); // , LabelCategory.regional); // let's create new LabelRu with label=regions
                     }
             }
             

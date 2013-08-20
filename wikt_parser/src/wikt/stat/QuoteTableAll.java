@@ -205,7 +205,8 @@ public class QuoteTableAll {
                 }
             }
         }
-    }
+    } // eo class ObjectWithWords
+    
 
     /** Collects words from one cluster to one list.
      */
