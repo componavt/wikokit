@@ -25,6 +25,8 @@ import java.util.HashMap;
 
 import java.util.List;
 import java.util.ArrayList;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.util.LabelsWikiText;
 
 /** Semantic relations of English Wiktionary word.
  *
@@ -472,7 +474,18 @@ public class WRelationEn {
         WikiText[] wt = WikiText.createSplitByComma(page_title, onym_list);
         if(0 == wt.length) return null;
         
-        return new WRelation(meaning_summary, wt);
+        // temp solution (without labels, i.e. label's array is empty) ---------------------
+        LabelsWikiText[] lwt_array = new LabelsWikiText[wt.length];
+        int i=0;
+        for(WikiText _wiki_text : wt) {
+            List<Label> _labels = null;
+            
+            lwt_array[i] = new LabelsWikiText(_labels, _wiki_text);
+            i++;
+        }
+        // -------------------------------------------------------- eo temp solution
+        
+        return new WRelation(meaning_summary, lwt_array);
     }
     
 

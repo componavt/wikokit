@@ -16,6 +16,7 @@ import wikokit.base.wikt.util.POSText;
 
 import java.util.Map;
 import java.util.HashMap;
+import wikokit.base.wikt.util.LabelsWikiText;
 
 /** Semantic relations of Wiktionary word.
  *
@@ -29,7 +30,7 @@ public class WRelation {
     /** List of words (phrases) with context labels,
      * e.g. two phrases: "[[служба]]; частичн.: [[пост]]", 
      * one phrase can have several labels. */
-    private WikiText[] phrases;
+    private LabelsWikiText[] phrases;       //old: private WikiText[] phrases;
     
 
     // In some Wiktionaries (e.g. Russian): 
@@ -56,13 +57,13 @@ public class WRelation {
     //private final static WRelation[] NULL_WRELATION_ARRAY = new WRelation[0];
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
 
-    public WRelation(String _meaning_summary, WikiText[] _phrases) {
+    public WRelation(String _meaning_summary, LabelsWikiText[] _phrases) {
         phrases = _phrases;
         meaning_summary = _meaning_summary;
     }
 
     /** Gets array of relations (word or phrases). */
-    public WikiText[] get() {
+    public LabelsWikiText[] get() {
         return phrases;
     }
 

@@ -146,6 +146,39 @@ public class WikiText {
 
         return wt;
     }
+    
+    /** @return true if object are equals (the same texts and the same wikified texts). */
+    static public boolean equals (WikiText one, WikiText two) {
+    
+        if (null == one && null == two)
+            return true;
+        if (null == one || null == two)
+            return false;
+        
+        String text1 = one.text;
+        String text2 = two.text;
+        
+        if (null == text1 && null == text2)
+            return true;
+        if (null == text1 || null == text2)
+            return false;
+        
+        if(text1.equalsIgnoreCase(text2)) {
+            
+            // wikified text is NULL if "text" hasn't any wikification
+            String w1 = one.wikified_text;
+            String w2 = two.wikified_text;
+            
+            if (null == w1 && null == w2)
+                return true;
+            if (null == w1 || null == w2)
+                return false;
+            
+            return w1.equalsIgnoreCase(w2);
+        }
+        
+        return false;
+    }
 }
 
 
