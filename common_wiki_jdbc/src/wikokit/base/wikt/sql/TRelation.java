@@ -23,6 +23,8 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Collection;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.util.LabelsWikiText;
 
 /** An operations with the table 'relation' in MySQL wiktionary_parsed database.
  *
@@ -123,10 +125,16 @@ public class TRelation {
 
                 String meaning_summary = cur_rel.getMeaningSummary();
 
-                WikiText[] phrases = cur_rel.get();
-                for(WikiText p : phrases) {
+                LabelsWikiText[] phrases = cur_rel.get();
+                for(LabelsWikiText p : phrases) {
 
-                    TWikiText twiki_text = TWikiText.storeToDB(connect, p);
+                    Label[] labels = p.getLabels();
+                    // save labels to the table 'label_relation'
+                    // todo
+                    // ...
+                    
+                    WikiText wt = p.getWikiText();
+                    TWikiText twiki_text = TWikiText.storeToDB(connect, wt);
 
                     if(null != twiki_text) {
                         TRelation.insert(connect, tmeaning, twiki_text, 

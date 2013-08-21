@@ -1,4 +1,4 @@
-/* LabelText.java - data structure consists of context labels and text (after this labels).
+/* LabelText.java - data structure consists of context labels and text (with these labels).
  * 
  * Copyright (c) 2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
@@ -7,12 +7,11 @@ package wikokit.base.wikt.util;
 
 import java.util.List;
 import wikokit.base.wikt.constant.Label;
-import wikokit.base.wikt.multi.en.name.LabelEn;
 
 /** Data structure consists of an array of context labels 
  * and the corresponding text (e.g. a definition).
  */
-public class LabelText {
+public class LabelsText {
     
     /** Array of context labels. */
     private Label[]  labels;
@@ -25,14 +24,14 @@ public class LabelText {
     
     // public LabelText() {}
     
-    public LabelText(Label[] _labels, String _text) {
+    public LabelsText(Label[] _labels, String _text) {
         labels = _labels;
         text = _text;       //text = new StringBuffer();
     }
     
     private final static Label[] NULL_LABEL_ARRAY = new Label[0];
     
-    public LabelText(List<Label> _labels, String _text) {
+    public LabelsText(List<Label> _labels, String _text) {
         labels = (Label[])_labels.toArray(NULL_LABEL_ARRAY);
         text = _text;
     }
@@ -47,13 +46,13 @@ public class LabelText {
         return new_labels;
     }*/
     
-    /** Gets context labels array. */
+    /** Gets text. */
     public String getText() {
         return text;
     }
     
     /** @return true if object are equals (the same labels and the same text). */
-    static public boolean equals (LabelText one, LabelText two) {
+    static public boolean equals (LabelsText one, LabelsText two) {
     
         if (null == one && null == two)
             return true;
@@ -79,5 +78,5 @@ public class LabelText {
                 return false;
         }
         return true;
-    };
+    }
 }

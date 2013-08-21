@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import wikokit.base.wikipedia.util.template.TemplateExtractor;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelLocal;
-import wikokit.base.wikt.util.LabelText;
+import wikokit.base.wikt.util.LabelsText;
 
 /** Contexual information for definitions, or Synonyms, or Translations 
  * in Russian Wiktionary.
@@ -293,9 +293,9 @@ public final class LabelRu extends LabelLocal  {
      *         and a definition text line without context labels substring, 
      *         return NULL if there is no text and context labels
      */
-    private static LabelText extractFirstContextLabel(String line)
+    private static LabelsText extractFirstContextLabel(String line)
     {   
-        LabelText result = null;
+        LabelsText result = null;
         List<Label> labels = new ArrayList<Label>();
         
         // 1. extract labels {{экон.|en}} or {{экон.}}, or {{помета|экон.}}
@@ -303,7 +303,7 @@ public final class LabelRu extends LabelLocal  {
         // @returns: name of template, array of parameters, first and last position of the template in the source string
         TemplateExtractor te = TemplateExtractor.getFirstTemplate(line);
         if(null == te)
-            return new LabelText(NULL_LABEL_ARRAY, line); // there are no any templates
+            return new LabelsText(NULL_LABEL_ARRAY, line); // there are no any templates
         
         String template_name = te.getName();
         String text_from_label = "";
@@ -344,13 +344,13 @@ public final class LabelRu extends LabelLocal  {
                 text_before.matches("[\\s\\pP]*")) // between (or before) context labels only space and punctuation marks could be
             {
                 String text_wo_labels = text_from_label.concat( TemplateExtractor.extractTextAfterTemplate(line, te) );
-                result = new LabelText(labels, text_wo_labels);
+                result = new LabelsText(labels, text_wo_labels);
             }
             
             //if(0 == te.countTemplateParameters()) { // {{zero parameters}}
             //}
         } else {
-            result = new LabelText(NULL_LABEL_ARRAY, line); // this template is not context label
+            result = new LabelsText(NULL_LABEL_ARRAY, line); // this template is not context label
         }
         
         return result;
@@ -363,18 +363,18 @@ public final class LabelRu extends LabelLocal  {
      * @return labels array (NULL if absent) and a definition text line without context labels substring, 
      *         return NULL if there is no text and context labels
      */
-    public static LabelText extractLabelsTrimText(String line)
+    public static LabelsText extractLabelsTrimText(String line)
     {   
         line = removeEmptyLabelPometa(line);
         if(line.length() == 0)
             return null;
         
         if(!line.contains("{{"))    // every context label should be a template "{{"
-            return new LabelText(NULL_LABEL_ARRAY, line);
+            return new LabelsText(NULL_LABEL_ARRAY, line);
         
         List<Label> labels = new ArrayList<Label>();
         
-        LabelText lt = extractFirstContextLabel(line);
+        LabelsText lt = extractFirstContextLabel(line);
         while(lt != null && lt.getLabels().length > 0) {
             
             labels.addAll(Arrays.asList(lt.getLabels()));
@@ -385,7 +385,7 @@ public final class LabelRu extends LabelLocal  {
         if(lt != null)
             result_line = lt.getText().trim();
         
-        return new LabelText(labels, result_line);
+        return new LabelsText(labels, result_line);
     }
 
 
@@ -730,7 +730,9 @@ public final class LabelRu extends LabelLocal  {
     public static final Label biblical = new LabelRu("библейск.", "библейское", LabelEn.biblical);
     
     public static final Label veterinary_medicine = new LabelRu("вет.", "ветеринарное", LabelEn.veterinary_medicine);   
+    
     public static final Label military = new LabelRu("военн.", "военное", LabelEn.military);
+    public static final Label military2 = LabelRu.addNonUniqueShortName(military, "воен.");
     
     public static final Label gastronomic = new LabelRu("гастрон.", "гастрономическое", LabelEn.gastronomic);
     public static final Label genetics = new LabelRu("генет.", "молекулярная биология и генетика", LabelEn.genetics);

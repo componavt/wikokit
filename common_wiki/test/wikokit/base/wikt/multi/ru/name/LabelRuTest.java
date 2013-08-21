@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
 import wikokit.base.wikt.multi.en.name.LabelEn;
-import wikokit.base.wikt.util.LabelText;
+import wikokit.base.wikt.util.LabelsText;
 
 public class LabelRuTest {
     
@@ -44,10 +44,10 @@ public class LabelRuTest {
         String line = "text without any labels and templates";
         
         Label[] _labels = NULL_LABEL_ARRAY;
-        LabelText expResult = new LabelText(_labels, line);
+        LabelsText expResult = new LabelsText(_labels, line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     @Test
@@ -57,10 +57,10 @@ public class LabelRuTest {
         String line = "text {{with unknown template, but it is not a valid labul}} sure";
         
         Label[] _labels = NULL_LABEL_ARRAY;
-        LabelText expResult = new LabelText(_labels, line);
+        LabelsText expResult = new LabelsText(_labels, line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     @Test
@@ -74,10 +74,10 @@ public class LabelRuTest {
         assertTrue(label_en_ru);
         
         Label[] _labels = { LabelEn.US };
-        LabelText expResult = new LabelText(_labels, result_line);
+        LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     // {{амер.|en}} one label and one unusable parameter
@@ -89,10 +89,10 @@ public class LabelRuTest {
         String result_line =              "[[самолёт]], [[аэроплан]] {{this template should remain in text}}";
         
         Label[] _labels = { LabelEn.US };
-        LabelText expResult = new LabelText(_labels, result_line);
+        LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     // {{устар.}}, {{рег.}} род лёгкой сохи, плужка {{Даль|толкование}}
@@ -104,10 +104,10 @@ public class LabelRuTest {
         String result_line =                      "род лёгкой сохи, плужка {{Даль|толкование}}";
         
         Label[] _labels = { LabelEn.obsolete, LabelEn.regional };
-        LabelText expResult = new LabelText(_labels, result_line);
+        LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     // complex case: list of labels with short words between
@@ -120,10 +120,10 @@ public class LabelRuTest {
         String result_line =                                    "то же, что [[город]]";
         
         Label[] _labels = { LabelEn.obsolete, LabelEn.poetic, LabelEn.archaic, LabelEn.ru_equal };
-        LabelText expResult = new LabelText(_labels, result_line);
+        LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     
@@ -144,7 +144,7 @@ public class LabelRuTest {
         Label[] _labels = { LabelEn.regional };
         // LabelText expResult = new LabelText(_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
         Label[]   result_labels = result.getLabels();
         
         assertEquals( result_labels.length, 1); // one label "сиб., сев.-вост."
@@ -175,10 +175,10 @@ public class LabelRuTest {
         String result_line =                   "[[что]]";
         
         Label[] exp_labels = { LabelEn.colloquial };
-        LabelText expResult = new LabelText(exp_labels, result_line);
+        LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     // {{помета|nocolor=1|разг.}} [[что]]    // "разг." == LabelEn.colloquial
@@ -190,10 +190,10 @@ public class LabelRuTest {
         String result_line =                             "[[что]]";
         
         Label[] exp_labels = { LabelEn.colloquial };
-        LabelText expResult = new LabelText(exp_labels, result_line);
+        LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     // {{помета|unknown context label}} [[что]]
@@ -207,7 +207,7 @@ public class LabelRuTest {
         // Label[] exp_labels = { LabelEn.colloquial };
         // LabelText expResult = new LabelText(exp_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
         //assertTrue( LabelText.equals( expResult, result) );
         assertEquals( result.getText(), result_line);
         
@@ -233,7 +233,7 @@ public class LabelRuTest {
         // Label[] exp_labels = { LabelEn.colloquial };
         // LabelText expResult = new LabelText(exp_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
         //assertTrue( LabelText.equals( expResult, result) );
         assertEquals( result.getText(), result_line);
         
@@ -267,13 +267,13 @@ public class LabelRuTest {
         String result_line =                 "от [[w:Franklin Delano Roosevelt]]; Франклин Делано Рузвельт, 32-й президент США";
         
         Label[] exp_labels = { LabelEn.US, LabelEn.colloquial, LabelEn.abbreviation };
-        LabelText expResult     = new LabelText(exp_labels, result_line);
-        LabelText expResult_syn = new LabelText(exp_labels, result_line);
+        LabelsText expResult     = new LabelsText(exp_labels, result_line);
+        LabelsText expResult_syn = new LabelsText(exp_labels, result_line);
         
-        LabelText result     = LabelRu.extractLabelsTrimText(line);
-        LabelText result_syn = LabelRu.extractLabelsTrimText(line_syn);
-        assertTrue( LabelText.equals( expResult, result) );
-        assertTrue( LabelText.equals( expResult, result_syn) );
+        LabelsText result     = LabelRu.extractLabelsTrimText(line);
+        LabelsText result_syn = LabelRu.extractLabelsTrimText(line_syn);
+        assertTrue( LabelsText.equals( expResult, result) );
+        assertTrue( LabelsText.equals( expResult, result_syn) );
     }
  
     // old formatting:
@@ -291,13 +291,13 @@ public class LabelRuTest {
         String line_result_new =      "от [[командир батальона]]";
         
         Label[] exp_labels = { LabelEn.abbreviation };
-        LabelText expResult_old = new LabelText(exp_labels, line_result_old);
-        LabelText expResult_new = new LabelText(exp_labels, line_result_new);
+        LabelsText expResult_old = new LabelsText(exp_labels, line_result_old);
+        LabelsText expResult_new = new LabelsText(exp_labels, line_result_new);
         
-        LabelText result_old    = LabelRu.extractLabelsTrimText(line_old);
-        LabelText result_new    = LabelRu.extractLabelsTrimText(line_new);
-        assertTrue( LabelText.equals( expResult_old, result_old) );
-        assertTrue( LabelText.equals( expResult_new, result_new) );
+        LabelsText result_old    = LabelRu.extractLabelsTrimText(line_old);
+        LabelsText result_new    = LabelRu.extractLabelsTrimText(line_new);
+        assertTrue( LabelsText.equals( expResult_old, result_old) );
+        assertTrue( LabelsText.equals( expResult_new, result_new) );
     }
 
     // Special template (form-of), it is not a context label in really :)
@@ -310,10 +310,10 @@ public class LabelRuTest {
         String result_line =   "то же, что [[спирт]], бесцветная летучая жидкость, получаемая при ферментации сахара";
         
         Label[] exp_labels = { LabelEn.chemistry, LabelRu.equal };
-        LabelText expResult = new LabelText(exp_labels, result_line);
+        LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     // "{{хим-элем|17|Cl|[[неметалл]] из группы [[галоген]]ов}}" -> хим. "[[химический элемент]] с [[атомный номер|атомным номером]] 17, обозначается [[химический символ|химическим символом]] Cl, [[неметалл]] из группы [[галоген]]ов"
@@ -325,10 +325,10 @@ public class LabelRuTest {
         String result_line = "[[химический элемент]] с [[атомный номер|атомным номером]] 17, обозначается [[химический символ|химическим символом]] Cl, [[неметалл]] из группы [[галоген]]ов";
         
         Label[] exp_labels = { LabelEn.chemistry };
-        LabelText expResult = new LabelText(exp_labels, result_line);
+        LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelText result = LabelRu.extractLabelsTrimText(line);
-        assertTrue( LabelText.equals( expResult, result) );
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertTrue( LabelsText.equals( expResult, result) );
     }
     
     // special templates tranforming definition text, e.g. сокр., аббр.

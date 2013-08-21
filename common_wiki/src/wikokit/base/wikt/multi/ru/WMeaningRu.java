@@ -21,7 +21,7 @@ import java.util.regex.Matcher;
 import java.util.List;
 import java.util.ArrayList;
 import wikokit.base.wikt.constant.Label;
-import wikokit.base.wikt.util.LabelText;
+import wikokit.base.wikt.util.LabelsText;
 
 /** Meaning consists of <PRE>
  * # Definition (preceded by "#", which causes automatic numbering).
@@ -147,7 +147,7 @@ public class WMeaningRu {
         if(line.startsWith("{{морфема"))
             return null;    // skip now, todo (parse) in future
 
-        LabelText label_text = LabelRu.extractLabelsTrimText(line);
+        LabelsText label_text = LabelRu.extractLabelsTrimText(line);
         if(null == label_text)
             return null;
         line = label_text.getText();

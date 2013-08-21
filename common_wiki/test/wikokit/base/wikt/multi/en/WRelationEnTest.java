@@ -15,6 +15,7 @@ import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.word.WRelation;
 
 import wikokit.base.wikt.constant.POS;
+import wikokit.base.wikt.util.LabelsWikiText;
 import wikokit.base.wikt.util.WikiText;
 
 public class WRelationEnTest {
@@ -225,15 +226,15 @@ public class WRelationEnTest {
         assertNotNull(str);
         assertTrue(str.equalsIgnoreCase("furp"));
         
-        WikiText[] synonym_row_0 = r[0].get();
+        LabelsWikiText[] synonym_row_0 = r[0].get();
         assertEquals(2, synonym_row_0.length);
-        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("flrink"));
-        assertTrue(synonym_row_0[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("pigglehick"));
+        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("flrink"));
+        assertTrue(synonym_row_0[1].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("pigglehick"));
 
-        WikiText[] synonym_row_1 = r[1].get();
+        LabelsWikiText[] synonym_row_1 = r[1].get();
         assertEquals(2, synonym_row_0.length);
-        assertTrue(synonym_row_1[0].getVisibleText().equalsIgnoreCase("furp"));
-        assertTrue(synonym_row_1[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("whoodleplunk"));
+        assertTrue(synonym_row_1[0].getWikiText().getVisibleText().equalsIgnoreCase("furp"));
+        assertTrue(synonym_row_1[1].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("whoodleplunk"));
 
 
         /* flower_text */
@@ -264,8 +265,8 @@ public class WRelationEnTest {
 
         synonym_row_0 = r[0].get();
         assertEquals(2, synonym_row_0.length);
-        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("head"));
-        assertTrue(synonym_row_0[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("pseudanthium"));
+        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("head"));
+        assertTrue(synonym_row_0[1].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("pseudanthium"));
     }
     
     /* # {{colloquial|lang=fo}} [[one]], [[they]] {{i|indefinite third person singular pronoun}}
@@ -302,10 +303,10 @@ public class WRelationEnTest {
         assertNotNull(str);
         assertTrue(str.equalsIgnoreCase("standard"));
 
-        WikiText[] synonym_row_0 = r[0].get();
+        LabelsWikiText[] synonym_row_0 = r[0].get();
         assertEquals(1, synonym_row_0.length);
-        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("mann"));
-        assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("mann"));
+        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("mann"));
+        assertTrue(synonym_row_0[0].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("mann"));
     }
     
     /* Tests wrong order: "Related terms" should be after "Synonyms" in really,
@@ -343,10 +344,10 @@ public class WRelationEnTest {
         str = r[0].getMeaningSummary();
         assertNull(str);
 
-        WikiText[] synonym_row_0 = r[0].get();
+        LabelsWikiText[] synonym_row_0 = r[0].get();
         assertEquals(1, synonym_row_0.length);
-        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("latrate {{i|obsolete}}"));
-        assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("latrate"));
+        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("latrate {{i|obsolete}}"));
+        assertTrue(synonym_row_0[0].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("latrate"));
 
         // TODO label: obsolete
         // ...
@@ -403,10 +404,10 @@ public class WRelationEnTest {
         str = r[0].getMeaningSummary();
         assertNull(str);
         
-        WikiText[] synonym_row_0 = r[0].get();
+        LabelsWikiText[] synonym_row_0 = r[0].get();
         assertEquals(1, synonym_row_0.length);
-        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("aeroplane"));
-        assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("aeroplane"));
+        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("aeroplane"));
+        assertTrue(synonym_row_0[0].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("aeroplane"));
     }
 
     /** The relation section may absent..., e.g.:
@@ -457,10 +458,10 @@ public class WRelationEnTest {
         str = r[0].getMeaningSummary();
         assertNull(str);
         
-        WikiText[] synonym_row_0 = r[0].get();
+        LabelsWikiText[] synonym_row_0 = r[0].get();
         assertEquals(1, synonym_row_0.length);
-        assertTrue(synonym_row_0[0].getVisibleText().equalsIgnoreCase("Suomijos Respublika"));
-        assertTrue(synonym_row_0[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("Suomijos Respublika"));
+        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("Suomijos Respublika"));
+        assertTrue(synonym_row_0[0].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("Suomijos Respublika"));
     }
     
     @Test
@@ -487,13 +488,13 @@ public class WRelationEnTest {
         str = r[0].getMeaningSummary();
         assertNull(str);
         
-        WikiText[] synonym_row = r[0].get();
+        LabelsWikiText[] synonym_row = r[0].get();
         assertEquals(2, synonym_row.length);
-        assertTrue(synonym_row[0].getVisibleText().equalsIgnoreCase("gustus"));
-        assertTrue(synonym_row[0].getWikiWords()[0].getWordLink().equalsIgnoreCase("gustus"));
+        assertTrue(synonym_row[0].getWikiText().getVisibleText().equalsIgnoreCase("gustus"));
+        assertTrue(synonym_row[0].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("gustus"));
         
-        assertTrue(synonym_row[1].getVisibleText().equalsIgnoreCase("tahti"));
-        assertTrue(synonym_row[1].getWikiWords()[0].getWordLink().equalsIgnoreCase("tahti"));
+        assertTrue(synonym_row[1].getWikiText().getVisibleText().equalsIgnoreCase("tahti"));
+        assertTrue(synonym_row[1].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("tahti"));
     }
     
     
