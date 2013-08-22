@@ -1,7 +1,6 @@
 
 package wikokit.base.wikt.multi.ru;
 
-import wikokit.base.wikt.multi.ru.WRelationRu;
 import java.util.Map;
 //import java.util.regex.Pattern;
 import org.junit.After;
@@ -11,13 +10,14 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.Relation;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.word.WRelation;
 
 import wikokit.base.wikt.constant.POS;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.util.LabelsWikiText;
-import wikokit.base.wikt.util.WikiText;
 
 public class WRelationRuTest {
 
@@ -326,23 +326,179 @@ public class WRelationRuTest {
         assertNull(r[2]);
     }
 
-
-    /**
-     * Test of parseOneKindOfRelation method, of class WRelationRu.
-     */
-    /*@Test
-    public void testParseOneKindOfRelation() {
-        System.out.println("parseOneKindOfRelation");
-        LanguageType wikt_lang = null;
-        String page_title = "";
-        String text = "";
-        Pattern relation_header_pattern = null;
-        Relation relation = null;
-        WRelation[] expResult = null;
-        WRelation[] result = WRelationRu.parseOneKindOfRelation(wikt_lang, page_title, text, relation_header_pattern, relation);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }*/
+    
+    // /////////////////////////////////////////////////////
+    // Context labels in synonyms (parseOneLine function)
+    // @see http://ru.wiktionary.org/wiki/Викисловарь:Правила_оформления_статей#Оформление_семантических_отношений
+    // @see http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D1%81%D1%82%D0%B0%D1%82%D0%B5%D0%B9#.D0.9E.D1.84.D0.BE.D1.80.D0.BC.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D1.81.D0.B5.D0.BC.D0.B0.D0.BD.D1.82.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D1.85_.D0.BE.D1.82.D0.BD.D0.BE.D1.88.D0.B5.D0.BD.D0.B8.D0.B9
+    
+    // # [[ремень]], [[поясок]]; частичн.: [[гайтан]]; устар.: [[кушак]], [[обвязка]]
+    @Test
+    public void testParseOneLine_labels_as_text() {
+        System.out.println("ParseOneLine_labels_as_text");
+        String page_title, text;
+        WRelation result;
+        Label la;
+        
+        page_title = "пояс";
+        text = "# [[ремень]], [[поясок]]; частичн.: [[гайтан]]; устар.: [[кушак]], [[обвязка]]";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(5, lwt_array.length);
+        
+        // 1) [[ремень]]
+        assertEquals(0, lwt_array[0].getLabels().length);
+        
+        // 2) [[поясок]]
+        assertEquals(0, lwt_array[1].getLabels().length);
+        
+        // 3) частичн.: [[гайтан]]
+        assertEquals("гайтан", lwt_array[2].getWikiText().getVisibleText());
+                
+        Label[] labels_gaitan = lwt_array[2].getLabels();
+        assertEquals(1, labels_gaitan.length);
+        la = labels_gaitan[0];
+        assertEquals(LabelRu.partial.getShortName(), la.getShortName());  // частичн.
+        
+        // 4) устар.: [[кушак]]
+        assertEquals("кушак", lwt_array[3].getWikiText().getVisibleText());
+        Label[] labels_kushak = lwt_array[3].getLabels();
+        assertEquals(1, labels_kushak.length);// устар.
+        la = labels_kushak[0];
+        assertEquals(LabelRu.obsolete.getShortName(), la.getShortName()); 
+        
+        // 5) устар.: [[обвязка]]
+        assertEquals("обвязка", lwt_array[4].getWikiText().getVisibleText());
+        Label[] labels_obvyazka = lwt_array[4].getLabels();
+        assertEquals(1, labels_obvyazka.length);// устар.
+        la = labels_obvyazka[0];
+        assertEquals(LabelRu.obsolete.getShortName(), la.getShortName());
+    }
+    
+    // # [[Питер]] (разг.), [[град Петров]] (поэт., высок.)
+    @Test
+    public void testParseOneLine_labels_in_brackets() {
+        System.out.println("ParseOneLine_labels_in_brackets");
+        String page_title, text;
+        WRelation result;
+        Label la;
+        
+        page_title = "Санкт-Петербург";
+        text = "# [[Питер]] (разг.), [[град Петров]] (поэт., высок.)";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(2, lwt_array.length);
+        
+        // 1) [[Питер]] (разг.)
+        assertEquals("Питер", lwt_array[0].getWikiText().getVisibleText());
+                
+        Label[] labels_Piter = lwt_array[0].getLabels();
+        assertEquals(1, labels_Piter.length);
+        la = labels_Piter[0];
+        assertEquals(LabelRu.colloquial.getShortName(), la.getShortName());// разг.
+        
+        // 2) [[град Петров]] (поэт., высок.)
+        assertEquals("град Петров", lwt_array[1].getWikiText().getVisibleText());
+        
+        Label[] labels_grad = lwt_array[1].getLabels();
+        assertEquals(2, labels_grad.length);// поэт., высок.
+        
+        assertEquals(LabelRu.poetic.getShortName(), labels_grad[0].getShortName());// поэт.
+        assertEquals(LabelRu.bombast.getShortName(), labels_grad[1].getShortName());// высок.
+    }
+    
+    
+    // # {{груб.|-}}: [[копыто]]; {{п.|-}}, {{груб.|-}}: [[ходуля|ходули]]; {{помета|частичн.}}: [[лапа]], [[щупальце]]
+    @Test
+    public void testParseOneLine_labels_in_templates() {
+        System.out.println("ParseOneLine_labels_in_templates");
+        String page_title, text;
+        WRelation result;
+        Label la;
+        
+        page_title = "нога";
+        text = "# {{груб.|-}}: [[копыто]]; {{п.|-}}, {{груб.|-}}: [[ходуля|ходули]]; {{помета|частичн.}}: [[лапа]], [[щупальце]]";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(4, lwt_array.length);// 1) груб., 2) переносное, грубое, 3) частичн. 4) частичн.
+        
+        // 1) {{груб.|-}}: [[копыто]]
+        assertEquals("копыто", lwt_array[0].getWikiText().getVisibleText());
+                
+        Label[] labels_kopwto = lwt_array[0].getLabels();
+        assertEquals(1, labels_kopwto.length);
+        la = labels_kopwto[0];
+        assertEquals(LabelRu.acerbity.getShortName(), la.getShortName());// груб.
+        
+        // 2) {{п.|-}}, {{груб.|-}}: [[ходуля|ходули]]
+        assertEquals("ходули", lwt_array[1].getWikiText().getVisibleText());
+        
+        Label[] labels_hoduli = lwt_array[1].getLabels();
+        assertEquals(2, labels_hoduli.length);// п., груб.
+        
+        assertEquals(LabelRu.figuratively.getShortName(), labels_hoduli[0].getShortName());// п.
+        assertEquals(LabelRu.acerbity.getShortName(), labels_hoduli[1].getShortName());// груб.
+        
+        // 3) "лапа" 
+        // {{помета|частичн.}}: [[лапа]], [[щупальце]]
+        assertEquals("лапа", lwt_array[2].getWikiText().getVisibleText());
+        
+        Label[] labels_lapa = lwt_array[2].getLabels();
+        assertEquals(1, labels_lapa.length);// частичн.
+        assertEquals(LabelRu.partial.getShortName(), labels_lapa[0].getShortName());// частичн.
+        
+        // 4) "щупальце" 
+        // {{помета|частичн.}}: [[лапа]], [[щупальце]]
+        assertEquals("щупальце", lwt_array[3].getWikiText().getVisibleText());
+        
+        Label[] labels_shupaltse = lwt_array[3].getLabels();
+        assertEquals(1, labels_shupaltse.length);// частичн.
+        assertEquals(LabelRu.partial.getShortName(), labels_shupaltse[0].getShortName());// частичн.
+    }
+    
+    // # [[копыто]] ({{груб.|-}}); [[ходуля|ходули]] ({{п.|-}}, {{груб.|-}})
+    @Test
+    public void testParseOneLine_labels_in_templates_in_brackets() {
+        System.out.println("ParseOneLine_labels_in_templates_in_brackets");
+        String page_title, text;
+        WRelation result;
+        Label la;
+        
+        page_title = "нога";
+        text = "# [[копыто]] ({{груб.|-}}); [[ходуля|ходули]] ({{п.|-}}, {{груб.|-}})";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(4, lwt_array.length);// 1) груб., 2) переносное, грубое
+        
+        // 1) {{груб.|-}}: [[копыто]]
+        assertEquals("копыто", lwt_array[0].getWikiText().getVisibleText());
+                
+        Label[] labels_kopwto = lwt_array[0].getLabels();
+        assertEquals(1, labels_kopwto.length);
+        la = labels_kopwto[0];
+        assertEquals(LabelRu.acerbity.getShortName(), la.getShortName());// груб.
+        
+        // 2) {{п.|-}}, {{груб.|-}}: [[ходуля|ходули]]
+        assertEquals("ходули", lwt_array[1].getWikiText().getVisibleText());
+        
+        Label[] labels_hoduli = lwt_array[1].getLabels();
+        assertEquals(2, labels_hoduli.length);// п., груб.
+        
+        assertEquals(LabelRu.figuratively.getShortName(), labels_hoduli[0].getShortName());// п.
+        assertEquals(LabelRu.acerbity.getShortName(), labels_hoduli[1].getShortName());// груб.
+    }
+    
+    
+    
+    // eo context labels in synonyms
+    // /////////////////////////////////////////////////////
 
 }

@@ -35,6 +35,9 @@ public class WRelationRu {
 
     private final static WRelation[] NULL_WRELATION_ARRAY = new WRelation[0];
     //Map<Relation, WRelation[]> m = new HashMap<Relation, WRelation[]>>();
+    
+    // private final static Label[] NULL_LABEL_ARRAY = new Label[0];
+    private final static List<Label> NULL_LABEL_LIST = new ArrayList(0);
 
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
 
@@ -217,7 +220,7 @@ public class WRelationRu {
         LabelsWikiText[] lwt_array = new LabelsWikiText[wt.length];
         int i=0;
         for(WikiText _wiki_text : wt) {
-            List<Label> _labels = null;
+            List<Label> _labels = NULL_LABEL_LIST;
             
             lwt_array[i] = new LabelsWikiText(_labels, _wiki_text);
             i++;

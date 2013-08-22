@@ -395,6 +395,9 @@ public final class LabelRu extends LabelLocal  {
     public static final Label context = new LabelRu("помета", "помета", LabelEn.context);// meta context label will be treated in a special way. http://ru.wiktionary.org/wiki/Шаблон:помета
                                                                                          // this is a fake label, which shouldn't be visible to user in GUI
     
+    public static final Label partial = new LabelRu("частичн.", "частичный", LabelEn.partial);
+    
+    
     // grammatical - грамматические категории
     // //////////////////////////
     public static final Label abbreviation = new LabelRu("аббр.", "аббревиатура", LabelEn.abbreviation);
@@ -568,6 +571,7 @@ public final class LabelRu extends LabelLocal  {
     
     public static final Label regional = new LabelRu("обл.", "областное", LabelEn.regional);
     public static final Label regional_reg = LabelRu.addNonUniqueShortName(regional, "рег.");
+    public static final Label regional_mestn = LabelRu.addNonUniqueShortName(regional, "местн.");
     
     public static final Label Ossetia = new LabelRu("осет.", "осетинское", LabelEn.Ossetia);
     public static final Label Punjab = new LabelRu("пандж.", "панджабское", LabelEn.Punjab);
