@@ -306,6 +306,7 @@ public final class LabelEn extends Label {
     public static final Label onomatopoeia = new LabelEn("onomatopoeia", "onomatopoeia", LabelCategory.grammatical); //звукоподражание
     public static final Label ordinal = new LabelEn("ordinal", "ordinal", LabelCategory.grammatical); //порядковое числительное
     public static final Label parenthetical_word = new LabelEn("parenthetical word", "parenthetical word", LabelCategory.grammatical); // ruwikt вводное слово
+    public static final Label partial = new LabelEn("partial", "partial", LabelCategory.root);//ruwikt частичн.
     public static final Label participle = new LabelEn("participle", "participle", LabelCategory.grammatical); //ruwikt form-of
     public static final Label passive = new LabelEn("passive", "passive", LabelCategory.grammatical);
     public static final Label past_tense = new LabelEn("past tense", "past tense", LabelCategory.grammatical); // ruwikt прошедшее время, прошедшего времени
