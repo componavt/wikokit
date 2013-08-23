@@ -7,7 +7,7 @@ wiwordik 0.XX 2011-0?-??
 -Xms1212m -Xmx1212m -Xmn16m -XX:+DisableExplicitGC -verbose:gc -XX:PermSize=256m
 
 Split to common_wiki and common_wiki_jdbc
-  common_wiki 279 tests passed, 7 tests failed
+  common_wiki 279 tests passed, 11 tests failed
   common_wiki 280 tests passed, 6 tests failed
   common_wiki_jdbc 88 tests passed, 10 tests failed
   common_wiki_jdbc 58 tests passed, 38 tests failed (wo wikt_parsed)
