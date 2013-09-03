@@ -336,9 +336,9 @@ CREATE  TABLE IF NOT EXISTS `quot_author` (
   `name` VARCHAR(512) BINARY NOT NULL ,
   `wikilink` VARCHAR(512) BINARY NOT NULL COMMENT 'a wikilink to Wikipedia (format: [[w:name|]]) for the author ' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name_wikilink` (`name` ASC, `wikilink` ASC) ,
-  INDEX `name` (`name` ASC) ,
-  INDEX `wikilink` (`wikilink` ASC) )
+  UNIQUE INDEX `name_wikilink` (`name`(15) ASC, `wikilink`(15) ASC) ,
+  INDEX `name` (`name`(12) ASC) ,
+  INDEX `wikilink` (`wikilink`(12) ASC) )
 ENGINE = InnoDB;
 
 
@@ -365,7 +365,7 @@ CREATE  TABLE IF NOT EXISTS `quot_publisher` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `text` VARCHAR(512) BINARY NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `text_UNIQUE` (`text` ASC) )
+  UNIQUE INDEX `text_UNIQUE` (`text`(15) ASC) )
 ENGINE = InnoDB, 
 COMMENT = 'in ruwikt: издание' ;
 
@@ -379,7 +379,7 @@ CREATE  TABLE IF NOT EXISTS `quot_source` (
   `id` INT(5) UNSIGNED NOT NULL AUTO_INCREMENT ,
   `text` VARCHAR(512) BINARY NOT NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `text_UNIQUE` (`text` ASC) )
+  UNIQUE INDEX `text_UNIQUE` (`text`(15) ASC) )
 ENGINE = InnoDB;
 
 
@@ -409,8 +409,8 @@ CREATE  TABLE IF NOT EXISTS `quot_ref` (
   `publisher_id` INT(5) UNSIGNED NULL ,
   `source_id` INT(5) UNSIGNED NULL ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `year_auth_tit_pub_s_UNIQUE` (`year_id` ASC, `author_id` ASC, `title` ASC, `publisher_id` ASC, `source_id` ASC) ,
-  INDEX `title_INDEX` (`title` ASC) )
+  UNIQUE INDEX `year_auth_tit_pub_s_UNIQUE` (`year_id` ASC, `author_id` ASC, `title`(15) ASC, `publisher_id` ASC, `source_id` ASC) ,
+  INDEX `title_INDEX` (`title`(12) ASC) )
 ENGINE = InnoDB, 
 COMMENT = 'links to tables with reference information (year, etc.)' ;
 
