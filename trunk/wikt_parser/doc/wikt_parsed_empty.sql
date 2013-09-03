@@ -152,7 +152,7 @@ CREATE  TABLE IF NOT EXISTS `part_of_speech` (
   `id` TINYINT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(255) NOT NULL COMMENT 'language name: English, Русский, etc.' ,
   PRIMARY KEY (`id`) ,
-  UNIQUE INDEX `name` (`name` ASC) )
+  UNIQUE INDEX `name` (`name`(255) ASC) )
 ENGINE = InnoDB, 
 COMMENT = 'The language of the word in question. \n' ;
 
