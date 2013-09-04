@@ -75,6 +75,14 @@ public final class LabelEn extends Label {
         //label2category. put(this, category);
     }
     
+    public LabelEn(String short_name, LabelCategory label_cat) { 
+        super(short_name);
+        initLabelAddedAutomatically(this);
+        
+        this.category   = label_cat;
+        label2category. put(this, category);
+    }
+    
     protected void initLabelAddedByHand(Label label) {
     
         if(null == label)

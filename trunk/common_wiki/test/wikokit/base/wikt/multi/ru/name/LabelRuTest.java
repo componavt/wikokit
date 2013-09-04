@@ -130,13 +130,35 @@ public class LabelRuTest {
     // ///////////////////////////////////////////////////////////
     // LabelParamsRu
     
+    // only language code in regional labels, e.g.:
+    // {{рег.|lang=hr}} [[утюг]] // https://ru.wiktionary.org/wiki/pegla
+    @Test
+    public void testExtractLabelsTrimText_with_regional_and_only_lang_code() {
+        System.out.println("extractLabelsTrimText_with_regional_and_only_lang_code");
+        
+        String line        = "{{рег.|lang=hr}} [[утюг]]";
+        
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        Label[]   result_labels = result.getLabels();
+        
+        assertEquals( result_labels.length, 1); // one label regional
+        Label la = result_labels[0];
+        assertEquals(la.getShortName(), "regional");
+        assertEquals(la.getName(),      "regional");
+        
+        LabelCategory result_label_category = LabelEn.getCategoryByLabel(la);
+        assertNotNull(result_label_category);
+        assertEquals(result_label_category.getName(), "regional");
+        assertEquals(result_label_category, LabelCategory.regional);
+    }
+    
     // in ruwikt names of regions given as parameter to the template {{regional|regions free text}}
     // Regional {{рег.|regions}} or {{обл.|regions}} // рег. == LabelEn.regional
     // харьк., луг., донецкое, белгородск.
     // {{рег.|сиб., сев.-вост.}} [[ловушка]] 
     @Test
-    public void testExtractLabelsTrimText_with_regional_with_paremeter() {
-        System.out.println("extractLabelsTrimText_with_regional_with_paremeter");
+    public void testExtractLabelsTrimText_with_regional_with_parameter() {
+        System.out.println("extractLabelsTrimText_with_regional_with_parameter");
         
         String line        = "{{рег.|сиб., сев.-вост.}} [[ловушка]]"; // http://ru.wiktionary.org/wiki/кулёма
         String result_line =                           "[[ловушка]]";
@@ -153,10 +175,42 @@ public class LabelRuTest {
         assertEquals(la.getShortName(), "сиб., сев.-вост.");
         assertEquals(la.getName(),      "");
         
-         LabelCategory result_label_category = LabelEn.getCategoryByLabel(result_labels[0]);
-         assertNotNull(result_label_category);
-         assertEquals(result_label_category.getName(), "regional");
-         assertEquals(result_label_category, LabelCategory.regional);
+        LabelCategory result_label_category = LabelEn.getCategoryByLabel(result_labels[0]);
+        assertNotNull(result_label_category);
+        assertEquals(result_label_category.getName(), "regional");
+        assertEquals(result_label_category, LabelCategory.regional);
+    }
+    
+    // capacheca
+    // # {{рег.|Перу|lang=es}}, {{рег.|Чили|lang=es}} торговый [[лоток]]
+    // 
+    @Test
+    public void testExtractLabelsTrimText_with_regional_with_lang_code() {
+        System.out.println("extractLabelsTrimText_with_regional_with_lang_code");
+        
+        String line        = "{{рег.|Перу|lang=es}}, {{рег.|Чили|lang=es}} торговый [[лоток]]";
+        
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        Label[]   result_labels = result.getLabels();
+        
+        assertEquals( result_labels.length, 2); // two labels: "Перу", "Чили"
+        Label la1 = result_labels[0];
+        assertEquals(la1.getShortName(), "Перу");
+        assertEquals(la1.getName(),      "");
+        
+        LabelCategory label_category1 = LabelEn.getCategoryByLabel(la1);
+        assertNotNull(label_category1);
+        assertEquals(label_category1.getName(), "regional");
+        assertEquals(label_category1, LabelCategory.regional);
+        
+        Label la2 = result_labels[1];
+        assertEquals(la2.getShortName(), "Чили");
+        assertEquals(la2.getName(),      "");
+        
+        LabelCategory label_category2 = LabelEn.getCategoryByLabel(la2);
+        assertNotNull(label_category2);
+        assertEquals(label_category2.getName(), "regional");
+        assertEquals(label_category2, LabelCategory.regional);
     }
     // LabelParamsRu
     // ///////////////////////////////////////////////////////////
