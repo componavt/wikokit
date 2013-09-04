@@ -8,6 +8,7 @@ package wikokit.base.wikt.multi.ru.name;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import wikokit.base.wikipedia.util.template.TemplateExtractor;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
 import wikokit.base.wikt.multi.en.name.LabelEn;
@@ -70,12 +71,19 @@ public class LabelParamsRu {
             template_params[i] = template_params[i].trim();
         
         if(Label.equals(label, LabelRu.regional)) {
-            // template_params[0] - region
+            // template_params[0] - region or language code (if region is absent)
             // template_params[1] - language code (en, de, fr...)
-            switch( template_params.length ) {
+            
+            // template parameter without language code (region name or empty array)
+            String[] remain_params = TemplateExtractor.excludeParameter (template_params, "lang");
+            
+            switch( remain_params.length ) {
+                case 0:
                 case 1:
-                case 2: // result = "от [["+template_params[1]+"]]";
-                    String regions = template_params[0];
+                    String regions = "";
+                    if(remain_params.length > 0)
+                        regions = remain_params[0];
+                    
                     if(regions.length() == 0)
                         return LabelEn.regional;
                     
@@ -84,7 +92,8 @@ public class LabelParamsRu {
                         if(null != label_existing)
                             return label_existing;
                     } else {                    
-                        return new LabelEn(regions); // , LabelCategory.regional); // let's create new LabelRu with label=regions
+                        return new LabelEn(regions, LabelCategory.regional); // let's create new LabelRu with label=regions and label category regional
+                        //return new LabelEn(regions); // , LabelCategory.regional); // let's create new LabelRu with label=regions
                     }
             }
             

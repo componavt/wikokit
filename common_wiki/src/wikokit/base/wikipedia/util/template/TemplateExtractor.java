@@ -135,7 +135,7 @@ public class TemplateExtractor {
     }
     
     /** Removes substring {{template text}} from the source 'text', trims result string.
-     * !Attention: te should be created by function getFirstTemplate().
+     * !Attention: variable 'te' should be created by function getFirstTemplate().
      * 
      *                |---- template text ------|
      * "text before {{template name|parameter one}} text after" : source
