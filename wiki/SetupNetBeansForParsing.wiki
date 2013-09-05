@@ -63,6 +63,12 @@ gvim "C:\w\MySQL\MySQL Server 5.1\my.ini"
 NET START MySQL
 }}}
 
+Check character set by MySQL command `status` (change `my.ini`):
+{{{
+Server characterset:    latin1
+Db     characterset:    latin1
+}}}
+
 OK. Run it:
 {{{
 $cd /enwikt20100824/wikt_parser
