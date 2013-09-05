@@ -141,7 +141,6 @@ public class TLabel {
         
         label2id = new LinkedHashMap<>(size);
         id2label = new LinkedHashMap<>(size);
-                
         
         // get labels found by parser
         TLabel.getLabelsFoundByParserFromDatabase(connect, wikt_lang);
@@ -151,10 +150,10 @@ public class TLabel {
         for(Label label : labs) {
             
             String short_name = label.getShortName();
-            int id        = getIDByShortName(connect, short_name, "createFastMaps");
+            int id = getIDByShortName(connect, short_name, "createFastMaps");
             
             if (0 == id) {
-                System.out.println("Error (wikt_parsed TLabel.createFastMaps()):: There is an empty label short name, check the table `label_category`!");
+                System.out.println("Error (wikt_parsed TLabel.createFastMaps()):: There is label short name='"+short_name+"' which is absent in table 'label'!");
                 continue;
             }
         

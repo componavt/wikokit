@@ -330,22 +330,17 @@ public class LabelTableAll {
 
         // print values
         for(Label _label : m_source_n.keySet()) {
-            ObjectWithWords s_w = m_source_n.get(_label);
+            ObjectWithWords s_w = m_source_n.get(_label);            
             
             LabelEn linked_label_en = _label.getLinkedLabelEn();
-            if(null != linked_label_en)
+            if(null == linked_label_en)
                 continue;
             
             LabelCategory label_category = linked_label_en.getCategory();
             if(null == label_category)
                 continue;
             
-            /*LabelCategory label_category = _label.getLinkedLabelEn().getCategory();
-            if(null != label_category)
-                continue;*/
-            
-            // print only regional labels
-            if(label_category != LabelCategory.regional)
+            if(label_category != LabelCategory.regional) // print only regional labels
                 continue;
 
                                                    // replace since there are problems in wiki tables
