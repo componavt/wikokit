@@ -317,6 +317,57 @@ public class LabelTableAll {
         System.out.println("|}");
     }
     
+    /** Prints statistics about only regional context labels found by parser
+     * (LabelCategory = regional).
+     */
+    private static void printRegionalLabelsFoundByParser (
+                        Map<Label, ObjectWithWords> m_source_n)
+    {
+        System.out.println("\n=== Regional labels found by parser ===");
+
+        System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
+        System.out.println("! Short name !! Length !! Counter !! words");
+
+        // print values
+        for(Label _label : m_source_n.keySet()) {
+            ObjectWithWords s_w = m_source_n.get(_label);
+            
+            LabelEn linked_label_en = _label.getLinkedLabelEn();
+            if(null != linked_label_en)
+                continue;
+            
+            LabelCategory label_category = linked_label_en.getCategory();
+            if(null == label_category)
+                continue;
+            
+            /*LabelCategory label_category = _label.getLinkedLabelEn().getCategory();
+            if(null != label_category)
+                continue;*/
+            
+            // print only regional labels
+            if(label_category != LabelCategory.regional)
+                continue;
+
+                                                   // replace since there are problems in wiki tables
+            String short_name = _label.getShortName().replace("+", "<nowiki>+</nowiki>");
+            
+            System.out.println("|-");
+            System.out.print(
+                    "|" + short_name + 
+                    "||" + _label.getShortName().length() + 
+                    "||" + s_w.counter + "||" );
+
+            StringBuilder sb = new StringBuilder();
+            List<String> words = s_w.example_words;
+            for(String w : words)
+                sb.append("[[").append(w).append("]], ");
+            if(sb.length() > 3)
+                sb.delete(sb.length()-2, sb.length());
+            System.out.println( sb.toString() );
+        }
+        System.out.println("|}");
+    }
+    
     
     public static void main(String[] args) {
 
@@ -356,7 +407,8 @@ public class LabelTableAll {
         /** Number of using labels in meanings (definitions) */
         LabelTableAll.printLabelsAddedByHand(m_label_n);
         LabelTableAll.printLabelsFoundByParser(m_label_n);
-
+        LabelTableAll.printRegionalLabelsFoundByParser(m_label_n);
+        
         //System.out.println("\nThere are quotes in " + m.size() + " languages.");
         CommonPrinter.printFooter();
     }
