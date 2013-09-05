@@ -63,7 +63,7 @@ gvim "C:\w\MySQL\MySQL Server 5.1\my.ini"
 NET START MySQL
 }}}
 
-Check character set by MySQL command `status` (change `my.ini`):
+Check character set by MySQL command "status" (change file `my.ini`):
 {{{
 Server characterset:    latin1
 Db     characterset:    latin1
