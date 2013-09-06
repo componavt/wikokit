@@ -318,7 +318,7 @@ public class LabelTableAll {
     }
     
     /** Prints statistics about only regional context labels found by parser
-     * (LabelCategory = regional).
+     * (LabelCategory = regional), skip 'length' column.
      */
     private static void printRegionalLabelsFoundByParser (
                         Map<Label, ObjectWithWords> m_source_n)
@@ -326,9 +326,11 @@ public class LabelTableAll {
         System.out.println("\n=== Regional labels found by parser ===");
 
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.println("! Short name !! Length !! Counter !! words");
+        System.out.println("! Short name !! Counter !! words");
 
         // print values
+        int counter = 0;
+        int total = 0;
         for(Label _label : m_source_n.keySet()) {
             ObjectWithWords s_w = m_source_n.get(_label);            
             
@@ -342,14 +344,15 @@ public class LabelTableAll {
             
             if(label_category != LabelCategory.regional) // print only regional labels
                 continue;
-
+            
+            counter ++;
+            total = total + s_w.counter;
                                                    // replace since there are problems in wiki tables
             String short_name = _label.getShortName().replace("+", "<nowiki>+</nowiki>");
             
             System.out.println("|-");
             System.out.print(
                     "|" + short_name + 
-                    "||" + _label.getShortName().length() + 
                     "||" + s_w.counter + "||" );
 
             StringBuilder sb = new StringBuilder();
@@ -361,6 +364,9 @@ public class LabelTableAll {
             System.out.println( sb.toString() );
         }
         System.out.println("|}");
+        counter --; // Unique regional labels without 'regional' label without parameter
+        System.out.println("\nUnique regional labels used in definitions: " + counter );
+        System.out.println("\nTotal regional labels used in definitions: " + total );
     }
     
     
