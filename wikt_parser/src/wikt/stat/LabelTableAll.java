@@ -364,7 +364,7 @@ public class LabelTableAll {
             System.out.println( sb.toString() );
         }
         System.out.println("|}");
-        counter --; // Unique regional labels without 'regional' label without parameter
+        counter --; // Unique regional labels without [empty 'regional' label, i.e. whithout regions]
         System.out.println("\nUnique regional labels used in definitions: " + counter );
         System.out.println("\nTotal regional labels used in definitions: " + total );
     }
@@ -398,6 +398,9 @@ public class LabelTableAll {
 
         int n_label_meaning = Statistics.Count(wikt_parsed_conn, "label_meaning");
         System.out.println("\nTotal labels used in definitions (meanings): " + n_label_meaning );
+        
+        int n_meaning = Statistics.countDistinct(wikt_parsed_conn, "label_meaning", "meaning_id");
+        System.out.println("\nTotal definitions with labels: " + n_meaning );
         
         Map<LanguageType, Integer> m = LabelTableAll.countLabels(wikt_parsed_conn);
         wikt_parsed_conn.Close();

@@ -113,6 +113,39 @@ public class Statistics {
         
     }
     
+    /** Gets number of distinct values of given field in the table.<br><br> 
+     * SELECT COUNT(DISTINCT field_name) FROM table_name;
+     *
+     * @return -1 if database is not available
+     */
+    public static int countDistinct(Connect connect, String table_name, String field_name) {
+        
+        if(null==connect || null==connect.conn)
+            return -1;
+        
+        StringBuilder str_sql = new StringBuilder();
+        int result = 0;
+        try {
+            Statement s = connect.conn.createStatement ();
+            try {
+                str_sql.append("SELECT COUNT(DISTINCT ").append(field_name);
+                str_sql.append(") AS result FROM ").append(table_name);
+                ResultSet rs = s.executeQuery(str_sql.toString());
+                try {
+                    if (rs.next ())
+                        result = rs.getInt("result");
+                } finally {
+                    rs.close();
+                }
+            } finally {
+                s.close();
+            }
+        } catch(SQLException ex) {
+            System.out.println("SQLException (Statistics.countDistinct()): sql='" + str_sql + "' " + ex.getMessage());
+        }
+        return result;
+    }
+    
     /** Gets sum of elements of some field in the table.<br><br> 
      * SELECT SUM(field_name) FROM table_name;
      *
@@ -143,7 +176,7 @@ public class Statistics {
                 s.close();
             }
         } catch(SQLException ex) {
-            System.out.println("SQLException (Statistics.java Count()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (Statistics.Sum()): sql='" + str_sql + "' " + ex.getMessage());
         }
         return sum;
     }
