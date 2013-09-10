@@ -64,7 +64,8 @@ public class LabelCategoryRu extends LabelCategoryLocal {
         return name2category.get(name);
     }
 
-    public static String get (LabelCategory lcat) {
+    /** Get's local name of category, i.e. Russian names of categories for LabelCategoryRu. */
+    public static String getName (LabelCategory lcat) {
 
         String s = category2name.get(lcat);
         if(null == s)
@@ -103,12 +104,12 @@ public class LabelCategoryRu extends LabelCategoryLocal {
         grammatical = new LabelCategoryRu("грамматические пометы‎", LabelCategory.grammatical);
         
         period = new LabelCategoryRu("временные пометы‎", LabelCategory.period); // virtual, absent in ruwikt
-        qualifier = new LabelCategoryRu("дополняющие пометы‎", LabelCategory.period); // virtual, absent in ruwikt
+        qualifier = new LabelCategoryRu("дополняющие пометы‎", LabelCategory.qualifier); // virtual, absent in ruwikt
 
-        regional = new LabelCategoryRu("пометы языковой принадлежности", LabelCategory.period);
-        usage = new LabelCategoryRu("стилистические пометы‎", LabelCategory.period);
+        regional = new LabelCategoryRu("пометы языковой принадлежности", LabelCategory.regional);
+        usage = new LabelCategoryRu("стилистические пометы‎", LabelCategory.usage);
         
-        topical = new LabelCategoryRu("пометы предметных областей‎", LabelCategory.period);
+        topical = new LabelCategoryRu("пометы предметных областей‎", LabelCategory.topical);
         
         computing = new LabelCategoryRu("компьютерные ‎пометы‎", LabelCategory.computing); // virtual, absent in ruwikt
         games = new LabelCategoryRu("‎игровые ‎пометы‎", LabelCategory.games); // virtual, absent in ruwikt

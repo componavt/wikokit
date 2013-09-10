@@ -20,4 +20,5 @@ public class LabelCategoryLocal {
 
     /** LabelCategory corresponding to this name, e.g. LabelCategory.grammatical */
     protected LabelCategory category;
+    
 }
