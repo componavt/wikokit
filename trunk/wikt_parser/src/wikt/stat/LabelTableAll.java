@@ -31,14 +31,13 @@ import wikt.stat.printer.CommonPrinter;
 /** Context labels statistics in the database of the parsed Wiktionary. */
 public class LabelTableAll {
     
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     
     /** Number of labels per language. */
     private static Map<LanguageType, Integer> m_lang_n = new HashMap<LanguageType, Integer>();
 
     /** Number of meanings for each label: <label, example_words and counter). */
     private static Map<Label, ObjectWithWords> m_label_n = new HashMap<Label, ObjectWithWords>();
-    
     private static int MAX_EXAMPLE_WORDS = 3;
     
     
@@ -99,7 +98,7 @@ public class LabelTableAll {
     } // eo class ObjectWithWords
     
     
-    /** Counts number of quotes, authors, sources,...
+    /** Counts number of labels, category_labels (m_category_n),...
      * by selecting all records from the table 'quote' from the database of the parsed Wiktionary.<br><br>
      * SELECT * FROM quote;
      *
@@ -369,6 +368,55 @@ public class LabelTableAll {
         System.out.println("\nTotal regional labels used in definitions: " + total );
     }
     
+    /** Calculates number of categories of labels, read data from m_source_n,
+     * prints result to table "Label categories"
+     */
+    private static void calcAndPrintLabelCategories (
+                        Map<Label, ObjectWithWords> m_source_n)
+    {
+
+        /** Total number of label categories: <label category, total number). */
+        Map<LabelCategory, Integer> m_category_n = new HashMap<LabelCategory, Integer>();
+                
+
+        // 1. sum labels for each category
+        for(Label _label : m_source_n.keySet()) {
+            ObjectWithWords s_w = m_source_n.get(_label);
+            
+            LabelEn linked_label_en = _label.getLinkedLabelEn();
+            if(null == linked_label_en)
+                continue;
+            
+            LabelCategory lc = linked_label_en.getCategory();
+            if(null == lc)
+                continue;
+            
+            if(m_category_n.containsKey(lc) ) {
+                    int n = m_category_n.get(lc);
+                    m_category_n.put(lc, n + s_w.counter);
+                } else
+                    m_category_n.put(lc, s_w.counter);
+        }
+        
+        // 2. print table
+        System.out.println("\n=== Label categories ===");
+        System.out.println("\n Number of labels for each category.\n\n");
+        
+        System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
+        System.out.println("! Category !! Parent category !! Number");
+        
+        for(LabelCategory _cat : m_category_n.keySet()) {
+            int n = m_category_n.get( _cat );
+            
+            System.out.println("|-");
+            System.out.print(
+                    "|" + _cat.getName() + 
+                    "||" + _cat.getParent().getName() + 
+                    "||" + n );
+        }
+        System.out.println("|}");
+    }
+    
     
     public static void main(String[] args) {
 
@@ -409,10 +457,12 @@ public class LabelTableAll {
         CommonPrinter.printSomethingPerLanguage(native_lang, m);
 
         /** Number of using labels in meanings (definitions) */
-        LabelTableAll.printLabelsAddedByHand(m_label_n);
+/*        LabelTableAll.printLabelsAddedByHand(m_label_n);
         LabelTableAll.printLabelsFoundByParser(m_label_n);
         LabelTableAll.printRegionalLabelsFoundByParser(m_label_n);
-        
+*/
+        LabelTableAll.calcAndPrintLabelCategories(m_label_n);
+                
         //System.out.println("\nThere are quotes in " + m.size() + " languages.");
         CommonPrinter.printFooter();
     }
