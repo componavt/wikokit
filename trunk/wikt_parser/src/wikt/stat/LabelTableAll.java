@@ -17,7 +17,9 @@ import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.Statistics;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
+import wikokit.base.wikt.constant.LabelCategoryLocal;
 import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.ru.name.LabelCategoryRu;
 import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TLangPOS;
@@ -31,7 +33,7 @@ import wikt.stat.printer.CommonPrinter;
 /** Context labels statistics in the database of the parsed Wiktionary. */
 public class LabelTableAll {
     
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     
     /** Number of labels per language. */
     private static Map<LanguageType, Integer> m_lang_n = new HashMap<LanguageType, Integer>();
@@ -372,7 +374,8 @@ public class LabelTableAll {
      * prints result to table "Label categories"
      */
     private static void calcAndPrintLabelCategories (
-                        Map<Label, ObjectWithWords> m_source_n)
+                        Map<Label, ObjectWithWords> m_source_n,
+                        LanguageType wikt_lang)
     {
 
         /** Total number of label categories: <label category, total number). */
@@ -400,16 +403,26 @@ public class LabelTableAll {
         
         // 2. print table
         System.out.println("\n=== Label categories ===");
-        System.out.println("\n Number of labels for each category.\n\n");
+        System.out.println("\nNumber of labels for each label's category.\n");
+        
+        // + translation of label category into Russian
+        String add_header = ""; 
+        if(wikt_lang == LanguageType.ru)
+            add_header = "! in Russian !";
         
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.println("! Category !! Parent category !! Number");
+        System.out.println(add_header+"! Category !! Parent category !! Number");
         
         for(LabelCategory _cat : m_category_n.keySet()) {
             int n = m_category_n.get( _cat );
             
+            String add_translation = ""; 
+            if(wikt_lang == LanguageType.ru)
+                add_translation = "|"+LabelCategoryRu.getName(_cat)+"|";
+
             System.out.println("|-");
-            System.out.print(
+            System.out.println(
+                    add_translation +
                     "|" + _cat.getName() + 
                     "||" + _cat.getParent().getName() + 
                     "||" + n );
@@ -434,6 +447,8 @@ public class LabelTableAll {
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
         // ? TRelationType.createFastMaps(wikt_parsed_conn);
+        
+        LabelCategoryLocal temp0 = LabelCategoryRu.computing; // let's initialize maps in LabelCategoryRu class
         TLabelCategory.createFastMaps(wikt_parsed_conn);
         
         Label temp1 = LabelEn.Acadia; // let's initialize maps in LabelEn class
@@ -457,11 +472,11 @@ public class LabelTableAll {
         CommonPrinter.printSomethingPerLanguage(native_lang, m);
 
         /** Number of using labels in meanings (definitions) */
-/*        LabelTableAll.printLabelsAddedByHand(m_label_n);
+        LabelTableAll.printLabelsAddedByHand(m_label_n);
         LabelTableAll.printLabelsFoundByParser(m_label_n);
         LabelTableAll.printRegionalLabelsFoundByParser(m_label_n);
-*/
-        LabelTableAll.calcAndPrintLabelCategories(m_label_n);
+
+        LabelTableAll.calcAndPrintLabelCategories(m_label_n, native_lang);
                 
         //System.out.println("\nThere are quotes in " + m.size() + " languages.");
         CommonPrinter.printFooter();
