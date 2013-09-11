@@ -370,10 +370,10 @@ public class LabelTableAll {
         System.out.println("\nTotal regional labels used in definitions: " + total );
     }
     
-    /** Calculates number of categories of labels, read data from m_source_n,
+    /** Calculates number of categories of labels (only added by hand), read data from m_source_n,
      * prints result to table "Label categories"
      */
-    private static void calcAndPrintLabelCategories (
+    private static void calcAndPrintAddedByHandLabelCategories (
                         Map<Label, ObjectWithWords> m_source_n,
                         LanguageType wikt_lang)
     {
@@ -403,7 +403,8 @@ public class LabelTableAll {
         
         // 2. print table
         System.out.println("\n=== Label categories ===");
-        System.out.println("\nNumber of labels for each label's category.\n");
+        System.out.println("\nNumber of labels for each label's category.");
+        System.out.println("\nThese labels were added by hand only, since labels added automatically don't have label categories (except regional labels in Russian Wiktionary).\n");
         
         // + translation of label category into Russian
         String add_header = ""; 
@@ -413,6 +414,7 @@ public class LabelTableAll {
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         System.out.println(add_header+"! Category !! Parent category !! Number");
         
+        int total = 0;
         for(LabelCategory _cat : m_category_n.keySet()) {
             int n = m_category_n.get( _cat );
             
@@ -426,8 +428,10 @@ public class LabelTableAll {
                     "|" + _cat.getName() + 
                     "||" + _cat.getParent().getName() + 
                     "||" + n );
+            total += n;
         }
         System.out.println("|}");
+        System.out.println("\nTotal labels added by hand (with categories): " + total );
     }
     
     
@@ -476,7 +480,7 @@ public class LabelTableAll {
         LabelTableAll.printLabelsFoundByParser(m_label_n);
         LabelTableAll.printRegionalLabelsFoundByParser(m_label_n);
 
-        LabelTableAll.calcAndPrintLabelCategories(m_label_n, native_lang);
+        LabelTableAll.calcAndPrintAddedByHandLabelCategories(m_label_n, native_lang);
                 
         //System.out.println("\nThere are quotes in " + m.size() + " languages.");
         CommonPrinter.printFooter();
