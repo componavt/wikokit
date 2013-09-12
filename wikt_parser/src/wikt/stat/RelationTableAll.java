@@ -1,6 +1,6 @@
 /* RelationTableAll.java - relations' statistics in the database of the parsed Wiktionary.
  *
- * Copyright (c) 2005-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2005-2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 
