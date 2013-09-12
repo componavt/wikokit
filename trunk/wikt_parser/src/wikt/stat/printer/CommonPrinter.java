@@ -56,27 +56,28 @@ public class CommonPrinter {
                         Map<LanguageType,Integer> m_lang_entries_number)
     {
         // print header line
-        System.out.println("=== Number of relations per languge ===");
+        System.out.println("=== Number of relations per language ===");
 
         System.out.println("\n'''Number of entries''' is a number of (Language & POS level) entries per language. E.g. the Wiktionary article \"[[:en:rook|rook]]\" contains three English and two Dutch entries of Part Of Speech level.");
         System.out.println("\n'''Total''' is a total number of relations, i.e. synonyms + antonyms + etc...\n");
         
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.print("! Language name || Language code || ");
+        System.out.println("! Language name");
+        System.out.println("! Template");
 
         if(LanguageType.en != native_lang)
-            System.out.print("in " + native_lang.getName() + " ||");
+            System.out.println("! in " + native_lang.getName());
 
-        System.out.print("Number of entries || ");
+        System.out.println("! Number of entries");
 
         //Collection<Relation> all_rel = Relation.getAllRelations();
         Relation[] all_rel = {  Relation.synonymy,  Relation.antonymy,
                                 Relation.hypernymy, Relation.hyponymy,
                                 Relation.holonymy,  Relation.meronymy};
         
-        System.out.print(" total"); // " Number of semantic relations"
+        System.out.println("! total"); // " Number of semantic relations"
         for(Relation r : all_rel) {
-            System.out.print(" || " + r.toString());
+            System.out.println("! " + r.toString());
         }
 
         // print values
@@ -86,14 +87,15 @@ public class CommonPrinter {
             else {*/
 
                 //System.out.print("|| " + lang.getName() + " || " + lang.getCode());
-            System.out.println("\n|-\n! " + lang.getName() + " || " + lang.getCode());
+            System.out.println("|-");
+            System.out.print("|" + lang.getName() + "||{{" + lang.getCode() + "}}");
             if(LanguageType.en != native_lang) {
                 String local_name = "";
                 if (lang.hasTranslation(native_lang))
                     local_name = lang.translateTo(native_lang);
-                System.out.print(" || " + local_name);
+                System.out.print("||" + local_name);
             }
-            System.out.print(" || " + m_lang_entries_number.get(lang));
+            System.out.print("||" + m_lang_entries_number.get(lang));
 
 //|-
 //! Abaza            
@@ -102,15 +104,16 @@ public class CommonPrinter {
             int total = 0; // number of relations for one language: synonyms + antonyms + ...
             for(Relation r : all_rel)
                 total += (rel_n.containsKey(r) ? rel_n.get(r) : 0);
-            System.out.print("|| " + total);
+            System.out.print("||" + total);
 
             for(Relation r : all_rel) {
                 int n = rel_n.containsKey(r) ? rel_n.get(r) : 0;
-                System.out.print(" || " + n);
+                System.out.print("||" + n);
                 total += n;
             }
+            System.out.println();
         }
-        System.out.println("\n|}");
+        System.out.println("|}");
     }
 
     /** Prints statistics about number of words per number of relation types in Wiktionary.
@@ -130,7 +133,8 @@ public class CommonPrinter {
 
 
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.print("! Number of relation types || Number of words ||");
+        System.out.println("! Number of relation types");
+        System.out.println("! Number of words");
 
         //Collection<Relation> all_rel = Relation.getAllRelations();
         Relation[] all_rel = {  Relation.synonymy,  Relation.antonymy,
@@ -140,35 +144,37 @@ public class CommonPrinter {
                                 Relation.otherwise_related
         };
 
-        System.out.print(" total"); // " Number of semantic relations"
+        System.out.println("! total"); // " Number of semantic relations"
         for(Relation r : all_rel)
-            System.out.print(" || " + r.toString());
+            System.out.println("! " + r.toString());
 
         for(int i=1; i < rel_type_histogram.length; i++) {
-            System.out.println("\n|-\n! " + i + " || " + rel_type_histogram[i]);
+            System.out.println("|-");
+            System.out.print("|" + i + "||" + rel_type_histogram[i]);
 //|-
 //! Abaza
 
             Map<Relation,Integer> rel_n = m_relation_type_number[i];
 
             if(null == rel_n) {
-                System.out.print(" || 0");
+                System.out.print("||0");
                 for(Relation r : all_rel)
-                    System.out.print(" || 0");
+                    System.out.print("||0");
 
             } else {
 
                 int total = 0; // number of relations for one language: synonyms + antonyms + ...
                 for(Relation r : all_rel)
                     total += (rel_n.containsKey(r) ? rel_n.get(r) : 0);
-                System.out.print("|| " + total);
+                System.out.print("||" + total);
 
                 for(Relation r : all_rel) {
                     int n = rel_n.containsKey(r) ? rel_n.get(r) : 0;
-                    System.out.print(" || " + n);
+                    System.out.print("||" + n);
                     total += n;
                 }
             }
+            System.out.println();
         }
         System.out.println("\n|}");
     }
@@ -197,7 +203,8 @@ public class CommonPrinter {
         System.out.println("\nOnly the first " + max_values_to_print + " rows are presented in the table.");
 
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.print("! Number of relations || Number of words");
+        System.out.println("! Number of relations");
+        System.out.println("! Number of words");
 
         int max = Math.min(rel_histogram.length, max_values_to_print);
         for(int i=0; i<max; i++) {
@@ -208,9 +215,10 @@ public class CommonPrinter {
                 continue;
 
                 //System.out.print("|| " + lang.getName() + " || " + lang.getCode());
-            System.out.print("\n|-\n! " + i + " || " + n_rel);
+            System.out.println("|-");
+            System.out.println("|" + i + "||" + n_rel);
         }
-        System.out.println("\n|}");
+        System.out.println("|}");
     }
 
 
@@ -238,7 +246,12 @@ public class CommonPrinter {
                 " types of semantic relations.");
 
         System.out.println("\n{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.print("! Word || Number<br>of<br>relations || Types<br>of<br>semantic<br>relations || Number<br>of<br>meanings || POS || Language code || Language name");
+        System.out.println("! Word");
+        System.out.println("! Number<br>of<br>relations");
+        System.out.println("! Types<br>of<br>semantic<br>relations");
+        System.out.println("! Number<br>of<br>meanings");
+        System.out.println("! POS");
+        System.out.println("! Language name");
 
         for(TLangPOS lang_pos : words_rich_in_relations) {
             
@@ -255,12 +268,13 @@ public class CommonPrinter {
             if(page_title.equalsIgnoreCase("/"))
                 page_title = ":/";
 
-            System.out.print("\n|-\n|| [[" + page_title + "]] || " + n_relation +
-                    " || " + n_types_relation +
-                    " || " + n_meaning +
-                    " || " + pos + " || " + lang_code + " || " + lang_name);
+            System.out.println("|-");
+            System.out.println("|[[" + page_title + "]]||" + n_relation +
+                    "||" + n_types_relation +
+                    "||" + n_meaning +
+                    "||" + pos + "||" + lang_name);
         }
-        System.out.println("\n|}");
+        System.out.println("|}");
     }
 
 
