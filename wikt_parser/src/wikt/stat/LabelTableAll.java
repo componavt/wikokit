@@ -404,7 +404,7 @@ public class LabelTableAll {
         // 2. print table
         System.out.println("\n=== Label categories ===");
         System.out.println("\nNumber of labels for each label's category.");
-        System.out.println("\nThese labels were added by hand only, since labels added automatically don't have label categories (except regional labels in Russian Wiktionary).\n");
+        System.out.println("\nThese labels were added by hand only, since labels added automatically don't have categories (except regional labels in Russian Wiktionary).\n");
         
         // + translation of label category into Russian
         String add_header = ""; 
