@@ -36,10 +36,10 @@
 == Библиография ==
 
 === 2013 ===
+  * Sandkuhl K., Feiyu Lin, Shilov N., Smirnov A., Tarasov V., Krizhanovsky A. Logistics-as-a-service: ontology-based architecture and approach // ???, 2013. (in press).
   * Крижановский А.А., Смирнов А.В. Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря // Известия РАН. Теория и системы управления. N2, 2013, С. 53-63. [http://scipeople.com/publication/111654/ preprint]
   * A. A. Krizhanovsky, A. V. Smirnov. An approach to automated construction of a general-purpose lexical ontology based on Wiktionary. J. of Computer and Systems Sciences International, 2013, Vol. 52, No. 2, pp. 215–225. 
   * Браславский П.И., Мухин М.Ю., Ляшевская О.Н., Бонч-Осмоловская А.А., Крижановский А.А., Егоров П.В. [http://www.dialog-21.ru/digests/dialog2013/materials/pdf/BraslavskiyP_YARN.pdf YARN: начало] // Компьютерная лингвистика и интеллектуальные технологии: По материалам ежегодной Международной конференции «Диалог» (Бекасово, 29 мая — 2 июня 2013 г.). Электронная публикация. [http://www.dialog-21.ru/adx/aspx/adxGetMedia.aspx?DocID=94271dac-6c20-4e4d-bdb3-3e97bd4de101 Презентация].
-  * Sandkuhl K., Feiyu Lin, Shilov N., Smirnov A., Tarasov V., Krizhanovsky A. Logistics-as-a-service: ontology-based architecture and approach // ???, 2013. (in press).
   * Крижановский А. А. [http://it2013.petrsu.ru/publication.php Написание научно-популярных статей в Википедии как часть образовательного процесса в ПетрГУ] // Информационная среда вуза XXI века : материалы VII Международной науч.-практ. конф. (23-27 сентября 2013 г.). — Петрозаводск, 2013. — 228 с. С. 122–124. ISBN 978-5-8021-1902-0
 
 === 2012 ===
