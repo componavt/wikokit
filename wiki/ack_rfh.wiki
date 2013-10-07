@@ -35,8 +35,14 @@
 
 == Библиография ==
 
+=== 2013 ===
+  * Крижановский А.А., Смирнов А.В. Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря // Известия РАН. Теория и системы управления. N2, 2013, С. 53-63. [http://scipeople.com/publication/111654/ preprint]
+  * A. A. Krizhanovsky, A. V. Smirnov. An approach to automated construction of a general-purpose lexical ontology based on Wiktionary. J. of Computer and Systems Sciences International, 2013, Vol. 52, No. 2, pp. 215–225. 
+  * Браславский П.И., Мухин М.Ю., Ляшевская О.Н., Бонч-Осмоловская А.А., Крижановский А.А., Егоров П.В. [http://www.dialog-21.ru/digests/dialog2013/materials/pdf/BraslavskiyP_YARN.pdf YARN: начало] // Компьютерная лингвистика и интеллектуальные технологии: По материалам ежегодной Международной конференции «Диалог» (Бекасово, 29 мая — 2 июня 2013 г.). Электронная публикация. [http://www.dialog-21.ru/adx/aspx/adxGetMedia.aspx?DocID=94271dac-6c20-4e4d-bdb3-3e97bd4de101 Презентация].
+  * Sandkuhl K., Feiyu Lin, Shilov N., Smirnov A., Tarasov V., Krizhanovsky A. Logistics-as-a-service: ontology-based architecture and approach // ???, 2013. (in press).
+  * Крижановский А. А. [http://it2013.petrsu.ru/publication.php Написание научно-популярных статей в Википедии как часть образовательного процесса в ПетрГУ] // Информационная среда вуза XXI века : материалы VII Международной науч.-практ. конф. (23-27 сентября 2013 г.). — Петрозаводск, 2013. — 228 с. С. 122–124. ISBN 978-5-8021-1902-0
+
 === 2012 ===
-  * Крижановский А.А., Смирнов А.В. Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря // Известия Академии наук: Теория и системы управления. N2, 2013 (в печати)
   * Крижановский А. А., Луговая Н. Б., Круглов В. М. [http://textualheritage.org/content/view/398/188/lang,russian/ Извлечение и анализ дат произведений в корпусе цитат онлайн-словаря] // Информационные технологии и письменное наследие: материалы VI междунар. науч. конф. El'Manuscript-12 (Петрозаводск, 3-8 сентября 2012) / отв. ред. В.А.Баранов, А.Г.Варфоломеев. – Петрозаводск; Ижевск, 2012. – 328 с. – C. 137—142. ISBN 978-5-8021-1402-5. ([http://textualheritage.org/component/option,com_docman/task,doc_download/gid,290/Itemid,/lang,russian/ PDF])
   * Krizhanovsky A. [http://scipeople.ru/publication/108159/ A quantitative analysis of the English lexicon in Wiktionaries and WordNet] // International Journal of Intelligent Information Technologies (IJIIT), October-December 2012, Vol. 8, No. 4, pp. 13-22.
   * Karpov A., Kipyatkova I., Ronzhin A. [http://www.mica.edu.vn/sltu2012/files/proceedings/16.pdf Speech recognition for east slavic languages: the case of Russian] // 3rd International Workshop on Spoken Language Technologies for Under-resourced Languages, 7-9 May 2012, Cape Town, South Africa. Pp.  84-89.
