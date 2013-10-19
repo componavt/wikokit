@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 
-/** An operations with the table 'lang_pos' in MySQL wiktionary_parsed database.
+/** Operations with the table 'lang_pos' in MySQL Wiktionary parsed database.
  *
  * @see wikt.word.WPOS
  */
