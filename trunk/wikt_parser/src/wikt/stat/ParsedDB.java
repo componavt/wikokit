@@ -13,6 +13,13 @@ import wikokit.base.wikipedia.sql.Statistics;
 import wikokit.base.wikipedia.sql.Connect;
 import wikt.stat.printer.CommonPrinter;
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.LabelCategoryLocal;
+import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.ru.name.LabelCategoryRu;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
+import wikokit.base.wikt.sql.label.TLabel;
+import wikokit.base.wikt.sql.label.TLabelCategory;
 
 
 /** Base parameters (number of records) of the database of the parsed Wiktionary.
@@ -39,19 +46,33 @@ public class ParsedDB {
     }
     
     public static void main(String[] args) {
+        LanguageType native_lang;
 
         // Connect to wikt_parsed database
         Connect wikt_parsed_conn = new Connect();
 
         // Russian
-        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, LanguageType.ru);
+        native_lang = LanguageType.ru;
+        wikt_parsed_conn.Open(Connect.RUWIKT_HOST, Connect.RUWIKT_PARSED_DB, Connect.RUWIKT_USER, Connect.RUWIKT_PASS, native_lang);
 
         // English
-        //wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, LanguageType.en);
+        // native_lang = LanguageType.en;
+        // wikt_parsed_conn.Open(Connect.ENWIKT_HOST, Connect.ENWIKT_PARSED_DB, Connect.ENWIKT_USER, Connect.ENWIKT_PASS, native_lang);
         
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
         TRelationType.createFastMaps(wikt_parsed_conn);
+        
+        
+        LabelCategoryLocal temp0 = LabelCategoryRu.computing; // let's initialize maps in LabelCategoryRu class
+        TLabelCategory.createFastMaps(wikt_parsed_conn);
+        
+        Label temp1 = LabelEn.Acadia; // let's initialize maps in LabelEn class
+        Label temp2 = LabelRu.Yoruba; //                  ... in LabelRu class
+        TLabel.createFastMaps(wikt_parsed_conn, native_lang);        
+        // System.out.println("LabelEn size = " + LabelEn.getAllLabels().size());
+        // System.out.println("LabelRu size = " + LabelRu.getAllLabels().size());
+        
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Parameters of the created (parsed) Wiktionary database ==");
@@ -77,6 +98,12 @@ public class ParsedDB {
         printRowWithTableSize(wikt_parsed_conn, "meaning", "Number of meanings, one word can have several meanings / definitions.");
         printRowWithTableSize(wikt_parsed_conn, "inflection", "It is extracted from wikified word definitions, e.g. <nowiki>[[normal form|</nowiki>'''inflection'''<nowiki>]]</nowiki>");
 
+        System.out.print(empty_line);
+        printRowWithTableSize(wikt_parsed_conn, "label", "Number of unique labels.");
+        printRowWithTableSize(wikt_parsed_conn, "label_category", "Number of categories of context labels.");
+        printRowWithTableSize(wikt_parsed_conn, "label_meaning", "Number of labels used in meanings / definitions.");
+        printRowWithTableSize(wikt_parsed_conn, "label_relation", "Number of labels used in semantic relations (only in ruwikt).");
+        
         System.out.print(empty_line);
         printRowWithTableSize(wikt_parsed_conn, "quote", "Number of quotations and examples, one meaning can have several quotes.");
         printRowWithTableSize(wikt_parsed_conn, "quot_translation", "Number of translations of quotes (quote in foreign languages can have translation).");
