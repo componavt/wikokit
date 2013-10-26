@@ -115,6 +115,10 @@ The result database is ready. Let's dump it into file (just in case):
 
     * mysqldump --opt -u root -p --compatible=ansi --default-character-set=binary enwikt20110618_mean_semrel > enwikt20110618_mean_semrel.sql
 
+Turn off extended-insert with single line statements for each record which then gets processed flawlessly by the database systems:
+
+    * mysqldump --opt -u root -p --compatible=ansi --default-character-set=binary --max_allowed_packet=1M --skip-extended-insert ruwikt20130815_parsed > ruwikt20130815_parsed.sql
+
 === Usefull SQL commands ===
 
 Check the result database by SQL commands:
