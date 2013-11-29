@@ -32,7 +32,7 @@ mysql$ GRANT SELECT ON enwikt20100824.* TO javawiki@'localhost';
 
 = Machine-readable database schema =
 
-The structure (tables and relations) of the Wiktionary parsed database:
+The structure (tables and relations) of the Wiktionary parsed database (database layout):
 
 http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/wikt_parsed_empty_with_foreign_keys.png
 
