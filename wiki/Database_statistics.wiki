@@ -29,7 +29,7 @@ Time 18271.756 sec = 305 min
 
 == Parsed database ==
 
-See [http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/wikt_parsed_20090122_2.png database layout].
+See database layout in File_wikt_parsed_empty_sql.
 
 There are the following results (name of table, size of table, and my comment).
 
