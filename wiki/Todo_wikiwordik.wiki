@@ -17,7 +17,7 @@ Done:
 
 == Language, labels, foreign ==
 
-The current version of our database contains languages (names of labels, names of semantic relations, etc.) only in English.
+The current version of our database contains languages (and names of labels, names of semantic relations, etc.) only in English.
 
 The database should contain names of languages (labels, etc.) in Russian (and other languages) also.
 
