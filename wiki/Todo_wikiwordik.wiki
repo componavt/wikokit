@@ -15,6 +15,16 @@ Done:
 
 = DB layout changes =
 
+== Language, labels, foreign ==
+
+Now database contains languages (names of labels, names of semantic relations, etc.) only in English.
+
+The database should contain names of languages (labels, etc.) in Russian (and other languages) also.
+
+The short names of languages (see "Шаблон:lang" in ruwikt) should be stored as a field of the table "lang", not "label".
+
+See database layout in [File_wikt_parsed_empty_sql].
+
 == Word frequency and importance ==
 
 Start using the field `page.wiki_link_count` (now value is 0).
