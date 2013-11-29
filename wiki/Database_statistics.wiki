@@ -29,7 +29,7 @@ Time 18271.756 sec = 305 min
 
 == Parsed database ==
 
-See database layout in File_wikt_parsed_empty_sql.
+See database layout in [[File_wikt_parsed_empty_sql]].
 
 There are the following results (name of table, size of table, and my comment).
 
