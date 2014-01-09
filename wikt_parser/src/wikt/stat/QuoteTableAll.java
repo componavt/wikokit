@@ -384,6 +384,25 @@ public class QuoteTableAll {
         }
         System.out.println("\n|}");
     }
+    
+    /** Joins wiki words to one string: "[[words 1]], [[words 2]], ... [[words N]]"
+     */
+    private static String joinWikiWords (List<String> words)
+    {
+        StringBuilder s = new StringBuilder();
+    
+        boolean b_first = true;
+                
+        for(String w : words) {
+            if(b_first) {
+                b_first = false;
+            } else {
+                s.append(", ");
+            }
+            s.append("[[").append(w).append("]]");
+        }
+        return s.toString();
+    }
 
     /** Prints statistics about quote sources in Wiktionary.
      * Split names to to clusters.
@@ -421,9 +440,7 @@ public class QuoteTableAll {
                             " || " + s_w.object_wikilink +
                             " || " + s_w.counter + " || " );
 
-                    List<String> words = s_w.example_words;
-                    for(String w : words)
-                        System.out.print("[[" + w + "]], ");
+                    System.out.print(joinWikiWords( s_w.example_words ));
                 //}
             }
         }
@@ -444,10 +461,12 @@ public class QuoteTableAll {
                 System.out.print("\n|-\n| " + _name +
                         " || " + s_w.object_wikilink +
                         " || " + s_w.counter + " || " );
+                
+                System.out.print(joinWikiWords( s_w.example_words ));
 
-                List<String> words = s_w.example_words;
+                /*List<String> words = s_w.example_words;
                 for(String w : words)
-                    System.out.print("[[" + w + "]], ");
+                    System.out.print("[[" + w + "]], ");*/
             //}
         }
         System.out.println("\n|}");
@@ -472,6 +491,7 @@ public class QuoteTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of quotes in the Wiktionary parsed database ==");
+        System.out.println("\n''Last updated: summer 2013.''");
         CommonPrinter.printHeader (db_name);
 
         Map<LanguageType, Integer> m = QuoteTableAll.countQuotes(wikt_parsed_conn);
