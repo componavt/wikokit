@@ -331,10 +331,11 @@ public class TLabel {
      * @param name          full name of label
      * @param category_id  ID of label category from the table 'label_category'
      */
-    public static void insert (Connect connect,String short_name, String name, int category_id) {
+    public static int insert (Connect connect,String short_name, String name, int category_id) {
 
-        if(null == short_name || short_name.length() == 0) return;
+        if(null == short_name || short_name.length() == 0) return 0;
         
+        int result_id = 0;
         StringBuilder str_sql = new StringBuilder();
         try
         {
@@ -351,11 +352,16 @@ public class TLabel {
                 str_sql.append(category_id);
                 str_sql.append(")");
 
-                s.executeUpdate (str_sql.toString());
+                s.executeUpdate (str_sql.toString(), Statement.RETURN_GENERATED_KEYS);
+                ResultSet rs = s.getGeneratedKeys();
+                if (rs.next()){
+                    result_id = rs.getInt(1);
+                }
             }
         }catch(SQLException ex) {
             System.out.println("SQLException (wikt_parsed TLabel.insert(with category_id)):: sql='" + str_sql.toString() + "' " + ex.getMessage());
         }
+        return result_id;
     }
     
     /** Inserts record into the table 'label', gets last inserted ID.<br><br>
@@ -389,7 +395,6 @@ public class TLabel {
                 if (rs.next()){
                     result_id = rs.getInt(1);
                 }
-                
             }
         }catch(SQLException ex) {
             System.out.println("SQLException (wikt_parsed TLabel.insert(without category_id)):: sql='" + str_sql.toString() + "' " + ex.getMessage());
@@ -474,8 +479,16 @@ public class TLabel {
         {
             // 1. if 'la' is new label then add 'la' to the table 'label' (label.added_by_hand = false).
             int label_id = TLabel.getIDByShortName(connect, la.getShortName(), page_title);
-            if(0 == label_id)
-                label_id = TLabel.insert (connect, la.getShortName(), la.getName());
+            if(0 == label_id) {
+                LabelCategory la_category = LabelEn.getCategoryByLabel(la);
+                if(la_category == LabelCategory.regional) {
+                    // this is new regional label found by parser (it is absent in the official regional labels list)
+                    int cat_id = TLabelCategory.getIDFast(LabelCategory.regional_automatic);
+                    label_id = TLabel.insert (connect, la.getShortName(), la.getName(), cat_id);
+                } else {
+                    label_id = TLabel.insert (connect, la.getShortName(), la.getName());
+                }
+            }
             
             // 2. add to the table 'label_meaning' the record (la.label_id, _meaning.id)
             TLabelMeaning.insert( connect, page_title, label_id, _meaning.getID());

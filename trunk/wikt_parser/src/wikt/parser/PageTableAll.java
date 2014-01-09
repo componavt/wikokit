@@ -25,7 +25,7 @@ public class PageTableAll {
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        //"dog", // temp ai    лым бор
+        "льзя", // temp ai    лым бор
 
         /*"chien", some common words, e.g. dog are absent in the db
         "rain cats and dogs",
@@ -103,6 +103,7 @@ public class PageTableAll {
         "град", "снѣгъ", "жестокий", "позаимствовавший", "позади",
         "железо", // many translations
         "casar", "mariposa", // labels
+        "льзя", // regianl labels
         "пѣти", // template:Cyrs
     };
     
