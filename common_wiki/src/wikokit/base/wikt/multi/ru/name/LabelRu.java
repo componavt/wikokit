@@ -828,7 +828,10 @@ public final class LabelRu extends LabelLocal  {
     
     public static final Label theater = new LabelRu("театр.", "театральное", LabelEn.theater);
     public static final Label textiles = new LabelRu("текст.", "текстильное", LabelEn.textiles);
+    
     public static final Label technology = new LabelRu("техн.", "техническое", LabelEn.technology);
+    public static final Label technology2 = LabelRu.addNonUniqueShortName(technology, "тех.");
+    
     public static final Label trading = new LabelRu("торг.", "торговое", LabelEn.trading);
     public static final Label transport = new LabelRu("трансп.", "транспортное", LabelEn.transport);
     

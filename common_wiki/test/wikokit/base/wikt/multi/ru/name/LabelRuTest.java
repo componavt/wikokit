@@ -54,7 +54,7 @@ public class LabelRuTest {
     public void testExtractLabelsTrimText_with_template_but_not_a_valid_label() {
         System.out.println("extractLabelsTrimText_with_template_but_not_a_valid_label");
         
-        String line = "text {{with unknown template, but it is not a valid labul}} sure";
+        String line = "text {{with unknown template, but it is not a valid labеl}} sure";
         
         Label[] _labels = NULL_LABEL_ARRAY;
         LabelsText expResult = new LabelsText(_labels, line);

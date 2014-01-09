@@ -119,8 +119,10 @@ public class LabelCategory {
             grammatical, 
             period,
             qualifier,
-            regional, 
+            regional,
             usage,
+            
+            regional_automatic, // region labels found automatically by parser, they are not listed in the parser code
             
             topical,
             computing,
@@ -144,6 +146,8 @@ public class LabelCategory {
         qualifier   = new LabelCategory("qualifier", LabelCategory.root);
         regional    = new LabelCategory("regional", LabelCategory.root);
         usage       = new LabelCategory("usage", LabelCategory.root);
+        
+        regional_automatic = new LabelCategory("regional automatic", LabelCategory.regional);
         
         topical     = new LabelCategory("topical", LabelCategory.root);
         computing   = new LabelCategory("computing", LabelCategory.topical);

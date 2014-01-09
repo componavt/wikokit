@@ -28,7 +28,6 @@ import wikokit.base.wikt.util.WikiText;
 import wikokit.base.wikipedia.language.LanguageType;
 
 import java.util.Map;
-import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.sql.label.TLabel;
 import wikokit.base.wikt.sql.quote.TQuote;
 
