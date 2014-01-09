@@ -83,7 +83,7 @@ public class RelationTableAll {
         int n_unknown_lang_pos = 0; // relations which belong to words with unknown language and POS
 
         int n_total = Statistics.Count(wikt_parsed_conn, "relation");
-        //System.out.println("Total relations: " + n_total);
+        System.out.println("Total relations: " + n_total);
         t_start = System.currentTimeMillis();
 
         Map<LanguageType, Map<Relation,Integer>> m_lang_rel_n = new HashMap<LanguageType, Map<Relation,Integer>>();

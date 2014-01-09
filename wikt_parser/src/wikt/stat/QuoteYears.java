@@ -30,7 +30,7 @@ public class QuoteYears {
     /** SELECT `from`,`to` FROM quot_year ORDER BY `from` LIMIT 17; */
     private static int MIN_YEAR_RU = 0; // 1076; // воинъ Изборник Святослава
     
-    private static int MAX_YEAR = 2013;
+    private static int MAX_YEAR = 2014; // = current year + 1
     
     
     /** Inner class which contains quote example,
@@ -288,6 +288,7 @@ public class QuoteYears {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of years in quotes in the Wiktionary parsed database ==");
+        System.out.println("\n''Last updated: summer 2013.''");
         CommonPrinter.printHeader (db_name);
 
         
@@ -295,7 +296,7 @@ public class QuoteYears {
         OneYearQuote[] years_all_lang = QuoteYears.countYears(wikt_parsed_conn, min_year, MAX_YEAR, native_lang );
         wikt_parsed_conn.Close();
 
-        System.out.println();
+        // System.out.println();
 
         /** Number of quotes for each source: <source name, example_words and counter). */
         QuoteYears.printQuoteYears(years_all_lang, min_year, MAX_YEAR);
