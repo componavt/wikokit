@@ -461,6 +461,7 @@ public class LabelTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of context labels in the Wiktionary parsed database ==");
+        System.out.println("\n''Last updated: summer 2013.''");
         CommonPrinter.printHeader (db_name);
 
         int n_label_meaning = Statistics.Count(wikt_parsed_conn, "label_meaning");
