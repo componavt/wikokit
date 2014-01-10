@@ -26,6 +26,8 @@ public class PageTableAll {
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
         "льзя", // temp ai    лым бор
+        "тема",
+        "ђам", "đam",
 
         /*"chien", some common words, e.g. dog are absent in the db
         "rain cats and dogs",

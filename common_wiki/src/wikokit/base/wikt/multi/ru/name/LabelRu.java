@@ -117,7 +117,7 @@ public final class LabelRu extends LabelLocal  {
         
         if(null != label_prev_by_short_name)
             System.out.println("Error in LabelRu.initLabelAddedAutomatically(): duplication of label (short name)! short name='"+short_name+
-                    ". Check the maps short_name2label.");
+                    "'. Check the maps short_name2label.");
         
         short_name2label.put(short_name, label);
         label2short_name.put(label, short_name);
