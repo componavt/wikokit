@@ -345,6 +345,11 @@ public final class LabelRu extends LabelLocal  {
             {
                 String text_wo_labels = text_from_label.concat( TemplateExtractor.extractTextAfterTemplate(line, te) );
                 result = new LabelsText(labels, text_wo_labels);
+            } else {
+                if (text_before.length() >= 10){ // "# some definition and {{the label at the end of definition}}"
+                    String text_wo_labels = text_before.concat( text_from_label.concat( TemplateExtractor.extractTextAfterTemplate(line, te) ));
+                    result = new LabelsText(labels, text_wo_labels.trim());
+                }
             }
             
             //if(0 == te.countTemplateParameters()) { // {{zero parameters}}

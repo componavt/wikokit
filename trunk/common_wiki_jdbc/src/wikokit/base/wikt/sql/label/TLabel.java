@@ -79,7 +79,24 @@ public class TLabel {
     }
     
     
-    /** Gets all labels from the table 'label' of database. */
+    /** Gets SQL returning labels found automatically: 
+     * (1) category_id is NULL or (2) category_id = "regional automatic".
+     */
+    private static String getSQLWhereCategoryId_FoundByParser() {
+        
+        int cat_id = TLabelCategory.getIDFast(LabelCategory.regional_automatic);
+        return "WHERE category_id in (NULL, "+cat_id+")";
+    }
+    
+    private static String getSQLWhereCategoryId_AddedByHand() {
+        
+        int cat_id = TLabelCategory.getIDFast(LabelCategory.regional_automatic);
+        return "WHERE (category_id IS NOT NULL) AND (category_id <> "+cat_id+")";
+    }
+    
+    /** Gets all labels from the table 'label' of database, 
+     * which were found automatically: (1) category_id is NULL or (2) category_id = "regional automatic".
+     */
     public static Collection<Label> getLabelsFoundByParserFromDatabase(Connect wikt_parsed_conn, 
                                                     LanguageType native_lang) {
         
@@ -90,7 +107,9 @@ public class TLabel {
         try {
             s = wikt_parsed_conn.conn.createStatement();
             StringBuilder str_sql = new StringBuilder();
-            str_sql.append("SELECT short_name FROM label WHERE category_id is NULL");
+            
+            str_sql.append("SELECT short_name FROM label ");
+            str_sql.append( TLabel.getSQLWhereCategoryId_FoundByParser() );
             
             s.executeQuery (str_sql.toString());
             rs = s.getResultSet ();
@@ -251,7 +270,7 @@ public class TLabel {
     
     /** Counts number of labels added by hand. <br><br>
      *
-     * SELECT COUNT(*) FROM label WHERE category_id is NOT NULL;
+     * SELECT COUNT(*) FROM label WHERE category_id correspond to labels added by hand;
      * 
      * @return 0 means error
      **/
@@ -260,20 +279,23 @@ public class TLabel {
         Statement s = null;
         ResultSet rs= null;
         int size = 0;
-        String str_sql = null;
+        StringBuilder str_sql = new StringBuilder();
 
         if(null==connect || null==connect.conn)
             return 0;
 
         try {
             s = connect.conn.createStatement ();
-            str_sql = "SELECT COUNT(*) AS size FROM label WHERE category_id is NOT NULL";
-            rs = s.executeQuery (str_sql);
+            
+            str_sql.append("SELECT COUNT(*) AS size FROM label ");
+            str_sql.append( TLabel.getSQLWhereCategoryId_AddedByHand() );
+            
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
                 size = rs.getInt("size");
             
         } catch(SQLException ex) {
-            System.out.println("SQLException (TLabel.countLabelsAddedByHand()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (TLabel.countLabelsAddedByHand()): sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {
                 try { rs.close();
@@ -289,7 +311,7 @@ public class TLabel {
     
     /** Counts number of labels found by parser (automatically). <br><br>
      *
-     * select COUNT(*) FROM label WHERE category_id is NULL;
+     * select COUNT(*) FROM label WHERE category_id was found by parser;
      * 
      * @return 0 means error
      **/
@@ -298,20 +320,23 @@ public class TLabel {
         Statement s = null;
         ResultSet rs= null;
         int size = 0;
-        String str_sql = null;
+        StringBuilder str_sql = new StringBuilder();
 
         if(null==connect || null==connect.conn)
             return 0;
 
         try {
             s = connect.conn.createStatement ();
-            str_sql = "SELECT COUNT(*) AS size FROM label WHERE category_id is NULL";
-            rs = s.executeQuery (str_sql);
+            
+            str_sql.append("SELECT COUNT(*) AS size FROM label ");
+            str_sql.append( TLabel.getSQLWhereCategoryId_FoundByParser() );
+            
+            rs = s.executeQuery (str_sql.toString());
             if (rs.next ())
                 size = rs.getInt("size");
             
         } catch(SQLException ex) {
-            System.out.println("SQLException (TLabel.countLabelsAddedByHand()): sql='" + str_sql + "' " + ex.getMessage());
+            System.out.println("SQLException (TLabel.countLabelsAddedByHand()): sql='" + str_sql.toString() + "' " + ex.getMessage());
         } finally {
             if (rs != null) {
                 try { rs.close();
@@ -462,7 +487,7 @@ public class TLabel {
     }
     
     /** Stores context labels related to this meaning into table:
-     * 'label_meaning'. New labels will be stored to the table 'label' automatically (added_by_hand = false).
+     * 'label_meaning'. New labels will be stored to the table 'label' automatically.
      *
      * @param page_title    word described in this article
      * @param _meaning      corresponding record in table 'meaning' to this relation
