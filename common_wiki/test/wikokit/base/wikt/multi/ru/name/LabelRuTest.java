@@ -307,6 +307,31 @@ public class LabelRuTest {
     
     
     // ///////////////////////////////////////////////////////////
+    // extractFirstContextLabel
+    
+    // Extraction of label(s) from the end of definition:
+    // e.g. "# some definition and {{the label at the end of definition}}"
+    @Test
+    public void testExtractFirstContextLabel_from_the_end_of_definition() {
+        System.out.println("testExtractFirstContextLabel_from_the_end_of_definition");
+        
+        String line        = "some definition {{помета|the label}} end ";
+        String result_line = "some definition  end";
+                
+        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        assertEquals( result.getText(), result_line);
+        
+        assertEquals( 1, result.getLabels().length);
+        Label result_label = result.getLabels()[0];
+        assertEquals( "the label", result_label.getShortName());
+        assertEquals( result_label.getName().length(), 0);
+    }
+    
+    // eo extractFirstContextLabel
+    // ///////////////////////////////////////////////////////////
+    
+    
+    // ///////////////////////////////////////////////////////////
     // special templates tranforming definition text, e.g. сокр., аббр.
     
     // 1) # {{амер.}}, {{разг.|en}}, {{аббр.|en|w:Franklin Delano Roosevelt|Франклин Делано Рузвельт, 32-й президент США}}

@@ -25,10 +25,8 @@ public class PageTableAll {
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "льзя", // temp ai    лым бор
-        "тема",
-        "ђам", "đam",
-
+        // "temp word", 
+        
         /*"chien", some common words, e.g. dog are absent in the db
         "rain cats and dogs",
         "connotation",
@@ -40,8 +38,7 @@ public class PageTableAll {
         "bush dog",
         "god",
         "dog"*/
-
-        
+       
         // English Wiktionary
         "Main Page", // should be omitted
         //"dog", // empty?
@@ -105,8 +102,9 @@ public class PageTableAll {
         "град", "снѣгъ", "жестокий", "позаимствовавший", "позади",
         "железо", // many translations
         "casar", "mariposa", // labels
-        "льзя", // regianl labels
         "пѣти", // template:Cyrs
+        "льзя", // regionl labels
+        "тема", "ђам", "đam",
     };
     
     /** Selects all pages (not categories, not redirects), 
