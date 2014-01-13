@@ -324,7 +324,7 @@ public class LabelTableAll {
     private static void printRegionalLabelsFoundByParser (
                         Map<Label, ObjectWithWords> m_source_n)
     {
-        System.out.println("\n=== Regional labels found by parser ===");
+        System.out.println("\n=== Regional labels found(?) by parser ===");
 
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         System.out.println("! Short name !! Counter !! words");
@@ -343,7 +343,9 @@ public class LabelTableAll {
             if(null == label_category)
                 continue;
             
-            if(label_category != LabelCategory.regional) // print only regional labels
+            // print only regional labels
+            if(label_category != LabelCategory.regional && 
+               label_category != LabelCategory.regional_automatic)
                 continue;
             
             counter ++;

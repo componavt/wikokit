@@ -44,11 +44,15 @@ public class TLabel {
     /** Context label full name. */
     private String name;
     
-    /** Category of context label (category_id). NULL means that label_category is unknown. */
+    /** Category of context label (category_id). NULL means that label_category is unknown. 
+     * 
+     * A] The label was gathered automatically by parser if:     * 
+     * (1) category_id is NULL or (2) category_id = "regional automatic".
+     * 
+     * B] The label was added manually to the code of parser if 
+     * (1) category_id is not NULL and (2) category_id != "regional automatic".
+     */
     private TLabelCategory label_category;
-    
-    /** Weather the label was added manually to the code of wikokit, or was gathered automatically by parser. */
-    private boolean added_by_hand;
     
     /** Number of definitions with this context label. */
     private int counter;
