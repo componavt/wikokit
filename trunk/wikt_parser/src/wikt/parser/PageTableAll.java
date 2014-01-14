@@ -103,7 +103,7 @@ public class PageTableAll {
         "железо", // many translations
         "casar", "mariposa", // labels
         "пѣти", // template:Cyrs
-        "льзя", // regionl labels
+        "льзя", "grasa", // regionl labels
         "тема", "ђам", "đam",
     };
     

@@ -484,13 +484,14 @@ public final class LabelRu extends LabelLocal  {
     
     // regional - языковая принадлежность
     // //////////////////////////
+    public static final Label Avar = new LabelRu("аварск.", "аварское", LabelEn.Avar);
     public static final Label Australia = new LabelRu("австрал.", "австралийское вариант английского языка", LabelEn.Australia);
     public static final Label Albania = new LabelRu("алб.", "албанское", LabelEn.Albania);
     public static final Label Adygei = new LabelRu("адыг.", "адыгское", LabelEn.Adygei);
     public static final Label Azerbaijan = new LabelRu("азерб.", "азербайджанское", LabelEn.Azerbaijan);
     public static final Label Aymara = new LabelRu("айм.", "аймарское", LabelEn.Aymara);
     public static final Label Ainu = new LabelRu("айнск.", "айнское", LabelEn.Ainu);
-    public static final Label Alemannic = new LabelRu("алем.", "алеманское", LabelEn.Alemannic);
+    public static final Label Alemannic = new LabelRu("алем.", "алеманнское", LabelEn.Alemannic);
     public static final Label US = new LabelRu("амер.", "американский вариант английского языка", LabelEn.US);
     public static final Label England = new LabelRu("англ.", "английское", LabelEn.England);
     public static final Label Arabic = new LabelRu("арабск.", "арабское", LabelEn.Arabic);
@@ -532,6 +533,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label Spain = new LabelRu("исп.", "испанское", LabelEn.Spain);
     public static final Label Iceland = new LabelRu("исл.", "исландское", LabelEn.Iceland);
     public static final Label Italy = new LabelRu("итал.", "итальянское", LabelEn.Italy);
+    public static final Label Itelmen = new LabelRu("ительм.", "ительменское", LabelEn.Itelmen);
     public static final Label Yoruba = new LabelRu("йор.", "йоруба", LabelEn.Yoruba);
     
     public static final Label Kazakhstan = new LabelRu("казахск.", "казахское", LabelEn.Kazakhstan);
@@ -551,6 +553,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label Latin = new LabelRu("лат.", "латинское", LabelEn.Latin);
     public static final Label Latgale = new LabelRu("латг.", "латгальское", LabelEn.Latgale);
     public static final Label Latvia = new LabelRu("латышск.", "латышское", LabelEn.Latvia);
+    public static final Label Livonian = new LabelRu("лив.", "ливский", LabelEn.Livonian);
     public static final Label Lithuania = new LabelRu("литовск.", "литовское", LabelEn.Lithuania);
     public static final Label Lusatia = new LabelRu("луж.", "лужицкое", LabelEn.Lusatia);
         
@@ -604,6 +607,8 @@ public final class LabelRu extends LabelLocal  {
     public static final Label Tamil = new LabelRu("тамильск.", "тамильское", LabelEn.Tamil);
     public static final Label Tatarstan = new LabelRu("тат.", "татарское", LabelEn.Tatarstan);
     public static final Label Tat = new LabelRu("татск.", "татское", LabelEn.Tat);
+    public static final Label Tosk = new LabelRu("тоскск.", "тоскский", LabelEn.Tosk);
+    
     public static final Label Turkey = new LabelRu("тур.", "турецкое", LabelEn.Turkey);
     public static final Label Turkmenistan = new LabelRu("туркм.", "туркменское", LabelEn.Turkmenistan);
     public static final Label Turkic = new LabelRu("тюркск.", "тюркское", LabelEn.Turkic);
