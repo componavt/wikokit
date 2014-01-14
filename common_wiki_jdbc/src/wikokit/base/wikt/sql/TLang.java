@@ -282,7 +282,7 @@ public class TLang {
         int size = LanguageType.size();
         Map<String, LanguageType> code2lang = LanguageType.getAllLanguages();
 
-        List<String>list_code = new ArrayList<String>(size);
+        List<String>list_code = new ArrayList<>(size);
         for(String s : code2lang.keySet()) {
             list_code.add(s);
         }
@@ -291,7 +291,7 @@ public class TLang {
         // OK, we have list of language codes. Sorted list.
         // list_code
 
-        Map<Integer, LanguageType> id2lang = new LinkedHashMap<Integer, LanguageType>(size);    //lang_code2id = new LinkedHashMap<String, Integer>(size);
+        Map<Integer, LanguageType> id2lang = new LinkedHashMap<>(size);    //lang_code2id = new LinkedHashMap<String, Integer>(size);
         for(int id=0; id<size; id++) {
 
             String code = list_code.get(id);

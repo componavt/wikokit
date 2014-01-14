@@ -18,8 +18,11 @@ import wikokit.base.wikipedia.sql.PageTableBase;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.UtilSQL;
 import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.LabelCategory;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikt.multi.ru.name.LabelRu;
+import wikokit.base.wikt.constant.LabelCategoryLocal;
+import wikokit.base.wikt.multi.ru.name.LabelCategoryRu;
 
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TPOS;
@@ -93,6 +96,20 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         TPOS.createFastMaps(wikt_parsed_conn);
 
         TRelationType.createFastMaps(wikt_parsed_conn);
+        
+        // Russian Wiktionary
+        if(LanguageType.ru == native_lang) {
+            LabelCategoryLocal temp0 = LabelCategoryRu.computing; // let's initialize maps in LabelCategoryRu class
+        } else {
+            // English Wiktionary
+            if(LanguageType.en == native_lang) {
+                LabelCategory temp0 = LabelCategory.computing; // let's initialize maps in LabelCategory class
+            }
+        }
+        TLabelCategory.createFastMaps(wikt_parsed_conn);
+        Label temp1 = LabelEn.Acadia; // let's initialize maps in LabelEn class
+        Label temp2 = LabelRu.Yoruba; //                  ... in LabelRu class
+        TLabel.createFastMaps(wikt_parsed_conn, native_lang);
     }
 
     /** Parses the set of Wiktionary pages, 

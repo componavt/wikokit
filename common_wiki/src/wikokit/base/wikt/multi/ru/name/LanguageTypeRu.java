@@ -111,6 +111,8 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal alp = new LanguageTypeRu("Алуне", LanguageType.alp);
     public static final LanguageTypeLocal alq = new LanguageTypeRu("Алгонкинский", LanguageType.alq);
     public static final LanguageTypeLocal alr = new LanguageTypeRu("Алюторский", LanguageType.alr);
+    public static final LanguageTypeLocal als = new LanguageTypeRu("Тоскский диалект", LanguageType.als);
+    
     public static final LanguageTypeLocal alt = new LanguageTypeRu("Алтайский", LanguageType.alt);
     public static final LanguageTypeLocal am = new LanguageTypeRu("Амхарский", LanguageType.am);
     public static final LanguageTypeLocal ang = new LanguageTypeRu("Древнеанглийский", LanguageType.ang);

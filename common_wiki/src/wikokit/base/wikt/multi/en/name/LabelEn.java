@@ -423,6 +423,7 @@ public final class LabelEn extends Label {
     public static final Label AU = LabelEn.addNonUniqueShortName(Australia, "AU");
 
     public static final Label Austria = new LabelEn("Austria", "Austria", LabelCategory.regional);
+    public static final Label Avar = new LabelEn("Avar", "Avar", LabelCategory.regional); // ruwikt аварский
     public static final Label Aymara = new LabelEn("Aymara", "Aymara", LabelCategory.regional); // ruwikt аймарское
     public static final Label Azerbaijan = new LabelEn("Azerbaijan", "Azerbaijan", LabelCategory.regional); // ruwikt азейбарджанское
 
@@ -537,6 +538,7 @@ public final class LabelEn extends Label {
     public static final Label Iron = new LabelEn("Iron", "Iron dialect", LabelCategory.regional);
     public static final Label Isle_of_Mann = new LabelEn("Isle of Mann", "Manx", LabelCategory.regional);
     public static final Label Italy = new LabelEn("Italy", "Italy", LabelCategory.regional); // ruwikt итальянское
+    public static final Label Itelmen = new LabelEn("Itelmen", "Itelmen", LabelCategory.regional); // ruwikt ительменское
 
     public static final Label Jakarta = new LabelEn("Jakarta", "Jakarta", LabelCategory.regional);
     public static final Label Jamaica = new LabelEn("Jamaica", "Jamaica", LabelCategory.regional);
@@ -574,6 +576,7 @@ public final class LabelEn extends Label {
     public static final Label Lincolnshire = new LabelEn("Lincolnshire", "Lincolnshire", LabelCategory.regional);
     public static final Label Lithuania = new LabelEn("Lithuania", "Lithuania", LabelCategory.regional); // ruwikt литовское
     public static final Label Liverpool = new LabelEn("Liverpool", "Liverpudlian", LabelCategory.regional);
+    public static final Label Livonian = new LabelEn("Livonian", "Livonian", LabelCategory.regional);
     public static final Label London = new LabelEn("London", "London", LabelCategory.regional);
     public static final Label Louisiana_French = new LabelEn("Louisiana French", "Louisiana French", LabelCategory.regional);
     public static final Label Low_Prussian = new LabelEn("Low Prussian", "Low Prussian", LabelCategory.regional);
