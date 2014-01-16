@@ -105,9 +105,8 @@ public class LabelCategoryRu extends LabelCategoryLocal {
         
         period = new LabelCategoryRu("временные пометы‎", LabelCategory.period); // virtual, absent in ruwikt
         qualifier = new LabelCategoryRu("дополняющие пометы‎", LabelCategory.qualifier); // virtual, absent in ruwikt
-
-        regional = new LabelCategoryRu("пометы языковой принадлежности", LabelCategory.regional);
         usage = new LabelCategoryRu("стилистические пометы‎", LabelCategory.usage);
+        regional = new LabelCategoryRu("пометы языковой принадлежности", LabelCategory.regional);
         
         topical = new LabelCategoryRu("пометы предметных областей‎", LabelCategory.topical);
         

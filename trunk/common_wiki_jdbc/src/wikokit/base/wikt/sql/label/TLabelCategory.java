@@ -88,6 +88,23 @@ public class TLabelCategory {
         return result;
     }
     
+    /** Gets label category by ID from the table 'label_category'.<br><br>
+     *
+     * REM: the functions createFastMaps() should be run at least once,
+     * before this function execution.
+     */  
+    public static LabelCategory getLabelCategoryFast(int id) {
+        if(null == id2category) {
+            System.out.println("Error (wikt_parsed TLabelCategory.getLabelCategoryFast()):: What about calling 'createFastMaps()' before?");
+            return null;
+        }
+        if(id <= 0) {
+            // System.out.println("Error (wikt_parsed TLabelCategory.getLabelCategoryFast()):: argument id <=0, id = "+id);
+            return null;
+        }
+        return id2category.get(id);
+    }
+    
     /** Read all records from the table 'label_category',
      * fills the internal map from a table ID to a label category .<br><br>
      *

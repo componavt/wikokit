@@ -19,14 +19,20 @@ public abstract class LabelLocal extends Label {
     
     /** English Wiktionary label (LabelEn) associated with this local label (e.g. LabelRu, LabelFr, etc.). */
     protected Label label_en;
+
+    /** Category associated with this label. */
+    protected LabelCategory category;
     
     public LabelLocal(String short_name) {
         super(short_name);
+        
+        category = null;
     }
     
     protected LabelLocal(String short_name, String name, Label label_en) {
         super(short_name, name);
         this.label_en   = label_en; 
+        category = null;
     }
     
     /** Gets label itself (short name) in English. 
@@ -46,5 +52,21 @@ public abstract class LabelLocal extends Label {
     @Override
     public LabelEn getLinkedLabelEn() {
         return (LabelEn)label_en;
+    }
+    
+    /** Sets LabelCategory for LabelLocal. */
+    @Override
+    public void setCategory(LabelCategory _category) {
+        category = _category;
+    }
+    @Override
+    public LabelCategory getCategory() {
+        
+        // all except: |regional automatic||regional automatic||regional||182
+        LabelEn linked_label_en = getLinkedLabelEn();
+        if(null != linked_label_en)
+            return linked_label_en.getCategory();
+        
+        return category; // if(null != category) then category="regional automatic" labels in ruwikt
     }
 }
