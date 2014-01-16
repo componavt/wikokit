@@ -89,7 +89,7 @@ public class TLabel {
     private static String getSQLWhereCategoryId_FoundByParser() {
         
         int cat_id = TLabelCategory.getIDFast(LabelCategory.regional_automatic);
-        return "WHERE category_id in (NULL, "+cat_id+")";
+        return "WHERE category_id is NULL OR category_id="+cat_id;
     }
     
     private static String getSQLWhereCategoryId_AddedByHand() {
@@ -112,7 +112,7 @@ public class TLabel {
             s = wikt_parsed_conn.conn.createStatement();
             StringBuilder str_sql = new StringBuilder();
             
-            str_sql.append("SELECT short_name FROM label ");
+            str_sql.append("SELECT short_name, category_id FROM label ");
             str_sql.append( TLabel.getSQLWhereCategoryId_FoundByParser() );
             
             s.executeQuery (str_sql.toString());
@@ -120,15 +120,24 @@ public class TLabel {
             while (rs.next ())
             {
                 String short_name = Encodings.bytesToUTF8(rs.getBytes("short_name"));
+                LabelCategory _lc = TLabelCategory.getLabelCategoryFast( rs.getInt("category_id") );
                 
                 Label _label = null;
 
                 LanguageType l = native_lang;
                 if(l == LanguageType.ru) {
                     _label = new LabelRu(short_name);
+                    _label.setCategory(_lc);
                 } else if(l == LanguageType.en) {
-                    _label = new LabelEn(short_name);
+                    _label = new LabelEn(short_name, _lc);
                 }
+                
+                /*if(null == _lc) {
+                    _label = new LabelRu(short_name);
+                } else {
+                    _label = new LabelEn(short_name, _lc);
+                }*/
+                
                 result.add(_label);
             }
         } catch(SQLException ex) {

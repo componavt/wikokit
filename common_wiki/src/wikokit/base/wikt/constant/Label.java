@@ -78,6 +78,11 @@ public abstract class Label {
     /** Gets English Wiktionary context label (LabelEn) associated with this label (e.g. LabelRu, LabelFr, etc.). */
     abstract public LabelEn getLinkedLabelEn();
     
+    /** Sets LabelCategory for LabelLocal. */
+    abstract public void setCategory(LabelCategory _category);
+    
+    abstract public LabelCategory getCategory();
+    
     @Override
     public String toString() { return short_name; }
     

@@ -201,13 +201,34 @@ public final class LabelEn extends Label {
     }
     
     /** Gets label's category. */
-    public LabelCategory getCategory() {        
+    @Override
+    public LabelCategory getCategory() {
         return category;
+    }
+    
+    /** Sets LabelCategory for LabelLocal. */
+    @Override
+    public void setCategory(LabelCategory _category) {
+        // do nothing;
     }
     
     /** Gets label's category by label's name. */
     public static LabelCategory getCategoryByLabel(Label label_en) {        
         return label2category.get(label_en);
+    }
+    
+    /** Gets true if label was found by parser automatically, gets false if it was added to the code of parser manually.
+     * 
+     * true] The label was gathered automatically by parser if:     * 
+     * (1) category_id is NULL or (2) category_id = "regional automatic".
+     * 
+     * false] The label was added manually to the code of parser if 
+     * (1) category_id is not NULL and (2) category_id != "regional automatic".
+     */
+    public static boolean isLabelFoundByParser(Label la) {
+        
+        LabelCategory  label_category = LabelEn.getCategoryByLabel(la);
+        return null == label_category || label_category == LabelCategory.regional_automatic;
     }
     
     /** Gets all labels. */

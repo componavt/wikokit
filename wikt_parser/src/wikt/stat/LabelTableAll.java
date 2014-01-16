@@ -244,13 +244,21 @@ public class LabelTableAll {
         for(Label _label : m_source_n.keySet()) {
             ObjectWithWords s_w = m_source_n.get(_label);
             
+            if(LabelEn.isLabelFoundByParser( _label.getLinkedLabelEn()))
+                continue;
+            
+            // _label added by hand, so != null
+            LabelEn linked_label_en = _label.getLinkedLabelEn();
+            LabelCategory label_category = linked_label_en.getCategory();
+            
+            /*
             LabelEn linked_label_en = _label.getLinkedLabelEn();
             if(null == linked_label_en)
                 continue;
             
             LabelCategory label_category = linked_label_en.getCategory();
-            if(null == label_category)
-                continue;
+            if(LabelEn.isLabelFoundByParser( label_category))
+                continue;*/
 
             System.out.println("|-");
             System.out.print(
@@ -286,18 +294,13 @@ public class LabelTableAll {
         for(Label _label : m_source_n.keySet()) {
             ObjectWithWords s_w = m_source_n.get(_label);
             
-            LabelEn linked_label_en = _label.getLinkedLabelEn();
-            if(null != linked_label_en)
+            if(!LabelEn.isLabelFoundByParser( _label.getLinkedLabelEn()))
                 continue;
             
-            /*LabelCategory label_category = linked_label_en.getCategory();
-            if(null == label_category)
+            /*LabelEn linked_label_en = _label.getLinkedLabelEn();
+            if(null != linked_label_en && !isLabelFoundByParser( linked_label_en.getCategory() )) // label was added by hand
                 continue;
-            
-            LabelCategory label_category = _label.getLinkedLabelEn().getCategory();
-            if(null != label_category)
-                continue;*/
-
+            */
                                                    // replace since there are problems in wiki tables
             String short_name = _label.getShortName().replace("+", "<nowiki>+</nowiki>");
             
@@ -318,35 +321,40 @@ public class LabelTableAll {
         System.out.println("|}");
     }
     
-    /** Prints statistics about only regional context labels found by parser
-     * (LabelCategory = regional), skip 'length' column.
+    /** Prints statistics about only 
+     * (1) regional context labels added by hand (LabelCategory = regional) and
+     * (2) regional context labels found by parser (LabelCategory = "regional automatic").
      */
-    private static void printRegionalLabelsFoundByParser (
+    private static void printRegionalLabels (
                         Map<Label, ObjectWithWords> m_source_n)
     {
-        System.out.println("\n=== Regional labels found(?) by parser ===");
+        System.out.println("\n=== Regional labels ===");
 
+        System.out.println("\nRegional labels added by hand, category = \"regional\".");
+        System.out.println("\nRegional labels found by parser, category = \"regional automatic\".");
+        
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
-        System.out.println("! Short name !! Counter !! words");
+        System.out.println("! Short name !! Category !! Counter !! words");
 
         // print values
         int counter = 0;
         int total = 0;
         for(Label _label : m_source_n.keySet()) {
             ObjectWithWords s_w = m_source_n.get(_label);            
+        
+            LabelCategory lc = _label.getCategory();
             
-            LabelEn linked_label_en = _label.getLinkedLabelEn();
+            /*LabelEn linked_label_en = _label.getLinkedLabelEn();
             if(null == linked_label_en)
                 continue;
             
             LabelCategory label_category = linked_label_en.getCategory();
-            if(null == label_category)
-                continue;
-            
+            */
             // print only regional labels
-            if(label_category != LabelCategory.regional && 
-               label_category != LabelCategory.regional_automatic)
-                continue;
+            if(lc != LabelCategory.regional && 
+               lc != LabelCategory.regional_automatic)
+                  continue;
+            // at this line: label_category != null;
             
             counter ++;
             total = total + s_w.counter;
@@ -356,6 +364,7 @@ public class LabelTableAll {
             System.out.println("|-");
             System.out.print(
                     "|" + short_name + 
+                    "||" + lc + 
                     "||" + s_w.counter + "||" );
 
             StringBuilder sb = new StringBuilder();
@@ -382,19 +391,30 @@ public class LabelTableAll {
 
         /** Total number of label categories: <label category, total number). */
         Map<LabelCategory, Integer> m_category_n = new HashMap<LabelCategory, Integer>();
-                
-
+        
         // 1. sum labels for each category
         for(Label _label : m_source_n.keySet()) {
             ObjectWithWords s_w = m_source_n.get(_label);
             
-            LabelEn linked_label_en = _label.getLinkedLabelEn();
-            if(null == linked_label_en)
-                continue;
-            
-            LabelCategory lc = linked_label_en.getCategory();
+            LabelCategory lc = _label.getCategory();
             if(null == lc)
                 continue;
+            /*if(null == lc) {
+                
+                // all except: |regional automatic||regional automatic||regional||182
+                LabelEn linked_label_en = _label.getLinkedLabelEn();
+                if(null == linked_label_en)
+                    continue;
+
+                lc = linked_label_en.getCategory();
+                if(null == lc)
+                    continue;
+            }*/
+            
+            /* case 3: empty list
+            LabelCategory lc = LabelEn.getCategoryByLabel(_label);
+            if(null == lc)
+                continue;*/
             
             if(m_category_n.containsKey(lc) ) {
                     int n = m_category_n.get(lc);
@@ -406,7 +426,7 @@ public class LabelTableAll {
         // 2. print table
         System.out.println("\n=== Label categories ===");
         System.out.println("\nNumber of labels for each label's category.");
-        System.out.println("\nThese labels were added by hand only, since labels added automatically don't have categories (except regional labels in Russian Wiktionary).\n");
+        System.out.println("\nThese labels were added by hand only, since labels added automatically don't have categories (except \"regional automatic\" labels in Russian Wiktionary).\n");
         
         // + translation of label category into Russian
         String add_header = ""; 
@@ -481,7 +501,7 @@ public class LabelTableAll {
         /** Number of using labels in meanings (definitions) */
         LabelTableAll.printLabelsAddedByHand(m_label_n);
         LabelTableAll.printLabelsFoundByParser(m_label_n);
-        LabelTableAll.printRegionalLabelsFoundByParser(m_label_n);
+        LabelTableAll.printRegionalLabels(m_label_n);
 
         LabelTableAll.calcAndPrintAddedByHandLabelCategories(m_label_n, native_lang);
                 
