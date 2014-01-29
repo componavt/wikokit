@@ -106,6 +106,9 @@ public class FormOfRu extends FormOf {
                 */
             }
             
+          } else if(Label.equals(label, LabelRu.diminutive_hypocoristic)) {
+              result = "[["+template_params[1]+"]]";// template_params[0] - language code (en, de, fr...)  // template_params[1] - the word
+            
         } else if(Label.equals(label, LabelRu.action)) {
             // template_params[0] - the same as [[word]]
             // template_params[1] - meaning / definition

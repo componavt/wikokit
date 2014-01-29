@@ -1586,26 +1586,6 @@ public class LanguageType {
     public static final LanguageType kk_lat = LanguageType.addNonUniqueCode(kaz, "kk.lat");// Kazakh Latin
     // ------------ eo Kazakh
     
-    // new
-/*    // Kazakh ------------
-    public static final LanguageType kk = new LanguageType("kk", "Қазақ тілі", "Kazakh");
-    public static final LanguageType kaz     = LanguageType.addNonUniqueCode(kk, "kaz");
-
-    public static final LanguageType kk_arab = LanguageType.addNonUniqueCode(kk, "kk-arab");// Kazakh Arabic
-    public static final LanguageType kk_cyrl = LanguageType.addNonUniqueCode(kk, "kk-cyrl");// Kazakh Cyrillic
-    public static final LanguageType kk_latn = LanguageType.addNonUniqueCode(kk, "kk-latn");// Kazakh Latin
-
-    public static final LanguageType kk_cn   = LanguageType.addNonUniqueCode(kk, "kk-cn");// Kazakh (China)
-    public static final LanguageType kk_kz   = LanguageType.addNonUniqueCode(kk, "kk-kz");// Kazakh (Kazakhstan)
-    public static final LanguageType kk_tr   = LanguageType.addNonUniqueCode(kk, "kk-tr");// Kazakh (Turkey)
-
-                                     // Russian Wiktionary
-    public static final LanguageType kk_arab2 = LanguageType.addNonUniqueCode(kk, "kk.arab");// Kazakh Arabic
-    public static final LanguageType kk_cyr = LanguageType.addNonUniqueCode(kk, "kk.cyr");// Kazakh Cyrillic
-    public static final LanguageType kk_lat = LanguageType.addNonUniqueCode(kk, "kk.lat");// Kazakh Latin
-    // ------------ eo Kazakh
-*/
-
 
     public static final LanguageType kea = new LanguageType("kea", "Kabuverdianu", "Kabuverdianu");
     public static final LanguageType kea2 = LanguageType.addNonUniqueName(kea, "Cape Verdean Creole");

@@ -59,6 +59,24 @@ public class FormOfRuTest {
         assertEquals(expResult, result);
     }
     
+    // {{умласк.||ратник}} -> "[[ратник]]" + Label.diminutive_hypocoristic 
+    @Test
+    public void testTransformTemplateToText_umlask() {
+        System.out.println("transformTemplateToText_three_params");
+        
+        Label source_label = LabelEn.diminutive_hypocoristic;// умласк.
+        
+        String[] one_params = {"", "ратник"};
+        String expResult = "[[ратник]]";
+        String result = FormOfRu.transformTemplateToText(source_label, one_params);
+        assertEquals(expResult, result);
+        
+        String[] two_params = {"ru", "ратник"};
+        result = FormOfRu.transformTemplateToText(source_label, two_params);
+        assertEquals(expResult, result);
+    }
+    
+    
     // {{as ru}} -> "аналогично русскому слову"
     @Test
     public void testTransformTemplateToText_as_ru() {
@@ -334,6 +352,7 @@ public class FormOfRuTest {
         result = FormOfRu.transformTemplateToText(source_label, two_params_prosh);
         assertEquals(expResult, result);
     }
+    
     
     // *******************************
     // Категория:Грамматические пометы
