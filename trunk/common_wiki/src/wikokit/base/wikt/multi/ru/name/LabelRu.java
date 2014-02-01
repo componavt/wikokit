@@ -789,7 +789,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label forestry = new LabelRu("лес.", "лесоводство", LabelEn.forestry);
     public static final Label linguistics = new LabelRu("лингв.", "лингвистическое", LabelEn.linguistics);
     
-    public static final Label mathematics = new LabelRu("матем.", "математическое", LabelEn.mathematics);
+    public static final Label mechanical_engineering = new LabelRu("машин.", "машиностроительное", LabelEn.mechanical_engineering);
     public static final Label microbiology = new LabelRu("микробиол.", "микробиологическое", LabelEn.microbiology);
     public static final Label mechanics = new LabelRu("мех.", "механика", LabelEn.mechanics);
     public static final Label mineralogy = new LabelRu("минер.", "минералогия", LabelEn.mineralogy);
@@ -892,7 +892,7 @@ public final class LabelRu extends LabelLocal  {
     
     // mathematics
     // //////////////////////////
-    
+    public static final Label mathematics = new LabelRu("матем.", "математическое", LabelEn.mathematics);
     
     // music
     // //////////////////////////
@@ -911,7 +911,6 @@ public final class LabelRu extends LabelLocal  {
     
     // science
     // //////////////////////////
-    
     public static final Label alchemy = new LabelRu("алхим.", "алхимическое", LabelEn.alchemy);
     public static final Label anthropology = new LabelRu("антроп.", "антропологическое", LabelEn.anthropology);
     public static final Label archaeology = new LabelRu("археол.", "археология", LabelEn.archaeology);
@@ -922,8 +921,8 @@ public final class LabelRu extends LabelLocal  {
     public static final Label zoology = new LabelRu("зоол.", "зоологическое", LabelEn.zoology);
     public static final Label computer_science = new LabelRu("информ.", "информатическое", LabelEn.computer_science);
     
+    public static final Label oceanography = new LabelRu("океан.", "океанологическое", LabelEn.oceanography);
     public static final Label psychology = new LabelRu("психол.", "психология", LabelEn.psychology);
-    
     public static final Label physics = new LabelRu("физ.", "физическое", LabelEn.physics);
     
     public static final Label chemistry = new LabelRu("хим.", "химическое", LabelEn.chemistry);
