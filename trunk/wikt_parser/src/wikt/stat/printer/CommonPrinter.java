@@ -30,7 +30,7 @@ public class CommonPrinter {
 
         System.out.println("\nThe parsed database name: " + db_name +"<ref>" +
                 "This (or more recent) database would be available at the project site " +
-                "[http://code.google.com/p/wikokit wikokit], see Download section." +
+                "[http://code.google.com/p/wikokit wikokit], see Download section at page [http://whinger.krc.karelia.ru/soft/wikokit/index.html whinger.krc.karelia.ru]." +
                 "</ref>");
     }
     public static void printHeaderXML (String db_name) {

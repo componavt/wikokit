@@ -82,6 +82,21 @@ public class TLabel {
         return id2label;
     }
     
+    /** Gets label by ID from the table 'label'.<br><br>
+     * REM: createFastMaps() should be run at least once, before this function execution.
+     */
+    public static Label getLabelFast(int id) {
+        if(null == id2label) {
+            System.out.println("Error (wikt_parsed TLabel.getTLabelFast()):: What about calling 'createFastMaps()' before?");
+            return null;
+        }
+        if(id <= 0) {
+            System.out.println("Error (wikt_parsed TLabel.getTLabelFast()):: argument id <=0, id = "+id);
+            return null;
+        }
+        return id2label.get(id);
+    }
+    
     
     /** Gets SQL returning labels found automatically: 
      * (1) category_id is NULL or (2) category_id = "regional automatic".
