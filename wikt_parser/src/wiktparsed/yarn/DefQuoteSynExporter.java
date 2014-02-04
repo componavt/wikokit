@@ -1,7 +1,7 @@
 /* DefQuoteSynExporter.java - exports definition, quotations and synonyms
  * from the database of the parsed Wiktionary in YARN format.
  *
- * Copyright (c) 2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2013-2014 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 package wiktparsed.yarn;
@@ -19,8 +19,13 @@ import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.PageTableBase;
 import wikokit.base.wikipedia.sql.Statistics;
 import wikokit.base.wikt.api.WTMeaning;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.LabelCategoryLocal;
 import wikokit.base.wikt.constant.POS;
 import wikokit.base.wikt.constant.Relation;
+import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.ru.name.LabelCategoryRu;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TLangPOS;
 import wikokit.base.wikt.sql.TMeaning;
@@ -28,6 +33,9 @@ import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.TRelation;
 import wikokit.base.wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.label.TLabel;
+import wikokit.base.wikt.sql.label.TLabelCategory;
+import wikokit.base.wikt.sql.label.TLabelMeaning;
 import wikokit.base.wikt.sql.quote.TQuotRef;
 import wikokit.base.wikt.sql.quote.TQuote;
 import wikt.stat.printer.CommonPrinter;
@@ -37,7 +45,7 @@ import wikt.stat.printer.CommonPrinter;
  * @see YARN format https://github.com/xoposhiy/yarn/commit/65411750ee8f867c79cdd77bcbaf8024df2c9d63
  */
 public class DefQuoteSynExporter {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     //private static final FileWriter file;
     
     /** map for the first part of YARN file: lexicon. Map from word to "nID" */
@@ -200,7 +208,8 @@ public class DefQuoteSynExporter {
     }
     
     public static String getSynsetEntryBegin (POS pos, int synset_id, String word, 
-                                Map<String, Integer> _m_noun_word_to_id, TQuote[] quotes)
+                                Map<String, Integer> _m_noun_word_to_id, 
+                                Label[] labels, TQuote[] quotes)
     {
         String pos_prefix = getPOSOneLetterPrefix(pos);
         
@@ -214,6 +223,12 @@ public class DefQuoteSynExporter {
         else 
             sb.append("      <word ref=\"").append(pos_prefix).append(word_id).append("\">\n");
         
+        
+        // Label[] labels
+        for(Label la : labels ) {
+            sb.append("        <mark>").append(la.getShortName()).append("</mark>\n");
+            sb.append("        <mark_desc>").append(la.getName()).append("</mark_desc>\n");
+        }
         
         // todo sample: quotations
         // <sample source="В. В. Крестовский, 'Петербургские трущобы', 1867 г., НКРЯ">Мечут же карты, передѐргивают и всякие иные фокусы употребляют только главные и
@@ -316,7 +331,7 @@ public class DefQuoteSynExporter {
                 if(null == lang_pos_not_recursive)
                     continue;
                 LanguageType lang = lang_pos_not_recursive.getLang().getLanguage();
-                if(lang != LanguageType.ru) // this is our language :) 
+                if(lang != LanguageType.ru) // this is not our language :) 
                     continue;
                 
                 TPage tpage = lang_pos_not_recursive.getPage();
@@ -327,7 +342,7 @@ public class DefQuoteSynExporter {
                     continue;       // only meanings with nonempty definitions
 
                 POS p = lang_pos_not_recursive.getPOS().getPOS();
-                if(!exported_pos.contains(p))   // this is our POS :) it should be exported
+                if(!exported_pos.contains(p))   // only our POS should be exported :)
                     continue;
 
                 current_word_id ++;
@@ -350,10 +365,11 @@ public class DefQuoteSynExporter {
                         System.out.print("\n    def: " + meaning_text);
                     
                     TQuote[] quotes = TQuote.get (wikt_parsed_conn, m);
+                    Label[] labels = TLabelMeaning.get(wikt_parsed_conn, m);
 
                     current_synset_id ++;
                     StringBuilder xml_synset = new StringBuilder( DefQuoteSynExporter.
-                                                getSynsetEntryBegin (p, current_synset_id, page_title, m_noun_word_to_id, quotes));
+                                                getSynsetEntryBegin (p, current_synset_id, page_title, m_noun_word_to_id, labels, quotes));
                     
                     TRelation[] rels = TRelation.get(wikt_parsed_conn, m);
                     if(0 == rels.length)
@@ -442,6 +458,13 @@ public class DefQuoteSynExporter {
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
         TRelationType.createFastMaps(wikt_parsed_conn);
+        
+        LabelCategoryLocal temp0 = LabelCategoryRu.computing; // let's initialize maps in LabelCategoryRu class
+        TLabelCategory.createFastMaps(wikt_parsed_conn);
+        
+        Label temp1 = LabelEn.Acadia; // let's initialize maps in LabelEn class
+        Label temp2 = LabelRu.Yoruba; //                  ... in LabelRu class
+        TLabel.createFastMaps(wikt_parsed_conn, native_lang);
         
         System.out.println("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
         CommonPrinter.printHeaderXML (wikt_parsed_conn.getDBName());

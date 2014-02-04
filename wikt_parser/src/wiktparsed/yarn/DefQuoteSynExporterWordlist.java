@@ -23,8 +23,13 @@ import java.util.logging.Logger;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikt.api.WTMeaning;
+import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.LabelCategoryLocal;
 import wikokit.base.wikt.constant.POS;
 import wikokit.base.wikt.constant.Relation;
+import wikokit.base.wikt.multi.en.name.LabelEn;
+import wikokit.base.wikt.multi.ru.name.LabelCategoryRu;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TLangPOS;
 import wikokit.base.wikt.sql.TMeaning;
@@ -32,10 +37,14 @@ import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.TRelation;
 import wikokit.base.wikt.sql.TRelationType;
+import wikokit.base.wikt.sql.label.TLabel;
+import wikokit.base.wikt.sql.label.TLabelCategory;
+import wikokit.base.wikt.sql.label.TLabelMeaning;
 import wikokit.base.wikt.sql.quote.TQuote;
 import wikt.stat.printer.CommonPrinter;
 
-/** YARN format exporter
+/** YARN format exporter.
+ * Reads 22K of words from NKRYA.
  *
  * 
  * @see YARN format https://github.com/xoposhiy/yarn/commit/65411750ee8f867c79cdd77bcbaf8024df2c9d63
@@ -130,10 +139,11 @@ outerloop:
                         System.out.print("\n    def: " + meaning_text);
 
                     TQuote[] quotes = TQuote.get (wikt_parsed_conn, m);
+                    Label[]  labels = TLabelMeaning.get(wikt_parsed_conn, m);
                     
                     current_synset_id ++;
                     StringBuilder xml_synset = new StringBuilder( DefQuoteSynExporter.
-                                                getSynsetEntryBegin (p, current_synset_id, page_title, m_noun_word_to_id, quotes));
+                                                getSynsetEntryBegin (p, current_synset_id, page_title, m_noun_word_to_id, labels, quotes));
 
                     TRelation[] rels = TRelation.get(wikt_parsed_conn, m);
                     if(0 == rels.length)
@@ -232,6 +242,13 @@ outerloop:
         TLang.createFastMaps(wikt_parsed_conn);
         TPOS.createFastMaps(wikt_parsed_conn);
         TRelationType.createFastMaps(wikt_parsed_conn);
+        
+        LabelCategoryLocal temp0 = LabelCategoryRu.computing; // let's initialize maps in LabelCategoryRu class
+        TLabelCategory.createFastMaps(wikt_parsed_conn);
+        
+        Label temp1 = LabelEn.Acadia; // let's initialize maps in LabelEn class
+        Label temp2 = LabelRu.Yoruba; //                  ... in LabelRu class
+        TLabel.createFastMaps(wikt_parsed_conn, native_lang);
         
         System.out.println("<?xml version=\"1.0\" encoding=\"utf-8\" ?>");
         CommonPrinter.printHeaderXML (wikt_parsed_conn.getDBName());
