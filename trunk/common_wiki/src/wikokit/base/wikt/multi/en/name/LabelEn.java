@@ -822,6 +822,10 @@ public final class LabelEn extends Label {
     public static final Label dismissal = new LabelEn("dismissal",  "dismissal", LabelCategory.usage);
     public static final Label distorted = new LabelEn("distorted",  "distorted", LabelCategory.usage); // ruwikt искажённое
     public static final Label dysphemism = new LabelEn("dysphemism",  "dysphemism", LabelCategory.usage); // ruwikt дисфемизм
+    
+    public static final Label elevated = new LabelEn("elevated",  "elevated", LabelCategory.usage);
+    public static final Label lofty = LabelEn.addNonUniqueShortName(elevated, "lofty");
+    
     public static final Label endearing = new LabelEn("endearing",  "endearing", LabelCategory.usage);
     public static final Label ethnic_slur = new LabelEn("ethnic slur",  "ethnic slur", LabelCategory.usage);
     public static final Label euphemistic = new LabelEn("euphemistic",  "euphemistic", LabelCategory.usage);
