@@ -1,3 +1,5 @@
+<font color="red">Attention: download new files from the page [http://whinger.krc.karelia.ru/soft/wikokit/index.html]. See "External links" (left panel).</font>
+
 _Language is a city to the building of which every human being brought a stone._ /Ralph Waldo Emerson/
 
 == Wikokit - Machine-readable Wiktionary ==
@@ -80,6 +82,7 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
 == Further reading ==
 === In English ===
   * A. Krizhanovsky, A. Smirnov. [http://scipeople.com/publication/113533/ An approach to automated construction of a general-purpose lexical ontology based on Wiktionary] // Journal of Computer and Systems Sciences International, 2013, Vol. 52, No. 2, pp. 215–225.
+  * A. Smirnov, T. Levashova, A. Karpov, I. Kipyatkova, A. Ronzhin, A. Krizhanovsky, N. Krizhanovsky. [http://www.micai.org/rcs/2012_56/Analysis%20of%20the%20Quotation%20Corpus%20of%20the%20Russian%20Wiktionary.html Analysis of the quotation corpus of the Russian Wiktionary] // Research in Computing Science, Vol. 56, pp. 101-112, 2012.
   * A. Krizhanovsky. [http://www.igi-global.com/article/quantitative-analysis-english-lexicon-wiktionaries/74827 A quantitative analysis of the English lexicon in Wiktionaries and WordNet] // International Journal of Intelligent Information Technologies (IJIIT), October-December 2012, Vol. 8, No. 4, pp. 13-22. [http://scipeople.ru/publication/108159/ preprint]
   * F. Lin, A. Krizhanovsky. [http://arxiv.org/abs/1109.0732 Multilingual ontology matching based on Wiktionary data accessible via SPARQL endpoint] // In: Proceedings of the 13th Russian Conference on Digital Libraries RCDL’2011. October 19-22, Voronezh, Russia. – pp. 19-26. [http://ceur-ws.org/Vol-803/paper1.pdf link2]
   * A. A. Krizhanovsky. [http://arxiv.org/abs/1011.1368 Transformation of Wiktionary entry structure into tables and relations in a relational database schema.] Preprint. 2010.

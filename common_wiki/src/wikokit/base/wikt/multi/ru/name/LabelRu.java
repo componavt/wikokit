@@ -666,7 +666,9 @@ public final class LabelRu extends LabelLocal  {
     public static final Label abusive2 = LabelRu.addNonUniqueShortName(abusive, "бран.");
     
     public static final Label vulgar = new LabelRu("вульг.", "вульгарное",  LabelEn.vulgar);
-    public static final Label bombast = new LabelRu("высок.", "высокопарное",  LabelEn.bombast);
+    //public static final Label bombast = new LabelRu("высок.", "высокопарное",  LabelEn.bombast);
+    public static final Label elevated = new LabelRu("высок.", "высокое",  LabelEn.elevated);
+    
     public static final Label acerbity = new LabelRu("груб.", "грубое",  LabelEn.acerbity);
     public static final Label childish = new LabelRu("детск.", "детское", LabelEn.childish);
     public static final Label dialect = new LabelRu("диал.", "диалектное", LabelEn.dialect);
