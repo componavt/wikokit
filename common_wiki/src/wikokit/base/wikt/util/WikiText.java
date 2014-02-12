@@ -31,6 +31,10 @@ public class WikiText {
     /** Split by comma and semicolon */
     private final static Pattern ptrn_comma_semicolon = Pattern.compile(
             "[,;]+");
+    
+    /** Split by semicolon */
+    private final static Pattern ptrn_semicolon = Pattern.compile(
+            "[;]+");
 
     public WikiText(String _text, String _wikified_text, WikiWord[] _wiki_words) {
         text            = _text;
@@ -119,7 +123,33 @@ public class WikiText {
         return (WikiText[])wt_list.toArray(NULL_WIKITEXT_ARRAY);
     }
 
-
+    /** Parses text (split by semicolons), creates array of wiki text fragments
+     * This function should be used to split wikified list of synonyms and translations.
+     * @return empty array if there is no text.
+     */
+    public static WikiText[] createSplitBySemicolon(String page_title, String text)
+    {
+        if(0 == text.trim().length()) {
+            return NULL_WIKITEXT_ARRAY;
+        }
+        
+        String[] ww = ptrn_semicolon.split(text);   // split by comma and semicolon
+        
+        List<WikiText> wt_list = new ArrayList<WikiText>();
+        for(String w : ww) {
+            WikiText wt = WikiText.createOnePhrase(page_title, w.trim());
+            if(null != wt) {
+                wt_list.add(wt);
+            }
+        }
+        
+        if(0 == wt_list.size()) {
+            return NULL_WIKITEXT_ARRAY;
+        }
+        
+        return (WikiText[])wt_list.toArray(NULL_WIKITEXT_ARRAY);
+    }
+     
     /** Creates array of wiki words (words with hyperlinks) without any parsing.
      *
      * @param wikified_words words which are already without [[wikification]],

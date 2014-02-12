@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 import java.util.List;
 import java.util.ArrayList;
-import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.util.LabelsWikiText;
 
 /** Semantic relations of Russian Wiktionary word.
@@ -37,7 +37,7 @@ public class WRelationRu {
     //Map<Relation, WRelation[]> m = new HashMap<Relation, WRelation[]>>();
     
     // private final static Label[] NULL_LABEL_ARRAY = new Label[0];
-    private final static List<Label> NULL_LABEL_LIST = new ArrayList(0);
+    // private final static List<Label> NULL_LABEL_LIST = new ArrayList(0);
 
     private final static Map<Relation, WRelation[]> NULL_MAP_RELATION_WRELATION_ARRAY = new HashMap<Relation, WRelation[]>();
 
@@ -49,7 +49,12 @@ public class WRelationRu {
     private final static Pattern ptrn_coordinate_term = Pattern.compile("===?=?\\s*Согипонимы\\s*===?=?\\s*\\n");
     private final static Pattern ptrn_holonymy  = Pattern.compile("===?=?\\s*Холонимы\\s*===?=?\\s*\\n");
     private final static Pattern ptrn_meronymy  = Pattern.compile("===?=?\\s*Меронимы\\s*===?=?\\s*\\n");
-
+    
+    /** Two main patterns for synonyms with labels */
+    private final static Pattern ptrn_labels  = Pattern.compile("(?<pometa>[^:]+):(?<slovo>.+)");
+    private final static Pattern ptrn_labels_brackets  = Pattern.compile("(?<slovo>\\[\\[[^\\]]+\\]\\])([ ]?(\\((?<pometa>[^\\)]+)\\))?)");
+    /** Split by comma */
+    private final static Pattern ptrn_comma = Pattern.compile("[,]+");
 
     /** The begin of any list of semantic relations: "# " */
     private final static Pattern ptrn_line_start = Pattern.compile(
@@ -212,21 +217,34 @@ public class WRelationRu {
         if(text.equals("{{-}}"))
             return null;
 
-        // 2. split by semicolon and comma
-        WikiText[] wt = WikiText.createSplitByComma(page_title, text);
+        // 2. split by semicolon
+        WikiText[] wt = WikiText.createSplitBySemicolon(page_title, text);
         if(0 == wt.length) return null;
         
-        // temp solution (without labels, i.e. label's array is empty) ---------------------
-        LabelsWikiText[] lwt_array = new LabelsWikiText[wt.length];
-        int i=0;
+        // 3. get text and labels
+        List<LabelsWikiText> lwt_array = new ArrayList(0);
+
         for(WikiText _wiki_text : wt) {
-            List<Label> _labels = NULL_LABEL_LIST;
-            
-            lwt_array[i] = new LabelsWikiText(_labels, _wiki_text);
-            i++;
+            String _text = _wiki_text.getWikifiedText();
+            //check if first pattern "works"
+            Matcher demo_match = ptrn_labels.matcher(_text);
+            Matcher main_matcher;
+            //check, what variant of regexp fits
+            if(!demo_match.find())
+                main_matcher = ptrn_labels_brackets.matcher(_text);
+            else 
+                main_matcher = ptrn_labels.matcher(_wiki_text.getWikifiedText());
+            //use chosen regexp
+            while (main_matcher.find()) {
+                String _words = main_matcher.group("slovo");
+                String _labels = main_matcher.group("pometa");
+                WikiText[] wt1 = WikiText.createSplitByComma(page_title, _words);
+                for(WikiText _wiki_word : wt1) {
+                    lwt_array.add(new LabelsWikiText(LabelRu.createSplitByPattern(_labels, ptrn_comma), _wiki_word));
+                }
+            }                        
         }
-        // -------------------------------------------------------- eo temp solution
         
-        return new WRelation(null, lwt_array);
+        return new WRelation(null, lwt_array.toArray(new LabelsWikiText[lwt_array.size()]));
     }
 }

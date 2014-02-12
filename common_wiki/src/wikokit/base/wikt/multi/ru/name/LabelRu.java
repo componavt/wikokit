@@ -44,6 +44,7 @@ public final class LabelRu extends LabelLocal  {
     protected static Map<Label, Label> translation_en2local = new HashMap<Label, Label>();
     
     private final static Label[] NULL_LABEL_ARRAY = new Label[0];
+    private final static List<Label> NULL_LABEL_LIST = new ArrayList(0);
     
     
     /** Constructor for static context labels listed in this file below.
@@ -391,6 +392,34 @@ public final class LabelRu extends LabelLocal  {
             result_line = lt.getText().trim();
         
         return new LabelsText(labels, result_line);
+    }
+    
+    /** Parses text with use of some pattern, creates list of labels,
+     * e.g. text is "устар., высок." or "{{груб.|-}}".
+     * This function should be used to split list of labels taken from wikified list of synonyms.
+     * @return empty list if there is no labels.
+     */
+    public static List<Label> createSplitByPattern(String text, Pattern pattern)
+    {
+        List<Label> _labels = new ArrayList(0);
+        if(text==null || 0 == text.trim().length()) {
+            return NULL_LABEL_LIST;
+        }
+        
+        String[] ll = pattern.split(text);   // split by pattern
+        
+        for(String l : ll) {
+            l = l.trim();
+            LabelsText result = LabelRu.extractLabelsTrimText(l);
+            Label[] result_labels = result.getLabels();
+            if (result_labels.length>0) {
+                _labels.add(result_labels[0]);
+            } else {
+                _labels.add(LabelRu.getByShortName(l.trim()));
+            }                        
+        }         
+        
+        return _labels;
     }
 
 
