@@ -408,7 +408,7 @@ public class WRelationRuTest {
         assertEquals(2, labels_grad.length);// поэт., высок.
         
         assertEquals(LabelRu.poetic.getShortName(), labels_grad[0].getShortName());// поэт.
-        assertEquals(LabelRu.bombast.getShortName(), labels_grad[1].getShortName());// высок.
+        assertEquals(LabelRu.elevated.getShortName(), labels_grad[1].getShortName());// высок.
     }
     
     
@@ -476,7 +476,7 @@ public class WRelationRuTest {
         result = WRelationRu.parseOneLine(page_title, text);
         
         LabelsWikiText[] lwt_array = result.get();
-        assertEquals(4, lwt_array.length);// 1) груб., 2) переносное, грубое
+        assertEquals(2, lwt_array.length);// 1) груб., 2) переносное, грубое
         
         // 1) {{груб.|-}}: [[копыто]]
         assertEquals("копыто", lwt_array[0].getWikiText().getVisibleText());
