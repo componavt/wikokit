@@ -411,6 +411,36 @@ public class WRelationRuTest {
         assertEquals(LabelRu.elevated.getShortName(), labels_grad[1].getShortName());// высок.
     }
     
+    // # [[маскаре]] (вариант: [[маскарэ]]), [[поророка]]
+    @Test
+    public void testParseOneLine_unknown_labels_in_brackets() {
+        System.out.println("ParseOneLine_labels_in_brackets");
+        String page_title, text;
+        WRelation result;
+        Label la;
+        
+        page_title = "бор";
+        text = "# [[маскаре]] (вариант: [[маскарэ]]), [[поророка]]";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(2, lwt_array.length);
+        
+        // 1) [[маскаре]] (вариант: [[маскарэ]])
+        assertEquals("маскаре", lwt_array[0].getWikiText().getVisibleText());
+                
+        Label[] labels_maskare = lwt_array[0].getLabels();
+        assertEquals(1, labels_maskare.length);
+        la = labels_maskare[0];
+        assertEquals("вариант: [[маскарэ]]", la.getShortName());// this is unknown label
+        
+        // 2) [[поророка]]
+        assertEquals("поророка", lwt_array[1].getWikiText().getVisibleText());
+        
+        Label[] labels_pororoka = lwt_array[1].getLabels();
+        assertEquals(0, labels_pororoka.length);
+    }
     
     // # {{груб.|-}}: [[копыто]]; {{п.|-}}, {{груб.|-}}: [[ходуля|ходули]]; {{помета|частичн.}}: [[лапа]], [[щупальце]]
     @Test

@@ -51,8 +51,8 @@ public class WRelationRu {
     private final static Pattern ptrn_meronymy  = Pattern.compile("===?=?\\s*Меронимы\\s*===?=?\\s*\\n");
     
     /** Two main patterns for synonyms with labels */
-    private final static Pattern ptrn_labels  = Pattern.compile("(?<pometa>[^:]+):(?<slovo>.+)");
-    private final static Pattern ptrn_labels_brackets  = Pattern.compile("(?<slovo>\\[\\[[^\\]]+\\]\\])([ ]?(\\((?<pometa>[^\\)]+)\\))?)");
+    private final static Pattern ptrn_labels  = Pattern.compile("(?<label>[^:]+):(?<word>.+)");
+    private final static Pattern ptrn_labels_brackets  = Pattern.compile("(?<word>\\[\\[[^\\]]+\\]\\])([ ]?(\\((?<label>[^\\)]+)\\))?)");
     /** Split by comma */
     private final static Pattern ptrn_comma = Pattern.compile("[,]+");
 
@@ -236,8 +236,8 @@ public class WRelationRu {
                 main_matcher = ptrn_labels.matcher(_wiki_text.getWikifiedText());
             //use chosen regexp
             while (main_matcher.find()) {
-                String _words = main_matcher.group("slovo");
-                String _labels = main_matcher.group("pometa");
+                String _words = main_matcher.group("word");
+                String _labels = main_matcher.group("label");
                 WikiText[] wt1 = WikiText.createSplitByComma(page_title, _words);
                 for(WikiText _wiki_word : wt1) {
                     lwt_array.add(new LabelsWikiText(LabelRu.createSplitByPattern(_labels, ptrn_comma), _wiki_word));
