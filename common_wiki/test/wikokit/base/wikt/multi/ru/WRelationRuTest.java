@@ -157,7 +157,7 @@ public class WRelationRuTest {
         assertEquals(3, r.length);
         LabelsWikiText[] synonym_row_0 = r[0].get();
         assertEquals(1, synonym_row_0.length);
-        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("кандия (церк.)"));
+        assertTrue(synonym_row_0[0].getWikiText().getVisibleText().equalsIgnoreCase("кандия"));
         assertTrue(synonym_row_0[0].getWikiText().getWikiWords()[0].getWordLink().equalsIgnoreCase("кандия"));
 
         // antonymy
