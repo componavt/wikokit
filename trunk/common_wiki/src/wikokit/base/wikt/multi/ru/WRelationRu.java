@@ -51,7 +51,9 @@ public class WRelationRu {
     private final static Pattern ptrn_meronymy  = Pattern.compile("===?=?\\s*Меронимы\\s*===?=?\\s*\\n");
     
     /** Two main patterns for synonyms with labels */
-    private final static Pattern ptrn_labels  = Pattern.compile("(?<label>[^:]+):(?<word>.+)");
+    // private final static Pattern ptrn_labels  = Pattern.compile("(?<label>[^:]+):(?<word>.+)");
+    private final static Pattern ptrn_labels  = Pattern.compile("^(?<label>[^:(]+):(?<word>.+)");
+    
     private final static Pattern ptrn_labels_brackets  = Pattern.compile("(?<word>\\[\\[[^\\]]+\\]\\])([ ]?(\\((?<label>[^\\)]+)\\))?)");
     /** Split by comma */
     private final static Pattern ptrn_comma = Pattern.compile("[,]+");
@@ -230,10 +232,11 @@ public class WRelationRu {
             Matcher demo_match = ptrn_labels.matcher(_text);
             Matcher main_matcher;
             //check, what variant of regexp fits
-            if(!demo_match.find())
-                main_matcher = ptrn_labels_brackets.matcher(_text);
-            else 
+            if(demo_match.find())   // labels before word: word1, word2;
                 main_matcher = ptrn_labels.matcher(_wiki_text.getWikifiedText());
+            else                    // word (label after word, label2, label3);
+                main_matcher = ptrn_labels_brackets.matcher(_text);
+                
             //use chosen regexp
             while (main_matcher.find()) {
                 String _words = main_matcher.group("word");

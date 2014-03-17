@@ -52,7 +52,9 @@ public abstract class Label {
     }
     
     /** Constructor for new context labels which are extracted by parser 
-     * from the template {{context|new label}} and added automatically,
+     * (1) from the template {{context|new label}} or
+     * (2) from semantic relations' labels (word (label), in ruwikt)
+     * and added automatically,
      * these new labels are not listed in the LabelEn.
      * 
      * @param short_name name of the found of context label

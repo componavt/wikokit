@@ -67,7 +67,9 @@ public final class LabelRu extends LabelLocal  {
     }
     
     /** Constructor for new context labels which are extracted by parser 
-     * from the template {{помета|new label}} and added automatically,
+     * (1) from the template {{помета|new label}} or
+     * (2) from semantic relations' labels (word (label), in ruwikt)
+     * and added automatically,
      * these new labels are not listed in the LabelRu.
      * 
      * @param short_name name of the found context label
@@ -280,13 +282,13 @@ public final class LabelRu extends LabelLocal  {
         if(LabelRu.hasShortName( str ))
             return LabelRu.getByShortName( str );
         
-      //return new LabelEn(str, LabelCategory.unknown);     // let's create new context label
-        return new LabelRu(str);                                // let's create new context label
+      //return new LabelEn(str, LabelCategory.unknown); // let's create new context label
+        return new LabelRu(str);                        // let's create new context label
     }
     
     
-    /** Extracts labels from the first template from the beginning of the text string, 
-     * remove these template from the text line, 
+    /** Extracts label from the first template from the beginning of the text string, 
+     * remove this template from the text line, 
      * store the result to the object LabelText.
      *
      * @param line          (wikified) definition line
@@ -415,9 +417,14 @@ public final class LabelRu extends LabelLocal  {
             if (result_labels.length>0) {
                 _labels.add(result_labels[0]);
             } else {
-                _labels.add(LabelRu.getByShortName(l.trim()));
-            }                        
-        }         
+                if(LabelRu.hasShortName( l )) {
+                    _labels.add(LabelRu.getByShortName( l ));
+                } else {
+                    // if this is an unusual label, then add it to the table of labels
+                    _labels.add( new LabelRu( l ) );    // let's create new context label
+                }
+            }
+        }
         
         return _labels;
     }
@@ -696,7 +703,7 @@ public final class LabelRu extends LabelLocal  {
     
     public static final Label vulgar = new LabelRu("вульг.", "вульгарное",  LabelEn.vulgar);
     //public static final Label bombast = new LabelRu("высок.", "высокопарное",  LabelEn.bombast);
-    public static final Label elevated = new LabelRu("высок.", "высокое",  LabelEn.elevated);
+    public static final Label high_register = new LabelRu("высок.", "высокое",  LabelEn.high_register);
     
     public static final Label acerbity = new LabelRu("груб.", "грубое",  LabelEn.acerbity);
     public static final Label childish = new LabelRu("детск.", "детское", LabelEn.childish);

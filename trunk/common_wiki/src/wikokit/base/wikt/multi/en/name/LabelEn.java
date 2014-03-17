@@ -823,9 +823,6 @@ public final class LabelEn extends Label {
     public static final Label distorted = new LabelEn("distorted",  "distorted", LabelCategory.usage); // ruwikt искажённое
     public static final Label dysphemism = new LabelEn("dysphemism",  "dysphemism", LabelCategory.usage); // ruwikt дисфемизм
     
-    public static final Label elevated = new LabelEn("elevated",  "elevated", LabelCategory.usage);
-    public static final Label lofty = LabelEn.addNonUniqueShortName(elevated, "lofty");
-    
     public static final Label endearing = new LabelEn("endearing",  "endearing", LabelCategory.usage);
     public static final Label ethnic_slur = new LabelEn("ethnic slur",  "ethnic slur", LabelCategory.usage);
     public static final Label euphemistic = new LabelEn("euphemistic",  "euphemistic", LabelCategory.usage);
@@ -836,14 +833,20 @@ public final class LabelEn extends Label {
     public static final Label figuratively = new LabelEn("figuratively", "figuratively", LabelCategory.usage);
     // la-conj-form-gloss/iacio/context6 -> figuratively // strange context label which will skipped by parser
     
-    public static final Label folk_colloquial = new LabelEn("folk colloquial",  "folk colloquial", LabelCategory.usage); // ruwikt народно-разговорное
-    public static final Label folk_poetic = new LabelEn("folk poetic",  "folk poetic", LabelCategory.usage); // ruwikt народно-поэтическое
-    public static final Label formal = new LabelEn("formal",  "formal", LabelCategory.usage);
-    public static final Label gay_slang = new LabelEn("gay slang",  "gay slang", LabelCategory.usage);
-    public static final Label humorous = new LabelEn("humorous",  "humorous", LabelCategory.usage);
-    public static final Label hyperbolic = new LabelEn("hyperbolic",  "hyperbolic", LabelCategory.usage);
-    public static final Label hypercorrect = new LabelEn("hypercorrect",  "hypercorrect", LabelCategory.usage);
-    public static final Label hyperforeign = new LabelEn("hyperforeign",  "hyperforeign", LabelCategory.usage);
+    public static final Label folk_colloquial = new LabelEn("folk colloquial", "folk colloquial", LabelCategory.usage); // ruwikt народно-разговорное
+    public static final Label folk_poetic = new LabelEn("folk poetic", "folk poetic", LabelCategory.usage); // ruwikt народно-поэтическое
+    public static final Label formal = new LabelEn("formal", "formal", LabelCategory.usage);
+    public static final Label gay_slang = new LabelEn("gay slang", "gay slang", LabelCategory.usage);
+    public static final Label humorous = new LabelEn("humorous", "humorous", LabelCategory.usage);
+    public static final Label hyperbolic = new LabelEn("hyperbolic", "hyperbolic", LabelCategory.usage);
+    public static final Label hypercorrect = new LabelEn("hypercorrect", "hypercorrect", LabelCategory.usage);
+    public static final Label hyperforeign = new LabelEn("hyperforeign", "hyperforeign", LabelCategory.usage);
+    
+    public static final Label high_register = new LabelEn("high-register", "high-register", LabelCategory.usage);
+    public static final Label higher_register = LabelEn.addNonUniqueShortName(high_register, "higher-register");
+    // public static final Label elevated = new LabelEn("elevated",  "elevated", LabelCategory.usage);
+    // public static final Label lofty = LabelEn.addNonUniqueShortName(elevated, "lofty");
+    
     public static final Label informal = new LabelEn("informal",  "informal", LabelCategory.usage);
     public static final Label Internet_slang = new LabelEn("Internet slang",  "Internet slang", LabelCategory.usage);
     public static final Label IRC = new LabelEn("IRC",  "IRC", LabelCategory.usage);

@@ -408,7 +408,7 @@ public class WRelationRuTest {
         assertEquals(2, labels_grad.length);// поэт., высок.
         
         assertEquals(LabelRu.poetic.getShortName(), labels_grad[0].getShortName());// поэт.
-        assertEquals(LabelRu.elevated.getShortName(), labels_grad[1].getShortName());// высок.
+        assertEquals(LabelRu.high_register.getShortName(), labels_grad[1].getShortName());// высок.
     }
     
     // # [[маскаре]] (вариант: [[маскарэ]]), [[поророка]]
