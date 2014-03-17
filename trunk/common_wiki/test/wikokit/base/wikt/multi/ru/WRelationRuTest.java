@@ -332,6 +332,21 @@ public class WRelationRuTest {
     // @see http://ru.wiktionary.org/wiki/Викисловарь:Правила_оформления_статей#Оформление_семантических_отношений
     // @see http://ru.wiktionary.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C:%D0%9F%D1%80%D0%B0%D0%B2%D0%B8%D0%BB%D0%B0_%D0%BE%D1%84%D0%BE%D1%80%D0%BC%D0%BB%D0%B5%D0%BD%D0%B8%D1%8F_%D1%81%D1%82%D0%B0%D1%82%D0%B5%D0%B9#.D0.9E.D1.84.D0.BE.D1.80.D0.BC.D0.BB.D0.B5.D0.BD.D0.B8.D0.B5_.D1.81.D0.B5.D0.BC.D0.B0.D0.BD.D1.82.D0.B8.D1.87.D0.B5.D1.81.D0.BA.D0.B8.D1.85_.D0.BE.D1.82.D0.BD.D0.BE.D1.88.D0.B5.D0.BD.D0.B8.D0.B9
     
+    // non-wikified label
+    @Test
+    public void testParseOneLine_empty_labels_in_brackets() {
+        System.out.println("ParseOneLine_empty_labels_in_brackets");
+        String page_title, text;
+        WRelation result;
+        Label la;
+        
+        page_title = "baba";
+        text = "# ata";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        assertNull(result);
+    }
+    
     // # [[ремень]], [[поясок]]; частичн.: [[гайтан]]; устар.: [[кушак]], [[обвязка]]
     @Test
     public void testParseOneLine_labels_as_text() {

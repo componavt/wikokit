@@ -168,7 +168,7 @@ public class PageTableAll {
                         break;  //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
                 }
 
-                if(0 == n_cur % 1000) {   // % 100 1000
+//                if(0 == n_cur % 1000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
                     long    t_cur, t_remain;
@@ -184,7 +184,7 @@ public class PageTableAll {
                             ", duration: "  + t_cur +   // t_cur/(60f*1000f) + 
                             " min, remain: " + t_remain +
                             " min");
-                }
+//                }
 
                 WiktParser.parseWiktionaryEntry(native_lang, wikt_conn, wikt_parsed_conn, page_title);
             }
