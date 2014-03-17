@@ -223,6 +223,8 @@ public class WRelationRu {
         WikiText[] wt = WikiText.createSplitBySemicolon(page_title, text);
         if(0 == wt.length) return null;
         
+        if(0 == wt[0].getWikiWords().length) return null; // if this is a non-wikified list of synonyms
+        
         // 3. get text and labels
         List<LabelsWikiText> lwt_array = new ArrayList(0);
 
