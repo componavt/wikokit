@@ -45,7 +45,7 @@ import wikt.stat.printer.CommonPrinter;
  * @see YARN format https://github.com/xoposhiy/yarn/commit/65411750ee8f867c79cdd77bcbaf8024df2c9d63
  */
 public class DefQuoteSynExporter {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     //private static final FileWriter file;
     
     /** map for the first part of YARN file: lexicon. Map from word to "nID" */
