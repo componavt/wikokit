@@ -101,7 +101,7 @@ public class PageTableAll {
         "шумерский язык", "хам", "телескопирование", "общий род", "марашка", // long quotes
         "град", "снѣгъ", "жестокий", "позаимствовавший", "позади",
         "железо", // many translations
-        "casar", "mariposa", // labels
+        "casar", "mariposa", "АУГ", // labels
         "пѣти", // template:Cyrs
         "льзя", "grasa", // regionl labels
         "тема", "ђам", "đam",
