@@ -223,13 +223,14 @@ public class WRelationRu {
         WikiText[] wt = WikiText.createSplitBySemicolon(page_title, text);
         if(0 == wt.length) return null;
         
-        if(0 == wt[0].getWikiWords().length) return null; // if this is a non-wikified list of synonyms
-        
         // 3. get text and labels
         List<LabelsWikiText> lwt_array = new ArrayList(0);
 
         for(WikiText _wiki_text : wt) {
             String _text = _wiki_text.getWikifiedText();
+            if(null == _text || _text.length() == 0)
+                continue; // if this is a non-wikified synonym
+            
             //check if first pattern "works"
             Matcher demo_match = ptrn_labels.matcher(_text);
             Matcher main_matcher;

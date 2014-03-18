@@ -334,17 +334,36 @@ public class WRelationRuTest {
     
     // non-wikified label
     @Test
-    public void testParseOneLine_empty_labels_in_brackets() {
-        System.out.println("ParseOneLine_empty_labels_in_brackets");
+    public void testParseOneLine_non_wikified_synset() {
+        System.out.println("ParseOneLine_non_wikified_synset");
         String page_title, text;
         WRelation result;
-        Label la;
         
         page_title = "baba";
         text = "# ata";
         
         result = WRelationRu.parseOneLine(page_title, text);
-        assertNull(result);
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(0, lwt_array.length);
+    }
+    
+    // one wikified and one non-wikified labels
+    @Test
+    public void testParseOneLine_semi_wikified_synset() {
+        System.out.println("ParseOneLine_semi_wikified_synset");
+        String page_title, text;
+        WRelation result;
+        
+        page_title = "АУГ";
+        text = "# [[вооружение]]; ударная группировка";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(1, lwt_array.length);
+        
+        // 1) [[вооружение]]
+        assertEquals(0, lwt_array[0].getLabels().length);
+        assertEquals("вооружение", lwt_array[0].getWikiText().getVisibleText());
     }
     
     // # [[ремень]], [[поясок]]; частичн.: [[гайтан]]; устар.: [[кушак]], [[обвязка]]
