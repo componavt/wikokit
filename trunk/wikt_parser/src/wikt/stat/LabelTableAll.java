@@ -15,9 +15,11 @@ import java.util.Map;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikipedia.sql.Connect;
 import wikokit.base.wikipedia.sql.Statistics;
+import wikokit.base.wikt.api.WTMeaning;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.constant.LabelCategory;
 import wikokit.base.wikt.constant.LabelCategoryLocal;
+import wikokit.base.wikt.constant.POS;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikt.multi.ru.name.LabelCategoryRu;
 import wikokit.base.wikt.multi.ru.name.LabelRu;
@@ -28,12 +30,13 @@ import wikokit.base.wikt.sql.TPOS;
 import wikokit.base.wikt.sql.TPage;
 import wikokit.base.wikt.sql.label.TLabel;
 import wikokit.base.wikt.sql.label.TLabelCategory;
+import wikokit.base.wikt.sql.label.TLabelMeaning;
 import wikt.stat.printer.CommonPrinter;
 
 /** Context labels statistics in the database of the parsed Wiktionary. */
 public class LabelTableAll {
     
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     
     /** Number of labels per language. */
     private static Map<LanguageType, Integer> m_lang_n = new HashMap<LanguageType, Integer>();
@@ -457,6 +460,209 @@ public class LabelTableAll {
     }
     
     
+    /** Maximum number of meanings in one article (language - POS level) */
+    static final int MAX_MEANINGS = 100;
+    
+    private static String[][] ar_labels_meanings_words = new String[MAX_MEANINGS][MAX_MEANINGS];
+        
+    /** Counts number of meanings with labels, writes result to two-dimensional array,
+     * fills by example words array ar_labels_meanings_words.<br><br>
+     *
+     * @param connect   connection to the database of the parsed Wiktionary
+     * @param only_pos  only this POS words will be counted, 
+     *                  if only_pos is NULL then all words will be counted
+     * @param only_lang only this language words will be counted, 
+     *                  if only_lang is NULL then words of all languages will be counted
+     * @return integer two-dimensional array, where [X][Y] = Z means that 
+     *                      X - number of meanings with labels; 
+     *              Y - total number of meanings; 
+     *      Z - number of words with Y meanings, where X meanings have one or more labels (X <= Y)
+     */
+    public static int[][] countNumberOfMeaningsWithLabels ( Connect wikt_parsed_conn,
+                                                            LanguageType only_lang,
+                                                            POS only_pos) {
+        // lang_pos -> meaning -> label_meaning 
+        
+        int[][] ar_labels_meanings = new int[MAX_MEANINGS][MAX_MEANINGS];
+        
+        Statement s = null;
+        ResultSet rs= null;
+        long      t_start;
+
+        int n_total = Statistics.Count(wikt_parsed_conn, "lang_pos");
+        t_start = System.currentTimeMillis();
+
+        try {
+            s = wikt_parsed_conn.conn.createStatement ();
+            s.executeQuery ("SELECT id FROM lang_pos");
+            rs = s.getResultSet ();
+            int n_cur = 0;
+            while (rs.next ())
+            {
+                n_cur ++;
+                int id = rs.getInt("id");
+                TLangPOS lang_pos_not_recursive = TLangPOS.getByID (wikt_parsed_conn, id);// fields are not filled recursively
+                if(null == lang_pos_not_recursive)
+                    continue;
+                LanguageType lang = lang_pos_not_recursive.getLang().getLanguage();
+                
+                if(null != only_lang && only_lang != lang)   // this is not our language :) 
+                    continue;
+                
+                TPage tpage = lang_pos_not_recursive.getPage();
+                String page_title = tpage.getPageTitle();
+
+                int n_meaning = WTMeaning.countMeanings(wikt_parsed_conn, lang_pos_not_recursive);
+                if(0 == n_meaning)
+                    continue;       // only meanings with nonempty definitions
+
+                POS p = lang_pos_not_recursive.getPOS().getPOS();
+                if(null != only_pos && only_pos != p)   // only our POS should be counted :)
+                    continue;
+
+                if(DEBUG)
+                    System.out.print("\n" + page_title + ", meanings:" + n_meaning);
+                    //System.out.print(", pos:" + p.toString());
+
+                int meanings_with_labels = 0;
+                TMeaning[] mm = TMeaning.get(wikt_parsed_conn, lang_pos_not_recursive);
+                for(TMeaning m : mm) {
+                    
+                    String meaning_text = m.getWikiTextString();
+                    if(0 == meaning_text.length())
+                        continue;
+                    
+                    if(DEBUG)
+                        System.out.print("\n    def: " + meaning_text);
+                    
+                    Label[] labels = TLabelMeaning.get(wikt_parsed_conn, m);
+                    
+                    if(null != labels && labels.length > 0)
+                        meanings_with_labels ++;
+                }
+                ar_labels_meanings       [meanings_with_labels] [n_meaning] ++;
+                ar_labels_meanings_words [meanings_with_labels] [n_meaning] = page_title;
+
+                if(0 == n_cur % 1000) {   // % 100
+                    if(DEBUG && n_cur > 1999)
+                        break;
+
+                    long    t_cur, t_remain;
+
+                    t_cur  = System.currentTimeMillis() - t_start;
+                    t_remain = (long)((n_total - n_cur) * t_cur/(60f*1000f*(float)(n_cur)));
+                    t_cur = (long)(t_cur/(60f*1000f));
+
+                    System.out.println(n_cur + ": " +
+                        ", duration: "  + t_cur +   // t_cur/(60f*1000f) +
+                        " min, remain: " + t_remain +
+                        " min");
+                }
+                
+            } // eo while
+        } catch(SQLException ex) {
+            System.err.println("SQLException (LabelTableAll.countLabelsForEachLangPOS()): " + ex.getMessage());
+        } finally {
+            if (rs != null) {   try { rs.close(); } catch (SQLException sqlEx) { }  rs = null; }
+            if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
+        }
+        
+        return ar_labels_meanings;
+    }
+    
+    
+    /** Prints number of meanings with labels in form of table.<br><br>
+     */
+    private static void printNumberOfMeaningsWithLabels (
+                        int[][] ar_labels_meanings,
+                        LanguageType only_lang,
+                        POS only_pos)
+    {
+        // 1. Calculate maximum number of meanings, 
+        // i.e. calculate maximum array index N with non-zero value in ar_labels_meanings [N][N]
+        int max_non_zero_meaning = 0;
+        int max_non_zero_labels = 0;
+        for(int i=0; i<MAX_MEANINGS; i++) {
+            for(int j=0; j<MAX_MEANINGS; j++) {
+                if(ar_labels_meanings[i][j] > 0 && j > max_non_zero_meaning)
+                    max_non_zero_meaning = j;
+                
+                if(ar_labels_meanings[i][j] > 0 && i > max_non_zero_labels)
+                    max_non_zero_labels = i;
+            }
+        }
+        int MAX = max_non_zero_meaning;
+        
+        // 2. print table
+        System.out.println("\n=== Number of meanings with labels ===");
+        
+        if(null != only_lang) 
+            System.out.println("\nOnly "+only_lang.toString()+" words were taken into account.");
+        
+        if(null != only_pos) 
+            System.out.println("\nOnly one POS were taken into account: "+only_pos.toString()+".");
+        
+        System.out.println("\nTable contains two-dimensional integer array, where [X][Y] = Z means that \n"
+                + ":: X (horizontal) - total number of meanings; \n" +
+                  ":: Y (vertical) - number of meanings with labels; \n" +
+                  ":: Z (value in cell) - number of words with Y meanings, where X meanings have one or more labels (X <= Y)");
+        
+        System.out.println("E.g. \"[[:ru:abdomen#Английский]]\" has 3 meanings, where 2 meanings are marked by labels, then [3][2] ++ (increments value in this cell of the table).\n");
+        
+        System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");        
+        System.out.print("! Y \\ X "); // top-left cell
+        
+        // print horizontal header - number of meanings of words
+        for(int i=0; i<MAX+1; i++)
+            System.out.print("!!" + i);
+        System.out.println("");
+        
+        int total = 0;
+        for(int i=0; i<MAX+1; i++) {
+            
+            // print vertical header - number of meanings with labels            
+            System.out.println("|-");
+            System.out.print(  "|" + i);
+            
+            for(int j=0; j<MAX+1; j++) {
+                System.out.print(
+                    "||" + ar_labels_meanings[i][j] );
+                total += ar_labels_meanings[i][j];
+            }
+            System.out.println("");
+        }
+        System.out.println("|}");
+        
+        System.out.println("\nTotal number of meanings with labels: " + total );
+        System.out.println("\nMaximum number of meanings (with labels): "+MAX);
+        System.out.println("\nMaximum number of meanings marked by labels: "+max_non_zero_labels);
+        
+        // part 2.
+        System.out.println("\n\nThe same table with example words: ");
+        System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");        
+        System.out.print("! Y \\ X "); // top-left cell
+        
+        // print horizontal header - number of meanings of words
+        for(int i=0; i<MAX+1; i++)
+            System.out.print("!!" + i);
+        System.out.println("");
+        
+        for(int i=0; i<MAX+1; i++) {
+            
+            // print vertical header - number of meanings with labels            
+            System.out.println("|-");
+            System.out.print(  "|" + i);
+            
+            for(int j=0; j<MAX+1; j++) {
+                String s = ar_labels_meanings_words[i][j];
+                s = null == s ? "" : "[[" + s + "]]" ;
+                System.out.print("||" + s);
+            }
+            System.out.println("");
+        }
+        System.out.println("|}");
+    }
+    
     public static void main(String[] args) {
 
         // Connect to wikt_parsed database
@@ -492,18 +698,35 @@ public class LabelTableAll {
         int n_meaning = Statistics.countDistinct(wikt_parsed_conn, "label_meaning", "meaning_id");
         System.out.println("\nTotal definitions with labels: " + n_meaning );
         
-        Map<LanguageType, Integer> m = LabelTableAll.countLabels(wikt_parsed_conn);
+//        Map<LanguageType, Integer> m = LabelTableAll.countLabels(wikt_parsed_conn);
+        
+        // ar_labels_meanings [X][Y] = Z
+        // X - number of meanings with labels; Y - total number of meanings; Z - number of words with Y meanings, where X meanings have one or more labels (X <= Y)
+        
+
+        //LanguageType only_lang = null;
+        LanguageType only_lang = LanguageType.ru;
+        
+        //POS only_pos = null;
+        POS only_pos = POS.verb;
+                
+        int[][] ar_labels_meanings = LabelTableAll.countNumberOfMeaningsWithLabels(wikt_parsed_conn, only_lang, only_pos);
+        // int[][] ar_labels_meanings = LabelTableAll.countLabelsForEachLangPOS(wikt_parsed_conn, POS.noun);
+        
+        LabelTableAll.printNumberOfMeaningsWithLabels(ar_labels_meanings, only_lang, only_pos);
+        
         wikt_parsed_conn.Close();
 
         System.out.println();
-        CommonPrinter.printSomethingPerLanguage(native_lang, m);
+//        CommonPrinter.printSomethingPerLanguage(native_lang, m);
 
         /** Number of using labels in meanings (definitions) */
-        LabelTableAll.printLabelsAddedByHand(m_label_n);
+/*        LabelTableAll.printLabelsAddedByHand(m_label_n);
         LabelTableAll.printLabelsFoundByParser(m_label_n);
         LabelTableAll.printRegionalLabels(m_label_n);
 
         LabelTableAll.calcAndPrintAddedByHandLabelCategories(m_label_n, native_lang);
+*/                
                 
         //System.out.println("\nThere are quotes in " + m.size() + " languages.");
         CommonPrinter.printFooter();
