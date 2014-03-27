@@ -36,7 +36,7 @@ import wikt.stat.printer.CommonPrinter;
 /** Context labels statistics in the database of the parsed Wiktionary. */
 public class LabelTableAll {
     
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     
     /** Number of labels per language. */
     private static Map<LanguageType, Integer> m_lang_n = new HashMap<LanguageType, Integer>();
@@ -691,34 +691,29 @@ public class LabelTableAll {
         System.out.println("\n== Statistics of context labels in the Wiktionary parsed database ==");
         System.out.println("\n''Last updated: summer 2013.''");
         CommonPrinter.printHeader (db_name);
-
+/*
         int n_label_meaning = Statistics.Count(wikt_parsed_conn, "label_meaning");
         System.out.println("\nTotal labels used in definitions (meanings): " + n_label_meaning );
         
         int n_meaning = Statistics.countDistinct(wikt_parsed_conn, "label_meaning", "meaning_id");
         System.out.println("\nTotal definitions with labels: " + n_meaning );
         
-//        Map<LanguageType, Integer> m = LabelTableAll.countLabels(wikt_parsed_conn);
+        Map<LanguageType, Integer> m = LabelTableAll.countLabels(wikt_parsed_conn);
+        */
         
-        // ar_labels_meanings [X][Y] = Z
-        // X - number of meanings with labels; Y - total number of meanings; Z - number of words with Y meanings, where X meanings have one or more labels (X <= Y)
+        // part 2
+        LanguageType only_lang = null;
+        // LanguageType only_lang = LanguageType.ru;
         
-
-        //LanguageType only_lang = null;
-        LanguageType only_lang = LanguageType.ru;
-        
-        //POS only_pos = null;
-        POS only_pos = POS.verb;
+        POS only_pos = null;
+        // POS only_pos = POS.verb;
                 
         int[][] ar_labels_meanings = LabelTableAll.countNumberOfMeaningsWithLabels(wikt_parsed_conn, only_lang, only_pos);
-        // int[][] ar_labels_meanings = LabelTableAll.countLabelsForEachLangPOS(wikt_parsed_conn, POS.noun);
-        
-        LabelTableAll.printNumberOfMeaningsWithLabels(ar_labels_meanings, only_lang, only_pos);
-        
         wikt_parsed_conn.Close();
+        
 
         System.out.println();
-//        CommonPrinter.printSomethingPerLanguage(native_lang, m);
+  //      CommonPrinter.printSomethingPerLanguage(native_lang, m);
 
         /** Number of using labels in meanings (definitions) */
 /*        LabelTableAll.printLabelsAddedByHand(m_label_n);
@@ -726,9 +721,10 @@ public class LabelTableAll {
         LabelTableAll.printRegionalLabels(m_label_n);
 
         LabelTableAll.calcAndPrintAddedByHandLabelCategories(m_label_n, native_lang);
-*/                
-                
-        //System.out.println("\nThere are quotes in " + m.size() + " languages.");
+*/        
+        // part 2 (print)
+        LabelTableAll.printNumberOfMeaningsWithLabels(ar_labels_meanings, only_lang, only_pos);
+        
         CommonPrinter.printFooter();
     }
     
