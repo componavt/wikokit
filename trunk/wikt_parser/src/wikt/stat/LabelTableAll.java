@@ -463,14 +463,28 @@ public class LabelTableAll {
     /** Maximum number of meanings in one article (language - POS level) */
     static final int MAX_MEANINGS = 100;
     
-    private static String[][] ar_labels_meanings_words = new String[MAX_MEANINGS][MAX_MEANINGS];
-        
+    // ar_labels_meanings_words - all words, including {noun, verb, adverb, adjective} + pronoun, conjunction, etc.
+    private static String[][] ar_labels_meanings_words          = new String[MAX_MEANINGS][MAX_MEANINGS];
+    private static String[][] ar_labels_meanings_words_noun     = new String[MAX_MEANINGS][MAX_MEANINGS];
+    private static String[][] ar_labels_meanings_words_verb     = new String[MAX_MEANINGS][MAX_MEANINGS];
+    private static String[][] ar_labels_meanings_words_adverb   = new String[MAX_MEANINGS][MAX_MEANINGS];
+    private static String[][] ar_labels_meanings_words_adjective = new String[MAX_MEANINGS][MAX_MEANINGS];
+    
+    private static int[][] ar_labels_meanings          = new int[MAX_MEANINGS][MAX_MEANINGS];
+    private static int[][] ar_labels_meanings_noun     = new int[MAX_MEANINGS][MAX_MEANINGS];
+    private static int[][] ar_labels_meanings_verb     = new int[MAX_MEANINGS][MAX_MEANINGS];
+    private static int[][] ar_labels_meanings_adverb   = new int[MAX_MEANINGS][MAX_MEANINGS];
+    private static int[][] ar_labels_meanings_adjective = new int[MAX_MEANINGS][MAX_MEANINGS];
+    
     /** Counts number of meanings with labels, writes result to two-dimensional array,
-     * fills by example words array ar_labels_meanings_words.<br><br>
+     * fills by example words array ar_labels_meanings_words.
+     * (1) Counts all words, writes to ar_labels_meanings and ar_labels_meanings_words.
+     * (2) Counts ar_labels_meanings_noun, _verb, _adverb, _adjective only for one language: only_lang
+     * <br><br>
      *
      * @param connect   connection to the database of the parsed Wiktionary
-     * @param only_pos  only this POS words will be counted, 
-     *                  if only_pos is NULL then all words will be counted
+     * // skip @param only_pos  only this POS words will be counted, 
+     * //                     if only_pos is NULL then all words will be counted
      * @param only_lang only this language words will be counted, 
      *                  if only_lang is NULL then words of all languages will be counted
      * @return integer two-dimensional array, where [X][Y] = Z means that 
@@ -478,12 +492,9 @@ public class LabelTableAll {
      *              Y - total number of meanings; 
      *      Z - number of words with Y meanings, where X meanings have one or more labels (X <= Y)
      */
-    public static int[][] countNumberOfMeaningsWithLabels ( Connect wikt_parsed_conn,
-                                                            LanguageType only_lang,
-                                                            POS only_pos) {
+    public static void countNumberOfMeaningsWithLabels ( Connect wikt_parsed_conn,
+                                                         LanguageType only_lang) {
         // lang_pos -> meaning -> label_meaning 
-        
-        int[][] ar_labels_meanings = new int[MAX_MEANINGS][MAX_MEANINGS];
         
         Statement s = null;
         ResultSet rs= null;
@@ -506,9 +517,6 @@ public class LabelTableAll {
                     continue;
                 LanguageType lang = lang_pos_not_recursive.getLang().getLanguage();
                 
-                if(null != only_lang && only_lang != lang)   // this is not our language :) 
-                    continue;
-                
                 TPage tpage = lang_pos_not_recursive.getPage();
                 String page_title = tpage.getPageTitle();
 
@@ -517,8 +525,8 @@ public class LabelTableAll {
                     continue;       // only meanings with nonempty definitions
 
                 POS p = lang_pos_not_recursive.getPOS().getPOS();
-                if(null != only_pos && only_pos != p)   // only our POS should be counted :)
-                    continue;
+                //if(null != only_pos && only_pos != p)   // only our POS should be counted :)
+                //    continue;
 
                 if(DEBUG)
                     System.out.print("\n" + page_title + ", meanings:" + n_meaning);
@@ -542,9 +550,30 @@ public class LabelTableAll {
                 }
                 ar_labels_meanings       [meanings_with_labels] [n_meaning] ++;
                 ar_labels_meanings_words [meanings_with_labels] [n_meaning] = page_title;
+                
+                if(only_lang == lang) {   // calculates labels for 4 POS only for one language
+                    switch(p.toString()) {
+                        case "noun":
+                            ar_labels_meanings_noun       [meanings_with_labels] [n_meaning] ++;
+                            ar_labels_meanings_words_noun [meanings_with_labels] [n_meaning] = page_title;
+                            break;
+                        case "verb":
+                            ar_labels_meanings_verb       [meanings_with_labels] [n_meaning] ++;
+                            ar_labels_meanings_words_verb [meanings_with_labels] [n_meaning] = page_title;
+                            break;
+                        case "adverb":
+                            ar_labels_meanings_adverb     [meanings_with_labels] [n_meaning] ++;
+                            ar_labels_meanings_words_adverb [meanings_with_labels] [n_meaning] = page_title;
+                            break;
+                        case "adjective":
+                            ar_labels_meanings_adjective  [meanings_with_labels] [n_meaning] ++;
+                            ar_labels_meanings_words_adjective [meanings_with_labels] [n_meaning] = page_title;
+                            break;
+                    }
+                }
 
                 if(0 == n_cur % 1000) {   // % 100
-                    if(DEBUG && n_cur > 1999)
+                    if(DEBUG && n_cur > 2999)
                         break;
 
                     long    t_cur, t_remain;
@@ -567,47 +596,28 @@ public class LabelTableAll {
             if (s != null)  {   try { s.close();  } catch (SQLException sqlEx) { }  s = null;  }
         }
         
-        return ar_labels_meanings;
+        // return ar_labels_meanings;
     }
     
     
-    /** Prints number of meanings with labels in form of table.<br><br>
-     */
-    private static void printNumberOfMeaningsWithLabels (
-                        int[][] ar_labels_meanings,
-                        LanguageType only_lang,
-                        POS only_pos)
-    {
+    private static void printMeaningsLabelsTableNumbersAndTableWords (
+                                            int[][] ar, 
+                                            String[][] ar_words) {
+        
         // 1. Calculate maximum number of meanings, 
-        // i.e. calculate maximum array index N with non-zero value in ar_labels_meanings [N][N]
+        // i.e. calculate maximum array index N with non-zero value in ar [N][N]
         int max_non_zero_meaning = 0;
         int max_non_zero_labels = 0;
         for(int i=0; i<MAX_MEANINGS; i++) {
             for(int j=0; j<MAX_MEANINGS; j++) {
-                if(ar_labels_meanings[i][j] > 0 && j > max_non_zero_meaning)
+                if(ar[i][j] > 0 && j > max_non_zero_meaning)
                     max_non_zero_meaning = j;
                 
-                if(ar_labels_meanings[i][j] > 0 && i > max_non_zero_labels)
+                if(ar[i][j] > 0 && i > max_non_zero_labels)
                     max_non_zero_labels = i;
             }
         }
         int MAX = max_non_zero_meaning;
-        
-        // 2. print table
-        System.out.println("\n=== Number of meanings with labels ===");
-        
-        if(null != only_lang) 
-            System.out.println("\nOnly "+only_lang.toString()+" words were taken into account.");
-        
-        if(null != only_pos) 
-            System.out.println("\nOnly one POS were taken into account: "+only_pos.toString()+".");
-        
-        System.out.println("\nTable contains two-dimensional integer array, where [X][Y] = Z means that \n"
-                + ":: X (horizontal) - total number of meanings; \n" +
-                  ":: Y (vertical) - number of meanings with labels; \n" +
-                  ":: Z (value in cell) - number of words with Y meanings, where X meanings have one or more labels (X <= Y)");
-        
-        System.out.println("E.g. \"[[:ru:abdomen#Английский]]\" has 3 meanings, where 2 meanings are marked by labels, then [3][2] ++ (increments value in this cell of the table).\n");
         
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");        
         System.out.print("! Y \\ X "); // top-left cell
@@ -626,14 +636,14 @@ public class LabelTableAll {
             
             for(int j=0; j<MAX+1; j++) {
                 System.out.print(
-                    "||" + ar_labels_meanings[i][j] );
-                total += ar_labels_meanings[i][j];
+                    "||" + ar[i][j] );
+                total += ar[i][j];
             }
             System.out.println("");
         }
         System.out.println("|}");
         
-        System.out.println("\nTotal number of meanings with labels: " + total );
+        System.out.println("\nTotal number of entries (POS-level) with labels: " + total );
         System.out.println("\nMaximum number of meanings (with labels): "+MAX);
         System.out.println("\nMaximum number of meanings marked by labels: "+max_non_zero_labels);
         
@@ -654,13 +664,53 @@ public class LabelTableAll {
             System.out.print(  "|" + i);
             
             for(int j=0; j<MAX+1; j++) {
-                String s = ar_labels_meanings_words[i][j];
+                String s = ar_words[i][j];
                 s = null == s ? "" : "[[" + s + "]]" ;
                 System.out.print("||" + s);
             }
             System.out.println("");
         }
         System.out.println("|}");
+    }
+    
+    /** Prints number of meanings with labels in form of table.<br><br>
+     */
+    private static void printNumberOfMeaningsWithLabels (
+                        int[][] ar_labels_meanings,         String[][] ar_labels_meanings_words,
+                        int[][] ar_labels_meanings_noun,    String[][] ar_labels_meanings_words_noun,
+                        int[][] ar_labels_meanings_verb,    String[][] ar_labels_meanings_words_verb,
+                        int[][] ar_labels_meanings_adverb,  String[][] ar_labels_meanings_words_adverb,
+                        int[][] ar_labels_meanings_adjective, String[][] ar_labels_meanings_words_adjective,
+                        LanguageType native_lang)
+    {
+        System.out.println("\n=== Number of meanings with labels ===");
+        
+        System.out.println("\nTable contains two-dimensional integer array, where [X][Y] = Z means that \n"
+                + ":: X (horizontal) - total number of meanings; \n" +
+                  ":: Y (vertical) - number of meanings with labels; \n" +
+                  ":: Z (value in cell) - number of words with Y meanings, where X meanings have one or more labels (X <= Y)");
+        
+        System.out.println("E.g. \"[[:ru:abdomen#Английский]]\" has 3 meanings, where 2 meanings are marked by labels, then [3][2] ++ (increments value in this cell of the table).");
+
+        System.out.println("\n==== All ====");
+        System.out.println("\n\nThese two tables (numbers and words) contains information about all languages and POS.");
+        printMeaningsLabelsTableNumbersAndTableWords(ar_labels_meanings, ar_labels_meanings_words);
+        
+        System.out.println("\n==== "+native_lang.getName()+", noun ====");
+        System.out.println("\n\nThis table takes into account only "+native_lang.getName()+" words, POS = noun.");
+        printMeaningsLabelsTableNumbersAndTableWords(ar_labels_meanings_noun, ar_labels_meanings_words_noun);
+        
+        System.out.println("\n==== "+native_lang.getName()+", verb ====");
+        System.out.println("\n\nThis table takes into account only "+native_lang.getName()+" words, POS = verb.");
+        printMeaningsLabelsTableNumbersAndTableWords(ar_labels_meanings_verb, ar_labels_meanings_words_verb);
+        
+        System.out.println("\n==== "+native_lang.getName()+", adverb ====");
+        System.out.println("\n\nThis table takes into account only "+native_lang.getName()+" words, POS = adverb.");
+        printMeaningsLabelsTableNumbersAndTableWords(ar_labels_meanings_adverb, ar_labels_meanings_words_adverb);
+        
+        System.out.println("\n==== "+native_lang.getName()+", adjective ====");
+        System.out.println("\n\nThis table takes into account only "+native_lang.getName()+" words, POS = adjective.");
+        printMeaningsLabelsTableNumbersAndTableWords(ar_labels_meanings_adjective, ar_labels_meanings_words_adjective);
     }
     
     public static void main(String[] args) {
@@ -701,16 +751,9 @@ public class LabelTableAll {
         Map<LanguageType, Integer> m = LabelTableAll.countLabels(wikt_parsed_conn);
         */
         
-        // part 2
-        LanguageType only_lang = null;
-        // LanguageType only_lang = LanguageType.ru;
-        
-        POS only_pos = null;
-        // POS only_pos = POS.verb;
-                
-        int[][] ar_labels_meanings = LabelTableAll.countNumberOfMeaningsWithLabels(wikt_parsed_conn, only_lang, only_pos);
+        // part 2        
+        LabelTableAll.countNumberOfMeaningsWithLabels(wikt_parsed_conn, native_lang);
         wikt_parsed_conn.Close();
-        
 
         System.out.println();
   //      CommonPrinter.printSomethingPerLanguage(native_lang, m);
@@ -723,7 +766,13 @@ public class LabelTableAll {
         LabelTableAll.calcAndPrintAddedByHandLabelCategories(m_label_n, native_lang);
 */        
         // part 2 (print)
-        LabelTableAll.printNumberOfMeaningsWithLabels(ar_labels_meanings, only_lang, only_pos);
+        LabelTableAll.printNumberOfMeaningsWithLabels(
+                        ar_labels_meanings,         ar_labels_meanings_words,
+                        ar_labels_meanings_noun,    ar_labels_meanings_words_noun,
+                        ar_labels_meanings_verb,    ar_labels_meanings_words_verb,
+                        ar_labels_meanings_adverb,  ar_labels_meanings_words_adverb,
+                        ar_labels_meanings_adjective, ar_labels_meanings_words_adjective, 
+                        native_lang);
         
         CommonPrinter.printFooter();
     }
