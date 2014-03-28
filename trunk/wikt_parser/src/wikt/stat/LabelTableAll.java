@@ -623,21 +623,23 @@ public class LabelTableAll {
         System.out.print("! Y \\ X "); // top-left cell
         
         // print horizontal header - number of meanings of words
-        for(int i=0; i<MAX+1; i++)
+        for(int i=1; i<MAX+1; i++)
             System.out.print("!!" + i);
         System.out.println("");
         
         int total = 0;
-        for(int i=0; i<MAX+1; i++) {
+        for(int i=0; i<MAX+1; i++) { // number of meanings with labels
             
             // print vertical header - number of meanings with labels            
             System.out.println("|-");
             System.out.print(  "|" + i);
             
-            for(int j=0; j<MAX+1; j++) {
+            for(int j=1; j<MAX+1; j++) { // number of meanings
                 System.out.print(
                     "||" + ar[i][j] );
-                total += ar[i][j];
+                
+                if(i > 0) 
+                    total += ar[i][j]; // counts only entries with labels
             }
             System.out.println("");
         }
@@ -653,7 +655,7 @@ public class LabelTableAll {
         System.out.print("! Y \\ X "); // top-left cell
         
         // print horizontal header - number of meanings of words
-        for(int i=0; i<MAX+1; i++)
+        for(int i=1; i<MAX+1; i++)
             System.out.print("!!" + i);
         System.out.println("");
         
@@ -663,7 +665,7 @@ public class LabelTableAll {
             System.out.println("|-");
             System.out.print(  "|" + i);
             
-            for(int j=0; j<MAX+1; j++) {
+            for(int j=1; j<MAX+1; j++) {
                 String s = ar_words[i][j];
                 s = null == s ? "" : "[[" + s + "]]" ;
                 System.out.print("||" + s);
@@ -741,7 +743,8 @@ public class LabelTableAll {
         System.out.println("\n== Statistics of context labels in the Wiktionary parsed database ==");
         System.out.println("\n''Last updated: summer 2013.''");
         CommonPrinter.printHeader (db_name);
-/*
+
+        // part 1
         int n_label_meaning = Statistics.Count(wikt_parsed_conn, "label_meaning");
         System.out.println("\nTotal labels used in definitions (meanings): " + n_label_meaning );
         
@@ -749,22 +752,24 @@ public class LabelTableAll {
         System.out.println("\nTotal definitions with labels: " + n_meaning );
         
         Map<LanguageType, Integer> m = LabelTableAll.countLabels(wikt_parsed_conn);
-        */
+
         
         // part 2        
         LabelTableAll.countNumberOfMeaningsWithLabels(wikt_parsed_conn, native_lang);
         wikt_parsed_conn.Close();
 
         System.out.println();
-  //      CommonPrinter.printSomethingPerLanguage(native_lang, m);
+        
+        // part 1 (print)
+        CommonPrinter.printSomethingPerLanguage(native_lang, m);
 
         /** Number of using labels in meanings (definitions) */
-/*        LabelTableAll.printLabelsAddedByHand(m_label_n);
+        LabelTableAll.printLabelsAddedByHand(m_label_n);
         LabelTableAll.printLabelsFoundByParser(m_label_n);
         LabelTableAll.printRegionalLabels(m_label_n);
 
         LabelTableAll.calcAndPrintAddedByHandLabelCategories(m_label_n, native_lang);
-*/        
+
         // part 2 (print)
         LabelTableAll.printNumberOfMeaningsWithLabels(
                         ar_labels_meanings,         ar_labels_meanings_words,
