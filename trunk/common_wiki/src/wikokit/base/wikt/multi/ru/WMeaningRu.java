@@ -69,14 +69,7 @@ public class WMeaningRu {
             //            lang_section.toString() + "' has no section ==== Значение ====.");
             return NULL_WMEANING_ARRAY;
         }
-
-        // 2. skip (or add?) one-line with proto meaning
-        // e.g. {{прото|передняя, выдающаяся вперёд часть чего-либо}}
-        // todo
-        // ....
-
-
-
+        
         int len = text.length();
         int prev_eol = m.end();         // previous end of line
         
@@ -93,14 +86,17 @@ public class WMeaningRu {
             }
             String line = text.substring(prev_eol, next_eol);
 
-            // 4. extracts {{label.}}, definition, {{example|Sentence.}}
-            // return WMeaning
-            // return null if this line is not started from "#" or = "# "
-            WMeaning wm = WMeaning.parseOneDefinition(wikt_lang, page_title, lang_section, line);
-            if(null != wm) {
-                if(null == wm_list)
-                    wm_list = new ArrayList<WMeaning>();
-                wm_list.add(wm);
+            if(!line.startsWith("{{прото|")) // skip one-line with {{proto|common meaning}}
+            {
+                // 4. extracts {{label.}}, definition, {{example|Sentence.}}
+                // return WMeaning
+                // return null if this line is not started from "#" or = "# "
+                WMeaning wm = WMeaning.parseOneDefinition(wikt_lang, page_title, lang_section, line);
+                if(null != wm) {
+                    if(null == wm_list)
+                        wm_list = new ArrayList<WMeaning>();
+                    wm_list.add(wm);
+                }
             }
             to_continue = next_eol < len-1 && (text.charAt(next_eol+1) == '#');
             prev_eol = next_eol + 1;

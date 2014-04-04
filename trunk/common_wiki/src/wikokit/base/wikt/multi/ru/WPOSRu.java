@@ -387,11 +387,16 @@ public class WPOSRu {
                     if(POSTypeRu.has(pos_name)) {
                         p_type = POSTypeRu.get(pos_name);
                     }
-                }
+                }*/
             } else {
-                // else get two_letters + the first Word
-                // todo 
-                // ....*/
+                // if first line after "===Морфологические и синтаксические свойства===" do not start from "{{" then search first "{{"
+                int double_braces_pos = text.indexOf("{{", m.end());
+                if(-1 != double_braces_pos && double_braces_pos+5 < text.length()) {
+                    String pos_name = StringUtilRegular.getLettersTillSpaceHyphenOrPipe(text.substring(double_braces_pos+2)).toLowerCase();
+                    if(POSTemplateRu.has(pos_name)) {
+                        p_type = checkIfSuchPOSExist(pos_name);
+                    }
+                }
             }
         } else {
             if(isPhrasePOS(text))

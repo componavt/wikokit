@@ -35,6 +35,9 @@ public class TLangTest {
 
         // SQLite                   //Connect.testSQLite();
         //ruwikt_parsed_conn.OpenSQLite(Connect.RUWIKT_SQLITE, LanguageType.ru);
+        
+        // initialize languages
+        TLang.createFastMaps(ruwikt_parsed_conn);
     }
 
     @After
