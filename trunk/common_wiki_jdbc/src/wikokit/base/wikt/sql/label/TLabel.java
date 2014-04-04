@@ -268,7 +268,7 @@ public class TLabel {
             LabelCategory lc = label.getLinkedLabelEn().getCategory();
             int category_id = category2id.get(lc);
                     
-            //               short_name,              name,               category_id, added_by_hand (default FALSE), counter (default 0)
+            //               short_name,           name,            category_id, counter (default 0)
             insert (connect, label.getShortName(), label.getName(), category_id);
         }
     }
