@@ -210,7 +210,6 @@ public class WPOSRuTest {
         LangText lt;
         POSText pt;
 
-        // particle
         page_title = "шум";
         lt = new LangText(LanguageType.en);
         str =   "Before \n" +

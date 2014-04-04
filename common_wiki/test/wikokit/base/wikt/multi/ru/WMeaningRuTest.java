@@ -530,5 +530,36 @@ public class WMeaningRuTest {
         // todo
         // test quotation
     }
+    
+    
+    // skip one-line with proto meaning
+    @Test
+    public void testParse_skip_proto() {
+        System.out.println("parse_skip_proto");
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        page_title      = "история";
+        lang_section    = LanguageType.ru; // Russian word
+
+        Label[] _labels = new Label[0];   //_labels[0] = LabelRu.p;
+        String _definition1 = "наука, изучающая факты, тенденции и закономерности развития общества";
+        String _definition2 = "эпическое повествование";
+
+        str =   "Before \n" +
+                "{{-ru-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "==== Значение ====\n" +
+                "{{прото|знание о ходе развития чего-либо во времени}}\n" +
+                "# [[наука]], изучающая [[факт]]ы, тенденции и закономерности развития общества {{пример|}}\n" +
+                "# эпическое [[повествование]] {{пример}}";
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
+        assertEquals(2, result.length);
+        assertTrue(result[0].getDefinition().equalsIgnoreCase(_definition1));
+        assertTrue(result[1].getDefinition().equalsIgnoreCase(_definition2));
+    }
 
 }

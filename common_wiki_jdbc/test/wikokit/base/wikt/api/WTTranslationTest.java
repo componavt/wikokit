@@ -174,12 +174,12 @@ public class WTTranslationTest {
         assertEquals(1, transl_words.length);
         assertEquals("Flugzeug", transl_words[0]);
 
-        // Russian to English: [[airplane]], [[plane]], [[aircraft]]
+        // Russian to English: [[airplane]], [[plane]], [[aircraft]], [[aeroplane]]
         target_lang = "en";
 
         transl_words = WTTranslation.translate(connect, source_lang, target_lang, word);
         assertTrue(transl_words.length > 0);
-        assertEquals(3, transl_words.length);
+        assertEquals(4, transl_words.length);
     }
 
     /** Translates from Foreign (German, English) into Native (Russian) language. */
