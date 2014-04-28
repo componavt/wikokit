@@ -717,7 +717,10 @@ public final class LabelRu extends LabelLocal  {
     public static final Label literary = new LabelRu("книжн.", "книжное",  LabelEn.literary);
     public static final Label computerese = new LabelRu("комп. жарг.", "компьютерный жаргон",  LabelEn.computerese); // absent
     public static final Label endearing = new LabelRu("ласк.", "ласкательное", LabelEn.endearing);
-    public static final Label obscene_language = new LabelRu("мат", "матерное",  LabelEn.obscene_language);
+    
+    public static final Label obscene_language = new LabelRu("обсц.", "обсценное",  LabelEn.obscene_language);
+    public static final Label obscene_language2 = LabelRu.addNonUniqueShortName(obscene_language, "мат");
+    
     public static final Label youth = new LabelRu("мол.", "молодёжное", LabelEn.youth);
     public static final Label folk_poetic = new LabelRu("нар.-поэт.", "народно-поэтическое", LabelEn.folk_poetic);
     public static final Label folk_colloquial = new LabelRu("нар.-разг.", "народно-разговорное", LabelEn.folk_colloquial);
