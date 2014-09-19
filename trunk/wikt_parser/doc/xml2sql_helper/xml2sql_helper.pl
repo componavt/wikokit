@@ -3,6 +3,7 @@
 # DESCRIPTION:   .
 #
 #   Deletes lines in the text file with text:
+#   <dbname>
 #   <redirect />
 #   <ns>
 #   <sha1 />
@@ -15,7 +16,7 @@
 #
 # AUTHOR:       Andrew Krizhanovsky (http://code.google.com/p/wikokit)
 # START DATE:   2009
-# FINISH DATE:  2013
+# FINISH DATE:  2014
 # SEE: 
 #   Talk:Xml2sql   http://meta.wikimedia.org/wiki/Talk:Xml2sql
 #   MySQL 2 SQLite http://www.perlmonks.org/index.pl?node_id=150476
@@ -36,7 +37,7 @@ my( $synsets, $synwords, %unique_synwords);
 my( $i, $set, $w);
 
 
-$headline = "xml2sql_helper V0.04 (GNU-GPL) 2009-2013 AKA MBG \n";
+$headline = "xml2sql_helper V0.05 (GNU-GPL) 2009-2014 AKA MBG \n";
 # --------------------------------------------------------------
 # subroutine help_exit
 # --------------------------------------------------------------
@@ -104,6 +105,9 @@ sub help_exit
 
       # remove lines with text "<ns>", e.g. "<ns>8</ns>"
       next LINE if -1 ne index $line, "<ns>";
+
+      # remove lines with text "<dbname>"
+      next LINE if -1 ne index $line, "<dbname>";      
 
       # remove lines with text "<model>", e.g. "<model>wikitext</model>"
       next LINE if -1 ne index $line, "<model>";
