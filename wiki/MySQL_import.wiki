@@ -8,6 +8,7 @@ At this moment, there is more information about import here: [http://synarcher.s
 = !MediaWiki =
  
 My beloved WAMP tutorial pages: 
+[http://superuser.com/questions/748117/how-to-manually-install-apache-php-and-mysql-on-windows How to manually install Apache, PHP and MySQL on Windows?],
 [http://fastec.altervista.org/Apache_PHP_MySQL.php Ultimate How To], 
 [http://www.softtime.ru/article/index.php?id_article=95 in Russian].
 
