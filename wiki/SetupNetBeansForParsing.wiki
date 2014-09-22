@@ -95,6 +95,8 @@ Ok, you can continue parsing from the record 42400 in the table 'page'.
 $run_wikt_parser.bat en 424000
 }}}
 
+Attention: if you want to run parser from zero (from the very beginning) then `DROP DATABASE` (see above).
+
 = Analyze MySQL slow requests log file =
 
 Dump result Wiktionary parsed database, then:
