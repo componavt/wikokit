@@ -96,6 +96,8 @@ by
 INSERT INTO `page` (page_id, page_namespace, page_title, page_restrictions, page_counter, page_is_redirect, page_is_new, page_random, page_touched, page_latest, page_len) 
 }}}
 
+See [https://www.mediawiki.org/wiki/Manual:Page_table MediaWiki/Manual:page table].
+
 === revision.sql ===
 
 If there are the errors (due to `SOURCE revision.sql`): 
