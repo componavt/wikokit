@@ -40,6 +40,8 @@ DEBUG_PAGES = false;
 
 = Run parser =
 
+== Running parser in first time ==
+
 Create directory for the parser, copy project files, run .bat file:
 {{{
 $mkdir /enwikt20100824/wikt_parser
@@ -73,6 +75,24 @@ OK. Run it:
 {{{
 $cd /enwikt20100824/wikt_parser
 $run_wikt_parser.bat en 0
+}}}
+
+== Running parser in ... time ==
+
+If/When the parser got an error and failed you continue from last treated page of the source Wiktionary database. You should open log-file located in the same directory as `run_wikt_parser.bat`.
+
+Go to the end of the generated log-file, find the line starting from the figure, e.g.:
+{{{
+424000: some_word_from_Wiktionary, duration: 199 min, remain: 27 min
+}}}
+
+Ok, you can continue parsing from the record 42400 in the table 'page'. 
+
+1. Increment the name of log-file in `run_wikt_parser.bat`: enwikt20100824_parsed_02.log -> enwikt20100824_parsed_03.log
+
+2. run .bat-file with new parameter
+{{{
+$run_wikt_parser.bat en 424000
 }}}
 
 = Analyze MySQL slow requests log file =
