@@ -82,6 +82,20 @@ mysql$ SOURCE /temp/text.sql
 mysql$ SOURCE /temp/revision.sql 
 }}}
 
+=== page.sql ==
+
+If you got the error: `wrong number of parameters in INSERT`, THEN
+
+Replace all (in text editor)
+{{{
+INSERT INTO `page`
+}}}
+
+by
+{{{
+INSERT INTO `page` (page_id, page_namespace, page_title, page_restrictions, page_counter, page_is_redirect, page_is_new, page_random, page_touched, page_latest, page_len) 
+}}}
+
 === revision.sql ===
 
 If there are the errors (due to `SOURCE revision.sql`): 
