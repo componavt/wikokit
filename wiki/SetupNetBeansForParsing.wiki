@@ -87,10 +87,8 @@ Go to the end of the generated log-file, find the line starting from the figure,
 }}}
 
 Ok, you can continue parsing from the record 42400 in the table 'page'. 
-
-1. Increment the name of the log-file in `run_wikt_parser.bat`, e.g. enwikt20100824_parsed_02.log -> enwikt20100824_parsed_03.log
-
-2. run .bat-file with new parameter
+  # Increment the name of the log-file in `run_wikt_parser.bat`, e.g. enwikt20100824_parsed_02.log -> enwikt20100824_parsed_03.log
+  # run .bat-file with new parameter
 {{{
 $run_wikt_parser.bat en 424000
 }}}
