@@ -84,7 +84,7 @@ mysql$ SOURCE /temp/revision.sql
 
 === page.sql ==
 
-If you got the error: `wrong number of parameters in INSERT`, THEN
+If you got the error: `wrong number of parameters in INSERT`, then
 
 Replace all (in text editor)
 {{{
