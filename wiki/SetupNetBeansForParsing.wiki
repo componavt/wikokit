@@ -79,7 +79,7 @@ $run_wikt_parser.bat en 0
 
 == Running parser in ... time ==
 
-If/When the parser got an error and failed, you can continue from last treated page of the source Wiktionary database. You should open log-file located in the same directory as `run_wikt_parser.bat`.
+If/When the parser got an error and failed, you can continue from the last treated page of the source Wiktionary database. You should open log-file located in the same directory as `run_wikt_parser.bat`.
 
 Go to the end of the generated log-file, find the line starting from the figure, e.g.:
 {{{
