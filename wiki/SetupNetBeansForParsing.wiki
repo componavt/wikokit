@@ -95,7 +95,7 @@ $run_wikt_parser.bat en 424000
 
 Attention: if you want to run parser from zero (from the very beginning) then recreate Wiktionary parsed database (see "DROP DATABASE" above).
 
-Attention: if you are running the wikt_parser as a main project in !NetBeans, then (1) see NetBeans output buffer instead of log-file, (2) change "Arguments: *`en 0`*" to
+Attention: if you are running the wikt_parser as a main project in !NetBeans, then (1) see !NetBeans output buffer instead of log-file, (2) change "Arguments: *`en 0`*" to
     * Arguments: *`en 424000`*
 
 = Analyze MySQL slow requests log file =
