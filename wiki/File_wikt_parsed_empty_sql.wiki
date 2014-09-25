@@ -19,6 +19,11 @@ If MySQL whines and prints error message that access is denied then you can try 
 mysql$ GRANT SELECT ON enwikt20100824.* TO javawiki@'localhost';
 }}}
 
+You can list the privileges that are granted to a 'javawiki' MySQL user account:
+{{{
+mysql$ SHOW GRANTS FOR javawiki;
+}}}
+
 = Details =
 
   * Edit `wikt_parsed_empty.mwb` file in [MySQLWorkbench MySQL Workbench], export it to `wikt_parsed_empty.sql`
