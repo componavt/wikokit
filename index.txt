@@ -1,16 +1,18 @@
-<font color="red">Attention: download new files from the page [http://whinger.krc.karelia.ru/soft/wikokit/index.html]. See "External links" (left panel).</font>
-
 _Language is a city to the building of which every human being brought a stone._ /Ralph Waldo Emerson/
 
 == Wikokit - Machine-readable Wiktionary ==
 
-Stone I. Parser. This program parses Wiktionaries, builds and constructs machine-readable Wiktionaries.
+Stone I. Parser <b>wikokit</b>. This program parses Wiktionaries, constructs and fills machine-readable Wiktionaries.
 
-Stone II. Dictionary. A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
+Stone II. PHP API [https://github.com/componavt/piwidict piwidict]
+
+Stone III. Dictionary kiwidict. A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
 
 The goal of this project is to extract [http://en.wikipedia.org/wiki/Semi-structured_data semi-structured information] from Wiktionary and construct [http://en.wikipedia.org/wiki/Machine-readable_dictionary machine-readable dictionary] (database + [http://en.wikipedia.org/wiki/API API] + [http://en.wikipedia.org/wiki/GUI GUI]).
 
-=== Stone II: Android applications ===
+<font color="red">Attention: download new files from the page [http://whinger.krc.karelia.ru/soft/wikokit/index.html]. See "External links" (left panel).</font>
+
+=== Stone III: kiwidict - Android applications ===
 
   * [https://play.google.com/store/apps/details?id=wikokit.kiwidict.enwikt kiwidict] offline multilingual dictionary and thesaurus based on the English Wiktionary.
   * [https://play.google.com/store/apps/details?id=wikokit.kiwidict kiwidict-ru] offline multilingual dictionary and thesaurus based on the Russian Wiktionary.
@@ -90,6 +92,7 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
   * A. A. Krizhanovsky, F. Lin. [http://arxiv.org/abs/0907.2209 Related terms search based on WordNet / Wiktionary and its application in Ontology Matching] // In: Proceedings of the 11th Russian Conference on Digital Libraries RCDL’2009. September 17-21, Petrozavodsk, Russia. – pp. 363-369.
 
 === In Russian ===
+  * Крижановский А.А., Смирнов А.В., Круглов В.М., Крижановская Н.Б., Кипяткова И.С. [http://scipeople.com/publication/117259/ Автоматическое извлечение словарных помет из Русского Викисловаря] //  Труды СПИИРАН. 2014. Вып. 2(33). С. 164-185. ([http://cdn.scipeople.com/materials/97/context_labels_ruwikt_2014_KrizhanovskyAA_color.pdf PDF]).
   * Крижановский А.А., Смирнов А.В. [http://scipeople.com/publication/111654/ Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря] // Известия РАН. Теория и системы управления. N2, 2013, С. 53-63.
   * Крижановский А. А., Луговая Н. Б., Круглов В. М. [http://textualheritage.org/content/view/398/188/lang,russian/ Извлечение и анализ дат произведений в корпусе цитат онлайн-словаря] // Информационные технологии и письменное наследие: материалы VI междунар. науч. конф. El'Manuscript-12 (Петрозаводск, 3-8 сентября 2012) / отв. ред. В.А.Баранов, А.Г.Варфоломеев. – Петрозаводск; Ижевск, 2012. – 328 с. – C. 137—142. ISBN 978-5-8021-1402-5. ([http://textualheritage.org/component/option,com_docman/task,doc_download/gid,290/Itemid,/lang,russian/ PDF])
   * Смирнов А.В., Круглов В.М., Крижановский А.А., Луговая Н.Б., Карпов А.А., Кипяткова И.С. [http://scipeople.com/publication/113406/ Количественный анализ лексики русского WordNet и викисловарей] // Труды СПИИРАН. 2012. Вып. 23. С. 231–253. ([http://cdn.scipeople.com/materials/97/quant_WN_Wikt_ru_en_2012.pdf PDF]).
@@ -107,6 +110,7 @@ The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are u
   * [https://github.com/benreynwar/wiktionary-parser/tree/master/wiktionary_parser wiktionary_parser] // github.com, Perl module
   * [http://code.google.com/p/wikily-supervised-pos-tagger/ wikily-supervised-pos-tagger] - part-of-speech taggers for multiple languages implemented by training Hidden Markov with Wiktionary (see paper: Shen Li; João Graça; Ben Taskar, [http://aclweb.org/anthology-new/D/D12/D12-1127.pdf Wiki-ly Supervised Part-of-Speech Tagging], 2012, [http://aclweb.org/anthology-new/D/D12/D12-1127.bib bib])
   * [http://dbpedia.org/Wiktionary DBpedia Wiktionary]
+  * [http://kaiko.getalp.org/about-dbnary/ Dbnary]
   * [http://wiki.okfn.org/Linguistics/llod/datasets/wiktionary Wiktionary RDF versions]
   * [http://russianword.net/ YARN] (open !WordNet-like thesaurus for Russian)
 

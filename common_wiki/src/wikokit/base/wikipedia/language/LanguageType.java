@@ -2139,8 +2139,9 @@ public class LanguageType {
 
 
 
-    public static final LanguageType noo = new LanguageType("noo", "Nuu-chah-nulth", "Nuu-chah-nulth");
-    public static final LanguageType noo2 = LanguageType.addNonUniqueName(noo, "Nootka");
+    public static final LanguageType nuk = new LanguageType("nuk", "Nuu-chah-nulth", "Nuu-chah-nulth");
+    public static final LanguageType nuk2 = LanguageType.addNonUniqueName(nuk, "Nootka");
+    //public static final LanguageType noo = LanguageType.addNonUniqueCode(nuk, "noo"); // noo is error? now nuk
 
     public static final LanguageType nr = new LanguageType("nr", "Southern Ndebele", "Southern Ndebele");
     public static final LanguageType nbl = LanguageType.addNonUnique(nr, "nbl", "Nrebele");

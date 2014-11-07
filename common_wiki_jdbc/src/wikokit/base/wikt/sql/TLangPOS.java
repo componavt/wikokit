@@ -58,7 +58,7 @@ public class TLangPOS {
     /** A lemma of word. It's used when .redirect_type != None */
     private String lemma;
 
-    /** (1) Meaning consists of Definitions + Quotations. */
+    /** Meaning consists of Definitions + Quotations, Semantic relations and Translations. */
     private TMeaning[] meaning;
     
     private final static TLangPOS[] NULL_TLANGPOS_ARRAY = new TLangPOS[0];

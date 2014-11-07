@@ -559,12 +559,13 @@ public final class LabelRu extends LabelLocal  {
     public static final Label Greece = new LabelRu("греч.", "греческое", LabelEn.Greece);
     public static final Label Denmark = new LabelRu("датск.", "датское", LabelEn.Denmark);
     public static final Label Dominican_Republic = new LabelRu("доминик.", "доминиканский вариант испанского языка", LabelEn.Dominican_Republic);
+    public static final Label Doric_Greek = new LabelRu("дор.", "дорийский диалект древнегреческого языка", LabelEn.Doric_Greek);
     public static final Label Old_High_German = new LabelRu("др.-в.-нем.", "древневерхненемецкое", LabelEn.Old_High_German);
     public static final Label Old_Prussian = new LabelRu("др.-прусск.", "древнепрусское", LabelEn.Old_Prussian);
     public static final Label Samogitia = new LabelRu("жем.", "жемайтское", LabelEn.Samogitia);
     
     public static final Label Indonesia = new LabelRu("индонез.", "индонезийское", LabelEn.Indonesia);
-    public static final Label Ionic_Greek = new LabelRu("ион.", "ионийское", LabelEn.Ionic_Greek);
+    public static final Label Ionic_Greek = new LabelRu("ион.", "ионийский диалект древнегреческого языка", LabelEn.Ionic_Greek);
     public static final Label Ireland = new LabelRu("ирл.", "ирландский вариант английского языка", LabelEn.Ireland);
     public static final Label Spain = new LabelRu("исп.", "испанское", LabelEn.Spain);
     public static final Label Iceland = new LabelRu("исл.", "исландское", LabelEn.Iceland);
@@ -681,6 +682,7 @@ public final class LabelRu extends LabelLocal  {
 
     public static final Label Evenki = new LabelRu("эвенк.", "эвенкийское", LabelEn.Evenki);
     public static final Label Even = new LabelRu("эвенск.", "эвенское", LabelEn.Even);
+    public static final Label Aeolic_Greek = new LabelRu("эол.", "эолийский диалект древнегреческого языка", LabelEn.Aeolic_Greek);
     public static final Label Erzya = new LabelRu("эрз.", "эрзянское", LabelEn.Erzya);
     public static final Label Estonia = new LabelRu("эст.", "эстонское", LabelEn.Estonia);
 
@@ -750,6 +752,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label student_slang = new LabelRu("студ. жарг.", "студенческий жаргон",  LabelEn.student_slang);
     public static final Label tabooed = new LabelRu("табу", "табуированное", LabelEn.tabooed);
     public static final Label technical_jargon = new LabelRu("техн. жарг.", "технический жаргон",  LabelEn.technical_jargon); // absent
+    public static final Label manufacturing = new LabelRu("технол.", "технологическое", LabelEn.manufacturing);
     public static final Label solemn = new LabelRu("торж.", "торжественное", LabelEn.solemn);
     public static final Label traditionally_poetic = new LabelRu("трад.-поэт.", "традиционно-поэтическое", LabelEn.traditionally_poetic);
 

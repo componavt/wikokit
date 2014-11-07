@@ -10,7 +10,7 @@ public class UtilSQL {
     /** Deletes all records from the table 'table_name', resets auto increment.
      *
      * DELETE FROM table_name;
-     * ALTER TABLE table_name AUTO_INCREMENT = 0;
+     * ALTER TABLE table_name AUTO_INCREMENT = 1;
      */
     public static void deleteAllRecordsResetAutoIncrement (Connect connect, String table_name) {
 

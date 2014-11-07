@@ -26,7 +26,7 @@ import java.util.Collections;
 /** Table lang contains list of languages: name and ID. */
 public class TLang {
 
-    /** Unique page identifier. */
+    /** Unique language identifier. */
     private int id;
 
     /** Languages of wiki: code and name, e.g. 'ru' and 'Russian'. */
