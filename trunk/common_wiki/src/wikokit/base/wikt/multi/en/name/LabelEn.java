@@ -419,6 +419,7 @@ public final class LabelEn extends Label {
     
     public static final Label Acadia = new LabelEn("Acadia", "Acadian", LabelCategory.regional);
     public static final Label Adygei = new LabelEn("Adygei", "Adygei", LabelCategory.regional); // ruwikt адыгейское
+    public static final Label Aeolic_Greek = new LabelEn("Aeolic Greek", "Aeolic Greek", LabelCategory.regional); // ruwikt эол.
     public static final Label Africa = new LabelEn("Africa", "Africa",    LabelCategory.regional);
     public static final Label Afrikaans = new LabelEn("Afrikaans", "Afrikaans",    LabelCategory.regional); // ruwikt африкаанс
     public static final Label African_American_Vernacular_English = new LabelEn("African American Vernacular English",     "African American Vernacular",    LabelCategory.regional);
@@ -505,6 +506,7 @@ public final class LabelEn extends Label {
     public static final Label Denmark = new LabelEn("Denmark", "Denmark", LabelCategory.regional); //ruwikt датское
     public static final Label Digor = new LabelEn("Digor", "Digor dialect", LabelCategory.regional);
     public static final Label Dominican_Republic = new LabelEn("Dominican Republic", "Dominican Republic", LabelCategory.regional);
+    public static final Label Doric_Greek = new LabelEn("Doric Greek", "Doric Greek", LabelCategory.regional);//ruwikt дор.
     public static final Label Dublin = new LabelEn("Dublin", "Dublin", LabelCategory.regional);
 
     public static final Label East_Africa = new LabelEn("East Africa", "East Africa", LabelCategory.regional);
