@@ -2538,8 +2538,8 @@ public class LanguageType {
     public static final LanguageType srs = new LanguageType("srs", "Tsuut’ina", "Tsuut’ina");
     public static final LanguageType srs2 = LanguageType.addNonUniqueName(srs, "Sarsi");
 
-    public static final LanguageType ss = new LanguageType("ss", "SiSwati", "Swati");
-    public static final LanguageType ssw = LanguageType.addNonUniqueCode(ss, "ssw");
+    public static final LanguageType ss = new LanguageType("ss", "SiSwati", "Swazi");
+    public static final LanguageType ssw = LanguageType.addNonUnique(ss, "ssw", "Swati");
     
     public static final LanguageType st = new LanguageType("st", "Sesotho", "Sotho");
     public static final LanguageType sot = LanguageType.addNonUnique(st, "sot", "Sesotho");
