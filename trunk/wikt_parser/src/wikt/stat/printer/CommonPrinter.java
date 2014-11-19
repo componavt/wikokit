@@ -58,12 +58,12 @@ public class CommonPrinter {
         // print header line
         System.out.println("=== Number of relations per language ===");
 
-        System.out.println("\n'''Number of entries''' is a number of (Language & POS level) entries per language. E.g. the Wiktionary article \"[[:en:rook|rook]]\" contains three English and two Dutch entries of Part Of Speech level.");
+        System.out.println("\n'''Number of entries''' is a number of (Language & POS level) entries per language. E.g. the Wiktionary article \"[[:en:rook|rook]]\" contains three English and two Dutch entries of Part Of Speech level (Etymologies).");
         System.out.println("\n'''Total''' is a total number of relations, i.e. synonyms + antonyms + etc...\n");
         
         System.out.println("{| class=\"sortable prettytable\" style=\"text-align: center;\"");
         System.out.println("! Language name");
-        System.out.println("! Template");
+        System.out.println("! Code"); // Code - enwiki, Template - ruwiki
 
         if(LanguageType.en != native_lang)
             System.out.println("! in " + native_lang.getName());
@@ -88,7 +88,7 @@ public class CommonPrinter {
 
                 //System.out.print("|| " + lang.getName() + " || " + lang.getCode());
             System.out.println("|-");
-            System.out.print("|" + lang.getName() + "||{{" + lang.getCode() + "}}");
+            System.out.print("|" + lang.getName() + "||" + lang.getCode());
             if(LanguageType.en != native_lang) {
                 String local_name = "";
                 if (lang.hasTranslation(native_lang))

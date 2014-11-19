@@ -91,10 +91,10 @@ public class Connect {
     public final static String ENWIKT_HOST  = "localhost";
     public final static String ENWIKT_USER  = "javawiki";
     public final static String ENWIKT_PASS  = "";
-    public final static String ENWIKT_DB = "enwikt20111008?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_DB = "enwikt20140908?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     // English Wiktionary parsed database
-    public final static String ENWIKT_PARSED_DB = "enwikt20111008_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_PARSED_DB = "enwikt20140908_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
 
     //public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20101030.sqlite";
     public final static String ENWIKT_SQLITE = "enwikt20111008.sqlite";

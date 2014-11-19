@@ -1,6 +1,6 @@
 /* LabelTableAll.java - context labels statistics in the database of the parsed Wiktionary.
  *
- * Copyright (c) 2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2013-2014 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 package wikt.stat;
@@ -741,7 +741,7 @@ public class LabelTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of context labels in the Wiktionary parsed database ==");
-        System.out.println("\n''Last updated: summer 2013.''");
+        System.out.println("\n''Last updated: summer 2014.''");
         CommonPrinter.printHeader (db_name);
 
         // part 1

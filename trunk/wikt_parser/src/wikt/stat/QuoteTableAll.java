@@ -491,7 +491,7 @@ public class QuoteTableAll {
 
         String db_name = wikt_parsed_conn.getDBName();
         System.out.println("\n== Statistics of quotes in the Wiktionary parsed database ==");
-        System.out.println("\n''Last updated: summer 2013.''");
+        System.out.println("\n''Last updated: summer 2014.''");
         CommonPrinter.printHeader (db_name);
 
         Map<LanguageType, Integer> m = QuoteTableAll.countQuotes(wikt_parsed_conn);
