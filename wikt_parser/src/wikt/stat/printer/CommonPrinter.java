@@ -298,10 +298,13 @@ public class CommonPrinter {
         System.out.println("! Language name");
         System.out.println("! Number");
 
-        // in Russian
-        if(LanguageType.en != native_lang) // let's print translations of the language for non-English Wiktionaries
-            System.out.println("! in " + native_lang.getName());
-        System.out.println("! Template");
+        if(LanguageType.en == native_lang) {
+            System.out.println("! Language code");
+        }
+        else { // e.g. Russian
+            System.out.println("! in " + native_lang.getName());    // let's print translations of the language for non-English Wiktionaries
+            System.out.println("! Template");
+        }
 
         // print values
         for(LanguageType lang : m_lang_n.keySet()) {
@@ -313,7 +316,10 @@ public class CommonPrinter {
             //System.out.print("|| " + lang.getCode() + " || " + lang.getName());
             // System.out.println(" || " + n + " ||");
 
-            if(LanguageType.en != native_lang) {
+            if(LanguageType.en == native_lang) {
+                System.out.print("||" + lang.getCode());
+                
+            } else {
                 String local_name = "";
                 if (lang.hasTranslation(native_lang))
                     local_name = lang.translateTo(native_lang);
