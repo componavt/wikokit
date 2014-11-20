@@ -336,7 +336,7 @@ public class POSAndPolysemyTableAll {
         Connect wikt_parsed_conn = new Connect();
         LanguageType native_lang;
         
-        boolean b_english = false;
+        boolean b_english = true;
 
         // English
         if(b_english) {
