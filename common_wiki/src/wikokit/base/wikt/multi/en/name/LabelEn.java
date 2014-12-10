@@ -804,6 +804,7 @@ public final class LabelEn extends Label {
     public static final Label childish = new LabelEn("childish",  "childish", LabelCategory.usage);
     public static final Label chu_Nom = new LabelEn("chu Nom",  "Vietnamese chữ Nôm", LabelCategory.usage);
     public static final Label Classic_1811 = new LabelEn("Classic 1811 Dictionary of the Vulgar Tongue",  "obsolete, slang", LabelCategory.usage);
+    public static final Label clipping = new LabelEn("clipping", "clipping", LabelCategory.qualifier);//ruwikt усечённое - clipping, truncation, shortening
     
     public static final Label colloquial = new LabelEn("colloquial",  "colloquial", LabelCategory.usage);
     public static final Label colloquial_um = LabelEn.addNonUniqueShortName(colloquial, "colloquial-um");

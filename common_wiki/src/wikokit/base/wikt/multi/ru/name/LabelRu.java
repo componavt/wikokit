@@ -709,6 +709,7 @@ public final class LabelRu extends LabelLocal  {
     
     public static final Label acerbity = new LabelRu("груб.", "грубое",  LabelEn.acerbity);
     public static final Label childish = new LabelRu("детск.", "детское", LabelEn.childish);
+    public static final Label clipping = new LabelRu("усеч.", "усечённое", LabelEn.clipping);
     public static final Label dialect = new LabelRu("диал.", "диалектное", LabelEn.dialect);
     public static final Label dysphemism = new LabelRu("дисфм.", "дисфемизм", LabelEn.dysphemism);
     public static final Label cant = new LabelRu("жарг.", "жаргонное", LabelEn.cant);
@@ -846,7 +847,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label regional_Mor = LabelRu.addNonUniqueShortName(nautical, "Мор.");
 
     public static final Label sciences = new LabelRu("научн.", "научное", LabelEn.sciences);
-    public static final Label oil_industry = new LabelRu("нефтегаз.", "нефтегазодобыча", LabelEn.oil_industry);
+    public static final Label oil_industry = new LabelRu("нефтегаз.", "нефтегазовая промышленность и нефтепереработка", LabelEn.oil_industry);
     public static final Label numismatics = new LabelRu("нумизм.", "нумизматическое", LabelEn.numismatics);
 	
     public static final Label occult = new LabelRu("оккульт.", "оккультное", LabelEn.occult);
@@ -990,7 +991,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label fishing = new LabelRu("рыбол.", "рыболовецкое", LabelEn.fishing);
     public static final Label tennis = new LabelRu("теннис", "теннис", LabelEn.tennis);
     // "chess" see in section "games"
-    public static final Label soccer = new LabelRu("футб", "футбол", LabelEn.soccer); // ПОМЕНЯЛ С football 
+    public static final Label soccer = new LabelRu("футб", "футбол", LabelEn.soccer); // changed with football 
     public static final Label hockey = new LabelRu("хокк", "хоккей", LabelEn.hockey);
     
     

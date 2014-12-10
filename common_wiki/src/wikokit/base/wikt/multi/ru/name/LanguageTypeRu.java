@@ -540,7 +540,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     // el public static final LanguageTypeLocal pnt = new LanguageTypeRu("Понтийский", LanguageType.pnt);
     public static final LanguageTypeLocal pox = new LanguageTypeRu("Полабский", LanguageType.pox);
     public static final LanguageTypeLocal ppol = new LanguageTypeRu("Протополинезийский", LanguageType.ppol);
-    public static final LanguageTypeLocal prg = new LanguageTypeRu("Прусский", LanguageType.prg);
+    public static final LanguageTypeLocal prg = new LanguageTypeRu("Древнепрусский", LanguageType.prg);
     public static final LanguageTypeLocal prs = new LanguageTypeRu("Дари", LanguageType.prs);
     public static final LanguageTypeLocal ps = new LanguageTypeRu("Пушту", LanguageType.ps);
     public static final LanguageTypeLocal psl = new LanguageTypeRu("Праславянский", LanguageType.psl);
