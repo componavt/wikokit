@@ -871,7 +871,10 @@ public final class LabelEn extends Label {
     public static final Label pejorative = new LabelEn("pejorative", "pejorative", LabelCategory.usage);
     public static final Label poetic = new LabelEn("poetic", "poetic", LabelCategory.usage);
     public static final Label polite = new LabelEn("polite",  "polite", LabelCategory.usage);  // вежливый
+    
     public static final Label politically_correct = new LabelEn("politically correct",  "politically correct", LabelCategory.usage);
+    public static final Label political_slang = new LabelEn("political slang",  "political slang", LabelCategory.usage);//ruwikt полит.жарг.
+    
     public static final Label popular_language = new LabelEn("popular language", "popular language", LabelCategory.usage); // ruwikt просторечное
     public static final Label proscribed = new LabelEn("proscribed",  "proscribed", LabelCategory.usage);
     public static final Label radio_slang = new LabelEn("radio slang",  "radio slang", LabelCategory.usage);
@@ -1235,8 +1238,10 @@ public final class LabelEn extends Label {
     //plant перемещено вниз, как синоним botany
     public static final Label poetry = new LabelEn("poetry", "poetry", LabelCategory.topical);
     //poison перемещено вниз, как синоним toxicology
+    
     public static final Label political_science = new LabelEn("political science", "political science", LabelCategory.topical);
     public static final Label politics = new LabelEn("politics", "politics", LabelCategory.topical); // полит. — политическое
+    
     public static final Label polymer_science = new LabelEn("polymer science", "polymer science", LabelCategory.topical);
     public static final Label pornography = new LabelEn("pornography", "pornography", LabelCategory.topical);
     public static final Label pottery = new LabelEn("pottery", "pottery", LabelCategory.topical);

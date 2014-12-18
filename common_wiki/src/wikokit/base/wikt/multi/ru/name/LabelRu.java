@@ -696,12 +696,9 @@ public final class LabelRu extends LabelLocal  {
     // usage - стиль
     // //////////////////////////
     
-    // todo syn:
-    // шаблон:студ. жарг. -> Шаблон:студ.жарг. и др.
-    // техн. жарг.
-    
     public static final Label abusive = new LabelRu("бранн.", "бранное",  LabelEn.abusive);
     public static final Label abusive2 = LabelRu.addNonUniqueShortName(abusive, "бран.");
+    public static final Label abusive3 = LabelRu.addNonUniqueShortName(abusive, "оскорб.");
     
     public static final Label vulgar = new LabelRu("вульг.", "вульгарное",  LabelEn.vulgar);
     //public static final Label bombast = new LabelRu("высок.", "высокопарное",  LabelEn.bombast);
@@ -718,7 +715,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label distorted = new LabelRu("искаж.", "искажённое",  LabelEn.distorted);
     public static final Label beaurocratic = new LabelRu("канц.", "канцелярское",  LabelEn.beaurocratic);
     public static final Label literary = new LabelRu("книжн.", "книжное",  LabelEn.literary);
-    public static final Label computerese = new LabelRu("комп. жарг.", "компьютерный жаргон",  LabelEn.computerese); // absent
+    public static final Label computerese = new LabelRu("комп.жарг.", "компьютерный жаргон",  LabelEn.computerese); // absent
     public static final Label endearing = new LabelRu("ласк.", "ласкательное", LabelEn.endearing);
     
     public static final Label obscene_language = new LabelRu("обсц.", "обсценное",  LabelEn.obscene_language);
@@ -750,9 +747,12 @@ public final class LabelRu extends LabelLocal  {
     public static final Label rhetoric = new LabelRu("ритор.", "риторическое", LabelEn.rhetoric);
     public static final Label slang = new LabelRu("сленг", "сленг", LabelEn.slang);
     public static final Label low_style = new LabelRu("сниж.", "сниженное",  LabelEn.low_style);
-    public static final Label student_slang = new LabelRu("студ. жарг.", "студенческий жаргон",  LabelEn.student_slang);
+    
+    public static final Label student_slang = new LabelRu("студ.жарг.", "студенческий жаргон",  LabelEn.student_slang);
+    public static final Label student_slang2 = LabelRu.addNonUniqueShortName(student_slang, "студ. жарг.");
+    
     public static final Label tabooed = new LabelRu("табу", "табуированное", LabelEn.tabooed);
-    public static final Label technical_jargon = new LabelRu("техн. жарг.", "технический жаргон",  LabelEn.technical_jargon); // absent
+    public static final Label technical_jargon = new LabelRu("техн.жарг.", "технический жаргон",  LabelEn.technical_jargon); // absent
     public static final Label manufacturing = new LabelRu("технол.", "технологическое", LabelEn.manufacturing);
     public static final Label solemn = new LabelRu("торж.", "торжественное", LabelEn.solemn);
     public static final Label traditionally_poetic = new LabelRu("трад.-поэт.", "традиционно-поэтическое", LabelEn.traditionally_poetic);
@@ -857,9 +857,15 @@ public final class LabelRu extends LabelLocal  {
 	
     public static final Label paleontology = new LabelRu("палеонт.", "палеонтологическое", LabelEn.paleontology);
     public static final Label hairdressing = new LabelRu("парикмах.", "парикмахерское", LabelEn.hairdressing);
+    
     public static final Label carpentry = new LabelRu("плотн.", "плотницкое дело", LabelEn.carpentry);
+    public static final Label carpentry2 = LabelRu.addNonUniqueShortName(carpentry, "столярн.");
+    
     public static final Label printing = new LabelRu("полигр.", "полиграфическое", LabelEn.printing);
+    
     public static final Label politics = new LabelRu("полит.", "политическое", LabelEn.politics);
+    public static final Label political_slang = new LabelRu("полит.жарг.", "политический жаргон", LabelEn.political_slang);
+    
     public static final Label sartorial = new LabelRu("портн.", "портновское дело", LabelEn.sartorial);
     public static final Label professional = new LabelRu("проф.", "профессиональное", LabelEn.professional);
     public static final Label psychiatry = new LabelRu("психиатр.", "психиатрия", LabelEn.psychiatry);
