@@ -278,6 +278,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal frm = new LanguageTypeRu("Среднефранцузский", LanguageType.frm);
     public static final LanguageTypeLocal fro = new LanguageTypeRu("Старофранцузский", LanguageType.fro);
     public static final LanguageTypeLocal frp = new LanguageTypeRu("Франкопровансальский", LanguageType.frp);
+    public static final LanguageTypeLocal frr = new LanguageTypeRu("Севернофризский", LanguageType.frr);
     public static final LanguageTypeLocal fur = new LanguageTypeRu("Фриульский", LanguageType.fur);
     public static final LanguageTypeLocal fy = new LanguageTypeRu("Фризский", LanguageType.fy);
 
