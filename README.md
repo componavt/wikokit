@@ -1,4 +1,3 @@
-_Language is a city to the building of which every human being brought a stone._ /Ralph Waldo Emerson/
 <blockquote>
 <p>Language is a city to the building of which every human being brought a stone.</p>
 <blockquote><p>Ralph Waldo Emerson</p></blockquote>
@@ -8,7 +7,7 @@ _Language is a city to the building of which every human being brought a stone._
 
 Stone I. Parser <b>wikokit</b>. This program parses Wiktionaries, constructs and fills machine-readable Wiktionaries.
 
-Stone II. PHP API [https://github.com/componavt/piwidict piwidict]
+Stone II. PHP API [piwidict](https://github.com/componavt/piwidict)
 
 Stone III. Dictionary kiwidict. A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
 
