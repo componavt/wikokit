@@ -43,12 +43,12 @@ II) Today's result. Now machine-readable Wiktionary contains the following infor
 (^) Context labels and quotations were extracted only from Russian Wiktionary.
 
 Machine-readable Wiktionary framework:
-http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/db_scheme/MRDW_framework_external_applications.png
+https://raw.githubusercontent.com/componavt/wikokit/master/wiki/wiwordik.attach/db_scheme/MRDW_framework_external_applications.png
 
 I am interested that all two hundred Wiktionaries were parsed by this parser. But I know only Russian and English :)
 
 If you are developer and if you are interested in adding modules to parse "your Wiktionary", then 
-  * start from the paper describing the database (tables and relations) of machine-readable Wiktionary: [http://arxiv.org/abs/1011.1368 Transformation of Wiktionary entry structure into tables and relations in a relational database schema.]. 2010. But there are new tables (absent in the publication) related to _quotations_ and _context labels_, see [http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql#Machine-readable_database_schema Machine-readable database schema];
+  * start from the paper describing the database (tables and relations) of machine-readable Wiktionary: [http://arxiv.org/abs/1011.1368 Transformation of Wiktionary entry structure into tables and relations in a relational database schema.]. 2010. But there are new tables (absent in the publication) related to _quotations_ and _context labels_, see [Machine-readable database schema](http://code.google.com/p/wikokit/wiki/File_wikt_parsed_empty_sql#Machine-readable_database_schema);
   * GettingStartedWiktionaryParser - install parser and try to parse English Wiktionary and Russian Wiktionary;
   * Play with parsed English or Russian Wiktionary SQL dump (see Donwload section);
   * OneMoreWiktionary - extend parser in order to extract invaluable information from your Wiktionary.
