@@ -33,13 +33,14 @@ After installation you can find the parsed Wiktionary database in SQLite format 
 I) The maximum goal (in distant future) is to extract all information (i.e. [all sections of entry](http://en.wiktionary.org/wiki/Wiktionary:ELE)) from all wiktionaries and convert data to machine-readable format.
 
 II) Today's result. Now machine-readable Wiktionary contains the following information extracted from Russian Wiktionary and English Wiktionary:
-  # word's language and part of speech;
-  # meanings / definitions;
-  # semantic relations;
-  # translations;
-  # (^) quotations (text + bibliographic data).
+  1. word's language and part of speech;
+  2. meanings / definitions;
+  3. semantic relations;
+  4. translations;
+  5. (^) context labels (from definitions);
+  6. (^) quotations (text + bibliographic data).
 
-(^) Quotations were extracted only from Russian Wiktionary.
+(^) Context labels and quotations were extracted only from Russian Wiktionary.
 
 Machine-readable Wiktionary framework:
 http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/db_scheme/MRDW_framework_external_applications.png
