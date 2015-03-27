@@ -36,11 +36,11 @@ mysql$ SHOW GRANTS FOR javawiki;
 
 The structure (tables and relations) of the Wiktionary parsed database (database layout):
 
-![http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/wikt_parsed_empty_with_foreign_keys.png](http://wikokit.googlecode.com/svn/trunk/wikt_parser/doc/screenshots/wikt_parsed_empty_with_foreign_keys.png)
+![Wiktionary parsed database](https://raw.githubusercontent.com/componavt/wikokit/master/wikt_parser/doc/screenshots/wikt_parsed_empty_with_foreign_keys.png)
 
 Set of tables related to quotations (fragment of the Wiktionary parsed database):
 
-![http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/db_scheme/quote_tables.png](http://wikokit.googlecode.com/svn/trunk/wiki/wiwordik.attach/db_scheme/quote_tables.png)
+![quotations tables of the Wiktionary parsed database](https://raw.githubusercontent.com/componavt/wikokit/master/wiki/wiwordik.attach/db_scheme/quote_tables.png)
 
 # Misc #
 
