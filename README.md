@@ -13,22 +13,22 @@ Stone III. Dictionary kiwidict. A visual interface to the parsed English Wiktion
 
 The goal of this project is to extract [semi-structured information](http://en.wikipedia.org/wiki/Semi-structured_data) from Wiktionary and construct [machine-readable dictionary](http://en.wikipedia.org/wiki/Machine-readable_dictionary) (database + [API](http://en.wikipedia.org/wiki/API) + [GUI](http://en.wikipedia.org/wiki/GUI)).
 
-**Download** new Wiktionary parsed databases from the page [link](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
+**Download** new Wiktionary parsed databases from [this page](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
 
-=== Stone III: kiwidict - Android applications ===
+### Stone III: Dictionary kiwidict - Android applications
 
-  * [https://play.google.com/store/apps/details?id=wikokit.kiwidict.enwikt kiwidict] offline multilingual dictionary and thesaurus based on the English Wiktionary.
-  * [https://play.google.com/store/apps/details?id=wikokit.kiwidict kiwidict-ru] offline multilingual dictionary and thesaurus based on the Russian Wiktionary.
-  * [https://market.android.com/details?id=wordik.magneto magnetowordik] word game based on data extracted from the English Wiktionary.
+  * [kiwidict](https://play.google.com/store/apps/details?id=wikokit.kiwidict.enwikt) offline multilingual dictionary and thesaurus based on the English Wiktionary.
+  * [kiwidict-ru](https://play.google.com/store/apps/details?id=wikokit.kiwidict) offline multilingual dictionary and thesaurus based on the Russian Wiktionary.
+  * [magnetowordik](https://market.android.com/details?id=wordik.magneto) word game based on data extracted from the English Wiktionary.
 
-Graphical user interface (kiwidict and kiwidict-ru) supports (see [http://wikokit.googlecode.com/svn/trunk/wiwordik/release_notes.txt release_notes.txt]):
-  * words filtering by language code (e.g. de, fr);
+Graphical user interface (kiwidict and kiwidict-ru) supports (see [release_notes.txt](https://github.com/componavt/wikokit/blob/master/wiwordik/release_notes.txt)):
+  * words filtering by language code (e.g. de, fr)
   * wildcard characters: the percent sign (%) matches zero or more characters, and underscore ({{{_}}}) a single character;
   * todo: list of words only with meanings and / or semantic relations (use checkboxes).
 
 After installation you can find the parsed Wiktionary database in SQLite format on your phone in the folder `SD card/kiwidict/`.
 
-=== Stone I: Parser and dictionary description ===
+### Stone I: Parser and dictionary description
 
 I) The maximum goal (in distant future) is to extract all information (i.e. [http://en.wiktionary.org/wiki/Wiktionary:ELE all sections of entry]) from all wiktionaries and convert data to machine-readable format.
 
