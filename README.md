@@ -23,7 +23,7 @@ The goal of this project is to extract [semi-structured information](http://en.w
 
 Graphical user interface (kiwidict and kiwidict-ru) supports (see [release_notes.txt](https://github.com/componavt/wikokit/blob/master/wiwordik/release_notes.txt)):
   * words filtering by language code (e.g. de, fr)
-  * wildcard characters: the percent sign (%) matches zero or more characters, and underscore ({{{_}}}) a single character;
+  * wildcard characters: the percent sign (%) matches zero or more characters, and underscore (_) a single character;
   * todo: list of words only with meanings and / or semantic relations (use checkboxes).
 
 After installation you can find the parsed Wiktionary database in SQLite format on your phone in the folder `SD card/kiwidict/`.
