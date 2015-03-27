@@ -43,7 +43,7 @@ II) Today's result. Now machine-readable Wiktionary contains the following infor
 (^) Context labels and quotations were extracted only from Russian Wiktionary.
 
 Machine-readable Wiktionary framework:
-https://raw.githubusercontent.com/componavt/wikokit/master/wiki/wiwordik.attach/db_scheme/MRDW_framework_external_applications.png
+![Machine-readable Wiktionary framework](https://raw.githubusercontent.com/componavt/wikokit/master/wiki/wiwordik.attach/db_scheme/MRDW_framework_external_applications.png)
 
 I am interested that all two hundred Wiktionaries were parsed by this parser. But I know only Russian and English :)
 
