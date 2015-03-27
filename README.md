@@ -13,8 +13,7 @@ Stone III. Dictionary kiwidict. A visual interface to the parsed English Wiktion
 
 The goal of this project is to extract [semi-structured information](http://en.wikipedia.org/wiki/Semi-structured_data) from Wiktionary and construct [machine-readable dictionary](http://en.wikipedia.org/wiki/Machine-readable_dictionary) (database + [API](http://en.wikipedia.org/wiki/API) + [GUI](http://en.wikipedia.org/wiki/GUI)).
 
-<font color="red">Attention: download new files from the page [http://whinger.krc.karelia.ru/soft/wikokit/index.html]. See "External links" (left panel).</font>
-Download new Wiktionary parsed databases from the page [link](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
+**Download** new Wiktionary parsed databases from the page [link](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
 
 === Stone III: kiwidict - Android applications ===
 
