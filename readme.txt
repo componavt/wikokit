@@ -1,7 +1,6 @@
 _Language is a city to the building of which every human being brought a stone._ /Ralph Waldo Emerson/
 
-Wikokit - Machine-readable Wiktionary
-=====================================
+# Wikokit - Machine-readable Wiktionary
 
 Stone I. Parser <b>wikokit</b>. This program parses Wiktionaries, constructs and fills machine-readable Wiktionaries.
 
