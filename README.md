@@ -1,4 +1,8 @@
 _Language is a city to the building of which every human being brought a stone._ /Ralph Waldo Emerson/
+<blockquote>
+<p>Language is a city to the building of which every human being brought a stone.</p>
+<blockquote><p>Ralph Waldo Emerson</p></blockquote>
+</blockquote>
 
 # Wikokit - Machine-readable Wiktionary
 
