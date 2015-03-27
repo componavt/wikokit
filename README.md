@@ -30,7 +30,7 @@ After installation you can find the parsed Wiktionary database in SQLite format 
 
 ### Stone I: Parser and dictionary description
 
-I) The maximum goal (in distant future) is to extract all information (i.e. [http://en.wiktionary.org/wiki/Wiktionary:ELE all sections of entry]) from all wiktionaries and convert data to machine-readable format.
+I) The maximum goal (in distant future) is to extract all information (i.e. [all sections of entry](http://en.wiktionary.org/wiki/Wiktionary:ELE)) from all wiktionaries and convert data to machine-readable format.
 
 II) Today's result. Now machine-readable Wiktionary contains the following information extracted from Russian Wiktionary and English Wiktionary:
   # word's language and part of speech;
