@@ -50,8 +50,8 @@ I am interested that all two hundred Wiktionaries were parsed by this parser. Bu
 If you are developer and if you are interested in adding modules to parse "your Wiktionary", then 
   * start from the paper describing the database (tables and relations) of machine-readable Wiktionary: [Transformation of Wiktionary entry structure into tables and relations in a relational database schema](http://arxiv.org/abs/1011.1368). 2010. But there are new tables (absent in the publication) related to _quotations_ and _context labels_, see [Machine-readable database schema](https://github.com/componavt/wikokit/blob/wiki/File_wikt_parsed_empty_sql.md#machine-readable-database-schema);
   * [GettingStartedWiktionaryParser](https://github.com/componavt/wikokit/blob/wiki/GettingStartedWiktionaryParser.md) &mdash; install parser and try to parse English Wiktionary and Russian Wiktionary;
-  * Play with parsed English or Russian Wiktionary SQL dump (see Donwload section);
-  * OneMoreWiktionary - extend parser in order to extract invaluable information from your Wiktionary.
+  * Play with parsed English or Russian Wiktionary SQL dump (download [Wiktionary parsed databases](http://whinger.krc.karelia.ru/soft/wikokit/index.html));
+  * [OneMoreWiktionary](https://github.com/componavt/wikokit/blob/wiki/OneMoreWiktionary.md) &mdash; extend parser in order to extract invaluable information from your Wiktionary.
 
 === Statistics ===
 
