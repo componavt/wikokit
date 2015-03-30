@@ -13,15 +13,16 @@ Russian language code is "ru" (ISO 639) is used as the suffix _Ru_ in names of n
 
 There is a special package [wikokit.base.wikt.multi](https://github.com/componavt/wikokit/tree/master/common_wiki/src/wikokit/base/wikt/multi) which contains subpackages for each WLE: en, ru.
 
-Russian Wiktionary module files in the package **[wikokit.base.wikt.multi.ru.name](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/)**:
-  * [LanguageTypeRu.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/LanguageTypeRu.java) - names of languages in Russian and links to the [LanguageType](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikipedia/language/LanguageType.java) codes;
-  * [POSRu.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/POSRu.java) - names of parts of speech in Russian and the links to the [POS](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/constant/POS.java) objects;
-  * [RelationRu.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/RelationRu.java) - names of semantic relations in Russian and the links to the [Relation](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/constant/POS.java) objects.
-  * [LabelCategoryRu.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/LabelCategoryRu.java) - skip now, context labels are under construction this year... (names of categories of context labels in Russian).
+Russian Wiktionary module files in the package **[wikokit.base.wikt.multi.ru.name](https://github.com/componavt/wikokit/tree/master/common_wiki/src/wikokit/base/wikt/multi/ru/name)**:
+  * [LanguageTypeRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/name/LanguageTypeRu.java) &mdash; names of languages in Russian and links to the [LanguageType](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikipedia/language/LanguageType.java) codes;
+  * [POSRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/name/POSRu.java) &mdash; names of parts of speech in Russian and the links to the [POS](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/constant/POS.java) objects;
+  * [RelationRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/name/RelationRu.java) &mdash; names of semantic relations in Russian and the links to the [Relation](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/constant/POS.java) objects.
+  * [LabelRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/name/LabelRu.java) &mdash; names of context labels in Russian.
+  * [LabelCategoryRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/name/LabelCategoryRu.java) &mdash; names of categories of context labels in Russian.
 
-Russian Wiktionary module files in the package **[wikokit.base.wikt.multi.ru](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/)**:
-  * each file in this package corresponds to the file in the package _[wikokit.base.wikt.word](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word)_ (see next section), which correspond to one level (header, subsection) of the Wiktionary entry;
-  * + additional file [POSTemplateRu.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/POSTemplateRu.java) - correspondences between part of speech (POS) templates in ruwikt and POS names.
+Russian Wiktionary module files in the package **[wikokit.base.wikt.multi.ru](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/)**:
+  * each file in this package corresponds to the file in the package _[wikokit.base.wikt.word](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/word)_ (see next section), which correspond to one level (header, subsection) of the Wiktionary entry;
+  * + additional file [POSTemplateRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/POSTemplateRu.java) - correspondences between part of speech (POS) templates in ruwikt and POS names.
 
 ## New parser module (copy and paste) ##
 
