@@ -68,7 +68,7 @@ Now we are calling **WLanguageFr.java** which should be located at the package *
 # Comments #
 1. Don't forget about [unit test](http://en.wikipedia.org/wiki/Unit_testing). It's a best documentation of our code. Every nontrivial class and function in this project have unit tests, e.g. class [WLanguageRu](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/WLanguageRu.java) has unit tests in the file [WLanguageRuTest.java](https://github.com/componavt/wikokit/blob/master/common_wiki/test/wikokit/base/wikt/multi/ru/WLanguageRuTest.java)
 
-2. Parsed Wiktionary language edition is defined as input parameter of the file [Main.java](https://github.com/componavt/wikokit/blob/master/wikt_parser/src/wikt/parser/Main.java) in the [wikt\_parser](https://github.com/componavt/wikokit/blob/master/wikt_parser#wikt_parser%253Fstate%253Dclosed) project:
+2. Parsed Wiktionary language edition is defined as input parameter of the file [Main.java](https://github.com/componavt/wikokit/blob/master/wikt_parser/src/wikt/parser/Main.java) in the [wikt\_parser](https://github.com/componavt/wikokit/tree/master/wikt_parser) project:
 ```
 LanguageType wikt_lang; // language of Wiktionary
 ```
