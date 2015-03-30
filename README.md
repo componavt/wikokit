@@ -53,7 +53,7 @@ If you are developer and if you are interested in adding modules to parse "your 
   * Play with parsed English or Russian Wiktionary SQL dump (download [Wiktionary parsed databases](http://whinger.krc.karelia.ru/soft/wikokit/index.html));
   * [OneMoreWiktionary](https://github.com/componavt/wikokit/blob/wiki/OneMoreWiktionary.md) &mdash; extend parser in order to extract invaluable information from your Wiktionary.
 
-=== Statistics ===
+### Statistics ###
 
 The machine-readable dictionary database statistics:
   * English Wiktionary: [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Parameters_of_the_database_created_by_the_Wiktionary_parser total], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Semantic_relations semantic relations], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:Translations translations], [http://en.wiktionary.org/wiki/User:AKA_MBG/Statistics:POS part of speech]
