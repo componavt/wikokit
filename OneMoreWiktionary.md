@@ -22,7 +22,7 @@ Russian Wiktionary module files in the package **[wikokit.base.wikt.multi.ru.nam
 
 Russian Wiktionary module files in the package **[wikokit.base.wikt.multi.ru](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/)**:
   * each file in this package corresponds to the file in the package _[wikokit.base.wikt.word](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/word)_ (see next section), which correspond to one level (header, subsection) of the Wiktionary entry;
-  * + additional file [POSTemplateRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/POSTemplateRu.java) - correspondences between part of speech (POS) templates in ruwikt and POS names.
+  * + additional file [POSTemplateRu.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/POSTemplateRu.java) &mdash; correspondences between part of speech (POS) templates in ruwikt and POS names.
 
 ## New parser module (copy and paste) ##
 
@@ -30,11 +30,11 @@ Let's we want to extend our parser by files and classes in order to parse e.g. F
   1. copy folder (package) _wikokit.base.wikt.multi.**ru**_ to _wikokit.base.wikt.multi.**fr**_;
   1. copy _wikokit.base.wikt.multi.**ru**.name_ to _wikokit.base.wikt.multi.**fr**.name_;
   1. rename files in this folders (e.g. _LanguageTypeRu.java_ to _LanguageTypeFr.java_ etc.)
-  1. change the code of these files in accordance with formatting rules of your (e.g. French) Wiktionary - the most fun part of work :)
+  1. change the code of these files in accordance with formatting rules of your (e.g. French) Wiktionary &mdash; the most fun and hard part of work :)
 
 # 2. Adding new code to existing files and classes #
 
-Each file in the package [wikokit.base.wikt.word](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word) contains the call of WLE parser module. E.g. [WLanguage.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/word/WLanguage.java) contains code:
+Each file in the package [wikokit.base.wikt.word](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/word) contains the call of WLE parser module. E.g. [WLanguage.java](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/word/WLanguage.java) contains code:
 ```
 LanguageType wikt_lang; // language of Wiktionary
 
@@ -66,9 +66,9 @@ if(l  == LanguageType.ru) {
 Now we are calling **WLanguageFr.java** which should be located at the package **wikokit.base.wikt.multi.fr**.
 
 # Comments #
-1. Don't forget about [unit test](http://en.wikipedia.org/wiki/Unit_testing). It's a best documentation of our code. Every nontrivial class and function in this project have unit tests, e.g. class [WLanguageRu](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/WLanguageRu.java) has unit tests in the file [WLanguageRuTest.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/test/wikokit/base/wikt/multi/ru/WLanguageRuTest.java)
+1. Don't forget about [unit test](http://en.wikipedia.org/wiki/Unit_testing). It's a best documentation of our code. Every nontrivial class and function in this project have unit tests, e.g. class [WLanguageRu](https://github.com/componavt/wikokit/blob/master/common_wiki/src/wikokit/base/wikt/multi/ru/WLanguageRu.java) has unit tests in the file [WLanguageRuTest.java](https://github.com/componavt/wikokit/blob/master/common_wiki/test/wikokit/base/wikt/multi/ru/WLanguageRuTest.java)
 
-2. Parsed Wiktionary language edition is defined as input parameter of the file [Main.java](http://code.google.com/p/wikokit/source/browse/trunk/wikt_parser/src/wikt/parser/Main.java) in the [wikt\_parser](https://code.google.com/p/wikokit/source/browse/trunk/wikt_parser#wikt_parser%253Fstate%253Dclosed) project:
+2. Parsed Wiktionary language edition is defined as input parameter of the file [Main.java](https://github.com/componavt/wikokit/blob/master/wikt_parser/src/wikt/parser/Main.java) in the [wikt\_parser](https://github.com/componavt/wikokit/blob/master/wikt_parser#wikt_parser%253Fstate%253Dclosed) project:
 ```
 LanguageType wikt_lang; // language of Wiktionary
 ```
