@@ -11,7 +11,7 @@ There are files and classes in the parser in order to extract information from t
 
 Russian language code is "ru" (ISO 639) is used as the suffix _Ru_ in names of new Java files and suffix _.ru_ in names of new Java packages (related to Russian language).
 
-There is a special package [wikokit.base.wikt.multi](http://code.google.com/p/wikokit/source/browse/#svn%2Ftrunk%2Fcommon_wiki%2Fsrc%2Fwikokit%2Fbase%2Fwikt%2Fmulti) which contains subpackages for each WLE: en, ru.
+There is a special package [wikokit.base.wikt.multi](https://github.com/componavt/wikokit/tree/master/common_wiki/src/wikokit/base/wikt/multi) which contains subpackages for each WLE: en, ru.
 
 Russian Wiktionary module files in the package **[wikokit.base.wikt.multi.ru.name](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/)**:
   * [LanguageTypeRu.java](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikt/multi/ru/name/LanguageTypeRu.java) - names of languages in Russian and links to the [LanguageType](http://code.google.com/p/wikokit/source/browse/trunk/common_wiki/src/wikokit/base/wikipedia/language/LanguageType.java) codes;
