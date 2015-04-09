@@ -63,27 +63,27 @@ The machine-readable dictionary database statistics:
 
 Wiki tool kit (wikokit) contains several projects related to wiki
 
-./common_wiki - common (low-level) functions to handle data of Wikipedia and Wiktionary in MySQL database,
+./common_wiki — common (low-level) functions to handle data of Wikipedia and Wiktionary in MySQL database,
 
-./common_wiki_jdbc - functions to handle data of Wiktionary in MySQL and SQLite databases (JDBC, Java SE) (depends on common_wiki.jar).
+./common_wiki_jdbc — functions to handle data of Wiktionary in MySQL and SQLite databases (JDBC, Java SE) (depends on common_wiki.jar).
 
-./android/common_wiki_alink - Eclipse copy (source link) of ./common_wiki (!NetBeans)
+./android/common_wiki_alink — Eclipse copy (source link) of ./common_wiki (!NetBeans)
 
-./android/common_wiki_android -- functions for access to Wiktionary in Android SQLite version of database (depends on common_wiki.jar).
+./android/common_wiki_android — functions for access to Wiktionary in Android SQLite version of database (depends on common_wiki.jar).
 
-./android/[magnetowordik](https://market.android.com/details?id=wordik.magneto) &mdash; Android word game (Wiktionary thesaurus).
+./android/[magnetowordik](https://market.android.com/details?id=wordik.magneto) — Android word game (Wiktionary thesaurus).
 
-./hits_wiki - API for access to Wikipedia in MySQL database, algorithms to search synonyms in Wikipedia (depends on jcfd.jar, common_wiki.jar).
+./hits_wiki — API for access to Wikipedia in MySQL database, algorithms to search synonyms in Wikipedia (depends on jcfd.jar, common_wiki.jar).
 
-./TGWikiBrowser - visual browser to search for synonyms in local or remote Wikipedia (depends on hits_wiki.jar and common_wiki.jar)
+./TGWikiBrowser — visual browser to search for synonyms in local or remote Wikipedia (depends on hits_wiki.jar and common_wiki.jar)
 
-./wikidf - Wiki Index Database (list of lemmas and links to wiki pages, which contain these lemmas).
+./wikidf — Wiki Index Database (list of lemmas and links to wiki pages, which contain these lemmas).
 
-./[GettingStartedWiktionaryParser wikt_parser] - Wiktionary parser creates a MySQL database (like [http://en.wikipedia.org/wiki/WordNet WordNet]) from an Wiktionary MySQL dump file. The project goal is to convert Wiktionary articles to machine readable format. (It depends on common_wiki, common_wiki_jdbc)
+./[GettingStartedWiktionaryParser wikt_parser] — Wiktionary parser creates a MySQL database (like [http://en.wikipedia.org/wiki/WordNet WordNet]) from an Wiktionary MySQL dump file. The project goal is to convert Wiktionary articles to machine readable format. (It depends on common_wiki, common_wiki_jdbc)
 
-./wiwordik - Visualization of parsed Wiktionary database. wiki + word = wiwordik.
+./wiwordik — Visualization of parsed Wiktionary database. wiki + word = wiwordik.
 
-The code of previous project [http://synarcher.sourceforge.net/ Synarcher] are used in wikokit.
+The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are used in wikokit.
 
 == Further reading ==
 === In English ===
