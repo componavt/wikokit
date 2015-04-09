@@ -69,7 +69,7 @@ Wiki tool kit (wikokit) contains several projects related to wiki
 
 ./android/common_wiki_alink - Eclipse copy (source link) of ./common_wiki (!NetBeans)
 
-./android/common_wiki_android - functions for access to Wiktionary in Android SQLite version of database (depends on common_wiki.jar).
+./android/common_wiki_android -- functions for access to Wiktionary in Android SQLite version of database (depends on common_wiki.jar).
 
 ./android/[magnetowordik](https://market.android.com/details?id=wordik.magneto) &mdash; Android word game (Wiktionary thesaurus).
 
