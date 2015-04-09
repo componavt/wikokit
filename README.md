@@ -108,8 +108,8 @@ The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are 
   * Крижановский А. [Машинная обработка Русского Викисловаря](http://ru.wikipedia.org/wiki/%D0%92%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F:%D0%92%D0%B8%D0%BA%D0%B8-%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D1%8F_2009/%D0%9F%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0/%D0%94%D0%BE%D0%BA%D0%BB%D0%B0%D0%B4%D1%8B/%D0%9C%D0%B0%D1%88%D0%B8%D0%BD%D0%BD%D0%B0%D1%8F_%D0%BE%D0%B1%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%BA%D0%B0_%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B3%D0%BE_%D0%92%D0%B8%D0%BA%D0%B8%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8F) // Вики-конференция 2009. 24—25 октября, Санкт-Петербург.
 
 ## See also ##
-  * [Java Wiktionary Library (JWKTL)]http://www.ukp.tu-darmstadt.de/software/jwktl/) and [jwktl](http://code.google.com/p/jwktl) at code.google.com
-  * [http://personal.inet.fi/koti/korhoj/ English Wiktionary parser in Java] (or [http://personal.inet.fi/koti/korhoj/source/wikt_cide_latest.7z here]) by Joel Korhonen
+  * [Java Wiktionary Library (JWKTL)](http://www.ukp.tu-darmstadt.de/software/jwktl/) and [jwktl](http://code.google.com/p/jwktl) at code.google.com
+  * [English Wiktionary parser in Java](http://personal.inet.fi/koti/korhoj/) (or [here](http://personal.inet.fi/koti/korhoj/source/wikt_cide_latest.7z)) by Joel Korhonen
   * [https://github.com/clbecker/perl-wiktionary-parser/ perl-wiktionary-parser] // github.com, Perl module
   * [https://github.com/benreynwar/wiktionary-parser/tree/master/wiktionary_parser wiktionary_parser] // github.com, Perl module
   * [http://code.google.com/p/wikily-supervised-pos-tagger/ wikily-supervised-pos-tagger] - part-of-speech taggers for multiple languages implemented by training Hidden Markov with Wiktionary (see paper: Shen Li; João Graça; Ben Taskar, [http://aclweb.org/anthology-new/D/D12/D12-1127.pdf Wiki-ly Supervised Part-of-Speech Tagging], 2012, [http://aclweb.org/anthology-new/D/D12/D12-1127.bib bib])
