@@ -115,7 +115,7 @@ The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are 
   * [DBpedia Wiktionary](http://dbpedia.org/Wiktionary)
   * [Dbnary](http://kaiko.getalp.org/about-dbnary/)
   * [Wiktionary RDF versions](http://wiki.okfn.org/Linguistics/llod/datasets/wiktionary)
-  * [YARN](http://russianword.net/) (open !WordNet-like thesaurus for Russian)
+  * [YARN](http://russianword.net/) (open WordNet-like thesaurus for Russian)
 
 ## License ##
 
