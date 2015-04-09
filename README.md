@@ -109,14 +109,13 @@ The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are 
 
 ## See also ##
   * [Java Wiktionary Library (JWKTL)](http://www.ukp.tu-darmstadt.de/software/jwktl/) and [jwktl](http://code.google.com/p/jwktl) at code.google.com
-  * [English Wiktionary parser in Java](http://personal.inet.fi/koti/korhoj/) (or [here](http://personal.inet.fi/koti/korhoj/source/wikt_cide_latest.7z)) by Joel Korhonen
-  * [https://github.com/clbecker/perl-wiktionary-parser/ perl-wiktionary-parser] // github.com, Perl module
-  * [https://github.com/benreynwar/wiktionary-parser/tree/master/wiktionary_parser wiktionary_parser] // github.com, Perl module
-  * [http://code.google.com/p/wikily-supervised-pos-tagger/ wikily-supervised-pos-tagger] - part-of-speech taggers for multiple languages implemented by training Hidden Markov with Wiktionary (see paper: Shen Li; João Graça; Ben Taskar, [http://aclweb.org/anthology-new/D/D12/D12-1127.pdf Wiki-ly Supervised Part-of-Speech Tagging], 2012, [http://aclweb.org/anthology-new/D/D12/D12-1127.bib bib])
-  * [http://dbpedia.org/Wiktionary DBpedia Wiktionary]
-  * [http://kaiko.getalp.org/about-dbnary/ Dbnary]
-  * [http://wiki.okfn.org/Linguistics/llod/datasets/wiktionary Wiktionary RDF versions]
-  * [http://russianword.net/ YARN] (open !WordNet-like thesaurus for Russian)
+  * [perl-wiktionary-parser](https://github.com/clbecker/perl-wiktionary-parser/) // github.com, Perl module
+  * [wiktionary_parser](https://github.com/benreynwar/wiktionary-parser/tree/master/wiktionary_parser) // github.com, Perl module
+  * [wikily-supervised-pos-tagger](http://code.google.com/p/wikily-supervised-pos-tagger/) — part-of-speech taggers for multiple languages implemented by training Hidden Markov with Wiktionary (see paper: Shen Li; João Graça; Ben Taskar, [Wiki-ly Supervised Part-of-Speech Tagging](http://aclweb.org/anthology-new/D/D12/D12-1127.pdf), 2012, [bib](http://aclweb.org/anthology-new/D/D12/D12-1127.bib))
+  * [DBpedia Wiktionary](http://dbpedia.org/Wiktionary
+  * [Dbnary](http://kaiko.getalp.org/about-dbnary/)
+  * [Wiktionary RDF versions](http://wiki.okfn.org/Linguistics/llod/datasets/wiktionary)
+  * [YARN](http://russianword.net/) (open !WordNet-like thesaurus for Russian)
 
 ## License ##
 
