@@ -85,8 +85,8 @@ Wiki tool kit (wikokit) contains several projects related to wiki
 
 The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are used in wikokit.
 
-== Further reading ==
-=== In English ===
+## Further reading ##
+### In English ###
   * A. Krizhanovsky, A. Smirnov. [http://scipeople.com/publication/113533/ An approach to automated construction of a general-purpose lexical ontology based on Wiktionary] // Journal of Computer and Systems Sciences International, 2013, Vol. 52, No. 2, pp. 215–225.
   * A. Smirnov, T. Levashova, A. Karpov, I. Kipyatkova, A. Ronzhin, A. Krizhanovsky, N. Krizhanovsky. [http://www.micai.org/rcs/2012_56/Analysis%20of%20the%20Quotation%20Corpus%20of%20the%20Russian%20Wiktionary.html Analysis of the quotation corpus of the Russian Wiktionary] // Research in Computing Science, Vol. 56, pp. 101-112, 2012.
   * A. Krizhanovsky. [http://www.igi-global.com/article/quantitative-analysis-english-lexicon-wiktionaries/74827 A quantitative analysis of the English lexicon in Wiktionaries and WordNet] // International Journal of Intelligent Information Technologies (IJIIT), October-December 2012, Vol. 8, No. 4, pp. 13-22. [http://scipeople.ru/publication/108159/ preprint]
@@ -95,9 +95,9 @@ The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are 
   * A. A. Krizhanovsky. [http://arxiv.org/abs/1006.5040 The comparison of Wiktionary thesauri transformed into the machine-readable format.] Preprint. 2010.
   * A. A. Krizhanovsky, F. Lin. [http://arxiv.org/abs/0907.2209 Related terms search based on WordNet / Wiktionary and its application in Ontology Matching] // In: Proceedings of the 11th Russian Conference on Digital Libraries RCDL’2009. September 17-21, Petrozavodsk, Russia. – pp. 363-369.
 
-=== In Russian ===
-  * Крижановский А.А., Смирнов А.В., Круглов В.М., Крижановская Н.Б., Кипяткова И.С. [http://scipeople.com/publication/117259/ Автоматическое извлечение словарных помет из Русского Викисловаря] //  Труды СПИИРАН. 2014. Вып. 2(33). С. 164-185. ([http://cdn.scipeople.com/materials/97/context_labels_ruwikt_2014_KrizhanovskyAA_color.pdf PDF]).
-  * Крижановский А.А., Смирнов А.В. [http://scipeople.com/publication/111654/ Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря] // Известия РАН. Теория и системы управления. N2, 2013, С. 53-63.
+### In Russian ###
+  * Крижановский А.А., Смирнов А.В., Круглов В.М., Крижановская Н.Б., Кипяткова И.С. [Автоматическое извлечение словарных помет из Русского Викисловаря](http://scipeople.com/publication/117259/) //  Труды СПИИРАН. 2014. Вып. 2(33). С. 164-185. ([PDF](http://cdn.scipeople.com/materials/97/context_labels_ruwikt_2014_KrizhanovskyAA_color.pdf)).
+  * Крижановский А.А., Смирнов А.В. [Подход к автоматизированному построению общецелевой лексической онтологии на основе данных викисловаря](http://scipeople.com/publication/111654/) // Известия РАН. Теория и системы управления. N2, 2013, С. 53-63.
   * Крижановский А. А., Луговая Н. Б., Круглов В. М. [http://textualheritage.org/content/view/398/188/lang,russian/ Извлечение и анализ дат произведений в корпусе цитат онлайн-словаря] // Информационные технологии и письменное наследие: материалы VI междунар. науч. конф. El'Manuscript-12 (Петрозаводск, 3-8 сентября 2012) / отв. ред. В.А.Баранов, А.Г.Варфоломеев. – Петрозаводск; Ижевск, 2012. – 328 с. – C. 137—142. ISBN 978-5-8021-1402-5. ([http://textualheritage.org/component/option,com_docman/task,doc_download/gid,290/Itemid,/lang,russian/ PDF])
   * Смирнов А.В., Круглов В.М., Крижановский А.А., Луговая Н.Б., Карпов А.А., Кипяткова И.С. [http://scipeople.com/publication/113406/ Количественный анализ лексики русского WordNet и викисловарей] // Труды СПИИРАН. 2012. Вып. 23. С. 231–253. ([http://cdn.scipeople.com/materials/97/quant_WN_Wikt_ru_en_2012.pdf PDF]).
   * Крижановский А. [http://scipeople.com/publication/106012/ Количественный анализ лексики английского языка в викисловарях и Wordnet] // Труды СПИИРАН. 2011. Вып. 19. С. 87–101. ([http://cdn.scipeople.com/materials/97/quant_English_2011.pdf PDF]).
