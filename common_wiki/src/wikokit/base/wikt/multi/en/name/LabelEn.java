@@ -1106,7 +1106,7 @@ public final class LabelEn extends Label {
     public static final Label Internet = new LabelEn("Internet", "Internet", LabelCategory.topical);
     public static final Label isotope = new LabelEn("isotope", "isotope", LabelCategory.topical);
     
-    public static final Label journalism = new LabelEn("journalism", "journalism", LabelCategory.topical); //журналистское
+    public static final Label journalism = new LabelEn("journalism", "journalism", LabelCategory.topical); //publicistic
     public static final Label juggling = new LabelEn("juggling", "juggling", LabelCategory.topical); //жонглерское
     
     public static final Label knitting = new LabelEn("knitting", "knitting", LabelCategory.topical);

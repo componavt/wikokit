@@ -869,6 +869,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label sartorial = new LabelRu("портн.", "портновское дело", LabelEn.sartorial);
     public static final Label professional = new LabelRu("проф.", "профессиональное", LabelEn.professional);
     public static final Label psychiatry = new LabelRu("психиатр.", "психиатрия", LabelEn.psychiatry);
+    public static final Label journalism = new LabelRu("публиц.", "публицистическое", LabelEn.journalism);// publicistic
 
     public static final Label advertising = new LabelRu("рекл.", "рекламное", LabelEn.advertising);
     public static final Label radio = new LabelRu("радио", "радиодело, радиовещание", LabelEn.radio);
