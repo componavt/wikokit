@@ -79,7 +79,7 @@ Wiki tool kit (wikokit) contains several projects related to wiki
 
 ./wikidf — Wiki Index Database (list of lemmas and links to wiki pages, which contain these lemmas).
 
-./[GettingStartedWiktionaryParser wikt_parser] — Wiktionary parser creates a MySQL database (like [http://en.wikipedia.org/wiki/WordNet WordNet]) from an Wiktionary MySQL dump file. The project goal is to convert Wiktionary articles to machine readable format. (It depends on common_wiki, common_wiki_jdbc)
+./[wikt_parser](https://github.com/componavt/wikokit/blob/wiki/GettingStartedWiktionaryParser.md) — Wiktionary parser creates a MySQL database (like [WordNet](http://en.wikipedia.org/wiki/WordNet)) from an Wiktionary MySQL dump file. The project goal is to convert Wiktionary articles to machine-readable format. (It depends on common_wiki, common_wiki_jdbc)
 
 ./wiwordik — Visualization of parsed Wiktionary database. wiki + word = wiwordik.
 
