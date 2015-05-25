@@ -765,6 +765,7 @@ public final class LabelRu extends LabelLocal  {
     
     public static final Label diminutive_hypocoristic = new LabelRu("умласк.", "уменьшительно-ласкательное", LabelEn.diminutive_hypocoristic);
     public static final Label diminutive_hypocoristic2 = LabelRu.addNonUniqueShortName(diminutive_hypocoristic, "умласк");
+    public static final Label diminutive_hypocoristic3 = LabelRu.addNonUniqueShortName(diminutive_hypocoristic, "гипокор.");
     
     public static final Label derogatory = new LabelRu("унич.", "уничижительное", LabelEn.derogatory);// унич. порицательный
     public static final Label derogatory2 = LabelRu.addNonUniqueShortName(derogatory, "уничиж.");
