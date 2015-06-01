@@ -25,7 +25,7 @@ public class Main {
      * 
      * Run from the command-line, with a list of arguments:
      * <P><B>
-     * java -jar "./wikt_parser/dist/wikt_parser.jar"
+     * java -jar "./wikt_parser/dist/wikt_parser.jar" ru 0
      * </B><BR>
      */
     public static void main(String[] args) {
