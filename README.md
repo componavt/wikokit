@@ -125,3 +125,5 @@ This program is multi-licensed and may be used under the terms of any of the fol
   * GPL, GNU General Public License V3.0 or later, http://www.gnu.org/licenses/gpl.html
   * AL, Apache License, V2.0 or later, http://www.apache.org/licenses
   * BSD, New BSD License, http://www.opensource.org/licenses/bsd-license
+
+See [documentation](https://github.com/componavt/wikokit/wiki).
