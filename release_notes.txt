@@ -8,7 +8,6 @@ wiwordik 0.XX 2011-0?-??
 
 Split to common_wiki and common_wiki_jdbc
   common_wiki 293 tests passed, 5 tests failed
-  common_wiki 292 tests passed, 6 tests failed
   common_wiki_jdbc 88 tests passed, 10 tests failed
   common_wiki_jdbc 77 tests passed, 20 tests failed, 1 error (wo wikt_parsed)
 

@@ -564,7 +564,7 @@ public class WMeaningEnTest {
         LabelEn[] _labels = new LabelEn[0];   //_labels[0] = LabelRu.p;
 
         String _def_source =
-            "# {{legal}} One who [[benefit]]s from the distribution, especially of an estate.\n" +
+            "# {{context|legal|lang=en}} One who [[benefit]]s from the distribution, especially of an estate.\n" +
             "#: ''If any '''beneficiary''' does not survive the Settlor for a period of 30 days then the Trustee shall distribute that '''beneficiary'''’s share to the surviving '''beneficiaries''' by right of representation.''";
 
         String _def_result          = "One who benefits from the distribution, especially of an estate.";
