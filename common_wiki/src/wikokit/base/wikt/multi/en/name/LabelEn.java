@@ -1073,6 +1073,7 @@ public final class LabelEn extends Label {
     public static final Label healthcare = new LabelEn("healthcare", "healthcare", LabelCategory.topical);
     public static final Label hematology = new LabelEn("hematology", "hematology", LabelCategory.topical);
     public static final Label heraldiccharge = new LabelEn("heraldiccharge", "heraldiccharge", LabelCategory.topical);
+    public static final Label hydraulic_engineering = new LabelEn("hydraulic engineering", "hydraulic engineering", LabelCategory.topical);// ruwikt гидротехнический
     
     public static final Label heraldry = new LabelEn("heraldry", "heraldry", LabelCategory.topical); // геральд. - геральдическое
     public static final Label tincture = LabelEn.addNonUniqueShortName(heraldry, "tincture"); // краски, оттенки

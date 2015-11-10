@@ -724,6 +724,8 @@ public final class LabelRu extends LabelLocal  {
     public static final Label youth = new LabelRu("мол.", "молодёжное", LabelEn.youth);
     public static final Label folk_poetic = new LabelRu("нар.-поэт.", "народно-поэтическое", LabelEn.folk_poetic);
     public static final Label folk_colloquial = new LabelRu("нар.-разг.", "народно-разговорное", LabelEn.folk_colloquial);
+    public static final Label folk_colloquial2 = LabelRu.addNonUniqueShortName(folk_colloquial, "трад.-нар.");
+    
     public static final Label pejorative = new LabelRu("неодобр.", "неодобрительное",  LabelEn.pejorative);// унич. неодобр. умаляющий
     public static final Label approving = new LabelRu("одобр.", "одобрительное",  LabelEn.approving);
     public static final Label formal = new LabelRu("офиц.", "официальное",  LabelEn.formal);
@@ -805,7 +807,9 @@ public final class LabelRu extends LabelLocal  {
     public static final Label heraldry = new LabelRu("геральд.", "геральдическое", LabelEn.heraldry);
     public static final Label geometry = new LabelRu("геометр.", "геометрическое", LabelEn.geometry);
     public static final Label geology = new LabelRu("геол.", "геологическое", LabelEn.geology);
+    public static final Label hydraulic_engineering = new LabelRu("гидротехн.", "гидротехническое", LabelEn.hydraulic_engineering);
     public static final Label hydrology = new LabelRu("гидрол.", "гидрологическое", LabelEn.hydrology);
+    
     public static final Label mining = new LabelRu("горн.", "горное дело", LabelEn.mining);
     
     public static final Label diplomacy = new LabelRu("дипл.", "дипломатическое", LabelEn.diplomacy);
