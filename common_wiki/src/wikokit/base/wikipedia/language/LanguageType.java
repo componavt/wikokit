@@ -2954,7 +2954,8 @@ public class LanguageType {
     public static final LanguageType cpx4 = LanguageType.addNonUniqueName(cpx, "Xinghua");
 
     public static final LanguageType wuu = new LanguageType("wuu", "Wu", "Wu");
-
+    public static final LanguageType zh_woo_ruwikt = LanguageType.addNonUniqueCode(wuu, "zh-woo");// zh-woo in ruwikt, wuu in enwikt
+    
             // todo : enwikt:template:zh-ts -> trad. (zh-tw), simpl. (zh-cn)
     public static final LanguageType zh_tw = new LanguageType("zh-tw", "Traditional Chinese", "Traditional Chinese");
     public static final LanguageType zh_hant = LanguageType.addNonUniqueCode(zh_tw, "zh-hant");// Chinese written using the Traditional Chinese script
@@ -3005,6 +3006,9 @@ public class LanguageType {
     // 2. todo error:  unknown language code
     
     public static final LanguageType letter_ru = new LanguageType("Буква", "Letter", "Letter");
+    public static final LanguageType Cyrl = LanguageType.addNonUniqueCode(letter_ru, "Cyrl");//ruwikt Cyrillic letter
+    public static final LanguageType Latn = new LanguageType("Latn", "Latn", "Latn");//ruwikt Latin letter
+    
     public static final LanguageType bagua  = new LanguageType("bagua", "Ba gua", "Ba gua");
     
     public static final LanguageType hanzi  = new LanguageType("hanzi", "Chinese character", "Chinese character");

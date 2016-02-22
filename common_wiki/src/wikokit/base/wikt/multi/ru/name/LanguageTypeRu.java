@@ -707,7 +707,6 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal wbp = new LanguageTypeRu("Вальбири", LanguageType.wbp);
     public static final LanguageTypeLocal wlm = new LanguageTypeRu("Средневаллийский", LanguageType.wlm);
     public static final LanguageTypeLocal wo = new LanguageTypeRu("Волоф", LanguageType.wo);
-    public static final LanguageTypeLocal wuu = new LanguageTypeRu("У (китайский диалект)", LanguageType.wuu);
     public static final LanguageTypeLocal wya = new LanguageTypeRu("Гуронский", LanguageType.wya);
     public static final LanguageTypeLocal wym = new LanguageTypeRu("Вилямовский", LanguageType.wym);
 
@@ -759,9 +758,12 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal za = new LanguageTypeRu("Чжуанский", LanguageType.za);
     public static final LanguageTypeLocal ze = new LanguageTypeRu("Генуэзский диалект лигурского языка", LanguageType.ze);
     public static final LanguageTypeLocal zen = new LanguageTypeRu("Зенага", LanguageType.zen);
+    
     public static final LanguageTypeLocal zh = new LanguageTypeRu("Китайский", LanguageType.zh);
     public static final LanguageTypeLocal zh_cn = new LanguageTypeRu("Китайский (упрощ.)", LanguageType.zh_cn);
     public static final LanguageTypeLocal zh_tw = new LanguageTypeRu("Китайский (традиц.)", LanguageType.zh_tw);
+    public static final LanguageTypeLocal wuu = new LanguageTypeRu("Китайский (у)", LanguageType.wuu);// zh-woo in ruwikt, wuu in enwikt
+    
     public static final LanguageTypeLocal zko = new LanguageTypeRu("Коттский", LanguageType.zko);
     public static final LanguageTypeLocal zkt = new LanguageTypeRu("Киданьский", LanguageType.zkt);
     public static final LanguageTypeLocal zkz = new LanguageTypeRu("Хазарский", LanguageType.zkz);
