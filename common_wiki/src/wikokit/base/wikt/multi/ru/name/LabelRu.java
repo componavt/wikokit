@@ -884,6 +884,7 @@ public final class LabelRu extends LabelLocal  {
     public static final Label agriculture = new LabelRu("сельск.", "сельскохозяйственное", LabelEn.agriculture);
     public static final Label agriculture2 = LabelRu.addNonUniqueShortName(agriculture, "сх");
     public static final Label agriculture3 = LabelRu.addNonUniqueShortName(agriculture, "с.-х.");
+    public static final Label agriculture4 = LabelRu.addNonUniqueShortName(agriculture, "животн.");
     
     public static final Label sociology = new LabelRu("социол.", "социология", LabelEn.sociology);
     
