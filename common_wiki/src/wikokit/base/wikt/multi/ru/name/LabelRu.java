@@ -877,7 +877,9 @@ public final class LabelRu extends LabelLocal  {
     public static final Label journalism = new LabelRu("публиц.", "публицистическое", LabelEn.journalism);// publicistic
 
     public static final Label advertising = new LabelRu("рекл.", "рекламное", LabelEn.advertising);
+    
     public static final Label radio = new LabelRu("радио", "радиодело, радиовещание", LabelEn.radio);
+    public static final Label radio2 = LabelRu.addNonUniqueShortName(radio, "радио.");
     
     public static final Label sexology = new LabelRu("сексол.", "сексология", LabelEn.sexology);
     
@@ -903,6 +905,8 @@ public final class LabelRu extends LabelLocal  {
     
     public static final Label technology = new LabelRu("техн.", "техническое", LabelEn.technology);
     public static final Label technology2 = LabelRu.addNonUniqueShortName(technology, "тех.");
+    
+    public static final Label telecommunications = new LabelRu("телеком.", "телекоммуникация и связь", LabelEn.telecommunications);
     
     public static final Label trading = new LabelRu("торг.", "торговое", LabelEn.trading);
     public static final Label transport = new LabelRu("трансп.", "транспортное", LabelEn.transport);

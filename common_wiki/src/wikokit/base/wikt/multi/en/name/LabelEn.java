@@ -1323,7 +1323,7 @@ public final class LabelEn extends Label {
     public static final Label taxonomic_name = LabelEn.addNonUniqueShortName(taxonomy, "taxonomic name");
     
     public static final Label technology = new LabelEn("technology", "technology", LabelCategory.topical); // техн. — техническое
-    public static final Label telecommunications = new LabelEn("telecommunications", "telecommunications", LabelCategory.topical); // связано с телекоммуникациями
+    public static final Label telecommunications = new LabelEn("telecommunications", "telecommunications", LabelCategory.topical); // телеком.
     public static final Label telegraphy = new LabelEn("telegraphy", "telegraphy", LabelCategory.topical); // телеграфское
     public static final Label telephony = new LabelEn("telephony", "telephony", LabelCategory.topical); // телефония
     public static final Label television = new LabelEn("television", "television", LabelCategory.topical); // телевизионное
