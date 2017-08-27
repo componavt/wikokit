@@ -70,6 +70,14 @@ public class LabelParamsRu {
         for(int i=0; i<template_params.length; i++)
             template_params[i] = template_params[i].trim();
         
+        // {{обл.||-}}
+        if( template_params.length == 2 &&
+            template_params[0].length() == 0 &&
+            template_params[1].equals( "-" ))
+        {
+            return LabelRu.regional;
+        }
+        
         if(Label.equals(label, LabelRu.regional)) {
             // template_params[0] - region or language code (if region is absent)
             // template_params[1] - language code (en, de, fr...)
@@ -85,7 +93,7 @@ public class LabelParamsRu {
                         regions = remain_params[0];
                     
                     if(regions.length() == 0)
-                        return LabelEn.regional;
+                        return LabelRu.regional;
                     
                     if(LabelRu.hasShortName(regions)) {
                         Label label_existing = LabelRu.getByShortName(regions);

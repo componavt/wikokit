@@ -76,6 +76,22 @@ public class TemplateExtractorTest {
         assertTrue( TemplateExtractor.equals( expResult, result) );
     }
     
+     @Test
+    public void testGetFirstTemplate_remove_spaces() {
+        System.out.println("getFirstTemplate_remove_spaces");
+        String text = "text before {{template name|parameter one | two}} text after";
+        
+        String[] params = {"parameter one", "two"};
+        TemplateExtractor expResult = new TemplateExtractor("template name", params, 12, 46);
+        
+        TemplateExtractor result = TemplateExtractor.getFirstTemplate(text);
+        
+        // compare only params, since start and last position are different
+        String[] result_params = result.getTemplateParameters();
+        for(int i=0; i<params.length; i++)
+            assertEquals( result_params[i], params[i]);
+    }
+    
     @Test
     public void testGetFirstTemplate_two_params() {
         System.out.println("getFirstTemplate_two_params");

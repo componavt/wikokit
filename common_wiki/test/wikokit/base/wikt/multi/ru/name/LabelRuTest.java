@@ -42,11 +42,12 @@ public class LabelRuTest {
         System.out.println("extractLabelsTrimText_without_template_labels");
         
         String line = "text without any labels and templates";
+        String page_title  = "test page0";
         
         Label[] _labels = NULL_LABEL_ARRAY;
         LabelsText expResult = new LabelsText(_labels, line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -55,11 +56,12 @@ public class LabelRuTest {
         System.out.println("extractLabelsTrimText_with_template_but_not_a_valid_label");
         
         String line = "text {{with unknown template, but it is not a valid labеl}} sure";
+        String page_title  = "test page";
         
         Label[] _labels = NULL_LABEL_ARRAY;
         LabelsText expResult = new LabelsText(_labels, line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -69,6 +71,7 @@ public class LabelRuTest {
         
         String line        = "{{амер.}} [[самолёт]], [[аэроплан]]"; // http://ru.wiktionary.org/wiki/airplane
         String result_line =           "[[самолёт]], [[аэроплан]]";
+        String page_title  = "airplane";
         
         boolean label_en_ru = Label.equals( LabelEn.US, LabelRu.US);
         assertTrue(label_en_ru);
@@ -76,7 +79,7 @@ public class LabelRuTest {
         Label[] _labels = { LabelEn.US };
         LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -87,11 +90,12 @@ public class LabelRuTest {
         
         String line        = "{{амер.|en}} [[самолёт]], [[аэроплан]] {{this template should remain in text}}"; // http://ru.wiktionary.org/wiki/airplane
         String result_line =              "[[самолёт]], [[аэроплан]] {{this template should remain in text}}";
+        String page_title  = "airplane";
         
         Label[] _labels = { LabelEn.US };
         LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -102,11 +106,12 @@ public class LabelRuTest {
         
         String line        = "{{устар.}}, {{рег.}} род лёгкой сохи, плужка {{Даль|толкование}}"; // http://ru.wiktionary.org/wiki/самолёт
         String result_line =                      "род лёгкой сохи, плужка {{Даль|толкование}}";
+        String page_title  = "самолёт";
         
         Label[] _labels = { LabelEn.obsolete, LabelEn.regional };
         LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -118,11 +123,12 @@ public class LabelRuTest {
         
         String line        = "{{устар.}} ''или'' {{поэт.}}; {{старин.}} {{=|город}}"; // http://ru.wiktionary.org/wiki/град
         String result_line =                                    "то же, что [[город]]";
+        String page_title  = "city";
         
         Label[] _labels = { LabelEn.obsolete, LabelEn.poetic, LabelEn.archaic, LabelEn.ru_equal };
         LabelsText expResult = new LabelsText(_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -137,16 +143,17 @@ public class LabelRuTest {
         System.out.println("extractLabelsTrimText_with_regional_and_only_lang_code");
         
         String line        = "{{рег.|lang=hr}} [[утюг]]";
+        String page_title  = "pegla";
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         Label[]   result_labels = result.getLabels();
         
         assertEquals( result_labels.length, 1); // one label regional
         Label la = result_labels[0];
-        assertEquals(la.getShortName(), "regional");
-        assertEquals(la.getName(),      "regional");
+        assertEquals(la.getShortName(), "обл.");        // regional
+        assertEquals(la.getName(),      "областное");   // regional
         
-        LabelCategory result_label_category = LabelEn.getCategoryByLabel(la);
+        LabelCategory result_label_category = la.getCategory();
         assertNotNull(result_label_category);
         assertEquals(result_label_category.getName(), "regional");
         assertEquals(result_label_category, LabelCategory.regional);
@@ -166,7 +173,8 @@ public class LabelRuTest {
         Label[] _labels = { LabelEn.regional };
         // LabelText expResult = new LabelText(_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        String page_title = "кулёма";
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         Label[]   result_labels = result.getLabels();
         
         assertEquals( result_labels.length, 1); // one label "сиб., сев.-вост."
@@ -190,7 +198,7 @@ public class LabelRuTest {
         
         String line        = "{{рег.|Перу|lang=es}}, {{рег.|Чили|lang=es}} торговый [[лоток]]";
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText("capacheca", line);
         Label[]   result_labels = result.getLabels();
         
         assertEquals( result_labels.length, 2); // two labels: "Перу", "Чили"
@@ -225,13 +233,13 @@ public class LabelRuTest {
     public void testExtractLabelsTrimText_with_pometa_and_known_label() {
         System.out.println("extractLabelsTrimText_with_pometa_and_known_label");
         
-        String line        = "{{помета|разг.}} [[что]]";
+        String line        = "{{помета| разг.}} [[что]]";
         String result_line =                   "[[что]]";
         
         Label[] exp_labels = { LabelEn.colloquial };
         LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText("some page with colloquial", line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -240,13 +248,14 @@ public class LabelRuTest {
     public void testExtractLabelsTrimText_with_nocolor_and_pometa_and_known_label() {
         System.out.println("extractLabelsTrimText_with_nocolor_and_pometa_and_known_label");
         
+        String page_title = "colloquial";
         String line        = "{{помета|nocolor=1|разг.}} [[что]]";
         String result_line =                             "[[что]]";
         
         Label[] exp_labels = { LabelEn.colloquial };
         LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -255,13 +264,14 @@ public class LabelRuTest {
     public void testExtractLabelsTrimText_with_pometa_and_unknown_label() {
         System.out.println("extractLabelsTrimText_with_pometa_and_unknown_label");
         
+        String page_title = "page with unknown context label";
         String line        = "{{помета|unknown context label}} [[что]]";
         String result_line =                                  "[[что]]";
         
         // Label[] exp_labels = { LabelEn.colloquial };
         // LabelText expResult = new LabelText(exp_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         //assertTrue( LabelText.equals( expResult, result) );
         assertEquals( result.getText(), result_line);
         
@@ -272,7 +282,7 @@ public class LabelRuTest {
         // assertEquals( result_label.getAddedByHand(), false); // added automatically
         
         // parsing the same unknown label again:
-        result = LabelRu.extractLabelsTrimText(line);
+        result = LabelRu.extractLabelsTrimText(page_title, line);
         assertEquals( 1, result.getLabels().length); // this is the same new added label
     }
     
@@ -281,13 +291,14 @@ public class LabelRuTest {
     public void testExtractLabelsTrimText_with_pometa_nocolor_and_unknown_label() {
         System.out.println("extractLabelsTrimText_with_pometa_nocolor_and_unknown_label");
         
+        String page_title = "page with nocolor_and_unknown_label";
         String line        = "{{помета|nocolor=1|unknown2 another context label}} [[что]]";
         String result_line =                                                     "[[что]]";
         
         // Label[] exp_labels = { LabelEn.colloquial };
         // LabelText expResult = new LabelText(exp_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         //assertTrue( LabelText.equals( expResult, result) );
         assertEquals( result.getText(), result_line);
         
@@ -298,7 +309,7 @@ public class LabelRuTest {
         //assertEquals( result_label.getAddedByHand(), false); // added automatically
         
         // parsing the same unknown label again:
-        result = LabelRu.extractLabelsTrimText(line);
+        result = LabelRu.extractLabelsTrimText(page_title, line);
         assertEquals( 1, result.getLabels().length); // this is the same new added label
     }
     
@@ -315,10 +326,11 @@ public class LabelRuTest {
     public void testExtractFirstContextLabel_from_the_end_of_definition() {
         System.out.println("testExtractFirstContextLabel_from_the_end_of_definition");
         
+        String page_title = "page with some definition";
         String line        = "some definition {{помета|the label}} end ";
         String result_line = "some definition  end";
                 
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertEquals( result.getText(), result_line);
         
         assertEquals( 1, result.getLabels().length);
@@ -340,6 +352,8 @@ public class LabelRuTest {
     public void testExtractLabelsTrimText_with_abbrev() {
         System.out.println("extractLabelsTrimText_with_abbrev");
         
+        String page_title = "32 president of USA";
+        
         // two equal (from parser POV) lines:
         String line        = "# {{амер.}}, {{разг.|en}}, {{аббр.|en|w:Franklin Delano Roosevelt|Франклин Делано Рузвельт, 32-й президент США}}";
         String line_syn    = "# {{амер.}}, {{разг.|en}}, {{сокр.||w:Franklin Delano Roosevelt|Франклин Делано Рузвельт, 32-й президент США}}";
@@ -349,8 +363,8 @@ public class LabelRuTest {
         LabelsText expResult     = new LabelsText(exp_labels, result_line);
         LabelsText expResult_syn = new LabelsText(exp_labels, result_line);
         
-        LabelsText result     = LabelRu.extractLabelsTrimText(line);
-        LabelsText result_syn = LabelRu.extractLabelsTrimText(line_syn);
+        LabelsText result     = LabelRu.extractLabelsTrimText(page_title, line);
+        LabelsText result_syn = LabelRu.extractLabelsTrimText(page_title, line_syn);
         assertTrue( LabelsText.equals( expResult, result) );
         assertTrue( LabelsText.equals( expResult, result_syn) );
     }
@@ -362,6 +376,7 @@ public class LabelRuTest {
     @Test
     public void testExtractLabelsTrimText_one_parameter() {
         System.out.println("extractLabelsTrimText_with_abbrev");
+        String page_title = "комбат";
         
         // two equal (from parser POV) lines:
         String line_old    = "# {{сокр.}} [[командир]] [[батальон]]а";
@@ -373,8 +388,8 @@ public class LabelRuTest {
         LabelsText expResult_old = new LabelsText(exp_labels, line_result_old);
         LabelsText expResult_new = new LabelsText(exp_labels, line_result_new);
         
-        LabelsText result_old    = LabelRu.extractLabelsTrimText(line_old);
-        LabelsText result_new    = LabelRu.extractLabelsTrimText(line_new);
+        LabelsText result_old    = LabelRu.extractLabelsTrimText(page_title, line_old);
+        LabelsText result_new    = LabelRu.extractLabelsTrimText(page_title, line_new);
         assertTrue( LabelsText.equals( expResult_old, result_old) );
         assertTrue( LabelsText.equals( expResult_new, result_new) );
     }
@@ -384,6 +399,7 @@ public class LabelRuTest {
     @Test
     public void testExtractLabelsTrimText_with_equal_template() {
         System.out.println("extractLabelsTrimText_with_equal_template");
+        String page_title = "бражка";
         
         String line        = "# {{хим.}} {{=|спирт}}, бесцветная летучая жидкость, получаемая при ферментации сахара";
         String result_line =   "то же, что [[спирт]], бесцветная летучая жидкость, получаемая при ферментации сахара";
@@ -391,7 +407,7 @@ public class LabelRuTest {
         Label[] exp_labels = { LabelEn.chemistry, LabelRu.equal };
         LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     
@@ -399,6 +415,7 @@ public class LabelRuTest {
     @Test
     public void testExtractLabelsTrimText_element_symbol() {
         System.out.println("extractLabelsTrimText_element_symbol");
+        String page_title = "halogen";
         
         String line        = "# {{хим-элем|17|Cl|[[неметалл]] из группы [[галоген]]ов}}";
         String result_line = "[[химический элемент]] с [[атомный номер|атомным номером]] 17, обозначается [[химический символ|химическим символом]] Cl, [[неметалл]] из группы [[галоген]]ов";
@@ -406,7 +423,7 @@ public class LabelRuTest {
         Label[] exp_labels = { LabelEn.chemistry };
         LabelsText expResult = new LabelsText(exp_labels, result_line);
         
-        LabelsText result = LabelRu.extractLabelsTrimText(line);
+        LabelsText result = LabelRu.extractLabelsTrimText(page_title, line);
         assertTrue( LabelsText.equals( expResult, result) );
     }
     

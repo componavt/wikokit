@@ -50,7 +50,7 @@ public final class LabelEn extends Label {
     /** Constructor for static context labels listed in this file below.
      */
     protected LabelEn(String short_name, String name, LabelCategory category) { 
-        super(short_name, name);
+        super(short_name, name);        
         initLabelAddedByHand(this);
         
         if(null == category)
@@ -67,9 +67,9 @@ public final class LabelEn extends Label {
      * 
      * @param short_name name of the found context label
      */
-    public LabelEn(String short_name) { // , LabelCategory label_cat) { 
+    public LabelEn(String page_title, String short_name) { // , LabelCategory label_cat) { 
         super(short_name);
-        initLabelAddedAutomatically(this);
+        initLabelAddedAutomatically(page_title, this);
         
         this.category   = null; // it is unknown; 
         //label2category. put(this, category);
@@ -77,19 +77,24 @@ public final class LabelEn extends Label {
     
     public LabelEn(String short_name, LabelCategory label_cat) { 
         super(short_name);
-        initLabelAddedAutomatically(this);
+        
+        String page_title = null;
+        initLabelAddedAutomatically(page_title, this);
         
         this.category   = label_cat;
         label2category. put(this, category);
     }
     
+    /** Initialization of static context labels listed in this file below.
+     */
     protected void initLabelAddedByHand(Label label) {
     
         if(null == label)
             System.out.println("Error in LabelEn.initLabelAddedByHand(): label is null, short_name="+short_name+"; name=\'"+name+"\'.");
         
-        checksPrefixSuffixSpace(short_name);
-        checksPrefixSuffixSpace(name);
+        String page_title = null;
+        checksPrefixSuffixSpace(page_title, short_name);
+        checksPrefixSuffixSpace(page_title, name);
         
         // check the uniqueness of the label short name and full name
         Label label_prev_by_short_name = short_name2label.get(short_name);
@@ -110,12 +115,12 @@ public final class LabelEn extends Label {
         label2name.put(label, name);
     };
     
-    protected void initLabelAddedAutomatically(Label label) {
+    protected void initLabelAddedAutomatically(String page_title, Label label) {
     
         if(null == label)
             System.out.println("Error in LabelEn.initLabelAddedAutomatically(): label is null, short_name="+short_name+".");
         
-        checksPrefixSuffixSpace(short_name);
+        checksPrefixSuffixSpace(page_title, short_name);
         
         // check the uniqueness of the label short name
         Label label_prev_by_short_name = short_name2label.get(short_name);
@@ -173,7 +178,8 @@ public final class LabelEn extends Label {
      */
     public static Label addNonUniqueShortName(Label label, String synonymic_short_name) {
 
-        checksPrefixSuffixSpace(synonymic_short_name);
+        String page_title = null;
+        checksPrefixSuffixSpace(page_title, synonymic_short_name);
         if(synonymic_short_name.length() > 255) {
             System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label='"+synonymic_short_name+
                     "' is too long (.length() > 255)!");

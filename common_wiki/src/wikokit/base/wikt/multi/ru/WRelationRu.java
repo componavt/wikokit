@@ -246,7 +246,7 @@ public class WRelationRu {
                 String _labels = main_matcher.group("label");
                 WikiText[] wt1 = WikiText.createSplitByComma(page_title, _words);
                 for(WikiText _wiki_word : wt1) {
-                    lwt_array.add(new LabelsWikiText(LabelRu.createSplitByPattern(_labels, ptrn_comma), _wiki_word));
+                    lwt_array.add(new LabelsWikiText(LabelRu.createSplitByPattern(page_title, _labels, ptrn_comma), _wiki_word));
                 }
             }                        
         }

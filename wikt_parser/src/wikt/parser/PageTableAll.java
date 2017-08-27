@@ -18,14 +18,14 @@ import wikokit.base.wikt.sql.label.TLabel;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG_PAGES = true;
+    private static final boolean DEBUG_PAGES = false;
     
     //private static final boolean PRINT_PROGRESS = true;
     
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        // "temp word", 
+        //"title", // "temp word", "Кукла", "temp word", 
         
         /*"chien", some common words, e.g. dog are absent in the db
         "rain cats and dogs",
@@ -55,6 +55,18 @@ public class PageTableAll {
         "волк каждый год линяет, а всё сер бывает", // bad wikification of Synonyms, it is not stripped
 
         // Russian Wiktionary
+        "оне", "отаитянин", "простота", "воля", "ច្របាច់រឺត", // SQLException data too long
+        "Муда", // Перевод имени, Перевод топонима	
+        "Тригон", "Хилей", // SQLException (wikt_parsed TLabelMeaning.insert):: page_title='Тригон'; sql='INSERT INTO label_meaning (label_id,meaning_id) VALUES (402,457390)' Duplicate entry '402-457390' for key 'unique_label_meaning'
+        "Эребру", // ссылки в разделе Перевод с помощью шаблона с(сылка)
+        "авиаактив", // Шаблон:дат
+        "агнецъ", // {{Библия|Ин|1:29}}
+        "ад", // wrong location of image in entry
+        "акцептовать", // synonyms in brackets, e.g. "word1 (word2)" generates error: Error (entry:акцептовать) in LabelRu.initLabelAddedAutomatically(): label has wikilink, short_name=[[принять]]
+        //"", // закончил обход на строке 394 файла: ruwikt20170707_parsed_02_from_350_to_400K.log
+        //"", // ещё проверить файлы: ruwikt20170707_parsed_01_from_0_to_350K.log, ruwikt20170707_parsed_04.log
+
+
         "!", "процессуальное право", "материальное право", "вздуть", "голубой",
         "a", "the", "y", "at", "too", "an", "on", "Будда", "кулёма",
         "адджындзинад",
@@ -168,7 +180,7 @@ public class PageTableAll {
                         break;  //page_title = wikt_conn.enc.EncodeFromJava("MTR");    // Sanskrit
                 }
 
-                if(0 == n_cur % 1000) {   // % 100 1000
+                if(0 == n_cur % 10000) {   // % 100 1000
                     //if(n_cur<10900)
                     //    continue;
                     long    t_cur, t_remain;

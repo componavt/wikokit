@@ -76,18 +76,22 @@ public final class LabelRu extends LabelLocal  {
      * 
      * !Attention, automatically added labels (LabelRu) don't have corresponding English labels (LabelEn)!
      */
-    public LabelRu(String short_name) { 
+    public LabelRu(String page_title, String short_name) { 
         super(short_name);  // added_by_hand = false
-        initLabelAddedAutomatically(this);
+        
+        initLabelAddedAutomatically(page_title, this);
     }
     
+    /** Initialization of static context labels listed in this file below.
+     */
     protected void initLabelAddedByHand(Label label) {
     
         if(null == label)
             System.out.println("Error in LabelEn.initLabelAddedByHand(): label is null, short_name="+short_name+"; name=\'"+name+"\'.");
         
-        checksPrefixSuffixSpace(short_name);
-        checksPrefixSuffixSpace(name);
+        String page_title = null;
+        checksPrefixSuffixSpace(page_title, short_name);
+        checksPrefixSuffixSpace(page_title, name);
         
         // check the uniqueness of the label short name and full name
         Label label_prev_by_short_name = short_name2label.get(short_name);
@@ -108,22 +112,35 @@ public final class LabelRu extends LabelLocal  {
         label2name.put(label, name);
     };
     
-    protected void initLabelAddedAutomatically(Label label) {
-    
-        if(null == label)
-            System.out.println("Error in LabelRu.initLabelAddedAutomatically(): label is null, short_name="+short_name+".");
+    protected void initLabelAddedAutomatically(String page_title, Label label) {
         
-        checksPrefixSuffixSpace(short_name);
+        String str_entry = " ";
+        if(null != page_title)
+            str_entry = " (entry:" + page_title + ") ";
+        
+        if(null == label)
+            System.out.println("Error"+ str_entry +"in LabelRu.initLabelAddedAutomatically(): label is null, short_name="+short_name);
+        
+        // if label is wikified, then this is wrong label, since labels has not wikification
+        if(short_name.contains("[[")) {
+            System.out.println("Error"+ str_entry +"in LabelRu.initLabelAddedAutomatically(): label has wikilink, short_name="+short_name);
+            return;
+        }
+        
+        checksPrefixSuffixSpace( page_title, short_name);
         
         // check the uniqueness of the label short name
         Label label_prev_by_short_name = short_name2label.get(short_name);
         
-        if(null != label_prev_by_short_name)
-            System.out.println("Error in LabelRu.initLabelAddedAutomatically(): duplication of label (short name)! short name='"+short_name+
-                    "'. Check the maps short_name2label.");
-        
-        short_name2label.put(short_name, label);
-        label2short_name.put(label, short_name);
+        //System.out.println("Debug "+ str_entry +"in LabelRu.initLabelAddedAutomatically(): new label found, short_name="+short_name);
+        // if(null != label_prev_by_short_name)
+        //    System.out.println("Error"+ str_entry +"in LabelRu.initLabelAddedAutomatically(): duplication of label (short name)! short name='"+short_name+
+        //            "'. Check the maps short_name2label.");
+  
+        if(null == label_prev_by_short_name) {
+            short_name2label.put(short_name, label);
+            label2short_name.put(label, short_name);
+        }
     };
     
     /** Checks weather exists the Label (short name) by its name, checks synonyms also. */
@@ -151,8 +168,9 @@ public final class LabelRu extends LabelLocal  {
      * @param synonymic_label synonym of label (short name)
      */
     public static Label addNonUniqueShortName(Label label, String synonymic_short_name) {
-
-        checksPrefixSuffixSpace(synonymic_short_name);
+        
+        String page_title = null;
+        checksPrefixSuffixSpace(page_title, synonymic_short_name);
         if(synonymic_short_name.length() > 255) {
             System.out.println("Error in Label.addNonUniqueShortName(): the synonymic label='"+synonymic_short_name+
                     "' is too long (.length() > 255)!");
@@ -260,7 +278,7 @@ public final class LabelRu extends LabelLocal  {
      * @param params array
      * @return found or created context label, null in the case of some error
      */
-    private static Label getPometaLabel(String[] params)
+    private static Label getPometaLabel(String page_title, String[] params)
     {
         if(null == params || params.length == 0)
             return null;
@@ -282,8 +300,8 @@ public final class LabelRu extends LabelLocal  {
         if(LabelRu.hasShortName( str ))
             return LabelRu.getByShortName( str );
         
-      //return new LabelEn(str, LabelCategory.unknown); // let's create new context label
-        return new LabelRu(str);                        // let's create new context label
+      //return new LabelEn(page_title, str, LabelCategory.unknown); // let's create new context label
+        return new LabelRu(page_title, str);                        // let's create new context label
     }
     
     
@@ -296,7 +314,7 @@ public final class LabelRu extends LabelLocal  {
      *         and a definition text line without context labels substring, 
      *         return NULL if there is no text and context labels
      */
-    private static LabelsText extractFirstContextLabel(String line)
+    private static LabelsText extractFirstContextLabel(String page_title, String line)
     {   
         LabelsText result = null;
         List<Label> labels = new ArrayList<Label>();
@@ -317,7 +335,7 @@ public final class LabelRu extends LabelLocal  {
             
             Label l = LabelRu.getByShortName(template_name);
             if(Label.equals( l, LabelEn.context )) { // {{помета|}}
-                Label pometa_label = getPometaLabel( template_params );
+                Label pometa_label = getPometaLabel(page_title, template_params );
                 if(null != pometa_label)
                     labels.add( pometa_label );
                 
@@ -371,7 +389,7 @@ public final class LabelRu extends LabelLocal  {
      * @return labels array (NULL if absent) and a definition text line without context labels substring, 
      *         return NULL if there is no text and context labels
      */
-    public static LabelsText extractLabelsTrimText(String line)
+    public static LabelsText extractLabelsTrimText(String page_title, String line)
     {   
         line = removeEmptyLabelPometa(line);
         if(line.length() == 0)
@@ -382,11 +400,11 @@ public final class LabelRu extends LabelLocal  {
         
         List<Label> labels = new ArrayList<Label>();
         
-        LabelsText lt = extractFirstContextLabel(line);
+        LabelsText lt = extractFirstContextLabel(page_title, line);
         while(lt != null && lt.getLabels().length > 0) {
             
             labels.addAll(Arrays.asList(lt.getLabels()));
-            lt = extractFirstContextLabel(lt.getText());
+            lt = extractFirstContextLabel(page_title, lt.getText());
         }
         
         String result_line = "";
@@ -401,7 +419,7 @@ public final class LabelRu extends LabelLocal  {
      * This function should be used to split list of labels taken from wikified list of synonyms.
      * @return empty list if there is no labels.
      */
-    public static List<Label> createSplitByPattern(String text, Pattern pattern)
+    public static List<Label> createSplitByPattern(String page_title, String text, Pattern pattern)
     {
         List<Label> _labels = new ArrayList(0);
         if(text==null || 0 == text.trim().length()) {
@@ -412,7 +430,7 @@ public final class LabelRu extends LabelLocal  {
         
         for(String l : ll) {
             l = l.trim();
-            LabelsText result = LabelRu.extractLabelsTrimText(l);
+            LabelsText result = LabelRu.extractLabelsTrimText(page_title, l);
             Label[] result_labels = result.getLabels();
             if (result_labels.length>0) {
                 _labels.add(result_labels[0]);
@@ -421,7 +439,7 @@ public final class LabelRu extends LabelLocal  {
                     _labels.add(LabelRu.getByShortName( l ));
                 } else {
                     // if this is an unusual label, then add it to the table of labels
-                    _labels.add( new LabelRu( l ) );    // let's create new context label
+                    _labels.add( new LabelRu( page_title, l ) );    // let's create new context label
                 }
             }
         }

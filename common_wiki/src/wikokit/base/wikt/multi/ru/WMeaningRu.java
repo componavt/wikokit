@@ -143,7 +143,7 @@ public class WMeaningRu {
         if(line.startsWith("{{морфема"))
             return null;    // skip now, todo (parse) in future
 
-        LabelsText label_text = LabelRu.extractLabelsTrimText(line);
+        LabelsText label_text = LabelRu.extractLabelsTrimText(page_title, line);
         if(null == label_text)
             return null;
         line = label_text.getText();

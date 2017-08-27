@@ -71,10 +71,15 @@ public abstract class Label {
     /** Checks whitespace characters in the prefix or suffix of a string.
      * Prints "error" message if there is any.
      */
-    protected static void checksPrefixSuffixSpace(String s) {
+    protected static void checksPrefixSuffixSpace(String page_title, String s) {
 
-        if(s.charAt(0) == ' ' || s.charAt(s.length()-1) == ' ')
-            System.out.println("Error in Label.checksPrefixSuffixSpace(): there are leading spaces, string='"+s+"'.");
+        if(s.charAt(0) == ' ' || s.charAt(s.length()-1) == ' ') {
+            if(null == page_title) {
+                System.out.println(                          "Error in Label.checksPrefixSuffixSpace(): there are leading spaces, string='"+s+"'.");
+            } else {
+                System.out.println("Error at page '"+page_title+"', in Label.checksPrefixSuffixSpace(): there are leading spaces, string='"+s+"'.");
+            }
+        }
     }
     
     /** Gets English Wiktionary context label (LabelEn) associated with this label (e.g. LabelRu, LabelFr, etc.). */

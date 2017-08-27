@@ -222,6 +222,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal dar = new LanguageTypeRu("Даргинский", LanguageType.dar);
     public static final LanguageTypeLocal dav = new LanguageTypeRu("Таита", LanguageType.dav);
     public static final LanguageTypeLocal dbl = new LanguageTypeRu("Дирбал", LanguageType.dbl);
+    public static final LanguageTypeLocal ddo = new LanguageTypeRu("Цезский", LanguageType.ddo);
     public static final LanguageTypeLocal de = new LanguageTypeRu("Немецкий", LanguageType.de);
     public static final LanguageTypeLocal de_a = new LanguageTypeRu("Немецкий (австрийский)", LanguageType.de_a);
     public static final LanguageTypeLocal de_ch = new LanguageTypeRu("Немецкий (швейцарский)", LanguageType.de_ch);
@@ -291,6 +292,7 @@ public class LanguageTypeRu extends LanguageTypeLocal {
     public static final LanguageTypeLocal gez = new LanguageTypeRu("Геэз", LanguageType.gez);
     public static final LanguageTypeLocal gha = new LanguageTypeRu("Гхадамесский", LanguageType.gha);
     public static final LanguageTypeLocal gil = new LanguageTypeRu("Кирибати", LanguageType.gil);
+    public static final LanguageTypeLocal gin = new LanguageTypeRu("Гинухский", LanguageType.gin);
     public static final LanguageTypeLocal gl = new LanguageTypeRu("Галисийский", LanguageType.gl);
     public static final LanguageTypeLocal gld = new LanguageTypeRu("Нанайский", LanguageType.gld);
     public static final LanguageTypeLocal glk = new LanguageTypeRu("Гилянский", LanguageType.glk);

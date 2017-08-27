@@ -560,7 +560,31 @@ public class WRelationRuTest {
         assertEquals(LabelRu.acerbity.getShortName(), labels_hoduli[1].getShortName());// груб.
     }
     
-    
+    // entry = -ка
+    // # {{обл.||-}}: [[-ко]], [[-кось]]
+    @Test
+    public void testParseOneLine_region_label_with_curly_brackets() {
+        System.out.println("ParseOneLine_region_label_with_curly_brackets");
+        String page_title, text;
+        WRelation result;
+        Label la;
+        
+        page_title = "-ка";
+        text = "# {{обл.||-}}: [[-ко]], [[-кось]]";
+        
+        result = WRelationRu.parseOneLine(page_title, text);
+        
+        LabelsWikiText[] lwt_array = result.get();
+        assertEquals(2, lwt_array.length);// 1) обл.
+        
+        // 1) {{обл.||-}}: [[-ко]], [[-кось]]
+        assertEquals("-ко", lwt_array[0].getWikiText().getVisibleText());
+                
+        Label[] labels_ko = lwt_array[0].getLabels();
+        assertEquals(1, labels_ko.length);
+        la = labels_ko[0];
+        assertEquals(LabelRu.regional.getShortName(), la.getShortName());// обл.
+    }
     
     // eo context labels in synonyms
     // /////////////////////////////////////////////////////

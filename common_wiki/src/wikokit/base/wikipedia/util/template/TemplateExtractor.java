@@ -131,6 +131,11 @@ public class TemplateExtractor {
                 params = StringUtil.split("|", template_params);
             }
         }
+        
+        // remove leading and trailing spaces in params
+        for(int i=0; i<params.length; i++)
+            params[i] = params[i].trim();
+        
         return new TemplateExtractor(template_name, params, start_pos, end_pos);
     }
     

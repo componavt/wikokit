@@ -141,7 +141,7 @@ public class TLabel {
 
                 LanguageType l = native_lang;
                 if(l == LanguageType.ru) {
-                    _label = new LabelRu(short_name);
+                    _label = new LabelRu(null, short_name); // String page_title = null;
                     _label.setCategory(_lc);
                 } else if(l == LanguageType.en) {
                     _label = new LabelEn(short_name, _lc);

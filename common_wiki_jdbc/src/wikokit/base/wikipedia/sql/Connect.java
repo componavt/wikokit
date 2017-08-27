@@ -51,14 +51,14 @@ public class Connect {
     public final static String WP_HOST      = "localhost";
     public final static String WP_USER      = "javawiki";
     public final static String WP_PASS      = "";
-    public final static String WP_DB        = "enwiki7?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String WP_DB        = "enwiki7?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     //public final static String WP_DB      = "enwiki7?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
     //public final static String WP_DB      = "enwiki7?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
     //public final static String WP_DB      = "enwiki?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
     
     // Simple English Wikipedia
     // use: connect_simple.Open(Connect.WP_HOST,Connect.WP_SIMPLE_DB,   Connect.WP_USER,    Connect.WP_PASS);
-    public final static String WP_SIMPLE_DB   = "simplewiki20090119?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String WP_SIMPLE_DB   = "simplewiki20090119?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     //public final static String WP_SIMPLE_DB = "simplewiki20070909?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
     //public final static String WP_SIMPLE_DB = "simplewiki?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
     //public final static String WP_SIMPLE_DB = "simplewiki?useUnicode=true&autoReconnect=true&useUnbufferedInput=false";
@@ -70,7 +70,7 @@ public class Connect {
     public final static String WP_RU_USER   = "javawiki";
     public final static String WP_RU_PASS   = "";
     //public final static String WP_RU_DB     = "ruwiki20080220?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
-    public final static String WP_RU_DB   = "ruwiki20070920?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String WP_RU_DB   = "ruwiki20070920?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     
     
     // Russian Wiktionary
@@ -78,10 +78,10 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    public final static String RUWIKT_DB   = "ruwikt20160210?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_DB   = "ruwikt20170707?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     
     // Russian Wiktionary parsed database
-    public final static String RUWIKT_PARSED_DB = "ruwikt20160210_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20170707_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     public final static String RUWIKT_SQLITE = "ruwikt20110521.sqlite";
@@ -91,21 +91,21 @@ public class Connect {
     public final static String ENWIKT_HOST  = "localhost";
     public final static String ENWIKT_USER  = "javawiki";
     public final static String ENWIKT_PASS  = "";
-    public final static String ENWIKT_DB = "enwikt20140908?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_DB = "enwikt20140908?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
 
     // English Wiktionary parsed database
-    public final static String ENWIKT_PARSED_DB = "enwikt20140908_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_PARSED_DB = "enwikt20140908_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
 
     //public final static String ENWIKT_SQLITE = "C:/w/bin/enwikt20101030.sqlite";
     public final static String ENWIKT_SQLITE = "enwikt20111008.sqlite";
     
     // Meaning + semantic relations database based on English Wiktionary parsed database
-    public final static String ENWIKT_MEAN_SEMREL = "enwikt20111008_mean_semrel?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false";
+    public final static String ENWIKT_MEAN_SEMREL = "enwikt20111008_mean_semrel?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
 
     
     // IDF (inverse document frequency) database
     public final static String IDF_EN_HOST  = "localhost";
-    public final static String IDF_EN_DB    = "idfenwiki7?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
+    public final static String IDF_EN_DB    = "idfenwiki7?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     public final static String IDF_EN_USER  = "javawiki";
     public final static String IDF_EN_PASS  = "";
     
@@ -114,16 +114,16 @@ public class Connect {
     public final static String IDF_SIMPLE_HOST  = "localhost";
     public final static String IDF_SIMPLE_USER  = "javawiki";
     public final static String IDF_SIMPLE_PASS  = "";
-    public final static String IDF_SIMPLE_DB    = "idfsimplewiki20080214?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
-    //public final static String IDF_SIMPLE_DB  = "idfsimplewiki20070909?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
+    public final static String IDF_SIMPLE_DB    = "idfsimplewiki20080214?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
+    //public final static String IDF_SIMPLE_DB  = "idfsimplewiki20070909?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     
     // IDF Russian Wikipedia
     // use: idf_conn.Open(Connect.IDF_RU_HOST, Connect.IDF_RU_DB, Connect.IDF_RU_USER, Connect.IDF_RU_PASS);
     public final static String IDF_RU_HOST  = "localhost";
     public final static String IDF_RU_USER  = "javawiki";
     public final static String IDF_RU_PASS  = "";
-    //public final static String IDF_RU_DB    = "idfruwiki20080220?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
-    public final static String IDF_RU_DB    = "idfruwiki20070920?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false";
+    //public final static String IDF_RU_DB    = "idfruwiki20080220?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
+    public final static String IDF_RU_DB    = "idfruwiki20070920?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
 
     /** Gets language of Wiktionary/Wikipedia edition, main or native language,
      * e.g. Russian in Russian Wiktionary.

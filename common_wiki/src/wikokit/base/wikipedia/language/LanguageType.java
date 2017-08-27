@@ -3208,7 +3208,8 @@ public class LanguageType {
     public static final LanguageType dak = new LanguageType("dak", "Dakota", "Dakota");
     public static final LanguageType dav = new LanguageType("dav", "Taita", "Taita");
     public static final LanguageType dbj = new LanguageType("dbj", "Ida'an", "Ida'an");
-    public static final LanguageType dbl = new LanguageType("dbl", "Dyirbal", "Dyirbal");
+    public static final LanguageType dbl = new LanguageType("dbl", "Dyirbal", "Dyirbal"); 
+    public static final LanguageType ddo = new LanguageType("ddo", "цезйас мец", "Tsez");
     public static final LanguageType dgr = new LanguageType("dgr", "Dogrib", "Dogrib");
     public static final LanguageType dif = new LanguageType("dif", "Dieri", "Dieri");
     public static final LanguageType dim = new LanguageType("dim", "Dime", "Dime");
@@ -3246,6 +3247,7 @@ public class LanguageType {
     public static final LanguageType gbb = new LanguageType("gbb", "Kaytetye", "Kaytetye");
     public static final LanguageType gdm = new LanguageType("gdm", "Laal", "Laal");
     public static final LanguageType gil = new LanguageType("gil", "Gilbertese", "Gilbertese");
+    public static final LanguageType gin = new LanguageType("gin", "гьинузас мец", "Hinuq");
     public static final LanguageType gld = new LanguageType("gld", "Nanai", "Nanai");
     public static final LanguageType glk = new LanguageType("glk", "Gilaki", "Gilaki");
     public static final LanguageType gnd = new LanguageType("gnd", "Zulgo-Gemzek", "Zulgo-Gemzek");
