@@ -58,7 +58,10 @@ public class WMeaningRu {
         if(0 == text.length()) {
             return NULL_WMEANING_ARRAY;
         }
-
+        
+        // 0. gets all pictures from templates: {{илл|}}
+        // todo
+        
         // 1. gets position in text after ==== Значение ====
         Matcher m = ptrn_meaning_4th_level.matcher(text.toString());
         boolean b_next = m.find();

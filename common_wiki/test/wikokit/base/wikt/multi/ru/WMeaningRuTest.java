@@ -322,6 +322,42 @@ public class WMeaningRuTest {
         assertTrue(result.getDefinition().equalsIgnoreCase(definition));
     }
 
+    
+    // testing pictures (images) -----------------------------------------------
+    
+    // Parse article with image without caption, e.g.: {{илл|some picture.jpg}}, 
+    // there are several meanings, this image linked to the first meaning
+    @Test
+    public void testParse_Image_without_text() {
+        System.out.println("parse_Image_without_text");
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        page_title      = "щегол";
+        lang_section    = LanguageType.ru; // Russian word
+
+        String image_filename = "some picture.jpg";
+        
+        str =   "{{-ru-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "{{илл|some picture.jpg}}\n" +
+                "==== Значение ====\n" +
+                "# {{зоол.|ru}} ([[:species:Carduelis|Carduelis]]) небольшая [[певчая птица]]\n" +
+                "# {{п.|ru}}, {{прост.|ru}}, {{унич.|ru}} [[молокосос]], [[салага]]";
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
+        assertEquals(2, result.length);
+        
+        assertTrue(result[0].getImageFilename().equalsIgnoreCase(image_filename));
+        assertTrue(result[0].getImageCaption() .length() == 0);
+        assertTrue(result[1].getImageFilename().length() == 0);
+        assertTrue(result[1].getImageCaption() .length() == 0);
+    }
+    
+    // ----------------------------------------------------- eo testing pictures
+    
     @Test
     public void testParse_2_meaning_parse_labels() {
         System.out.println("parse_2_meaning_parse_labels");
