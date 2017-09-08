@@ -7,3 +7,4 @@
 /common_wiki_jdbc/dist/
 /wikt_parser/build/
 /wikt_parser/dist/
+*.bak

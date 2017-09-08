@@ -10,6 +10,7 @@ package wikokit.base.wikt.word;
 import wikokit.base.wikt.util.WikiWord;
 import wikokit.base.wikt.util.WikiText;
 import wikokit.base.wikipedia.language.LanguageType;
+import wikokit.base.wikt.constant.Image;
 import wikokit.base.wikt.constant.Label;
 import wikokit.base.wikt.util.POSText;
 import wikokit.base.wikt.multi.ru.WMeaningRu;
@@ -23,6 +24,9 @@ public class WMeaning {
 
     // StringBuffer definition;
     // + wiki word, + number of wiki word or number of first char of wikiword in definition
+    
+    // todo replace image_filename and image_caption by one object:
+    private Image   image;
     
     /** File name of image at Commons. One meaning has one (or zero) image. 
      */

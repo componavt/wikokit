@@ -60,7 +60,11 @@ public class WMeaningRu {
         }
         
         // 0. gets all pictures from templates: {{илл|}}
-        // todo
+        //String[number of images][2 = filename and caption] fc
+        String[] fc = ImageParserRu.getFilenameAndCaption(text.toString());
+        if(fc.length == 2) {
+            this.
+        }
         
         // 1. gets position in text after ==== Значение ====
         Matcher m = ptrn_meaning_4th_level.matcher(text.toString());
