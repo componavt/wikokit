@@ -21,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.List;
 import java.util.ArrayList;
 import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.Image;
 import wikokit.base.wikt.util.LabelsText;
 
 /** Meaning consists of <PRE>
@@ -38,7 +39,7 @@ public class WMeaningRu {
     
     /** Parses text (related to the POS), creates and fill array of meanings (WMeaning).
      * @param wikt_lang     language of Wiktionary
-     * @param page_title    word which are described in this article 'text'
+     * @param page_title    word described in this article 'text'
      * @param lang_section  language of this section of an article
      * @param pt            POSText defines POS stored in pt.text
      * @return
@@ -60,11 +61,12 @@ public class WMeaningRu {
         }
         
         // 0. gets all pictures from templates: {{илл|}}
-        //String[number of images][2 = filename and caption] fc
-        String[] fc = ImageParserRu.getFilenameAndCaption(text.toString());
-        if(fc.length == 2) {
-            this.
-        }
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText(page_title, text.toString());
+        //if(images[index].filename is valid    and 
+        //            .caption is presented and
+        //            .meaning_number == index) {
+        //    then store this images[index] -> (WMeaning[])wm_list
+        //}
         
         // 1. gets position in text after ==== Значение ====
         Matcher m = ptrn_meaning_4th_level.matcher(text.toString());

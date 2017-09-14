@@ -14,6 +14,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import wikokit.base.wikipedia.language.LanguageType;
 import wikokit.base.wikt.constant.Label;
+import wikokit.base.wikt.constant.Image;
 import wikokit.base.wikt.multi.en.name.LabelEn;
 import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.util.POSText;
@@ -350,10 +351,14 @@ public class WMeaningRuTest {
         WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
         assertEquals(2, result.length);
         
-        assertTrue(result[0].getImageFilename().equalsIgnoreCase(image_filename));
-        assertTrue(result[0].getImageCaption() .length() == 0);
-        assertTrue(result[1].getImageFilename().length() == 0);
-        assertTrue(result[1].getImageCaption() .length() == 0);
+        Image imag0 = result[0].getImage();
+        assertTrue(null != imag0);
+                
+        assertTrue(imag0.getFilename().equalsIgnoreCase(image_filename));
+        assertTrue(imag0.getCaption() .length() == 0);
+        
+        Image imag1 = result[1].getImage();
+        assertTrue(null == imag1);
     }
     
     // ----------------------------------------------------- eo testing pictures

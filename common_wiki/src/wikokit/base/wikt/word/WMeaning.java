@@ -25,15 +25,10 @@ public class WMeaning {
     // StringBuffer definition;
     // + wiki word, + number of wiki word or number of first char of wikiword in definition
     
-    // todo replace image_filename and image_caption by one object:
+    /** Image (picture) related to some definition (meaning).
+     * One meaning has one or zero related images.
+    */
     private Image   image;
-    
-    /** File name of image at Commons. One meaning has one (or zero) image. 
-     */
-    private String  image_filename; //private WImage  image;
-    
-    /** Image caption (under image at Wiktionary entry), without number of meaning. */
-    private String  image_caption;
     
     /** Contexual information for definitions, e.g. "idiom" from text "# {{idiom}} [[bullet]]s".
      * @see full list of labels in LabelEn, LabelRu, etc.
@@ -66,9 +61,7 @@ public class WMeaning {
     private final static WikiWord[] NULL_WIKIWORD       = new WikiWord[0];
 
     public WMeaning() {
-        image_filename  = "";
-        image_caption   = "";
-        
+        image  = null;
         labels = null;
         definition = null;
         quote = null;
@@ -78,6 +71,7 @@ public class WMeaning {
         /** Frees memory recursively. */
     public void free ()
     {
+        image  = null;
         labels = null;
 
         if(null != quote) {
@@ -91,16 +85,15 @@ public class WMeaning {
      *
      * @param page_title
      * @param _labels
+     * @param _images
      * @param _definition wikified text of the definition
      * @param _quote could be null
      * @param _template_not_def true if there is template (e.g. {{form of|}} or
-     * {{plural of|}}) instead of definiton text (in enwikt)
+     * {{plural of|}}) instead of definition text (in enwikt)
      */
-    public WMeaning(String page_title,Label[] _labels,
+    public WMeaning(String page_title, Label[] _labels, //Image _image,
                     String _definition, WQuote[] _quote, boolean _template_not_def) {
-        image_filename  = "";
-        image_caption   = "";
-        
+        //image  = _image;
         labels = _labels;
         
         wikified_text = _definition;
@@ -114,20 +107,6 @@ public class WMeaning {
             quote = _quote;
 
     }
-
-    /** Gets name of file at Commons.
-     * @return empty string "" if there is no any images for this meaning
-     */
-    public String getImageFilename() {
-        return image_filename;
-    }
-    
-    /** Gets text caption of image.
-     * @return empty string "" if there is no any images for this meaning
-     */
-    public String getImageCaption() {
-        return image_caption;
-    }
     
     /** True if the definition defines inflection of the word with the help of
      * (1) the template (e.g. {{form of|}} or {{plural of|}}), or
@@ -137,6 +116,13 @@ public class WMeaning {
         return form_of_inflection;
     }
 
+    /** Gets image.
+     * @return null if there is no image for this meaning
+     */
+    public Image getImage() {
+        return image;
+    }
+    
     /** Gets array of context labels in the definition. */
     public Label[] getLabels() {
         return labels;
