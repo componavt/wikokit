@@ -7,6 +7,7 @@
 package wikokit.base.wikt.multi.ru;
 
 import wikokit.base.wikt.constant.Image;
+import wikokit.base.wikipedia.util.template.TemplateExtractor;
 
 /** Set of functions to extract pictures filenames and pictures captions 
  * from the template {{илл|}} in Russian Wiktionary.
@@ -34,7 +35,13 @@ public final class ImageParserRu {
      */
     public static Image[] getFilenameAndCaptionFromText(String page_title, String text) {
         
+        // 1. modern variant: templace case {{илл|filename|caption}}
         
+        String template_name = "илл";
+        TemplateExtractor[] te = TemplateExtractor.getTemplateByName(page_title, template_name, text);
+        
+        // 2. outdated variant: bare figure of Commons, for example: [[Файл:Declaration of Independence - USA.jpg|мини|200 px|декларация]]
+        // todo ...
         
         return null;
     }

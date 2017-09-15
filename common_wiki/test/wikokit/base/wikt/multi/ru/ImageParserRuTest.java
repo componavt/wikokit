@@ -58,7 +58,7 @@ public class ImageParserRuTest {
                 "# {{п.|ru}}, {{прост.|ru}}, {{унич.|ru}} [[молокосос]], [[салага]]";
         
         Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
-        assertTrue(null != images);
+        assertNotNull(images);
         assertEquals(1, images.length);
         
         assertTrue(  images[0].getFilename().equalsIgnoreCase(image_filename));

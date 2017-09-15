@@ -363,6 +363,7 @@ public class WMeaningRuTest {
     
     // ----------------------------------------------------- eo testing pictures
     
+    
     @Test
     public void testParse_2_meaning_parse_labels() {
         System.out.println("parse_2_meaning_parse_labels");

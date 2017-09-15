@@ -35,6 +35,8 @@ public class TemplateExtractorTest {
     public void tearDown() {
     }
 
+    
+    // testing getFirstTemplate() ----------------------------------------------------- 
     @Test
     public void testGetFirstTemplate_empty_text() {
         System.out.println("getFirstTemplate");
@@ -104,6 +106,41 @@ public class TemplateExtractorTest {
         assertTrue( TemplateExtractor.equals( expResult, result) );
     }
     // {{template name|parameter one|parameter two|...}}
+    // ----------------------------------------------------- eo testing getFirstTemplate()
+    
+    
+    
+    // testing getTemplateByName() ----------------------------------------------------- 
+    @Test
+    public void testgetTemplateByName_empty() {
+        System.out.println("getTemplateByName_empty");
+        String page_title, str;
+        
+        page_title      = "page_title_is_getTemplateByName_empty";
+        String image_filename = "some picture.jpg";
+        
+        String template_name = "templatus";
+        str =   "{{-ru-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "{{templatus|parameter one|two}}\n" +
+                "==== Значение ====\n" +
+                "# {{зоол.|ru}} ([[:species:Carduelis|Carduelis]]) небольшая [[певчая птица]]\n" +
+                "# {{п.|ru}}, {{прост.|ru}}, {{унич.|ru}} [[молокосос]], [[салага]]";
+        
+        String[] params = {"parameter one", "two"};
+        TemplateExtractor expResult = new TemplateExtractor("template name", params, 12, 46);
+        
+        TemplateExtractor[] te_array = TemplateExtractor.getTemplateByName(page_title, template_name, str);
+        
+        assertNotNull(te_array);
+        assertEquals(1, te_array.length);
+        
+        TemplateExtractor result = te_array[0];
+        assertTrue( TemplateExtractor.equals( expResult, result) );
+    }
+    // ----------------------------------------------------- eo testing getTemplateByName()
+    
+    
     
     // {"param1", "param2=value2", ...} get value2 by param2
     @Test

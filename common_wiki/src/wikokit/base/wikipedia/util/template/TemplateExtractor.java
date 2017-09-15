@@ -27,6 +27,7 @@ public class TemplateExtractor {
     private int end_pos;
     
     private final static String[] NULL_STRING_ARRAY = new String[0];
+    private final static TemplateExtractor[] NULL_TE_ARRAY = new TemplateExtractor[0];
     
     /** Gets name of template. */
     public String getName() {
@@ -51,7 +52,7 @@ public class TemplateExtractor {
         
         this.params = new String[ _params.length ];
         System.arraycopy(_params, 0, this.params, 0, _params.length);
-    };
+    }
     
     /** @return true if all fields of two templates are the same. */
     static public boolean equals (TemplateExtractor one, TemplateExtractor two) {
@@ -137,6 +138,36 @@ public class TemplateExtractor {
             params[i] = params[i].trim();
         
         return new TemplateExtractor(template_name, params, start_pos, end_pos);
+    }
+    
+    
+    // TemplateExtractor[] te = TemplateExtractor.getTemplateByName(String page_title, String template_name, String text);
+    
+    /** Gets parameters {{template_name|parameters...}} from the source string 'text'.
+     * 
+     * @param template_name name of template which are parameters will be found
+     * @param page_title  word described in this article 'text'
+     * @param text source text
+     * @return empty TemplateExtractor[] if this template is absent in the source text
+     */    
+    public static TemplateExtractor[] getTemplateByName(String page_title, String template_name, String text) {
+        /*
+        int start_pos = text.indexOf("{{");
+        if(-1 == start_pos)        // ^ start_pos
+            return null;
+        
+        int end_pos = text.indexOf("}}", start_pos);
+        if(-1 == end_pos)        // ^ end_pos
+            return null;
+        end_pos ++;              // }}
+                                 //  ^ end_pos
+                                 
+                                 
+       if(null)
+           return NULL_TE_ARRAY;
+       */
+       //return new TemplateExtractor(template_name, params, start_pos, end_pos);
+       return null;
     }
     
     /** Removes substring {{template text}} from the source 'text', trims result string.
