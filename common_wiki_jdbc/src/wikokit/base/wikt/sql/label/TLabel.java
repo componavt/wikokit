@@ -38,10 +38,11 @@ public class TLabel {
     /** Unique identifier in the table 'label'. */
     private int id;
     
-    /** Context label short name. */
+    /** Context label short name, e.g. {{obsolete}}, {{slang}}
+     * (or long description in ruwikt sometimes, see https://ru.wiktionary.org/wiki/оне). */
     private String short_name;
     
-    /** Context label full name. */
+    /** Context label full name, e.g. 'New Zealand' for {{NZ}}. */
     private String name;
     
     /** Category of context label (category_id). NULL means that label_category is unknown. 
@@ -289,10 +290,12 @@ public class TLabel {
 
         Map<Integer, Label> _id2label = TLabel.getAllID2Labels();
         
-        for(int label_id : _id2label.keySet()) {
-            
-            int counter = TLabelMeaning.countRecordsWithLabelID(connect, label_id); // SELECT COUNT(*) FROM label_meaning WHERE label_id = 3;
-            update(connect, label_id, counter);                                     // UPDATE label SET counter=7 WHERE id=3;
+        if(null != _id2label) {
+            for(int label_id : _id2label.keySet()) {
+
+                int counter = TLabelMeaning.countRecordsWithLabelID(connect, label_id); // SELECT COUNT(*) FROM label_meaning WHERE label_id = 3;
+                update(connect, label_id, counter);                                     // UPDATE label SET counter=7 WHERE id=3;
+            }
         }
     }
     

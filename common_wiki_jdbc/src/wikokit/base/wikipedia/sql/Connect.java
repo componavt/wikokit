@@ -78,10 +78,18 @@ public class Connect {
     public final static String RUWIKT_HOST   = "localhost";
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
-    public final static String RUWIKT_DB   = "ruwikt20170707?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
+    //public final static String RUWIKT_DB   = "ruwikt20180601?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
+    public final static String RUWIKT_DB   = "ruwikt20180601?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
+    //public final static String RUWIKT_DB   = "ruwikt20180601?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&useUnbufferedInput=false&serverTimezone=UTC";
+    // jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    // jdbc:mysql://localhost/db?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     
     // Russian Wiktionary parsed database
-    public final static String RUWIKT_PARSED_DB = "ruwikt20170707_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
+    //public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
+    //public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
+    //public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
+    // "ruwikt20180601?useUnicode=true&useSSL=false&serverTimezone=UTC";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";
     public final static String RUWIKT_SQLITE = "ruwikt20110521.sqlite";
@@ -220,10 +228,13 @@ public class Connect {
     
     private void Open() { 
         conn = null;
-        String classname = "com.mysql.jdbc.Driver";
+        String classname = "com.mysql.cj.jdbc.Driver"; // "com.mysql.jdbc.Driver"; ~
         try {
             Class.forName(classname).newInstance(); 
-            conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name, user, pass);
+
+            //Class.getDeclaredConstructor(String.class).newInstance(classname);
+
+            conn = DriverManager.getConnection("jdbc:mysql://"+db_host+"/"+db_name, user, null); // pass);
 
             // jdbc:mysql://localhost/test?user=testuser&password=testpass
 //            String s = "jdbc:mysql://"+db_host+"/"+db_name +"&user="+ user +"&password="+ pass;
