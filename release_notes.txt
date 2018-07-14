@@ -1,4 +1,5 @@
 
+  common_wiki 299 tests passed, 7 tests failed
   common_wiki 295 tests passed, 5 tests failed
 
 wiwordik 0.XX 2011-0?-??

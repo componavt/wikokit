@@ -110,33 +110,86 @@ public class TemplateExtractorTest {
     
     
     
-    // testing getTemplateByName() ----------------------------------------------------- 
+    // testing getFirstTemplateByName() ----------------------------------------------------- 
     @Test
-    public void testgetTemplateByName_empty() {
-        System.out.println("getTemplateByName_empty");
-        String page_title, str;
+    public void testgetFirstTemplateByName_empty() {
+        System.out.println("getFirstTemplateByName_empty");
+        String page_title, text0, text0and0;
         
-        page_title      = "page_title_is_getTemplateByName_empty";
-        String image_filename = "some picture.jpg";
-        
+        page_title      = "page_title_is_getFirstTemplateByName_empty";        
         String template_name = "templatus";
-        str =   "{{-ru-}}\n" +
-                "=== Семантические свойства ===\n" +
-                "{{templatus|parameter one|two}}\n" +
-                "==== Значение ====\n" +
-                "# {{зоол.|ru}} ([[:species:Carduelis|Carduelis]]) небольшая [[певчая птица]]\n" +
-                "# {{п.|ru}}, {{прост.|ru}}, {{унич.|ru}} [[молокосос]], [[салага]]";
+        text0     = "{{templatus|}}\n";
+        text0and0 = "{{templatus|||}}\n";
+                
+        TemplateExtractor te_first = TemplateExtractor.getFirstTemplateByName(page_title, template_name, text0);
+        assertNull(te_first);
+                                                                                       
+        te_first = TemplateExtractor.getFirstTemplateByName(page_title, template_name, text0and0);
+        assertNull(te_first);
+    }
+    
+    @Test
+    public void testgetFirstTemplateByName_one_param() {
+        System.out.println("getFirstTemplateByName_one_param");
+        String page_title, text;
         
-        String[] params = {"parameter one", "two"};
-        TemplateExtractor expResult = new TemplateExtractor("template name", params, 12, 46);
+        page_title      = "page_title_is_getFirstTemplateByName_one_param";
+        String template_name = "templatus";
+        text = "012345{{templatus|param one}}\n"  +
+               "{{templatus|111|222}}";
         
-        TemplateExtractor[] te_array = TemplateExtractor.getTemplateByName(page_title, template_name, str);
+        String[] params = {"param one"};
+        TemplateExtractor expResult = new TemplateExtractor(template_name, params, 6, 28);
         
-        assertNotNull(te_array);
-        assertEquals(1, te_array.length);
+        TemplateExtractor te_first = TemplateExtractor.getFirstTemplateByName(page_title, template_name, text);
+        assertNotNull(te_first);
+        assertEquals(1, te_first.countTemplateParameters());
+        assertTrue( TemplateExtractor.equals( expResult, te_first) );
+    }
+    
+    @Test
+    public void testgetAllTemplatesByName_empty() {
+        System.out.println("getAllTemplatesByName_empty");
+        String page_title, text;
         
-        TemplateExtractor result = te_array[0];
-        assertTrue( TemplateExtractor.equals( expResult, result) );
+        page_title      = "page_title_is_getAllTemplatesByName_empty";
+        String template_name = "absent template";
+        text = "012345{{templatus|param one}}\n"  +
+               "{{templatus|111|222}}";
+        
+        TemplateExtractor[] te_all = TemplateExtractor.getAllTemplatesByName(page_title, template_name, text);
+        assertNotNull(te_all);
+        assertEquals(0, te_all.length);
+    }
+    
+    @Test
+    public void testgetAllTemplatesByName_two_templates() {
+        System.out.println("getAllTemplatesByName_two_templates");
+        String page_title, text, text_without_template, str;
+        
+        page_title      = "page_title_is_getAllTemplatesByName_two_templates";
+        String template_name = "t";
+        text = "012345{{t|param one}}\n"  +
+               "{{t|111|222}}end";
+        text_without_template = "012345\n"  +
+                                "end";
+        
+        TemplateExtractor[] te_all = TemplateExtractor.getAllTemplatesByName(page_title, template_name, text);
+        assertNotNull(te_all);
+        assertEquals(2, te_all.length);
+        
+        String[] params1 = {"param one"};
+        TemplateExtractor expResult1 = new TemplateExtractor(template_name, params1, 6, 20);
+        assertTrue( TemplateExtractor.equals( expResult1, te_all[0]) );
+        
+        String[] params2 = {"111", "222"};
+        TemplateExtractor expResult2 = new TemplateExtractor(template_name, params2, 22, 34);
+        assertTrue( TemplateExtractor.equals( expResult2, te_all[1]) );
+        
+        // remove last template, then remove first template
+        str = TemplateExtractor.extractTextWithoutTemplate(text, te_all[1]);
+        str = TemplateExtractor.extractTextWithoutTemplate(str,  te_all[0]);
+        assertEquals(str, text_without_template);
     }
     // ----------------------------------------------------- eo testing getTemplateByName()
     
@@ -152,7 +205,7 @@ public class TemplateExtractorTest {
         // NULL
         // NULL if this parameter is absent or, there are no values for this parameter.
         
-        parameter_name = "my_parameer";
+        parameter_name = "my_parameter";
         String[] params_zero = {};
         value = TemplateExtractor.getParameterValue (params_zero, parameter_name);
         assertNull(value);

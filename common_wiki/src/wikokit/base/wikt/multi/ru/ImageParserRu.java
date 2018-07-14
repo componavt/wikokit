@@ -38,7 +38,7 @@ public final class ImageParserRu {
         // 1. modern variant: templace case {{илл|filename|caption}}
         
         String template_name = "илл";
-        TemplateExtractor[] te = TemplateExtractor.getTemplateByName(page_title, template_name, text);
+        TemplateExtractor[] te = TemplateExtractor.getAllTemplatesByName(page_title, template_name, text);
         
         // 2. outdated variant: bare figure of Commons, for example: [[Файл:Declaration of Independence - USA.jpg|мини|200 px|декларация]]
         // todo ...

@@ -1,11 +1,13 @@
 /* TemplateExtractor.java - set of functions to extract {{template data|from the text}}.
  * 
- * Copyright (c) 2013 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2018 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under EPL/LGPL/GPL/AL/BSD multi-license.
  */
 package wikokit.base.wikipedia.util.template;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 import wikokit.base.wikipedia.util.StringUtil;
 
@@ -86,7 +88,7 @@ public class TemplateExtractor {
     
     /** Gets first template from the source string 'text'.
      * 
-     * This function parses only simple one-level templates, 
+     * This function parses only simple one-level templates, without nested templates, 
      * i.e. templates like "{{one{{two}}ops}}" will be parsed with errors.
      * 
      * @param text source text
@@ -141,18 +143,17 @@ public class TemplateExtractor {
     }
     
     
-    // TemplateExtractor[] te = TemplateExtractor.getTemplateByName(String page_title, String template_name, String text);
-    
-    /** Gets parameters {{template_name|parameters...}} from the source string 'text'.
+    /** Gets parameters of the first encountered template {{template_name|parameters...}} 
+     * from the source string 'text'.
      * 
      * @param template_name name of template which are parameters will be found
      * @param page_title  word described in this article 'text'
      * @param text source text
-     * @return empty TemplateExtractor[] if this template is absent in the source text
+     * @return null if this template is absent in the source text or have empty parameters
      */    
-    public static TemplateExtractor[] getTemplateByName(String page_title, String template_name, String text) {
-        /*
-        int start_pos = text.indexOf("{{");
+    public static TemplateExtractor getFirstTemplateByName(String page_title, String template_name, String text) {
+        
+        int start_pos = text.indexOf("{{" + template_name);
         if(-1 == start_pos)        // ^ start_pos
             return null;
         
@@ -161,13 +162,70 @@ public class TemplateExtractor {
             return null;
         end_pos ++;              // }}
                                  //  ^ end_pos
-                                 
-                                 
-       if(null)
-           return NULL_TE_ARRAY;
-       */
-       //return new TemplateExtractor(template_name, params, start_pos, end_pos);
-       return null;
+        
+        //                             |---- template text --------|
+        // "text before {{template name|parameter one|paremeter two}} text after"
+        //              ^ start_pos                   ^ end_pos
+        
+        String s = "{{" + template_name;
+        int len = s.length();                            // 1 is one pipe after template name 
+        String template_params = text.substring(start_pos + 1 + len, end_pos - 1);
+        if(template_params.length() == 0)
+            return null;                // {{template_name|}} - template without parameters
+        
+        String[] params = NULL_STRING_ARRAY;
+        if(template_params.length() > 0) {
+            params = StringUtil.split("|", template_params);
+        }
+        
+        boolean b_empty = true; // in case there is no any params, e.g. {{|||}}
+        
+        // remove leading and trailing spaces in params
+        for(int i=0; i<params.length; i++) {
+            params[i] = params[i].trim();
+            if(params[i].length() > 0)
+                b_empty = false;        // at least one parameter exists
+        }
+        if(b_empty)
+            return null;
+       
+        return new TemplateExtractor(template_name, params, start_pos, end_pos);
+    }
+        
+    /** Gets array of templates {{template_name|parameters...}} 
+     * from the source string 'text'.
+     * 
+     * @param template_name name of template which are parameters will be found
+     * @param page_title  word described in this article 'text'
+     * @param text source text
+     * @return empty array TemplateExtractor[] if this template is absent in the source text or have empty parameters
+     */
+    public static TemplateExtractor[] getAllTemplatesByName(String page_title, String template_name, String text) {
+        
+        TemplateExtractor t;
+        
+        Collection<TemplateExtractor> result = new ArrayList<>();
+        
+        t = TemplateExtractor.getFirstTemplateByName(page_title, template_name, text);
+        String new_text = text;
+        while(null != t) {
+            result.add( t );
+            new_text = new_text.substring(t.end_pos + 1);
+            t = TemplateExtractor.getFirstTemplateByName(page_title, template_name, new_text);
+        }
+        
+        if(0 == result.size())
+            return NULL_TE_ARRAY;
+        
+        // update .start_pos and .end_pos
+        int current_end_pos = 0; // current "end" position of this template in the source 'text'
+        for (TemplateExtractor t_cur : result) {
+            t_cur.start_pos += current_end_pos;
+            t_cur.end_pos   += current_end_pos;
+            
+            current_end_pos += (t_cur.end_pos + 1);  
+        }
+        return ((TemplateExtractor[])result.toArray(NULL_TE_ARRAY));
     }
     
     /** Removes substring {{template text}} from the source 'text', trims result string.
