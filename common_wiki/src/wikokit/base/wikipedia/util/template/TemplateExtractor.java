@@ -19,7 +19,7 @@ public class TemplateExtractor {
     private String name;
     
     /** Template parameters,
-     * if there are not parameters then params = NULL_STRING_ARRAY. */
+     * if there are no parameters then params = NULL_STRING_ARRAY. */
     private String[] params;
     
     /** Start position of the template in the source string. */
@@ -259,7 +259,7 @@ public class TemplateExtractor {
      * 
      * @param template_params
      * @param parameter_name
-     * @return NULL if this parameter is absent or, there are no values for this parameter.
+     * @return NULL if this parameter is absent or, there is no value for this parameter
      */
     public static String getParameterValue (String[] params, String parameter_name) {
         if(null == params || params.length == 0)
@@ -272,6 +272,43 @@ public class TemplateExtractor {
             if(words[0].trim().equalsIgnoreCase(parameter_name))
                 return words[1].trim();
         }
+        return null;
+    }
+    
+    /** Gets value by parameter name or parameter number 
+     * from an array of parameters in the form {"param1", "param2=value2", ...},
+     * first search value by parameter name, then by number.
+     * 
+     * @param template_params
+     * @param parameter_name
+     * @param parameter_number
+     * @return NULL if this parameter is absent or, there is no value for this parameter
+     */
+    public static String getParameterValueByNameOrNumber (String[] params,
+                                String parameter_name, int parameter_number) 
+    {
+        if(null == params || params.length == 0)
+            return null;
+        
+        // get parameter by name
+        for(String p : params) {
+            String[] words = p.split("=");
+            if(words.length != 2)   // name = value (2 words)
+                continue;
+            if(words[0].trim().equalsIgnoreCase(parameter_name))
+                return words[1].trim();
+        }
+        
+        // OK, there is no parameter with this name, then get parameter by number
+        if(parameter_number < params.length + 1) {
+            String _p = params[parameter_number - 1];
+            if(!_p.contains("=")) { // this parameter cannot contain a name, see the previous cycle
+                _p = _p.trim();
+                if (_p.length() > 0)
+                    return _p;
+            }
+        }
+        
         return null;
     }
     

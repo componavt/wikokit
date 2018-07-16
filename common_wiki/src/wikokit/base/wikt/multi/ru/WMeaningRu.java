@@ -113,8 +113,13 @@ public class WMeaningRu {
 
         if(null == wm_list)
             return NULL_WMEANING_ARRAY;
-
-        return( (WMeaning[])wm_list.toArray(NULL_WMEANING_ARRAY) );
+        
+        WMeaning[] wmeanings = (WMeaning[])wm_list.toArray(NULL_WMEANING_ARRAY);
+        
+        if(images.length > 0)
+            wmeanings = mapImageToMeaning(images, wmeanings);
+                
+        return wmeanings;
     }
 
     
@@ -170,6 +175,30 @@ public class WMeaningRu {
         WQuote[] quote = WQuoteRu.getQuotes(page_title, line);        
 
         return new WMeaning(page_title, label_text.getLabels(), wiki_definition, quote, false);
+    }
+    
+    
+    /** Selects the most appropriate image (by meaning number, not caption text) 
+     * for each meaning.
+     * 
+     * @param images
+     * @param wmeanings
+     * @return the same array wmeanings with assigned images
+     * 
+     * @see wikokit.base.wikt.multi.ru.ImageParserRu
+     */
+    private static WMeaning[] mapImageToMeaning(Image[] images, WMeaning[] wmeanings)
+    {
+        for (int i = 0; i < wmeanings.length; i++) {
+            WMeaning m = wmeanings[i];
+            
+            for (Image image : images) {
+                if(image.getMeaningNumber() == i+1)
+                    m.setImage( image );     // +1 number of meaning starts from 1, not 0
+            }
+        }
+    
+        return wmeanings;
     }
 
 }

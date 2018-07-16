@@ -108,7 +108,7 @@ public class TemplateExtractorTest {
     // {{template name|parameter one|parameter two|...}}
     // ----------------------------------------------------- eo testing getFirstTemplate()
     
-    
+  
     
     // testing getFirstTemplateByName() ----------------------------------------------------- 
     @Test
@@ -146,7 +146,9 @@ public class TemplateExtractorTest {
         assertEquals(1, te_first.countTemplateParameters());
         assertTrue( TemplateExtractor.equals( expResult, te_first) );
     }
+    // ------------------------------------- eo testing getFirstTemplateByName()
     
+    // getAllTemplatesByName ---------------------------------------------------
     @Test
     public void testgetAllTemplatesByName_empty() {
         System.out.println("getAllTemplatesByName_empty");
@@ -191,9 +193,11 @@ public class TemplateExtractorTest {
         str = TemplateExtractor.extractTextWithoutTemplate(str,  te_all[0]);
         assertEquals(str, text_without_template);
     }
-    // ----------------------------------------------------- eo testing getTemplateByName()
+    // ------------------------------------- eo testing getFirstTemplateByName()
     
     
+    
+    // getParameterValue -------------------------------------------------------
     
     // {"param1", "param2=value2", ...} get value2 by param2
     @Test
@@ -225,4 +229,28 @@ public class TemplateExtractorTest {
         value = TemplateExtractor.getParameterValue (my_param_exist, parameter_name);
         assertEquals(value, "value 2");
     }
+    // ------------------------------------------ eo testing getParameterValue()
+    
+    
+    // getParameterValueByNameOrNumber -----------------------------------------
+    // {"param1", "param2=value2", ...} get value2 by param2
+    @Test
+    public void testgetParameterValueByNameOrNumber() {
+        System.out.println("getParameterValueByNameOrNumber");
+        String parameter_name, value;
+        int parameter_number;
+        
+        parameter_name = "param2";
+        
+        // get second parameter by name
+        String[] my_param_named = {"param1 value without name", parameter_name+"= value 2 "};
+        value = TemplateExtractor.getParameterValueByNameOrNumber (my_param_named, parameter_name, 2);
+        assertEquals(value, "value 2");
+        
+        // get second parameter by number
+        String[] my_param_without_name = {"param1 value without name", " value 2 "};
+        value = TemplateExtractor.getParameterValueByNameOrNumber (my_param_without_name, parameter_name, 2);
+        assertEquals(value, "value 2");
+    }
+    // ---------------------------- eo testing getParameterValueByNameOrNumber()
 }

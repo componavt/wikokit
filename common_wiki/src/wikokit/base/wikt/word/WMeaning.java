@@ -123,6 +123,10 @@ public class WMeaning {
         return image;
     }
     
+    public void setImage(Image i) {
+        image = i;
+    }
+    
     /** Gets array of context labels in the definition. */
     public Label[] getLabels() {
         return labels;

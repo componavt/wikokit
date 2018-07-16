@@ -361,6 +361,51 @@ public class WMeaningRuTest {
         assertTrue(null == imag1);
     }
     
+    // Several images with captions with numbers
+    @Test
+    public void testParse_Images_with_3_captions() {
+        System.out.println("parse_Images_with_3_captions");
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        page_title      = "пояс";
+        lang_section    = LanguageType.ru; // Russian word
+        
+        str =   "{{-ru-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "{{илл|Karate belt.jpg}}\n" +
+                "{{илл|Garter belt.jpg|Пояс [2] для чулок}}\n" +
+                "{{илл|InnerSolarSystem-en.png|Пояс [4] астероидов}}\n" +
+                "==== Значение ====\n" +
+                "# [[лента]], [[шнур]], [[ремень]] \n" +
+                "# [[предмет]] женского нижнего белья\n" +
+                "# {{разг.|ru}} [[талия]], место, где [[туловище]] охватывается таким поясом [1]\n" +
+                "# {{п.|ru}} [[слой]], [[пространство]], [[опоясывающий|опоясывающее]] собой что-либо\n" +
+                "# {{геогр.|ru}} [[часть]] поверхности земного шара\n";
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
+        assertEquals(5, result.length);
+        
+        Image i1 = result[0].getImage();
+        assertNotNull(i1);
+        assertTrue(i1.getFilename().equalsIgnoreCase("Karate belt.jpg"));
+        assertTrue(i1.getCaption() .length() == 0);
+        
+        Image i2 = result[1].getImage();
+        assertNotNull(i2);                   // {{илл|Garter belt.jpg|Пояс [2] для чулок}}
+        assertTrue(i2.getFilename().equalsIgnoreCase("Garter belt.jpg"));
+        assertTrue(i2.getCaption() .equalsIgnoreCase("Пояс для чулок"));
+        
+        Image i3 = result[2].getImage();
+        assertNull(i3);
+        
+        Image i4 = result[3].getImage();
+        assertNotNull(i4);                   // {{илл|InnerSolarSystem-en.png|Пояс [4] астероидов}}
+        assertTrue(i4.getFilename().equalsIgnoreCase("InnerSolarSystem-en.png"));
+        assertTrue(i4.getCaption() .equalsIgnoreCase("Пояс астероидов"));
+    }
     // ----------------------------------------------------- eo testing pictures
     
     

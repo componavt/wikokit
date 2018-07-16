@@ -123,8 +123,8 @@ public class WikiText {
         return (WikiText[])wt_list.toArray(NULL_WIKITEXT_ARRAY);
     }
 
-    /** Parses text (split by semicolons), creates array of wiki text fragments
-     * This function should be used to split wikified list of synonyms and translations.
+    /** Parses text (split by semicolons), creates array of wiki text fragments, 
+     * this function should be used to split wikified list of synonyms and translations.
      * @return empty array if there is no text.
      */
     public static WikiText[] createSplitBySemicolon(String page_title, String text)
