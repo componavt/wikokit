@@ -73,9 +73,9 @@ public class WTranslationRu {
         boolean b_next = m.find();
 
         if(!b_next) {   // there is no translation section!
-            if(lang_section == LanguageType.ru)
-                System.out.println("Warning in WTranslationRu.parse(): The Russian word '"+
-                        page_title + "' has no section === Перевод ===.");
+            //if(lang_section == LanguageType.ru) // too often warning, so skip it
+                //System.out.println("Warning in WTranslationRu.parse(): The Russian word '"+
+                //        page_title + "' has no section === Перевод ===.");
             return NULL_WTRANSLATION_ARRAY;
         }
 

@@ -85,6 +85,9 @@ source ./wikt_parser/doc/wikt_parsed_empty.sql
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "translation_entry");
         
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "image");
+        UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "image_meaning");
+        
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "label_meaning");
         UtilSQL.deleteAllRecordsResetAutoIncrement(wikt_parsed_conn, "label_relation");
 

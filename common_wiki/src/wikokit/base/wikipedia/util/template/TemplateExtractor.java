@@ -14,6 +14,7 @@ import wikokit.base.wikipedia.util.StringUtil;
 /** Set of functions to extract {{template data|from the text}} with known location (position) in text.
  */
 public class TemplateExtractor {
+    // private static final boolean DEBUG = true;
     
     /** Name of template. */
     private String name;
@@ -153,11 +154,14 @@ public class TemplateExtractor {
      */    
     public static TemplateExtractor getFirstTemplateByName(String page_title, String template_name, String text) {
         
-        int start_pos = text.indexOf("{{" + template_name);
+        String s = "{{" + template_name + "|";
+        int len = s.length();
+        
+        int start_pos = text.indexOf(s);
         if(-1 == start_pos)        // ^ start_pos
             return null;
         
-        int end_pos = text.indexOf("}}", start_pos);
+        int end_pos = text.indexOf("}}", start_pos + len);
         if(-1 == end_pos)        // ^ end_pos
             return null;
         end_pos ++;              // }}
@@ -167,9 +171,10 @@ public class TemplateExtractor {
         // "text before {{template name|parameter one|paremeter two}} text after"
         //              ^ start_pos                   ^ end_pos
         
-        String s = "{{" + template_name;
-        int len = s.length();                            // 1 is one pipe after template name 
-        String template_params = text.substring(start_pos + 1 + len, end_pos - 1);
+        //if(DEBUG)
+        //    System.out.println(page_title + ": template_name=" + template_name + " text=" + text);
+        
+        String template_params = text.substring(start_pos + len, end_pos - 1);
         if(template_params.length() == 0)
             return null;                // {{template_name|}} - template without parameters
         

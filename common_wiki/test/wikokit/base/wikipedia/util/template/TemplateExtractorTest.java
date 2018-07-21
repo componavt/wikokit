@@ -114,17 +114,22 @@ public class TemplateExtractorTest {
     @Test
     public void testgetFirstTemplateByName_empty() {
         System.out.println("getFirstTemplateByName_empty");
-        String page_title, text0, text0and0;
+        String page_title, text0, text0and0, text1;
         
         page_title      = "page_title_is_getFirstTemplateByName_empty";        
         String template_name = "templatus";
+        
         text0     = "{{templatus|}}\n";
         text0and0 = "{{templatus|||}}\n";
+        text1     = "{{templatus}}";
                 
         TemplateExtractor te_first = TemplateExtractor.getFirstTemplateByName(page_title, template_name, text0);
         assertNull(te_first);
                                                                                        
         te_first = TemplateExtractor.getFirstTemplateByName(page_title, template_name, text0and0);
+        assertNull(te_first);
+        
+        te_first = TemplateExtractor.getFirstTemplateByName(page_title, template_name, text1);
         assertNull(te_first);
     }
     

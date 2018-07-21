@@ -28,7 +28,7 @@ import wikokit.base.wikt.multi.ru.name.LabelRu;
 import wikokit.base.wikt.sql.TLang;
 import wikokit.base.wikt.sql.TMeaning;
 
-/** An operations with the table 'label' (context labels) in MySQL Wiktionary_parsed database.
+/** Operations with the table 'label' (context labels) in MySQL Wiktionary_parsed database.
  * 
  * Attention: LabelEn used instead of Label, because there is need in LabelCategory
  * (category_id in the table label).
@@ -492,7 +492,7 @@ public class TLabel {
         return result_id;
     }
     
-    /** Updates values (n_foreign_POS, n_translations) in the table 'lang'. <br><br>
+    /** Updates values (counter) in the table 'label'. <br><br>
      *
      * UPDATE label SET counter=7 WHERE id=3;
      */

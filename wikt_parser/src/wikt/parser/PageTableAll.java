@@ -18,14 +18,14 @@ import wikokit.base.wikt.sql.label.TLabel;
 /** Worker with all pages in the WP table 'page'.
  */
 public class PageTableAll {
-    private static final boolean DEBUG_PAGES = true;
+    private static final boolean DEBUG_PAGES = false;
     
     //private static final boolean PRINT_PROGRESS = true;
     
     /** pages which caused crash of program (Wikipedia or Wiktionary) - for fast debug */
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
-        "щегол", "щёголь", // илл
+        "щегол", "щёголь", "пояс", "идти", "выстрел", "труба", "номер", "вилка", "ловить", "модель", // images in ruwikt: илл
         //"title", // "temp word", "Кукла", "temp word", 
         
         /*"chien", some common words, e.g. dog are absent in the db

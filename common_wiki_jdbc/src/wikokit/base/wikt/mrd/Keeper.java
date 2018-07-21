@@ -1,6 +1,6 @@
 /* Keeper.java - manager stores parsed data to MRD Wiktionary database (wikt_parsed).
  * 
- * Copyright (c) 2008-2011 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
+ * Copyright (c) 2008-2018 Andrew Krizhanovsky <andrew.krizhanovsky at gmail.com>
  * Distributed under GNU General Public License.
  */
 
@@ -28,6 +28,8 @@ import wikokit.base.wikt.util.WikiText;
 import wikokit.base.wikipedia.language.LanguageType;
 
 import java.util.Map;
+import wikokit.base.wikt.constant.Image;
+import wikokit.base.wikt.sql.TImage;
 import wikokit.base.wikt.sql.label.TLabel;
 import wikokit.base.wikt.sql.quote.TQuote;
 
@@ -38,8 +40,8 @@ public class Keeper {
     
     /** Stores word data to tables of parsed wiktionary database
      *
-     * @param conn connection interface to a parsed wiktionary database
-     * @param word data to be stored to a parsed wiktionary database
+     * @param conn connection interface to a parsed Wiktionary database
+     * @param word data to be stored to a parsed Wiktionary database
      * @param native_lang       native language in the Wiktionary,
      *                          e.g. Russian language in Russian Wiktionary
      */
@@ -100,6 +102,10 @@ public class Keeper {
                     
                     TRelation.storeToDB(conn, tmeaning, i, m_relations);
                     TLabel.storeToDB(conn, page_title, tmeaning, tlang, w_meaning.getLabels());
+                    
+                    Image image = w_meaning.getImage();
+                    if(null != image)
+                        TImage.storeToDB(conn, page_title, tmeaning, image);
                     
                     if(translations.length > i) // not every meaning is happy to have it's own translation
                         TTranslation.storeToDB(conn, native_lang, page_title,

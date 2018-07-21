@@ -41,7 +41,7 @@ public class ImageParserRuTest {
     
     // testing getFilenameAndCaptionFromText() ---------------------------------
     
-    /** Empty template {{илл|}} */
+    /** Empty templates {{илл|}} and {{илл}} */
     @Test
     public void testGetFilenameAndCaptionFromText_empty() {
         System.out.println("getFilenameAndCaptionFromText_empty");
@@ -52,6 +52,7 @@ public class ImageParserRuTest {
         str =   "{{-ru-}}\n" +
                 "=== Семантические свойства ===\n" +
                 "{{илл|}}\n" +
+                "{{илл}}\n" +
                 "==== Значение ====\n" +
                 "# {{зоол.|ru}} ([[:species:Carduelis|Carduelis]]) небольшая [[певчая птица]]\n" +
                 "# {{п.|ru}}, {{прост.|ru}}, {{унич.|ru}} [[молокосос]], [[салага]]";
@@ -77,6 +78,54 @@ public class ImageParserRuTest {
         assertNotNull(images);
         assertEquals(0, images.length);
     }
+    
+    
+    /** Skip parameter 'lang', e.g.: 
+     * {{илл|lang=da|}} - empty
+     * {{илл|lang=io|H. albicilla wing.png}} - ok, filename only without caption
+     */
+    @Test
+    public void testGetFilenameAndCaptionFromText_parameter_lang() {
+        System.out.println("getFilenameAndCaptionFromText_parameter_lang");
+        String page_title, str;
+        
+        page_title      = "alo";
+        str =   "{{илл|lang=da|}}";
+        
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(0, images.length);
+        
+        str =   "{{илл|lang=io|H. albicilla wing.png}}";
+        images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(1, images.length);
+        
+        assertTrue(  images[0].getFilename().equalsIgnoreCase("H. albicilla wing.png"));
+        assertTrue(  images[0].getCaption() .length() == 0);
+        assertEquals(images[0].getMeaningNumber(), 1);
+    }
+    
+    
+    /** Skip parameter 'size', {{илл|Chess knight 0965.jpg|At [2]|size=110px}}
+     */
+    @Test
+    public void testGetFilenameAndCaptionFromText_parameter_size() {
+        System.out.println("getFilenameAndCaptionFromText_parameter_size");
+        String page_title, str;
+        
+        page_title      = "at";
+        str =   "{{илл|Chess knight 0965.jpg|At [2]|size=110px}}";
+        
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(1, images.length);
+        
+        assertTrue(  images[0].getFilename().equalsIgnoreCase("Chess knight 0965.jpg"));
+        assertTrue(  images[0].getCaption() .equalsIgnoreCase("At"));
+        assertEquals(images[0].getMeaningNumber(), 2);
+    }
+    
     
     /** Filename without caption, e.g.: {{илл|some picture.jpg}}, 
      */
@@ -148,6 +197,7 @@ public class ImageParserRuTest {
         str =   "{{-ru-}}\n" +
                 "=== Семантические свойства ===\n" +
                 "{{илл|picture1.jpg|3rd object's caption [3]}}\n" +
+                "{{илл}}\n" +
                 "{{илл|picture2.jpg|4th [4] and 5th [5] objects' captions}}\n" +
                 "==== Значение ====\n" +
                 "# {{зоол.|ru}} ([[:species:Carduelis|Carduelis]]) небольшая [[певчая птица]]\n" +

@@ -19,8 +19,13 @@ import wikokit.base.wikt.word.WMeaning;
  * 
  * @see wikokit.base.wikipedia.text.ImageParser about [[Image:...]]
  * @see https://ru.wiktionary.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%B8%D0%BB%D0%BB
+ * 
+ * Check MySQL results of parsing:
+ * SELECT * FROM image, image_meaning WHERE image_meaning.image_id=image.id LIMIT 33;
+ * SELECT filename,image_caption,image_id,meaning_id FROM image, image_meaning WHERE image_meaning.image_id=image.id LIMIT 33;
  */
 public final class ImageParserRu {
+    //private static final boolean DEBUG = true;
     
     private final static Image[] NULL_IMAGE_ARRAY = new Image[0];
     
@@ -86,6 +91,8 @@ public final class ImageParserRu {
             // 1. first required parameter (without name) is filename
             String[] params = t.getTemplateParameters();
             
+            params = TemplateExtractor.excludeParameter (params, "lang");
+            
             if(params.length == 0)
                 continue;
             
@@ -123,6 +130,9 @@ public final class ImageParserRu {
             
             Image i = new Image(_filename, _caption, _meaning_number);
             result.add( i );
+            
+            //if(DEBUG)
+            //    System.out.println("page_title:" + page_title + ";  caption=" + _caption + ";  _filename=" + _filename);
         }
         
         // 2. outdated variant: bare figure of Commons, for example: [[Файл:Declaration of Independence - USA.jpg|мини|200 px|декларация]]

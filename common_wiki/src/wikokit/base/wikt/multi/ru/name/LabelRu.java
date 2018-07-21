@@ -122,10 +122,11 @@ public final class LabelRu extends LabelLocal  {
             System.out.println("Error"+ str_entry +"in LabelRu.initLabelAddedAutomatically(): label is null, short_name="+short_name);
         
         // if label is wikified, then this is wrong label, since labels has not wikification
-        if(short_name.contains("[[")) {
-            System.out.println("Error"+ str_entry +"in LabelRu.initLabelAddedAutomatically(): label has wikilink, short_name="+short_name);
-            return;
-        }
+        // but sometimes long labels (like descriptions) in ruwikt has wikilinks :(
+        //if(short_name.contains("[[")) {
+        //    System.out.println("Error"+ str_entry +"in LabelRu.initLabelAddedAutomatically(): label has wikilink, short_name="+short_name);
+        //    return;
+        //}
         
         checksPrefixSuffixSpace( page_title, short_name);
         
