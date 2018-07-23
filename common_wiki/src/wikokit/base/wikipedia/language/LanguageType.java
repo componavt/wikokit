@@ -840,6 +840,13 @@ public class LanguageType {
     public static final LanguageType bn = new LanguageType("bn", "Bengali", "Bengali");
     public static final LanguageType ben = LanguageType.addNonUnique(bn, "ben", "Bangla");
     
+    public static final LanguageType bnc = new LanguageType("bnc", "Bontoc", "Bontoc");
+    public static final LanguageType lbk = LanguageType.addNonUniqueCode(bnc, "lbk");
+    public static final LanguageType ebk = LanguageType.addNonUniqueCode(bnc, "ebk");
+    public static final LanguageType rbk = LanguageType.addNonUniqueCode(bnc, "rbk");
+    public static final LanguageType obk = LanguageType.addNonUniqueCode(bnc, "obk");
+    public static final LanguageType vbk = LanguageType.addNonUniqueCode(bnc, "vbk");
+    
     public static final LanguageType bng = new LanguageType("bng", "Benga", "Benga");
     public static final LanguageType bng2 = LanguageType.addNonUniqueName(bng, "Bapuku");
 
@@ -1309,6 +1316,8 @@ public class LanguageType {
     public static final LanguageType gd4 = LanguageType.addNonUniqueName(gd, "Scots Gaelic");
     public static final LanguageType gd5 = LanguageType.addNonUniqueName(gd, "Scottish");
     
+    public static final LanguageType gdo = new LanguageType("gdo", "ГъибдилIи мицци", "Godoberi");
+    
     public static final LanguageType gha = new LanguageType("gha", "Ghadamès", "Ghadamès");
     public static final LanguageType gha2 = LanguageType.addNonUniqueName(gha, "Ghadames");
     
@@ -1356,7 +1365,9 @@ public class LanguageType {
     public static final LanguageType hau = LanguageType.addNonUniqueCode(ha, "hau");
     public static final LanguageType ha_lat = LanguageType.addNonUniqueCode(ha, "ha.lat");// Russian Wiktionary
     public static final LanguageType ha_arab = LanguageType.addNonUniqueCode(ha, "ha.arab");// Russian Wiktionary
-
+    
+    public static final LanguageType hac = new LanguageType("hac", "Gorani", "Gorani");
+    
     public static final LanguageType he = new LanguageType("he", "Hebrew", "Hebrew");
     public static final LanguageType heb = LanguageType.addNonUniqueCode(he, "heb");
     public static final LanguageType hbo = LanguageType.addNonUnique(he, "hbo", "Ancient Hebrew");
@@ -2616,6 +2627,7 @@ public class LanguageType {
 
     public static final LanguageType th = new LanguageType("th", "Phasa Thai", "Thai");
     public static final LanguageType tha = LanguageType.addNonUniqueCode(th, "tha");
+    public static final LanguageType tyz = LanguageType.addNonUniqueCode(th, "tyz"); // ruwikt
     public static final LanguageType nod = new LanguageType("nod", "Northern Thai", "Northern Thai");
     public static final LanguageType sou = LanguageType.addNonUnique(th, "sou", "Southern Thai");
     public static final LanguageType tts = new LanguageType("tts", "Isan", "Isan");
@@ -3076,8 +3088,10 @@ public class LanguageType {
     public static final LanguageType kpy = new LanguageType("kpy", "Koryak", "Koryak");
 
     public static final LanguageType ppol   = new LanguageType("ppol", "Proto-Polynesian", "Proto-Polynesian");
+    
     public static final LanguageType psl    = new LanguageType("psl", "Proto-Slavic", "Proto-Slavic");
-
+    public static final LanguageType sla_pro = LanguageType.addNonUniqueCode(psl, "sla-pro");
+    
     public static final LanguageType qya    = new LanguageType("qya", "Quenya", "Quenya");
 
     public static final LanguageType rmq    = new LanguageType("rmq", "Calo", "Calo");

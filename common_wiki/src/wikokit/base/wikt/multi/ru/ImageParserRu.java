@@ -7,6 +7,7 @@
 package wikokit.base.wikt.multi.ru;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -21,7 +22,7 @@ import wikokit.base.wikt.word.WMeaning;
  * @see https://ru.wiktionary.org/wiki/%D0%A8%D0%B0%D0%B1%D0%BB%D0%BE%D0%BD:%D0%B8%D0%BB%D0%BB
  * 
  * Check MySQL results of parsing:
- * SELECT * FROM image, image_meaning WHERE image_meaning.image_id=image.id LIMIT 33;
+ * SELECT COUNT(*) FROM image, image_meaning WHERE image_meaning.image_id=image.id;
  * SELECT filename,image_caption,image_id,meaning_id FROM image, image_meaning WHERE image_meaning.image_id=image.id LIMIT 33;
  */
 public final class ImageParserRu {
@@ -59,6 +60,36 @@ public final class ImageParserRu {
         }
     }
     
+    
+    /** Checks and reports about the problems with parsing of meaning_number and caption.
+     * 
+     * @param page_title
+     * @param params    array of parameters of the image template {{илл|...}}
+     * @return true if some problem was found with parameters
+     */
+    public static boolean skipParsingCaption(String page_title, String[] params) {
+        
+        // if(params[] contains "thumb" or "{{PAGENAME") then skip search of meaning_number and caption
+        
+        if(Arrays.asList( params ).contains( "thumb" ) ||
+           Arrays.asList( params ).contains( "right" ) ) {
+            System.out.println("Error in ImageParserRu.skipParsingCaption(): image template contains 'thumb', page_title:" + page_title);
+            return true;
+        }
+            
+        if(Arrays.asList( params ).contains( "{{PAGENAME")) {
+            System.out.println("Warning in ImageParserRu.skipParsingCaption(): image template contains '{{PAGENAME}}', page_title:" + page_title);
+            return true;
+        }
+        
+        // caption with [[wikilink]] should be skipped, due to problems in correct parsing of [[pipe|pipes]],
+        for(String par : params) {
+            if(par.contains("[["))
+                return true;
+        }
+        
+        return false;
+    }
 
     /** Gets information about images: filename, caption, 
      * number of meaning in the caption.
@@ -87,6 +118,8 @@ public final class ImageParserRu {
         
         Collection<Image> result = new ArrayList<>();
         for (TemplateExtractor t : te) {
+            _caption = "";
+            int _meaning_number = -1;
             
             // 1. first required parameter (without name) is filename
             String[] params = t.getTemplateParameters();
@@ -100,28 +133,36 @@ public final class ImageParserRu {
             if(_filename.length() == 0)
                 continue;
             
-            // 2. second optional parameter (without name) is title
-            _caption = "";
-            if(params.length > 1) {
-                if(!params[1].contains("="))
-                    _caption = params[1].trim();
-            }
+            if(!ImageParserRu.skipParsingCaption( page_title, params)) {
             
-            // meaning number as fifth optional parameter (with name 'n')
-            int _meaning_number = -1;
-            String str_meaning_number = TemplateExtractor.getParameterValueByNameOrNumber (params, "n", 5);
-            if(null == str_meaning_number)
-                str_meaning_number = TemplateExtractor.getParameterValueByNameOrNumber (params, "№", 5);
-            if(null != str_meaning_number)
-                _meaning_number = Integer.parseInt(str_meaning_number);
-            
-            // meaning number in the caption string
-            if(_caption.length() > 4 &&     // at least len("word [N]") > 4 &&
-                   -1 == _meaning_number)   // there is no parameter 'meaning number'
-            {
-                if(ImageParserRu.MeaningNumberInCaption.parse(_caption)) {
-                    _meaning_number = ImageParserRu.MeaningNumberInCaption.meaning_number;
-                    _caption        = ImageParserRu.MeaningNumberInCaption.caption_without_number;
+                // 2. second optional parameter (without name) is title
+                if(params.length > 1) {
+                    if(!params[1].contains("="))
+                        _caption = params[1].trim();
+                }
+
+                // meaning number as fifth optional parameter (with name 'n')
+                String str_meaning_number = TemplateExtractor.getParameterValueByNameOrNumber (params, "n", 5);
+                if(null == str_meaning_number)
+                    str_meaning_number = TemplateExtractor.getParameterValueByNameOrNumber (params, "№", 5);
+                if(null != str_meaning_number) {
+                    try {
+                        _meaning_number = Integer.parseInt(str_meaning_number);
+                    } catch (NumberFormatException e){
+                        //something went wrong
+                        _meaning_number = 1;
+                        System.out.println("Error in ImageParserRu.getFilenameAndCaptionFromText(): meaning number is not integer in image template, page_title:" + page_title);
+                    }
+                }
+                
+                // meaning number in the caption string
+                if(_caption.length() > 4 &&     // at least len("word [N]") > 4 &&
+                       -1 == _meaning_number)   // there is no parameter 'meaning number'
+                {
+                    if(ImageParserRu.MeaningNumberInCaption.parse(_caption)) {
+                        _meaning_number = ImageParserRu.MeaningNumberInCaption.meaning_number;
+                        _caption        = ImageParserRu.MeaningNumberInCaption.caption_without_number;
+                    }
                 }
             }
         

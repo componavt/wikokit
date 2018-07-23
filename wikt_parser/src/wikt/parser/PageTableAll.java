@@ -26,6 +26,7 @@ public class PageTableAll {
     //private static final String[] debug_pages = {"-ейш-", "-лык", "-io-"};  //
     private static final String[] debug_pages = {
         "щегол", "щёголь", "пояс", "идти", "выстрел", "труба", "номер", "вилка", "ловить", "модель", // images in ruwikt: илл
+        "papagáj", // error with image captions
         //"title", // "temp word", "Кукла", "temp word", 
         
         /*"chien", some common words, e.g. dog are absent in the db
@@ -50,6 +51,7 @@ public class PageTableAll {
         "for all intensive purposes", "illegal number", // too much <references />
         "kenoviiva", "forward slash", "\\", // backslash
         "Australopithecus", "cm", // Error (TranslationTableAll.countTranslationPerLanguage()): There is a translation box from a foreign language, code=mul,
+        "Biquizionario", // Russian word?
         "save someone's bacon", // section with unknown language: Alternative phrases.
         "iman", // section with unknown language: See also.
         "ОЭЗ", // 'ru' language section has no # Definition

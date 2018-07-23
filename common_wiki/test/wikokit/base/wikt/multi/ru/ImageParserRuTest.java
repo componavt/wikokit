@@ -114,8 +114,8 @@ public class ImageParserRuTest {
         System.out.println("getFilenameAndCaptionFromText_parameter_size");
         String page_title, str;
         
-        page_title      = "at";
-        str =   "{{илл|Chess knight 0965.jpg|At [2]|size=110px}}";
+        page_title = "at";
+        str = "{{илл|Chess knight 0965.jpg|At [2]|size=110px}}";
         
         Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
         assertNotNull(images);
@@ -124,6 +124,84 @@ public class ImageParserRuTest {
         assertTrue(  images[0].getFilename().equalsIgnoreCase("Chess knight 0965.jpg"));
         assertTrue(  images[0].getCaption() .equalsIgnoreCase("At"));
         assertEquals(images[0].getMeaningNumber(), 2);
+    }
+    
+    /** Caption with [[wikilink]] should be skipped, due to problems in correct parsing of [[pipe|pipes]],
+     * that is {{илл|LocationAustria.png|Австрия на [[карта|карте]] [[мир|мира]]}} -> {{илл|LocationAustria.png}}
+     */
+    @Test
+    public void testGetFilenameAndCaptionFromText_caption_wikilink() {
+        System.out.println("getFilenameAndCaptionFromText_caption_wikilink");
+        String page_title, str;
+        
+        page_title = "Austria";
+        str = "{{илл|LocationAustria.png|Австрия на [[карта|карте]] [[мир|мира]]}}";
+        
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(1, images.length);
+        
+        assertTrue(  images[0].getFilename().equalsIgnoreCase("LocationAustria.png"));
+        assertTrue(  images[0].getCaption() .length() == 0);
+        assertEquals(images[0].getMeaningNumber(), 1);
+    }
+    
+    /** Caption with [String instead of a number] arises an exception.
+     */
+    @Test
+    public void testGetFilenameAndCaptionFromText_NumberFormatException() {
+        System.out.println("getFilenameAndCaptionFromText_NumberFormatException");
+        String page_title, str;
+        
+        page_title = "test_parseInt";
+        str = "{{илл|LocationAustria.png|Caption|N=1, 2}}";
+        
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(1, images.length);
+        
+        assertTrue(  images[0].getFilename().equalsIgnoreCase("LocationAustria.png"));
+        assertTrue(  images[0].getCaption() .equalsIgnoreCase("Caption"));
+        assertEquals(images[0].getMeaningNumber(), 1);
+    }
+    
+    
+    /** Caption is {{PAGENAME}}: {{илл|LocationAustria.png|{{PAGENAME}}}}
+     */
+    @Test
+    public void testGetFilenameAndCaptionFromText_caption_PAGENAME() {
+        System.out.println("getFilenameAndCaptionFromText_caption_PAGENAME");
+        String page_title, str;
+        
+        page_title = "Аустрија";
+        str = "{{илл|LocationAustria.png|{{PAGENAME}}}}";
+        
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(1, images.length);
+        
+        assertTrue(  images[0].getFilename().equalsIgnoreCase("LocationAustria.png"));
+        assertTrue(  images[0].getCaption() .length() == 0);
+        assertEquals(images[0].getMeaningNumber(), 1);
+    }
+    
+    /** Wrong parameters: {{илл|Amazon.parrot.arp.jpg|200px|right|thumb|Boloky}}
+     */
+    @Test
+    public void testGetFilenameAndCaptionFromText_wrong_parameters() {
+        System.out.println("getFilenameAndCaptionFromText_wrong_parameters");
+        String page_title, str;
+        
+        page_title      = "boloky";
+        str = "{{илл|Amazon.parrot.arp.jpg|200px|right|thumb|Boloky}}";
+        
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(1, images.length);
+        
+        assertTrue(  images[0].getFilename().equalsIgnoreCase("Amazon.parrot.arp.jpg"));
+        assertTrue(  images[0].getCaption() .length() == 0);
+        assertEquals(images[0].getMeaningNumber(), 1);
     }
     
     
@@ -222,9 +300,7 @@ public class ImageParserRuTest {
     // 5. test caption with several meaning numbers
     
     // 6. test caption with wrong meaning number, i.e. > maximum number of meanings
-    
-    // 7. test several images
-    
+        
     
     /**
      * Test of getFilenameAndCaptionFromText method, of class ImageParserRu.
