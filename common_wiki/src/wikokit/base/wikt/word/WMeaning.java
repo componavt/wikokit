@@ -240,5 +240,16 @@ public class WMeaning {
 
         return wm;
     }
+    
+    /** Checks the presence of the context label l in this meaning. */
+    public boolean hasLabel(Label l) {
+        
+        for(Label la : labels) {
+            if(la == l)
+                return true;
+        }
+        
+        return false;
+    }
 
 }

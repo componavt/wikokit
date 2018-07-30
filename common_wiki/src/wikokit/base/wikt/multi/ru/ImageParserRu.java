@@ -113,8 +113,12 @@ public final class ImageParserRu {
         String template_name = "илл";
         TemplateExtractor[] te = TemplateExtractor.getAllTemplatesByName(page_title, template_name, text);
         
-        if(0 == te.length)
-            return NULL_IMAGE_ARRAY;
+        if(0 == te.length) {
+            template_name = "илл."; // synonym templates: "илл" and "илл."
+            te = TemplateExtractor.getAllTemplatesByName(page_title, template_name, text);
+            if(0 == te.length)
+                return NULL_IMAGE_ARRAY;
+        }
         
         Collection<Image> result = new ArrayList<>();
         for (TemplateExtractor t : te) {
@@ -133,6 +137,9 @@ public final class ImageParserRu {
             if(_filename.length() == 0)
                 continue;
             
+            if(Arrays.asList( params ).contains( "hide=1" )) // skip indecent and shocking images
+                continue;
+                
             if(!ImageParserRu.skipParsingCaption( page_title, params)) {
             
                 // 2. second optional parameter (without name) is title

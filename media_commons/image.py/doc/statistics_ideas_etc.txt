@@ -1,0 +1,22 @@
+1) Get filename from database
+Sawhorse.png
+
+2) Get JSON file with URL
+https://commons.wikimedia.org/w/api.php?action=query&titles=File:Sawhorse.png&prop=imageinfo&iiprop=url&iiurlwidth=220
+
+3) wget image URL
+
+statistics
+
+ruwikt20180601_parsed
+
+40162 pairs image-meaning (only {{илл}} without {{илл.}}, last template was not taken into accout by error)
+SELECT COUNT(*) FROM image, image_meaning WHERE image_meaning.image_id=image.id;
+
+1. skip indecent images with parameter hide=1,
+
+2. skip indecent images with meaning labels: сексол., обсц.
+
+?1. Calculate number of POS with images
+
+?2. Calculate number of images by lang

@@ -126,6 +126,46 @@ public class ImageParserRuTest {
         assertEquals(images[0].getMeaningNumber(), 2);
     }
     
+    // {{илл.|Benoit Pierre Emery silk scarf.jpg|Шарф из канауса [1]}}
+    @Test
+    public void testGetFilenameAndCaptionFromText_template_name_with_dot() {
+        System.out.println("getFilenameAndCaptionFromText_parameter_template_name_with_dot");
+        String page_title, str;
+        
+        page_title = "канаус";
+        str = "{{илл.|Benoit Pierre Emery silk scarf.jpg|Шарф из канауса [1]}}";
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        
+        assertNotNull(images);
+        assertEquals(1, images.length);
+        
+        assertTrue(  images[0].getFilename().equalsIgnoreCase("Benoit Pierre Emery silk scarf.jpg"));
+        assertTrue(  images[0].getCaption() .equalsIgnoreCase("Шарф из канауса"));
+        assertEquals(images[0].getMeaningNumber(), 1);
+    }
+    
+    
+    /** The parameter 'hide' helps to skip indecent images, skip if "hide=1", e.g.:
+     *      {{илл|Cunni.png|hide=1}}
+     *      {{илл|size=240px|Wiki-pegging.png|hide=1}}
+     *      {{илл|Édouard-Henri Avril (20).jpg|Оральный секс|hide=1}}
+     */
+    @Test
+    public void testGetFilenameAndCaptionFromText_parameter_hide_is_1() {
+        System.out.println("getFilenameAndCaptionFromText_parameter_hide_is_1");
+        String page_title, str;
+        
+        page_title = "something indecent";
+        str = "{{илл|Cunni.png|hide=1}}\n" 
+                + "{{илл|size=240px|Wiki-pegging.png|hide=1}}\n"
+                + "{{илл|Édouard-Henri Avril (20).jpg|Оральный секс|hide=1}}";
+        
+        Image[] images = ImageParserRu.getFilenameAndCaptionFromText( page_title, str );
+        assertNotNull(images);
+        assertEquals(0, images.length);
+    }
+    
+    
     /** Caption with [[wikilink]] should be skipped, due to problems in correct parsing of [[pipe|pipes]],
      * that is {{илл|LocationAustria.png|Австрия на [[карта|карте]] [[мир|мира]]}} -> {{илл|LocationAustria.png}}
      */

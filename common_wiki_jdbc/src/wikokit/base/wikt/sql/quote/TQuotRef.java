@@ -155,6 +155,7 @@ public class TQuotRef {
     {
         String year_id = (null == y) ? " IS NULL" : "=" + y.getID();
         String author_id = (null == a) ? " IS NULL" : "=" + a.getID();
+        String author_name = (null == a) ? "NULL" : "" + a.getName();
         String publisher_id = (null == p) ? " IS NULL" : "=" + p.getID();
         String source_id = (null == src) ? " IS NULL" : "=" + src.getID();
 
@@ -196,7 +197,7 @@ public class TQuotRef {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.out.println("SQLException (TQuotRef.get):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotRef.get):: _author='"+author_name+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }
@@ -275,6 +276,7 @@ public class TQuotRef {
     {
         String year_id = (null == y) ? "NULL" : "" + y.getID();
         String author_id = (null == a) ? "NULL" : "" + a.getID();
+        String author_name = (null == a) ? "NULL" : "" + a.getName();
         String publisher_id = (null == p) ? "NULL" : "" + p.getID();
         String source_id = (null == src) ? "NULL" : "" + src.getID();
         
@@ -321,7 +323,7 @@ public class TQuotRef {
                 s.close();
             }
         }catch(SQLException ex) {
-            System.out.println("SQLException (TQuotRef.insert):: _author='"+a.getName()+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
+            System.out.println("SQLException (TQuotRef.insert):: _author='"+author_name+"'; _title='"+_title+"'; sql='" + str_sql.toString() + "' error=" + ex.getMessage());
         }
         return result;
     }

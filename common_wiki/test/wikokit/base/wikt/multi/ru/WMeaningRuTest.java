@@ -406,6 +406,48 @@ public class WMeaningRuTest {
         assertTrue(i4.getFilename().equalsIgnoreCase("InnerSolarSystem-en.png"));
         assertTrue(i4.getCaption() .equalsIgnoreCase("Пояс астероидов"));
     }
+    
+    
+    // Skip shocking and indecent images with meaning labels: sexology (сексол.), obscene_language (обсц.)
+    @Test
+    public void testParse_Images_skip_shocking_images_due_to_labels() {
+        System.out.println("parse_Images_skip_shocking_images_due_to_labels");
+        LanguageType lang_section;
+        String page_title;
+        POSText pt;
+        String str;
+
+        page_title      = "some image with indecent images";
+        lang_section    = LanguageType.ru; // Russian word
+        
+        str =   "{{-ru-}}\n" +
+                "=== Семантические свойства ===\n" +
+                "{{илл|Karate belt.jpg}}\n" +
+                "{{илл|Garter belt.jpg|Пояс [2] для чулок}}\n" +                // should be skipped due to {{сексол.}}
+                "{{илл|InnerSolarSystem-en.png|Пояс [4] астероидов}}\n" +       // should be skipped due to {{обсц.|ru}}
+                "==== Значение ====\n" +
+                "# [[лента]], [[шнур]], [[ремень]] \n" +
+                "# {{сексол.}} [[предмет]] женского нижнего белья\n" +
+                "# [[талия]]\n" +
+                "# {{обсц.|ru}} some bad words\n";
+        pt = new POSText(POS.noun, str);
+        WMeaning[] result = WMeaningRu.parse(page_title, lang_section, pt);
+        assertEquals(4, result.length);
+        
+        Image i1 = result[0].getImage();
+        assertNotNull(i1);
+        assertTrue(i1.getFilename().equalsIgnoreCase("Karate belt.jpg"));
+        assertTrue(i1.getCaption() .length() == 0);
+        
+        Image i2 = result[1].getImage();
+        assertNull(i2);
+        
+        Image i3 = result[2].getImage();
+        assertNull(i3);
+        
+        Image i4 = result[3].getImage();
+        assertNull(i4);
+    }
     // ----------------------------------------------------- eo testing pictures
     
     

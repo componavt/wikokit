@@ -192,9 +192,13 @@ public class WMeaningRu {
         for (int i = 0; i < wmeanings.length; i++) {
             WMeaning m = wmeanings[i];
             
+            if(m.hasLabel( LabelRu.sexology ) ||        // skip shocking and indecent images 
+               m.hasLabel( LabelRu.obscene_language ))
+                continue;
+            
             for (Image image : images) {
                 if(image.getMeaningNumber() == i+1)
-                    m.setImage( image );     // +1 number of meaning starts from 1, not 0
+                    m.setImage( image );     // +1, number of meaning starts from 1, not 0
             }
         }
     
