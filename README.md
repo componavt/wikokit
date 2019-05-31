@@ -107,13 +107,10 @@ The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are 
   * Крижановский А. [Машинная обработка Русского Викисловаря](https://w.wiki/4S7) // Вики-конференция 2009. 24—25 октября, Санкт-Петербург.
 
 ## See also ##
-  * [Java Wiktionary Library (JWKTL)](http://www.ukp.tu-darmstadt.de/software/jwktl/) and [jwktl](http://code.google.com/p/jwktl) at code.google.com
+  * [Java Wiktionary Library (JWKTL)](https://dkpro.github.io/dkpro-jwktl/)
   * [perl-wiktionary-parser](https://github.com/clbecker/perl-wiktionary-parser/) // github.com, Perl module
   * [wiktionary_parser](https://github.com/benreynwar/wiktionary-parser/tree/master/wiktionary_parser) // github.com, Perl module
-  * [wikily-supervised-pos-tagger](http://code.google.com/p/wikily-supervised-pos-tagger/) — part-of-speech taggers for multiple languages implemented by training Hidden Markov with Wiktionary (see paper: Shen Li; João Graça; Ben Taskar, [Wiki-ly Supervised Part-of-Speech Tagging](http://aclweb.org/anthology-new/D/D12/D12-1127.pdf), 2012, [bib](http://aclweb.org/anthology-new/D/D12/D12-1127.bib))
-  * [DBpedia Wiktionary](http://dbpedia.org/Wiktionary)
   * [Dbnary](http://kaiko.getalp.org/about-dbnary/)
-  * [Wiktionary RDF versions](http://wiki.okfn.org/Linguistics/llod/datasets/wiktionary)
   * [YARN](http://russianword.net/) (open WordNet-like thesaurus for Russian)
 
 ## License ##
