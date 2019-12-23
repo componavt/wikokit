@@ -224,7 +224,7 @@ public class WRelationRu {
         if(0 == wt.length) return null;
         
         // 3. get text and labels
-        List<LabelsWikiText> lwt_array = new ArrayList(0);
+        List<LabelsWikiText> lwt_array = new ArrayList<>(0);
 
         for(WikiText _wiki_text : wt) {
             String _text = _wiki_text.getWikifiedText();

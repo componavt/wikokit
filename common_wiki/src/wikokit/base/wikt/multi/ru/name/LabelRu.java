@@ -44,7 +44,7 @@ public final class LabelRu extends LabelLocal  {
     protected static Map<Label, Label> translation_en2local = new HashMap<Label, Label>();
     
     private final static Label[] NULL_LABEL_ARRAY = new Label[0];
-    private final static List<Label> NULL_LABEL_LIST = new ArrayList(0);
+    private final static List<Label> NULL_LABEL_LIST = new ArrayList<>(0);
     
     
     /** Constructor for static context labels listed in this file below.
@@ -422,7 +422,7 @@ public final class LabelRu extends LabelLocal  {
      */
     public static List<Label> createSplitByPattern(String page_title, String text, Pattern pattern)
     {
-        List<Label> _labels = new ArrayList(0);
+        List<Label> _labels = new ArrayList<>(0);
         if(text==null || 0 == text.trim().length()) {
             return NULL_LABEL_LIST;
         }

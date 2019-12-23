@@ -1,6 +1,8 @@
 
-  common_wiki 316 tests passed, 5 tests failed
+  common_wiki 317 tests passed, 5 tests failed
   common_wiki 295 tests passed, 5 tests failed
+
+  common_wiki_jdbc 79 tests passed, 19 tests failed (with empty wikt_parsed)
 
 wiwordik 0.XX 2011-0?-??
    See wiwordik/release_notes.txt

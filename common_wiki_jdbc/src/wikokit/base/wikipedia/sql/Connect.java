@@ -79,7 +79,7 @@ public class Connect {
     public final static String RUWIKT_USER   = "javawiki";
     public final static String RUWIKT_PASS   = "";
     //public final static String RUWIKT_DB   = "ruwikt20180601?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
-    public final static String RUWIKT_DB   = "ruwikt20180601?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
+    public final static String RUWIKT_DB   = "ruwikt20191206?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
     //public final static String RUWIKT_DB   = "ruwikt20180601?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&useUnbufferedInput=false&serverTimezone=UTC";
     // jdbc:mysql://localhost/db?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     // jdbc:mysql://localhost/db?useUnicode=true&useLegacyDatetimeCode=false&serverTimezone=UTC
@@ -88,7 +88,7 @@ public class Connect {
     //public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     //public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false";
     //public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
-    public final static String RUWIKT_PARSED_DB = "ruwikt20180601_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
+    public final static String RUWIKT_PARSED_DB = "ruwikt20191206_parsed?useUnicode=false&characterEncoding=ISO8859_1&autoReconnect=true&useUnbufferedInput=false&useSSL=false&serverTimezone=UTC";
     // "ruwikt20180601?useUnicode=true&useSSL=false&serverTimezone=UTC";
 
     // public final static String RUWIKT_SQLITE = "C:/w/bin/ruwikt20090707.sqlite";

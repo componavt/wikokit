@@ -102,12 +102,12 @@ public class POSAndPolysemyTableAll {
         public float calcAveragePolysemyIncludingMonosemousWords() {
             if(0 == uniques_strings)
                 return -1f;
-            return new Float(word_sense_pairs) / new Float(uniques_strings);
+            return Float.valueOf(word_sense_pairs) / Float.valueOf(uniques_strings);
         }
         public float calcAveragePolysemyExcludingMonosemousWords() {
             if(0 == polysemous_words)
                 return -1f;
-            return new Float(word_sense_pairs - monosemous) / new Float(polysemous_words);
+            return Float.valueOf(word_sense_pairs - monosemous) / Float.valueOf(polysemous_words);
         }
 
         /** Maximum number of senses (meanings, definitions) for this POS. */

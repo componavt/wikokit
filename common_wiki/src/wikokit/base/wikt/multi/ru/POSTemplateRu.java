@@ -52,7 +52,7 @@ public class POSTemplateRu extends POSType {
         {   // store (POS, +=name_in_text) -> type2name_in_text
             Set<String> templates = type2name_in_text.get(type);
             if(null == templates)
-                templates = new HashSet();
+                templates = new HashSet<>();
 
             templates.add(name_in_text);
             type2name_in_text.put(type, templates);

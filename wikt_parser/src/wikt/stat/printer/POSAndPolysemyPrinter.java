@@ -13,7 +13,6 @@ import wikt.stat.POSAndPolysemyTableAll.POSStat;
 
 import java.util.Map;
 import wikokit.base.wikipedia.language.LanguageType;
-import wikokit.base.wikipedia.util.PrintfFormat;
 
 /** Statistics of parts of speech and polysemy of the parsed Wiktionary.
  *
@@ -100,8 +99,8 @@ public class POSAndPolysemyPrinter {
             System.out.print(   " || " + pos_stat.getMonosemous() +
                 " || " + pos_stat.getPolysemousWords() +
                 " || " + pos_stat.getPolysemousSenses() +
-                " || " + new PrintfFormat("%.2lg").sprintf(pos_stat.calcAveragePolysemyIncludingMonosemousWords()) +
-                " || " + new PrintfFormat("%.2lg").sprintf(pos_stat.calcAveragePolysemyExcludingMonosemousWords()));
+                " || " + System.out.format("%.2f", pos_stat.calcAveragePolysemyIncludingMonosemousWords()) + // + new PrintfFormat("%.2lg").sprintf(pos_stat.calcAveragePolysemyIncludingMonosemousWords()) +
+                " || " + System.out.format("%.2f", pos_stat.calcAveragePolysemyExcludingMonosemousWords()));  //" || " + new PrintfFormat("%.2lg").sprintf(pos_stat.calcAveragePolysemyExcludingMonosemousWords()))
         }
         System.out.println("\n|}");
     }

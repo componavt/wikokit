@@ -9,7 +9,6 @@
 #   SELECT image_id,filename,image_caption,meaning_id FROM image, image_meaning WHERE image_meaning.image_id=image.id LIMIT 23;
 # Input: 
 #   ?, 
-#   lemma_matrix.lemma2
 # Output: 
 #   ?
 # Calculate:
@@ -30,7 +29,11 @@ logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s', level=lo
 #sys.path.append(os.path.abspath('../')) # add parent folder, access to 'lib'
 import lib.create_thumb_url
 
-width = 220
+import configus
+width = configus.THUMBWIDTH
+print "width={0} ".format( configus.THUMBWIDTH )
+
+# width = 220
 # filename = "Sawhorse.png"
 # filename = "De Stieglitz lat Carduelis carduelis.jpg"
 
@@ -59,8 +62,8 @@ for row in result_set:
 
     db.commit()
     i = i+1
-    if(i > 30):
-        break
+    #if(i > 3):
+    #    break
 
 cursor.close()
 cursor2.close()
