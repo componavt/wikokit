@@ -440,7 +440,7 @@ CREATE TABLE IF NOT EXISTS `label` (
   `category_id` TINYINT UNSIGNED NULL COMMENT 'ID of category of context labels',
   `counter` INT(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT 'number of times that this label was used in articles',
   PRIMARY KEY (`id`),
-  INDEX `short_name_INDEX` (`short_name` ASC))
+  INDEX `short_name_INDEX` (`short_name` (255) ASC))
 ENGINE = InnoDB
 COMMENT = 'Context labels.';
 
@@ -498,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `image` (
   `width` INT(5) UNSIGNED NULL COMMENT 'Image width in pixels.',
   `height` INT(5) UNSIGNED NULL COMMENT 'Image height in pixels.',
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `filename_UNIQUE` (`filename` ASC))
+  UNIQUE INDEX `filename_UNIQUE` (`filename` (255) ASC))
 ENGINE = InnoDB
 COMMENT = 'Image connected to meanings of words';
 
