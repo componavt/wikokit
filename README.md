@@ -123,6 +123,6 @@ This program is multi-licensed and may be used under the terms of any of the fol
   * BSD, New BSD License, http://www.opensource.org/licenses/bsd-license
 
 ## Links ##
-  * New Wiktionary parsed databases from [this page](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
+  * [New Wiktionary parsed databases](http://whinger.krc.karelia.ru/soft/wikokit/index.html)
 
 See [documentation](https://github.com/componavt/wikokit/wiki).
