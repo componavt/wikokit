@@ -111,7 +111,6 @@ The code of previous project [Synarcher](http://synarcher.sourceforge.net/) are 
   * [perl-wiktionary-parser](https://github.com/clbecker/perl-wiktionary-parser/) // github.com, Perl module
   * [wiktionary_parser](https://github.com/benreynwar/wiktionary-parser/tree/master/wiktionary_parser) // github.com, Perl module
   * [Dbnary](http://kaiko.getalp.org/about-dbnary/)
-  * [YARN](http://russianword.net/) (open WordNet-like thesaurus for Russian)
 
 ## License ##
 
