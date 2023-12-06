@@ -9,8 +9,8 @@ Stone I. Parser <b>wikokit</b>. This program parses Wiktionaries, constructs and
 
 Stone II. PHP API ([piwidict](https://github.com/componavt/piwidict) project) to work with machine-readable Wiktionary.
 
-Stone III. Dictionary kiwidict. A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
-
+<!--Stone III. Dictionary kiwidict. A visual interface to the parsed English Wiktionary and Russian Wiktionary databases.
+-->
 The goal of this project is to extract [semi-structured information](http://en.wikipedia.org/wiki/Semi-structured_data) from Wiktionary and construct [machine-readable dictionary](http://en.wikipedia.org/wiki/Machine-readable_dictionary) (database + [API](http://en.wikipedia.org/wiki/API) + [GUI](http://en.wikipedia.org/wiki/GUI)).
 
 **Download** new Wiktionary parsed databases from [this page](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
