@@ -13,7 +13,9 @@ Stone II. PHP API ([piwidict](https://github.com/componavt/piwidict) project) to
 -->
 The goal of this project is to extract [semi-structured information](http://en.wikipedia.org/wiki/Semi-structured_data) from Wiktionary and construct [machine-readable dictionary](http://en.wikipedia.org/wiki/Machine-readable_dictionary) (database + [API](http://en.wikipedia.org/wiki/API) + [GUI](http://en.wikipedia.org/wiki/GUI)).
 
-**Download** new Wiktionary parsed databases from [this page](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
+**Download** new Wiktionary parsed databases from [this page](http://whinger.krc.karelia.ru/soft/wikokit/index.html):
+  * Russian Wiktionary [parsed ruwikt20230901](https://academictorrents.com/details/df5f4f51a50d6ff24f5ee748a7290ae3c490eaac) from Academic Torrents.
+  * English Wiktionary todo soon...
 
 <!--### Stone III: Dictionary kiwidict - Android applications
 
