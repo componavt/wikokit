@@ -15,7 +15,7 @@ The goal of this project is to extract [semi-structured information](http://en.w
 
 **Download** new Wiktionary parsed databases from [this page](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
 
-### Stone III: Dictionary kiwidict - Android applications
+<!--### Stone III: Dictionary kiwidict - Android applications
 
   * [kiwidict](https://play.google.com/store/apps/details?id=wikokit.kiwidict.enwikt) offline multilingual dictionary and thesaurus based on the English Wiktionary.
   * [kiwidict-ru](https://play.google.com/store/apps/details?id=wikokit.kiwidict) offline multilingual dictionary and thesaurus based on the Russian Wiktionary.
@@ -27,7 +27,7 @@ Graphical user interface (kiwidict and kiwidict-ru) supports (see [release_notes
   * todo: list of words only with meanings and / or semantic relations (use checkboxes).
 
 After installation you can find the parsed Wiktionary database in SQLite format on your phone in the folder `SD card/kiwidict/`.
-
+-->
 ### Stone I: Parser and dictionary description
 
 I) The maximum goal (in distant future) is to extract all information (i.e. [all sections of entry](http://en.wiktionary.org/wiki/Wiktionary:ELE)) from all wiktionaries and convert data to machine-readable format.
