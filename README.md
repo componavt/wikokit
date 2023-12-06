@@ -71,7 +71,7 @@ Wiki tool kit (wikokit) contains several projects related to wiki
 
 ./android/common_wiki_android — functions for access to Wiktionary in Android SQLite version of database (depends on common_wiki.jar).
 
-./android/[magnetowordik](https://market.android.com/details?id=wordik.magneto) — Android word game (Wiktionary thesaurus).
+./android/magnetowordik — Android word game (Wiktionary thesaurus).
 
 ./hits_wiki — API for access to Wikipedia in MySQL database, algorithms to search synonyms in Wikipedia (depends on jcfd.jar, common_wiki.jar).
 
