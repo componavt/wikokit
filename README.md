@@ -139,7 +139,4 @@ This program is multi-licensed and may be used under the terms of any of the fol
   * AL, Apache License, V2.0 or later, http://www.apache.org/licenses
   * BSD, New BSD License, http://www.opensource.org/licenses/bsd-license
 
-## Links ##
-  * [New Wiktionary parsed databases](http://whinger.krc.karelia.ru/soft/wikokit/index.html)
-
 See [documentation](https://github.com/componavt/wikokit/wiki).
