@@ -13,9 +13,11 @@ Stone II. PHP API ([piwidict](https://github.com/componavt/piwidict) project) to
 -->
 The goal of this project is to extract [semi-structured information](http://en.wikipedia.org/wiki/Semi-structured_data) from Wiktionary and construct [machine-readable dictionary](http://en.wikipedia.org/wiki/Machine-readable_dictionary) (database + [API](http://en.wikipedia.org/wiki/API) + [GUI](http://en.wikipedia.org/wiki/GUI)).
 
-**Download** new Wiktionary parsed databases from [this page](http://whinger.krc.karelia.ru/soft/wikokit/index.html):
-  * Russian Wiktionary [parsed ruwikt20230901](https://academictorrents.com/details/df5f4f51a50d6ff24f5ee748a7290ae3c490eaac) from Academic Torrents.
-  * English Wiktionary todo soon...
+**Download** new Wiktionary parsed databases from Academic Torrents:
+  * Russian Wiktionary [parsed ruwikt20230901](https://academictorrents.com/details/df5f4f51a50d6ff24f5ee748a7290ae3c490eaac);
+  * English Wiktionary [parsed enwikt20231001](https://academictorrents.com/details/d0c67ff5bdba2ca1b1f20ec756d554bc85142537).
+
+ Archives of Wiktionary parsed databases are available at [whinger.krc.karelia.ru/soft/wikokit](http://whinger.krc.karelia.ru/soft/wikokit/index.html).
 
 <!--### Stone III: Dictionary kiwidict - Android applications
 
@@ -43,6 +45,20 @@ II) Today's result. Now machine-readable Wiktionary contains the following infor
   6. (^) quotations (text + bibliographic data).
 
 (^) Context labels and quotations were extracted only from Russian Wiktionary.
+
+
+### Parsed Wiktionary database schema
+
+The structure (tables and relations) of the Wiktionary parsed database (database layout, see the file [wikt_parsed_empty_with_foreign_keys.png](https://raw.githubusercontent.com/componavt/wikokit/master/wikt_parser/doc/screenshots/wikt_parsed_empty_with_foreign_keys.png)):
+
+![Wiktionary parsed database](https://raw.githubusercontent.com/componavt/wikokit/master/wikt_parser/doc/screenshots/wikt_parsed_empty_with_foreign_keys.png)
+
+Set of tables related to quotations (fragment of the Wiktionary parsed database):
+
+![quotations tables of the Wiktionary parsed database](https://raw.githubusercontent.com/componavt/wikokit/master/wiki/wiwordik.attach/db_scheme/quote_tables.png)
+
+
+### State of the art and Future work 
 
 Machine-readable Wiktionary framework:
 ![Machine-readable Wiktionary framework](https://raw.githubusercontent.com/componavt/wikokit/master/wiki/wiwordik.attach/db_scheme/MRDW_framework_external_applications.png)
